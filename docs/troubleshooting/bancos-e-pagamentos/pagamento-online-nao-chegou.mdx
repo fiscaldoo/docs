@@ -1,0 +1,92 @@
+---
+id: pagamento-online-nao-chegou
+slug: /troubleshooting/pagamento-online-nao-chegou
+title: O pagamento online do cliente não aparece
+sidebar_label: Pagamento online não aparece
+description: O cliente diz que pagou por Multibanco, MB WAY ou cartão e a fatura continua por pagar. Como ver o pedido, perguntar ao prestador e reconhecer um pagamento confirmado ou com erro.
+keywords: [pagamento online, pagamento não aparece, pagamento nao aparece, Multibanco, referência Multibanco, referencia Multibanco, MB WAY, cartão, cartao, prestador, Eupago, ifthenpay, Consultar agora, por pagar, aviso do prestador, ainda não está pago, ainda nao esta pago, valor não corresponde, valor nao corresponde]
+doc_id: DOC-0359
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 0ad668575)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/reconciliar-pagamentos-online, accounting-pt/bancos-e-tesouraria/reconciliar-movimentos-bancarios]
+---
+
+## Sintoma
+
+O cliente diz que pagou a fatura por Multibanco, MB WAY ou cartão, mas a fatura continua por pagar e o pedido aparece em **Por pagar**, no painel **O que há para fazer com os pagamentos online?**, ou já não aparece em lado nenhum.
+
+## Mensagem
+
+Ao carregar em **Consultar agora**, no pagamento:
+
+> «Resposta do prestador. Ainda não está pago: o prestador continua à espera do cliente.»
+
+Se carregar outra vez logo a seguir:
+
+> «O prestador foi consultado há poucos segundos. Aguarde um momento e tente de novo.»
+
+No pagamento em estado **Erro**, quando o aviso do prestador traz outro valor:
+
+> «O valor dos dados de pagamento não corresponde ao da transação.»
+
+Hoje, os perfis **Contabilista** e **Contabilista certificado** abrem o pagamento a partir da fatura sem recusa.
+
+## Causas verificadas
+
+- **O prestador ainda não tem o pagamento como feito.** Na demonstração, a `FT D26/29` (ifthenpay) continuou por pagar depois de **Consultar agora** e de um aviso de pagamento que o simulador do prestador não confirmou.
+- **O pedido ainda está dentro do prazo.** Em **O que está pendente**, cada referência mostra **Pagar até** e a data. Enquanto o prestador não confirmar, fica aí.
+- **O aviso traz um valor diferente do pedido.** Na demonstração, um aviso de 1,00 € sobre um pedido de 4.847,43 € (`FT D26/30`, Eupago) pôs o pagamento em **Erro**, com a mensagem acima. A fatura continuou com tudo por pagar e **Consultar agora** deixou de aparecer. Hoje, este pagamento também sai de **O que está pendente** sem entrar em **Expirados ou cancelados**: encontra-se pela fatura.
+
+## O que confirmar
+
+1. Abra **Contabilidade › Reconciliar › Pagamentos online › O que há para fazer com os pagamentos online?** e escolha o mês do pedido. Veja o cartão **Por pagar** e a lista **O que está pendente**, com o cliente, o valor e a data-limite.
+   ![Cartão Por pagar do painel dos pagamentos online, com 1 pedido de 147,60 €](/images/troubleshooting/pagamento-online-nao-chegou/01-por-pagar.png)
+2. Peça ao cliente o comprovativo: a referência, o valor e a data do pagamento. Compare o valor com a linha do painel: a linha mostra o cliente, o valor e o prazo, não o número da referência.
+3. Se o pedido não está no painel, abra a fatura e veja o botão **Transação de Pagamento**, que indica o pedido ligado a ela.
+
+## Como resolver
+
+1. Na fatura, carregue em **Transação de Pagamento**. Veja o estado no topo do pagamento:
+   - **Pendente:** carregue em **Consultar agora**. O fiscaldoo pergunta ao prestador e mostra a resposta. Se é a de cima, o prestador ainda não tem o pagamento: confirme os dados com o cliente e consulte mais tarde.
+   - **Erro:** leia a mensagem no pagamento. Não há botão para repetir: compare o comprovativo com a fatura e contacte o suporte.
+   - **Confirmado:** o pagamento já entrou. Veja o «Resultado esperado».
+2. Depois de o prestador confirmar, trate o resto em [Como reconciliar pagamentos online](/accounting-pt/reconciliar-pagamentos-online).
+
+**Quem faz:** o administrador, o **Contabilista** ou o **Contabilista certificado**: os dois perfis abrem o pagamento a partir da fatura e têm **Consultar agora**.
+
+<span className="fd-pending">Pendente de validação no ecrã: a resposta de **Consultar agora** quando o prestador já tem o pagamento, e a confirmação com a ifthenpay, com MB WAY e com cartão. Hoje, na demonstração, os simuladores respondem «por pagar» a esta consulta, e o da ifthenpay não confirma um aviso. O que está abaixo foi visto com um aviso do simulador da Eupago, por Multibanco.</span>
+
+## Resultado esperado
+
+Depois de o prestador confirmar, sem nada a fazer no ecrã, na `FT D26/33` de 147,60 €:
+
+- A fatura mostra a faixa **Pago**, a linha «Paga em 04/11/2026 147,60 €», **Valor em Dívida** 0,00 € e o botão **1 Pagamentos**.
+- O pagamento (botão **Transação de Pagamento**) fica **Confirmado**, sem **Consultar agora**.
+- No painel, o pedido passa de **Por pagar** para **Pagos**.
+  ![Cartões Pagos e Por pagar do painel, depois de o pagamento de 147,60 € ser confirmado](/images/troubleshooting/pagamento-online-nao-chegou/03-depois-de-pago.png)
+- É lançado o recebimento `PBNK1/2026/00040`:
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| 120002 Recebimentos Pendentes | 147,60 € | |
+| 2111 Clientes gerais | | 147,60 € |
+
+Um aviso repetido não paga duas vezes: o mesmo aviso, enviado de novo, só ficou contado como repetido.
+
+{/* Nota interna (v9-B, DOC-0359, master 0ad668575, base docs_demo_v9b_test): só simuladores, instância local 8212, guarda de rede ligada. ifthenpay: simulator.PAID é uma lista em memória, preenchida só pelos testes do produto; não há caminho no ecrã; Consultar agora na FT D26/29 por clique e aviso = HTTP 409. Eupago: lib/simulator.build_notice assina avisos «para testes e demonstrações» com a chave constante do simulador; o produto aceita-os sem confirmar com o prestador: FT D26/33 paga, assinatura errada = 401, repetido = 200 sem novo pagamento, valor errado = Erro. O aviso foi enviado por HTTP local; o resultado foi lido no ecrã. Rever «Quem faz» e o estado Erro quando os defeitos do relatório forem corrigidos. Menu Avisos de pagamentos online continua invisível. */}
+
+## Quando contactar o suporte
+
+- O prestador confirma o pagamento no comprovativo do cliente e **Consultar agora** continua a responder que não está pago.
+- O pagamento está em **Erro**.
+- Aparece outra resposta do prestador ou um erro.
+
+## Informação a enviar
+
+- O número da fatura e a referência do pagamento (por exemplo `SUB00001-575-1`).
+- O comprovativo do cliente, sem dados do cartão.
+- O texto completo da mensagem, copiado do ecrã, o perfil e a hora aproximada.

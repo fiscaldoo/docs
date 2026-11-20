@@ -1,0 +1,91 @@
+---
+id: inventario-de-competencias
+slug: /people/inventario-de-competencias
+title: Como consultar o inventário de competências
+sidebar_label: Inventário de competências
+description: "Como registar as competências de cada trabalhador e consultá-las numa lista por tipo, com o nível de cada pessoa."
+keywords: [inventário de competências, inventario de competencias, competências, competencias, idiomas, nível de competência, currículo, certificação]
+doc_id: DOC-0247
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/formacao/horas-de-formacao, people/trabalhadores/criar-um-trabalhador]
+---
+
+{/* Nota interna (DOCS-046, lote v13-PPL): percorrido com demo.rh; três competências criadas por clique. O botão «Create Resume Lines» do separador Currículo está por traduzir: ver LOTE_V13PPL. */}
+
+## Para que serve?
+
+Mostra num só sítio quem sabe o quê na empresa e a que nível, sem abrir ficha a ficha. Por exemplo: que trabalhadores falam inglês e com que nível.
+
+## Quando utilizar?
+
+- Precisa de alguém com uma competência para um cliente ou um projeto.
+- Quer planear formação a partir do que já existe.
+
+## Onde encontrar?
+
+- **Pessoas › Consultar › Inventário de competências**, para consultar.
+- **Pessoas › Trabalhadores › Trabalhadores**, na ficha, separador **Currículo**, para registar.
+
+Se o menu **Consultar** não couber na barra, está no **+**.
+
+## Antes de começar
+
+O perfil é o **Gestor de RH**. Os passos foram feitos até ao fim com esse perfil. A **Gerência** não tem este menu.
+
+## Como utilizar
+
+### Registar uma competência
+
+<StepByStep>
+
+1. Abra a ficha do trabalhador e o separador **Currículo**.
+2. Em **COMPETÊNCIAS E CERTIFICAÇÕES**, carregue em **Escolha uma competência da lista** (ou em **ADICIONAR**, se a pessoa já tiver alguma).
+3. Na janela **Atualizar competências**, escolha a **Categoria** (por exemplo **Idiomas**), a **Competência** (**Inglês**) e o **Nível de competência** (**B2**).
+4. Carregue em **Guardar & Fechar** e guarde a ficha.
+
+</StepByStep>
+
+A competência só fica registada depois de guardar a ficha.
+
+### Consultar o inventário
+
+Abra **Pessoas › Consultar › Inventário de competências**. A lista vem agrupada por **Tipo de competência** e **Competência**: carregue no grupo para o abrir. Cada linha tem o **Trabalhador**, o **Tipo de competência**, a **Competência**, o **Nível de competência** e o **Progresso do nível**.
+
+![Inventário de competências com três linhas de Idiomas: Espanhol B1 a 60 %, Inglês B2 a 75 % e Inglês A2 a 40 %, cada uma com o nome do trabalhador](/images/people/inventario-de-competencias/01-lista.png)
+
+Para comparar pessoas, escolha a vista **Tabela dinâmica**, no canto superior direito: uma coluna por trabalhador e uma linha por competência, com o **Nível atual**.
+
+## No Enterprise
+
+No Odoo Enterprise, o inventário é o mesmo: com o perfil **Gestor de RH**, **Pessoas › Consultar › Inventário de competências** tem as mesmas colunas e as vistas **Lista** e **Tabela dinâmica**, e o separador **Currículo** da ficha tem o mesmo bloco **COMPETÊNCIAS E CERTIFICAÇÕES**, com **Escolha uma competência da lista**. A **Gerência** também não tem este menu.
+
+{/* Nota interna (lote EE-11, DOCS-073 #4142, DEC-1794, master 589ecfd27, 12/11/2026): cópia Enterprise docs_ee_ee11_test no portátil (pg_dump da odoo20_ee_test, já em 589ecfd27; -i de hr_payroll, planning, hr_appraisal e hr_recruitment e -u de fiscaldoo_ux_kit e l10n_pt_fiscaldoo_demo; ee_neutralizar antes e construir), porta 8508, guarda de rede ligada; utilizadores criados por RPC na cópia, cada um só com um valor do campo Perfil: ee11_rh: Inventário de competências (Trabalhador, Tipo de competência, Competência, Nível de competência, Progresso do nível; agrupado por Tipo de competência > Competência; vazio na cópia Enterprise, com a mensagem de «A lista está vazia») e Currículo de Hugo Miguel Santos (RESUMO, COMPETÊNCIAS E CERTIFICAÇÕES, Certificação/De/A/Certificado). ee11_ger sem Consultar em Pessoas nas duas cópias. Nenhuma competência gravada. Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee11_test (master 589ecfd27, porta 8518), com os mesmos utilizadores. Ver reports/LOTE_EE-11.md. */}
+
+## Resultado esperado
+
+Com três competências registadas, o grupo **Idiomas** mostra **3 registos** e uma média de 58,33 %, e a **Tabela dinâmica** mostra, na linha do **Inglês**, 75 % para um trabalhador e 40 % para outro.
+
+## Notas importantes
+
+- **O progresso é uma percentagem associada ao nível**, para poder comparar e fazer médias. Nos idiomas: A1 10 %, A2 40 %, B1 60 %, B2 75 %, C1 85 %, C2 100 %. A média do grupo não é uma medida da empresa: serve só para ter uma ideia.
+- **O que a lista não vê.** Só aparece o que foi registado nas fichas. Quem não tem nada registado não aparece, mesmo que tenha a competência. As ações de formação não entram aqui sozinhas. Para essas, veja [Como acompanhar as horas de formação obrigatórias do ano](/people/horas-de-formacao).
+- **Certificações.** Na mesma zona da ficha, **Adicionar uma linha** regista uma certificação, com a validade e o certificado. Pendente de validação no ecrã: a janela foi aberta, mas não se gravou nenhuma.
+
+## Problemas frequentes
+
+### A lista está vazia
+
+- **Sintoma:** aparece «Este relatório dá-lhe uma visão geral das competências por trabalhador. Crie-as na configuração e adicione-as ao trabalhador.»
+- **Causa:** nenhuma ficha tem competências guardadas nesta empresa.
+- **O que fazer:** registe as competências nas fichas, como acima.
+
+### Registei a competência e ela não aparece
+
+- **Sintoma:** a competência aparece na ficha, mas não no inventário.
+- **Causa:** a ficha não ficou guardada. O botão de guardar fica inativo enquanto faltar um campo obrigatório, como o **Local de trabalho habitual**.
+- **O que fazer:** preencha o campo a vermelho, guarde e confirme outra vez. Veja [Não consigo guardar a ficha do trabalhador](/people/departamentos-e-organigrama#não-consigo-guardar-a-ficha-do-trabalhador).

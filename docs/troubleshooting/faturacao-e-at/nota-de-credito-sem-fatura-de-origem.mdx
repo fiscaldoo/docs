@@ -1,0 +1,115 @@
+---
+id: nota-de-credito-sem-fatura-de-origem
+slug: /troubleshooting/nota-de-credito-sem-fatura-de-origem
+title: A nota de crédito não indica a fatura que corrige
+sidebar_label: Nota de crédito sem fatura de origem
+description: Porque uma nota de crédito criada com Novo é recusada por não ter documento de origem, e o que fazer quando a fatura existe no fiscaldoo, foi emitida noutro programa ou já não se encontra.
+keywords: [nota de crédito, nota de credito, sem origem, documento de origem, fatura de origem, documento retificado, não tem documento de origem, nao tem documento de origem, não é uma linha do documento retificado, nao e uma linha do documento retificado, outro software, outro programa, Nota de crédito sem origem, Registar exceção, motivo da retificação, motivo de regularização, motivo de regularizacao]
+doc_id: DOC-0337
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master f671d6842)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/emitir-uma-nota-de-credito, troubleshooting/faturacao-e-at/motivo-de-isencao-em-falta]
+---
+
+## Sintoma
+
+Criou uma nota de crédito em **Faturação › Faturar › Notas de crédito de clientes**, com o botão **Novo**, e, ao carregar em **Confirmar**, o fiscaldoo recusa porque ela não diz que fatura corrige. Esta é a primeira recusa: só depois de indicar a origem é que a nota pede os dados da regularização de IVA.
+
+## Mensagem
+
+Ao carregar em **Confirmar** numa nota sem origem:
+
+> «A nota de crédito “*Rascunho de nota de crédito*” não tem documento de origem, por isso não pode ser publicada. Porquê: A lei exige que uma nota de crédito refira a fatura que corrige (CIVA art. 36.º n.º 6). Como resolver: Crie-a com o botão “Nota de crédito” da fatura original ou preencha “Documento retificado”. Se a origem não existe mesmo neste sistema, um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» pode registar a exceção com a ação “Nota de crédito sem origem”, indicando o motivo.»
+
+![Recusa da nota de crédito sem documento de origem](/images/troubleshooting/nota-de-credito-sem-fatura-de-origem/01-recusa-sem-origem.png)
+
+Se preencher o **Documento retificado** numa nota criada à mão:
+
+> «A linha “*[SERV] Serviço genérico*” da nota de crédito *Rascunho de nota de crédito* não é uma linha do documento retificado “*FT D26/31*”: uma nota de crédito só pode creditar o que o documento que retifica faturou. Retire a linha ou escolha o documento certo.»
+
+Se indicar o número do documento de outro programa e não o motivo:
+
+> «A nota de crédito/débito “*Rascunho de nota de crédito*” não diz porque foi emitida. Porquê: O motivo da retificação vai para o ficheiro fiscal (no máximo 50 carateres). Como resolver: Preencha “Motivo da retificação” antes de publicar.»
+
+## Causas verificadas
+
+- **A nota foi criada com Novo.** Desta forma, nada a liga a uma fatura: o campo **Documento retificado** fica vazio.
+- **As linhas foram escritas à mão.** Mesmo com o **Documento retificado** preenchido, uma linha que não veio da fatura é recusada.
+- **Faltam os dados da regularização de IVA.** Depois de indicar a origem, o fiscaldoo recusa uma coisa de cada vez: primeiro o **Motivo da regularização de IVA** (veja [A nota de crédito pede um motivo de regularização de IVA](/troubleshooting/motivo-de-regularizacao-de-iva)) e, com o motivo de anulação ou redução, a **Prova da regularização** e a **Data de referência da regularização**.
+- **Falta o motivo da retificação.** É outro campo, que vai para o ficheiro fiscal.
+
+## O que confirmar
+
+1. A fatura que quer corrigir existe neste sistema e está **Publicada**?
+2. Se foi emitida noutro programa, tem o número dela?
+3. O que está errado: o valor ou as linhas (nota de crédito) ou o documento inteiro, emitido por erro ([Como anular uma fatura](/fiscal-core/anular-uma-fatura))?
+
+## Como resolver
+
+### A fatura existe no fiscaldoo
+
+Abandone o rascunho e crie a nota a partir da fatura original, com o botão **Nota de Crédito**: as linhas vêm da fatura e a ligação fica feita. Os passos estão em [Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito).
+
+**Quem faz:** Faturação ou Contabilista.
+
+### A fatura foi emitida noutro programa e tem o número
+
+1. No rascunho, preencha **Número do documento retificado (outro software)**, por exemplo `FT OLD/2025/123`.
+2. Preencha **Motivo da retificação**, por exemplo «Devolução de mercadoria».
+3. Preencha os dados da regularização de IVA: **Motivo da regularização de IVA** e, com o motivo de anulação ou redução, **Prova da regularização** e **Data de referência da regularização**. Sem eles, **Confirmar** recusa, agora por estes dados.
+4. Carregue em **Confirmar**.
+
+O fiscaldoo não confere o número, porque a fatura não está cá: copie-o sem erros. Na demonstração, a `NC D26/2` foi publicada assim.
+
+### Não pode indicar o número, ou a fatura já não se encontra
+
+O botão **Nota de crédito sem origem** só aparece ao perfil **Contabilista certificado**, numa nota em rascunho sem origem. O perfil **Administrativo** não o vê.
+
+1. Carregue em **Nota de crédito sem origem**.
+2. Em **Caso**, escolha uma das duas opções:
+   - **Documento original emitido por outro sistema:** preencha **Número do documento original**. Sem o número, a janela não fecha.
+   - **Origem indisponível (justificada):** o campo do número desaparece.
+3. Preencha **Motivo** e **Justificação**.
+   ![Janela Nota de crédito sem origem, com o caso, o número do documento original, o motivo e a justificação](/images/troubleshooting/nota-de-credito-sem-fatura-de-origem/02-assistente-sem-origem.png)
+4. Carregue em **Registar exceção**. A janela fecha e o botão desaparece: o rascunho ainda não está publicado.
+5. Preencha os dados da regularização de IVA, como no caso anterior: a exceção não os dispensa.
+6. Carregue em **Confirmar**.
+
+A autorização fica no histórico da nota, por exemplo: «Nota de crédito sem documento de origem autorizada por … Motivo: Devolução de mercadoria. Justificação: … Documento original de outro sistema: FT OLD/2025/123.»
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: quando a falta da fatura de origem é aceitável para efeitos do art. 36.º n.º 6 do CIVA, sobretudo no caso «Origem indisponível», em que o documento não refere nenhum número.</span>
+
+**Quem faz:** o perfil Contabilista certificado.
+
+## Resultado esperado
+
+A nota de crédito fica **Publicada**, com número próprio. No canto, aparece a marca **Por regularizar**, porque o crédito ainda não foi devolvido nem descontado. No PDF da `NC D26/3` lê-se «Retifica a fatura FT OLD/2025/123: Devolução de mercadoria» e «Documento retificado: FT OLD/2025/123 — Motivo: Devolução de mercadoria».
+
+Numa nota de 100,00 € com IVA a 23%, conferida na `NC D26/3`:
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| 721 Prestações de serviços | 100,00 € | |
+| 2433 IVA - Liquidado | 23,00 € | |
+| 2111 Clientes gerais | | 123,00 € |
+
+{/* Nota interna (DOCS-063, lote v14-REV, master cf8052b9e): com o FAT-141, a ordem das recusas foi vista por clique com demo.faturacao, numa nota nova da Padaria Aurora: origem, motivo de regularização, prova e data. */}
+
+{/* Nota interna (v9-B, DOC-0337, master 0ad668575, base docs_demo_v9b_test): tudo por clique, com artigo SERV a 100,00 €. demo.faturacao: recusa de origem, recusa da linha com FT D26/31, recusa de motivo e NC D26/2 com número de outro software. demo.gestor_contabilidade: NC D26/3 (caso outro sistema) e NC D26/4 (origem indisponível). Linhas lidas por RPC. A lista de Documento retificado oferece faturas de fornecedor (FTF/2026/00045): defeito no relatório; aceitação não testada. */}
+
+## Quando contactar o suporte
+
+- A nota foi criada com o botão **Nota de Crédito** da fatura e, mesmo assim, aparece a recusa de falta de origem.
+- O perfil **Contabilista certificado** não vê o botão **Nota de crédito sem origem** num rascunho sem origem.
+
+## Informação a enviar
+
+- O número da fatura original e o estado da nota de crédito.
+- O texto completo da mensagem, copiado do ecrã.
+- O perfil com que entrou e a hora aproximada.
+
+{/* Nota interna (v23-T, DOC-0337, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

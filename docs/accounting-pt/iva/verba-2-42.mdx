@@ -1,0 +1,104 @@
+---
+id: verba-2-42
+slug: /accounting-pt/verba-2-42
+title: Como regularizar o IVA da verba 2.42
+sidebar_label: Regularizar a verba 2.42
+description: Registar a regularização do IVA da construção de habitação a preço moderado (verba 2.42 da Lista I), a favor da empresa ou do Estado, e levá-la à declaração periódica de IVA.
+keywords: [verba 2.42, regularizar a verba 2.42 do iva, regularizações da verba 2.42, regularizacoes da verba 2.42, Pacote Habitação, pacote habitacao, taxa reduzida construção, campo 40, campo 41, 6 %, preço moderado, preco moderado, DL 97/2026]
+doc_id: DOC-0097
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 00c68a6d8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/iva/taxas-e-isencoes-de-iva, accounting-pt/iva/iva-de-dividas-antigas, accounting-pt/iva/declaracao-periodica-de-iva]
+---
+
+{/* Nota interna (v13-ACC, DOC-0097): base docs_demo_v13acc_test, porta 8254, master 56504fe86. Percorrido por clique com o perfil Gestor de contabilidade, a partir da declaração 2026/11. Provados por clique: registo a favor (17.000,00 € no campo 40), caminho do campo 41 com as duas recusas, opção de substituição, data de junho, período de 2021 e anulação. Fontes: Ofício-Circulado 25116/2026 (ponto 11) e 25119/2026, Portaria 298/2026/1, DL 97/2026 art. 11.º, CIVA art. 78.º, LGT art. 45.º, como constam da regra legal do produto (dpiva/VERBA_242) e da resposta do contabilista certificado de 18/10/2026 (DEC-977); os art. 10.º e 11.º do DL foram lidos pelo auditor na cópia do Portal das Finanças a 04/11/2026 e confirmam a tabela; falta a validação do contabilista certificado. Defeitos no relatório LOTE_V13ACC: data num período com declaração validada aceite, sem lista de todas as regularizações fora do modo de programador, referência «/», aviso de registo não encontrado depois de anular. */}
+
+## Para que serve?
+
+Regista a correção do IVA de uma obra de habitação abrangida pela verba 2.42 da Lista I do Código do IVA (taxa reduzida de 6 %, do Pacote Habitação). A correção pode ser a favor da empresa ou do Estado. O produto calcula a diferença entre as taxas e leva-a à declaração periódica de IVA do período.
+
+<HelpCallout type="risco">
+
+A escolha do caso muda o campo, os juros e as coimas. Decida com o contabilista certificado antes de registar. <span className="fd-pending">Pendente de validação por contabilista certificado: DL 97/2026, art. 11.º, Ofício-Circulado 25116/2026 e Portaria 298/2026/1.</span>
+
+</HelpCallout>
+
+## Quando utilizar?
+
+- Quando pagou ou liquidou 23 % numa obra e as condições da verba 2.42 passaram a cumprir-se: pode recuperar a diferença.
+- Quando aplicou 6 % e deixou de cumprir uma condição: tem de devolver a diferença.
+- Só se aplica a declarações de períodos que começam em 1 de julho de 2026 ou depois.
+- Não use para outras correções de IVA. Para uma nota de crédito ou uma dívida incobrável, veja o [IVA de dívidas antigas](/accounting-pt/iva-de-dividas-antigas).
+- Não use quando o comprador deixou de usar a casa como habitação própria e permanente: esse facto não dá regularização de IVA e o produto não a propõe. O DL 97/2026, art. 10.º, n.º 5, prevê aí um agravamento do IMT. <span className="fd-pending">Pendente de validação por contabilista certificado.</span>
+
+## Onde encontrar?
+
+**Contabilidade › Declarar › IVA › O que há para fazer com o IVA?** › **Listas de apoio** › **Registo das declarações de IVA**. Abra a declaração do período, abra o separador **Anexos 40 e 41** e carregue em **Regularizar verba 2.42 (Pacote Habitação)**.
+
+O botão só aparece enquanto a declaração está em rascunho ou calculada.
+
+Para consultar as regularizações já registadas: **Contabilidade › Declarar › IVA › O que há para fazer com o IVA?** › **Listas de apoio** › **Regularizações da verba 2.42**. O **Contabilista** chega aqui e lê a lista, mas não regista nem anula.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**. O **Contabilista** não tem este botão.
+- A declaração do período da regularização não está validada nem entregue.
+- Tem, para cada mês em que a obra foi declarada, o valor tributável e a taxa aplicada.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a declaração do período e o separador **Anexos 40 e 41**. Carregue em **Regularizar verba 2.42 (Pacote Habitação)**.
+2. Em **O que aconteceu**, escolha o caso. A tabela de baixo diz o que acontece em cada um.
+3. Em **Data da regularização**, confirme a data. Abre com o último dia do período da declaração, e é essa data que decide a declaração que recebe o valor.
+4. Em **Lançamento**, escolha o lançamento contabilístico, se já o fez. Em **Nota**, escreva o motivo.
+5. Carregue em **Adicionar uma linha**. Em **Período de origem**, escolha o primeiro dia do mês em que a obra foi declarada, por exemplo `01/08/2026`.
+6. Preencha **Valor tributável**, por exemplo `100.000,00`. **Taxa aplicada (%)** e **Taxa da verba 2.42 (%)** vêm preenchidas com 23,00 e 6,00: altere-as se as taxas forem outras. O **IVA a regularizar** calcula-se sozinho, 17.000,00 € no exemplo. Repita para cada mês.
+   ![Janela Regularização da verba 2.42 com o caso de recuperar IVA, a data de 30/11/2026, a linha de agosto com 100.000,00 € e 17.000,00 € a regularizar](/images/accounting-pt/verba-2-42/01-janela-recuperar.png)
+7. Carregue em **Registar a regularização**.
+
+</StepByStep>
+
+| O que aconteceu | Quando | Efeito |
+|---|---|---|
+| **Posso recuperar IVA: as condições passaram a cumprir-se (campo 40)** | A obra foi faturada a 23 % e passou a cumprir as condições | O valor vai para o campo 40. Só dentro do prazo de caducidade de 4 anos |
+| **Tenho de devolver IVA: preço moderado e venda até 24 meses, mas falhou OUTRA condição (campo 41, só com juros)** | Preço moderado, venda até 24 meses, e falhou outra condição | O valor vai para o campo 41. Pede **Data do facto**, **Preço moderado (art. 2.º n.º 2 b))** e **Vendido até 24 meses após o início de utilização (art. 10.º n.º 1 a) ii))**. Vale só até ao fim do período seguinte ao facto. As duas opções vêm por marcar: marque-as só se forem verdadeiras. Sem as duas, o registo é recusado. A janela não calcula os juros compensatórios: trate-os com o contabilista certificado |
+| **Tenho de devolver IVA: qualquer outro caso (substituir as declarações, com juros e coimas; sem campo 41)** | Todos os outros casos em que tem de devolver | Nada se regista. O produto diz que declarações tem de substituir |
+
+Na autoliquidação, quem regulariza é quem liquidou, ou seja, o comprador. <span className="fd-pending">Pendente de validação por contabilista certificado.</span>
+
+## Resultado esperado
+
+Abre-se a lista **Regularizações da verba 2.42**, com a linha da data, do sentido, do período de origem, das taxas e do **IVA regularizado**.
+
+![Lista Regularizações da verba 2.42, na parte direita, com o valor tributável de 100.000,00 €, as taxas de 23,00 e 6,00 e 17.000,00 € de IVA regularizado](/images/accounting-pt/verba-2-42/03-apos-registar.png)
+
+Volte à declaração e carregue em **Calcular**. No separador **Quadro 06 — campos**, o valor entra no campo 40 ou no campo 41 da declaração. <span className="fd-pending">Pendente de validação por contabilista certificado.</span>
+
+O registo não gera lançamentos. O lançamento contabilístico é do contabilista, porque depende da dedução que a empresa fez. Depois de lançado, liga-se em **Lançamento**.
+
+## Notas importantes
+
+- A data decide a declaração. Escolha uma data do período da declaração que está a preparar: uma data num período com a declaração validada ou entregue é recusada (ver [Problemas frequentes](#problemas-frequentes)).
+- No menu **Ações** de uma fatura, **Regularizações da verba 2.42** mostra só as regularizações ligadas a esse lançamento.
+
+## Problemas frequentes
+
+**Registei mal.** Na lista **Regularizações da verba 2.42**, abra a linha e carregue em **Anular regularização**. Na janela «Retirar esta regularização? Deixa de constar da declaração de IVA do seu período.», carregue em **Confirmar**. Aparece um aviso a dizer que o registo não foi encontrado: é esperado, porque o registo já não existe. Carregue de novo em **Calcular** na declaração.
+
+**«A declaração de IVA “*Empresa Demonstração, Lda — 2026/9 (v1)*” do período de *30/09/2026* já está validada ou entregue. Porquê: Guarda os seus valores, por isso uma regularização com data neste período não entraria nela: o campo 40 ou 41 ficaria igual. Como resolver: Escolha uma data num período cuja declaração ainda esteja aberta, ou devolva a declaração a rascunho (administrador, com um motivo) e registe a regularização outra vez; se a declaração já foi entregue, substitua-a.»** Mude a **Data da regularização** para o período da declaração em preparação.
+
+**«A regularização da verba 2.42 só existe para declarações de períodos que começam em 1 de julho de 2026 ou depois (Portaria 298/2026/1, art. 4.º n.º 3). O que aconteceu: *30/06/2026* é anterior a essa data. Como resolver: escolha uma data de regularização a partir de julho de 2026.»** Corrija a **Data da regularização**.
+
+**«O período de origem *01/08/2021* está fora do prazo de caducidade de quatro anos (art. 45.º da LGT; Ofício-Circulado 25116/2026). O que aconteceu: uma regularização a favor do sujeito passivo só é válida dentro desse prazo. Como resolver: confirme as datas com o contabilista.»** O prazo acabou. Fale com o contabilista certificado.
+
+**«Este caso não vai para o campo 41. Porquê: O campo 41 com o anexo da verba 2.42 é só para as operações com preço moderado (art. 2.º n.º 2 b)) vendidas até 24 meses depois do início de utilização (art. 10.º n.º 1 a) ii)) em que falhou OUTRA condição, e tem de afirmar as duas condições. Como resolver: Se as duas forem verdadeiras, marque «Preço moderado» e «Vendido até 24 meses» e registe outra vez; caso contrário, substitua as declarações de IVA dos períodos que tiveram taxa reduzida (há juros e coimas), com a opção «substituir as declarações de IVA» deste assistente.»** Marque as duas opções, se forem verdadeiras. Se não forem, escolha a terceira opção em **O que aconteceu**.
+
+**«A data da regularização *30/11/2026* é posterior ao fim do período seguinte ao facto (*31/07/2026*). O que aconteceu: o campo 41 só vale até ao fim do período seguinte, só com juros. Como resolver: substitua as declarações dos períodos que tiveram taxa reduzida (há juros e coimas).»** Passou o prazo do campo 41. Escolha a terceira opção em **O que aconteceu**. <span className="fd-pending">Pendente de validação por contabilista certificado.</span>
+
+**«Substituir as declarações. Nada foi registado e o campo 41 não é usado. O que aconteceu: neste caso o IVA regulariza-se substituindo as declarações dos períodos que tiveram taxa reduzida, com juros e coimas. Como resolver: substitua as declarações de: *08/2026*.»** É a resposta da terceira opção, não um erro. Substitua as declarações indicadas, com o contabilista certificado.

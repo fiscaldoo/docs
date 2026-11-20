@@ -1,0 +1,72 @@
+---
+id: copias-de-seguranca
+slug: /administration/copias-de-seguranca
+title: Como acompanhar as cópias de segurança
+sidebar_label: Cópias de segurança
+sidebar_position: 3
+description: Registar uma cópia de segurança feita fora do programa, com a soma de verificação, conferir que está intacta e ver os alertas de cópia em falta.
+keywords: [cópias de segurança, copias de seguranca, backup, soma de verificação, sha256, alertas, verificar restauros, registo das cópias]
+doc_id: DOC-0321
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/seguranca-e-arquivo/registo-de-auditoria]
+---
+
+## Para que serve?
+
+O produto não faz cópias de segurança: regista as que fez fora dele e confere que estão intactas, e avisa quando falta uma. O ecrã diz-o: «Faça a cópia fora do programa, calcule a soma com «sha256sum» e registe-a aqui. O registo só regista e verifica; não faz cópias.»
+
+## Quando utilizar?
+
+- Depois de cada cópia, para a registar com a soma de verificação.
+- Para conferir uma cópia antiga contra a soma guardada.
+- Para ver há quantos dias a empresa não tem cópia.
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Sistema e segurança › Registo das cópias de segurança** e **Alertas das cópias de segurança**.
+
+## Antes de começar
+
+O seu perfil é **Contabilista certificado** ou o administrador do sistema. Precisa da cópia feita e da soma SHA-256 do ficheiro (o comando `sha256sum`). Feito a 1 de novembro de 2026, com uma cópia fictícia.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › Sistema e segurança › Registo das cópias de segurança**. Sem registos, diz «Ainda não há cópias de segurança registadas».
+   ![Registo das cópias de segurança vazio: Ainda não há cópias de segurança registadas e a explicação de que o registo só regista e verifica](/images/administration/copias-de-seguranca/01-registo-sem-copias.png)
+2. Carregue em **Novo**. **Feita em** abre com a data e a hora de agora e **Âmbito** com **Base de dados e ficheiros**.
+3. Escreva o **Tamanho (bytes)**, a **Soma de verificação SHA-256** (64 caracteres, 0-9 e a-f) e **Guardada em** (onde a cópia está). Guarde.
+4. Para conferir a cópia mais tarde, abra o registo e carregue em **Verificar**. Escreva a soma da cópia guardada, ou escolha o ficheiro, e carregue em **Comparar**. O estado fica **A soma coincide** ou **A soma NÃO coincide**.
+5. Abra **Alertas das cópias de segurança** para ver os alertas **Abertos**.
+
+</StepByStep>
+
+## Resultado esperado
+
+O registo fica com **Resultado** **Boa** e a mensagem «Registo de cópia de segurança criado». Na demonstração, o ecrã **Alertas**, que abre com o filtro **Aberto**, tinha um alerta **Aberto**: «Não há cópia de segurança registada para a empresa Empresa Demonstração, Lda.». As colunas são **Aberto em**, **Alerta**, **Dias sem cópia**, **Estado** e **Resolvido em**.
+
+## Notas importantes
+
+- **O registo não prova que a cópia restaura.** Só prova que o ficheiro é o mesmo: teste o restauro de vez em quando, fora do programa.
+- **Depois de guardado, o registo fica só de leitura.** Se errar um valor, registe uma cópia nova e explique o motivo nas notas.
+- **A comparação fica escrita no registo.** Com a soma igual, o estado passa a **A soma coincide** e ficam preenchidos **Verificada em** e **Verificada por**.
+- **O alerta fecha-se sozinho.** Ao registar a cópia, o alerta **Aberto** dessa empresa deixa de estar aberto. Os alertas das outras empresas continuam abertos até cada uma ter a sua cópia.
+
+## Problemas frequentes
+
+### «uma cópia que foi feita precisa da sua soma SHA-256»
+
+- **Mensagem:** na janela **Erro de Validação**, depois do nome do registo (empresa, data e âmbito): «uma cópia que foi feita precisa da sua soma SHA-256 (64 caracteres 0-9, a-f). Calcule-a na cópia guardada com «sha256sum &lt;ficheiro&gt;» e cole o resultado.»
+- **Causa:** guardou sem a soma, ou com uma soma que não tem 64 caracteres.
+- **O que fazer:** calcule a soma na cópia guardada e cole-a em **Soma de verificação SHA-256**.
+  ![Janela Erro de Validação ao guardar um registo sem soma: uma cópia que foi feita precisa da sua soma SHA-256 de 64 caracteres](/images/administration/copias-de-seguranca/02-falta-a-soma-sha256.png)
+
+{/* Nota interna (DOCS-040, lote F4): visto com demo.gestor_contabilidade: Novo, a recusa, o registo com soma fictícia, a janela Verificar (abre; Comparar não foi carregado) e o ecrã de alertas. O registo fictício (soma «aaaa…») ficou na base. O estado Boa vem do campo Resultado por omissão. */}
+
+{/* Nota interna (DOCS-005 #3400, lote CAP-01, 10/11/2026, master ce51f2d47, docs_demo_cap01_test, porta 8504): por clique com um utilizador criado na cópia só com o perfil Contabilista certificado. Lista vazia (captura 01); Novo com Feita em agora, Âmbito Base de dados e ficheiros, Resultado Boa e Tamanho 0; Guardar sem soma dá o Erro de Validação (captura 02), com o nome do registo antes do texto citado; registo descartado, nada ficou gravado. Alertas: um Aberto, aberto nesta cópia a 10/11/2026 (a data é a do arranque da cópia, por isso o texto já não a diz). Verificar e Comparar não foram refeitos. */}

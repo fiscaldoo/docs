@@ -1,0 +1,102 @@
+---
+id: encomendas-edi
+slug: /fiscal-core/encomendas-edi
+title: Como receber e responder a encomendas EDI
+sidebar_label: Encomendas recebidas
+sidebar_position: 2
+description: Receber as encomendas do retalhista por EDI como orçamentos, decidir os preços que diferem, confirmar e enviar a resposta à encomenda (aceite, aceite com alterações ou recusada).
+keywords: [encomendas EDI, encomendas recebidas, Troca de documentos, encomenda EDI, receber encomendas, resposta à encomenda, ORDRSP, ORDERS, retalhista, preço do retalhista, manter os nossos preços, usar os preços do retalhista, por rever, reprocessar, processar outra vez, mensagens EDI, painel EDI]
+doc_id: DOC-0058
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 3a28c9b91)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao-eletronica/ligar-o-edi, fiscal-core/faturacao-eletronica/aviso-de-expedicao]
+---
+
+<HelpCallout type="risco" title="Nesta versão, só a conta de testes da Saphety">
+O fiscaldoo só liga ao ambiente de testes da Saphety (veja [Como ligar o EDI e a Saphety](/fiscal-core/ligar-o-edi)): as encomendas vêm desse ambiente e uma resposta «Aceite» foi aceite por ele, sem chegar ao retalhista. Combine as encomendas com o retalhista pela via habitual.
+</HelpCallout>
+
+## Para que serve?
+
+O retalhista envia as encomendas por EDI. O fiscaldoo recebe-as e cria um **orçamento** para cada uma, com o cliente, os artigos, as quantidades, os preços do retalhista e a data de entrega, sem nada escrito à mão. Depois de decidir e confirmar, envia ao retalhista a **resposta à encomenda**: aceite, aceite com alterações ou recusada.
+
+## Quando utilizar?
+
+- O retalhista já troca EDI consigo: [Como ligar o EDI e a Saphety](/fiscal-core/ligar-o-edi).
+- Chegaram encomendas novas, ou o retalhista pede a resposta à encomenda (**Resposta à encomenda (ORDRSP)** marcada no separador **Faturação eletrónica (EDI)** do cliente).
+
+## Onde encontrar?
+
+- **Receber:** **EDI › Receber mensagens**.
+- **Encomendas recebidas:** **Vendas › Ordens › Encomendas recebidas**.
+- **Mensagens com problemas:** **EDI › Painel** (bloco **Por tratar**) e **EDI › Mensagens**.
+
+## Antes de começar
+
+- O seu perfil é **Administrativo**. Os passos foram feitos do princípio ao fim com este perfil. O **Contabilista certificado** e o **Contabilista** também têm estes menus.
+- O cliente tem o EDI ativo e os artigos têm o código de barras do retalhista.
+- Se trabalha com várias empresas, escolha a empresa do retalhista no canto superior direito.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **EDI › Receber mensagens**. Aparece «Mensagens recebidas. N mensagem(ns) nova(s).» e a lista **Mensagens**. Cada encomenda tratada fica **Processada**; a que não se consegue tratar fica **Por rever** (veja «Problemas frequentes»).
+2. Abra **Vendas › Ordens › Encomendas recebidas**. A lista mostra **Número**, **Data da Encomenda**, **Entrega prometida**, **Cliente**, **Total**, **Estado**, **Estado da Fatura** e a **Referência do cliente**, que é o número da encomenda do retalhista (no exemplo, `S00004` com a referência `SIMORD0003`).
+3. Abra a encomenda. Confira as linhas: a coluna **Preço Unitário** tem o seu preço e **Preço do retalhista** o da encomenda. Se algum é diferente, aparece em cima o aviso «O preço de algumas linhas difere da encomenda do retalhista. Decida antes de confirmar: usar os preços do retalhista ou manter os nossos.».
+   ![Encomenda S00004 (SIMORD0003) com o aviso dos preços diferentes, os botões Usar os preços do retalhista e Manter os nossos preços, e a linha das Bolachas a 1,60 com o preço do retalhista 1,50](/images/fiscal-core/encomendas-edi/01-encomenda-com-precos-diferentes.png)
+4. Carregue em **Usar os preços do retalhista** ou em **Manter os nossos preços**. O aviso desaparece. No exemplo, escolheu-se **Manter os nossos preços**: as Bolachas ficaram a 1,60.
+5. Se precisar, altere quantidades ou a data de entrega. Depois carregue em **Confirmar**. O orçamento passa a **Ordem de Vendas**.
+6. Carregue em **Enviar resposta EDI**. A resposta segue para o operador e aparece a mensagem «Resposta EDI. A resposta à encomenda S00004 (SIMORD0003) foi enviada e aceite.». O botão desaparece da encomenda. Em **EDI › Mensagens** fica uma linha **Enviada**, **ORDRSP (resposta à encomenda)**, com o **Estado** **Aceite** (o operador recebeu-a).
+   ![Lista Mensagens com a resposta ORDRSP enviada a 02/11/2026 ao Retalhista Exemplo (EDI) no estado Aceite, por cima das encomendas recebidas Por rever e Processada](/images/fiscal-core/encomendas-edi/02-mensagens-edi.png)
+
+</StepByStep>
+
+**Que resposta segue.** O fiscaldoo decide pela encomenda: cancelada = **recusada**; confirmada igual ao pedido = **aceite**; confirmada com quantidade, preço ou data diferentes, ou com linhas retiradas = **aceite com alterações**. No exemplo, a `S00004` seguiu como aceite com alterações, com o preço de 1,60 nas Bolachas e a linha do Sumo aceite como veio.
+
+## No Enterprise
+
+No Odoo Enterprise, as encomendas EDI tratam-se da mesma maneira (visto com um utilizador só com o perfil **Administrativo**). A aplicação chama-se **EDI**: **EDI › Receber mensagens** mostra «Mensagens recebidas. 0 mensagem(ns) nova(s).» e abre a lista **Mensagens**. As encomendas estão em **Vendas › Ordens › Encomendas recebidas**. A encomenda `S00004 (SIMORD0003)` tem os mesmos botões, entre eles **Usar os preços do retalhista**, **Manter os nossos preços** e **Enviar resposta EDI**.
+
+{/* Nota interna (lote EE-12, DOCS-073 #4142, DEC-1794, master 589ecfd27, base Enterprise docs_ee_ee12_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee12_test): DOC-0058. Administrativo: Receber mensagens (0 novas), Encomendas recebidas (2 encomendas) e S00004 (SIMORD0003) com Enviar, Confirmar, Cancelar, Emitir documento, Usar os preços do retalhista, Manter os nossos preços e Enviar resposta EDI. Nenhuma resposta enviada. Igual na cópia Community. Ver reports/LOTE_EE-12.md. */}
+
+## Resultado esperado
+
+- A encomenda `S00004` (`SIMORD0003`) do Retalhista Exemplo (EDI) ficou **Ordem de Vendas**, com 12 Bolachas a 1,60 € e 6 Sumos a 2,40 €, IVA 6 % e o **Total** de 35,61 €.
+- Em **EDI › Mensagens** ficou a resposta `ORDRSP|5609999000012|SIMORD0003|1`, **Enviada**, **Aceite**.
+- A encomenda segue o caminho normal: entrega e guia ([Como enviar o aviso de expedição a partir da guia](/fiscal-core/aviso-de-expedicao)) e fatura ([Como enviar uma fatura por EDI](/fiscal-core/fatura-edi)).
+
+## Notas importantes
+
+- **Nada se confirma sozinho.** A encomenda chega como orçamento; é sempre alguém que confirma.
+- **Os preços nunca mudam em silêncio.** Enquanto houver preços diferentes por decidir, **Confirmar** é recusado.
+- **A resposta é opcional.** Só se envia se o cliente a pede.
+- **Uma resposta aceite não se envia outra vez.** Carregar de novo em **Enviar resposta EDI** abre «Esta resposta já foi enviada e aceite pelo operador (ORDRSP ORDRSP|5609999000012|SIMORD0003|1). Nada se envia duas vezes; altere a encomenda se a resposta tiver de mudar.».
+- **A mesma encomenda recebida duas vezes não cria dois orçamentos.**
+- Na demonstração, as encomendas e a resposta passam por um simulador do operador, não pela Saphety real. O formato das mensagens de cada retalhista confirma-se com a Saphety.
+
+{/* Nota interna (DOCS-046, lote v5-FC, 2.ª ronda, master 6fb7ee1d4): feito com demo.faturacao na Empresa Demonstração (cookie cids=4), docs_demo_v5fc_test. S00004 (SIMORD0003): Confirmar recusado, Manter os nossos preços, Confirmar, Enviar resposta EDI → ORDRSP aceite pelo simulador (código 34 no ficheiro, linha 1 alterada a 1,60). S00003 (SIMORD0001) ficou orçamento: Enviar resposta EDI recusado. Defeitos: V5FC-09 e V5FC-10 saíram com o FAT-132 (vistos no ecrã com demo.faturacao, DOCS-065, master c643480c2). */}
+
+## Problemas frequentes
+
+### «… ainda não pode ser confirmada: o preço de algumas linhas difere da encomenda do retalhista»
+
+- **Sintoma:** ao carregar em **Confirmar**, abre-se **Operação inválida**: «A encomenda S00004 (SIMORD0003) ainda não pode ser confirmada: o preço de algumas linhas difere da encomenda do retalhista. O que aconteceu: os preços nunca se alteram em silêncio. Como resolver: use «Usar os preços do retalhista» ou «Manter os nossos preços» na encomenda e confirme.».
+- **O que fazer:** carregue em **Fechar**, escolha um dos dois botões (passo 4) e confirme outra vez.
+
+### «… ainda é um orçamento sem alterações»
+
+- **Sintoma:** **Enviar resposta EDI** num orçamento por confirmar abre «A encomenda S00003 (SIMORD0001) ainda é um orçamento sem alterações. Como resolver: confirme-o (aceite), altere uma quantidade, preço ou data (aceite com alterações) ou cancele-o (recusada) e depois envie a resposta.».
+- **O que fazer:** confirme, altere ou cancele a encomenda e só depois envie a resposta.
+
+### Uma encomenda ficou «Por rever»
+
+- **Sintoma:** em **EDI › Painel**, no bloco **Por tratar**, ou em **EDI › Mensagens**, a mensagem **ORDERS (encomenda)** está **Por rever**, com o motivo em **ERROS**. Exemplos da demonstração: «O GLN do remetente 5609999000050 não corresponde a nenhum cliente.» e «Linha 2: nenhum artigo tem o código de barras 5609999119998. Preencha o código de barras na ficha do artigo (ou a referência do cliente) e processe a mensagem outra vez.».
+- **Causa:** o fiscaldoo não encontrou o cliente pelo GLN, ou um artigo pelo código de barras. Não criou nenhum orçamento.
+- **O que fazer:** corrija a causa (o **EAN/GLN** do cliente ou o **Código de Barras** do artigo) e, na mensagem, carregue em **Reprocessar**. Com **Administrativo**, **Contabilista** ou **Contabilista certificado**, o botão responde «O seu perfil não pode criar orçamentos e processar uma encomenda cria um. Como resolver: peça a um utilizador de Vendas que carregue em «Reprocessar» (ou ao administrador que lhe dê o acesso de Vendas). A mensagem fica «Por rever».»: peça a quem pode criar orçamentos, como o **Administrador**. Quando a causa está corrigida, a mensagem passa a **Processada** e o orçamento aparece em **Vendas › Ordens › Encomendas recebidas**.
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo (os passos feitos antes com o utilizador de faturação da demonstração, que hoje tem o perfil Administrativo, com o mesmo grupo de faturação); menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); Vendas › Ordens › Encomendas recebidas do Administrativo, do Contabilista e do Contabilista certificado; recusa do Reprocessar provocada por clique com o Administrativo na mensagem ORDERS SIM0005 (Por rever), texto de hoje («ao administrador que lhe dê o acesso de Vendas») */}

@@ -1,0 +1,110 @@
+---
+id: comunicar-faturas-a-at
+slug: /fiscal-core/comunicar-faturas-a-at
+title: Como comunicar as faturas à AT e ver o histórico
+sidebar_label: Comunicar as faturas e ver o histórico
+sidebar_position: 4
+description: Ver, mês a mês, quantas faturas faltam comunicar à AT e até quando, comunicá-las e consultar o histórico de cada comunicação.
+keywords: [comunicar faturas, comunicações à AT, comunicacoes a at, prazos das comunicações, prazos das comunicacoes, histórico, historico, por comunicar, faturas por comunicar, e-fatura, prazo dia 5, comunicações externas, comunicacoes externas, em atraso, pendente, em dia]
+doc_id: DOC-0051
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/at-e-saft/comunicar-a-faturacao-mensal, fiscal-core/at-e-saft/gerar-o-saft]
+---
+
+## Para que serve?
+
+As faturas emitidas num mês têm de ser comunicadas à Autoridade Tributária e Aduaneira (AT) até ao prazo do mês seguinte. O fiscaldoo conta, mês a mês, quantos documentos faltam comunicar e mostra o prazo. Guarda também uma linha por cada comunicação feita (faturas, guias de transporte e outras trocas com a AT): quando, por que via, em que ambiente e com que resposta.
+
+Emitir e comunicar são coisas diferentes. Uma fatura emite-se e imprime-se sem estar comunicada; fica «por comunicar» até a comunicação do mês ser registada.
+
+## Quando utilizar?
+
+- No início de cada mês, para ver o que falta comunicar do mês anterior e até quando.
+- Para confirmar que um mês já está todo comunicado (**0 de … por comunicar**).
+- Para saber quando e como foi comunicada uma fatura concreta, por exemplo a pedido do contabilista certificado.
+
+## Onde encontrar?
+
+**Contabilidade › Declarar › Autoridade Tributária › O que há para fazer com as obrigações?**, no fim da página, em **Listas de apoio**:
+
+- **Prazos das comunicações**: um cartão por mês, com o prazo e o que falta;
+- **Comunicações à AT (faturas e histórico)**: uma linha por comunicação, de qualquer serviço.
+
+O administrador encontra as mesmas listas em **Definições › fiscaldoo · Certificação**, grupo **Configurar a certificação: comunicação com a AT** (**Comunicações com a AT** e **Comunicações de faturas**).
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** ou acima. Os passos foram feitos com o perfil **Contabilista**. O perfil **Administrativo** não tem a aplicação **Contabilidade** e não vê estas listas.
+- As faturas do mês estão emitidas. Um rascunho não conta.
+- Para comunicar o mês, o ficheiro SAF-T do mês tem de se gerar sem erros: [Como gerar o ficheiro SAF-T de faturação](/fiscal-core/gerar-o-saft).
+- Para comunicar uma fatura de cada vez, pelo webservice (secção «Comunicar uma fatura de cada vez», abaixo): o perfil **Contabilista certificado** e as credenciais da AT da empresa guardadas pelo administrador, como em [Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). O perfil **Contabilista** abre a fatura, mas não tem o botão **Comunicar à AT**.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Declarar › Autoridade Tributária › O que há para fazer com as obrigações?** e, em **Listas de apoio**, carregue em **Prazos das comunicações**. Abre-se **Prazos das comunicações**, com um cartão por mês e empresa, arrumado nas colunas **Em dia** e **Pendente**.
+2. Leia o cartão do mês: o período, a empresa, o **Prazo** e quantos documentos faltam. No exemplo, a 29/10/2026, `2026-10` está em **Pendente**, com **Prazo: 05/11/2026** e **26 de 26 por comunicar**; `2026-09` está em **Em dia**, com **0 de 3 por comunicar**. O número de outubro sobe com cada documento emitido no mês: estes 26 já contam as faturas simplificadas e as faturas-recibo emitidas nos testes de [Como vender ao balcão](/fiscal-core/balcao). O cartão conta de novo cada vez que se abre a lista.
+   ![Cartões de setembro e de outubro de 2026: setembro em dia com 0 de 3 por comunicar e outubro com prazo a 05/11/2026 e 26 de 26 por comunicar](/images/fiscal-core/comunicar-faturas-a-at/02-prazos-por-mes.png)
+3. Carregue no cartão para ver o mês: **Início do período**, **Fim do período**, **Prazo**, **Documentos do mês**, **Por comunicar** e **Atualizado em** (a hora da última contagem). No cimo, o estado do mês: **Em atraso**, **Pendente** ou **Em dia**.
+4. Para comunicar o mês, entregue o ficheiro SAF-T do mês e registe a entrega: [Como comunicar a faturação do mês à AT](/fiscal-core/comunicar-a-faturacao-mensal). Depois de **Registar a submissão**, o cartão do mês passa a **0 de … por comunicar** e a **Em dia**.
+5. Para ver o histórico, volte a **O que há para fazer com as obrigações fiscais?** (o nome no cimo da página, à esquerda) e, em **Listas de apoio**, carregue em **Comunicações à AT (faturas e histórico)**. Abre-se a lista **Comunicações à AT (faturas e histórico)**, com **ID**, **Documento**, **Serviço**, **Estado**, **Tentativas**, **Enviada em**, **Respondida em**, **Transporte** e **Ambiente**. Tem uma linha por comunicação de qualquer serviço, e não só das faturas: na demonstração, a 03/11/2026, eram 41 linhas: 37 **Fatura**, 2 **Guia de transporte (registo)** (as guias de [Como emitir uma guia de transporte](/fiscal-core/emitir-uma-guia-de-transporte)), 1 **Troca EDI (receção)** e 1 **Séries** (a comunicação de uma série de documentos). Para ver só as faturas, abra **Filtros** e escolha **Faturas** (ficaram as 37). Para contar por serviço, agrupe por **Serviço**.
+   ![Lista Comunicações à AT (faturas e histórico) agrupada por Serviço: Séries 1 registo, Fatura 37 registos, Guia de transporte (registo) 2 registos e Troca EDI (receção) 1 registo](/images/fiscal-core/comunicar-faturas-a-at/01-lista-de-comunicacoes.png)
+6. Para ver uma comunicação, carregue na linha. O registo tem o **Serviço**, o **Documento em causa** (no exemplo, `Lançamento FT D26/28`), o **Transporte**, o **Ambiente**, as **Tentativas**, **Enviada em**, **Respondida em**, o **Utilizador** que registou a comunicação e os botões **Pedido** e **Resposta**. O campo **Empresa** só aparece a quem trabalha com mais de uma empresa; com uma só empresa, como o Contabilista da demonstração, o registo é sempre o da empresa ativa.
+
+</StepByStep>
+
+### Comunicar uma fatura de cada vez
+
+Com as credenciais da AT guardadas, uma fatura emitida comunica-se logo, sem esperar pela comunicação do mês. O fiscaldoo nunca o faz sozinho: é sempre um clique.
+
+1. Abra a fatura emitida e carregue em **Comunicar à AT**, no cimo, ao lado de **Enviar ao FE-AP**.
+2. Leia a mensagem no canto do ecrã: «Comunicação com a Autoridade Tributária. Aceites: 1, rejeitados: 0, sem resposta: 0.» Ao lado de **Publicada** aparece a etiqueta **Aceite**, e o botão **Comunicar à AT** desaparece.
+   ![Mensagem Comunicação com a Autoridade Tributária: aceites 1, rejeitados 0, sem resposta 0](/images/fiscal-core/comunicar-faturas-a-at/03-fatura-comunicada.png)
+3. Em **Comunicações à AT (faturas e histórico)** (passo 5) há uma linha nova para a fatura, já **Aceite**. Ao abri-la, o **Serviço** é **Fatura**, o **Documento em causa** é o da fatura, e o **Transporte** é **Simulado** numa base de testes, como a demonstração.
+   ![Registo da comunicação da fatura FT D26/31: estado Aceite, serviço Fatura, transporte Simulado, ambiente Teste, uma tentativa, enviada e respondida a 10/11/2026 às 08:08](/images/fiscal-core/comunicar-faturas-a-at/04-registo-da-comunicacao.png)
+
+Na demonstração, com credenciais de teste fictícias, a primeira fatura nova depois das da base, a `FT D26/31` (Papelaria Central, Lda, 1 Material de escritório (kit) com o preço mudado para 10,00 € + IVA, 12,30 €, emitida como em [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada)), ficou **Aceite** a 10/11/2026, com **Ambiente** **Teste** e uma tentativa. O simulador da AT respondeu e nada saiu para a AT verdadeira.
+
+Se a empresa ainda não tem credenciais, **Comunicar à AT** abre **Operação inválida**: «A empresa Empresa Demonstração, Lda não tem credenciais da AT completas para o ambiente teste (utilizador, palavra-passe, certificado e chave privada), por isso não foi enviado nada. …» Nada foi enviado e a fatura continua por comunicar: veja [As credenciais da AT são recusadas](/troubleshooting/credenciais-da-at-recusadas).
+
+Se a mensagem do passo 2 disser **sem resposta: 1**, a etiqueta passa a **Desconhecida**. Abra a linha da fatura em **Comunicações à AT (faturas e histórico)**. A **Mensagem** diz «Sem resposta da Autoridade Tributária dentro do tempo limite.». Carregue em **Consultar estado**. Na demonstração, numa 2.ª fatura nova igual, a `FT D26/32`, comunicada com o simulador da AT posto a não responder (uma opção técnica do simulador, só nas bases de testes), a mensagem foi «Consultar estado. Lançamento contabilístico FT D26/32: a Autoridade Tributária já o tinha recebido e aceitou-o.», e a linha e a fatura passaram a **Aceite**. Não comunique a fatura de novo antes de consultar. Os outros casos estão em [A comunicação à AT falhou ou ficou pendente](/troubleshooting/comunicacao-a-at-falhou).
+
+## Resultado esperado
+
+- O mês anterior está em **Em dia**, com **0 de … por comunicar**, antes do prazo do cartão.
+- Cada fatura do mês tem uma linha **Aceite** em **Comunicações à AT (faturas e histórico)**, no serviço **Fatura**. Quando o mês foi comunicado pela comunicação mensal, o **Transporte** é **Manual (submissão no Portal registada pelo utilizador)** e a hora é a do **Registar a submissão**.
+- Na demonstração, as contagens conferem: os **Documentos do mês** de janeiro a setembro de 2026 somam 37 (3 + 5 + 4 + 4 + 5 + 5 + 4 + 4 + 3) e o filtro **Faturas** mostra 37 linhas **Aceite**. Sem o filtro, a lista tem mais linhas (41 a 03/11/2026), porque também tem as guias, as trocas EDI e as séries. Comunicar não gera lançamentos contabilísticos.
+
+## Notas importantes
+
+<HelpCallout type="risco" title="O prazo é o do cartão">
+O cartão de cada mês mostra o prazo que o fiscaldoo calculou: o dia 5 do mês seguinte, passado para o dia útil seguinte quando calha num fim de semana ou feriado (na demonstração, setembro de 2026 tem **06/10/2026** e agosto **07/09/2026**). Comunique antes dessa data. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo legal da comunicação das faturas, regra do fim de semana e do feriado, e consequências do atraso.</span>
+</HelpCallout>
+
+- **O que as listas não veem.** A contagem do mês só tem os documentos de venda emitidos na empresa do cartão. Não conta rascunhos nem recibos: em outubro de 2026, a 29/10/2026, a demonstração tinha 26 documentos (`FS POS26/1`, cinco faturas `FT D26`, `FS D26/4` a `FS D26/20` e `FR D26/3` a `FR D26/5`) e os recibos `RG D26/16` a `RG D26/20` do mesmo mês não entram. Uma lista vazia ou um mês **Em dia** não prova que todas as vendas foram faturadas.
+- **Numa empresa sem documentos**, o cartão do mês aparece em **Em dia**, com **0 de 0 por comunicar** (visto numa empresa vazia criada na demonstração para o efeito). Quer dizer só que o fiscaldoo não tem documentos emitidos nesse mês, não que a empresa cumpriu: se vendeu e não emitiu, o cartão não o sabe.
+- **A demonstração não traz credenciais da AT.** Por isso, as linhas do histórico que já lá estão vêm todas da comunicação mensal. A comunicação de uma fatura de cada vez (secção acima) só se vê depois de o administrador guardar credenciais de teste: [Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). <span className="fd-pending">Pendente de validação por contabilista certificado: se comunicar as faturas uma a uma dispensa a entrega do ficheiro do mês.</span>
+
+{/* Nota interna (DOCS-020, NC-A26, refeito a 03/11/2026 em master 436524736): a lista chama-se «Comunicações à AT (faturas e histórico)», com as colunas ID e Documento; o registo tem «Documento em causa» e já não tem «Modelo do documento» (P-A27, P-A28 e UX-082 corrigidos). Captura 01 refeita a 03/11/2026 (41 linhas). A captura 02 e as contagens do passo 2 são de 29/10/2026 (outubro 26 de 26; a 03/11/2026 a cópia de auditoria dava 29 de 29): rever antes de cada auditoria. */}
+
+## Problemas frequentes
+
+### O mês continua «Pendente» depois de entregar o ficheiro no Portal das Finanças
+
+- **Causa:** a entrega no Portal não muda nada no fiscaldoo; falta registá-la.
+- **O que fazer:** abra a comunicação mensal desse mês, escreva a referência e a data do comprovativo e carregue em **Registar a submissão** ([Como comunicar a faturação do mês à AT](/fiscal-core/comunicar-a-faturacao-mensal), passos 7 e 8).
+
+### Não encontro uma fatura no histórico
+
+- **Causa:** a fatura ainda não foi comunicada (o mês dela está **Pendente**), é um rascunho, ou é de outra empresa.
+- **O que fazer:** confirme o mês da fatura em **Prazos das comunicações** e a empresa no canto superior direito. Na lista, escolha o filtro **Faturas** e procure o número na coluna **Documento** (por exemplo, `Lançamento FT D26/28`).
+
+{/* Nota interna (lote v23-AT, DOC-0051, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador): o Administrativo não tem a aplicação Contabilidade */}
+
+{/* Nota interna (lote v23-BB, DOCS-064 #3900 req. 46376, master ce51f2d47, docs_demo_v23bb_test, porta 8508): credenciais da AT de Teste fictícias guardadas no ecrã pelo administrador na Empresa Demonstração, Lda (cofre iniciado na cópia, .pfx gerado em memória, chave de cifra só na memória da instância; transporte simulado, nunca Produção). Faturas FT D26/31 e FT D26/32 criadas e emitidas pela integração (ORM) só na cópia, fora das contagens do artigo. Por clique: o Contabilista não tem Comunicar à AT; com o Contabilista certificado, sem credenciais, Operação inválida citada; com credenciais, Aceites: 1 e etiqueta Aceite (FT D26/31, comunicação 38, Simulado, Teste). Cenário «timeout» do simulador posto por RPC (parâmetro mock_scenario) e reposto em «accept»: FT D26/32 sem resposta: 1, Desconhecida, Mensagem «Sem resposta…», Consultar estado com o Contabilista certificado → Aceite. As contagens dos passos 2 e 5 são as da base-mãe (03/11), sem estes documentos. Auditoria docs-aud-v23bb (master ce51f2d47, docs_demo_v23bbaud_test, porta 8506): repetido por clique com utilizadores só com cada perfil — Contabilista sem Comunicar à AT; Contabilista certificado: Operação inválida sem credenciais, depois Aceites: 1 e etiqueta Aceite na FT D26/31 (registo: Fatura, Simulado, Teste, 1 tentativa); com o cenário timeout, sem resposta: 1, Desconhecida, Mensagem «Sem resposta…», Consultar estado → Aceite (FT D26/32). */}

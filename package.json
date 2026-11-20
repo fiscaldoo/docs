@@ -1,0 +1,58 @@
+{
+  "name": "fiscaldoo-documentation",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Centro de documentação do fiscaldoo (docs.fiscaldoo.pt) — esqueleto, não publicado.",
+  "scripts": {
+    "start": "docusaurus start --port 3398",
+    "build": "docusaurus build",
+    "serve": "docusaurus serve --port 3398",
+    "clear": "docusaurus clear",
+    "validate-links": "node scripts/validate-links.mjs",
+    "check-duplicates": "node scripts/check-duplicates.mjs",
+    "check-coverage": "node scripts/check-coverage.mjs",
+    "check-search": "node scripts/check-search.mjs",
+    "check-architecture": "node scripts/check-architecture.mjs",
+    "check-troubleshooting": "python3 scripts/check-troubleshooting.py",
+    "check": "npm run check-duplicates && npm run check-coverage && npm run check-architecture && npm run check-troubleshooting && npm run check-campos-cc && npm run check-perfis && npm run check-nif -- --estrito && npm run build && npm run validate-links && npm run check-info-icons && npm run check-notas-internas && node scripts/servir.mjs npm run check-marca",
+    "check-brand": "curl -sSf https://www.fiscaldoo.pt/assets/core.css | cmp - src/css/core.css && echo \"core.css igual ao do site\"",
+    "check-capturas": "node scripts/check-capturas.mjs",
+    "check-marca": "node scripts/check-marca.mjs",
+    "check-a11y": "node scripts/check-a11y.mjs",
+    "check-notas-internas": "node scripts/check-notas-internas.mjs",
+    "check-campos-cc": "node scripts/check-campos-cc.mjs",
+    "check-nif": "node scripts/check-nif.mjs",
+    "check-perfis": "node scripts/check-perfis.mjs",
+    "check-info-icons": "node scripts/check-info-icons.mjs && node scripts/check-info-icons.test.mjs",
+    "check-aprovacao": "python3 scripts/acertar-aprovacao.py --check",
+    "check-video": "node scripts/video/check-video.mjs",
+    "gates": "npm run check && node scripts/servir.mjs \"npm run check-video && npm run check-capturas && npm run check-search && npm run check-a11y\" && npm run check-brand"
+  },
+  "dependencies": {
+    "@docusaurus/core": "3.10.2",
+    "@docusaurus/preset-classic": "3.10.2",
+    "@easyops-cn/docusaurus-search-local": "0.55.3",
+    "@mdx-js/react": "3.1.1",
+    "clsx": "2.1.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "gray-matter": "4.0.3"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  }
+}

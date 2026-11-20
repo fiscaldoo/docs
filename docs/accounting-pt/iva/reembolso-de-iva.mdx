@@ -1,0 +1,124 @@
+---
+id: reembolso-de-iva
+slug: /accounting-pt/reembolso-de-iva
+title: Como pedir o reembolso do IVA
+sidebar_label: Pedir o reembolso do IVA
+description: Quando o período fecha com IVA a recuperar, pedir o reembolso no campo 95 da declaração periódica, conferir a relação de suporte e correr as verificações antes de validar.
+keywords: [reembolso do IVA, reembolso de IVA, pedido de reembolso, campo 95, campo 94, crédito de IVA, excesso a reportar, campo 96, relação de suporte, relacao de suporte, CIVA art. 22, art. 22.º, IVA a recuperar, declaração periódica de IVA, DP IVA]
+doc_id: DOC-0095
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master b1c81051)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/iva/declaracao-periodica-de-iva, accounting-pt/iva/correcoes-do-iva, accounting-pt/iva/apuramento-do-iva]
+---
+
+## Para que serve?
+
+Quando o IVA dedutível de um período é maior do que o liquidado, a declaração mostra um **Crédito a recuperar** (campo 94). Por regra, o crédito reporta-se para o período seguinte (campo 96 = 94 − 95). O reembolso só se pode pedir nas condições do art. 22.º do CIVA: em geral, quando o crédito persiste passados 12 meses desde o período em que o excesso começou e é superior a 250 €; antes disso, só nas exceções do n.º 6 (por exemplo, cessação de atividade ou crédito superior a 3.000 €). O fiscaldoo não valida estas condições: aceita qualquer pedido até ao valor do campo 94. Confirme-as com o contabilista certificado antes de pedir. Para pedir, escreve-se no campo 95 o valor de todo ou de parte do crédito. O fiscaldoo guarda o pedido, mostra os documentos que o sustentam e avisa dos problemas antes de a declaração ser validada.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: condições e prazos do reembolso (CIVA art. 22.º, n.os 5 a 7: 12 meses, 250 €, exceções, garantia acima de 30.000 €) e se o regime mensal ou trimestral os altera; quando convém pedir o reembolso em vez de reportar o excesso.</span>
+
+## Quando utilizar?
+
+- O período fechou com **Crédito a recuperar**, a empresa quer receber o IVA em vez de o reportar e cumpre as condições do art. 22.º do CIVA (ver «Para que serve?»).
+- Quer conferir que os documentos do período sustentam o pedido, antes de entregar a declaração.
+
+Se o IVA fica a pagar, não há reembolso: veja o [apuramento do IVA](/accounting-pt/apuramento-do-iva) e a [declaração periódica](/accounting-pt/declaracao-periodica-de-iva).
+
+## Onde encontrar?
+
+**Contabilidade › Declarar › IVA › O que há para fazer com o IVA?**, no grupo **Listas de apoio**, **Registo das declarações de IVA**. Abra a declaração do período (por exemplo **2026 / 11**). O botão **Editar o campo 95** está no cabeçalho; **Reembolso pedido (campo 95)** e **Relação de suporte do reembolso** estão no bloco **Quadro 06 — campos manuais**.
+
+![Campos 94, 95 e 96 da declaração de novembro de 2026, com o campo 95 assinalado](/images/accounting-pt/reembolso-de-iva/95-01-campos-94-95-96.png)
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a correspondência dos campos citados com o quadro oficial da declaração periódica de IVA, nos locais onde os campos aparecem do pedido de reembolso.</span>
+
+## Antes de começar
+
+- Perfil **Contabilista certificado** (ou o administrador) para editar o campo 95. O **Contabilista** vê a declaração mas a edição é recusada: «Só o perfil «Contabilista certificado (assina, fecha períodos)» (e o administrador) podem editar os campos manuais de uma declaração de IVA.»
+- A declaração do período está **Calculada** (ou em **Rascunho**): depois de **Validada** já não se edita, e a correção é uma declaração de substituição.
+- O período tem **Crédito a recuperar**. No exemplo, novembro de 2026 tem 181,70 € no campo 94: o IVA dedutível é 220,80 € e o imposto a favor do Estado (campo 92) é 39,10 €, isto é, 27,60 € liquidados mais 11,50 € da regularização da nota de crédito do [artigo das correções](/accounting-pt/correcoes-do-iva) (campo 41). Sem essa nota, o campo 94 seria 193,20 €. Se pediu o reembolso antes dessa nota, volte a abrir **Editar o campo 95** e ajuste o valor: o ecrã não o corrige sozinho (o campo 95 pode ficar acima do 94 até o editar).
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a correspondência dos campos citados com o quadro oficial da declaração periódica de IVA, nos pré-requisitos do pedido de reembolso.</span>
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a declaração do período e carregue em **Calcular** se os valores estiverem desatualizados. Confirme no separador **Quadro 06 — campos** que o campo 94 tem o crédito (181,70 €) e que o 95 está a zero.
+2. Carregue em **Editar o campo 95**. A janela mostra a **Declaração**, o **Valor ao abrir** (0,00 €), o **Novo valor** e o **Motivo**.
+3. Em **Novo valor**, escreva o montante que pede (`181,70`) e, em **Motivo**, a razão (`Pedido de reembolso do crédito de novembro`). O motivo é obrigatório. Carregue em **Guardar**.
+   ![Janela Editar o campo 95 (reembolso pedido) com o novo valor 181,70 € e o motivo preenchidos](/images/accounting-pt/reembolso-de-iva/95-02-janela-editar-campo-95.png)
+
+   O valor `181,70` e o período de novembro servem só para mostrar o ecrã: como o crédito é inferior a 250 € e tem poucos meses, um pedido real destes depende de uma das exceções do art. 22.º, n.º 6.
+
+4. Reabra a declaração se a lista de campos não se atualizar: o campo 95 mostra 181,70 € e o 96 (**Excesso a reportar para o período seguinte**) passa a «—». Se pedir só 100,00 €, o campo 96 fica com 81,70 €.
+5. Carregue em **Relação de suporte do reembolso** para ver os documentos de compra que dão o IVA dedutível do período. No exemplo é um: `FTF/2026/00046`.
+   ![Lista da relação de suporte do reembolso, com a fatura FTF/2026/00046](/images/accounting-pt/reembolso-de-iva/95-05-relacao-de-suporte-lista.png)
+
+   A coluna **Sem impostos** mostra aqui 1.000,00 € com sinal negativo (−1.000,00 €) por um defeito de apresentação: o valor certo é positivo (o total da fatura é 1.230,00 €).
+6. Abra o separador **Verificações** e carregue em **Correr verificações**. A linha **Pedido de reembolso de IVA** deve dizer «O reembolso pedido (181,70) tem suporte: 1 documento(s) com 220,80 de IVA dedutível no período (crédito do período: 181,70).»
+   ![Linha OK da verificação Pedido de reembolso de IVA com o texto sobre o suporte do pedido](/images/accounting-pt/reembolso-de-iva/95-04-verificacao-do-reembolso.png)
+7. Resolva as verificações **Bloqueio** que o ecrã mostrar, volte a **Calcular** e valide a declaração. Para a entregar, siga a [declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva): o fiscaldoo exporta o ficheiro (**Exportar ficheiro da DP IVA**) e o registo da entrega faz-se à parte; nada é enviado à AT a partir daqui.
+
+</StepByStep>
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a correspondência dos campos citados com o quadro oficial da declaração periódica de IVA, nos passos do pedido de reembolso.</span>
+
+## Resultado esperado
+
+O campo 95 fica com o valor pedido e o 96 com a diferença. A edição fica na lista **Edições manuais** (valor anterior, novo valor, motivo, quem e quando) e no registo de auditoria. Pedir o reembolso não gera lançamento: a declaração só regista o pedido. O IVA a receber contabiliza-se depois, quando o Estado paga, pelo extrato do banco.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a correspondência dos campos citados com o quadro oficial da declaração periódica de IVA, no resultado esperado do pedido de reembolso.</span>
+
+## Notas importantes
+
+### O pedido tem de ter suporte
+
+As verificações comparam o pedido com os documentos do período:
+
+- pedido maior do que o crédito: bloqueio, e o próprio ecrã recusa gravar (ver «Problemas frequentes»);
+- sem documentos de IVA dedutível nem excesso do período anterior: bloqueio;
+- documentos com fornecedor sem NIF, ou com NIF inválido: aviso ao validar, bloqueio ao entregar;
+- o mesmo documento do fornecedor repetido: aviso.
+
+A relação de suporte só vê os documentos de compra do período; não vê o excesso trazido do período anterior (campo 61).
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a correspondência dos campos citados com o quadro oficial da declaração periódica de IVA, na relação de suporte do pedido do pedido de reembolso.</span>
+
+### O que a validação também verifica
+
+No exemplo, **Validar** é recusado por razões que nada têm a ver com o reembolso: «O período tem 1 lançamento(s) por publicar…» e «O período anterior (outubro de 2026) ainda tem IVA por apurar…». Resolva-as antes: publique ou cancele os rascunhos e apure o período anterior.
+
+{/* Nota interna (DOCS-046, V3A2-12): (a) depois de «Guardar» na janela do campo 95, a lista de campos continua a mostrar o 95 vazio até se reabrir a declaração; (b) na relação de suporte, a coluna «Sem impostos» mostra -1.000,00 € numa fatura de fornecedor (sinal negativo): o artigo já o diz no passo 5, a rever com o cartão #3643 (VAT-075); (c) V3A2-17: o campo 95 grava-se por escrita direta, sem recusa de valor acima do 94 nem de perfil; as recusas do artigo existem só na janela «Editar o campo 95». */}
+
+## Problemas frequentes
+
+### «O reembolso pedido … não pode ser superior ao crédito a recuperar»
+
+- **Sintoma:** ao guardar 500,00 €: «Erro de Validação: O reembolso pedido (campo 95: 500,00) não pode ser superior ao crédito a recuperar no período (campo 94: 181,70).»
+- **O que fazer:** baixe o valor para o do campo 94, ou menos.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a correspondência dos campos citados com o quadro oficial da declaração periódica de IVA, nesta recusa do reembolso do pedido de reembolso.</span>
+
+### «Há campos obrigatórios por preencher»
+
+- **Sintoma:** sem **Motivo**, a janela não grava.
+- **O que fazer:** escreva o motivo.
+
+### «O valor não pode ser negativo»
+
+- **Sintoma:** «Operação inválida: O valor não pode ser negativo (reembolso pedido, campo 95, ou saldo inicial a reportar, campo 61). Como resolver: escreva zero ou um valor positivo.»
+- **O que fazer:** use zero para retirar o pedido, ou um valor positivo.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a correspondência dos campos citados com o quadro oficial da declaração periódica de IVA, nesta recusa do valor negativo do pedido de reembolso.</span>
+
+### O botão «Editar o campo 95» não aparece
+
+- **Causa:** a declaração já está **Validada** ou entregue, ou o perfil é **Contabilista**.
+- **O que fazer:** com a declaração validada, peça ao administrador que use **Retroceder a rascunho** antes de editar; se já foi entregue, a correção é uma declaração de substituição (ver [correções do IVA](/accounting-pt/correcoes-do-iva)).
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a correspondência dos campos citados com o quadro oficial da declaração periódica de IVA, no botão de edição do campo 95 do pedido de reembolso.</span>

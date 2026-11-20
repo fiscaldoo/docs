@@ -1,0 +1,82 @@
+---
+id: limite-de-credito-de-clientes
+slug: /fiscal-core/limite-de-credito-de-clientes
+title: Como ser avisado quando um cliente passa o limite de crédito
+sidebar_label: Limite de crédito de clientes
+sidebar_position: 9
+description: Ligar o limite de crédito de venda, escrever o limite na ficha do cliente e ver o aviso na fatura quando a dívida, com o documento novo, passa esse valor.
+keywords: [limite de crédito, limite de credito, crédito de clientes, cliente passou o limite, dívida do cliente, total a receber, limite do parceiro, limite de crédito por omissão, aviso de crédito, risco de cliente]
+doc_id: DOC-0444
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 97b34fac3)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/recibos-e-cobrancas/avisos-de-cobranca, fiscal-core/recibos-e-cobrancas/indicadores-de-cobranca]
+---
+
+## Para que serve?
+
+Para cada cliente, a empresa define até quanto aceita ter por receber. Quando uma fatura nova, somada ao que o cliente já deve, passa esse valor, a fatura mostra um aviso no topo. O aviso não altera a fatura nem a contabilidade: serve para quem fatura decidir.
+
+## Quando utilizar?
+
+- A empresa quer ser avisada antes de faturar a clientes que já devem muito.
+- Quer saber, ao preparar uma fatura, que o cliente vai ficar acima do valor combinado.
+
+## Onde encontrar?
+
+- **Contabilidade › Configurar › Geral › Definições**, no separador **Faturação**: a opção **Limite de crédito de venda**.
+- **Contabilidade › Lançar › Terceiros e ativos › Clientes**: o limite de cada cliente, no separador **Faturação** da ficha.
+- **Contabilidade › Lançar › Vendas e cobranças › Faturas de clientes**: o aviso.
+
+## Antes de começar
+
+- O administrador liga a opção. Com o perfil **Contabilista**, a entrada **Definições** não aparece em **Configurar**.
+- O limite de cada cliente e as faturas fazem-se com o perfil **Contabilista**. Provado com um utilizador criado só com esse perfil.
+- A opção vale para a empresa que está escolhida no canto superior direito. Com várias empresas, ligue-a em cada uma.
+- Feito a 8 de novembro de 2026 na `Empresa Demonstração, Lda`, com o cliente novo `Gráfica Ribeirinha, Lda` e o limite de 1.000,00 €.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Como administrador, abra **Contabilidade › Configurar › Geral › Definições**. Escreva `crédito` na pesquisa do topo.
+2. Ligue **Limite de crédito de venda**. Aparece **Limite de crédito por omissão**, o limite dos clientes que não têm um próprio (0,00 € = sem limite). Carregue em **Guardar**.
+   ![Opção Limite de crédito de venda ligada, com o texto «Acione alertas ao criar faturas e pedidos de vendas para parceiros com um valor total a receber que exceda um limite» e o Limite de crédito por omissão a 0,00 €](/images/fiscal-core/limite-de-credito-de-clientes/01-limite-de-credito-de-venda.png)
+3. Com o perfil **Contabilista**, abra **Contabilidade › Lançar › Terceiros e ativos › Clientes** e abra o cliente (ou carregue em **Novo**).
+4. No separador **Faturação**, no bloco **Limites de crédito**, ligue **Limite do parceiro** e escreva o valor, por exemplo `1000`. Guarde.
+   ![Bloco Limites de crédito da ficha do cliente: Total a Receber 0,00 €, Limite de crédito usado 0,0 %, Limite do parceiro ligado com 1.000,00 €](/images/fiscal-core/limite-de-credito-de-clientes/02-limite-do-cliente.png)
+5. Crie a fatura em **Contabilidade › Lançar › Vendas e cobranças › Faturas de clientes**, com **Novo**. Quando o total da fatura, somado ao que o cliente deve, passa o limite, o aviso aparece logo no topo do rascunho.
+   ![Aviso no topo da fatura: Gráfica Ribeirinha, Lda atingiu o seu limite de crédito de: 1.000,00 €. Valor total devido (incluindo este documento): 1.771,20 €](/images/fiscal-core/limite-de-credito-de-clientes/03-aviso-na-fatura.png)
+
+</StepByStep>
+
+No exemplo, o rascunho tem 3 × **Licença de software (anual)** a 480,00 €: 1.440,00 € mais 331,20 € de IVA a 23 %, 1.771,20 €. O cliente não devia nada, por isso o total devido é o da própria fatura.
+
+## Resultado esperado
+
+- A ficha do cliente mostra o **Limite do parceiro**, o **Total a Receber** e o **Limite de crédito usado (%)**.
+- Uma fatura que leva o cliente acima do limite mostra «… atingiu o seu limite de crédito de: … Valor total devido (incluindo este documento): …».
+
+## Notas importantes
+
+- **É um aviso, não um bloqueio.** O rascunho grava com o aviso e **Confirmar** emite a fatura na mesma, sem outra pergunta (confirmado numa fatura emitida com o aviso).
+- **O que conta como dívida.** O aviso compara com o limite o «Valor total devido (incluindo este documento)»: o **Total a Receber** do cliente mais o total da fatura que está a preparar, com IVA. Um cliente que já deve 590,40 €, com uma fatura nova de 590,40 €, fica com 1.180,80 €.
+- **Um limite de 0,00 €** na ficha não liga a verificação: ligue **Limite do parceiro** e escreva um valor acima de zero, como diz a ajuda do campo.
+- **Por agora, os textos de ajuda falam em «utilizadores»**: referem-se aos clientes.
+
+## Problemas frequentes
+
+### Liguei a opção e a fatura não mostra o aviso
+
+- **Causa:** a opção foi ligada noutra empresa (a que estava escolhida no canto superior direito quando carregou em **Guardar**).
+- **O que fazer:** escolha a empresa certa e ligue **Limite de crédito de venda** nas **Definições** dela.
+
+### A opção está ligada e a fatura continua sem aviso
+
+- **Causa:** o cliente não tem **Limite do parceiro** ligado nem há **Limite de crédito por omissão**, ou o total devido com esta fatura ainda está abaixo do limite.
+- **O que fazer:** confira os dois valores e o **Total a Receber** na ficha do cliente.
+
+{/* Nota interna (lote v23-AD, #4052 DOCS-069, parte do guia Contabilidade/lancamentos-em-rascunho-em-lote-e-recorrentes.md que o DOC-0438 do v23-AA deixou: limite de crédito de clientes, Odoo nativo). master 97b34fac3, docs_demo_v23ad_test, porta 8484. Por clique: admin, Definições (separador Faturação) com «Limite de crédito de venda» ligado na Empresa Demonstração (na 1.ª tentativa ficou na Empresa Teste Portugal, a empresa ativa do admin; desligada outra vez por clique); ad.contab (só o Perfil Contabilista, sem Definições em Configurar): cliente novo Gráfica Ribeirinha, Lda (id 87, sem NIF) com Limite do parceiro 1.000,00 €, fatura em rascunho com 3 × DEMO020 e o aviso. A fatura ficou em Rascunho (não emitida). O aviso do NIF em falta também aparece no rascunho (cliente sem NIF). Ajuda dos campos com «utilizadores» em vez de clientes: tradução nativa, defeito baixo no LOTE_V23-AD. Não testado: pedidos de venda (a opção diz que também avisa neles). */}

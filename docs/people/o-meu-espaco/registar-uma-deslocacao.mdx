@@ -1,0 +1,95 @@
+---
+id: registar-uma-deslocacao
+slug: /people/registar-uma-deslocacao
+title: Como registar uma deslocação e pedir as ajudas de custo
+sidebar_label: Registar uma deslocação
+sidebar_position: 6
+description: Registar uma viagem de trabalho no O meu espaço (uma só, ou o mês inteiro), submetê-la para aprovação e aceitar o mapa mensal.
+keywords: [registar deslocação, registar deslocacao, ajuda de custo, ajudas de custo, nova deslocação, nova deslocacao, mês de deslocações, mes de deslocacoes, mapa mensal, quilómetros, quilometros, o meu espaço, o meu espaco]
+doc_id: DOC-0266
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 00c68a6d8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/o-meu-espaco/pedir-ferias]
+---
+
+## Para que serve?
+
+Depois de uma viagem de trabalho, a pessoa regista onde foi, quando e como, e pede a ajuda de custo. A chefia ou os Recursos Humanos aprovam e o valor segue para o recibo de vencimento.
+
+## Quando utilizar?
+
+- Voltou de uma visita a um cliente, de uma formação ou de uma reunião fora da sede.
+- Fez várias viagens no mês e quer lançá-las todas de uma vez.
+- Já tem o mapa do mês fechado e precisa de o aceitar.
+
+Se a viagem ainda não terminou, espere: o fiscaldoo só aceita a deslocação depois do regresso.
+
+## Onde encontrar?
+
+**O meu espaço › Deslocações e despesas**, com estas entradas: **Nova deslocação** (uma viagem), **Mês de deslocações** (o mês em grelha), **As minhas deslocações** (a lista) e **Os meus mapas mensais de deslocações**.
+
+## Antes de começar
+
+- O perfil é o do **Trabalhador**: basta ter o **O meu espaço**. Os passos abaixo foram feitos até ao fim com esse perfil, exceto a aprovação, que é de outro perfil (ver [Como validar deslocações e ajudas de custo](/people/deslocacoes)).
+- Tenha à mão o destino, o motivo, as horas de saída e de regresso e, se foi de carro ou de mota, os quilómetros e a matrícula.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **O meu espaço › Deslocações e despesas › Nova deslocação**.
+2. Em **Quando**, carregue em **Hoje**, em **Ontem** ou escolha a data no calendário. Para uma viagem de vários dias, carregue em **Mais do que um dia**: aparecem **até** e **Dias com ajuda de custo**.
+3. Escreva as horas em **Saída (horas)** e **Regresso (horas)**. O ecrã traz 8 e 19.
+4. Em **Para onde**, escreva o **Destino** e o **Motivo**. Se a viagem foi a um cliente, escolha-o em **Cliente (opcional)**. Assinale **Deslocação ao estrangeiro** só se foi fora de Portugal.
+5. Em **Como correu**, escolha o **Transporte**: **Automóvel próprio**, **Motociclo próprio**, **Bicicleta própria**, **Viatura da empresa** ou **Transportes públicos**.
+   - No automóvel e no motociclo escreva os **Quilómetros (ida e volta)** e a **Matrícula**. Escreva o total; o botão **× 2** duplica o número, para quem escreveu só a ida.
+   - Na bicicleta pede só os quilómetros. Na viatura da empresa e nos transportes públicos não pede nada.
+6. Em **Ajuda de custo**, escolha **25 %**, **50 %**, **75 %** ou **100 %**. A linha **Total** mostra logo o valor e a parte isenta e tributável.
+   ![Formulário Nova deslocação preenchido: destino Porto, cliente, motivo, automóvel próprio com 150 quilómetros, ajuda de custo a 100 % e total de 125,89 €, com o botão Registar e submeter contornado](/images/people/registar-uma-deslocacao/01-nova-deslocacao.png)
+7. Carregue em **Registar e submeter**. Aparece «Deslocação registada e submetida para aprovação.»
+   - **Registar** guarda sem enviar: aparece «Deslocação registada como rascunho.» e a viagem fica **Rascunho** em **As minhas deslocações**.
+
+</StepByStep>
+
+Para lançar o mês de uma vez, abra **Mês de deslocações**, vá ao mês certo com **‹** e carregue em **Adicionar** no dia da viagem (**Repetir** copia o dia anterior). Preencha o **Destino**, o **Motivo** e o transporte; depois carregue por ordem em **1. Guardar os dias** («1 dia(s) guardado(s) como rascunho. Passo seguinte: submeter o mês.»), **2. Submeter o mês** («1 deslocação(ões) submetida(s) para aprovação…») e, quando estiverem aprovadas, **3. Mapa mensal**. Cada dia mostra o destino e o valor, e **Total do mês** soma-os. Os fins de semana estão escondidos: **Mostrar fins de semana** mostra-os. Os dias depois de hoje dizem «Dia futuro» e não têm **Adicionar**. Em cima, **Os dias novos começam com** escolhe o transporte que os dias novos trazem (**Automóvel próprio**, **Motociclo próprio**, **Bicicleta própria**, **Viatura da empresa** ou **Transportes públicos**) e as horas de saída e de volta.
+
+{/* Nota interna (lote v23-AH, DOCS-069 #4052, master 97b34fac3, docs_demo_v23ah_test): Mês de deslocações de novembro de 2026 visto por clique com o Trabalhador da demonstração (nada gravado). Vinha do guia congelado Pessoas/deslocacoes-e-ajudas-de-custo.md; o guia cita também «Repetir no mesmo dia da semana», «Repetir a última» e «Feriado», que não apareceram neste mês (a dica do Repetir é «Copiar o dia preenchido antes deste»). */}
+
+![Os dias 29 e 30 do mês anterior com o destino e o valor de cada viagem, e os botões 1. Guardar os dias, 2. Submeter o mês e 3. Mapa mensal](/images/people/registar-uma-deslocacao/02-mes-de-deslocacoes.png)
+
+## Resultado esperado
+
+- Em **As minhas deslocações** a viagem aparece com o estado **Contas prestadas** e o **Total pago** (no exemplo, Porto, 150 km, 125,89 €: 65,89 € de ajuda de custo e 60,00 € de quilómetros).
+- Depois de aprovada, passa a **Aprovado**. No fim do mês, os Recursos Humanos enviam-lhe o mapa mensal; ele fica em **Os meus mapas mensais de deslocações** com o estado **Enviado ao trabalhador**. Abra-o, confira o **Total pago** e carregue em **Aceitar**: passa a **Aceite pelo trabalhador**, com a data e quem aceitou.
+
+## Notas importantes
+
+- A viagem tem de estar completa. Sem **Destino** e **Motivo** perde-se a isenção da ajuda de custo, e o ecrã não deixa submeter.
+- <span className="fd-pending">Pendente de validação por contabilista certificado: os valores de 65,89 € por dia e de 0,40 € por quilómetro vêm do produto, com a base legal escrita por baixo do **Total** (CIRS, DL 1/2025, DL 106/98); o próprio ecrã diz «a confirmar pelo contabilista certificado».</span>
+- Não use **As minhas despesas** (no mesmo menu) para registar viagens: é outro circuito, de despesas com recibo. Hoje essa lista mostra também despesas que não são suas.
+
+{/* Nota interna (DOCS-046, V4PPL-01, master 52d1dd3ad): «As minhas despesas» abre com 10 linhas de outras pessoas, com valores em dólares (dados do Odoo de demonstração), vistas pelo Trabalhador. Retirar o último ponto das notas quando o cartão do defeito entrar em master. A aprovação foi feita com o Gestor de RH; o trabalhador do exemplo não tem chefia direta com utilizador e o histórico da viagem diz «a aguardar a aprovação dos recursos humanos». */}
+
+## Problemas frequentes
+
+### «A deslocação … ainda não terminou»
+
+- **Sintoma:** **Registar e submeter** abre a janela «A deslocação de *nome* ainda não terminou. O que aconteceu: a prestação de contas só se faz depois do regresso. Como resolver: submeta-a depois do regresso.»
+- **Causa:** a data é hoje (ou depois) e a hora de regresso ainda não passou. Foi o que o ecrã fez às 09:00 com o regresso às 19.
+- **O que fazer:** corrija a **Saída (horas)** e o **Regresso (horas)** para as horas reais ou submeta mais tarde. **Registar** guarda sem submeter.
+
+### «O mapa de deslocação … está incompleto»
+
+- **Sintoma:** «O mapa de deslocação de *nome* está incompleto. O que aconteceu: sem todos os seus elementos perde-se a isenção da ajuda de custo. Como corrigir: preencha Destino, Motivo.»
+- **O que fazer:** escreva o **Destino** e o **Motivo** e carregue outra vez.
+
+### «Um veículo próprio precisa dos quilómetros feitos»
+
+- **Sintoma:** com **Automóvel próprio**, **Motociclo próprio** ou **Bicicleta própria** e sem quilómetros, ao carregar em **Registar e submeter** aparece «Um veículo próprio precisa dos quilómetros feitos. Como resolver: preencha «Quilómetros (ida e volta)».»
+- **O que fazer:** escreva os quilómetros no campo **Quilómetros (ida e volta)**.
+
+{/* Nota interna (DOCS-063 #3853, lote v23-S, master cebcb888d, porta 8458, demo.trabalhador): UX-109 visto no ecrã. Mais do que um dia: o contador Dias com ajuda de custo desce até 0 (Total 0,00 €). Automóvel próprio sem quilómetros: «Registar» guarda o rascunho sem recusa; a mensagem dos quilómetros aparece em «Registar e submeter». Com «até» antes do primeiro dia, o contador mostra -2 e o Total -131,78 € antes de registar (defeito no relatório do lote v23-S); ao registar aparece a mensagem de deslocacao-recusada. */}

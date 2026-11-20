@@ -1,0 +1,131 @@
+---
+id: ativos-do-enterprise
+slug: /migration-toolkit/ativos-do-enterprise
+title: Como migrar os ativos do Enterprise
+sidebar_label: Ativos do Enterprise
+description: Passar os ativos que uma empresa portuguesa já tinha no Odoo Enterprise para os ativos fixos do fiscaldoo, com a depreciação já feita e o limite fiscal do DR 25/2009, sem criar lançamentos, sem duplicar e sem deixar o Enterprise a depreciar o mesmo bem.
+keywords: [migrar ativos, ativos do Enterprise, passar ativos do Enterprise, ativos fixos, depreciação à entrada, depreciacao a entrada, DR 25/2009, quadro fiscal, Enterprise, migração de ativos, migracao de ativos, ativos do Enterprise ainda a depreciar, parar a depreciação]
+doc_id: DOC-0308
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Só Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [migration-toolkit/historico/mudar-para-o-enterprise, migration-toolkit/historico/passar-a-contabilidade-organizada, getting-started/primeira-configuracao/requisitos-e-instalacao]
+---
+
+{/* Nota interna (DOCS-063 #3853 req. 46122, lote v23-BC, 10/11/2026, master ce51f2d47): artigo refeito por inteiro depois do EEA-064 (lista dos ativos que continuam a depreciar sozinhos e Parar a depreciação, campo Categoria para contas com várias, mensagens novas, título da janela, vida fiscal remanescente escondida). Base Enterprise da documentação docs_ee_v23bc_test no computador 2: clone da odoo20_ee_test_dev_template_full refeita sobre ce51f2d47, com l10n_pt_fiscaldoo_demo instalado (sem erros) e servida em 127.0.0.1:8512 por túnel, guarda de rede ligada. O pacote de migração instalou-se por clique com o administrador (Aplicações, sem o filtro e com Tudo em APPS, pesquisa «Ativos do Enterprise», Ativar) numa 1.ª construção da mesma base; na base final instalou-se pela linha de comandos, para repetir o exemplo do zero. Criado pelo odoo shell (não há ecrã para isto; guião scratchpad/v23-BC/doc0308_setup.py): o nome da empresa 1 («Metalomecânica Exemplo, Lda»), as contas de depreciação nas contas 433 e 435, 3 modelos de depreciação e 4 ativos do Enterprise (Torno 12 000 € 01/01/2024 linear 5 anos, confirmado; Empilhador 18 000 € 01/01/2025 degressivo, confirmado; Compressor 3 000 € 01/03/2026 em rascunho; Computador portátil 1 500 € 01/01/2025 linear 3 anos, confirmado, conta 435). A ponte recusa ativos do Enterprise numa empresa PT: criaram-se com o motor interno, como nos testes do módulo (caso real: ativos de antes da ponte). Utilizadores criados: um só com Contabilista certificado (todos os passos) e um só com Contabilista (vê Ativos fixos e Categorias de ativos, não vê Passar ativos do Enterprise nem Ativos do Enterprise ainda a depreciar). No ecrã, com o Contabilista certificado: 1.ª corrida sem categorias (0 passados, 4 ignorados, 3 ainda a depreciar), Criar categorias SNC por omissão (9), taxa [I-1060] na categoria Equipamento básico (a pesquisa por «1060» não encontra nada; por «Outras máquinas de uso» encontra), 2.ª corrida (2 passados, 2 ignorados), 3.ª corrida com Equipamento informático (1 passado, 1 ignorado), lista Ativos do Enterprise ainda a depreciar e Parar a depreciação do Empilhador (Confirmação, lista vazia). Conferido por leitura (RPC): 56 lançamentos da empresa antes e depois; rascunhos do Torno, do Computador e do Empilhador no Enterprise com lançamento automático «no». Os motivos «fechado ou cancelado», «aumentos de valor» e «nada a depreciar» foram provocados no ecrã pela auditoria (docs-aud-v23-BC), com três ativos do Enterprise criados só para isso numa cópia, depois do exemplo e fora dos números do artigo; o aumento de valor por clique é recusado pela ponte numa empresa PT. */}
+
+## Para que serve?
+
+Uma empresa portuguesa que já usava os ativos do Odoo Enterprise antes do fiscaldoo passa a usar os **Ativos fixos** do fiscaldoo, que têm o quadro fiscal do DR 25/2009. O assistente **Passar ativos do Enterprise** cria uma ficha de ativo fixo por cada ativo do Enterprise da empresa, com o valor, a depreciação já lançada e o limite fiscal, sem criar nem alterar lançamentos.
+
+Depois de passar, quem deprecia o bem é o fiscaldoo, e o Enterprise deixa de lançar sozinho as depreciações futuras desse bem. Os ativos que não passam continuam a ser depreciados pelo Enterprise e ficam numa lista própria, onde se param.
+
+## Quando utilizar?
+
+- Uma vez, quando o fiscaldoo começa a ser usado numa base Enterprise com ativos do Enterprise numa empresa portuguesa.
+- Outra vez, depois de corrigir o que ficou por passar (por exemplo, uma categoria que faltava). O assistente salta os ativos já passados e não duplica nada.
+- **Não use** para trazer ativos de outro programa: veja [Importar ativos de outro programa](/migration-toolkit/importar-ativos).
+- **Não use** numa empresa de outro país: os ativos dela continuam no Enterprise.
+
+## Onde encontrar?
+
+- **Contabilidade › Lançar › Terceiros e ativos › Passar ativos do Enterprise**. Abre uma janela por cima do ecrã onde está.
+- **Contabilidade › Configurar › Outras definições › Ativos do Enterprise ainda a depreciar**: a lista dos ativos do Enterprise que ainda se depreciam sozinhos. A mesma lista abre-se pelo botão com esse nome no fim da janela.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**, ou é o administrador do sistema. Com o perfil **Contabilista**, os dois menus acima não aparecem (aparecem **Ativos fixos** e **Categorias de ativos**).
+- O pacote opcional de migração dos ativos do Enterprise está instalado. Não se instala sozinho: sem ele, os menus não existem. Quem o instala é o administrador, em **Aplicações**: retira o filtro **Aplicações** da pesquisa, escolhe **Tudo** em **APPS**, no painel da esquerda, pesquisa `Ativos do Enterprise` e, no cartão **fiscaldoo · Migração — Ativos do Enterprise para ativos fiscaldoo — Enterprise**, carrega em **Ativar**. Quando a instalação acaba, os menus já lá estão. Veja também [Como instalar o fiscaldoo: No Enterprise](/getting-started/requisitos-e-instalacao#no-enterprise).
+- Há uma cópia de segurança da base, e a passagem foi primeiro ensaiada numa cópia. Veja [Cópias de segurança](/administration/copias-de-seguranca).
+- A empresa tem as categorias de ativos, com uma categoria para cada conta de ativo usada no Enterprise. Numa empresa sem categorias, **Contabilidade › Configurar › Bancos e ativos › Categorias de ativos** mostra «Ainda não há categorias de ativos» e o botão **Criar categorias SNC por omissão**. No exemplo, o botão respondeu «Categorias de ativos por omissão. 9 categorias criadas para Metalomecânica Exemplo, Lda.», entre elas **Equipamento básico**, com a conta `433`. Duas delas, **Equipamento administrativo** e **Equipamento informático**, usam a mesma conta `435`: os ativos dessa conta só passam quando escolhe a categoria na janela (passo 5). Os passos estão em [Categorias e modelos de depreciação](/accounting-pt/categorias-e-modelos-de-depreciacao).
+- Cada categoria tem a **Taxa DR 25/2009 por omissão** do bem. A taxa limita a depreciação fiscal que entra na ficha; numa categoria sem taxa, a depreciação fiscal à entrada fica igual à contabilística. No exemplo, a categoria **Equipamento básico** ficou com a taxa `[I-1060]` da Tabela I, de 14,28 %: no campo, escreva parte da descrição (por exemplo `Outras máquinas de uso`) e escolha a linha. Se a lista só mostrar **Criar “…”**, não carregue aí: escreva outra parte da descrição. <span className="fd-pending">Pendente de validação por contabilista certificado: o código da tabela do DR 25/2009 de cada bem.</span>
+- O exemplo é o de uma empresa que já tinha, no Enterprise, quatro ativos: o **Torno mecânico CNC** (12.000,00 €, comprado a 01/01/2024, 5 anos em linha reta, com as depreciações de 2024 e 2025 lançadas), o **Empilhador elétrico** (18.000,00 €, 2025, depreciação degressiva), o **Compressor de ar** (3.000,00 €, ainda em rascunho) e o **Computador portátil** (1.500,00 €, 2025, 3 anos em linha reta, na conta `435`).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Lançar › Terceiros e ativos › Passar ativos do Enterprise**. A janela traz a **Empresa** em que está a trabalhar, **Parar a depreciação do Enterprise** marcado e **Categoria para contas com várias** vazio. O texto da janela diz «Copia os ativos Enterprise em curso da empresa para os ativos fixos do fiscaldoo: valores, depreciações já feitas e quadro fiscal (DR 25/2009). Nenhum lançamento é criado ou alterado. Voltar a executar não duplica nada: os ativos já passados são ignorados.»
+   ![Janela Passar ativos do Enterprise com a Empresa Metalomecânica Exemplo, Lda, a opção Parar a depreciação do Enterprise marcada, o campo Categoria para contas com várias vazio e os botões Passar ativos e Fechar](/images/migration-toolkit/ativos-do-enterprise/01-assistente.png)
+2. Confirme a **Empresa** e deixe **Parar a depreciação do Enterprise** marcado. A ajuda (**?**) diz: «Impede o lançamento automático das depreciações futuras dos ativos do Enterprise PASSADOS, para que nada seja depreciado duas vezes. Os ativos que não são passados continuam a ser depreciados pelo Enterprise: aparecem no fim do resultado, com a forma de os parar. Os lançamentos já registados nunca são tocados.»
+3. Carregue em **Passar ativos**. A janela mostra o **Número de ativos passados**, o **Número de ativos ignorados**, a lista dos que ficaram de fora, com o motivo de cada um, e, no fim, os que «Continuam a ser depreciados sozinhos pelo Enterprise», com a data do próximo lançamento automático. No exemplo, já com as categorias e a taxa: «Passados: 2 ativo(s).», o Torno mecânico CNC e o Compressor de ar; «Não passados: 2 ativo(s).», o Empilhador elétrico («o método de depreciação do Enterprise não é linear: o quadro fiscaldoo é linear.») e o Computador portátil («a conta 435 Equipamento administrativo tem várias categorias (Equipamento administrativo, Equipamento informático): escolha uma no campo «Categoria para contas com várias» e passe de novo, ou crie a ficha à mão.»); e «Continuam a ser depreciados sozinhos pelo Enterprise: 2 ativo(s).», os mesmos dois, ambos com 31/12/2026.
+   ![Resultado com 2 ativos passados e 2 não passados, o Empilhador elétrico pelo método e o Computador portátil pelas duas categorias da conta 435, e os dois na lista dos que continuam a ser depreciados pelo Enterprise](/images/migration-toolkit/ativos-do-enterprise/03-resultado.png)
+4. Se um ativo ficou de fora por falta de categoria, crie-a (veja «Problemas frequentes») e volte a carregar em **Passar ativos**.
+5. Se um ativo ficou de fora porque a conta tem várias categorias, carregue em **Fechar** e volte a abrir **Passar ativos do Enterprise** (passo 1): na janela do resultado, o campo **Categoria para contas com várias** já não se pode mudar. Escolha a categoria certa nesse campo e carregue outra vez em **Passar ativos**. A ajuda (**?**) avisa: «Escolha uma aqui: vale para TODOS os ativos dessa conta nesta passagem. Deixe vazio para não passar nenhum.» No exemplo, com **Equipamento informático**: «Passados: 1 ativo(s).», o Computador portátil, e «Não passados: 1 ativo(s).», só o Empilhador elétrico. O Torno e o Compressor, já passados, não se repetiram.
+   ![Resultado da passagem com a categoria Equipamento informático escolhida: 1 ativo passado, o Computador portátil, e o Empilhador elétrico ainda a ser depreciado pelo Enterprise](/images/migration-toolkit/ativos-do-enterprise/06-categoria-varias.png)
+6. Para os ativos que não podem passar, carregue em **Ativos do Enterprise ainda a depreciar**. A lista **Ativos do Enterprise que ainda se depreciam sozinhos** mostra cada ativo com o **Método**, o valor, o **Valor contabilístico** e o **Próximo lançamento automático**. No exemplo, o Empilhador elétrico: 18.000,00 €, 12.600,00 € por depreciar e 31/12/2026.
+   ![Lista Ativos do Enterprise que ainda se depreciam sozinhos com o Empilhador elétrico, método Decrescente, 18.000,00 euros, 12.600,00 euros, próximo lançamento a 31/12/2026 e o botão Parar a depreciação](/images/migration-toolkit/ativos-do-enterprise/07-ainda-a-depreciar.png)
+7. Decida o que fazer com cada um antes da data do próximo lançamento (veja «o método de depreciação do Enterprise não é linear» em «Problemas frequentes»). Para que o Enterprise deixe de o depreciar, carregue em **Parar a depreciação** e, na janela **Confirmação** («O Enterprise deixa de registar sozinho as depreciações que faltam deste ativo (os lançamentos já registados não são tocados). A partir daí nada o deprecia, a não ser que crie a ficha fiscaldoo dele. Continuar?»), em **Confirmar**. O ativo sai da lista.
+8. Abra **Contabilidade › Lançar › Terceiros e ativos › Ativos fixos**. A lista abre com o filtro **Em uso**: estão lá o `AF/00001 Torno mecânico CNC` e o `AF/00003 Computador portátil`. Para ver também o `AF/00002 Compressor de ar`, tire o filtro: está **Em preparação**.
+9. Abra o `AF/00001` e confira os valores com os do Enterprise: **Valor de aquisição** 12.000,00 €. No separador **Quadro contabilístico**, o grupo **Histórico à entrada (bem usado)** tem a **Depreciação contabilística à entrada** e a **Vida útil contabilística remanescente (anos)**.
+   ![Grupo Histórico à entrada do quadro contabilístico com a depreciação contabilística à entrada de 4.800,00 euros e 3,00 anos de vida útil remanescente](/images/migration-toolkit/ativos-do-enterprise/04-historico-contabilistico.png)
+10. No separador **Quadro fiscal**, confira a **Taxa fiscal (%)**, a **Quota máxima anual** e, no grupo **Histórico à entrada (bem usado)**, a **Depreciação fiscal à entrada**.
+    ![Grupo Histórico à entrada do quadro fiscal com a depreciação fiscal à entrada de 3.427,20 euros](/images/migration-toolkit/ativos-do-enterprise/05-historico-fiscal.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+O ativo **Torno mecânico CNC**, que no Enterprise tinha 12.000,00 €, 5 anos em linha reta e as depreciações de 2024 e 2025 lançadas (2.400,00 € cada), ficou assim no fiscaldoo:
+
+| Na ficha `AF/00001` | Valor | De onde vem |
+| --- | --- | --- |
+| **Data de aquisição** | 01/01/2024 | A do Enterprise. |
+| **Data de início de utilização** | 01/01/2026 | O dia seguinte à última depreciação lançada no Enterprise (31/12/2025). |
+| **Condição** | Usado | Já tinha depreciação. |
+| **Processamento** | Anual | O Enterprise depreciava por anos. |
+| **Depreciação contabilística à entrada** | 4.800,00 € | As depreciações lançadas no Enterprise: 2 × 2.400,00 €. |
+| **Vida útil contabilística remanescente (anos)** | 3,00 | 5 anos × 7.200,00 € por depreciar ÷ 12.000,00 €. |
+| **Taxa fiscal (%)** | 14,2800 | A taxa `[I-1060]` da categoria. |
+| **Quota máxima anual** | 1.714,29 € | O máximo anual que o plano fiscal calculou para a taxa `[I-1060]` da categoria. Veja a nota a seguir a esta tabela. |
+| **Depreciação fiscal à entrada** | 3.427,20 € | O máximo da taxa até 31/12/2025 (12.000,00 € × 14,28 % × 24 meses ÷ 12). Veja a nota a seguir a esta tabela. |
+| **Estado** | Em uso | Já estava em uso no Enterprise. |
+
+- O separador **Plano de depreciação** fica com as quotas por fazer, todas **Planeado**: contabilísticas de 2.400,00 € a 31/12/2026, 2027 e 2028; fiscais de 1.714,29 € de 2026 a 2030 e 1,35 € em 2031. A quota de 1,35 € em 2031 nasce da diferença entre os 14,28 % usados na depreciação fiscal à entrada e os 14,2857 % do plano. <span className="fd-pending">Pendente de validação: a depreciação fiscal à entrada e o plano fiscal ainda não usam a mesma taxa, por isso a quota máxima anual, a depreciação fiscal à entrada e o fim do plano fiscal deste exemplo podem mudar.</span>
+- O **Compressor de ar**, que estava em rascunho no Enterprise, ficou `AF/00002`, **Em preparação**, **Condição** Novo, com a **Data de início de utilização** igual à de aquisição (01/03/2026). Quando o bem começar a ser usado, carregue em **Pôr em uso** na ficha.
+- O **Computador portátil** ficou `AF/00003`, **Em uso**, na categoria **Equipamento informático**, com 500,00 € de depreciação contabilística à entrada e 2,00 anos remanescentes. A categoria não tem taxa, por isso a depreciação fiscal à entrada também ficou em 500,00 €.
+- **Lançamentos: nenhum.** A empresa tinha 56 lançamentos antes de passar e continuou com 56. As depreciações de 2026 em diante lançam-se depois no fiscaldoo, nas contas da categoria (`4383` e `6423` no Torno): veja [Processar as depreciações](/accounting-pt/processar-depreciacoes).
+- **No Enterprise, nada é apagado.** As depreciações já lançadas ficam como estavam. As que faltam do Torno (2026 a 2028) e do Computador (2026 e 2027) ficam por lançar e deixam de se lançar sozinhas. As do Empilhador elétrico (2026 a 2029) só deixaram de se lançar sozinhas depois de **Parar a depreciação** (passo 7); a partir daí, nada deprecia esse bem até alguém criar a ficha dele.
+
+## Notas importantes
+
+<HelpCallout type="risco" title="O mesmo bem não pode ser depreciado em dois sítios">
+Deixe sempre **Parar a depreciação do Enterprise** marcado. Sem ele, o Enterprise continua a lançar sozinho as depreciações futuras dos ativos passados, e o fiscaldoo lança as mesmas. Pela mesma razão, não crie à mão a ficha de um ativo que ainda está em **Ativos do Enterprise ainda a depreciar**: pare-o primeiro.
+</HelpCallout>
+
+- **A depreciação fiscal à entrada pode ser menor do que a contabilística.** O Enterprise não aplica as taxas do DR 25/2009; o fiscaldoo aplica-as. No exemplo, 1.372,80 € dos 4.800,00 € já lançados no Torno ficaram acima do máximo fiscal, e de 2026 em diante a quota contabilística (2.400,00 €) continua acima da fiscal (1.714,29 €). <span className="fd-pending">Pendente de validação por contabilista certificado: o tratamento fiscal destas diferenças nos anos já fechados e nos seguintes.</span>
+- Nas fichas passadas, o separador **Quadro fiscal** não mostra a **Vida útil fiscal remanescente (anos)**: o plano fiscal sai da taxa e confere-se no **Plano de depreciação**.
+- **Parar a depreciação** não passa o ativo: depois de o parar, nada o deprecia. Se o bem continua a ser usado, crie a ficha dele em **Ativos fixos** com os valores do Enterprise. <span className="fd-pending">Pendente de validação por contabilista certificado: como passar para o quadro em linha reta um ativo que era depreciado pelo método degressivo.</span>
+- **Categoria para contas com várias** vale para todos os ativos dessa conta na mesma corrida. Se, na mesma conta, há bens de categorias diferentes (por exemplo, mobiliário e computadores na `435`), passe-os em corridas separadas ou crie as fichas de uns deles à mão.
+- Só passam ativos com depreciação em linha reta. Ficam também em «Não passados» os ativos que o Enterprise já fechou ou cancelou («já está fechado ou cancelado no Enterprise.»), os que têm aumentos de valor («tem aumentos de valor bruto, que não se passam.») e aqueles em que não há nada a depreciar («nada a depreciar (o valor menos o valor residual não é positivo).»). Os aumentos de valor só existem em ativos de antes do fiscaldoo: numa empresa portuguesa, o Enterprise já recusa um aumento de valor com «A empresa Metalomecânica Exemplo, Lda é portuguesa: os seus ativos fixos são os do fiscaldoo (…)».
+
+## Problemas frequentes
+
+### «nenhuma categoria dos ativos fiscaldoo usa a conta 433 Equipamento básico: crie-a primeiro»
+
+- **Sintoma:** depois de **Passar ativos**, os ativos aparecem em «Não passados» com esta frase. No exemplo, numa empresa ainda sem categorias, 3 dos 4 ativos ficaram de fora com ela (os da `433` e o da `435`) e o Empilhador elétrico com a do método; os três já confirmados apareceram em «Continuam a ser depreciados sozinhos pelo Enterprise».
+  ![Resultado com 0 ativos passados e 4 ignorados, três por não haver categoria para as contas 433 e 435 e o Empilhador elétrico pelo método, e 3 ativos que continuam a ser depreciados pelo Enterprise](/images/migration-toolkit/ativos-do-enterprise/02-sem-categorias.png)
+- **O que fazer:** em **Contabilidade › Configurar › Bancos e ativos › Categorias de ativos**, crie a categoria dessa conta, ou carregue em **Criar categorias SNC por omissão**. Depois, volte a **Passar ativos**.
+
+### «a conta 435 Equipamento administrativo tem várias categorias (…)»
+
+- **Sintoma:** o ativo fica em «Não passados» com «… escolha uma no campo «Categoria para contas com várias» e passe de novo, ou crie a ficha à mão.».
+- **O que fazer:** siga o passo 5. Nas categorias SNC por omissão, isto acontece sempre com a conta `435`.
+
+### «o método de depreciação do Enterprise não é linear: o quadro fiscaldoo é linear»
+
+- **Sintoma:** um ativo com depreciação degressiva fica em «Não passados» com esta frase, em todas as corridas, e continua em «Continuam a ser depreciados sozinhos pelo Enterprise».
+- **O que fazer:** o assistente nunca o passa. Enquanto não o parar, o Enterprise continua a lançar as depreciações dele na data de cada uma, mesmo com **Parar a depreciação do Enterprise** marcado, porque essa opção só vale para os ativos que passam. Antes da data do próximo lançamento (31/12/2026 no exemplo), pare-o (passos 6 e 7) e crie a ficha dele à mão em **Ativos fixos**, com o contabilista certificado.
+
+### O ativo passado não aparece em Ativos fixos
+
+- **Sintoma:** a janela diz que o ativo passou, mas a lista **Ativos fixos** não o mostra.
+- **O que fazer:** a lista abre com o filtro **Em uso**. Um ativo que estava em rascunho no Enterprise passa **Em preparação**: tire o filtro.
+
+### Não encontro Passar ativos do Enterprise
+
+- **Sintoma:** em **Contabilidade › Lançar › Terceiros e ativos** há **Ativos fixos**, mas não **Passar ativos do Enterprise**.
+- **O que fazer:** confirme que o seu perfil é **Contabilista certificado** e peça ao administrador que confirme, em **Aplicações**, que o pacote opcional de migração está instalado (veja «Antes de começar»). Numa base Community, o menu não existe: veja [Passar ao Enterprise](/migration-toolkit/mudar-para-o-enterprise).

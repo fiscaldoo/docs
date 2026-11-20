@@ -1,0 +1,94 @@
+---
+id: balanco
+slug: /accounting-pt/balanco
+title: Como obter o balanço
+sidebar_label: Obter o balanço
+sidebar_position: 2
+description: Obter o balanço da empresa no modelo do SNC, numa data, com a comparação com o período anterior, conferir que o ativo iguala o capital próprio mais o passivo e exportá-lo em PDF, também com o quadro de assinaturas.
+keywords: [balanço, balanco, balanço SNC, balanco snc, demonstrações financeiras, demonstracoes financeiras, ativo, passivo, capital próprio, capital proprio, balanço para o banco, balanco para o banco, balanço individual, balanco individual, PDF para assinar, NC-ME, SNC-PE, equilibrado, desequilibrado]
+doc_id: DOC-0143
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7a46de91a)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/demonstracao-de-resultados, accounting-pt/relatorios/balancete, accounting-pt/bancos-e-tesouraria/reconciliar-movimentos-bancarios]
+---
+
+## Para que serve?
+
+O balanço mostra, numa data, o que a empresa tem (ativo), o que deve (passivo) e o que pertence aos sócios (capital próprio), com as rubricas do modelo do SNC. É o documento que o banco, os sócios e a IES pedem, e que a gerência e o contabilista certificado assinam no fecho de contas.
+
+Obter o balanço não cria nem altera lançamentos: o Odoo junta os saldos das contas nas rubricas do modelo.
+
+## Quando utilizar?
+
+- No fecho do exercício, para as contas que a gerência aprova e assina.
+- A meio do ano, quando o banco ou um fornecedor pede um balanço provisório (por exemplo a 30/09).
+- Para conferir, depois do [balancete](/accounting-pt/balancete), que cada conta caiu na rubrica certa.
+
+## Onde encontrar?
+
+**Contabilidade › Consultar › Demonstrações financeiras › Balanço**. O título do ecrã é **Balanço (SNC)**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. Com ele faz todos os passos deste artigo, incluindo o PDF para assinar (testado com o perfil Contabilista). A **Gerência** e o **Auditor / ROC** também têm o menu.
+- A empresa tem o **Referencial contabilístico** escolhido (SNC, SNC-PE ou SNC-ME). Sem ele, o balanço não abre (ver «Problemas frequentes»).
+- Os movimentos bancários do período estão reconciliados ([Como reconciliar os movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios)). Enquanto houver pagamentos registados e ainda não reconciliados, o ecrã avisa e o caixa já os desconta (ver «Notas importantes»).
+- No exemplo, a Empresa Demonstração, Lda, a 10/11/2026, com o exercício de 2026 comparado com o de 2025.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Consultar › Demonstrações financeiras › Balanço**. O balanço abre no exercício corrente (**Ano**, `01/01/2026 – 31/12/2026`) e já comparado com o exercício anterior (**Comparar com período anterior** marcado, **Períodos** `1`, **Períodos anteriores**).
+2. Escolha a data. **Mês**, **Trimestre** e **Ano** e as setas **‹** e **›** funcionam como no [balancete](/accounting-pt/balancete); o balanço sai na data do fim do período. Com **Mês**, o exemplo fica em `01/11/2026 – 30/11/2026`, comparado com outubro. Para uma data à sua escolha, abra **Mais filtros** e mude **até**.
+3. Confira a **Variante**: a lista só oferece o modelo do referencial da empresa, **Balanço (SNC)** no exemplo. O referencial da empresa vê-se na ficha da empresa (**Definições › Utilizadores e empresas › Empresas**, separador **Localização PT**, campo **Referencial contabilístico**), que só o administrador abre; no exemplo é **SNC (regime geral)**. Os nomes das duas listas não são iguais: ao referencial **SNC-ME (microentidades)** corresponde a variante **Balanço (NC-ME)** e ao **SNC-ESNL (entidades sem fins lucrativos)** a **Balanço (NCRF-ESNL)**.
+4. Confira o quadro por cima da tabela: **Total do ativo** e **Total do capital próprio e do passivo** iguais (no exemplo, 255.275,00 €) e o selo **Equilibrado**.
+   ![Cabeçalho do Balanço (SNC) com a Variante Balanço (SNC), Comparar com período anterior marcado, o aviso dos pagamentos por reconciliar e o quadro Total do ativo 255.275,00 € e Total do capital próprio e do passivo 255.275,00 € com o selo Equilibrado assinalado](/images/accounting-pt/balanco/01-totais-equilibrado.png)
+5. Para ver de que contas vem uma rubrica, carregue no triângulo à esquerda dela, ou em **Mais filtros** marque **Desdobrar tudo**. Debaixo da rubrica aparecem as contas, com a taxonomia do SNC de cada uma.
+6. As rubricas sem valor estão escondidas (o ecrã diz quantas, por exemplo «34 linha(s) sem valores estão escondidas.»). Para as ver, em **Mais filtros** marque **Mostrar linhas a zero**. As outras opções do painel são **De** e **até**, **Incluir rascunhos**, **Período predefinido**, **Desdobrar tudo**, **Empresas**, **Plano analítico**, **Agrupar contas por hierarquia**, **Mostrar valores em** e **Contas analíticas**.
+7. Carregue em **Exportar PDF** para o balanço no modelo oficial, ou em **Exportar** › **Exportar PDF para assinar** para o mesmo balanço com o quadro de assinaturas no fim. Em **Exportar** estão também **Exportar com opções…**, **Exportar XLSX**, **Exportar CSV (formato PT)**, **Exportar CSV (técnico)** e **Imprimir**.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o balanço sai do mesmo ecrã do fiscaldoo: o menu abre **Balanço (SNC)**, com **Variante**, o quadro **Total do ativo** e **Total do capital próprio e do passivo**, o selo **Equilibrado**, o aviso dos pagamentos por reconciliar, **Mais filtros**, **Exportar PDF** e **Exportar** (visto com um utilizador só com o perfil **Contabilista**). O balanço do próprio Enterprise não está no menu do Contabilista.
+
+{/* Nota interna (lote EE-02, DOCS-073 #4142, DEC-1794, master 7a46de91a, base Enterprise docs_ee_ee02_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): Contabilista: Consultar › Demonstrações financeiras › Balanço abriu o visualizador do fiscaldoo (Exportar PDF, Exportar, Guardar opções, Copiar ligação, Repor, Mês/Trimestre/Ano, Comparar com período anterior, Períodos, 34 linhas escondidas); na cópia, 256.475,00 € de ativo e de capital próprio e passivo, Equilibrado. O balanço do Enterprise (accountant) está só no menu do administrador. Ver reports/LOTE_EE-02.md. */}
+
+## Resultado esperado
+
+- O selo diz **Equilibrado** e os dois totais são iguais. No exemplo, a 31/12/2026: ativo não corrente 214.244,16 €, ativo corrente 41.030,84 €, capital próprio 71.312,32 € (com o **Resultado líquido do período** de -59.791,84 €, o mesmo da [demonstração de resultados](/accounting-pt/demonstracao-de-resultados)), passivo 183.962,68 €.
+- O PDF tem o título «BALANÇO INDIVIDUAL EM 31 DE DEZEMBRO DE 2026», as colunas «31/12/2026 (N)» e «31/12/2025 (N-1)» e **todas** as rubricas do modelo, também as que estão a zero. No exemplo, os totais do PDF são iguais aos do ecrã.
+- O PDF para assinar acaba com o quadro **Assinaturas**, com um espaço «Gestor (nome e assinatura)» e outro «Contabilista certificado (n.º OCC) (nome e assinatura)», e tem no rodapé o «SHA-256 do conteúdo», que identifica a versão assinada. No exemplo, com as rubricas fechadas, tudo cabe numa página; com uma rubrica desdobrada (por exemplo, **Caixa e depósitos bancários**), o PDF para assinar passa a ter duas páginas e o quadro fica na segunda.
+- Nenhum lançamento é criado.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: quem assina o balanço (gerência e contabilista certificado) e a data de referência das contas a aprovar.</span>
+
+## Notas importantes
+
+- **Pagamentos por reconciliar abatem ao caixa.** O saldo das contas de passagem do banco (`120001 Conta Transitória`, `120002 Recebimentos Pendentes`, `120003 Pagamentos Pendentes`) junta-se à conta do banco do mesmo diário, em **Caixa e depósitos bancários**, e o ecrã avisa: «Há pagamentos por reconciliar: as contas de transferência e de pagamentos pendentes dos diários de banco têm saldo. O caixa apresentado já as abate à conta do banco de cada diário.». No exemplo, a 31/12/2026, o caixa é 33.390,63 €: `112 Caixa` 578,46 €, `113 Caixa do ponto de venda` 20,14 €, `120001 Conta Transitória` -367,50 € e `121 Depósitos à ordem` 33.159,53 €, a mesma soma das contas de caixa e depósitos do [balancete](/accounting-pt/balancete). Reconcilie os pagamentos antes de tirar o balanço para fora. <span className="fd-pending">Pendente de validação por contabilista certificado: rubrica destes saldos de passagem no balanço.</span>
+  ![Rubrica Caixa e depósitos bancários de 2026 desdobrada, com 112 Caixa 578,46 €, 113 Caixa do ponto de venda 20,14 €, 120001 Conta Transitória -367,50 € e 121 Depósitos à ordem 33.159,53 €, total 33.390,63 €](/images/accounting-pt/balanco/02-caixa-desdobrada.png)
+- **Um banco a crédito vai para o passivo.** Se um diário de banco fica a dever (saldo credor, já com as contas de passagem), o valor não reduz o caixa: vai para **Financiamentos obtidos** do passivo corrente. No exercício de 2025 do exemplo, a conta `121 Depósitos à ordem` tinha 78.700,00 € a crédito e aparece em **Financiamentos obtidos**, não no ativo. Em 2026 nenhum diário fica a dever, e essa linha está a 0,00 €.
+- **O PDF diz «EM 31 DE DEZEMBRO» mesmo antes do fim do ano** quando o período é o exercício inteiro. Para um balanço provisório, escolha o mês ou mude **até** para a data certa antes de exportar.
+
+## Problemas frequentes
+
+### «O referencial contabilístico de … não está definido, por isso esta demonstração não pode ser mostrada»
+
+- **Sintoma:** ao abrir o balanço, em vez da tabela: «O referencial contabilístico de “Empresa Teste Filial” não está definido, por isso esta demonstração não pode ser mostrada: sem ele as demonstrações financeiras sairiam vazias ou desequilibradas. Nada foi calculado nem exportado.» (visto numa empresa sem referencial da demonstração).
+- **O que fazer:** peça a um utilizador com o perfil **Contabilista certificado** ou ao administrador do sistema que escolha o referencial na ficha da empresa, como a mensagem indica, e abra de novo o balanço.
+
+### O selo diz «Desequilibrado: diferença de …»
+
+- **Sintoma:** o selo fica vermelho e, por cima dos totais, aparece uma faixa amarela que começa por «Controlo do Balanço em …: o Ativo (…) não é igual ao Capital próprio mais o Passivo (…); a diferença é …. Nada foi ajustado.». O PDF leva o mesmo aviso, a começar por «ATENÇÃO - esta demonstração não fecha».
+- **Causa:** há contas com saldo que não têm linha no modelo do referencial da empresa. Como a lista **Variante** só oferece o modelo do referencial, o aviso já não aparece por se escolher outro modelo. Na demonstração, o balanço de 2026 fecha equilibrado.
+- **O que fazer:** não use o balanço como está e fale com o contabilista certificado: as contas com saldo sem linha no balanço têm de ser revistas.
+
+{/* Nota interna (DOCS-035, DOC-0143): defeitos B2-05 (variantes que não são do referencial dão balanço vazio e PDF com rubricas trocadas e nome «SNC»), B2-06 (saldos credores de 120001/120003 em Financiamentos obtidos) e B2-07 («Outras dividas a pagar» sem acento, no ecrã e no PDF; título «Balanço (SNC)» com outra variante escolhida) em reports/LOTE_B2.md. Mensagem do referencial vista com o administrador na Empresa Teste Filial (empresa sem lançamentos e sem referencial). */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AY, 10/11/2026, master fa7915ea8 com o REP-134 (DEC-1822), docs_demo_v23ay_test, porta 8505): números de 2026 e capturas 01 e 02 refeitos por clique com um utilizador só com o perfil Contabilista; caixa 33.390,63 € igual à classe 1 do Balancete; Financiamentos obtidos correntes 0,00 € em 2026 e 78.700,00 € (121) em 2025; PDF e PDF para assinar exportados (totais iguais aos do ecrã, uma página, quadro Assinaturas). A lista Variante só tem Balanço (SNC) desde o REP-125 (B2-05): nota e captura 03 da variante errada retiradas, e o problema do selo desequilibrado reescrito sem a causa da variante (não reproduzido: a demonstração fecha equilibrada; início da mensagem conferido com a de 29/10 e com master). */}

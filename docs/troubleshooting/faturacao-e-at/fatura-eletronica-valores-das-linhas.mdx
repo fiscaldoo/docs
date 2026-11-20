@@ -1,0 +1,78 @@
+---
+id: fatura-eletronica-valores-das-linhas
+slug: /troubleshooting/fatura-eletronica-valores-das-linhas
+title: A fatura eletrónica recusa os valores das linhas
+sidebar_label: Fatura eletrónica recusa valores das linhas
+description: O que fazer quando a fatura eletrónica recusa uma quantidade com casas decimais a mais ou uma linha com quantidade zero, numa fatura que já não se altera.
+keywords: [fatura eletrónica, fatura eletronica, recusa valores, casas decimais, arredondar, InvoicedQuantity, Invoiced quantity is missing, IBR-022, quantidade zero, linhas não coincidem, CIUS-PT]
+doc_id: DOC-0374
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 0289754a8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/faturacao-e-at/fatura-eletronica-nao-gerada, troubleshooting/faturacao-e-at/fatura-eletronica-documento-nao-aceite, fiscal-core/faturacao/emitir-uma-fatura-certificada]
+---
+
+## Sintoma
+
+Numa fatura emitida, carregou em **Enviar ao FE-AP** e a janela **Operação inválida** fala de um valor de uma linha.
+
+## Mensagem
+
+Com uma linha de quantidade `1,2345`:
+
+> «A fatura eletrónica não pode ser gerada: o valor 1,2345 em “Quantidade” tem mais de 3 casas decimais, que a fatura eletrónica ao Estado não aceita. Esta fatura já está emitida e assinada, por isso não se pode alterar: emita uma nota de crédito (botão «Nota de crédito» na fatura) e uma fatura nova com o valor arredondado a 3 casas decimais.»
+
+![Janela Operação inválida com o valor 1,2345 em Quantidade](/images/troubleshooting/fatura-eletronica-valores-das-linhas/01-casas-decimais.png)
+
+Com uma linha de quantidade zero, a segunda linha da fatura:
+
+> «A fatura eletrónica não pode ser gerada:
+> - Linha 2: falta a «Quantidade» (ou está a zero). Preencha o campo «Quantidade» da linha; uma linha sem quantidade não pode seguir como fatura eletrónica. (IBR-022)»
+
+## Causas verificadas
+
+- **Quantidade com mais de 3 casas decimais.** A fatura eletrónica aceita até 3 casas. Com a precisão de 2 casas da demonstração, esta recusa não acontece: só foi provocada depois de subir a precisão das quantidades para 4 casas.
+- **Quantidade zero.** A emissão não a recusa. Antes de emitir, o rascunho avisa: «A(s) linha(s) Embalagem têm quantidade zero. Pode emitir o documento, mas a fatura eletrónica (FE-AP, Peppol, EDI) recusa uma linha sem quantidade quando é enviada, e um documento assinado já não se altera (só uma nota de crédito e uma fatura nova o corrigem). Se a quantidade for um engano, preencha-a antes de emitir.»
+
+Estes casos foram testados e **não** dão recusa nas linhas:
+
+- uma linha com preço zero;
+- uma linha com desconto de 100 %;
+- uma nota na fatura.
+
+Antes de chegar aqui, a emissão recusa uma linha de valor negativo e uma taxa de IVA diferente da que está em vigor. Por isso, estes dois casos não aparecem neste passo. A recusa de um valor negativo diz: «A linha “…” do documento “Rascunho de fatura” tem um valor negativo no campo “Preço Unitário”. Um documento certificado não tem linhas de valor negativo. Para reduzir um preço use o campo de desconto da linha (entre 0 e 100 %); para devolver mercadoria ou anular parte do documento emita uma nota de crédito do documento. Indique um valor positivo.»
+
+<span className="fd-pending">Não provocadas no ecrã, apesar dos testes acima: «A fatura eletrónica não pode ser gerada: “...” em ... não é um número. Corrija o valor na linha da fatura.» e «A fatura eletrónica de «...» não pode ser gerada: as suas linhas não coincidem com as linhas do documento.» Se lhe aparecer uma delas, trate-a como em **Quando contactar o suporte**.</span>
+
+## O que confirmar
+
+1. A coluna **Quantidade** de todas as linhas da fatura.
+2. Qual a linha indicada na mensagem. «Linha 2» é a segunda linha.
+3. Se a fatura já foi emitida. Num documento emitido, o ecrã diz «Documento emitido e assinado: já não se altera.»
+
+## Como resolver
+
+Como a mensagem diz, **uma fatura emitida já não se altera**. O que se faz é:
+
+1. Emita uma nota de crédito da fatura: [Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito).
+2. Emita uma fatura nova, com a quantidade até 3 casas decimais e sem linhas de quantidade zero.
+3. Carregue em **Enviar ao FE-AP** na fatura nova.
+
+Nas faturas seguintes, confira as quantidades antes de carregar em **Confirmar**. O rascunho avisa das linhas de quantidade zero.
+
+## Resultado esperado
+
+A fatura nova mostra o estado **Aceite** e a frase «Enviada ao portal FE-AP e aceite em …». **O envio ao FE-AP é, aqui, simulado: nada sai do computador, mesmo que o estado diga Aceite.** Veja [A fatura eletrónica não pode ser gerada](/troubleshooting/fatura-eletronica-nao-gerada).
+
+## Quando contactar o suporte
+
+Se aparecer a mensagem de um valor que não é um número ou a de linhas que não coincidem, ou se a recusa continuar com quantidades corretas, [peça suporte](/troubleshooting/como-pedir-suporte).
+
+## Informação a enviar
+
+- O número da fatura.
+- A quantidade, o preço e o desconto da linha indicada.
+- O texto completo da mensagem.

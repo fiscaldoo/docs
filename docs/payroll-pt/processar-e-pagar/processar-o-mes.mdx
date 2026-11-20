@@ -1,0 +1,124 @@
+---
+id: processar-o-mes
+slug: /payroll-pt/processar-o-mes
+title: Como processar os salários do mês
+sidebar_label: Processar os salários do mês
+sidebar_position: 1
+description: Criar o lote do mês, calcular os recibos de todos os trabalhadores e validá-los a partir do ecrã «O que há para fazer este mês?».
+keywords: [processar salários, processar salarios, processamento salarial, lote de salários, lote de salarios, recibos do mês, recibos do mes, calcular recibos, validar recibos, fazer os ordenados, folha de salários, folha de salarios, oito passos, o que há para fazer este mês]
+doc_id: DOC-0201
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/pagar-os-salarios, payroll-pt/configurar/contabilizar-os-salarios, payroll-pt/configurar/configurar-os-salarios, payroll-pt/configurar/salario-minimo, payroll-pt/declarar/dmr, payroll-pt/declarar/declaracao-a-seguranca-social]
+---
+
+## Para que serve?
+
+Todos os meses, os salários fazem-se num **lote**: um registo com um recibo por trabalhador. O fiscaldoo cria os recibos a partir do contrato de cada trabalhador, calcula a Segurança Social, a retenção de IRS e o líquido, e no fim fecha os recibos para não mudarem depois de pagos e declarados.
+
+O ponto de partida é o ecrã **O que há para fazer este mês?**, que abre ao entrar na aplicação Salários. Mostra os 9 passos do mês, cada um com o estado **Feito**, **A fazer** ou **Bloqueado**, e o botão para o processar. Por baixo dos passos vêm os números do mês: **Recibos por terminar**, **Salários por pagar**, **Faltas por aprovar** e **Declarações por entregar**, e as tabelas **Trabalhadores**, **Custo dos salários (recibos processados)**, **Ausências do mês, em dias**, **Horas extra do ano** e **Parentalidade e família**. As três primeiras tabelas comparam o mês escolhido com o mês anterior e com o mesmo mês do ano anterior. **Horas extra do ano** e **Parentalidade e família** não têm essa comparação. Num mês ainda sem lote, aparece «Este mês ainda não tem lote de processamento. Próximo passo: processar o mês.»
+
+{/* Nota interna (lote v23-AH, DOCS-069 #4052, master 97b34fac3, docs_demo_v23ah_test): números e tabelas vistos por clique com o Processador de Salários da demonstração em novembro de 2026 (colunas nov. 2026, out. 2026 e nov. 2025). Vinham do guia congelado Salários/o-mes-de-salarios-menus-e-linha-do-tempo.md. */}
+
+## Quando utilizar?
+
+- No fim de cada mês, depois de aprovar as ausências e de lançar os pagamentos variáveis e o trabalho suplementar (passos 1 e 2 do ecrã).
+- Quando entrou um trabalhador novo: o recibo dele é criado com os dos outros, se o contrato já estiver em vigor no mês.
+
+Este artigo não serve para corrigir um recibo já validado: um recibo validado já não se altera e corrige-se com um recibo corretivo.
+
+## Onde encontrar?
+
+**Salários › Preparar › O que há para fazer este mês?** › **Processar outubro** (o botão tem o nome do mês escolhido no topo)
+
+O mesmo ecrã está em **Salários › Preparar › O que há para fazer este mês?**. Os lotes de todos os meses estão em **Salários › Processar › Processar o mês**.
+
+## Antes de começar
+
+- O seu perfil é **Processador de salários**, com ou sem o acesso extra **Administrador de Salários** (dado nos **Ajustes avançados** do utilizador): faz todos os passos deste artigo.
+  {/* Nota interna (lote v23-AL, DOCS-069 #4052, master 7a3b55244, docs_demo_v23al_test): visto por clique com um utilizador só com o perfil Processador de salários: Processar novembro, Criar os recibos do mês, Calcular e Validar no lote de novembro de 2026 da cópia (o lote ficou Validado por esse utilizador). */}
+- Cada trabalhador tem contrato em vigor no mês, com a retribuição, o horário, o regime da Segurança Social e o perfil de IRS preenchidos. Sem perfil de IRS, a configuração da empresa traz por omissão «Nada se presume: não se calcula IRS enquanto não existir o perfil de IRS do trabalhador».
+- As ausências do mês estão aprovadas: entram no recibo quando o lote é calculado.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários**. No topo do ecrã **O que há para fazer este mês?**, escolha o mês na lista. Por omissão vem o mês atual (a 01/11/2026, **Novembro de 2026**): para o exemplo, escolha **Outubro de 2026**.
+   ![Topo do ecrã O que há para fazer este mês?, de outubro de 2026, com o botão Processar outubro assinalado](/images/payroll-pt/processar-o-mes/01-ecra-do-mes-processar-outubro.png)
+2. Carregue em **Processar outubro**. Abre-se um lote novo, **Salários de outubro de 2026**, no estado **Rascunho**, com o período de 01/10/2026 a 31/10/2026 e o **Tipo** **Normal**.
+3. Confira o período e o **Tipo**. A barra do lote mostra o botão **Criar os recibos do mês**. **Calcular** só aparece depois de haver recibos.
+   ![Lote Salários de outubro de 2026 em Rascunho, com o botão Criar os recibos do mês assinalado](/images/payroll-pt/processar-o-mes/02-lote-guardado-criar-os-recibos.png)
+4. Carregue em **Criar os recibos do mês** (o lote fica guardado). Aparece a mensagem «Recibos criados. 8 recibos criados; 0 trabalhadores já tinham recibo.» e a lista do lote passa a ter um recibo por trabalhador, em **Rascunho**. Quem já saiu da empresa por cessação (confirmada, com o último dia antes do período) não recebe recibo no lote do mês, do Natal nem das férias: a mensagem e o aviso **Trabalhadores deixados de fora do lote** dizem os nomes e o motivo, e os outros recibos criam-se na mesma. Quem sai a meio do período continua no lote desse período.
+5. Carregue em **Calcular**. O lote passa a **Calculado** e a coluna **Líquido a receber** mostra o valor de cada recibo, com o total por baixo (10.382,03 € no exemplo). O lote mostra o aviso «O lote está «Calculado»: ainda pode ser calculado novamente e ainda não está fechado. Valide-o quando os recibos estiverem certos; enquanto nenhum recibo estiver validado, «Repor em rascunho» ou «Apagar lote» desfazem-no (pede-se um motivo).»
+   ![Lote calculado: estado Calculado, oito trabalhadores com o líquido a receber e o botão Validar assinalado](/images/payroll-pt/processar-o-mes/03-lote-calculado-validar.png)
+6. Confira os recibos antes de validar. Carregue numa linha para abrir o recibo: o topo mostra **Bruto**, **Descontos** e **Líquido a pagar**, e o fim do recibo diz, em **Como se chegou aos valores**, a tabela de IRS, a taxa e a parcela a abater, e as taxas da Segurança Social. Para comparar com o mês anterior, use **Salários › Processar › Mês contra o mês anterior**.
+7. Se encontrar um erro, corrija o dado na origem (contrato, ausência, pagamento variável) e carregue de novo em **Calcular**, que continua na barra do lote enquanto ele está **Calculado** (ao lado de **Validar**).
+8. Carregue em **Validar**. O lote e os recibos passam a **Validado**.
+
+</StepByStep>
+
+{/* Nota interna (DOCS-022): vídeo previsto (video=sim, corrente DOCS-006): processar o lote de outubro, de «Processar outubro» até «Validar». Entra como secção «Vídeo demonstrativo» depois de «Resultado esperado» quando existir. */}
+
+**Exemplo.** No recibo de outubro de Ana Margarida Pinto (casada, único titular, 2 dependentes), o fiscaldoo calculou sozinho:
+
+- **Retribuição base** 2.400,00 € e **Subsídio de alimentação** 129,15 € (21 dias × 6,15 €): bruto 2.529,15 €.
+- **Segurança Social (trabalhador)**: 11 % de 2.400,00 € = 264,00 €. O subsídio de alimentação ficou fora da base; o recibo indica «1 excluída(s) pelo CRC art. 48.º».
+- **IRS retido**: tabela III de 2026 (casado, único titular), taxa 22,77 % sobre 2.400,00 €, menos a parcela a abater de 289,47 € e 2 × 42,86 € pelos dependentes = 171,29 €, arredondado para 171,00 €.
+- **Líquido a receber**: 2.529,15 € − 264,00 € − 171,00 € = 2.094,15 €.
+- A empresa paga ainda 23,75 % de 2.400,00 € = 570,00 € à Segurança Social, que não sai do salário. O recibo mostra o **Custo total para a empresa**: 3.099,15 €.
+
+O que entra na base da Segurança Social e do IRS, o valor diário do subsídio de alimentação e o arredondamento da retenção ao euro inferior são regras que o fiscaldoo aplica sozinho. <span className="fd-pending">Pendente de validação por contabilista certificado: limite do subsídio de alimentação excluído da base (CRC art. 48.º e CIRS) e arredondamento da retenção (CIRS art. 99.º-E).</span>
+
+## No Enterprise
+
+No Odoo Enterprise, este artigo faz-se da mesma maneira: com o perfil **Processador de salários**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)). No lote de outubro de 2026 da demonstração Enterprise, **Criar os recibos do mês** deu a mesma mensagem, «Recibos criados. 8 recibos criados; 0 trabalhadores já tinham recibo.», e o lote validado tem o mesmo líquido total, 10.382,03 €. Para confirmar o horário dos contratos no Enterprise, ver [Como registar e pagar trabalho suplementar](/payroll-pt/trabalho-suplementar#no-enterprise).
+
+{/* Nota interna (lote EE-06, DOCS-073 #4142, DEC-1794, master ce51f2d47, 10/11/2026): conferido numa cópia Enterprise da demonstração (docs_ee_ee06_test, computador 2) com utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): Processador de salários por clique: O que há para fazer este mês? › Outubro de 2026 › Processar outubro › Criar os recibos do mês › Calcular › Validar (lote novo da cópia, Validado); Mês contra o mês anterior. Menus e vistas comparados, perfil a perfil, com uma cópia Community do mesmo master (docs_demo_ee06_test). Ver reports/LOTE_EE-06.md. */}
+
+## Resultado esperado
+
+- O lote está **Validado** e todos os recibos também. Por cima do lote aparece «O lote está «Validado»: os seus recibos não se alteram e ainda não está fechado. Marque-o como pago quando os salários estiverem pagos e depois feche-o.»
+- No ecrã do mês, os passos 3 (**Processar outubro**) e 4 (**Conferir e validar os recibos**) passam a **Feito** e o passo 5, **Pagar os salários**, fica **A fazer**.
+- O lote mostra agora os botões de pagamento: **Gerar pagamentos**, **Ficheiro de transferências**, **Banco executou** e **Marcar como pago**. Antes de pagar, o **Administrador de Salários** tem de usar **Contabilizar** ([Como contabilizar o processamento dos salários](/payroll-pt/contabilizar-os-salarios)): o ficheiro de transferências é recusado enquanto os recibos não estiverem contabilizados. Depois siga para [Como pagar os salários](/payroll-pt/pagar-os-salarios).
+
+![Lote validado, com os botões de pagamento](/images/payroll-pt/processar-o-mes/04-lote-validado.png)
+
+## Notas importantes
+
+- **Um recibo validado já não se altera.** O próprio recibo diz: «Recibo de vencimento já validado: já não se altera. Para corrigir, crie um recibo corretivo.» Confira antes do passo 8.
+- **O recibo tem de chegar ao trabalhador até ao pagamento.** Um recibo validado avisa enquanto a entrega não estiver registada. No exemplo, com o lote de outubro já pago a 01/11/2026, o recibo de Ana mostra «Entrega: O recibo ainda não foi entregue ao trabalhador e o pagamento é em 01/11/2026. O que aconteceu: o art. 276.º, n.º 3 do Código do Trabalho exige a entrega até ao pagamento.» e «Pagamento: Um pagamento tem a data-valor 01/11/2026, depois da data-limite 30/10/2026: o trabalhador não terá o dinheiro a tempo (CT art. 278.º/5, mora do empregador).» A entrega regista-se no recibo, em **Ações** (**Entregue por e-mail**, **Entregue no portal** ou **Entregue em papel**).
+- **Data-limite do pagamento.** Em outubro de 2026 o recibo mostra 30/10/2026 e explica: «O período acaba em 31/10/2026, um dia não útil: o pagamento vence no dia útil anterior, 30/10/2026 (CT art. 278.º, interpretação).» <span className="fd-pending">Pendente de validação por contabilista certificado ou jurista do trabalho: vencimento no dia útil anterior quando o fim do mês não é dia útil.</span>
+- O passo 6 do ecrã, **Entregar as declarações**, desbloqueia com o lote validado: a [declaração mensal de remunerações à AT](/payroll-pt/dmr) e a [declaração à Segurança Social](/payroll-pt/declaracao-a-seguranca-social) usam os recibos deste lote.
+
+## Problemas frequentes
+
+### «Criar os recibos do mês» responde que não existe calendário de feriados (janeiro de 2027)
+
+- **Sintoma:** num lote de janeiro de 2027, **Criar os recibos do mês** abre «Operação inválida Não existe calendário de feriados para 2027 (Continente) na empresa «Empresa Demonstração, Lda». O que aconteceu: os dias úteis nunca se adivinham sem os feriados do ano. Como resolver: crie o calendário em Salários › Configurar › Empresa › Faltas e feriados › Calendários de feriados e carregue em «Gerar feriados».»
+  ![Recusa de Criar os recibos do mês: não existe calendário de feriados para 2027](/images/payroll-pt/processar-o-mes/05-sem-calendario-2027.png)
+- **Causa:** o ano do lote ainda não tem calendário de feriados na empresa.
+- **O que fazer:** peça ao **Administrador de Salários** que crie o calendário do ano (**Novo**, **Ano** `2027`, **Gerar feriados**: na demonstração gerou 13 feriados obrigatórios). Depois carregue de novo em **Criar os recibos do mês**. Ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios).
+
+### Calcular ou Validar respondem que as tabelas legais de 2027 ainda não estão publicadas
+
+- **Sintoma:** com o calendário feito, **Criar os recibos do mês** cria os recibos (6 na demonstração, com salário mínimo, IRS e Segurança Social por calcular), mas **Calcular** abre «Operação inválida O recibo «*Nome do trabalhador* (01/01/2027 — 31/01/2027)» não pode ser calculado nem validado: as tabelas legais de 2027 ainda não estão publicadas. O que aconteceu: calcular agora usaria valores em falta ou desatualizados (salário mínimo, IRS, Segurança Social) e daria montantes errados. Como resolver: aguarde o pacote de atualização legal de 2027 e instale-o; a vigilância da lei marca o ano como confirmado.» **Validar** num recibo em **Rascunho** dá a mesma recusa.
+  ![Recusa de Calcular: as tabelas legais de 2027 ainda não estão publicadas](/images/payroll-pt/processar-o-mes/06-tabelas-2027-por-publicar.png)
+- **Causa:** o fiscaldoo não calcula recibos de um ano sem o pacote legal desse ano. O salário mínimo de 2027 que existe na demonstração (970,00 €) é só uma previsão e nenhum recibo o lê ([Como atualizar o salário mínimo](/payroll-pt/salario-minimo)).
+- **O que fazer:** nada a corrigir no lote. Os recibos ficam em **Rascunho** e o líquido que mostram é provisório (por exemplo 2.523,00 € para a Ana, sem descontos). Calcule quando o pacote de atualização legal de 2027 estiver instalado.
+
+### Depois de validar aparece «Conta contabilística de cada rubrica com valor (Bloqueia o fecho)»
+
+- **Sintoma:** no lote validado, «8 trabalhador(es): Conta contabilística de cada rubrica com valor (Bloqueia o fecho)». **Ver quem é preciso corrigir** abre a lista dos trabalhadores e, para cada um: «Contabilização bloqueada: 1 rubrica(s) com valor não têm modelo de contabilização em 31/10/2026: Subsídio de alimentação. … Como corrigir: crie um modelo para cada uma (Salários › Configurar › Rubricas › Modelos de contabilização).»
+- **Causa:** uma rubrica do recibo (aqui o **Subsídio de alimentação**) não tem modelo de contabilização com data de início até ao fim do mês.
+- **O que fazer:** o aviso não impede pagar nem declarar, mas impede fechar o lote. Peça ao **Administrador de Salários** que crie o modelo dessa rubrica, com a conta escolhida pelo contabilista: ver [Como contabilizar o processamento dos salários](/payroll-pt/contabilizar-os-salarios).
+
+### A empresa não tem trabalhadores no ecrã do mês
+
+- **Sintoma:** **Trabalhadores ativos (no fim do mês)** mostra 0 e o passo 3 diz «Este mês ainda não tem lote.»
+- **Causa:** a empresa escolhida no canto superior direito não tem trabalhadores com contrato no mês (numa empresa sem salários, o ecrã aparece assim, com todos os contadores a 0).
+- **O que fazer:** confirme a empresa ativa antes de processar. Cada empresa tem os seus lotes, recibos e declarações.

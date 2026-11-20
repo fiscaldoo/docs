@@ -1,0 +1,33 @@
+WEBVTT
+
+1
+00:00:02.033 --> 00:00:04.433
+Carregue em Novo para criar a ficha.
+
+2
+00:00:04.433 --> 00:00:08.699
+Escreva o nome completo do cliente.
+
+3
+00:00:08.699 --> 00:00:16.899
+Escreva a rua, a cidade e o código postal.
+
+4
+00:00:16.899 --> 00:00:21.466
+Escolha o país do cliente.
+
+5
+00:00:21.466 --> 00:00:24.633
+Escreva o NIF, sem espaços.
+
+6
+00:00:24.633 --> 00:00:27.033
+O NIF português mostra «NIF válido».
+
+7
+00:00:27.033 --> 00:00:29.366
+Guarde a ficha.
+
+8
+00:00:29.366 --> 00:00:32.133
+Cliente guardado: já pode ser faturado.

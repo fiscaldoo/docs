@@ -1,0 +1,94 @@
+---
+id: lancamentos-desequilibrados
+slug: /accounting-pt/lancamentos-desequilibrados
+title: Como encontrar lançamentos desequilibrados e saldos anómalos
+sidebar_label: Lançamentos desequilibrados
+sidebar_position: 1
+description: Correr o diagnóstico que procura lançamentos em que o débito é diferente do crédito e contas com o saldo no lado contrário ao esperado, e abrir cada ocorrência.
+keywords: [lançamentos desequilibrados, saldos anómalos, débito diferente de crédito, saldo no lado inesperado, auditoria, balancete, diagnóstico, conta de caixa credora]
+doc_id: DOC-0171
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/balancete, accounting-pt/dia-a-dia/estornar-um-lancamento]
+---
+
+## Para que serve?
+
+O diagnóstico **Lançamentos desequilibrados e saldos anómalos** procura, num período, (a) lançamentos em que a soma dos débitos não é igual à dos créditos e (b) contas de movimento cujo saldo está do lado contrário ao que a tabela da AT espera (por exemplo, uma conta de caixa com saldo credor). **Só relata: não corrige nada.**
+
+## Quando utilizar?
+
+- Quando a linha de controlo do [balancete](/accounting-pt/balancete) mostra que a soma dos débitos não é igual à dos créditos.
+- Antes de fechar o período ou de entregar o SAF-T e a IES.
+- **Não** o use como lista de erros: um saldo no lado inesperado pode estar certo (por exemplo, descoberto autorizado). Cada caso pede avaliação do contabilista.
+
+## Onde encontrar?
+
+**Auditoria › Integridade › Lançamentos desequilibrados e saldos anómalos**, com o perfil **Auditor / ROC**, **Contabilista certificado** ou **Gerência**. O perfil **Contabilista** não tem o menu **Auditoria**.
+
+## Antes de começar
+
+- Perfil: **Contabilista certificado**. O exemplo é a Empresa Demonstração, Lda, de 01/01/2026 a 31/12/2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Auditoria › Integridade › Lançamentos desequilibrados e saldos anómalos**. Abre um ecrã com **Início do período**, **Fim do período** e **Incluir lançamentos em rascunho** (desligado). O campo **Empresa** só aparece a quem trabalha com mais do que uma empresa.
+   ![Ecrã do diagnóstico, antes de escrever as datas](/images/accounting-pt/lancamentos-desequilibrados/01-janela.png)
+2. Escreva as duas datas, **01/01/2026** e **31/12/2026**, e carregue em **Diagnosticar**.
+3. Leia os dois contadores: **N.º de lançamentos desequilibrados** e **N.º de saldos anómalos**. No exemplo, 0 e 1: a conta **111 Caixa** tem **−100,00 €**, com saldo esperado **Débito** (tipo **Saldo no lado inesperado**).
+   ![Resultado: nenhum lançamento desequilibrado e um saldo anómalo na caixa](/images/accounting-pt/lancamentos-desequilibrados/02-resultado.png)
+4. Carregue em **Abrir** na linha para ver os movimentos da conta. No exemplo é uma só linha: o lançamento OD/2026/00142 de 30/10/2026, «Curso», com 100,00 € a crédito na caixa. Falta, antes dele, o movimento que dá entrada de dinheiro na caixa.
+5. Para incluir também os lançamentos por publicar, marque **Incluir lançamentos em rascunho** e volte a diagnosticar (no exemplo o resultado foi igual).
+6. Mude o período e volte a diagnosticar: o resultado muda com ele. De **01/01/2026** a **30/09/2026**, o exemplo mostra também 0 e 1, mas o saldo anómalo é outro: a conta **2322 Ao pessoal**, com **−36.972,06 €** e saldo esperado **Débito**, dos salários contabilizados até setembro na demonstração (os modelos desde outubro usam a 2312). A de caixa já não aparece. Até 31/12/2026 essa conta deixa de estar no lado inesperado. Por isso, diagnostique sempre o período que vai entregar ou fechar.
+   ![Diagnóstico de 01/01 a 30/09/2026: um saldo anómalo na conta 2322 Ao pessoal](/images/accounting-pt/lancamentos-desequilibrados/03-periodo-parcial.png)
+7. Para diagnosticar outra empresa, mude primeiro de empresa no seletor do topo (ou ligue as duas) e só depois abra o diagnóstico: o campo **Empresa** só oferece as empresas ativas nesse seletor.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, **Auditoria › Integridade › Lançamentos desequilibrados e saldos anómalos** abre o mesmo **Diagnóstico: lançamentos desequilibrados e saldos anómalos**, com **Início do período**, **Fim do período**, **Incluir lançamentos em rascunho** e **Diagnosticar** (visto com um utilizador só com o perfil **Contabilista certificado**).
+
+{/* Nota interna (lote EE-04, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee04_test, cópia da odoo20_ee_test com EE_FASE=construir, 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0171. Contabilista certificado: ficha nova com Tipo, Lançamento, Data, Conta, Débito, Crédito, Diferença / saldo e Saldo esperado (Diagnosticar não corrido no Enterprise). Ver reports/LOTE_EE-04.md. */}
+
+## Resultado esperado
+
+- Sem ocorrências, os dois contadores ficam a **0** e o ecrã diz: «Nada a assinalar neste período: todos os lançamentos estão equilibrados e nenhuma conta tem saldo do lado inesperado.» Vê-se, por exemplo, em 01/01/2020 a 31/03/2020 na Empresa Demonstração.
+  ![Período sem ocorrências: contadores a 0 e a frase Nada a assinalar neste período](/images/accounting-pt/lancamentos-desequilibrados/04-empresa-sem-movimentos.png)
+- Cada ocorrência abre o lançamento ou os movimentos da conta, para o contabilista decidir; o diagnóstico nunca altera dados.
+
+## Notas importantes
+
+- **Só vê as contas e os lados da tabela da AT que têm «D» ou «C» exatos**; as contas com outro tipo de legenda ficam de fora (não são adivinhadas). Uma conta que não aparece não está, por isso, garantidamente certa.
+- Contas de resultados (rendimentos e gastos) contam só desde o início do exercício; as de balanço contam desde sempre até à data final.
+- O diagnóstico é por empresa. O campo **Empresa** só aceita as empresas ativas no seletor de empresas do topo: se escrever o nome de outra, não a encontra («Sem registos»). Mude de empresa no seletor antes de abrir o diagnóstico. «Nada a assinalar» numa empresa nova pode, por isso, ser a empresa certa, sem movimentos, e não um erro.
+- Um lançamento desequilibrado não se cria pelo produto: ao guardar, mesmo em rascunho, o ecrã recusa-o com «O lançamento não está equilibrado, por isso não pode ser confirmado: … Débito 100,00 € ≠ Crédito 60,00 €». Por isso o contador de lançamentos desequilibrados fica normalmente a 0; <span className="fd-pending">Pendente de validação no ecrã: um lançamento desequilibrado a aparecer no diagnóstico, que o produto não deixa criar (só depois de uma importação ou migração, que não há na demonstração).</span>
+
+## Problemas frequentes
+
+### O diagnóstico não abre
+
+- **Causa:** o perfil é **Contabilista**, sem o menu **Auditoria**.
+- **O que fazer:** peça a um utilizador com o perfil **Contabilista certificado**, **Gerência** ou **Auditor / ROC** que o corra, ou use o [balancete](/accounting-pt/balancete).
+
+### Aparece «Nada a assinalar neste período» e esperava ocorrências
+
+- **Causa:** não há ocorrências no período e na empresa escolhidos, ou a empresa não é a que queria.
+- **O que fazer:** confira a empresa, no seletor do topo, e as datas.
+
+### Saldo no lado inesperado numa conta de caixa
+
+- **Causa:** a caixa pagou antes de ter entrada (o exemplo) ou falta lançar uma entrada.
+- **O que fazer:** abra a ocorrência, confira o lançamento e, se for erro, [estorne-o](/accounting-pt/estornar-um-lancamento) e lance-o de novo. <span className="fd-pending">Pendente de validação por contabilista certificado: o tratamento contabilístico de uma conta de caixa credora.</span>
+
+{/* Nota interna (auditoria v17-PAY2, master 00c68a6d8): a demonstração de hoje não traz o lançamento «Curso»; foi criado na cópia (OD/2026/00142) para reproduzir 0 e 1 com a 111 Caixa. Sem ele, 2026 inteiro dá 0 e 0, com «Nada a assinalar». A empresa Papelaria Exemplo já não existe na demonstração. */}
+{/* Nota interna (lote v17-PAY, master 00c68a6d8): repetido 01/01 a 30/09/2026 com o perfil Auditor: 0 e 1, 2322 Ao pessoal −36.972,06 €; a conta continua no ecrã, por isso o exemplo fica. */}
+{/* Nota interna (DOCS-046 corretor, DOC-0171, risco alto): NV3I-03 corrigida em docs_demo_v3a5cor_test (master b1c81051), com demo.gestor_contabilidade. Provado: resultado vazio (Papelaria sozinha e 01/01 a 31/03/2020) sem contadores nem mensagem; 01/01 a 30/09/2026 = 0 e 1 com 2322 Ao pessoal −36.972,06; 2026 inteiro = 0 e 1 com 111. Campo Empresa: com uma empresa ativa só oferece essa («Sem registos» para outra; «Pesquisar mais» só lista a ativa); com as duas ligadas no seletor aceita a Papelaria e dá resultado vazio. O «Erro de Acesso» do auditor NÃO se reproduziu (V3A5-12). Lançamento desequilibrado: recusado no create por chamada ao servidor (perfil Contabilista): «O lançamento não está equilibrado… Débito 100,00 € ≠ Crédito 60,00 €». As linhas de saldo anómalo mostram Débito e Crédito a 0,00 € (V3A5-11). Lê o código REP-053. */}
+
+{/* Nota interna (lote v23-AT, DOC-0171, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): menus lidos com utilizadores criados por RPC só com um valor do campo Perfil (sem modo de programador): o menu Auditoria aparece ao Contabilista certificado, à Gerência, ao Auditor / ROC e ao administrador; o Contabilista (opera) não o tem. O acesso Responsável fiscal vem só com o perfil Contabilista certificado */}

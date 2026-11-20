@@ -1,0 +1,154 @@
+---
+id: quotas-sindicais
+slug: /payroll-pt/quotas-sindicais
+title: Como descontar e entregar as quotas sindicais
+sidebar_label: Quotas sindicais
+sidebar_position: 4
+description: Registar a autorização do trabalhador, descontar a quota sindical no recibo e registar a entrega ao sindicato até ao dia 15 do mês seguinte.
+keywords: [descontar, entregar, quotas, sindicais, sindicatos, quota sindical, autorizações de quotização sindical, autorizacoes de quotizacao sindical, quotas sindicais a entregar, art. 458]
+doc_id: DOC-0220
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/descontos-e-cessoes/adiantamentos-e-descontos, payroll-pt/descontos-e-cessoes/cessoes-de-salario, payroll-pt/configurar/contabilizar-os-salarios, payroll-pt/processar-e-pagar/processar-o-mes]
+---
+
+## Para que serve?
+
+Guarda a autorização escrita do trabalhador, desconta a quota no recibo e mostra o que tem de entregar a cada sindicato e até quando. O fiscaldoo não envia nada ao sindicato: o pagamento e o registo da entrega são passos seus.
+
+## Quando utilizar?
+
+- Quando um trabalhador lhe entrega a declaração escrita e assinada para descontar a quota.
+- Em cada recibo desse trabalhador, enquanto a autorização estiver em vigor.
+- Todos os meses, até ao dia 15, para entregar o que foi descontado no mês anterior.
+- Quando o trabalhador entrega a declaração a terminar a cobrança.
+
+## Onde encontrar?
+
+No painel **Salários › Preparar › O que há para fazer este mês?**, grupo **Sindicatos e representantes**:
+
+- **Sindicatos**;
+- **Autorizações de quotização sindical**.
+
+No menu: **Salários › Preparar › Descontos e empréstimos › Quotas sindicais a entregar**.
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador. O **Processador de salários** vê os sindicatos e as autorizações, mas não tem **Novo**.
+- Tem a declaração assinada em ficheiro, com o valor ou a percentagem e o sindicato.
+- O sindicato existe em **Contactos**. Se não existir, peça a quem tem o perfil **Contabilista** para o criar em **Contactos**, com **Novo**. Hoje, com o acesso **Administrador de Salários**, o campo não oferece a criação.
+- A rubrica **Quotas sindicais** tem modelo de contabilização. Na empresa de demonstração já tem: **Conta a débito** 231290, **Conta a crédito** 2781 e **Parceiro** **Sindicato**. Se a sua empresa não o tiver, crie-o como explica [Como contabilizar o processamento](/payroll-pt/contabilizar-os-salarios).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Sindicatos** e carregue em **Novo**. Preencha **Sindicato**, **NIF**, **IBAN** e **Contacto (contabilidade)**, e guarde.
+2. Abra **Autorizações de quotização sindical** e carregue em **Novo**. Preencha **Trabalhador** e **Sindicato**.
+3. Em **Fundamento**, escolha **O instrumento de regulamentação coletiva prevê-o e o trabalhador autoriza (art. 458.º/1)** ou **Opção expressa do trabalhador (art. 458.º/1)**.
+4. Em **Quota**, escolha **Valor** ou **Percentagem da retribuição** e escreva o número em **Valor ou percentagem**.
+5. Em **Entregue ao empregador em**, escreva o dia da entrega da declaração. **Descontada a partir de** preenche-se sozinho: o dia 1 do mês seguinte.
+6. Marque **Escrita e assinada**, carregue o ficheiro em **Declaração**, guarde e carregue em **Ativar**.
+   ![Autorização ativa de 1 % da retribuição, entregue a 20/10/2026 e descontada a partir de 01/11/2026](/images/payroll-pt/quotas-sindicais/01-autorizacao-ativa.png)
+7. No recibo do mês, carregue em **Calcular**. A linha **Quotas sindicais** entra sozinha enquanto a autorização estiver em vigor, e calcular de novo não a repete.
+   ![Linhas do recibo de novembro, com Quotas sindicais de 19,00 € nos descontos](/images/payroll-pt/quotas-sindicais/02-recibo-com-a-quota.png)
+8. Carregue em **Validar** e em **Contabilizar**. A quota passa para **Quotas sindicais a entregar**, por sindicato, com **Entregar até** no dia 15 do mês seguinte.
+9. Pague ao sindicato em **Salários › Pagar › Acerto com credores**, como em [Como processar cessões de salário](/payroll-pt/cessoes-de-salario): desmarque as linhas que não vai pagar agora.
+10. Em **Quotas sindicais a entregar**, abra o sindicato, clique na linha e preencha **Entregue em** e **Referência da entrega**. Guarde na própria lista. A linha sai do filtro **A entregar**: tire o filtro para a voltar a ver.
+    ![Quota de 19,00 € cobrada, a entregar até 15/12/2026, entregue a 10/12/2026 com a referência da transferência](/images/payroll-pt/quotas-sindicais/03-quota-entregue.png)
+11. Para terminar a cobrança, abra a autorização, preencha **Cessação entregue em** e carregue em **Terminar a cobrança**. O estado passa a **Cessada** e **Deixa de ser descontada a partir de** mostra o dia 1 do mês seguinte. No exemplo, com a cessação entregue a 20/11/2026, a data é 01/12/2026, e o recibo de dezembro já não tem a linha **Quotas sindicais**.
+
+</StepByStep>
+
+**Exemplo.** Uma trabalhadora com 1.900,00 € de retribuição base autoriza 1 %. Entrega a declaração a 20/10/2026, por isso o desconto começa em novembro. O recibo de novembro de 2026 ficou com:
+
+| Linha | Valor |
+| --- | --- |
+| Retribuição base e subsídio de alimentação | 2.029,15 € |
+| IRS retido | −124,00 € |
+| Segurança Social do trabalhador | −209,00 € |
+| Quotas sindicais: 1 % de 1.900,00 € | −19,00 € |
+| **Líquido** | **1.677,15 €** |
+
+Lançamento da quota, conferido no razão:
+
+| Conta | Débito | Crédito | Contacto |
+| --- | --- | --- | --- |
+| 231290 Remunerações em processamento | 19,00 € | | |
+| 2781 Outros devedores e credores (corrente) | | 19,00 € | Sindicato do Comércio do Norte |
+
+O prazo de entrega ao sindicato ficou em 15/12/2026. Entregue a 20/12/2026, a linha fica a vermelho: o atraso continua à vista.
+
+## No Enterprise
+
+No Odoo Enterprise, as quotas tratam-se da mesma maneira, com os mesmos menus e as mesmas listas. Com a autorização do exemplo (1 %, entregue a 20/10/2026), **Descontada a partir de** fica em 01/11/2026. O recibo de novembro de 2026 tem **Quotas sindicais** de 19,00 € e o líquido de 1.677,15 €. **Contabilizar** credita 19,00 € na conta 2781, com o contacto do sindicato, e a quota passa para **Quotas sindicais a entregar**. <span className="fd-pending">Pendente de validação no ecrã do Enterprise: o lançamento da quota e a lista das quotas a entregar.</span> Com a cessação entregue a 20/11/2026, a autorização fica **Cessada** e deixa de ser descontada a partir de 01/12/2026.
+
+{/* Nota interna (lote EE-09, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 12/11/2026): conferido numa cópia local da base Enterprise (docs_ee_ee09_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Administrador de Salários: painel › Sindicatos e Autorizações de quotização sindical (listas e Novo, descartados), Quotas sindicais a entregar (filtro A entregar, agrupada por sindicato); Processador sem Novo. Contacto com os direitos do Contabilista; sindicato, autorização, recusas (sem declaração, percentagem acima de 100), recibo, validação, contabilização e cessação com os direitos do Administrador de Salários, numa transação desfeita. A demonstração já tem o modelo de contabilização da rubrica Quotas sindicais (231290, 2781, Parceiro Sindicato), no Enterprise e no Community: o «Antes de começar» foi corrigido (dizia que não tinha). Menus e vistas destes ecrãs comparados, perfil a perfil, com uma cópia da demonstração Community (docs_demo_ee09_test, 2c8d358c0, porta 8524): iguais. Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-09.md. */}
+
+## Resultado esperado
+
+- A autorização fica **Ativo**, com a data a partir da qual se desconta.
+- O recibo tem a linha **Quotas sindicais**, e **Como foi calculado?** explica o valor.
+- Em **Quotas sindicais a entregar**, cada sindicato mostra o total e a data-limite.
+
+## Notas importantes
+
+Fonte: Código do Trabalho, arts. 457.º e 458.º, texto lido na PGDL a 04/11/2026.
+
+- **Quando se cobra.** Quando o instrumento coletivo o prevê e o trabalhador autoriza, ou por opção expressa do trabalhador (art. 458.º, n.º 1). Não cobrar a quota a quem a autorizou é contraordenação muito grave (art. 458.º, n.º 8).
+- **A declaração.** É escrita e assinada, e indica o valor ou a percentagem e o sindicato (n.º 2). O trabalhador envia uma cópia ao sindicato (n.º 6).
+- **Entrega.** Até ao dia 15 do mês seguinte (n.º 3).
+- **Efeitos.** A autorização e a cessação contam a partir do mês seguinte ao da entrega ao empregador (n.º 7).
+- **Dados sensíveis.** A filiação sindical só pode ser usada para cobrar e entregar as quotas (art. 457.º, n.º 3).
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a base da percentagem (o fiscaldoo usou a retribuição base, sem o subsídio de alimentação); a quota ficar fora do limite de um sexto do art. 279.º, n.º 3, do Código do Trabalho; a conta 2781 no modelo de contabilização; e o campo da quota na DMR.</span>
+
+## Problemas frequentes
+
+### Ao ativar: «sem a declaração escrita e assinada»
+
+- **Mensagem:** «A autorização de … não pode ser ativada sem a declaração escrita e assinada. O que aconteceu: o art. 458.º/2 do Código do Trabalho exige que o trabalhador a escreva e assine, indicando o valor ou a percentagem e o sindicato. Como resolver: anexe a declaração e marque «Escrita e assinada».»
+- **Causa:** falta o ficheiro ou a marca. Só a marca não chega.
+- **O que fazer:** faça as duas coisas e carregue de novo em **Ativar**.
+
+### A percentagem é recusada
+
+- **Mensagem:** «A percentagem da quota sindical não pode passar 100 %. Como resolver: copie a percentagem da declaração do trabalhador.»
+- **O que fazer:** escreva a percentagem como número, por exemplo `1` para 1 %.
+
+### Ao calcular: a linha não tem autorização
+
+- **Mensagem:** «A linha «Quotas sindicais» do recibo de … desconta quota sindical mas não tem autorização deste trabalhador. O que aconteceu: a quota só se desconta com a autorização escrita do trabalhador (CT art. 458.º/1-2). Como resolver: nas linhas do recibo, escolha a autorização do trabalhador na coluna «Autorização de quota sindical», ou retire a linha.»
+- **O que fazer:** escolha a autorização na linha, guarde e calcule de novo.
+
+### Ao calcular: a quota não é descontada neste recibo
+
+- **Mensagem:** «A quota sindical de … não é descontada neste recibo: a autorização produz efeitos em 01/11/2026 e termina em 01/12/2026 (art. 458.º/7: a partir do mês seguinte ao da entrega). Como resolver: retire a linha deste recibo.»
+- **Causa:** o mês do recibo está fora do período da autorização.
+- **O que fazer:** retire a linha.
+
+### Ao terminar: «A cobrança … não pode terminar»
+
+- **Mensagem:** «A cobrança de … não pode terminar. O que aconteceu: só termina uma autorização ativa, e com o dia em que o trabalhador entregou a declaração escrita de cessação. Como resolver: preencha «Cessação entregue em» e anexe a declaração.»
+- **O que fazer:** preencha a data e carregue de novo em **Terminar a cobrança**.
+
+### A data da cessação é recusada
+
+- **Mensagem:** «A cessação foi entregue antes da autorização. Como resolver: corrija «Cessação entregue em».»
+- **O que fazer:** escreva a data que está na declaração de cessação.
+
+### Ao guardar o sindicato: «Há campos obrigatórios por preencher»
+
+- **Causa:** falta o **Contacto (contabilidade)**.
+- **O que fazer:** escolha o contacto. Se não existir, veja [Antes de começar](#antes-de-começar).
+
+### Ao contabilizar: «Contabilização bloqueada»
+
+- **Mensagem:** «Contabilização bloqueada: 1 rubrica(s) com valor não têm modelo de contabilização em 30/11/2026: Quotas sindicais. […]»
+- **O que fazer:** crie o modelo da rubrica (ver [Antes de começar](#antes-de-começar)) e contabilize de novo.
+
+{/* Nota interna (DOCS-046, lote v13-PAY2, master cf8052b9e): tudo por clique com Administrador de Salários (sindicato, autorização, recibos de novembro e dezembro, 6 recusas, modelo, entrega dentro e fora de prazo, cessação); contacto criado com Contabilista; Processador sem Novo. Acerto com credores do sindicato não repetido: é o mesmo ecrã validado na cessão. Auditoria 05/11, master 255d77e63 (PAY-104): linha sozinha e sem repetir, terminar sem data e data anterior por clique. As recusas de «Ao calcular» só surgem numa linha acrescentada à mão, e não foram repetidas. */}

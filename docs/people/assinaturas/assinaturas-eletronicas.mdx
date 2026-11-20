@@ -1,0 +1,135 @@
+---
+id: assinaturas-eletronicas
+slug: /people/assinaturas-eletronicas
+title: Como pedir a assinatura eletrónica de um documento
+sidebar_label: Pedir uma assinatura eletrónica
+sidebar_position: 1
+description: Criar um modelo a partir de um PDF, marcar onde se assina, enviar o pedido a um trabalhador e acompanhar até ao PDF assinado.
+keywords: [assinatura eletrónica, pedir assinatura, modelo de assinatura, pedido de assinatura, enviar para assinar, pdf assinado, assinaturas, colocar os campos]
+doc_id: DOC-0269
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master acd623385)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/o-meu-espaco/confirmar-um-documento, people/trabalhadores/enviar-documentos-para-confirmar]
+---
+
+## Para que serve?
+
+Quando precisa que um trabalhador assine um PDF (uma declaração de receção de equipamento, por exemplo), cria um **modelo** com o PDF e o sítio da assinatura, envia o **pedido** e acompanha-o até ter o PDF assinado e a prova do que foi assinado.
+
+## Quando utilizar?
+
+- Quer a assinatura de um trabalhador num documento seu, e não apenas a confirmação de um documento que o fiscaldoo gera (para isso veja [Como pedir ao trabalhador que confirme um documento](/people/enviar-documentos-para-confirmar)).
+- Quer reutilizar o mesmo documento com várias pessoas: o modelo guarda-se e cada pedido é uma cópia.
+
+## Onde encontrar?
+
+**Assinaturas › Modelos** (o PDF e os campos) e **Assinaturas › Pedidos** (os envios e o seu estado). Os **Papéis** (quem assina: Signatário, Trabalhador, Entidade empregadora, Testemunha) e o **Histórico** estão em **Assinaturas › Configurar**.
+
+## Antes de começar
+
+- O seu perfil é **Gestor de RH**; o administrador do sistema também cria modelos e pedidos.
+- A **Gerência** e o **Auditor / ROC** têm a aplicação **Assinaturas** (**Por assinar**, **Pedidos**, **Modelos**; o Auditor / ROC tem também **Configurar**) para acompanhar, mas não criam nem alteram modelos e pedidos: as listas não têm **Novo** e a ficha do modelo não tem **Colocar os campos** (só **Campos**). A **Gerência**, quando é signatária, assina em **Por assinar**.
+- O **Trabalhador**, o **Processador de salários** e o **Contabilista** não têm a aplicação **Assinaturas**: o Processador de salários e o Contabilista têm só **As minhas assinaturas**, e o Trabalhador assina em **O meu espaço › As minhas assinaturas** (veja [Como confirmar ou assinar um documento que a empresa me enviou](/people/confirmar-um-documento)).
+- Tenha o PDF à mão e o contacto de quem assina com o **e-mail** preenchido (um trabalhador tem-no na ficha).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Assinaturas › Modelos** e carregue em **Novo**. Escreva o **Nome**, escolha o **PDF** em **Escolher ficheiro** e carregue em **Guardar**. O ecrã preenche as **Páginas** e o **SHA-256 do PDF**.
+2. Carregue em **Colocar os campos**. No lado esquerdo escolha o **Tipo** (**Assinatura**, **Nome**, **Data**, **Texto** ou **Caixa de seleção**) e o **Papel** (por exemplo **Trabalhador**) e clique na página, ou arraste para desenhar o tamanho.
+3. Com o campo selecionado, em **Campo selecionado**, confirme o **Papel**, escreva a **Etiqueta** e deixe **Obrigatório** marcado (vem marcado). **Esquerda**, **Topo**, **Largura** e **Altura** afinam a posição em percentagem da página; **Apagar o campo** retira-o.
+   ![Editor do modelo com o campo de assinatura do papel Trabalhador sobre o PDF](/images/people/assinaturas-eletronicas/01-editor.png)
+4. O editor guarda cada alteração sozinho (não tem botão **Guardar**). Carregue em **Voltar ao modelo**: o separador **Campos** lista a **Página**, o **Tipo**, o **Papel**, a **Etiqueta** e se é **Obrigatório**.
+5. No modelo, carregue em **Novo pedido**: o **Modelo** vem escolhido e o **Documento** (o nome do pedido) vem com o nome do modelo; acrescente-lhe o nome de quem assina, por exemplo «Receção do portátil - Bruno Miguel Teixeira». Em alternativa, abra **Assinaturas › Pedidos** e carregue em **Novo**: o **Documento** vem vazio e, quando escolhe o **Modelo**, passa a ter o nome do modelo; acrescente-lhe o nome de quem assina. Sem **Documento**, o pedido não se guarda. Se quiser, preencha o **Prazo**, **Assinar por ordem**, **Lembrar a cada (dias)**, o **Idioma do certificado** e a **Mensagem para os signatários**.
+6. No separador **Signatários** carregue em **Adicionar uma linha** e escolha o **Papel** (**Trabalhador**) e o **Signatário** (o contacto do trabalhador; o **E-mail** aparece sozinho). Carregue em **Guardar**.
+   ![Pedido de assinatura em rascunho com o modelo, o prazo e o signatário](/images/people/assinaturas-eletronicas/03-pedido.png)
+7. Carregue em **Enviar**. O estado passa de **Rascunho** a **Enviado** e o signatário fica **Por assinar**.
+8. Acompanhe em **Assinaturas › Pedidos**: a lista mostra **Assinado** (quantos já assinaram) e **Número de signatários**, e o **Estado**.
+   ![Lista de pedidos de assinatura nos estados Rascunho, Recusado e Assinado](/images/people/assinaturas-eletronicas/02-pedidos.png)
+9. Quando o trabalhador assina, o pedido fica **Assinado**: carregue em **Descarregar o PDF assinado**. O separador **Prova** guarda as datas, as impressões digitais (**SHA-256**) do PDF enviado e do assinado e se está **Íntegro**.
+   ![Separador Prova de um pedido assinado, com as datas, o SHA-256 e o PDF assinado](/images/people/assinaturas-eletronicas/04-prova.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, as assinaturas do fiscaldoo ficam dentro da aplicação **Assinar** do Enterprise, que substitui **Assinaturas**. Para o **Gestor de RH**, o procedimento e os ecrãs são os mesmos; mudam os caminhos:
+
+- **Assinar › Modelos do RH** (o PDF e os campos, com **Colocar os campos** e **Novo pedido**);
+- **Assinar › Documentos › Pedidos do RH** (os envios e o seu estado) e **Assinar › Documentos › Por assinar**;
+- **Assinar › Configurar › Papéis** e **Assinar › Configurar › Histórico**.
+
+![Pedido de assinatura Receção do portátil enviado a um trabalhador, dentro da aplicação Assinar, com o estado Enviado e o signatário Por assinar](/images/people/assinaturas-eletronicas/05-no-enterprise-assinar.png)
+
+No exemplo, o modelo «Receção do portátil» (PDF de 1 página com um campo de **Assinatura** do papel **Trabalhador**) e o pedido «Receção do portátil - Bruno Miguel Teixeira» passaram a **Enviado**, com o signatário **Por assinar**, e o trabalhador assinou-o em **O meu espaço › As minhas assinaturas**. Um signatário sem e-mail dá a mesma recusa que no Community («… não tem email. …»).
+
+Nos outros perfis:
+
+- A **Gerência** tem a aplicação **Assinar** com **Documentos** (**Por assinar**, **Pedidos do RH**), **Modelos do RH** e também **Configurar** (**Papéis**, **Histórico**). Como no Community, as listas não têm **Novo** e um pedido aberto não tem **Enviar** nem **Cancelar**.
+- O **Processador de salários** assina em **Assinar › Documentos › Por assinar**, em vez de **As minhas assinaturas**.
+- O **Trabalhador** continua a assinar em **O meu espaço › As minhas assinaturas**.
+- O **administrador do sistema** vê também os pedidos e os modelos deste artigo, em **Assinar › Documentos › Pedidos do RH** e **Assinar › Modelos do RH**, com os mesmos botões que o Gestor de RH. Tem ainda a gestão da aplicação **Assinar** do Enterprise: **Assinar › Modelos** e **Assinar › Documentos** (**Meus documentos**, **Todos os documentos**) abrem os ecrãs do Enterprise, com **Carregar PDF**, que não fazem parte deste procedimento.
+
+{/* Nota interna (lote EE-14, EEA-086 06a67d2ad e DEC-1853 e7ba9674b/4f1d82f1d em master acd623385, 12/11/2026): cópia Enterprise docs_ee_ee14_test no portátil (pg_dump da odoo20_ee_test, já com o comboio 196; -i de hr_payroll, hr_appraisal e planning e -u de fiscaldoo_ux_kit e l10n_pt_fiscaldoo_demo; ee_neutralizar antes e construir), porta 8524, guarda de rede ligada; utilizadores criados na cópia, cada um só com um valor do campo Perfil. Menus do Assinar pelo load_menus: Gestor de RH e Gerência «Documentos › Por assinar, Pedidos do RH», «Modelos do RH», «Configurar › Papéis, Histórico»; Processador só «Documentos › Por assinar»; administrador com Por assinar, Meus documentos, Todos os documentos, Pedidos do RH, Modelos, Modelos do RH, Consultar e Configurar. Modelo «Receção do portátil» e pedido «Receção do portátil - Bruno Miguel Teixeira» criados e enviados por RPC com o Gestor de RH (nome do utilizador «Recursos Humanos (demonstração)»); por clique, o Gestor de RH e o administrador abriram o pedido em Pedidos do RH (Enviar lembrete, Cancelar) e o modelo em Modelos do RH. Captura 05 refeita (Modelos do RH no menu e Pedidos do RH no caminho). */}
+{/* Nota interna (lote EE-11, DOCS-073 #4142, DEC-1794, master 589ecfd27, 12/11/2026): cópia Enterprise docs_ee_ee11_test no portátil (pg_dump da odoo20_ee_test, já em 589ecfd27; -i de hr_payroll, planning, hr_appraisal e hr_recruitment e -u de fiscaldoo_ux_kit e l10n_pt_fiscaldoo_demo; ee_neutralizar antes e construir), porta 8508, guarda de rede ligada; utilizadores criados por RPC na cópia, cada um só com um valor do campo Perfil: ee11_rh («Recursos Humanos (demonstração)» na captura) por clique: modelo «Receção do portátil» (PDF de 1 página feito para o lote, Páginas 1 e SHA-256), Colocar os campos (o mesmo editor: Tipo, Papel, «Cada alteração fica guardada…»), campo Assinatura/Trabalhador, Novo pedido, linha de signatário e Enviar; 1.º pedido para o contacto «Bruno Miguel Teixeira» da ficha (Enviado, captura 05); 2.º pedido para o contacto do utilizador do trabalhador: recusa «Perfil trab (ee11) não tem email. O que aconteceu: não foi possível enviar o convite. Como resolver: preencha o email do contacto.» e, depois de o administrador pôr o e-mail por RPC, Enviado; assinado por clique por ee11_trab. Documentos meus. Menus de Assinar por perfil (ee11_rh, ee11_ger, ee11_proc, admin) comparados com Assinaturas/As minhas assinaturas na cópia Community; ee11_ger sem Novo em Modelos e Pedidos e, na ficha do pedido, só Histórico e Descarregar o PDF assinado. O administrador tem sign.group_sign_user e a ponte l10n_pt_fiscaldoo_ee_sign esconde-lhe os pedidos e modelos do fiscaldoo (DEC-760); vê os do Enterprise com dados de demonstração do Odoo e textos em inglês («Request a signature», «Try a sample document», «Scheduled», «Shared»): relatório do lote. Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee11_test (master 589ecfd27, porta 8518), com os mesmos utilizadores. Ver reports/LOTE_EE-11.md. */}
+
+## Resultado esperado
+
+No exemplo, o pedido de um só signatário (papel **Trabalhador**) ficou **Assinado** com 1 de 1 assinaturas. O PDF assinado tem o nome «*Documento* - assinado.pdf» e a assinatura no sítio marcado. O botão **Histórico** do pedido regista, com o endereço IP e a hora, quando foi **criado**, **enviado**, **assinado** e **concluído**.
+
+## Notas importantes
+
+- **O modelo copia-se para o pedido.** Mudar os campos do modelo depois de enviar não altera os pedidos já enviados.
+- **Cada papel que assina precisa de um campo de assinatura**, e cada papel com campos precisa de um signatário (veja «Problemas frequentes»).
+- **Assinar por ordem** convida primeiro quem está na primeira linha do separador **Signatários** e só convida os seguintes quando os anteriores assinaram; a ordem é a das linhas (arraste-as pela pega à esquerda). No exemplo, com o Trabalhador na 1.ª linha e a Entidade empregadora na 2.ª, depois de **Enviar** a 1.ª ficou **Por assinar** e a 2.ª **À espera da sua vez**. Quando o trabalhador assinou, viu «A sua assinatura foi registada. O documento aguarda os outros signatários.», a 2.ª linha passou a **Por assinar** e o **Histórico** registou o convite à Entidade empregadora.
+- **Enviar lembrete** volta a convidar quem ainda não assinou e **Reenviar** (na linha do signatário) reenvia só a essa pessoa. Nenhum dos dois mostra mensagem no ecrã: cada clique fica no **Histórico** do pedido, numa linha **Lembrete** com o signatário. **Lembrar a cada (dias)** faz o mesmo sozinho, com o intervalo que indicar (0 = sem lembretes).
+- **Assinar presencialmente** (na linha do signatário, enquanto está **Por assinar**) abre o PDF, com os botões **Recusar** e **Assinar o documento** e o aviso «Está a registar uma assinatura dada presencialmente. O que acontece: fica guardada como assinada presencialmente, com o seu nome como quem a registou.» Use-o só com a pessoa à sua frente e com o consentimento dela.
+- **Cancelar** pede confirmação («Cancelar este pedido? Os signatários deixarão de o poder assinar.»). Um pedido assinado já não se cancela.
+- O pedido enviado não se edita, exceto o **Prazo**, o **Lembrar a cada (dias)** e a mensagem. Para mudar mais, cancele e crie outro.
+- A assinatura é eletrónica simples e o PDF assinado regista quem assinou, quando e de que endereço; não é uma assinatura digital qualificada. <span className="fd-pending">Pendente de validação por contabilista certificado: o valor legal desta assinatura em cada tipo de documento.</span>
+- <span className="fd-pending">Pendente de validação no ecrã: o convite por e-mail. A demonstração não tem servidor de correio e a comunicação ao exterior está bloqueada; o histórico diz «NÃO ENVIADO, reenviar» e o trabalhador vê o pedido em **As minhas assinaturas** na mesma.</span>
+
+{/* Nota interna (DOCS-046, lote v23-X, 08/11/2026, master cebcb888d, docs_demo_v23x_test): o que a auditoria v22-E viu só por leitura, agora por clique com um utilizador criado só com o perfil Gestor de RH (DEC-1777). Modelo «Receção do portátil» (PDF de 1 página e um campo de assinatura do Trabalhador) e pedido «Receção do portátil - Eva Rocha» criados e enviados por RPC com esse utilizador, na cópia. Enviar lembrete e Reenviar: sem mensagem no ecrã; o Histórico ganhou uma linha «Lembrete» por clique, com «NÃO ENVIADO, reenviar» (sem servidor de correio). Assinar presencialmente: o aviso citado, igual, e os botões Recusar e Assinar o documento; a assinatura presencial não foi concluída. */}
+{/* Nota interna (lote v23-Q, #3947, DOC-0269, master 808f8ca1f, docs_demo_v23q_test, porta 8452): com utilizadores criados só com cada valor do campo Perfil (DEC-1777), no ecrã: Gerência e Auditor sem Novo nas listas Modelos e Pedidos e, na ficha do modelo «Receção do portátil» (criado pela integração com o Gestor de RH, PDF de 1 página), só com o botão Campos (sem Colocar os campos nem Novo pedido); o Gestor de RH tem Novo e Colocar os campos. Pela integração, criar um pedido dá à Gerência «Não tem permissão para criar «Pedido de assinatura». O seu perfil só consulta «Pedido de assinatura»: … Quem faz: «Gestor de RH». …» e ao Auditor o texto do só de leitura: não se cita no artigo, porque no ecrã já não se chega lá. */}
+{/* Nota interna (auditoria v22-E, 06/11/2026, master d83bdf7ae, base docs_demo_v22e_test, porta 8372): por clique com utilizadores criados só com cada valor do campo Perfil (DEC-1777). Gestor de RH: modelo «Receção do monitor» com PDF (1 página, SHA-256), editor com Obrigatório marcado, 2 campos (Trabalhador e Entidade empregadora), Novo pedido com o Documento preenchido, «O papel «Entidade empregadora» não tem campo de assinatura…» num pedido feito antes do 2.º campo, Assinar por ordem (Por assinar / À espera da sua vez), Histórico com o convite à Entidade empregadora; Pedidos › Novo: «Há campos obrigatórios por preencher…», «Adicione pelo menos um signatário…» e «Cancelar este pedido?…». O Trabalhador assinou em O meu espaço › As minhas assinaturas («A sua assinatura foi registada…») e a Gerência em Por assinar («Todas as assinaturas estão feitas…»). Apps de cada perfil conferidas. Novo pedido e Colocar os campos continuavam visíveis à Gerência e ao Auditor e só davam recusa (resolvido: ver a nota do lote v23-Q). Captura 04-prova refeita (a antiga mostrava «Administrador (teste)»). */}
+{/* Nota interna (DOCS-046, lote v22-E, 06/11/2026, master d83bdf7ae, base docs_demo_v22e_test, porta 8362): percorrido por clique com um utilizador criado só com o perfil Gestor de RH (DEC-1777): modelo «Receção do portátil» com PDF, editor, Voltar ao modelo, Novo pedido, signatário, Guardar e Enviar; assinado pelo trabalhador da demonstração em As minhas assinaturas; Prova, Descarregar o PDF assinado e Histórico vistos. «Assinar por ordem» provado com 2 signatários («Receção do monitor - Eva Rocha»). As recusas da Gerência e do Auditor foram vistas por clique com utilizadores só com esses perfis; as apps do Trabalhador, do Processador de salários e do Contabilista também. Não se provaram as datas e textos preenchidos pelo signatário. */}
+
+## Problemas frequentes
+
+### «Há campos obrigatórios por preencher»
+
+- **Sintoma:** **Guardar** o pedido mostra «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** falta o **Documento** (o nome do pedido) ou, na linha do signatário, o **Papel**.
+- **O que fazer:** escreva o **Documento**, escolha o **Papel** (e o **Signatário**) e guarde.
+
+### «O prazo já passou»
+
+- **Sintoma:** **Enviar** abre «Operação inválida: O prazo já passou. Como resolver: escolha hoje ou um dia posterior.»
+- **O que fazer:** corrija o **Prazo** e envie outra vez.
+
+### «Adicione pelo menos um signatário»
+
+- **Sintoma:** **Enviar** abre «Adicione pelo menos um signatário. Como resolver: adicione as pessoas que têm de assinar, uma por papel.»
+- **O que fazer:** adicione a linha do passo 6.
+
+### «… não tem email»
+
+- **Sintoma:** **Enviar** diz «*Nome* não tem email. O que aconteceu: não foi possível enviar o convite. Como resolver: preencha o email do contacto.»
+- **O que fazer:** preencha o e-mail do contacto e envie.
+
+### «O papel … não tem campo de assinatura»
+
+- **Sintoma:** **Enviar** diz «O papel «Entidade empregadora» não tem campo de assinatura. O que aconteceu: *Nome* não teria nada para assinar. Como resolver: coloque no modelo um campo de assinatura para este papel.»
+- **Causa:** adicionou um signatário de um papel que não tem campo de assinatura no modelo.
+- **O que fazer:** retire essa linha, ou volte ao modelo, coloque o campo de assinatura desse papel e crie outro pedido (o pedido enviado ou em rascunho guarda a cópia dos campos que o modelo tinha).
+
+### «O papel … tem campos mas não tem signatário»
+
+- **Sintoma:** **Enviar** diz «O papel «Testemunha» tem campos mas não tem signatário. Como resolver: adicione um signatário para este papel.»
+- **Causa:** o modelo tem campos de um papel que não está na lista de **Signatários** do pedido.
+- **O que fazer:** no separador **Signatários**, adicione uma linha com esse papel e a pessoa que o assina, e envie.

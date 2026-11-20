@@ -1,0 +1,103 @@
+---
+id: taxa-de-iva-nao-corresponde
+slug: /troubleshooting/taxa-de-iva-nao-corresponde
+title: A taxa de IVA não corresponde à região ou ao tipo de operação
+sidebar_label: Taxa de IVA não corresponde
+description: A linha da fatura traz uma taxa de IVA errada, duas taxas, ou a fatura é recusada por autoliquidação ou regime da margem. O que conferir antes de confirmar e como resolver.
+keywords: [taxa de IVA, taxa errada, taxa de iva errada, região, regiao, Continente, Açores, Acores, Madeira, 22% MA, 12% MA, autoliquidação, autoliquidacao, duas taxas, 2 taxas de IVA, só é permitida uma por linha, so e permitida uma por linha, coluna Impostos, regime da margem, preço de compra, preco de compra]
+doc_id: DOC-0350
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c2bf63c34)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/iva/taxas-e-isencoes-de-iva, troubleshooting/contabilidade-e-iva/dp-iva-nao-pode-ser-gerada]
+---
+
+## Sintoma
+
+Numa fatura em rascunho, a coluna **Impostos** de uma linha tem uma taxa que não é a que espera para a região ou para o tipo de operação, ou o fiscaldoo recusa a fatura ao carregar em **Confirmar**.
+
+## Mensagem
+
+Com duas taxas de IVA na mesma linha:
+
+> «A linha “*[SERV] Serviço genérico*” da fatura a *Construções Marão, Lda* tem 2 taxas de IVA (IVA ou «não sujeito») — só é permitida uma por linha. Os impostos especiais de valor fixo (por exemplo, uma ecotaxa) têm de usar um tipo de imposto que não seja IVA, não uma segunda taxa de IVA.»
+
+![Recusa de uma fatura com duas taxas de IVA na mesma linha](/images/troubleshooting/taxa-de-iva-nao-corresponde/01-duas-taxas-na-linha.png)
+
+Com uma taxa de autoliquidação (por exemplo, **0% AUT construção (sem dedução)**) numa fatura a um cliente de fora de Portugal:
+
+> «O documento *FT D26/38* usa uma taxa de autoliquidação («IVA - autoliquidação», art. 2.º n.º 1 do CIVA) mas o parceiro não está estabelecido em Portugal (as operações intracomunitárias e as exportações não usam a autoliquidação interna). A autoliquidação só existe entre sujeitos passivos estabelecidos em Portugal: indique um NIF português válido no parceiro ou use outra taxa.»
+
+![Recusa de uma taxa de autoliquidação numa fatura a um cliente de fora de Portugal](/images/troubleshooting/taxa-de-iva-nao-corresponde/02-recusa-autoliquidacao.png)
+
+A fatura continua em rascunho. Hoje, a mensagem mostra o próximo número da série, mas esse número não lhe fica atribuído e pode ir para outra fatura.
+
+Com uma linha no regime da margem, sem preço de compra:
+
+> «A linha “*[SERV] Serviço genérico*” de *Rascunho de fatura* é vendida no regime da margem mas não tem preço de compra. O que aconteceu: o IVA incide só sobre a diferença entre o preço de venda e o preço de compra (art. 4.º n.º 1 do Decreto-Lei 199/96), por isso é preciso o preço de compra. Como resolver: preencha «Preço de compra (com IVA)» na linha.»
+
+## Causas verificadas
+
+- **A taxa foi acrescentada, em vez de trocada.** A coluna **Impostos** aceita mais do que uma taxa: ao escolher uma segunda, a primeira fica. Na demonstração, a linha ficou com **6%** e **23%**, e foi recusada só ao confirmar.
+- **A lista tem taxas de outras regiões.** Numa empresa do Continente, a lista da linha mostra, além de **23%**, **13%** e **6%**, a taxa **22% MA** da Madeira e as de operações especiais, como **0% EU S** e **0% EX S**. As outras taxas das regiões procuram-se pela sigla: **MA** mostra também **12% MA**, **5% MA** e **4% MA**, e **AZ** mostra **16% AZ**, **9% AZ** e **4% AZ**, dos Açores. A pesquisa pela palavra «Açores» responde «Sem registos».
+- **O fiscaldoo não recusa nem avisa uma taxa de outra região.** Com **22% MA**, numa empresa do Continente e com um cliente de Vila Real, o rascunho mostrou **IVA 22%** e 122,00 € sobre 100,00 €, e **Confirmar** publicou a fatura sem qualquer mensagem sobre a taxa. Depois de publicada, a taxa já não se altera.
+- **A taxa não muda com a região do cliente.** Com um cliente do Funchal (código postal 9000-100), a linha continuou com **23%** e a fatura foi publicada assim. Quem escolhe a taxa é quem faz a fatura.
+- **A autoliquidação só passa com cliente estabelecido em Portugal.** Com um cliente dos Estados Unidos, recusa acima. Com **Construções Marão, Lda** (NIF português), a mesma taxa foi aceite, com **IVA 0%**.
+- **O regime da margem precisa do preço de compra.** As colunas **Regime da margem** e **Preço de compra (com IVA)** estão escondidas: escolhem-se no botão de colunas, à direita do cabeçalho das linhas.
+
+## O que confirmar
+
+1. Na linha da fatura, a coluna **Impostos**: tem uma só taxa?
+2. Nos totais, abaixo das linhas, a percentagem e o valor do IVA, **antes** de carregar em **Confirmar**.
+3. No cliente, o país e o NIF, se usa uma taxa de autoliquidação.
+4. Que taxa deve aplicar. O artigo [Taxas e isenções de IVA](/accounting-pt/taxas-e-isencoes-de-iva) explica de onde vem a taxa, as taxas de cada região e a isenção intracomunitária.
+
+## Como resolver
+
+1. Com a fatura em rascunho, carregue na linha.
+2. Conforme a mensagem:
+   - **Duas taxas ou taxa errada:** na coluna **Impostos**, tire a taxa a mais ou a errada e escolha a certa.
+   - **Autoliquidação:** corrija o cliente, se o NIF português faltar, ou escolha outra taxa.
+   - **Regime da margem:** preencha **Preço de compra (com IVA)**. Com preço de venda de 100,00 € e de compra de 60,00 €, a **Taxa de IVA da margem** de 23% e **IVA da margem** de 7,48 €, o aviso passa a ser «Regime da margem (Decreto-Lei 199/96): a fatura não mostra IVA. IVA da margem deste documento: 7,48 €».
+3. Confira os totais e carregue em **Confirmar**. A publicação demorou entre 6 e 8 segundos na demonstração, com **23%** e com **22% MA**: espere pelo número da fatura e não carregue outra vez.
+
+Se a fatura já foi emitida, a taxa não se altera: [Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado).
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: que taxa aplicar quando a empresa e o cliente estão em regiões diferentes, e em cada tipo de operação com autoliquidação.</span>
+
+**Quem faz:** o perfil **Administrativo**, com que estes passos foram feitos.
+
+## Resultado esperado
+
+A fatura fica **Publicada**, com uma só taxa em cada linha e o IVA do total igual a essa taxa. Por exemplo:
+
+| Fatura de 100,00 € | Débito | Crédito |
+|---|---|---|
+| **22% MA** (`FT D26/34`): 2111 Clientes gerais | 122,00 € | |
+| 721 Prestações de serviços | | 100,00 € |
+| 2433 IVA - Liquidado | | 22,00 € |
+| **Regime da margem** (`FT D26/38`): 2111 Clientes gerais | 100,00 € | |
+| 721 Prestações de serviços | | 100,00 € |
+| Lançamento à parte (`OD/2026/00104`): 721 Prestações de serviços | 7,48 € | |
+| 2433 IVA - Liquidado | | 7,48 € |
+
+A taxa de outra região vai para a mesma conta 2433.
+
+{/* Nota interna (v9-B, DOC-0350, master 0ad668575, base docs_demo_v9b_test): tudo por clique com demo.faturacao, Empresa Demonstração. Confirmar com 22% MA: publicada (FT D26/34), 7,6 s, igual ao controlo com 23% (FT D26/35): o «inconclusivo» de v8-TS6 era espera curta de 3,5 s, não é defeito. Cliente do Funchal criado por RPC: FT D26/36 a 23%. Autoliquidação: FT D26/37 aceite, recusa com Harbor Tech Inc. O número FT D26/38 da recusa foi depois para outra fatura: defeito no relatório. IVA de caixa: fora do artigo, a demonstração não tem nenhuma taxa de IVA de caixa (nem arquivada), por isso as mensagens não se provocam sem mudar o regime da empresa. */}
+
+## Quando contactar o suporte
+
+- A linha tem uma só taxa e, mesmo assim, aparece a recusa de duas taxas.
+- A taxa certa não aparece na lista.
+- **Confirmar** não publica a fatura nem mostra mensagem, ao fim de um minuto.
+
+## Informação a enviar
+
+- A empresa, o cliente e a taxa que esperava.
+- O texto completo da mensagem, copiado do ecrã.
+- O perfil com que entrou e a hora aproximada.
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo (os passos feitos antes com o utilizador de faturação da demonstração, que hoje tem o perfil Administrativo, com o mesmo grupo de faturação); menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador) */}

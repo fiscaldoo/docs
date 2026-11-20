@@ -1,0 +1,116 @@
+---
+id: alterar-a-vida-util
+slug: /accounting-pt/alterar-a-vida-util
+title: Como parar, retomar ou alterar a vida útil de um ativo
+sidebar_label: Parar, retomar ou alterar a vida útil
+sidebar_position: 5
+description: Parar e retomar a depreciação de um ativo fixo tangível, alterar a vida útil contabilística com o motivo registado, recalcular o quadro e simular o efeito antes de gravar.
+keywords: [parar um ativo, retomar um ativo, alterar a vida útil, vida útil de um ativo, ativo parado, depreciação parada, quadro contabilístico, quota de depreciação, simular uma alteração, estimativa contabilística, ativos fixos tangíveis, depreciações]
+doc_id: DOC-0124
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/ativos/processar-depreciacoes, accounting-pt/ativos/abater-ou-vender-um-ativo]
+---
+
+## Para que serve?
+
+Um ativo fixo tangível «Em uso» depreciado todos os meses pode, durante um tempo, deixar de ser usado (por exemplo, uma impressora avariada), ou a empresa pode concluir que vai durar mais ou menos anos do que previu. O produto tem um assistente para as três situações: **parar** a depreciação, **retomá-la** e **alterar a vida útil contabilística**. Em todos os casos pede o **motivo**, que fica no histórico do ativo. Este artigo explica o que cada operação faz, o que não faz (parar não anula quotas) e como o quadro de depreciações se atualiza.
+
+## Quando utilizar?
+
+- Um ativo está parado e quer que ele saia do lote mensal de depreciações até voltar a funcionar.
+- A estimativa da vida útil mudou e quer que as quotas futuras reflitam o novo número de anos.
+- Quer ver o efeito de uma vida útil diferente **sem gravar nada** (a simulação, no fim do artigo).
+- **Não** use esta operação para vender ou abater o ativo (ver [abater ou vender um ativo](/accounting-pt/abater-ou-vender-um-ativo)) nem para corrigir quotas já lançadas: os períodos já processados nunca mudam.
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Terceiros e ativos › Ativos fixos**. Abra a ficha de um ativo **Em uso** (a lista abre com o filtro **Em uso**; para ver os parados, retire o filtro). Os comandos estão no botão **Ações**, grupo **Contabilístico**: **Parar** e **Parar / alterar vida útil**. Num ativo parado, o botão **Retomar** aparece ao lado, no cabeçalho.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** (testado com ele). O **Contabilista certificado** também o faz. A **Gerência** e o **Auditor / ROC** não: abrem a ficha, mas o cabeçalho só tem **Dossier do bem (PDF)**.
+- O ativo está **Em uso** (para parar e para alterar a vida útil) ou **Parado** (para retomar e para alterar a vida útil). Um ativo **Em preparação**, **Fechado**, **Alienado** ou **Abatido** não tem estas operações.
+- O exemplo é a **Impressora multifunções** (AF/00007), da Empresa Demonstração, Lda: custo de 2.400,00 €, 5 anos, quota contabilística de 40,00 € por mês. Os meses de fevereiro a outubro de 2026 já estão processados (9 quotas, 360,00 € depreciados, valor líquido de 2.040,00 €).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a ficha da **Impressora multifunções**. O estado é **Em uso**. Carregue em **Ações**: o grupo **Contabilístico** tem **Calcular quadro contabilístico**, **Parar**, **Anular processamento**, **Teste de imparidade** e **Parar / alterar vida útil**.
+   ![Menu Ações da ficha do ativo, com Parar e Parar / alterar vida útil no grupo Contabilístico](/images/accounting-pt/alterar-a-vida-util/01-menu-acoes.png)
+2. Escolha **Parar / alterar vida útil**. Abre o assistente **Parar / Retomar / Alterar a vida útil**, com o **Ativo**, a **Operação** (**Parar a depreciação**, **Retomar a depreciação** ou **Alterar a vida útil**) e o **Motivo**. Num ativo em uso a operação vem já em **Parar a depreciação**.
+3. Escreva o **Motivo** (`Impressora avariada, em reparação`) e carregue em **Confirmar**. Sem motivo o ecrã não deixa avançar: «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+   ![Assistente com a operação Parar a depreciação e o motivo preenchido](/images/accounting-pt/alterar-a-vida-util/02-assistente-parar.png)
+4. O estado passa a **Parado**. No cabeçalho aparece **Retomar** (numa janela estreita, na seta ao lado do primeiro botão) e deixa de haver **Parar**. No histórico da ficha ficam duas linhas: «Em uso → Parado (Estado)» e «Depreciação parada. Motivo: Impressora avariada, em reparação».
+   ![Ficha do ativo parado, numa janela estreita: o estado Parado e os valores de custo, depreciado e valor líquido](/images/accounting-pt/alterar-a-vida-util/03-ativo-parado.png)
+5. Para retomar, abra **Ações › Parar / alterar vida útil** (num ativo parado a operação vem em **Alterar a vida útil**), mude a **Operação** para **Retomar a depreciação**, escreva o motivo (`Impressora reparada`) e **Confirmar**. O estado volta a **Em uso** e o histórico regista «Depreciação retomada. Motivo: Impressora reparada». O botão **Retomar** do cabeçalho e **Ações › Parar** também mudam o estado, mas só isso: não pedem motivo.
+   ![Assistente com a operação Retomar a depreciação e o motivo preenchido](/images/accounting-pt/alterar-a-vida-util/04-assistente-retomar.png)
+6. Para alterar a vida útil, abra o assistente, escolha **Alterar a vida útil** e escreva a **Nova vida útil (anos)** (`6`) e o motivo (`Uso previsto mais longo, conferido pelo contabilista`). O assistente mostra a **Vida útil atual (anos)** (5,00); a **Nova vida útil (anos)** abre a 0,00. Carregue em **Confirmar**.
+   ![Assistente com a operação Alterar a vida útil: vida útil atual 5,00, nova vida útil 6 e o motivo](/images/accounting-pt/alterar-a-vida-util/05-assistente-vida-util.png)
+7. O quadro atualiza-se logo. O histórico mostra «5,00 → 6,00 (Vida útil contabilística (anos))», «Vida útil alterada de 5 para 6 anos (aplica-se aos períodos ainda não processados). Motivo: …» e «Quadro contabilístico recalculado: 63 período(s) planeado(s); 9 processado(s) mantido(s).» As 9 quotas já lançadas ficam como estavam (40,00 €) e as 63 seguintes passam a 32,38 € (2.040,00 € ÷ 63), até janeiro de 2032. O separador **Plano de depreciação** mostra cada período.
+   ![Separador Plano de depreciação do ativo: a última quota processada de 40,00 euros, a 31/10/2026, e as quotas planeadas de 32,38 euros](/images/accounting-pt/alterar-a-vida-util/06-plano-de-depreciacao.png)
+
+</StepByStep>
+
+### Simular antes de alterar
+
+O botão **Simular uma alteração**, no cabeçalho, abre uma janela onde pode escrever uma **Nova vida útil contabilística (anos)**, um **Novo método contabilístico** e uma **Nova taxa do DR 25/2009**. Carregue em **Simular** e a janela compara, período a período, as quotas contabilísticas e fiscais de hoje com as que resultariam (**Contab. agora** e **Contab. se**, **Fiscal agora** e **Fiscal se**, e as diferenças). Com 8 anos em vez de 6, a quota contabilística passaria de 32,38 € a 23,45 € por mês. Fechar a janela não grava nada: a vida útil do ativo continua em 6 anos.
+![Simulação de uma vida útil de 8 anos, só com as colunas do fim do período e das quotas contabilísticas: 32,38 euros agora e 23,45 euros com a alteração](/images/accounting-pt/alterar-a-vida-util/07-simular-uma-alteracao.png)
+
+## Resultado esperado
+
+- O ativo muda de **Em uso** para **Parado** e de volta, com o motivo no histórico. Estas operações **não criam lançamentos**.
+- **Parar não anula quotas.** Os períodos de depreciação continuam planeados. O que muda é o lote mensal: em **Contabilidade › Fechar › Contabilidade do mês › Depreciações do mês** (lista **Processar depreciações**) o campo **Estado do ativo** vem em **Em uso**, por isso o lote não inclui um ativo parado. Quando o lote é feito com **Parado** ou **Em uso e parado**, o ativo entra e o lote lança todas as quotas em atraso até à data (no exemplo, com outubro já processado, um lote a 30/11/2026 lança a quota de novembro, 32,38 €). Ver [processar as depreciações do mês](/accounting-pt/processar-depreciacoes).
+- A alteração da vida útil só muda os períodos **ainda não processados**. O quadro fiscal não é recalculado por este assistente: a taxa do DR 25/2009 continua a decidir a quota fiscal máxima (**Quadro fiscal**).
+- <span className="fd-pending">Pendente de validação por contabilista certificado: se um ativo parado deve continuar a depreciar-se (o produto mantém os períodos planeados e deixa a decisão ao lote), o tratamento da alteração de vida útil como alteração de estimativa (aplicação só aos períodos futuros, NCRF 4 do SNC) e o efeito fiscal da alteração (DR 25/2009).</span>
+
+## Notas importantes
+
+- **Dois caminhos para parar.** **Ações › Parar** e o botão **Retomar** só trocam o estado. O assistente **Parar / alterar vida útil** pede o motivo e deixa-o escrito. Prefira o assistente.
+- **Não é preciso recalcular à mão.** O assistente já recalcula o quadro. **Ações › Calcular quadro contabilístico** só repete o mesmo cálculo.
+- **Estado do lote.** Um ativo parado fica fora do lote mensal. Se o esquecer parado, as quotas não são lançadas e o resultado do período fica sem esse gasto, até um lote com **Parado** ou **Em uso e parado**.
+- **A simulação não é o assistente.** **Simular uma alteração** só mostra números; **Parar / alterar vida útil** grava.
+- Antes do fecho, os [avisos de fecho dos ativos](/accounting-pt/preparar-os-ativos-para-o-fecho) apontam o ativo parado com quotas do ano por processar, para confirmar se a depreciação deve mesmo ficar suspensa.
+
+## Problemas frequentes
+
+### «Só um ativo parado pode ser retomado; «Impressora multifunções» não está parado.»
+
+- **Causa:** escolheu **Retomar a depreciação** num ativo **Em uso** (mensagem **Operação inválida**).
+- **O que fazer:** feche a mensagem e o assistente. Se queria parar, escolha **Parar a depreciação**.
+  ![Mensagem Operação inválida: só um ativo parado pode ser retomado](/images/accounting-pt/alterar-a-vida-util/08-erro-retomar-em-uso.png)
+
+### «Só um ativo em uso pode ser parado; «Impressora multifunções» não está em uso.»
+
+- **Causa:** escolheu **Parar a depreciação** num ativo que já está **Parado**.
+- **O que fazer:** nada: o ativo já está parado. Para o pôr a funcionar, use **Retomar a depreciação**.
+
+### «A nova vida útil é igual à atual: não há nada para alterar.»
+
+- **Causa:** a **Nova vida útil (anos)** é igual à **Vida útil atual (anos)**.
+- **O que fazer:** escreva um número de anos diferente, ou feche o assistente.
+
+### «A nova vida útil tem de ser superior a zero (é em anos, por exemplo 8 ou 12,5).»
+
+- **Causa:** deixou a **Nova vida útil (anos)** a 0,00, ou escreveu um valor negativo.
+- **O que fazer:** escreva a vida útil em anos, com decimais se for preciso (12,5).
+
+### «Há campos obrigatórios por preencher»
+
+- **Causa:** o **Motivo** está vazio. É obrigatório nas três operações.
+  ![Aviso Há campos obrigatórios por preencher ao confirmar sem motivo](/images/accounting-pt/alterar-a-vida-util/09-motivo-obrigatorio.png)
+- **O que fazer:** escreva o motivo e carregue em **Confirmar**.
+
+### Não vejo os botões «Parar» nem «Retomar» no cabeçalho
+
+- **Causa:** **Parar** não está no cabeçalho: está em **Ações › Contabilístico**. **Retomar** só aparece num ativo **Parado**. Nenhum aparece para a Gerência nem para o Auditor / ROC.
+- **O que fazer:** abra **Ações** e escolha **Parar** ou **Parar / alterar vida útil**.
+
+{/* Nota interna (DOCS-046, DOC-0124): visto em docs_demo_v6a4_test (master 8f78854ec) com o Contabilista, tudo por clique. Assistente: parar, retomar, alterar de 5 para 6 anos. Ações › Parar e o botão Retomar exercidos no ecrã (só estado). Erros provocados: motivo vazio, parar parado, retomar em uso, vida igual, vida zero. V3A4-11 resolvido: o assistente recalcula e o histórico regista-o à mesma hora. Simular 8 anos: 32,50 → 23,64, a vida útil não muda. Lote simulado a 30/11/2026 (ficam 3 na base): Em uso 4 ativos sem a impressora; Parado só a impressora, 65,00 €; Em uso e parado 5. Gerência e Auditor: só Dossier do bem. A Impressora fica Em uso com 6 anos e quadro recalculado. Capturas 06 e 07 com linhas e colunas escondidas (o alt diz). */}
+
+{/* Nota interna (DOCS-046, lote v23-K, 07/11/2026, master a3603e0f2, base docs_demo_v23k_test na 8434, utilizador criado só com o perfil Contabilista): passo 6 por clique (assistente, 5 → 6 anos); histórico «Quadro contabilístico recalculado: 63 período(s) planeado(s); 9 processado(s) mantido(s).»; plano com 31/10/2026 processado a 40,00 € e 30/11/2026 planeado a 32,38 € (captura 06, recortada às primeiras 12 linhas, sem esconder nada); Simular com 8 anos: Contab. agora 32,38 €, Contab. se 23,45 € (captura 07, recortada às três primeiras colunas). O valor do lote em «Resultado esperado» (32,38 €) vem do plano conferido no ecrã; o lote não foi corrido de novo. */}

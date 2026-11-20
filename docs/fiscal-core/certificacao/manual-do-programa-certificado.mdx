@@ -1,0 +1,165 @@
+---
+id: manual-do-programa-certificado
+slug: /fiscal-core/manual-do-programa-certificado
+title: Onde está o manual do utilizador do programa certificado
+sidebar_label: Manual do programa certificado
+description: O manual do programa de faturação certificado, numa só página, para o dia a dia e para mostrar numa inspeção.
+keywords: [manual, manual do utilizador, manual do programa, programa certificado, faturação certificada, inspeção, inspecao, certificação, certificacao, documentação do programa, selo de validação, SVAT]
+doc_id: DOC-0015
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/certificacao/preparar-a-faturacao-certificada, fiscal-core/certificacao/integridade-dos-documentos, fiscal-core/certificacao/autodiagnostico-da-certificacao]
+---
+
+## Para que serve?
+
+O manual é esta página. Reúne, num só sítio, o que precisa no dia a dia fiscal do programa: emitir, usar as séries, anular, passar recibos, gerar o SAF-T e guardar cópias de segurança. Numa inspeção, é esta a página a mostrar, junto com os artigos para que ela liga.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: que esta página cumpre a documentação de utilizador pedida para o Selo de Validação AT (Portaria 293/2017, art. 3.º n.º 2 alínea b).</span>
+
+A regra de base: um documento emitido nunca se altera nem se apaga. Corrige-se com uma nota de crédito ou de débito, quando a operação aconteceu e o valor ou o IVA mudam, ou com uma anulação que deixa o motivo registado, quando a operação não existiu ou o erro é só formal (NIF, morada) e ainda não há pagamentos: [Como corrigir uma fatura](/fiscal-core/corrigir-uma-fatura).
+
+## Quando utilizar?
+
+- Quando precisa de saber onde se faz cada passo fiscal do programa.
+- Quando um inspetor, um auditor ou o contabilista certificado pede o manual do programa.
+- Para o detalhe de cada tarefa, siga a ligação de cada secção.
+
+## Onde encontrar?
+
+Está no portal, em **Certificação e séries › Faturação certificada**. Cada secção abaixo indica o menu do programa onde se faz o passo.
+
+## Antes de começar
+
+Veja qual é o seu perfil. Se um botão não aparece, o seu perfil não o permite: peça a quem tem o perfil **Contabilista certificado**, ou ao administrador. Todos os perfis: [perfis e permissões](/administration/perfis-e-permissoes).
+
+| Perfil | Numa fatura emitida, vê | Também pode |
+|---|---|---|
+| **Administrativo** | **Enviar**, **Imprimir**, **Emitir recibo**, **Nota de Crédito**, **Assinar PDF** | Criar faturas com **Novo** |
+| **Contabilista** | **Imprimir**, **Ver PDF**, **Emitir recibo**, **Nota de Crédito**, **Assinar PDF**, **Corrigir os dados do cliente**, **Referências Multibanco** | Anular um recibo. Gerar o SAF-T. Consultar o registo de auditoria e as verificações |
+| **Contabilista certificado** | Os do Contabilista, mais **Anular documento certificado**, **Comunicar à AT** e **Enviar ao FE-AP** | Gerir séries, gerar o SAF-T, registar cópias de segurança |
+| **Auditor / ROC** | **Imprimir**, **Ver PDF** | Só consulta: a lista de faturas não tem **Novo** |
+| **Administrador técnico** | <span className="fd-pending">Pendente de validação no ecrã: a demonstração não tem um utilizador só com este perfil.</span> | Configuração |
+
+## Como utilizar
+
+As imagens são da base de demonstração, onde a AT é substituída por um simulador.
+
+### Emitir um documento
+
+**Onde:** **Contabilidade › Lançar › Vendas e cobranças › Faturas de clientes**. Com o perfil **Administrativo**, o menu é **Faturação › Faturar**.
+
+<StepByStep>
+
+1. Carregue em **Novo**, escolha o cliente e acrescente as linhas com o imposto certo.
+2. Carregue em **Confirmar**. O programa dá o número da série (por exemplo `FT D26/35`), o ATCUD, o código QR e a assinatura.
+3. A partir daí, o documento só se lê: «Documento emitido e assinado: já não se altera.»
+   ![Fatura FT D26/35 emitida, com os avisos do PDF e de documento assinado, a série e o estado Por pagar](/images/fiscal-core/manual-do-programa-certificado/01-documento-emitido.png)
+4. Use **Imprimir** ou **Enviar**. Antes de enviar por e-mail, leia o aviso sobre a assinatura do PDF.
+
+</StepByStep>
+
+Detalhe, datas e recusas: [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada). Comunicar à AT: [como comunicar faturas](/fiscal-core/comunicar-faturas-a-at). Emitir não é comunicar.
+
+### Imprimir e a 2.ª via
+
+**O original é o PDF guardado na emissão** (faturas, notas de crédito, recibos, guias de transporte e documentos de trabalho). A 2.ª via de faturas, notas e recibos parte desse PDF: a 1.ª impressão devolve o ficheiro tal e qual e, da 2.ª em diante, sai com a marca «2.ª via» escrita por cima de cada página, no canto superior direito, acima da linha do tipo, número e ATCUD. Assim a 2.ª via é fiel ao original (Despacho n.º 8632/2014, ponto 2.2.15) e uma alteração futura dos layouts, das margens ou dos modelos de impressão não a muda. Um documento emitido antes desta versão e sem PDF guardado continua a ser reimpresso com as regras da sua data: as margens e o layout de então.
+
+Nas faturas, notas de crédito e de débito, faturas-recibo e simplificadas emitidas a partir desta versão, a frase «Processado por programa certificado n.º …/AT» sai uma só vez, por baixo do ATCUD e do código QR; o ATCUD continua em todas as páginas. O recibo, a guia de transporte e os documentos de conferência mantêm a frase no rodapé de todas as páginas. O aspeto escolhe-se em [Como mudar o aspeto das faturas](/fiscal-core/layouts-dos-documentos).
+
+Visto numa fatura emitida depois desta versão: a 1.ª impressão sem marca, a 2.ª e a 3.ª com «2.ª via» no topo do PDF e o mesmo ATCUD. As guias e os documentos de trabalho (FIX-M297) não se imprimiram repetidamente nesta ronda.
+
+**Documentos de trabalho (orçamento, pró-forma, nota de encomenda e outros de conferência).** Um documento de trabalho emitido guarda o layout da emissão, com as escolhas do editor, e a 2.ª via usa esse layout, como nas faturas (Despacho n.º 8632/2014, ponto 2.2.15). Os emitidos antes desta alteração recebem o layout da empresa nesse dia, e a 2.ª via imprime com as margens da emissão e não com as de hoje; os novos ficam com as margens atuais. Um documento ainda sem emissão não tem bloco de ATCUD nem linha certificada, por isso nada muda nele. <span className="fd-pending">Pendente de validação no ecrã: a diferença de margens na 2.ª via. Na demonstração, o orçamento emitido (S00001) e um por emitir (S00002) imprimem em A4, 1 página, ambos com o texto a começar a 26,24 pt da margem esquerda; não se viu diferença entre as margens antigas e as novas. Só se confirmou que a impressão do documento emitido abre sem erro e que o registo do layout da emissão existe (por leitura dos dados).</span>
+
+### Séries
+
+**Onde:** **Contabilidade › Configurar › Faturação certificada › Séries fiscais**.
+
+Cada tipo de documento tem a sua série por ano, com numeração seguida e sem falhas. Uma série comunicada não se apaga. Passos e código de validação: [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais). Para mudar de programa: **Contabilidade › Configurar › Migração e importações › Migração de séries**.
+
+### Anular um documento
+
+Abra o documento e carregue em **Anular documento certificado**, escreva o **Motivo** e carregue em **Anular documento**. O documento mantém o número e continua a aparecer no SAF-T como anulado. Se já tiver pagamento ou nota de crédito, o programa mostra o bloqueio. Passos e casos: [Como anular uma fatura ou outro documento certificado](/fiscal-core/anular-uma-fatura). Devoluções e descontos: [Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito).
+
+### Recibos
+
+**Onde:** **Contabilidade › Reconciliar › Bancos e caixa › Recibos e pagamentos recebidos**. Para receber, abra a fatura e carregue em **Emitir recibo**.
+
+O recibo liga-se à fatura que paga e não volta a rascunho. Se se enganou, anule-o com **Anular recibo** e emita outro: a fatura volta a **Por pagar**. Detalhe: [Como emitir um recibo](/fiscal-core/emitir-um-recibo) e a secção do recibo em [Como anular um documento certificado](/fiscal-core/anular-uma-fatura).
+
+### SAF-T
+
+**Onde:** **Contabilidade › Declarar › Ficheiro SAF-T › O que há para fazer com o SAF-T?** e **Contabilidade › Declarar › Ficheiro SAF-T › Gerar SAF-T**.
+
+<StepByStep>
+
+1. Em **Listas de apoio**, abra **Prontidão para o SAF-T** e veja o que falta antes de gerar.
+2. Em **Gerar SAF-T**, escolha o **Modo** (**F — Faturação**, **C — Contabilidade**, **I — Contabilidade integrada com a faturação** ou **S — Autofaturação**) e o período, e carregue em **Gerar com… documentos**.
+3. O ficheiro fica **Gerado** ou **Inválido**. Se estiver **Gerado**, carregue em **Descarregar ficheiro**. Se estiver **Inválido**, a lista de erros diz o que corrigir e não há ficheiro.
+4. A seguir, entregue-o e use **Registar submissão**.
+
+</StepByStep>
+
+Detalhe: [Como gerar o SAF-T](/fiscal-core/gerar-o-saft) e [Como corrigir os erros de validação do SAF-T](/fiscal-core/corrigir-erros-do-saft).
+
+### Registo de auditoria e verificações
+
+No menu **Auditoria**:
+
+- **Registos › Registo de auditoria**: quem fez o quê e quando.
+- **Integridade › Verificar integridade dos documentos**: abre o **Relatório de integridade da certificação**. Na demonstração: «Tudo certo: os 62 documentos verificados têm a assinatura, a numeração e a cadeia intactas.» Ver [integridade dos documentos](/fiscal-core/integridade-dos-documentos).
+- **Integridade › Autodiagnóstico da certificação**: corre as verificações, lista o que falta e o que fazer, e não altera nada. Ver [autodiagnóstico](/fiscal-core/autodiagnostico-da-certificacao).
+
+  ![Janela Autodiagnóstico da certificação com 19 verificações com êxito e 1 com falha, e o botão Executar de novo](/images/fiscal-core/manual-do-programa-certificado/02-autodiagnostico.png)
+
+### Cópias de segurança e restauro
+
+O programa regista e avisa. A cópia em si, e o restauro, faz-os o suporte técnico. Prazos e restauro: [cópias de segurança](/administration/copias-de-seguranca).
+
+<StepByStep>
+
+1. Em **Contabilidade › Configurar › Sistema e segurança › Registo das cópias de segurança**, carregue em **Novo**.
+   ![Formulário novo do registo de cópias, com Feita em, Âmbito, Resultado, Soma de verificação SHA-256 e Guardada em](/images/fiscal-core/manual-do-programa-certificado/03-registar-copia.png)
+2. Preencha **Feita em**, **Âmbito**, **Resultado**, **Soma de verificação SHA-256** e **Guardada em**, e guarde.
+3. Carregue em **Verificar**, cole a soma que o suporte calculou (ou carregue o ficheiro) e carregue em **Comparar**. Com a soma certa, o registo fica **A soma coincide**.
+
+</StepByStep>
+
+Em **Guardada em**, nunca escreva palavras-passe nem chaves. O programa recusa alguns formatos, mas não todos: aceitou «senha 1234».
+
+Em **Alertas das cópias de segurança** vê os alertas de cópia em atraso. Na demonstração, o alerta aberto fechou sozinho ao registar uma cópia boa.
+
+## Resultado esperado
+
+Documentos emitidos sem erros, séries em ordem, SAF-T **Gerado**, **Relatório de integridade da certificação** sem problemas e cópias de segurança verificadas.
+
+## Notas importantes
+
+- **Esta página substitui o manual em ficheiro de 26/10/2026.** Os menus e botões foram conferidos no ecrã a 04/11/2026.
+- **Autofaturação.** Tem artigo próprio: [Como emitir faturas em autofaturação e gerar o seu SAF-T](/fiscal-core/autofaturacao).
+- **Documentos de formação.** Nunca entram no SAF-T: [documentos de formação](/fiscal-core/documentos-de-formacao).
+
+## Problemas frequentes
+
+- **Sintoma:** o programa recusa emitir ou anular.
+  **Solução:** leia a mensagem até ao fim: diz o que falta. Se não a perceber, chame quem tem o perfil **Contabilista certificado**.
+- **Sintoma:** o SAF-T fica **Inválido**.
+  **Solução:** abra a lista de erros, corrija o que é indicado e gere de novo.
+- **Sintoma:** ao registar uma cópia, «uma cópia que foi feita precisa da sua soma SHA-256 (64 caracteres 0-9, a-f). Calcule-a na cópia guardada com «sha256sum &lt;ficheiro&gt;» e cole o resultado.»
+  **Solução:** peça a soma ao suporte técnico e cole-a inteira.
+- **Sintoma:** ao verificar a cópia, o registo fica **A soma NÃO coincide**.
+  **Solução:** a cópia guardada não é a registada. Avise o suporte técnico e peça uma cópia nova.
+- **Sintoma:** o **Autodiagnóstico da certificação** mostra falhas.
+  **Solução:** cada linha diz o que fazer. Corrija e carregue em **Executar de novo**.
+- **Sintoma:** emitiu um documento por engano.
+  **Solução:** não tente alterá-lo: emita uma nota de crédito ou, se ainda não tiver pagamento, anule-o com o motivo.
+
+{/* Nota interna (DOCS-046, lote v13-A, DEC-1728, 04/11/2026, master 56504fe86, docs_demo_v13a_test, porta 8250): fonte em Documentação Cliente/Certificação/manual-do-utilizador-programa-certificado.md, conferida por clique com Responsável fiscal, Faturação e Auditor. Administrador técnico e Registo de auditoria só vistos em menu, sem emitir. Corrigido em relação ao ficheiro: menus, Anular também na barra, comunicação à AT, Contabilista anula recibo, palavras-passe. Auditoria 05/11, master f671d6842: botões por perfil e integridade por clique. As capturas de img/ de 26/10 não vieram: mostram menus antigos. */}
+
+{/* Nota interna (v23-T, DOC-0015, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}
+
+{/* Nota interna (lote 99, CERT-153 e CERT-154, master 73d6a5fed, docs_demo_99_test, porta 9784, 19/11/2026): o orçamento S00001 tem data de emissão (06/11/2026) e um registo de layout atribuído pela migração com margens antigas (lido por RPC); PDFs de S00001 e S00002 obtidos por HTTP com o administrador (/report/pdf/sale.report_saleorder/1 e /2): ambos 595 x 842 pt, 1 página, texto a começar a 26,24 pt. Sem diferença visível de margens. */}

@@ -1,0 +1,170 @@
+---
+id: criar-e-alterar-contas
+slug: /accounting-pt/criar-e-alterar-contas
+title: Como criar uma conta ou reclassificar uma conta de 1.º grau
+sidebar_label: Criar e alterar contas
+description: Criar uma conta nova no plano de contas, mudar o código de uma conta que já tem lançamentos, consultar o histórico de alterações e reclassificar uma conta de 1.º grau para o SAF-T.
+keywords: [criar uma conta, criar conta, nova conta, plano de contas, recodificar conta, mudar o código de uma conta, alterar código da conta, histórico de alterações de contas, reclassificar conta de 1.º grau, conta de primeiro grau, subconta de movimento, extensão própria do plano SNC, o código da conta só pode ter algarismos, não pode ser recodificada, os códigos de conta devem ser exclusivos]
+doc_id: DOC-0078
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/plano-de-contas/plano-de-contas-snc, accounting-pt/plano-de-contas/taxonomias, accounting-pt/dia-a-dia/estornar-um-lancamento, accounting-pt/fecho/datas-de-bloqueio]
+---
+
+## Para que serve?
+
+O plano de contas do fiscaldoo traz as contas do SNC. Uma subconta de detalhe própria da empresa (por exemplo `622710`, por baixo de `6227`) cria-se à mão. Quando a conta já tem lançamentos, o código deixa de se poder escrever diretamente: o fiscaldoo obriga a passar por **Recodificar conta**, com motivo, e regista cada alteração. A conta de 1.º grau (código SNC de 2 algarismos significativos, como `14`) não recebe lançamentos novos: o fiscaldoo recusa-os, porque o SAF-T não a consegue representar com movimentos. O assistente **Reclassificar conta de 1.º grau** serve para as contas de 1.º grau que já tinham movimentos (por exemplo, vindos de uma importação antiga) e passa-as para uma subconta de movimento.
+
+Estes procedimentos não geram lançamentos nem mudam saldos: mudam o código, a conta de destino de linhas em rascunho e o registo de alterações.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: escolha da taxonomia e do código de cada conta nova, e tratamento das linhas já lançadas numa conta de 1.º grau.</span>
+
+## Quando utilizar?
+
+- A empresa precisa de uma subconta que o plano oficial não tem (por exemplo para separar um gasto).
+- Lançou documentos numa conta com o código errado, ou fora do plano do SNC, e quer corrigir o código sem perder os lançamentos.
+- Quer saber quem mudou o código de uma conta, quando e porquê.
+- O SAF-T recusa uma conta de 1.º grau com movimentos.
+
+Se o que quer é escolher a taxonomia das contas, veja [Como atribuir as taxonomias SNC às contas](/accounting-pt/taxonomias). Se o erro está num lançamento e não no código da conta, use o [estorno](/accounting-pt/estornar-um-lancamento).
+
+## Onde encontrar?
+
+- **Contabilidade › Configurar › Geral › Plano de contas**, para criar a conta e para abrir uma conta (separador **Portugal**, botão **Recodificar conta**).
+- **Contabilidade › Configurar › Plano e regras legais › Ferramentas das contas › Histórico de alterações de contas** e **› Reclassificar conta de 1.º grau**: o Administrador vê estes dois itens na barra; o Contabilista certificado só com o modo de programador ligado (o Auditor / ROC vê aí só o histórico; o Contabilista não vê nenhum dos dois). Sem o modo programador, o histórico de uma conta vê-se também nas mensagens da ficha da conta.
+
+![Menu Configurar, grupo Geral, com a opção Plano de contas assinalada](/images/accounting-pt/criar-e-alterar-contas/78-01-menu-plano-de-contas.png)
+
+{/* Nota interna (DOCS-046, V3A2-05): «Histórico de alterações de contas», «Reclassificar conta de 1.º grau» e «Aplicar variante do plano» só aparecem na barra com o modo programador (UX-055/DEC-1086). Atualizar o caminho quando o cartão que lhes der menu entrar em master. */}
+
+## Antes de começar
+
+- Para **criar** uma conta e **ver** o histórico: perfil **Contabilista certificado** (ou **Administrador**). Com o perfil **Contabilista**, o item **Plano de contas** não aparece na barra e a ficha da conta, aberta por ligação, não tem o botão **Recodificar conta**.
+- Para **recodificar** uma conta com lançamentos e para **reclassificar** uma conta de 1.º grau: perfil **Contabilista certificado**. Os dois passos pedem um motivo, que fica no registo de auditoria.
+- Confirme a empresa ativa: o plano de contas é por empresa.
+- Escolha o código antes de começar: só algarismos, a começar pela classe do SNC (1 a 9), e sem repetir um código existente.
+
+## Como utilizar
+
+### Criar uma conta
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › Geral › Plano de contas** e carregue em **Novo**.
+2. Escreva o **Código** (por exemplo `622710`), o **Nome da Conta** («Serviços de formadores») e escolha o **Tipo** («Despesas»). A **Conta superior** preenche-se sozinha pelo prefixo do código: aqui `622 Serviços especializados`.
+3. No separador **Portugal**, escolha a **Taxonomia**. O campo só sugere uma taxonomia sozinho quando o prefixo do código tem exatamente uma candidata: com várias, fica vazio e a escolha é sua. Neste exemplo, escreva «especializados - Outros» e escolha `S363 - Fornecimentos e serviços externos - Serviços especializados - Outros`, a taxonomia que a AT publica para os códigos `6227` e `6228`.
+   ![Ficha da conta 622710 no separador Portugal, com a taxonomia S363 e a marca Extensão própria do plano SNC](/images/accounting-pt/criar-e-alterar-contas/78-02-nova-conta-portugal.png)
+4. Grave. O separador **Portugal** mostra **Extensão própria do plano SNC** assinalada (a conta é uma subconta de detalhe criada por si, não uma conta oficial), **Deriva da conta** `622` e a **Categoria de agrupamento** do SAF-T «GM - Conta de movimento (contabilidade geral)».
+
+</StepByStep>
+
+A conta criada não tem lançamentos: enquanto não os tiver, o código ainda se pode editar na ficha.
+
+### Recodificar uma conta que já tem lançamentos
+
+<StepByStep>
+
+1. Abra a conta em **Plano de contas** e vá ao separador **Portugal**. Numa conta com lançamentos o **Código** está só de leitura e aparecem os botões **Recodificar conta** e **Alterar tipo de conta**. No exemplo, a conta `629200 Formação profissional` tem um lançamento de 100,00 €, publicado em `OD/2026/00105`.
+   ![Conta com lançamentos, código só de leitura e botão Recodificar conta no separador Portugal](/images/accounting-pt/criar-e-alterar-contas/78-03-conta-com-lancamentos.png)
+2. Carregue em **Recodificar conta**. A janela mostra a conta, o **Código atual**, o **Código novo** e o **Motivo**. Escreva `622720` e o motivo («Código fora do plano SNC: passa para 6227, serviços especializados») e carregue em **Recodificar**.
+   ![Janela Recodificar conta com o código novo 622720 e o motivo preenchidos](/images/accounting-pt/criar-e-alterar-contas/78-04-janela-recodificar.png)
+3. A ficha passa a mostrar o código novo (`622720`), o saldo mantém-se (100,00 €) e a mensagem da ficha regista «Conta recodificada: 629200 → 622720 (motivo: …)».
+4. Confirme a **Taxonomia**: a que a conta tinha pode já não condizer com o código novo, e a ficha avisa (ver «Problemas frequentes»). No exemplo, mude para `S363 - … - Outros`, que condiz com `6227`, e grave.
+   ![Ficha da conta recodificada com as mensagens 629100 para 629200 e 629200 para 622720](/images/accounting-pt/criar-e-alterar-contas/78-05-conta-recodificada.png)
+
+</StepByStep>
+
+O botão **Alterar tipo de conta**, ao lado, muda o tipo de uma conta com lançamentos (também com motivo; dos perfis, só o **Contabilista certificado** o tem) e altera retroativamente o balanço e a demonstração de resultados: não é tratado neste artigo.
+
+### Consultar o histórico de alterações
+
+Abra **Configurar › Plano e regras legais › Ferramentas das contas › Histórico de alterações de contas** (modo programador). A lista mostra, por alteração, a **Data/hora**, o **Nome da conta**, o **Campo alterado**, o **Valor anterior** e o **Valor novo**, o **Utilizador**, o **Motivo** e a **Origem** («Interface» quando vem do ecrã). Não se cria, edita nem apaga nada à mão: as linhas nascem sozinhas de cada recodificação.
+
+![Histórico de alterações de contas com as duas recodificações da conta Formação profissional](/images/accounting-pt/criar-e-alterar-contas/78-06-historico-de-alteracoes.png)
+
+### Reclassificar uma conta de 1.º grau
+
+<StepByStep>
+
+1. Abra **Configurar › Plano e regras legais › Ferramentas das contas › Reclassificar conta de 1.º grau** (modo programador).
+2. Em **Conta de 1.º grau**, escolha a conta; a lista só oferece contas de 2 algarismos significativos, por exemplo `12 Depósitos à ordem`. A **Subconta de movimento** preenche-se com a existente (`121`) e, se faltar, é criada ao reclassificar.
+3. Escreva o **Motivo** e carregue em **Reclassificar**. A janela mostra antes o que vai acontecer: **Linhas de lançamento em rascunho a mover**, **Linhas já lançadas (ficam)** e **Diários que usam a conta**, e a opção **Passar o saldo lançado com um lançamento de correção** (vem por assinalar, e só tem efeito se houver linhas já lançadas). Numa conta de 1.º grau sem movimentos, como a `12 Depósitos à ordem` do passo 2, os três contadores estão a 0.
+   ![Janela Reclassificar conta de 1.º grau com 12 Depósitos à ordem e a subconta 121](/images/accounting-pt/criar-e-alterar-contas/78-07-reclassificar-1-grau.png)
+4. O resultado diz quantas linhas e diários passaram para a subconta e quantas linhas já lançadas ficam na conta de 1.º grau. No exemplo: «0 linha(s) de lançamento em rascunho e 0 diário(s) passaram para 121. 0 linha(s) já lançada(s) ficam em 12: não podem ser alteradas (contabilidade certificada) e o SAF-T recusa essa conta enquanto estiverem no período — pergunte ao contabilista certificado como tratá-las.» A subconta `121 Depósitos à ordem` já existia, por isso não foi criada nenhuma conta.
+   ![Resultado da reclassificação da conta 12: 0 linhas em rascunho e 0 diários passaram para a subconta 121 e 0 linhas já lançadas ficam na 12](/images/accounting-pt/criar-e-alterar-contas/78-09-resultado.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- **Conta nova:** existe no plano com a conta superior certa, a taxonomia escolhida e a marca «Extensão própria do plano SNC». Não há lançamentos.
+- **Recodificação:** o código muda, o saldo e os lançamentos mantêm-se (a conta `622720` continua com os 100,00 € de `OD/2026/00105`, a débito, com a contrapartida a crédito em `111 Caixa`) e há uma linha nova no histórico.
+- **Reclassificação:** as linhas em rascunho e os diários passam para a subconta (no exemplo, 0 e 0, e a subconta `121` já existia). As linhas **já lançadas nunca são alteradas** (a contabilidade é certificada): ficam na conta de 1.º grau e o SAF-T continua a recusar essa conta enquanto estiverem no período. Há uma opção **Passar o saldo lançado com um lançamento de correção**, que cria um lançamento novo, com a data de hoje, a passar o saldo para a subconta.
+- **O que não foi possível provar no ecrã.** Uma conta de 1.º grau só pode ter linhas se já as tinha antes: o fiscaldoo recusa lançar nela («A conta 12 é agregadora; escolha uma conta de movimento (121). Só se pode lançar em contas de movimento (o SAF-T e o SNC não admitem lançamentos em contas agregadoras).»), tanto em rascunho como publicado, e por isso não se criam linhas de teste. A passagem de linhas em rascunho e o lançamento de correção das linhas lançadas ficam descritos pelo texto do ecrã e não foram corridos. <span className="fd-pending">Pendente de validação no ecrã: a reclassificação com linhas em rascunho e lançadas e o lançamento de correção (só há dados assim em bases migradas). Pendente de validação por contabilista certificado: como tratar as linhas já lançadas.</span>
+{/* Nota interna (NV3A-14): na versão anterior o motivo era «a demonstração não tem»; o motivo certo é que o produto impede lançar numa conta de 1.º grau (provado a 01/11 pelo ORM com o Responsável fiscal). Provado no ecrã: assistente com a conta 14 (criada em Plano de contas), contadores a 0, subconta 141 criada, recusa sem conta («Escolha a conta de 1.º grau a reclassificar»). As contas de teste 14 e 141 ficam na base de demonstração do corretor. */}
+
+## Notas importantes
+
+### Contas de períodos já exportados não se recodificam
+
+O fiscaldoo recusa a recodificação quando a conta tem lançamentos num período fechado ou já exportado para SAF-T. Nesse caso, arquive a conta e crie outra com o código certo: os lançamentos antigos ficam na conta arquivada.
+
+### O código não se escolhe ao acaso
+
+Um código fora do plano oficial do SNC (por exemplo `629100`, quando a AT só publica os subgrupos `621` a `626`) não tem taxonomia que condiza: a conta fica sem taxonomia coerente e o SAF-T e a IES não conseguem pô-la na linha certa. Escolha o código dentro de um subgrupo oficial.
+
+## Problemas frequentes
+
+### «O código da conta «12AB34» só pode ter algarismos»
+
+- **Sintoma:** ao gravar uma conta nova, janela **Erro de Validação**: «O código da conta «12AB34» só pode ter algarismos (classes 1 a 9 do SNC). Retire as letras ou símbolos.»
+- **Causa:** o código tem letras ou símbolos.
+- **O que fazer:** escreva só algarismos, a começar por 1 a 9.
+
+### «Os códigos de conta devem ser exclusivos»
+
+- **Sintoma:** «Os códigos de conta devem ser exclusivos. Não é possível criar contas com os códigos duplicados: 622710.»
+- **Causa:** já existe uma conta com esse código na empresa.
+- **O que fazer:** escolha outro código, ou use a conta que já existe.
+
+### «Indique um código novo, diferente do atual»
+
+- **Sintoma:** janela **Operação inválida** ao recodificar com o mesmo código: «Indique um código novo, diferente do atual (629100).»
+- **O que fazer:** escreva o código novo na janela e carregue em **Recodificar**.
+
+### «Há campos obrigatórios por preencher» ao recodificar
+
+- **Causa:** o **Motivo** está vazio.
+- **O que fazer:** escreva o motivo e carregue de novo.
+
+### «não pode ser recodificada: tem lançamentos em … um período já exportado para SAF-T»
+
+- **Sintoma:** **Erro de Validação**: «A conta 2111 Clientes gerais não pode ser recodificada: tem lançamentos em 01/08/2026 – 31/08/2026, um período já exportado para SAF-T (…). Arquive-a e crie uma conta nova.»
+- **Causa:** a conta tem lançamentos num período já exportado ou fechado.
+- **O que fazer:** arquive a conta e crie uma conta nova com o código certo.
+
+### «A taxonomia … não condiz com a conta»
+
+- **Sintoma:** depois de recodificar, a ficha mostra «A taxonomia «S357 - …» não condiz com a conta 622720: a Autoridade Tributária publica-a para outros códigos de conta, por isso o saldo desta conta iria para a linha errada do balanço, da IES e do SAF-T.»
+- **O que fazer:** escolha uma das taxonomias que condizem com o código (no exemplo, `S363`). A confirmação de uma exceção só a faz o administrador do sistema, no separador **Portugal**.
+
+### «Indique o motivo da reclassificação» ou «Escolha a conta de 1.º grau a reclassificar»
+
+- **Causa:** a janela **Reclassificar conta de 1.º grau** foi confirmada sem conta ou sem motivo.
+- **O que fazer:** escolha a conta, escreva o motivo e carregue de novo em **Reclassificar**.
+
+### «A conta … é uma conta de 1.º grau e não pode receber lançamentos»
+
+- **Sintoma:** ao lançar numa conta de código SNC de 2 algarismos (por exemplo `12`), «A conta 12 é agregadora; escolha uma conta de movimento (121). Só se pode lançar em contas de movimento (o SAF-T e o SNC não admitem lançamentos em contas agregadoras).»
+- **O que fazer:** lance numa subconta de movimento (aqui `121`). Se a conta de 1.º grau já tinha movimentos de antes, use **Reclassificar conta de 1.º grau**.
+
+### «O código de conta … não começa por nenhuma conta oficial do plano SNC»
+
+- **Sintoma:** ao criar uma conta com um código fora do plano (por exemplo `190000`), «O código de conta “190000” não começa por nenhuma conta oficial do plano SNC (nenhuma conta oficial começa por “19”). O prefixo válido mais próximo é “14” (Outros instrumentos financeiros): crie a conta de detalhe sob ele, por exemplo “140000”.»
+- **O que fazer:** escolha um código dentro de um subgrupo oficial.
+
+{/* Nota interna (v23-T, DOC-0078, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

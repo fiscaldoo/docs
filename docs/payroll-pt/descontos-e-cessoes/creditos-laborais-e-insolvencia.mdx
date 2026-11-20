@@ -1,0 +1,181 @@
+---
+id: creditos-laborais-e-insolvencia
+slug: /payroll-pt/creditos-laborais-e-insolvencia
+title: Como tratar créditos laborais e a insolvência de um trabalhador
+sidebar_label: Créditos laborais e insolvência
+sidebar_position: 5
+description: Registar um crédito laboral, ver quando prescreve e se só se prova por documento, exportar a prova documental e descontar a insolvência de um trabalhador.
+keywords: [tratar, créditos, creditos, laborais, insolvência, insolvencia, empregador, créditos laborais, creditos laborais, prova documental dos créditos laborais, prova documental dos creditos laborais, insolvências, insolvencias, fiduciário, fiduciario, prescrição, prescricao, art. 337, art. 347, art. 239]
+doc_id: DOC-0221
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/trabalhadores/cessacao-do-contrato, payroll-pt/descontos-e-cessoes/quotas-sindicais, payroll-pt/descontos-e-cessoes/penhoras, payroll-pt/descontos-e-cessoes/cessoes-de-salario]
+---
+
+## Para que serve?
+
+Dois registos diferentes:
+
+- **Créditos laborais:** o que o trabalhador ainda tem a receber da empresa, ou a empresa dele. O fiscaldoo diz quando o crédito prescreve e se só se prova por documento.
+- **Insolvências:** quando um **trabalhador** é declarado insolvente e o tribunal lhe manda ceder parte do rendimento a um fiduciário. O fiscaldoo desconta esse valor no recibo.
+
+**E a insolvência do empregador?** O fiscaldoo não tem um registo próprio para a insolvência da **empresa**. Nesse caso, registe e documente os créditos de cada trabalhador como se explica aqui, e veja a lei em [Notas importantes](#notas-importantes).
+
+## Quando utilizar?
+
+- Crédito laboral: quando um trabalhador reclama um valor, ou quando a empresa fica a dever algo que quer ter à vista até ser pago.
+- Prova documental: quando precisa de reunir os recibos e os mapas de horas de um período, para um tribunal ou para o administrador da insolvência.
+- Insolvência: quando recebe a decisão do tribunal sobre um trabalhador. Para uma ordem de penhora, veja [penhoras](/payroll-pt/penhoras).
+
+## Onde encontrar?
+
+- No painel **Salários › Preparar › O que há para fazer este mês?**, grupo **Situações e deveres com um trabalhador**: **Créditos laborais** e **Insolvências**. Também na ficha do trabalhador, em **⋮**.
+- **Salários › Fechar e consultar › Mapas de recursos humanos › Prova documental dos créditos laborais**.
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador.
+- Para a insolvência: tem a decisão do tribunal, com o valor que fica com o trabalhador e o fim da cessão. O contacto do fiduciário existe em **Contactos**. Se não existir, peça a quem tem o perfil **Contabilista** para o criar.
+- A rubrica **Insolvência: rendimento cedido ao fiduciário** tem modelo de contabilização. Se não tiver, crie-o como explica [Como contabilizar o processamento](/payroll-pt/contabilizar-os-salarios), com **Conta a débito** 231290, **Conta a crédito** 2781 e **Parceiro** **Outro terceiro**.
+
+## Como utilizar
+
+### Registar um crédito laboral
+
+<StepByStep>
+
+1. Abra **Créditos laborais** e carregue em **Novo**. Escolha o **Trabalhador**.
+2. Em **Tipo de crédito**, escolha **Crédito do contrato, da sua violação ou cessação**, **Compensação por violação do direito a férias**, **Indemnização por sanção abusiva** ou **Pagamento de trabalho suplementar**.
+3. Preencha **Descrição**, **Vencido desde** e **Montante (EUR)** e guarde. A secção **Estado** preenche-se sozinha.
+   ![Crédito de trabalho suplementar de 260,00 €, vencido em 2020: prescreve em 01/12/2027 e só se prova por documento](/images/payroll-pt/creditos-laborais-e-insolvencia/01-credito-so-por-documento.png)
+4. Se **Só se prova por documento** estiver marcado, escreva em **Documento idóneo** qual é o documento e anexe-o em **Documentos**.
+5. Quando ficar resolvido, escolha em **Resultado**: **Pago** ou **Encerrado por transação judicial**. Até lá fica **Em aberto**.
+
+</StepByStep>
+
+### Exportar a prova documental
+
+<StepByStep>
+
+1. Abra **Prova documental dos créditos laborais**.
+2. Preencha **Trabalhador**, **De** e **Até**. Os três são obrigatórios.
+3. Carregue em **Exportar PDF** ou **Exportar XLSX**. O ficheiro traz os **Recibos** (**De**, **Até**, **Estado**, **Bruto**, **Descontos** e **Líquido**) e os **Mapas de horas** desse período, e os **Créditos laborais** do trabalhador vencidos até ao fim do período (**Tipo de crédito**, **Vencido desde**, **Montante (EUR)**, **Resultado**, **Prescrito a partir de** e **Documento idóneo**). No PDF, os valores escrevem-se em português, com vírgula nos cêntimos e ponto nos milhares (por exemplo, 960,00). Os documentos anexados aos créditos não vão no ficheiro: junte-os à parte.
+
+   **Exemplo.** Para Eva Cristina Rocha, de 01/06/2026 a 31/10/2026, depois de registar um crédito de **Pagamento de trabalho suplementar** de 260,00 €, vencido desde 30/06/2020, como em «Registar um crédito laboral», o PDF traz quatro recibos **Pago**, de junho a setembro (em junho: bruto 960,00, descontos 122,60 e líquido 837,40), nenhum mapa de horas e o crédito, com 260,00 e **Em aberto**. {/* Nota interna (lote v23-AQ, depois do comboio 175 com o PAY-104b e o PAY-123, master d277b0e80, docs_demo_v23aq_test): crédito de trabalho suplementar de 260,00 € de Eva Cristina Rocha criado por RPC na sessão do utilizador com o acesso extra Administrador de Salários (a base de demonstração não tem créditos); o menu Salários › Fechar e consultar › Mapas de recursos humanos › Prova documental dos créditos laborais visto no ecrã com esse utilizador; o PDF foi pedido na mesma sessão (assistente criado por RPC e relatório descarregado) e lido com pdftotext: 960,00, 122,60, 837,40 e 260,00, títulos e estados em português. Auditoria docs-aud-v23aq (09/11/2026, master d277b0e80, cópia nova da base de demonstração, o mesmo crédito): a janela preenchida por clique com o Administrador de Salários (Trabalhador, De 01/06/2026 e Até 31/10/2026 escritos nos campos) e Exportar PDF deram o ficheiro «Prova documental Eva Cristina Rocha 2026-06-01-2026-10-31.pdf», com os quatro recibos Pago (junho: 960,00, 122,60 e 837,40), nenhum mapa de horas e o crédito com 260,00 e Em aberto. */}
+
+</StepByStep>
+
+### Descontar a insolvência de um trabalhador
+
+<StepByStep>
+
+1. Abra **Insolvências** e carregue em **Novo**. Preencha **Trabalhador**, **Processo de insolvência** e **Fiduciário**.
+2. Em **Contacto do fiduciário (contabilidade)**, escolha o contacto.
+3. Da decisão do tribunal, copie **Decisão judicial**, **Data da decisão**, **Excluído por mês**, **Cessão desde** e **Cessão até**. O valor **Excluído por mês** é o que fica com o trabalhador: o fiscaldoo não o calcula. Guarde.
+4. Carregue em **Ativar**.
+   ![Insolvência ativa com 1.000,00 € excluídos por mês, cessão de 01/11/2026 a 31/10/2029](/images/payroll-pt/creditos-laborais-e-insolvencia/02-insolvencia-do-trabalhador.png)
+5. No recibo do mês, carregue em **Calcular**. A linha **Insolvência: rendimento cedido ao fiduciário** entra sozinha, nos descontos.
+   ![Linhas do recibo de novembro, com a insolvência a descontar 269,50 €](/images/payroll-pt/creditos-laborais-e-insolvencia/03-recibo-com-a-cessao-ao-fiduciario.png)
+6. Carregue em **Validar** e em **Contabilizar**. Pague ao fiduciário em **Salários › Pagar › Acerto com credores**: a linha **Entrega a um terceiro** mostra o contacto do fiduciário em **Pagar a**. Desmarque as linhas que não vai pagar agora. Se o mesmo contacto receber outra retenção, os valores vêm na mesma linha.
+7. Quando a cessão acabar, abra o registo e carregue em **Terminar a insolvência**. O estado passa a **Terminados**.
+
+</StepByStep>
+
+**Exemplo de crédito.** Um trabalhador cujo contrato acabou a 30/11/2026 reclama 260,00 € de trabalho suplementar vencido em 15/04/2020:
+
+- **Prescrito a partir de**: 01/12/2027 (um ano a contar do dia seguinte ao do fim do contrato).
+- **Só se prova por documento**: marcado, porque venceu há mais de cinco anos.
+- **Conservar os documentos até**: 01/12/2027.
+
+Com o trabalhador ainda ao serviço, o **Estado** diz «O trabalhador está ao serviço: o crédito não prescreve enquanto o contrato durar.» Depois da data-limite, **Prescrito** fica marcado.
+
+**Exemplo de insolvência.** Novembro de 2026, retribuição base de 1.450,00 €, com 1.000,00 € excluídos por mês:
+
+| Linha | Valor |
+| --- | --- |
+| Retribuição base | 1.450,00 € |
+| Segurança Social do trabalhador | −159,50 € |
+| IRS retido | −21,00 € |
+| Parte líquida, sem subsídio de alimentação | 1.269,50 € |
+| Excluído por mês | −1.000,00 € |
+| **Rendimento cedido ao fiduciário** | **269,50 €** |
+
+O recibo paga 1.129,15 €: os 1.000,00 € excluídos mais os 129,15 € do subsídio de alimentação. Lançamento da linha, conferido no razão, com o contacto do fiduciário na linha da conta 2781:
+
+| Conta | Débito | Crédito |
+| --- | --- | --- |
+| 231290 Remunerações em processamento | 269,50 € | |
+| 2781 Outros devedores e credores (corrente) | | 269,50 € |
+
+## No Enterprise
+
+No Odoo Enterprise, os créditos, a prova documental e a insolvência tratam-se da mesma maneira, com o acesso extra **Administrador de Salários**. **Créditos laborais** e **Insolvências** estão no painel e no **⋮** da ficha, e **Prova documental dos créditos laborais** abre a mesma janela, com **Exportar XLSX** e **Exportar PDF**.
+
+O PDF de Eva Cristina Rocha, de 01/06/2026 a 31/10/2026, traz os mesmos quatro recibos **Pago** (em junho: 960,00, 122,60 e 837,40) e o crédito de 260,00, **Em aberto**. A insolvência do exemplo dá a linha de 269,50 € e o recibo de 1.129,15 €. Sem o contacto do fiduciário, **Contabilizar** dá a mesma recusa. <span className="fd-pending">Pendente de validação no ecrã do Enterprise: a recusa de Contabilizar.</span>
+
+{/* Nota interna (lote EE-09, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 12/11/2026): conferido numa cópia local da base Enterprise (docs_ee_ee09_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Administrador de Salários: painel › Créditos laborais e Insolvências (listas e Novo, descartados) e a janela da prova documental por clique. Crédito de trabalho suplementar de 260,00 € de Eva Cristina Rocha, PDF da prova (lido com pdftotext), insolvência de Fábio Nuno Carvalho e recibo de novembro com os direitos do Administrador de Salários numa transação desfeita (com o trabalhador ao serviço: Só se prova por documento marcado, sem data de prescrição). A mensagem de Contabilizar diz hoje «Salários › Configurar › Empresa › Controlos e listas › Credores sem contacto»: corrigido no corpo. No Enterprise, procurar o trabalhador pelo nome na barra de pesquisa da lista Fichas dos trabalhadores abre «Erro de Acesso» (campo reservado ao grupo «Folha de Salários / Assistant») e a lista não filtra, com os três perfis de salários; no Community filtra: defeito no relatório do lote. O ⋮ da ficha tem as mesmas entradas do Community e «Salary Increase» (EEA-083). Menus e vistas destes ecrãs comparados, perfil a perfil, com uma cópia da demonstração Community (docs_demo_ee09_test, 2c8d358c0, porta 8524): iguais. Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-09.md. */}
+
+## Resultado esperado
+
+- Cada crédito mostra na lista a data de vencimento, o montante, a data de prescrição e o resultado.
+- A prova documental descarrega um ficheiro do trabalhador e do período escolhidos.
+- A insolvência fica **Ativo** e cada recibo do período tem a linha.
+
+## Notas importantes
+
+Fonte: Código do Trabalho, arts. 333.º, 336.º, 337.º e 347.º, texto lido na PGDL a 04/11/2026; Código da Insolvência e da Recuperação de Empresas (CIRE), arts. 88.º e 239.º, texto lido na PGDL a 05/11/2026.
+
+- **Prescrição.** Os créditos prescrevem um ano a partir do dia seguinte ao fim do contrato (art. 337.º, n.º 1).
+- **Prova.** Compensação por violação do direito a férias, indemnização por sanção abusiva e trabalho suplementar, vencidos há mais de cinco anos, só se provam por documento idóneo (art. 337.º, n.º 2).
+- **Não se perdoa.** O crédito do trabalhador só se extingue sem pagamento por transação judicial (art. 337.º, n.º 3).
+- **Insolvência do empregador.** O contrato não acaba com a declaração de insolvência: o administrador da insolvência continua a cumprir as obrigações até ao encerramento definitivo (art. 347.º, n.º 1). Os créditos dos trabalhadores têm privilégios (art. 333.º). O Fundo de Garantia Salarial assegura os que a empresa não puder pagar por insolvência ou situação económica difícil (art. 336.º). O fiscaldoo não calcula nem comunica nada disto.
+- **Cessão do rendimento.** Durante os três anos seguintes ao encerramento do processo, o rendimento disponível fica cedido ao fiduciário (CIRE, art. 239.º, n.º 2). Fica de fora o que for razoavelmente necessário, como o sustento minimamente digno do trabalhador e do agregado, em regra até três salários mínimos (n.º 3). Por isso, **Excluído por mês** vem da decisão do tribunal.
+- **Uma penhora ao mesmo tempo.** A declaração de insolvência suspende as diligências executivas sobre os bens da massa insolvente (CIRE, art. 88.º, n.º 1). O fiscaldoo não suspende a penhora sozinho. Se chegar uma insolvência a um trabalhador com penhora ativa, fale com o contabilista.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a parte líquida sem o subsídio de alimentação, porque o art. 239.º, n.º 3, do CIRE conta «todos os rendimentos» antes das exclusões; a conta 2781 no modelo; e o que fazer à penhora ativa perante o art. 88.º do CIRE.</span>
+
+## Problemas frequentes
+
+### Contabilizar recusa: o fiduciário não tem contacto
+
+- **Sintoma:** ao carregar em **Contabilizar**: «Estes credores não têm contacto de contabilidade: *Processo 2201/26.0T8PRT* — *Nome do trabalhador* (…). O que aconteceu: o valor retido é devido a um terceiro e o lançamento credita a conta desse terceiro com o seu parceiro; sem ele os credores misturavam-se e não se saldavam um a um. Como resolver: preencha o contacto em cada um (Salários › Configurar › Empresa › Controlos e listas › Credores sem contacto lista-os com ligação) e contabilize de novo.»
+- **Causa:** a insolvência foi ativada sem **Contacto do fiduciário (contabilidade)**.
+- **O que fazer:** preencha o contacto e carregue outra vez em **Contabilizar**. Se o contacto não existir, peça a quem tem o perfil **Contabilista** para o criar.
+
+### O crédito diz que o trabalhador está ao serviço, mas o contrato já acabou
+
+- **Sintoma:** **Último dia do contrato** e **Prescrito a partir de** vazios, num crédito registado antes de se confirmar a cessação.
+- **O que fazer:** abra o crédito, mude **Consultado em** para outro dia e carregue em **Guardar**: **Último dia do contrato** e **Prescrito a partir de** passam a estar preenchidos. Volte a pôr a data de hoje em **Consultado em** e guarde. Até lá, não confie na lista para o prazo de prescrição.
+
+### O montante é recusado
+
+- **Mensagem:** «O montante do crédito não pode ser negativo. Como corrigir: indique o montante como número positivo.»
+- **O que fazer:** escreva o valor sem sinal.
+
+### Ao exportar a prova: «Há campos obrigatórios por preencher»
+
+- **Causa:** falta o **Trabalhador**, **De** ou **Até**.
+- **O que fazer:** preencha os três.
+
+### Ao ativar a insolvência: «não tem decisão judicial»
+
+- **Mensagem:** «A insolvência de … não tem decisão judicial. O que aconteceu: o valor que o devedor mantém é fixado pelo tribunal, por isso sem a decisão nada se pode calcular. Como resolver: preencha «Decisão judicial» e «Data da decisão» a partir da decisão que inicia a cessão.»
+- **O que fazer:** copie os dois campos da decisão e carregue de novo em **Ativar**.
+
+### As datas da cessão são recusadas
+
+- **Mensagem:** «A cessão termina antes de começar. Como resolver: corrija «Cessão desde» ou «Cessão até».»
+- **O que fazer:** copie as datas da decisão do tribunal.
+
+### Ao contabilizar: «Contabilização bloqueada»
+
+- **Mensagem:** «Contabilização bloqueada: 1 rubrica(s) com valor não têm modelo de contabilização em 30/11/2026: Insolvência: rendimento cedido ao fiduciário. […]»
+- **O que fazer:** crie o modelo da rubrica (ver [Antes de começar](#antes-de-começar)) e contabilize de novo.
+
+{/* Nota interna (DOCS-046, lote v13-PAY2, master cf8052b9e): créditos, recusas, prova e insolvência por clique com Administrador de Salários; contacto criado com Contabilista. RPC: cessação confirmada de um trabalhador (data 30/11/2026, comunicação 02/11/2026) para ver a prescrição; data de consulta mudada e reposta num crédito para ver Prescrito. Acerto da linha da insolvência feito por clique, com o erro de acesso. Auditoria 05/11, master 255d77e63: montante, datas, decisão e prova por clique; CIRE lido. Fiduciário como credor por clique: visto na auditoria v17-PAY2, master 00c68a6d8 (contacto na 2781 e em Pagar a, com o mesmo contacto na penhora: 619,00 €). Lote v18-B (master 00c68a6d8, porta 8310): fiduciário como credor por clique com o Administrador de Salários, com o contacto na linha 2781 de SAL/2026/00005 e em Pagar a, e a recusa sem contacto; modelo de contabilização, insolvências e versão criados por RPC na cópia. Auditoria v18-B (master c643480c2): crédito registado e cessação confirmada por clique, em pedidos separados: as datas não se recalculam, apesar do PAY-104. Defeito no relatório AUDITORIA_V18-B. Rever este problema quando o defeito entrar em master. */}
+
+{/* Nota interna (lote v23-BE, depois do comboio 188 com o I18N-041 #4146, master 7a46de91a, docs_demo_v23be_test, porta 8504): o botão «Fim» passou a «Terminar a insolvência». Insolvência de Fábio Nuno Carvalho (4567/26.3T8PRT, Fidúcia Administradores Judiciais, Lda, 1.000,00 € excluídos, 01/11/2026 a 31/10/2029) e o contacto criados por RPC na cópia; Ativar e Terminar a insolvência por clique com o Administrador de Salários da demonstração → Terminados; captura 02 refeita. O resto do artigo não foi percorrido. */}

@@ -1,0 +1,112 @@
+---
+id: deducao-do-iva
+slug: /accounting-pt/deducao-do-iva
+title: Como o fiscaldoo calcula o IVA dedutível
+sidebar_label: IVA dedutível numa compra
+description: Como o fiscaldoo decide que parte do IVA de uma fatura de fornecedor é dedutível, pelas regras de dedução por categoria de despesa, conta ou categoria de artigo, e como alterar uma regra sem estragar o passado.
+keywords: [IVA dedutível, iva dedutivel, regras de dedução do IVA, regras de deducao do iva, categorias de despesa, dedução limitada, deducao limitada, combustível, combustivel, gasóleo, gasoleo, CIVA art. 21, art. 21.º, percentagem dedutível, IVA não dedutível, conta 2432, conta 2432 IVA dedutível, 2432]
+doc_id: DOC-0087
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master b1c81051)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/iva/pro-rata, accounting-pt/iva/taxas-e-isencoes-de-iva, accounting-pt/compras/fatura-de-fornecedor]
+---
+
+## Para que serve?
+
+Numa fatura de fornecedor, o IVA só é dedutível na parte que a lei permite. O fiscaldoo decide essa parte linha a linha, pela **Categoria de despesa**, pela **Conta** ou pela categoria do artigo, e escreve-a na coluna **Dedutível**. O que não é dedutível fica no gasto; o que é dedutível vai para o IVA dedutível do período.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: percentagens e artigos do CIVA citados (art. 21.º, n.º 1, al. b), e as exceções à exclusão); o produto traz-as como dados que se alteram, não como lei validada.</span>
+
+## Quando utilizar?
+
+- Compra de combustível, eletricidade de veículos e outras despesas em que o IVA só é dedutível em parte.
+- Quer saber porque uma linha de uma fatura de fornecedor mostra **Dedutível** de 50 % e não de 100 %.
+- A percentagem de uma despesa mudou (lei nova) e é preciso fechar a regra antiga e abrir uma nova.
+
+Se a empresa só deduz parte do IVA de **todas** as compras porque faz operações com e sem direito a dedução, é outro assunto: veja o [pró-rata](/accounting-pt/pro-rata).
+
+## Onde encontrar?
+
+- **Usar:** **Contabilidade › Lançar › Compras › Faturas de fornecedores**, na coluna **Categoria de despesa** de cada linha, com o perfil **Contabilista** ou **Contabilista certificado**.
+- **Configurar as regras:** **Contabilidade › Declarar › IVA › O que há para fazer com o IVA?**, no grupo **Configuração do IVA** (**Regras de dedução do IVA** e **Categorias de despesa**). O perfil **Contabilista certificado** vê este grupo; o **Contabilista** só vê **Configuração do IVA** e **Classificação do Modelo 30**, sem as regras. O administrador chega pelas **Definições**, no bloco **IVA (PT): regras e tabelas**.
+- Também se encontram escrevendo «regras de dedução» na pesquisa de menus.
+
+![Grupo Configuração do IVA do painel do IVA, com Regras de dedução do IVA assinalada e Categorias de despesa por baixo](/images/accounting-pt/deducao-do-iva/87-01-painel-configuracao-do-iva.png)
+
+## Antes de começar
+
+- Para **ver ou alterar as regras**: perfil **Contabilista certificado**.
+- Para **lançar a fatura** e conferir o resultado: perfil **Contabilista**. Consulte o artigo da [fatura de fornecedor](/accounting-pt/fatura-de-fornecedor).
+- As regras são por empresa: confirme a empresa ativa no canto superior direito.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Regras de dedução do IVA**. A lista mostra, por regra, a **Conta**, a **Categoria de produto**, a **Categoria de despesa**, o **IVA dedutível (%)**, a **Referência legal**, **Válido desde** e **Válido até**. Na demonstração há sete regras, todas por categoria de despesa: gasóleo, GPL, gás natural e biocombustíveis a 50,00 %; gasolina a 0,00 %; viaturas com dedução total e eletricidade de elétricos e híbridos plug-in a 100,00 %.
+   ![Lista das regras de dedução do IVA, com a regra Combustível: gasóleo a 50,00 por cento assinalada](/images/accounting-pt/deducao-do-iva/87-02-lista-regras-de-deducao.png)
+2. Cada regra tem **um** alvo: uma **Categoria de despesa**, uma **Conta** ou uma **Categoria de produto**. Quando mais do que uma regra serve a mesma linha, vale a da **Categoria de despesa**, depois a da **Conta**, depois a da categoria do artigo (a mais próxima na árvore). Sem regra, a linha fica com 100 %.
+3. Numa fatura de fornecedor, abra uma linha e escolha a **Categoria de despesa**, por exemplo **Combustível: gasóleo**. Abre-se a janela **Categoria de despesa** com «A conta 6228 Outros foi substituída por 6242 Combustíveis, a conta da categoria “Combustível: gasóleo”.»; carregue em **Fechar**.
+4. Escreva o **Preço** (`100,00`) e o imposto `23%`. A linha mostra **Dedutível** 50 % e **IVA dedutível** 11,50 €.
+   ![Linha da fatura com a categoria Combustível: gasóleo, a conta 6242, Dedutível 50% e IVA dedutível 11,50 €](/images/accounting-pt/deducao-do-iva/87-03-linha-gasoleo-50.png)
+5. Confirme a fatura. A percentagem da regra fica na linha; mudar depois a regra não altera linhas já lançadas.
+
+</StepByStep>
+
+## Resultado esperado
+
+Para 100,00 € + 23,00 € de IVA em gasóleo (`FTF/2026/00048`, total 123,00 €), o razão mostra:
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| `6242 Combustíveis` (gasto) | 100,00 € | |
+| `6242 Combustíveis` (reparte o gasto) | | 50,00 € |
+| `6242 Combustíveis` («base do gasto (IVA parcialmente dedutível)») | 50,00 € | |
+| `6242 Combustíveis` («IVA não dedutível (CIVA art. 21.º)») | 11,50 € | |
+| `2432 IVA - Dedutível` | 11,50 € | |
+| `2211 Fornecedores gerais` | | 123,00 € |
+
+O gasto fica em 111,50 € (100,00 € mais os 11,50 € de IVA que não se deduz) e o IVA dedutível do período sobe 11,50 €. A linha **IVA não dedutível** cita o art. 21.º, que é o do exemplo; no pró-rata cita o art. 23.º.
+
+## Notas importantes
+
+### Mudar uma percentagem: feche a regra e abra outra
+
+Uma regra tem **Válido desde** e **Válido até**. A regra aplicada é a vigente na data da fatura. Para mudar a percentagem, preencha **Válido até** na regra antiga e crie outra, com a percentagem e o **Válido desde** novos. Duas regras do mesmo alvo com datas que se sobrepõem são recusadas (ver «Problemas frequentes»).
+
+### A regra «em uso» não fica protegida: não conte com isso
+
+O produto diz que uma regra usada em linhas publicadas não se altera nem se apaga, mas isso não se cumpriu na demonstração: depois de lançar duas faturas de gasóleo, a regra do gasóleo mudou de 50 % para 60 %, fechou-se antes da data das faturas e apagou-se, sem recusa. As faturas lançadas não mudaram. **Não altere nem apague regras já usadas**: feche-as com **Válido até** e crie a nova.
+
+{/* Nota interna (DOCS-046, V3A2-10): a linha publicada com Categoria de despesa não guarda a regra aplicada (campo «regra de dedução» vazio), por isso a proteção «regra em uso» (write/unlink) não atua. Reproduzir: fatura com Combustível: gasóleo, confirmar, depois alterar ou apagar a regra do gasóleo. Atualizar o artigo quando o cartão sair. */}
+
+### Percentagem escrita à mão
+
+Pode alterar **Dedutível** na linha. A alteração fica registada com o motivo «Substituição manual da regra por omissão do art. 21.º do CIVA “…”».
+
+### O que o ecrã não decide
+
+O fiscaldoo não valida se a despesa é dedutível por lei: aplica a regra que lá está. As categorias sem regra (por exemplo **Eletricidade** ou **Água**) ficam a 100 % e o produto avisa. <span className="fd-pending">Pendente de validação por contabilista certificado: que categorias sem regra devem ter percentagem, e o art. 21.º, n.º 2.</span>
+
+## Problemas frequentes
+
+### «A vigência desta regra sobrepõe-se à regra …»
+
+- **Sintoma:** ao gravar uma regra nova do gasóleo desde 01/06/2026: «A vigência desta regra sobrepõe-se à regra “Combustível: gasóleo — 50.0 %” para o mesmo alvo — feche a regra antiga (válido até) antes de criar a nova.»
+- **O que fazer:** preencha **Válido até** na regra antiga, num dia anterior ao **Válido desde** da nova, e grave a nova.
+
+### «Preencha a conta, a categoria de produto ou a categoria de despesa …»
+
+- **Sintoma:** «Preencha a conta, a categoria de produto ou a categoria de despesa — exatamente uma das três, nunca mais, nunca nenhuma.»
+- **O que fazer:** deixe só um dos três alvos preenchido.
+
+### Percentagem acima de 100 ou fim anterior ao início
+
+- **Sintoma:** «A percentagem dedutível tem de estar entre 0 e 100 (recebido *150,00*). Como resolver: indique a parte do IVA que é dedutível, por exemplo 50 para o gasóleo.» ou «A data de fim da vigência (*01/01/2026*) não pode ser anterior à data de início (*01/05/2026*). Como resolver: escolha uma data de fim igual ou posterior ao início, ou deixe-a vazia para uma regra sem fim.»
+- **O que fazer:** use um valor entre 0 e 100 e um **Válido até** igual ou posterior ao **Válido desde**.
+
+{/* Nota interna (DOCS-046, V3A2-11): as mensagens das restrições de percentagem (0 a 100) e de datas da regra de dedução saíam em inglês; no master de 19/11/2026 (lote 100) saem em português, vistas por chamada à base com o idioma pt_PT. */}

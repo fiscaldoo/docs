@@ -1,0 +1,86 @@
+---
+id: sugestoes-de-preenchimento
+slug: /copilot/sugestoes-de-preenchimento
+title: Como funcionam as sugestões de preenchimento
+sidebar_label: Sugestões de preenchimento
+sidebar_position: 6
+description: "Que campos podem ter uma sugestão do Copiloto, quem escolhe esses campos, quem vê o botão e o que nunca pode ser sugerido."
+keywords: [sugestões de preenchimento, sugestoes de preenchimento, campos com sugestão, campos com sugestao, sugerir com o copiloto, sugestões da ia, sugestoes da ia]
+doc_id: DOC-0289
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c2bf63c34)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [copilot/usar/ler-documentos, copilot/usar/redator]
+---
+
+## Para que serve?
+
+Em campos de texto escolhidos pela empresa, aparece ao lado do nome do campo um botão **Sugerir com o Copiloto**. O Copiloto propõe um valor e uma pessoa decide: nada fica escrito sem ela aceitar.
+
+## Quando utilizar?
+
+- Há campos de texto que a equipa preenche sempre da mesma forma, e uma proposta poupa tempo.
+- Quer ver que sugestões foram feitas e o que lhes aconteceu.
+
+## Onde encontrar?
+
+- **Escolher os campos:** **Copiloto › Agentes › Campos com sugestão**.
+- **Ver o histórico:** **Copiloto › Controlo › Sugestões da IA**.
+- **Pedir uma sugestão:** no próprio ecrã, ao lado do nome do campo.
+
+## Antes de começar
+
+- **Para escolher os campos:** o administrador do sistema. Só ele tem o menu **Copiloto › Agentes › Campos com sugestão**: nenhum valor do campo **Perfil** o dá, nem o acesso extra **Administração fiscal**.
+- **Para ver o botão:** o perfil **Contabilista**. Com o perfil **Administrativo**, o botão não aparece.
+- **Para funcionar:** os interruptores **Copiloto (interruptor geral da empresa)** e **IA - Sugerir valores para campos**, em **Copiloto › Controlo › Interruptores**, e uma [ligação à IA](/copilot/ligar-a-uma-ia) pronta.
+- Feito a 5 de novembro de 2026, na Empresa Demonstração, Lda.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Copiloto › Agentes › Campos com sugestão** e carregue em **Novo**.
+2. Em **Campo**, procure o campo. Entre parênteses vem o ecrã a que pertence, por exemplo **Cargo (Contacto)**.
+3. Em **O que sugerir**, escreva uma instrução curta, marque **Ligado** e carregue em **Guardar**.
+   ![Lista Campos com sugestão com o campo Cargo do contacto, a instrução e o interruptor ligado](/images/copilot/sugestoes-de-preenchimento/01-campos.png)
+4. Com o perfil **Contabilista**, abra o ecrã e carregue no botão ao lado do nome do campo.
+   ![Campo Cargo de um contacto com o botão Sugerir com o Copiloto ao lado do nome](/images/copilot/sugestoes-de-preenchimento/02-botao.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+Abre-se a janela **Copiloto**. Numa base de testes, diz que a IA não é chamada e que nada foi enviado.
+
+<span className="fd-pending">Pendente de validação no ecrã: a proposta, o aceitar e o recusar. A demonstração é uma base de testes e o fiscaldoo não chama a IA a partir dela, e as sugestões só podem ser criadas pelo próprio Copiloto. O que está abaixo vem do produto (o código) e não foi visto.</span>
+
+- A janela mostra a proposta. Só ao aceitar é que o valor fica no campo, escrito em nome de quem aceitou.
+- **Sugestões da IA** guarda o histórico: a sugestão, a **Confiança**, o **Modelo usado**, o **Estado** (**Proposta**, **Aceite** ou **Rejeitada**), **Decidida por** e **Decidida em**. Enquanto não houver nenhuma, a lista diz «Ainda não há sugestões da IA.».
+
+## Notas importantes
+
+- **Só campos de texto livre ou de escolha.** Não aceita campos que não são gravados, nem campos só de leitura.
+- **Nunca os campos fiscais certificados** (números, assinatura, séries), nem o que seja saúde, sindicatos, greves ou credenciais. Alguns nem aparecem na procura: procurar «Hash» dá **Sem registos**.
+- **Os dados pessoais seguem as regras da ligação.** Veja [Privacidade e consentimentos](/copilot/privacidade-e-consentimentos).
+- **O que esta lista não cobre:** as sugestões dos documentos lidos e das regras agendadas têm ecrãs próprios. Veja [Como agendar regras com IA e rever as sugestões](/copilot/regras-agendadas).
+
+## Problemas frequentes
+
+### «O campo «…» não pode ter sugestões…»
+
+- **Causa:** escolheu um campo fiscal, por exemplo **NIF do adquirente (Linha Intrastat)**. Nada foi gravado.
+- **O que fazer:** escolha um campo de texto livre, como uma descrição.
+
+### O botão não aparece ao lado do campo
+
+- **Causa:** o seu perfil não é **Contabilista**, o campo não está **Ligado** ou um dos dois interruptores está desligado.
+- **O que fazer:** peça ao administrador do sistema que confirme a lista dos campos e os interruptores.
+
+{/* Nota interna (v13-COP): lista e falha NIF por clique com admin; botão visto com o Contabilista, ausente com o login de faturação (suggest_fields pede group_l10n_pt_accountant). Contacto «Direção Financeira» criado por RPC, sem nome de pessoa. A mensagem da janela vem em inglês (defeito COP-A no LOTE_V13-COP): o artigo não a cita. Captura 02 refeita no lote v18-B (master 00c68a6d8), sem o algarismo cortado. Na base, os dois interruptores e o campo foram ligados por RPC, sem chamar a IA. */}
+
+{/* Nota interna (DOCS-063 #3853, lote v23-S, master cebcb888d, docs_demo_v23s_test, porta 8458): captura 02 refeita com um utilizador só com o Perfil Contabilista, no contacto «Loja Exemplo - Lisboa»; o campo Cargo (Contacto) foi posto em Campos com sugestão por RPC só na cópia (a base-mãe não o tem). Botão «Sugerir com o Copiloto» ao lado de Cargo, sem algarismos cortados. */}
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): menus lidos com utilizadores criados por RPC só com um valor do campo Perfil e com um Contabilista certificado com o acesso extra Administração fiscal: Copiloto › Agentes › Campos com sugestão só aparece ao administrador; Interruptores e Sugestões da IA aparecem ao Contabilista, ao Contabilista certificado, à Gerência e ao Auditor / ROC */}

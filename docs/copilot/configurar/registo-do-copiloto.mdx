@@ -1,0 +1,84 @@
+---
+id: registo-do-copiloto
+slug: /copilot/registo-do-copiloto
+title: Como ver o que o Copiloto fez e o que enviou à IA
+sidebar_label: Registo do Copiloto
+sidebar_position: 2
+description: "Os ecrãs do menu Controlo do Copiloto: o registo do que fez, as chamadas à IA com o custo, os consentimentos e os documentos que leu."
+keywords: [registo do copiloto, chamadas à IA, chamadas a IA, consentimentos, lidos pelo copiloto, custo da IA, controlo, auditoria do copiloto]
+doc_id: DOC-0283
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master c689f7580)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [copilot/configurar/o-que-e-o-copiloto, copilot/configurar/ligar-a-uma-ia]
+---
+
+## Para que serve?
+
+Mostra o que o Copiloto fez na empresa e o que enviou ao fornecedor de IA: quem pediu, quando, com que agente, com que modelo e com que custo estimado. Serve para controlar o gasto e para responder a quem pergunta «o que é que a IA viu?».
+
+## Quando utilizar?
+
+- Para conferir o gasto do mês.
+- Depois de ligar a IA, para ver se as chamadas são as esperadas.
+- Para mostrar a um auditor o que o Copiloto aplicou e quem aceitou.
+
+## Onde encontrar?
+
+**Copiloto › Controlo**, com cinco ecrãs que interessam aqui: **Registo**, **Chamadas à IA**, **Consentimentos da IA**, **Lidos pelo Copiloto** e **Perguntas ao Ajudante**.
+
+## Antes de começar
+
+O seu perfil é o do administrador do sistema. O **Contabilista** vê os mesmos menus de **Controlo**. Feito a 10 de novembro de 2026, na Empresa Demonstração, Lda.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Copiloto › Controlo › Registo**. Cada linha tem **Criado em**, **Empresa**, **Agente**, **O que aconteceu**, **Estado**, **Feito por** e **Aceite por**.
+   ![Registo do Copiloto com a linha de 06/11/2026 da Ligação à IA, Estado Aplicado, feita e aceite pelo OdooBot](/images/copilot/registo-do-copiloto/01-registo-ligacao-a-ia.png)
+2. Abra **Copiloto › Controlo › Chamadas à IA**. A lista tem **Criado em**, **Empresa**, **Quem**, **Nome do agente**, **Nome da ligação**, **Chegou-se através de**, **Modelo**, **Dados sensíveis autorizados**, **Resultado**, os **Tokens de entrada** e **de saída**, o **Custo estimado (EUR)** e uma **Nota**.
+3. Abra **Copiloto › Controlo › Consentimentos da IA** para ver quem deu e quem retirou o consentimento de um fornecedor.
+4. Abra **Copiloto › Controlo › Lidos pelo Copiloto** para ver os ficheiros que ele leu sozinho, com a confiança de cada campo. São rascunhos: nada fica validado.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, os ecrãs de **Copiloto › Controlo** são os mesmos, com as mesmas colunas (visto com o administrador; um utilizador só com o perfil **Contabilista** vê as mesmas entradas de **Controlo**): **Registo**, **Chamadas à IA** (com **Nome da ligação**, **Modelo**, **Dados sensíveis autorizados** e **Custo estimado (EUR)**), **Consentimentos da IA**, **Lidos pelo Copiloto** e **Perguntas ao Ajudante**. Se o administrador instalar o módulo **fiscaldoo · Copiloto — Configuração dentro da app de IA do Enterprise — Enterprise** (não se instala sozinho, nem com a aplicação **IA** do Enterprise), passam para **IA › Configurar**, no grupo **Controlo** (veja [O que é o Copiloto e o que pode fazer](/copilot/o-que-e-o-copiloto#no-enterprise)). Na **Ajuda passo a passo** da janela do Copiloto, estes menus aparecem então com o caminho novo, por exemplo **IA › Configurar › Controlo › Lidos pelo Copiloto**.
+
+Estes ecrãs registam só o que passa pelo Copiloto. A **Digitalização de documento** e a aplicação **IA** do Enterprise não aparecem aqui (veja [Como ligar ou desligar o Copiloto e controlar os dados enviados](/copilot/privacidade-e-consentimentos#no-enterprise)).
+
+{/* Nota interna (lote EE-13, DOCS-073 #4142, req 46633, DEC-1794, master 7f41ce71b, base Enterprise docs_ee_ee13_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee13_test): DOC-0283. Administrador: as cinco listas com as mesmas colunas nas duas cópias; na base Enterprise há registos antigos da Empresa Teste Portugal (27 no Registo, 21 Chamadas à IA, 1 consentimento DeepSeek), de antes da cópia. Contabilista: Controlo com Interruptores, Consentimentos da IA, Chamadas à IA, Registo, Sugestões da IA, Lidos pelo Copiloto e Perguntas ao Ajudante. Que a digitalização e a aplicação IA do Enterprise não escrevem nestes registos é a separação dos módulos: não se provocou nenhuma digitalização. Ver reports/LOTE_EE-13.md. */}
+
+{/* Nota interna (lote EE-15, comboio 197, master c689f7580, 12/11/2026; cópia Enterprise docs_ee_ee15_test (portas 8530/8531, cópia da odoo20_ee_test com ee_neutralizar) e cópia Community docs_demo_ee15_test (porta 8532), utilizadores criados nas cópias só com o perfil indicado): DOC-0283, EEA-091 (0dfcc9667). Contabilista com a ponte: Ajuda passo a passo «Interruptores do Copiloto» com Outros resultados IA › Configurar › Controlo › Interruptores e IA › Configurar › Controlo › Lidos pelo Copiloto. Ver reports/LOTE_EE-15.md. */}
+
+## Resultado esperado
+
+No exemplo, o **Registo** tinha uma linha, de 06/11/2026: «Ligação à IA «Anthropic» criada.», do agente **Ligação à IA (chamadas ao fornecedor de IA)**, com **Estado** **Aplicado**, feita e aceite pelo OdooBot. Quando alguém prepara o resumo do assistente de configuração da empresa, entra também uma linha do agente **Assistente de configuração da empresa**, por exemplo «Resumo preparado: 12 alterações a aplicar.», com **Estado** **Sugerido** e o nome de quem a pediu.
+
+As **Chamadas à IA** estavam vazias, porque a IA nunca foi chamada, e o ecrã diz: «Aqui estão todas as chamadas à IA: quem, quando, que agente e o custo estimado. O conteúdo nunca é registado.»
+
+![Chamadas à IA sem linhas: Aqui estão todas as chamadas à IA: quem, quando, que agente e o custo estimado. O conteúdo nunca é registado.](/images/copilot/registo-do-copiloto/02-chamadas-a-ia-vazias.png)
+
+**Lidos pelo Copiloto** diz «Ainda não foi lido nada sozinho». **Consentimentos da IA** diz «Nenhum consentimento registado».
+
+## Notas importantes
+
+- **O registo não guarda o que foi enviado**, só quem, quando e quanto. O texto da pergunta não fica.
+- **As Perguntas ao Ajudante** só ficam guardadas, sem dados pessoais, se a empresa ligar **Ajudante - guardar as perguntas** em **Copiloto › Controlo › Interruptores**.
+- <span className="fd-pending">Pendente de validação no ecrã: uma linha de **Chamadas à IA** com custo. A demonstração não chama nenhuma IA e o produto não tem simulador em execução.</span>
+
+## Problemas frequentes
+
+### As Chamadas à IA estão vazias
+
+- **Causa:** a IA está desligada ou ainda ninguém a usou.
+- **O que fazer:** veja [O que é o Copiloto](/copilot/o-que-e-o-copiloto) e confirme os interruptores.
+
+{/* Nota interna (DOCS-040, lote F4): defeito F4-08 (Registo: a linha de 30/10/2026 está em inglês, «AI connection «Anthropic» created.», e o Agente aparece como «ai»). Os ecrãs Chamadas à IA e Lidos pelo Copiloto não puderam ser vistos com dados (sem IA). */}
+
+{/* Nota interna (DOCS-005 #3400, lote CAP-01, 10/11/2026, master ce51f2d47, docs_demo_cap01_test, porta 8504): por clique com o administrador na Empresa Demonstração. A base-mãe tem hoje uma só linha no Registo (06/11/2026, «Ligação à IA «Anthropic» criada.», OdooBot); as três linhas de 01/11 do texto antigo já não existem. A linha «Resumo preparado: 12 alterações a aplicar.» (Sugerido) foi criada nesta cópia pelo Ir para o resumo do DOC-0008, com um utilizador meu: a captura 01 ordena por Criado em para mostrar só a da base-mãe. Colunas Empresa (Registo e Chamadas), Chegou-se através de e Nota (Chamadas) acrescentadas. Consentimentos e Lidos: textos vazios iguais aos citados. Menus de Controlo iguais para o Contabilista (opera) e o administrador (7 entradas). */}

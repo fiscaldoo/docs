@@ -1,0 +1,106 @@
+---
+id: declaracao-a-seguranca-social
+slug: /payroll-pt/declaracao-a-seguranca-social
+title: Como enviar a declaração de remunerações à Segurança Social
+sidebar_label: Declaração à Segurança Social
+sidebar_position: 2
+description: Preparar as confirmações do mês no modelo novo da Segurança Social, conferir o valor de cada trabalhador e registar se aceita os valores da Segurança Social ou confirma os seus.
+keywords: [declaração de remunerações, declaracao de remuneracoes, Segurança Social, Seguranca Social, DRI, confirmação dos valores, confirmacao dos valores, modelo novo, Segurança Social Direta, Seguranca Social Direta, aceitar valores, confirmar os nossos valores, remuneração permanente, dia 20]
+doc_id: DOC-0226
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 25deacc94)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/declarar/dmr]
+---
+
+## Para que serve?
+
+No modelo novo de declaração à Segurança Social, a Segurança Social apura todos os meses o valor de cada trabalhador a partir da remuneração já declarada, e a empresa aceita esses valores ou confirma os seus. O fiscaldoo prepara uma confirmação por trabalhador com o valor que a empresa declara, guarda o valor que a Segurança Social apurou e a diferença, e regista a decisão.
+
+O fiscaldoo não envia nada à Segurança Social e não lê nada dela. Os valores apurados veem-se na Segurança Social Direta, a decisão toma-se lá, e no fiscaldoo fica o registo do que se decidiu.
+
+## Quando utilizar?
+
+- Todos os meses, depois de [processar e validar os salários](/payroll-pt/processar-o-mes) e antes do **Prazo para confirmar**.
+- Sobretudo quando a remuneração de um trabalhador mudou face ao mês anterior: a confirmação avisa e pede decisão.
+
+Este artigo trata a empresa que já está no modelo novo, como a da demonstração. No modelo antigo, a mesma janela prepara uma declaração por taxa contributiva e estabelecimento; esse caminho não foi visto no ecrã, porque a adesão ao modelo novo é definitiva e a empresa da demonstração não pode voltar ao antigo. <span className="fd-pending">Pendente de validação no ecrã: declaração do modelo antigo.</span>
+
+## Onde encontrar?
+
+**Salários › Declarar › Declaração mensal à Segurança Social (DRI)** › escolher o mês › **Preparar o mês**
+
+As confirmações de todos os meses ficam em **Salários › Preparar › O que há para fazer este mês?** › **Listas de apoio** › **Confirmações da Segurança Social**.
+
+## Antes de começar
+
+- O seu perfil é **Processador de salários**, com ou sem o acesso extra **Administrador de Salários**. Com ou sem esse acesso, prepara e decide as confirmações.
+- Os recibos do mês estão **Validados**.
+- Tem acesso à Segurança Social Direta da empresa, para ver os valores que a Segurança Social apurou.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Declarar › Declaração mensal à Segurança Social (DRI)**. Abre-se a janela com o mesmo nome.
+2. Confirme o **Ano** e escreva o **Mês** em número (**10** para outubro; vem preenchido com o mês anterior ao atual). O **Modelo de declaração do mês** preenche-se sozinho: **Modelo novo: confirmar os valores da Segurança Social**.
+   ![Janela Declaração mensal à Segurança Social (DRI) com o ano 2026, o mês 10, o modelo novo e o botão Preparar o mês assinalado](/images/payroll-pt/declaracao-a-seguranca-social/01-preparar-o-mes.png)
+3. Carregue em **Preparar o mês**. Abre-se a lista **Confirmações da Segurança Social**, com uma linha por trabalhador: **Mês de referência**, **Trabalhador**, **Regime especial**, **Valor que declaramos**, **Valor apurado pela Segurança Social**, **Diferença**, **Alteração da remuneração permanente**, **Passou o limite da base**, **Precisa de confirmação**, **Prazo para confirmar** e **Estado** (**Por decidir**). As colunas **Regime especial**, **Alteração da remuneração permanente**, **Passou o limite da base** e **Precisa de confirmação** aparecem vazias quando não se aplicam (vazio quer dizer «não»); no exemplo estão vazias para os 8 trabalhadores.
+4. Abra a linha de um trabalhador. A confirmação mostra o **Valor que declaramos**, o **Valor do mês anterior** e o **Prazo para confirmar** (20/11/2026 para outubro de 2026). Se a remuneração mudou, aparece «A remuneração mudou desde o mês anterior: a alteração tem de ser comunicada e os valores confirmados até ao prazo.»
+   ![Confirmação de outubro de Ana Margarida Pinto por decidir: valor que declaramos 2.400,00, valor do mês anterior 2.400,00 e o botão Confirmar os nossos valores](/images/payroll-pt/declaracao-a-seguranca-social/02-confirmacao-por-decidir.png)
+5. Confira o **Valor que declaramos** com a **Base de Segurança Social** do recibo do mesmo trabalhador (no recibo, separador **Segurança Social e IRS**).
+6. Na Segurança Social Direta, veja o valor que a Segurança Social apurou para esse trabalhador. No fiscaldoo, marque **Valor da Segurança Social preenchido** e escreva esse valor em **Valor apurado pela Segurança Social**. A **Diferença** calcula-se sozinha e aparece o botão **Aceitar os valores da Segurança Social**.
+   ![Confirmação com Valor da Segurança Social preenchido marcado, valor apurado 2.400,00, diferença 0,00 e os botões Aceitar os valores da Segurança Social e Confirmar os nossos valores](/images/payroll-pt/declaracao-a-seguranca-social/03-valor-apurado-pela-seguranca-social.png)
+7. Decida, tal como decidiu na Segurança Social Direta: carregue em **Aceitar os valores da Segurança Social** se o valor dela está certo, ou em **Confirmar os nossos valores** se o certo é o da empresa. Em **Nota**, pode escrever porquê.
+8. Repita os passos 4 a 7 para cada trabalhador.
+
+</StepByStep>
+
+{/* Nota interna (DOCS-022): vídeo previsto (video=sim, corrente DOCS-006): confirmação de outubro de um trabalhador, de «Preparar o mês» até «Aceitar os valores da Segurança Social». Entra como secção «Vídeo demonstrativo» depois de «Resultado esperado» quando existir. */}
+
+**Exemplo.** Em outubro de 2026, Ana Margarida Pinto tem 2.400,00 € de retribuição base e 129,15 € de subsídio de alimentação. O recibo tem 2.400,00 € de **Base de Segurança Social**: o subsídio de alimentação ficou fora. A confirmação mostra o mesmo valor, 2.400,00 €, em **Valor que declaramos**, e 2.400,00 € em **Valor do mês anterior**. Com o valor apurado pela Segurança Social de 2.400,00 €, a **Diferença** é 0,00 € e a decisão é **Aceitar os valores da Segurança Social**.
+
+**Quando o valor da Segurança Social é diferente.** Bruno Miguel Teixeira tem 1.650,00 € em **Valor que declaramos**. Se a Segurança Social Direta mostra 1.800,00 €, escreva 1.800,00 € em **Valor apurado pela Segurança Social**: a **Diferença** passa a −150,00 €. Se o valor certo é o da empresa, escreva em **Nota** porquê e carregue em **Confirmar os nossos valores**: a confirmação fecha em **Valores nossos confirmados**, com a data da decisão. Se a Segurança Social tem razão, **Aceitar os valores da Segurança Social** fecha-a em **Valores da Segurança Social aceites**. <span className="fd-pending">Pendente de validação por contabilista certificado: o que fazer a uma diferença (aceitar ou confirmar os valores da empresa) e como se corrige o que a empresa declarou.</span>
+
+## No Enterprise
+
+No Odoo Enterprise, a declaração de remunerações à Segurança Social envia-se da mesma maneira: com o perfil **Processador de salários**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
+
+{/* Nota interna (lote EE-06, DOCS-073 #4142, DEC-1794, master ce51f2d47, 10/11/2026): conferido numa cópia Enterprise da demonstração (docs_ee_ee06_test, computador 2) com utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): Processador de salários em Salários › Declarar › Declaração mensal à Segurança Social (DRI). Menus e vistas comparados, perfil a perfil, com uma cópia Community do mesmo master (docs_demo_ee06_test). Ver reports/LOTE_EE-06.md. */}
+
+## Resultado esperado
+
+- A confirmação fica no estado **Valores da Segurança Social aceites** ou **Valores nossos confirmados**, com o valor apurado, a diferença e a nota, e mostra «Este registo já está fechado (validado, aprovado, pago ou enviado), por isso já não se altera.»
+- Na lista **Confirmações da Segurança Social**, nenhuma linha do mês fica **Por decidir**.
+
+![Confirmação no estado Valores da Segurança Social aceites](/images/payroll-pt/declaracao-a-seguranca-social/04-valores-aceites.png)
+
+## Notas importantes
+
+- **Prazo.** A confirmação mostra o **Prazo para confirmar**: o dia 20 do mês seguinte. Se a empresa não confirmar até lá, valem os valores apurados pela Segurança Social. O pagamento das contribuições é outra obrigação, com prazo próprio, que o ecrã do mês mostra em **Prazos do mês**. <span className="fd-pending">Pendente de validação por contabilista certificado: prazos de confirmação e de pagamento e efeito do silêncio no modelo novo (Decreto-Lei n.º 127/2025).</span>
+- **Uma decisão não se desfaz.** Depois de aceitar ou confirmar, a linha fecha. Confira o valor antes de carregar no botão.
+- **Depois do prazo, o silêncio decide.** Uma confirmação ainda **Por decidir** depois do **Prazo para confirmar** mostra «O prazo passou: sem confirmação, o silêncio conta como aceitação dos valores da Segurança Social (art. 40.º/8 e 9).» A decisão registada no fiscaldoo deve então ser a mesma que a Segurança Social já considerou.
+
+## Problemas frequentes
+
+### «Nada a confirmar» ao preparar o mês
+
+- **Sintoma:** «Operação inválida. Nada a confirmar em 11/2026. O que aconteceu: não há recibos validados no mês. Como resolver: valide os recibos do mês e tente de novo.»
+- **Causa:** o mês escrito em **Mês** ainda não tem recibos validados (por exemplo, o mês atual antes de processar).
+- **O que fazer:** confirme o mês. Se for o certo, [processe e valide os salários](/payroll-pt/processar-o-mes) e prepare de novo.
+
+### Não aparece o botão Aceitar os valores da Segurança Social
+
+- **Sintoma:** a confirmação só mostra **Confirmar os nossos valores**.
+- **Causa:** **Valor da Segurança Social preenchido** não está marcado.
+- **O que fazer:** marque-o e escreva o valor apurado (passo 6).
+
+### Aceitar é recusado sem o valor apurado
+
+- **Sintoma:** «Operação inválida. Não há valor da Segurança Social para aceitar. O que aconteceu: o valor apurado pela Segurança Social para 2026-10 / Ana Margarida Pinto não foi preenchido, ou é 0,00 ou negativo. Como resolver: preencha-o a partir da plataforma da Segurança Social, ou confirme os seus valores.»
+- **Causa:** marcou **Valor da Segurança Social preenchido** mas não escreveu o valor em **Valor apurado pela Segurança Social**.
+- **O que fazer:** carregue em **Fechar**, escreva o valor que a Segurança Social Direta mostra e aceite de novo; se o certo é o valor da empresa, use **Confirmar os nossos valores**.
+{/* Nota interna (DOCS-022, 3.ª auditoria, NC-47, master ba9c8bd7): P-15 do PAY-067 (#3614): a mensagem escreve o mês em formato ISO («2026-10»). */}

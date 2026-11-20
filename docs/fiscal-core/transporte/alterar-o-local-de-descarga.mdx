@@ -1,0 +1,119 @@
+---
+id: alterar-o-local-de-descarga
+slug: /fiscal-core/alterar-o-local-de-descarga
+title: Como alterar o local de descarga de uma guia já comunicada
+sidebar_label: Alterar o local de descarga
+sidebar_position: 4
+description: Antes de o transporte começar, muda o local de descarga numa guia já emitida e comunica a alteração à AT. Depois de começar, emite o documento de transporte adicional, em papel.
+keywords: [alterar, local de descarga, mudar destino, alteração de destino, alteracao de destino, guia comunicada, guia já comunicada, código -13, transporte já começou, documento adicional, documento de transporte adicional, alterações do local de descarga, alteracoes do local de descarga]
+doc_id: DOC-0048
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master dbbb5ac5c)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/transporte/emitir-uma-guia-de-transporte, fiscal-core/transporte/bens-nao-aceites]
+---
+
+## Para que serve?
+
+Depois de emitida, uma guia de transporte não se edita livremente: cada alteração tem a sua entrada no menu **Ações**. Esta serve para o local de descarga: se o cliente pedir a entrega noutra morada antes de os bens saírem, o fiscaldoo muda o local na guia, guarda o local antigo, o novo, o motivo e quem alterou, e comunica a alteração à AT.
+
+## Quando utilizar?
+
+- A guia está emitida e o transporte **ainda não começou** (a hora em **Início do transporte** ainda não passou).
+- O transporte **já começou**, a guia foi comunicada pelo programa e a mercadoria vai para outro sítio: emita o [documento de transporte adicional](#o-transporte-já-começou).
+- Só muda a morada de entrega. Se o cliente recusa os bens na entrega, veja [Como registar bens não aceites pelo destinatário](/fiscal-core/bens-nao-aceites). Se muda quem recebe, veja [Como mudar o destinatário de uma guia já emitida](/fiscal-core/mudar-o-destinatario).
+
+## Onde encontrar?
+
+**Faturação › Faturar › Guias de transporte**, abra a guia e carregue em **Ações › Alterar o local de descarga**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**. Com os perfis **Administrativo** e **Contabilista**, o menu **Ações** da guia só tem **Cancelar** e, com acesso à aplicação **Inventário**, também **Validar** e **Imprimir**.
+- A guia está emitida e comunicada: [Como emitir uma guia de transporte e obter o código da AT](/fiscal-core/emitir-uma-guia-de-transporte). No exemplo, a `GT D26/5` da Padaria Aurora, Lda, com início do transporte em 07/11/2026 20:16, **Comunicada** e **Comunicada por** «Automática (pelo programa)».
+- O novo local existe como contacto, com morada. Se não existir, crie-o antes: em **Faturação › Clientes e artigos › Clientes**, abra o cliente; no separador **Contactos**, carregue em **Adicionar Contactos associados** e escolha **Entrega**; preencha **Nome** e **Endereço de Entrega**, carregue em **Guardar & Fechar** e depois em **Guardar**, na ficha do cliente. A morada só fica criada com este último **Guardar**. No exemplo, a morada de entrega **Loja da Foz**, da Padaria Aurora, Lda: Avenida do Brasil, 200, Porto. Sem morada, o fiscaldoo recusa (ver [Problemas frequentes](#problemas-frequentes)).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a guia em **Faturação › Faturar › Guias de transporte**. Na janela seguinte, a guia aparece com o nome da entrega (no exemplo, `DEM/OUT/00006`).
+2. No topo da guia, carregue em **Ações** e escolha **Alterar o local de descarga**. A janela mostra o **Local de descarga atual**.
+3. Em **Novo local de descarga**, escolha o contacto (no exemplo, `Padaria Aurora, Lda, Loja da Foz`). Se o local não estiver na lista, **Criar e editar…** abre a ficha do contacto: preencha também o **Endereço**, porque sem morada a alteração é recusada.
+4. Em **Motivo**, escreva porque muda (no exemplo, «O cliente pediu a entrega na Loja da Foz»).
+   ![Janela Alterar o local de descarga: local atual Rua de Demonstração, 1, Porto; novo local Padaria Aurora, Lda, Loja da Foz; motivo; e o botão Alterar o local de descarga](/images/fiscal-core/alterar-o-local-de-descarga/01-janela-alterar-o-local.png)
+5. Carregue em **Alterar o local de descarga**. O fiscaldoo envia primeiro a alteração à AT e só depois muda a guia. A janela fecha, sem mensagem.
+6. Para o confirmar, abra o separador **Guia de transporte**: **Local de descarga** mostra o novo local, e no fim do bloco da comunicação à AT aparece a linha da alteração.
+   ![Linha da alteração na guia: 07/11/2026 20:10:03, Local de descarga, Padaria Aurora, Lda, Avenida do Brasil, 200, Porto, com o motivo](/images/fiscal-core/alterar-o-local-de-descarga/02-alteracao-na-guia.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- **Na guia:** a `GT D26/5` mantém o número, o ATCUD e o **Código AT**. **Local de descarga** passa a `Padaria Aurora, Lda, Loja da Foz`.
+- **Na guia impressa:** em **Imprimir guia**, o bloco passa a chamar-se **Local de descarga (em vigor)** e mostra a Avenida do Brasil, 200. Por baixo, em letra pequena, ficam «Local inicial: …», com a morada com que a guia foi emitida, e a linha «Alterado em *data e hora* para: *novo local* (*motivo*)».
+- **Na AT:** a alteração fica registada como uma comunicação própria da guia, separada da comunicação inicial. **Última comunicação à AT** passa a mostrar essa alteração (no exemplo, «Guia de transporte (alteração de destino) - DEM/OUT/00006», com **Resultado da última comunicação** «Aceite (simulado)»), e o **Código AT** da guia não muda. No exemplo, a resposta veio do simulador da AT: nesta demonstração não houve ligação à AT real.
+- **O que não acontece:** a alteração não mexe no stock: a entrega do exemplo continuou **Pronto**.
+
+## O transporte já começou
+
+Com a guia comunicada pelo programa e a hora em **Início do transporte** já passada, a mesma janela diz: «O transporte já começou: a Autoridade Tributária já não aceita esta alteração e a guia fica como foi comunicada. O artigo 4.º, n.º 8, do Decreto-Lei n.º 147/2003 exige um documento de transporte adicional, em papel, que identifique a alteração e o documento alterado: carregue em «Emitir o documento adicional» e imprima-o. O programa não o comunica à Autoridade Tributária: o artigo 4.º, n.º 11, exige que seja comunicado até ao 5.º dia útil seguinte ao do transporte (use o Portal das Finanças).»
+
+<StepByStep>
+
+1. Em **Novo local de descarga** e **Motivo**, preencha como acima. No exemplo, a mesma `GT D26/5`, já com a Loja da Foz, volta à morada principal, `Padaria Aurora, Lda`, com o motivo «O cliente voltou a pedir a entrega na morada principal».
+   ![Janela Alterar o local de descarga com o aviso de que o transporte já começou e o botão Emitir o documento adicional](/images/fiscal-core/alterar-o-local-de-descarga/03-documento-adicional-janela.png)
+2. Carregue em **Emitir o documento adicional**. Abre-se o **Documento de transporte adicional**, com o número da guia, quem alterou, o motivo, o local anterior e o novo.
+   ![Documento de transporte adicional da guia GT D26/5, com o local anterior, o novo local e o motivo](/images/fiscal-core/alterar-o-local-de-descarga/04-documento-adicional.png)
+3. Carregue em **Imprimir**. O PDF, com o número `GT D26/5 / ALT 2` no exemplo (a alteração para a Loja da Foz, feita antes do início, foi a 1.ª), identifica o documento alterado, o ATCUD e o **Código AT**. Diz «Este documento acompanha os bens juntamente com o documento alterado (RBC, art. 4.º n.º 8).».
+4. Faça a comunicação no Portal das Finanças, fora do produto, como a janela indica.
+
+</StepByStep>
+
+A guia não muda: fica com o **Código AT** e o **Local de descarga** com que foi comunicada, e o fiscaldoo não envia nada à AT. A alteração fica na lista do separador **Guia de transporte**. Na guia impressa, **Local de descarga (em vigor)** passa a mostrar o novo local (no exemplo, a morada principal da Padaria Aurora, Lda) e, por baixo, aparece mais uma linha: «Alterado em *data e hora* para: *novo local* (O cliente voltou a pedir a entrega na morada principal)». Se abrir outra vez **Alterar o local de descarga**, o **Local de descarga atual** já é esse novo local, o último em vigor, e não o da guia comunicada.
+
+## Notas importantes
+
+- **Guia comunicada no Portal das Finanças ou por telefone.** O fiscaldoo não envia nada à AT e não verifica o início do transporte: a janela não oferece o documento adicional, mesmo com o início já passado (visto na `GT D26/1`, comunicada no Portal), e a alteração escreve-se na guia. A alteração fica só registada na guia: faça-a também no canal por onde a guia foi comunicada.
+- **Guia ainda sem código da AT.** A alteração não é enviada, porque ainda não há comunicação a alterar. No exemplo, a `GT D26/4` aceitou-a e ficou só registada na guia.
+- **O que diz a lei quando os bens já saíram.** [Regime dos Bens em Circulação](https://info.portaldasfinancas.gov.pt/pt/informacao_fiscal/legislacao/diplomas_legislativos/Documents/Reg_bens_circ.pdf) (Decreto-Lei n.º 147/2003), art. 4.º, n.º 8: «As alterações ao destinatário ou adquirente, ou ao local de destino, ocorridas durante o transporte, ou a não aceitação imediata e total dos bens transportados, obrigam à emissão de documento de transporte adicional em papel, identificando a alteração e o documento alterado.» E o n.º 11: «Os documentos referidos nas alíneas a) e b) do n.º 6 e as alterações referidas no n.º 8 são comunicados por transmissão eletrónica de dados ou, quando emitidos nos termos da alínea e) do n.º 1 do artigo 5.º, por inserção no Portal das Finanças até ao 5.º dia útil seguinte ao do transporte.»
+- <span className="fd-pending">Pendente de validação por contabilista certificado: a que comunicações se aplica o prazo do n.º 11, e como se comunica o documento adicional no Portal das Finanças.</span>
+
+{/* Nota interna (DOCS-046, lote v10-C, master f684b47f1, docs_demo_v10c_test, porta 8236): guia GT D26/5 (id 14) criada por clique pelo admin, comunicada pelo simulador (MOCK-9548FB03); GT D26/6 (id 15) para a recusa -13; comunicação de alteração confirmada por leitura (n.º 38). Só simuladores. PDF conferido com pdftotext. A morada Loja da Foz criada por RPC (dados); caminho por clique percorrido na auditoria (master 85c07671a, porta 8238) com a morada Armazém de Gaia e a guia GT D26/7, MOCK-18629731. Defeito V10C-01: mensagem com «(destination)». */}
+
+## Problemas frequentes
+
+### «O local de descarga já não pode ser alterado na Autoridade Tributária: o transporte já começou (código -13)»
+
+- **Sintoma:** abre-se a janela **Operação inválida**: «O local de descarga já não pode ser alterado na Autoridade Tributária: o transporte já começou (código -13). Nada foi alterado. Uma alteração do destinatário ou do destino durante o transporte regista-se num documento de transporte adicional em papel, que identifica a alteração e o documento alterado (Regime dos Bens em Circulação, artigo 4.º, n.º 8). Na janela «Alterar o local de descarga», carregue em «Emitir o documento adicional».»
+- **Causa:** a janela estava aberta quando a hora em **Início do transporte** passou. O fiscaldoo não chega a enviar nada à AT.
+- **O que fazer:** feche a janela e abra-a de novo em **Ações › Alterar o local de descarga**. Siga [O transporte já começou](#o-transporte-já-começou).
+
+### «O novo local de descarga é igual ao atual.»
+
+- **Sintoma:** a janela **Operação inválida** abre com esta frase.
+- **Causa:** escolheu o mesmo contacto que já está na guia.
+- **O que fazer:** carregue em **Fechar** e escolha o outro contacto.
+
+### «A alteração de destino não pode ser comunicada: faltam dados obrigatórios (destination). Nada foi enviado.»
+
+- **Sintoma:** a janela **Operação inválida** abre com esta frase.
+- **Causa:** o contacto escolhido não tem morada. No exemplo, um contacto só com o nome.
+- **O que fazer:** carregue em **Cancelar**, preencha a rua ou a localidade do contacto, e repita.
+
+### «Há campos obrigatórios por preencher…»
+
+- **Sintoma:** ao carregar em **Alterar o local de descarga**, aparece «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.».
+- **Causa:** falta o **Novo local de descarga** ou o **Motivo**.
+- **O que fazer:** preencha os campos a vermelho e carregue outra vez.
+
+### Não encontro «Alterar o local de descarga» no menu Ações
+
+- **Sintoma:** o menu **Ações** da guia não tem **Alterar o local de descarga**.
+- **Causa:** o seu perfil não tem a entrada (**Administrativo** e **Contabilista** não a têm), ou a guia ainda não foi emitida.
+- **O que fazer:** confirme que a guia tem número e ATCUD. Se tem, peça a alteração a quem tem o perfil **Contabilista certificado**.
+
+{/* Nota interna (lote v23-AB, master 97b34fac3, docs_demo_v23ab_test, porta 8480, utilizadores criados só com cada valor do campo Perfil): STK-023 visto numa guia minha (DEM/OUT/00007, GT D26/5 desta cópia, criada e comunicada ao simulador por RPC pelo administrador, com matrícula e transportador): o Contabilista certificado alterou para a Loja da Foz antes do início e emitiu o documento adicional de volta à morada principal depois; a janela mostrou depois a morada principal como Local de descarga atual; o PDF (pdftotext) tem «Local de descarga (em vigor)», «Local inicial: …» e uma linha «Alterado em … para: … (motivo)» por alteração. Capturas 01 a 03 não refeitas (não mostram o papel). */}

@@ -1,0 +1,90 @@
+---
+id: depreciacoes-nao-sao-processadas
+slug: /troubleshooting/depreciacoes-nao-sao-processadas
+title: As depreciações não são processadas ou o ativo não se altera
+sidebar_label: Depreciações não processadas ou ativo que não se altera
+description: Por onde começar quando um ativo não é depreciado, não entra no processamento do mês ou recusa uma alteração, com a causa e o artigo de cada caso.
+keywords: [depreciações não processadas, depreciacoes nao processadas, ativo não é depreciado, ativo nao e depreciado, Porque não é depreciado, ativo em preparação, ativo parado, Retomar, Processar períodos contabilísticos, foi alienado ou abatido, ativo abatido, não pode ser alterado, alterar ativo, data de início de utilização]
+doc_id: DOC-0353
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 25deacc94)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/contabilidade-e-iva/revalorizacao-recusada, troubleshooting/contabilidade-e-iva/contagem-fisica-dos-ativos, accounting-pt/ativos/processar-depreciacoes, accounting-pt/ativos/alterar-a-vida-util, troubleshooting/contabilidade-e-iva/ficha-do-ativo-com-dados-em-falta, troubleshooting/contabilidade-e-iva/categoria-do-ativo-sem-contas, troubleshooting/contabilidade-e-iva/ativo-com-periodos-processados, troubleshooting/contabilidade-e-iva/estado-do-ativo-nao-permite]
+---
+
+## Sintoma
+
+Um ativo fixo não tem quotas de depreciação, não aparece no processamento do mês, ou recusa uma alteração. Este artigo ajuda a encontrar a causa e leva-o ao artigo que a trata.
+
+## Mensagem
+
+No separador **Quadro contabilístico** de um ativo ainda não posto em uso, **Porque não é depreciado** diz:
+
+> «O ativo está em preparação: ainda não entrou em funcionamento.»
+
+![Campo Porque não é depreciado do Servidor de cópias de segurança, em preparação: O ativo está em preparação: ainda não entrou em funcionamento.](/images/troubleshooting/depreciacoes-nao-sao-processadas/01-porque-nao-e-depreciado.png)
+
+Ao alterar um ativo já abatido, ao gravar:
+
+> «O ativo “*Computadores portáteis e servidor*” foi alienado ou abatido e não pode ser alterado (*Valor de aquisição*): só se editam as notas e os anexos. Se o abate estava errado, o contabilista certificado reverte-o no registo do abate, com um motivo.»
+
+Ao alterar o **Valor de aquisição** de um ativo em uso com períodos processados, ao gravar:
+
+> «O ativo “*Impressora multifunções*” já tem períodos processados, por isso não se pode alterar aqui o seguinte: *Valor de aquisição*. Os valores deixariam de bater com os lançamentos já feitos. Para mudar a vida útil use «Parar / alterar vida útil» no ativo (só vale para os períodos ainda por processar); para atualizar o valor use a reavaliação; se o custo ou a categoria estão errados, o contabilista certificado corrige primeiro os lançamentos.»
+
+![Janela Operação inválida da Impressora multifunções: já tem períodos processados e não se pode alterar o Valor de aquisição](/images/troubleshooting/depreciacoes-nao-sao-processadas/02-recusa-ativo-com-periodos-processados.png)
+
+O texto entre parênteses e depois de «o seguinte:» é o nome do campo que tentou alterar.
+
+## Causas verificadas
+
+- **O ativo está em preparação.** Só um ativo **Em uso** é depreciado.
+- **O ativo está parado.** O estado é **Parado** e a ficha mostra o botão **Retomar**.
+- **Faltam dados na ficha ou contas na categoria.** O botão **Pôr em uso** recusa: veja [O ativo não é guardado nem posto em uso](/troubleshooting/ficha-do-ativo-com-dados-em-falta) e [A categoria do ativo ou a tabela de taxas está incompleta](/troubleshooting/categoria-do-ativo-sem-contas).
+- **O processamento é anual.** Com **Processamento** em **Anual**, a quota lança-se só a 31/12. Na demonstração, o «Edifício da loja (Porto)» não aparece num lote simulado até 31/10/2026 e tem 3.700,00 € de quota contabilística num lote simulado até 31/12/2026. Veja [Como processar as depreciações do mês](/accounting-pt/processar-depreciacoes).
+- **O seu perfil não processa.** Com o perfil **Contabilista**, a ficha do ativo não tem o botão **Processar períodos contabilísticos**; com o perfil **Contabilista certificado**, tem. Em **Contabilidade › Fechar › Contabilidade do mês › Depreciações do mês**, **Simular** deixa o lote **Simulado**: o lote só fica processado com **Confirmar**. Se não vê esse botão, o seu perfil não confirma lotes: peça a quem os confirma.
+- **O ativo foi alienado ou abatido, ou já tem períodos processados.** Já não se altera por edição: veja [Não consigo alterar um ativo com depreciações processadas ou já abatido](/troubleshooting/ativo-com-periodos-processados).
+- **O ativo está em uso.** A **Data de aquisição** e a **Data de início de utilização** ficam só de leitura.
+- **A operação pede outro estado.** Parar, retomar, alienar ou testar a imparidade só se faz com o ativo em uso ou parado: veja [A operação não é possível no estado em que o ativo está](/troubleshooting/estado-do-ativo-nao-permite).
+- **É a revalorização ou a contagem física que recusa.** Veja [A revalorização do ativo não é aceite](/troubleshooting/revalorizacao-recusada) e [A contagem física ou as etiquetas dos ativos não avançam](/troubleshooting/contagem-fisica-dos-ativos).
+
+## O que confirmar
+
+1. Em **Contabilidade › Lançar › Terceiros e ativos › Ativos fixos**, abra o ativo e veja o estado no topo. A lista abre com o filtro **Em uso**: retire-o se não encontrar o ativo.
+2. Em **Geral**, o **Processamento** (**Anual** ou **Mensal**).
+3. No separador **Plano de depreciação**, até onde as linhas estão processadas.
+4. O perfil com que entrou.
+
+## Como resolver
+
+- **Em preparação:** carregue em **Pôr em uso**. Se recusar, siga o artigo da ficha ou o da categoria.
+- **Parado:** carregue em **Retomar**. O estado volta a **Em uso**.
+- **Falta processar um mês:** siga [Como processar as depreciações do mês](/accounting-pt/processar-depreciacoes), que trata também o período já confirmado. **Quem faz:** o perfil Contabilista certificado.
+- **Vida útil errada num ativo em uso:** use [Como parar, retomar ou alterar a vida útil de um ativo](/accounting-pt/alterar-a-vida-util).
+- **Ativo abatido por engano:** peça ao contabilista certificado que reverta o abate no registo do abate, com o motivo.
+
+- **Valor de aquisição, vida útil ou categoria errados num ativo com períodos processados:** o fiscaldoo recusa a alteração na ficha (mensagem acima). Para a vida útil use **Ações › Parar / alterar vida útil**; para o valor, a reavaliação; se o custo ou a categoria estão errados, o contabilista certificado corrige primeiro os lançamentos.
+
+{/* Nota interna (DOCS-046, lote v22-B, 06/11/2026, master d83bdf7ae, base docs_demo_v22b_test): com utilizadores de um só perfil criados na cópia. Por clique com o Contabilista: «Porque não é depreciado» na AF/00008, recusa do abatido AF/00002 (já mostra «Valor de aquisição», não o nome técnico), recusa da AF/00007 com períodos processados (ACC-245 corrigido: o parágrafo «hoje nada o impede» saiu), lotes simulados até 31/10 e 31/12/2026 (ficaram em Simulado na cópia). Contabilista Certificado / Gestor fiscal: botão Processar períodos contabilísticos e Confirmar no lote simulado. Retomar não foi refeito. */}
+
+## Resultado esperado
+
+O ativo fica **Em uso**, **Porque não é depreciado** deixa de aparecer e o **Plano de depreciação** mostra as quotas previstas.
+
+## Quando contactar o suporte
+
+- O ativo está **Em uso**, com **Processamento** certo e quotas previstas, e não entra na simulação do mês.
+- A mensagem aparece num ativo que nunca foi alienado nem abatido.
+
+## Informação a enviar
+
+- O código do ativo (por exemplo `AF/00007`) e a empresa.
+- O texto completo da mensagem, copiado do ecrã.
+- O perfil com que entrou e o mês que tentou processar.
+
+{/* Nota interna (v23-T, DOC-0353, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}
+
+{/* Nota interna (DOCS-005 #3400, lote CAP-01, 10/11/2026, master ce51f2d47, docs_demo_cap01_test, porta 8504): capturas por clique com um utilizador criado na cópia só com o perfil Contabilista (opera). AF/00008 (Em preparação), separador Quadro contabilístico: captura 01. AF/00007: Valor de aquisição 2.400,00 → 2.500,00 e Guardar dá a janela Operação inválida com o texto citado (captura 02); fechada e alterações descartadas, o valor ficou 2.400,00. A lista abre com o filtro Em uso. */}

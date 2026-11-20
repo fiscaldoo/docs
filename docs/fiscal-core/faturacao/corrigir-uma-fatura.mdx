@@ -1,0 +1,69 @@
+---
+id: corrigir-uma-fatura
+slug: /fiscal-core/corrigir-uma-fatura
+title: "Como corrigir uma fatura: anular, nota de crédito ou nota de débito"
+sidebar_label: Corrigir uma fatura
+sidebar_position: 3
+description: Qual das três correções usar numa fatura já emitida (anular, nota de crédito ou nota de débito), segundo o Ofício-Circulado 25120/2026 da AT, e o que cada uma faz no fiscaldoo.
+keywords: [corrigir fatura, retificar fatura, anular ou nota de crédito, nota de crédito ou nota de débito, nota de débito, nota de crédito só de IVA, nota de débito só de IVA, retificativo só de imposto, NIF errado, erro formal, regularização do IVA, ofício circulado 25120, ofício-circulado 25120/2026, artigo 78, artigo 29, artigo 36, campo 40, campo 41, declaração de substituição]
+doc_id: DOC-0448
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 73d6a5fed)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/anular-uma-fatura, fiscal-core/faturacao/emitir-uma-nota-de-credito, troubleshooting/faturacao-e-at/nao-consigo-alterar-um-documento-certificado, troubleshooting/faturacao-e-at/nao-consigo-anular-um-documento, accounting-pt/iva/correcoes-do-iva]
+---
+
+## Para que serve?
+
+Uma fatura emitida já não se altera. A pergunta é qual das correções usar: **anular** a fatura, emitir uma **nota de crédito** ou emitir uma **nota de débito**. A resposta depende do que está errado, e este artigo é a regra única que os outros artigos de faturação seguem.
+
+A fonte é o Ofício-Circulado n.º 25120/2026, de 28 de julho de 2026, da Autoridade Tributária e Aduaneira (AT), publicado no Portal das Finanças (Informação fiscal › Legislação › Instruções administrativas). Revoga o Ofício-Circulado n.º 33129/1993 e as orientações anteriores que o contrariem. Apoia-se no art. 29.º, n.º 7, no art. 36.º, n.º 6 e no art. 78.º do CIVA. <span className="fd-pending">Pendente de validação por contabilista certificado: a aplicação de cada caso à situação da empresa.</span>
+
+## Qual correção usar
+
+| O que aconteceu | O que fazer | Na declaração periódica de IVA |
+|---|---|---|
+| **A operação nunca existiu** (fatura em duplicado, emitida por engano) | **Anular** a fatura no programa de faturação (ofício, pontos 7 e 8). | Se a declaração do período ainda não foi entregue, nada. Se já foi, entregue uma declaração de substituição para retirar o imposto liquidado. |
+| **Erro formal** que não muda o valor nem o IVA: NIF, morada ou outros dados do cliente, descrição dos bens ou serviços | **Anular** a fatura e **emitir uma fatura nova** com os dados certos e a data em que os bens foram postos à disposição ou os serviços concluídos. Uma nota de crédito **não** é admissível (pontos 5 e 6). | Nada: não há regularização nem substituição da declaração. |
+| **A operação aconteceu e acabou ou diminuiu** (devolução, rescisão, desconto, abatimento) | **Nota de crédito**. A regularização do IVA é facultativa e faz-se até ao fim do período de imposto seguinte àquele em que aconteceu o facto (pontos 19 a 21). | Campo 40, com o anexo das regularizações. |
+| **Valor ou IVA faturado a mais** por erro de faturação (preço, quantidade, duplicação) | **Nota de crédito**, só com os elementos a corrigir, e prova de que o cliente a recebeu (ponto 23). | Campo 40 e quadro 1-A do anexo, até 2 anos desde que o imposto se tornou exigível. |
+| **Valor ou IVA faturado a menos** | **Nota de débito** que refere a fatura (ponto 23, exemplo 7). | Campo 41 no período do erro ou no seguinte. Depois disso, declaração de substituição do período, com juros e coima. |
+| **Erro de direito** (taxa, isenção ou inversão do sujeito passivo mal aplicadas) | A mais: **nota de crédito** pelo imposto a retificar. A menos: **nota de débito** pelo imposto em falta (pontos 24 a 28). | A mais: campo 40, linha «Regularizações decorrentes de um erro de direito», até 4 anos. A menos: declaração de substituição do período original. |
+
+Os campos 40 e 41 e os prazos da tabela são os do ofício. <span className="fd-pending">Pendente de validação por contabilista certificado: campo 40 e campo 41, e o prazo de cada regularização.</span>
+
+Duas regras que valem para todas:
+
+- **A nota de crédito não serve para anular faturas.** Limita-se aos elementos que mudam o valor ou o imposto (ponto 4).
+- **Nota de crédito ou de débito só de IVA.** O ofício prevê documentos retificativos só com o valor do imposto. Até ao fim de 2026, quem não os consegue emitir pode usar uma nota de crédito que anula a operação toda e uma fatura nova, que refere a fatura corrigida e a data da operação (pontos 67 a 69). Depois de 2026, essa via obriga o fornecedor e o cliente a entregarem declarações de substituição do período original (ponto 70).
+
+## Prova de que o cliente tomou conhecimento
+
+Para recuperar IVA com uma nota de crédito, o fornecedor tem de provar que o cliente soube da correção ou foi reembolsado (CIVA, art. 78.º, n.º 5). O ofício aceita, entre outras, a nota de crédito assinada pelo cliente, uma confirmação eletrónica de receção, uma resposta por e-mail que a confirme, o registo de acesso do cliente a um portal e o comprovativo do reembolso ligado à nota (pontos 14 a 17). Uma aceitação presumida por falta de resposta não serve (ponto 16). Para consumidores finais, o reembolso, ou o abatimento numa compra seguinte, chega (ponto 18).
+
+## O que o fiscaldoo faz hoje
+
+Visto no ecrã a 19/11/2026, numa fatura emitida, com o perfil de administrador:
+
+- **Nota de Crédito** abre a janela **Criar nota de crédito**, com o **Motivo**, o **Motivo da regularização de IVA**, a **Data de referência da regularização** e a **Prova da regularização**. Os motivos de IVA que a janela oferece são os de [Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito). A janela não tem uma opção «só IVA»: a nota leva todas as linhas da fatura e corrige-se nas linhas, antes de confirmar.
+- **Criar nota de crédito e nova fatura** é a via transitória do ofício: a nota anula a fatura toda e abre uma fatura nova em rascunho. Use-a só até ao fim de 2026 e só quando a correção for de IVA. <span className="fd-pending">Pendente de validação por contabilista certificado: o que fazer a partir de 1 de janeiro de 2027, porque o fiscaldoo ainda não emite uma nota só de IVA.</span>
+- **Anular documento certificado** anula uma fatura sem pagamentos, recibos nem notas de crédito, com o motivo, e comunica a anulação à AT: [Como anular uma fatura ou outro documento certificado](/fiscal-core/anular-uma-fatura). Anular não cria nenhum documento novo: a fatura certa emite-se à parte.
+- **Corrigir os dados do cliente** segue dois caminhos, que a janela anuncia em **Tipo de correção**. Quando só o NIF difere do contacto escolhido (mesmo nome e mesma morada), anula a fatura e prepara a fatura nova em rascunho, sem nota de crédito, como o ofício manda para o NIF (visto no ecrã: **Só o NIF**). Para qualquer outra diferença (outro nome, outra morada, outro cliente) emite uma nota de crédito total e prepara a fatura nova (**Outros dados do cliente**). Os passos estão em [Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado). <span className="fd-pending">Em preparação: uma morada errada continua a seguir o caminho da nota de crédito, e o ofício (pontos 5 e 6) manda anular e emitir de novo. Até lá, para uma morada errada use **Anular documento certificado** e emita a fatura certa, se a fatura ainda não tem pagamentos, recibos nem notas de crédito. Pendente de validação por contabilista certificado: quando usar este botão.</span>
+- **Nota de débito**: não há botão na fatura. Emite-se uma fatura de cliente no diário **Notas de débito (ND)** da empresa, com **Documento retificado** e **Motivo da retificação**: [A fatura eletrónica não foi aceite](/troubleshooting/fatura-eletronica-documento-nao-aceite). <span className="fd-pending">Em preparação: um botão de nota de débito na própria fatura. Pendente de validação no ecrã: a emissão da nota de débito por este caminho ainda não foi percorrida.</span>
+- Uma fatura paga, paga em parte ou com nota de crédito já não se anula: o próprio ecrã manda corrigi-la com um documento novo.
+
+## Problemas frequentes
+
+### Anulei uma fatura e a declaração do IVA já tinha sido entregue
+
+- **Causa:** a operação nunca existiu, mas a declaração do período já incluía o imposto.
+- **O que fazer:** entregue uma declaração periódica de substituição do período da fatura (ofício, ponto 7). Se foi só um erro formal, não é preciso.
+
+### O cliente quer a fatura com outro NIF
+
+- **O que fazer:** anule a fatura e emita uma nova com o NIF certo e a data da operação. Veja a segunda linha da tabela.
+
+{/* Nota interna (lote 100, secção 9 do relatório de validação de 19/11/2026): artigo-fonte das regras de correção. O Of. Circ. 25120/2026 existe e foi lido por inteiro (PDF do Portal das Finanças, 28/07/2026, 20 páginas); não há nenhuma citação dele noutros artigos antes deste lote. Pontos citados: 1 a 9 (retificação e anulação), 13 a 18 (prova), 19 a 21 (art. 78.º, n.º 2), 22 e 23 (tabela e exemplos 6 e 7), 24 a 29 (erros de direito), 67 a 71 (transitório e revogação). A lista de botões foi vista a 19/11/2026 em docs_demo_100_test (master 73d6a5fed) na FT D26/28: Nota de Crédito, Anular documento certificado, Corrigir os dados do cliente; janela Criar nota de crédito sem opção só IVA, com os botões Criar nota de crédito e Criar nota de crédito e nova fatura. A nota de débito não tem botão (diário ND de cada empresa; a lista do diário na empresa por omissão do administrador só trazia Vendas). */}

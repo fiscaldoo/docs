@@ -1,0 +1,137 @@
+---
+id: reconciliar-terceiros
+slug: /accounting-pt/reconciliar-terceiros
+title: Como reconciliar faturas e pagamentos de clientes e fornecedores
+sidebar_label: Reconciliar clientes e fornecedores
+sidebar_position: 3
+description: Ligar uma fatura ao pagamento que a liquida, reconciliar à mão ou automaticamente os itens de um cliente ou fornecedor que se anulam entre si, e fechar uma diferença pequena com um lançamento de ajuste.
+keywords: [reconciliar terceiros, reconciliação de terceiros, reconciliar clientes, reconciliar fornecedores, conta corrente, itens por reconciliar, débitos pendentes, créditos pendentes, diferença de reconciliação, ajuste de reconciliação, tolerância, reconciliação automática, pagamento parcial, saldo em aberto]
+doc_id: DOC-0112
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/reconciliar-movimentos-bancarios, accounting-pt/bancos-e-tesouraria/pagar-a-fornecedores, accounting-pt/relatorios/extratos-de-terceiros]
+---
+
+{/* Nota interna (v3-A1, DOC-0112, risco alto): validado na base docs_demo_v3a1_test (8175) com o Contabilista (demo.contabilista). Dados criados para o artigo: faturas de fornecedor FTF/2026/00046 (300,00 €), 00047 (150,00 €) e 00048 (80,00 €) da Papelaria Central, Lda; pagamentos PBNK1/2026/00043 (300,00), 00044 (149,50) e 00045 (79,60); cliente António Carlos Sousa (ENI): cobrança PBNK1/2026/00046 de 123,00 € e devolução PBNK1/2026/00047; cliente Alfa: 200,00 € recebidos e 199,50 € devolvidos (manual com ajuste, OD/2026/00104: D 2111 0,50 / C 7882 0,50 — a conta 7882 foi a única que a pesquisa «7882» ofereceu e não é a escolha adequada, por isso a captura não a mostra); cliente Beta: 80,00 € e 79,60 € (automática com tolerância 0,50, OD/2026/00105: D 2111 0,40 / C 7888 0,40). Defeito V3A1-07: a lista «Reconciliação de terceiros» e a reconciliação automática só veem linhas de pagamentos e lançamentos manuais, nunca as linhas das faturas (o filtro exige linha de tipo «produto» e as faturas têm linha de «prazo de pagamento»). O Auditor e o estado vazio numa empresa sem itens não foram testados (a base só tem a empresa de demonstração com o perfil Contabilista). */}
+{/* Nota interna (v23-L, 07/11/2026): capturas 03, 04, 06, 07, 11, 12 e 13 refeitas na cópia docs_demo_v23l_test (master dbbb5ac5c), com o Contabilista, na Empresa Demonstração: cobrança PBNK1/2026/00040 e devolução 00041 de 123,00 € (António Carlos Sousa); 200,00 € e 199,50 € da Oficina Auto Rápido, Lda (00042 e 00043); 100,00 € e 99,60 € do Hotel Vista Rio, SA (00044 e 00045, automática com tolerância 0,50 e conta 7888: OD/2026/00139, D 2111 0,40 e C 7888 0,40, conferido). Pagamentos criados por RPC. Sem o cliente «Teste». */}
+
+## Para que serve?
+
+Reconciliar é ligar o que se deve com o que se pagou: a fatura de um fornecedor com o pagamento que a liquida, ou o recebimento de um cliente com a devolução que lhe foi feita. Depois de reconciliados, os dois lados deixam de aparecer como saldo em aberto na conta corrente do cliente ou do fornecedor.
+
+Este artigo cobre os dois casos que o fiscaldoo trata no ecrã: as **faturas**, que se reconciliam na própria fatura, e os **outros itens** de um cliente ou fornecedor (pagamentos e lançamentos manuais), que se reconciliam na lista de itens por reconciliar. A reconciliação com o extrato do banco é outra tarefa: ver [Como reconciliar movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios).
+
+## Quando utilizar?
+
+- Registou um pagamento a um fornecedor ou um recebimento de cliente fora da fatura e a fatura continua por pagar.
+- Um cliente pagou a mais ou por engano e devolveu-se o dinheiro: o recebimento e a devolução têm de se anular.
+- A conta corrente de um cliente ou fornecedor mostra saldos pequenos (cêntimos) que sobraram de arredondamentos ou de descontos.
+- Não use a lista de itens para reconciliar uma **fatura**: ela não mostra as linhas das faturas (ver o passo 1 e as notas).
+
+## Onde encontrar?
+
+- Faturas: **Contabilidade › Lançar › Compras › Faturas de fornecedores** (ou **Vendas e cobranças › Faturas de clientes**), na ficha da fatura, o aviso **Débitos pendentes** (fornecedores) ou **Créditos pendentes** (clientes).
+- Itens que não são faturas: **Contabilidade › Reconciliar › Bancos e caixa › Reconciliação de terceiros**.
+- Reconciliação automática: **Contabilidade › Reconciliar › Bancos e caixa › O que há para fazer com os bancos?**, na secção **Listas de apoio**, a linha **Reconciliação automática de terceiros**.
+
+## Antes de começar
+
+- O perfil é **Contabilista** (ou **Contabilista certificado**). O Auditor / ROC só consulta: ao tentar criar uma reconciliação manual, o ecrã responde «O seu perfil (Auditor) é só de leitura: consulta tudo e nunca cria, altera ou elimina nada.»
+- A fatura está **Publicada** e o pagamento está **registado**: um rascunho não se reconcilia.
+- Os dois lados são do **mesmo cliente ou fornecedor**, da mesma conta e da mesma empresa.
+- Se vai ajustar uma diferença, escolha antes com o contabilista certificado a conta de ganhos ou de gastos onde ela fica.
+
+## Como utilizar
+
+### Reconciliar uma fatura com o seu pagamento
+
+<StepByStep>
+
+1. Abra a fatura do fornecedor (no exemplo, **FTF/2026/00046**, 300,00 € da Papelaria Central, Lda). O aviso **Tem débitos pendentes listados abaixo para este fornecedor** diz que há pagamentos registados e ainda sem fatura. Na secção **Débitos pendentes**, escolha o pagamento certo (**PBNK1/2026/00040**, 300,00 €) e carregue em **Adicionar**.
+   ![Fatura FTF/2026/00046 com o aviso de débitos pendentes e o botão Adicionar no pagamento PBNK1/2026/00040 de 300,00 euros](/images/accounting-pt/reconciliar-terceiros/01-debitos-pendentes.png)
+2. A fatura passa a **Pago**, o botão **Pagamentos** mostra 1 e o **Valor em Dívida** é 0,00 €. A reconciliação não cria nenhum lançamento novo: só liga as linhas do pagamento e da fatura na conta 2211.
+3. Se o pagamento for diferente do total (no exemplo, 149,50 € para uma fatura de 150,00 €), a fatura fica com o **Valor em Dívida** da diferença (0,50 €). O restante tem de ser liquidado com outro pagamento. **Não há no ecrã de reconciliação de terceiros um passo para fechar o resíduo de uma fatura**: a lista só mostra pagamentos e lançamentos manuais, não as linhas das faturas, por isso a diferença de 0,50 € fica na fatura (**Valor em Dívida**) até ser paga. {/* Nota interna (v3a1cor, V3A1-07, NV3D-05): defeito do produto (filtro por linhas de produto); o resíduo só se paga pela própria fatura. */}
+   ![Totais de uma fatura de 150,00 euros com paga em 30/10/2026 149,50 euros e valor em dívida de 0,50 euros](/images/accounting-pt/reconciliar-terceiros/14-fatura-parcial.png)
+
+</StepByStep>
+
+### Reconciliar itens de um cliente ou fornecedor que se anulam
+
+<StepByStep>
+
+1. Abra **Reconciliação de terceiros**. A lista mostra, por **Conta** e depois por **Parceiro**, os itens registados com saldo em aberto. Abra o grupo da conta (**2111 Clientes gerais**) e do cliente (**António Carlos Sousa (ENI)**): há dois itens, uma cobrança de −123,00 € e a sua devolução de 123,00 €.
+   ![Lista de itens por reconciliar com o cliente António Carlos Sousa, a cobrança de menos 123,00 euros e a devolução de 123,00 euros](/images/accounting-pt/reconciliar-terceiros/03-lista-terceiros.png)
+2. Marque as duas linhas, carregue em **Ações** e escolha **Reconciliar itens de terceiros**.
+   ![Menu Ações com a opção Reconciliar itens de terceiros, com as duas linhas marcadas](/images/accounting-pt/reconciliar-terceiros/04-acao-reconciliar.png)
+3. O assistente mostra a **Conta**, o **Terceiro**, o **Débito em aberto**, o **Crédito em aberto** e a **Diferença**. Com 123,00 € de cada lado, a diferença é 0,00 €: carregue em **Reconciliar**. Os dois itens saem da lista e o grupo do cliente desaparece.
+   ![Assistente Reconciliar itens de terceiros com débito e crédito de 123,00 euros e diferença de 0,00 euros](/images/accounting-pt/reconciliar-terceiros/05-assistente-sem-diferenca.png)
+4. Se os dois lados não fecham (no exemplo, 200,00 € recebidos e 199,50 € devolvidos), o assistente mostra a **Diferença** (−0,50 €) e diz: «Os itens não fecham: sem ajuste fica uma reconciliação parcial em aberto.» Sem fazer mais nada, carregar em **Reconciliar** liga as linhas mas deixa 0,50 € em aberto na conta do cliente.
+   ![Assistente com diferença de menos 0,50 euros e o aviso de reconciliação parcial em aberto](/images/accounting-pt/reconciliar-terceiros/06-diferenca-sem-ajuste.png)
+5. Para fechar a diferença, ative **Ajustar a diferença?**, escolha a **Conta de ajuste** e o **Diário do ajuste** (abre com **Operações Diversas**), confirme a **Descrição** («Ajuste de reconciliação») e a **Data do ajuste**, e carregue em **Reconciliar**. O fiscaldoo cria um lançamento de ajuste no diário escolhido: no exemplo, **D 2111 Clientes gerais 0,50 €** e **C** na conta de ajuste **0,50 €**, e reconcilia tudo. <span className="fd-pending">Pendente de validação por contabilista certificado: conta de ganhos ou de gastos onde se lançam as diferenças de reconciliação de clientes e fornecedores, e o seu tratamento fiscal.</span>
+
+</StepByStep>
+
+### Reconciliar automaticamente vários itens
+
+<StepByStep>
+
+1. Abra **O que há para fazer com os bancos?** e, em **Listas de apoio**, carregue em **Reconciliação automática de terceiros**.
+   ![Secção Listas de apoio do painel dos bancos com a linha Reconciliação automática de terceiros](/images/accounting-pt/reconciliar-terceiros/09-listas-de-apoio.png)
+2. Nos **Critérios**, escolha as **Contas**, os **Terceiros** e as datas **De** e **Até** que quer rever; se deixar tudo vazio, o fiscaldoo considera todas as contas de clientes e fornecedores. Em **Tolerância**, escreva a maior diferença que aceita ajustar (por omissão 0,00 €, só valores iguais) e escolha a **Conta de ajuste**; o **Diário do ajuste**, a **Descrição** e a **Data do ajuste** abrem preenchidos. No exemplo: Terceiros **Hotel Vista Rio, SA**, **Tolerância** 0,50 € e **Conta de ajuste** 7888 Outros não especificados. Sem **Conta de ajuste**, só se reconciliam valores iguais.
+   ![Assistente da reconciliação automática com o terceiro Hotel Vista Rio, a tolerância de 0,50 euros e a conta de ajuste 7888](/images/accounting-pt/reconciliar-terceiros/11-auto-criterios.png)
+3. Carregue em **Pré-visualizar**. A janela diz o **Número de correspondências** (1) e quantas levam ajuste (**Com ajuste** 1), e lista cada par: a conta, o cliente, as linhas e a **Diferença** (−0,40 €). Nada foi reconciliado ainda; **Voltar** deixa corrigir os critérios.
+   ![Pré-visualização com uma correspondência do Hotel Vista Rio e diferença de menos 0,40 euros](/images/accounting-pt/reconciliar-terceiros/12-auto-previsualizacao.png)
+4. Carregue em **Reconciliar**. A janela passa a dizer **Reconciliação concluída.** e fica a lista do que se reconciliou. O lançamento de ajuste foi **D 2111 Clientes gerais 0,40 €** e **C 7888 Outros não especificados 0,40 €**. É um **ganho** da empresa (a conta é de rendimentos): o cliente ficou a favor da empresa, que recebeu 100,00 € e devolveu 99,60 € (no primeiro ajuste, 0,50 €, o lançamento usa a conta 7882 «Excesso da estimativa para impostos», que não descreve este caso: use uma conta de ajuste sua). Carregue em **Fechar**. <span className="fd-pending">Pendente de validação por contabilista certificado: conta de ajuste adequada às diferenças de reconciliação.</span>
+   ![Reconciliação concluída com o par do Hotel Vista Rio](/images/accounting-pt/reconciliar-terceiros/13-auto-concluida.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, os três caminhos e os passos são os mesmos (visto com um utilizador só com o perfil **Contabilista**): **Reconciliação de terceiros** tem a mesma lista, por conta e por parceiro, e **Ações › Reconciliar itens de terceiros**; **O que há para fazer com os bancos?** tem a mesma linha **Reconciliação automática de terceiros**. O menu **Ações** dessa lista tem mais duas entradas do Enterprise, **Inserir em folha de cálculo** e **Criar Ativo**, que não reconciliam.
+
+{/* Nota interna (lote EE-01, DOCS-073 #4142, DEC-1794, master ce51f2d47, base Enterprise docs_ee_ee01_test, 10/11/2026): Ações da lista Reconciliação de terceiros com duas linhas marcadas: Exportar, Inserir em folha de cálculo, Dividir linha, Reconciliar itens de terceiros, Desconciliar, Mover para a conta, Alterar Período, Criar Ativo (Criar Ativo é do módulo de ativos do Enterprise; Inserir em folha de cálculo é das folhas de cálculo do Enterprise). */}
+
+## Resultado esperado
+
+- A fatura fica **Pago** (ou com o **Valor em Dívida** da diferença) e a conta corrente do cliente ou fornecedor deixa de mostrar os itens reconciliados.
+- Reconciliar sem diferença não cria lançamentos; com ajuste, cria um lançamento no diário escolhido (no exemplo, **OD/2026/00104** e **OD/2026/00105** em **Operações Diversas**), que se vê no razão e no [extrato do terceiro](/accounting-pt/extratos-de-terceiros).
+
+## Notas importantes
+
+- **A lista de itens não mostra faturas.** Só mostra pagamentos e lançamentos manuais; as linhas das faturas não aparecem nem entram na reconciliação automática. Para reconciliar uma fatura, use o aviso **Débitos pendentes** ou **Créditos pendentes** da própria fatura. {/* Nota interna (v3-A1, V3A1-07): defeito do produto; ver o comentário no início. */}
+- **Cada reconciliação é de um só terceiro, uma só conta e uma só empresa.** O assistente recusa o resto (ver os problemas frequentes).
+- **O ajuste vai para resultados.** Antes de ajustar, confirme com o contabilista certificado que uma diferença daquele tamanho se pode lançar como ganho ou gasto. <span className="fd-pending">Pendente de validação por contabilista certificado: limites e documentação da diferença.</span>
+- **Reconciliar não comunica nada à AT.**
+
+## Problemas frequentes
+
+### «Selecione pelo menos dois itens para reconciliar»
+
+- **Sintoma:** ao abrir **Reconciliar itens de terceiros** com uma só linha marcada, o assistente mostra: «Selecione pelo menos dois itens para reconciliar. Abra a lista de itens por reconciliar, marque os itens a débito e a crédito do mesmo terceiro e tente de novo.»
+- **O que fazer:** feche o assistente, marque também o item do outro lado e repita.
+
+### «Os itens selecionados pertencem a terceiros diferentes»
+
+- **Sintoma:** «Os itens selecionados pertencem a terceiros diferentes (ou alguns não têm terceiro). A reconciliação de terceiros exige um único terceiro.»
+- **O que fazer:** marque só os itens de um cliente ou fornecedor de cada vez.
+   ![Assistente com a mensagem de que os itens pertencem a terceiros diferentes](/images/accounting-pt/reconciliar-terceiros/09-itens-de-terceiros-diferentes.png)
+
+### «Há campos obrigatórios por preencher» ao ajustar
+
+- **Sintoma:** com **Ajustar a diferença?** ativo e sem **Conta de ajuste**, **Reconciliar** mostra «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **O que fazer:** escolha a **Conta de ajuste**.
+   ![Assistente com a conta de ajuste por preencher e o aviso de campos obrigatórios](/images/accounting-pt/reconciliar-terceiros/07-ajuste-sem-conta.png)
+
+### «Não há nada a reconciliar com estes critérios»
+
+- **Sintoma:** na reconciliação automática, a pré-visualização dá **Número de correspondências** 0 e **Reconciliar** responde «Não há nada a reconciliar com estes critérios. Altere a tolerância, as datas ou as contas e pré-visualize de novo.»
+- **Causa:** os valores não são iguais e a tolerância é 0,00 €, ou falta a **Conta de ajuste**.
+- **O que fazer:** **Voltar**, aumente a **Tolerância** e escolha a **Conta de ajuste**, ou reconcilie à mão.
+   ![Pré-visualização com zero correspondências](/images/accounting-pt/reconciliar-terceiros/10-auto-sem-correspondencias.png)
+
+{/* Nota interna (DOCS-046, lote v23-K, 07/11/2026, master a3603e0f2, base docs_demo_v23k_test na 8434, base-mãe v2): captura 01 refeita por clique com um utilizador só com o perfil Contabilista: pagamento PBNK1/2026/00040 de 300,00 € à Papelaria Central, Lda (02/10/2026) e fatura FTF/2026/00046 (FT PAP/2026/131, 243,90 € + IVA = 300,00 €), criados por RPC; depois de Adicionar, a fatura ficou Pago com 0,00 € em dívida. O resto do artigo não foi repercorrido. */}

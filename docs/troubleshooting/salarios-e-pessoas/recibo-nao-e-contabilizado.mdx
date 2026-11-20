@@ -1,0 +1,98 @@
+---
+id: recibo-nao-e-contabilizado
+slug: /troubleshooting/recibo-nao-e-contabilizado
+title: O recibo não é contabilizado
+sidebar_label: Recibo não é contabilizado
+description: Porque Contabilizar recusa o lote de salários quando uma rubrica não tem modelo de contabilização, como se cria o modelo e que lançamento sai no fim.
+keywords: [contabilizar salários, contabilizar salarios, recibo não contabilizado, recibo nao contabilizado, contabilização bloqueada, contabilizacao bloqueada, modelo de contabilização, modelo de contabilizacao, rubrica sem conta, lançamento dos salários, lancamento dos salarios, diário de salários, diario de salarios, não tem recibos para contabilizar]
+doc_id: DOC-0397
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7281543f)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado, payroll-pt/processar-e-pagar/processar-o-mes, troubleshooting/salarios-e-pessoas/lote-ou-recibo-no-passo-errado]
+---
+
+## Sintoma
+
+O lote de salários está **Validado** ou **Pago** e tem por cima o aviso «*8* trabalhador(es): Conta contabilística de cada rubrica com valor (Bloqueia o fecho)». O **Administrador de Salários** carrega em **Contabilizar** e abre-se **Operação inválida**. Não é criado nenhum lançamento.
+
+## Mensagem
+
+Visto no lote **Salários de outubro de 2026** da Empresa Demonstração, Lda, com o administrador da demonstração (que tem o acesso **Administrador de Salários**):
+
+> «Contabilização bloqueada: 1 rubrica(s) com valor não têm modelo de contabilização em *31/10/2026*: *Subsídio de alimentação*. O que aconteceu: o lançamento não pode ser construído sem uma conta para cada linha. Como corrigir: crie um modelo para cada uma (Salários › Configurar › Rubricas › Modelos de contabilização).»
+
+![Janela Operação inválida: contabilização bloqueada porque o Subsídio de alimentação não tem modelo de contabilização em 31/10/2026](/images/troubleshooting/recibo-nao-e-contabilizado/01-contabilizacao-bloqueada.png)
+
+## Causas verificadas
+
+- **Uma rubrica com valor não tem modelo de contabilização na data do recibo.** Cada rubrica que aparece no recibo com valor precisa de um modelo, com **Válido desde** até ao fim do período. O modelo diz a **Conta a débito**, a **Conta a crédito**, o **Parceiro** e o **Diário de salários**. Na demonstração, havia modelos para a retribuição base, as faltas, o líquido, o IRS e a Segurança Social, mas não para o **Subsídio de alimentação**.
+- **O recibo já está contabilizado.** Carregar outra vez em **Contabilizar** dá «O lote «*Salários de outubro de 2026*» não tem recibos para contabilizar. O que aconteceu: todos os recibos validados já têm o lançamento contabilístico. Como resolver: abra o lançamento a partir do recibo; para o corrigir, crie um recibo corretivo.»
+  ![Janela Operação inválida: o lote não tem recibos para contabilizar porque todos já têm lançamento](/images/troubleshooting/recibo-nao-e-contabilizado/02-ja-contabilizado.png)
+- **O recibo ainda não está validado.** **Contabilizar** só aparece com o lote **Validado** ou **Pago**, e só ao **Administrador de Salários**.
+- Há outras recusas, cada uma com a sua mensagem: o trabalhador sem classe contabilística (pessoal ou órgão social) no período, modelos que usam diários diferentes, um credor de uma penhora ou cessão sem contacto, um recibo sem IRS calculado. <span className="fd-pending">Pendente de validação no ecrã: estas recusas não foram provocadas nesta ronda.</span>
+
+## O que confirmar
+
+1. O aviso por cima do lote e, em **Ver quem é preciso corrigir**, a rubrica indicada para cada trabalhador.
+2. Em **Salários › Configurar › Rubricas › Modelos de contabilização**, se a rubrica tem modelo e se **Válido desde** é anterior ao fim do mês. A lista mostra **Rubrica salarial**, **Classe do trabalhador**, **Conta a débito**, **Conta a crédito**, **Parceiro**, **Diário de salários**, **Válido desde**, **Válido até** e **Empresa**.
+3. A empresa em que está a trabalhar. A lista só mostra os modelos da empresa escolhida no canto superior direito.
+
+## Como resolver
+
+Feito com o administrador da demonstração. O menu **Salários › Configurar** e o botão **Contabilizar** são do **Administrador de Salários**; o Processador de salários não os tem.
+
+1. Abra **Salários › Configurar › Rubricas › Modelos de contabilização** e carregue em **Novo**.
+2. Em **Rubrica salarial**, escolha a rubrica da mensagem (no exemplo, **Subsídio de alimentação**).
+3. Em **Conta a débito** e **Conta a crédito**, escolha as contas que o contabilista certificado indicar. No exemplo, as mesmas da retribuição base: `632` Remunerações do pessoal a débito e `231290` Remunerações em processamento a crédito. <span className="fd-pending">Pendente de validação por contabilista certificado: conta do subsídio de alimentação no SNC (632 ou 638) e tratamento da parte acima do limite isento.</span>
+4. Confirme os outros campos obrigatórios e guarde:
+   - **Empresa**: a da mensagem. O modelo novo vem com a empresa escolhida no canto superior direito;
+   - **Classe do trabalhador**: **Pessoal** (vem assim) ou **Órgãos sociais**;
+   - **Parceiro**: **Trabalhador** (vem assim), **Segurança Social**, **Autoridade Tributária (AT)**, **Sindicato** ou **Outro terceiro**;
+   - **Política analítica**: **Sem distribuição analítica** (vem assim), opcional ou obrigatória;
+   - **Diário de salários**: **Salários** (no exemplo veio vazio e foi escolhido);
+   - **Válido desde**: 01/01/2026 no exemplo.
+
+   Os modelos da demonstração estão em **Pessoal**, **Trabalhador** e **Sem distribuição analítica**. Um modelo só de **Pessoal** não serve ao recibo de um gerente ou administrador: esse recibo precisa de um modelo da classe **Órgãos sociais**, com a conta que o contabilista certificado indicar (no SNC, as remunerações dos órgãos sociais têm conta própria, 631). <span className="fd-pending">Pendente de validação por contabilista certificado: contas das remunerações dos órgãos sociais (631) e do subsídio de alimentação dos órgãos sociais.</span>
+5. Abra o lote e carregue em **Contabilizar**.
+
+**Linhas geradas.** O lançamento `SAL/2026/00005`, de 31/10/2026, no diário **Salários**, junta os 8 recibos do lote. Conferido no lançamento publicado:
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| 632 Remunerações do pessoal | 12.528,63 € | |
+| 231290 Remunerações em processamento | | 12.528,63 € |
+| 231290 Remunerações em processamento | 12.528,63 € | |
+| 2312 Ao pessoal (líquido a pagar) | | 10.382,03 € |
+| 242 Retenção de impostos sobre rendimentos (IRS retido) | | 875,00 € |
+| 245 Contribuições para a Segurança Social (trabalhadores) | | 1.271,60 € |
+| 635 Encargos sobre remunerações | 2.745,52 € | |
+| 245 Contribuições para a Segurança Social (empresa) | | 2.745,52 € |
+
+Os 12.528,63 € são os salários brutos de outubro (com o subsídio de alimentação) e repartem-se em líquido, IRS e Segurança Social do trabalhador: 10.382,03 € + 875,00 € + 1.271,60 €. As linhas do IRS e da Segurança Social têm como parceiro a AT e a Segurança Social; as do pessoal não têm parceiro, porque o lote é contabilizado num só lançamento.
+
+<HelpCallout type="risco" title="As contas do modelo decidem o lançamento de todos os meses">
+O modelo vale para todos os recibos a partir de **Válido desde**. Uma conta errada passa para todos os lançamentos de salários seguintes, e um lançamento feito não se refaz: corrige-se com um recibo corretivo. Peça as contas ao contabilista certificado antes de contabilizar.
+</HelpCallout>
+
+## Resultado esperado
+
+- O lote fica contabilizado e o aviso «Conta contabilística de cada rubrica com valor (Bloqueia o fecho)» sai de cima dele.
+- Cada recibo do lote abre o mesmo lançamento.
+- O lote pode ser fechado ([O lote ou o recibo não está no estado certo para este passo](/troubleshooting/lote-ou-recibo-no-passo-errado)).
+
+## Quando contactar o suporte
+
+- A rubrica da mensagem já tem modelo com **Válido desde** anterior ao fim do mês e a recusa repete-se.
+- **Contabilizar** não aparece ao Administrador de Salários com o lote **Validado**.
+- O total do lançamento não bate com o total bruto e o custo da empresa do lote.
+
+## Informação a enviar
+
+- O lote, a empresa e o mês.
+- O texto completo da mensagem, copiado do ecrã.
+- Uma captura da lista **Modelos de contabilização** filtrada pela rubrica.
+- O perfil com que entrou.

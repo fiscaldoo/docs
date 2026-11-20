@@ -1,0 +1,187 @@
+---
+id: fatura-de-fornecedor
+slug: /accounting-pt/fatura-de-fornecedor
+title: Como lançar uma fatura de fornecedor
+sidebar_label: Lançar uma fatura de fornecedor
+sidebar_position: 1
+description: Registar uma fatura de compra com o fornecedor, a referência, as datas, a conta de gasto e o IVA dedutível certos, e confirmá-la.
+keywords: [fatura de fornecedor, fatura de compra, faturas de fornecedores, lançar fatura de compra, lancar fatura de compra, registar fatura de compra, compras, IVA dedutível, iva dedutivel, dedutível, dedutivel, referência da fatura, referencia da fatura, data contabilística, data contabilistica, FTF, conta 2432, fornecedores gerais, 2211, retenção na fonte, retencao na fonte, autoliquidação, autoliquidacao, construção civil, construcao civil, inversão do sujeito passivo, M31, M42, M43, ouro para investimento, renúncia à isenção, IVA de caixa, motivo de isenção, motivo de isencao, categoria de despesa, combustível, combustivel, Açores, Acores, Madeira, duplicado]
+doc_id: DOC-0073
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 3a28c9b91)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/dia-a-dia/atrasos-de-registo, accounting-pt/iva/apuramento-do-iva, accounting-pt/iva/declaracao-periodica-de-iva]
+---
+
+## Para que serve?
+
+Lançar a fatura de um fornecedor regista a dívida ao fornecedor, o gasto (ou o investimento) e o IVA que a empresa pode deduzir. É a partir das faturas confirmadas que o Odoo calcula o IVA dedutível do período, as retenções na fonte a entregar e o que falta pagar a cada fornecedor.
+
+## Quando utilizar?
+
+- Recebeu uma fatura de compra em papel ou por e-mail e quer registá-la.
+- A fatura chegou em PDF e prefere escrevê-la à mão, ou a leitura automática não a reconheceu.
+- Uma fatura ficou em rascunho e tem de ser completada e confirmada.
+- A fatura tem retenção na fonte, ou vem sem IVA porque é a empresa que o liquida (autoliquidação): um fornecedor de outro país da União Europeia, ou um fornecedor português de construção civil, sucatas e outros casos com um motivo de autoliquidação. Siga os mesmos passos e veja «Quando há retenção na fonte ou autoliquidação». Na autoliquidação em Portugal, o motivo escolhe-se no passo 4, antes das linhas. Com os motivos **M42** (imóveis) e **M43** (ouro), leia primeiro o aviso dessa secção: hoje, este procedimento não serve para eles.
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Compras › Faturas de fornecedores**. A lista abre com os filtros **Rascunho ou Por pagar** e **Faturas de Fornecedor ou Recibo**.
+
+![Menu Lançar da Contabilidade, com Faturas de fornecedores assinalado no grupo Compras](/images/accounting-pt/fatura-de-fornecedor/01-menu-faturas-de-fornecedores.png)
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** ou **Contabilista certificado**.
+- O fornecedor existe nos contactos, com o NIF. Se não existir, escolha **Criar e editar…** no campo **Fornecedor** e preencha o NIF.
+- A fatura está em nome da empresa, com o NIF da empresa, e tem os elementos de uma fatura (número, data, NIF do fornecedor, valores e taxas de IVA). Sem isso o IVA não é dedutível, mesmo que o Odoo o calcule. <span className="fd-pending">Pendente de validação por contabilista certificado: condições formais de dedução (CIVA, art. 19.º, n.º 2, e art. 36.º).</span>
+- Tem a fatura à frente: número, data, valores sem IVA e taxa de IVA de cada linha.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Na lista, carregue em **Novo**. A fatura abre em rascunho, no diário **Compras**, com **Fatura de Fornecedor** escolhido no topo. Deixe-o assim: **Recibo**, ao lado, é para outro tipo de documento e não é tratado aqui.
+2. Em **Fornecedor**, escreva parte do nome e escolha-o, por exemplo **Papelaria Central, Lda**. A morada e o NIF aparecem por baixo.
+3. Em **Referência da Fatura**, escreva o número da fatura do fornecedor tal como vem no papel, por exemplo `FT A2026/318`.
+4. Deixe **Motivo de isenção do fornecedor?** vazio, salvo quando a fatura vem sem IVA e indica um motivo de autoliquidação: nesse caso escolha-o já aqui, antes das linhas, porque é ele que põe a taxa de IVA em cada linha nova (ver «Quando há retenção na fonte ou autoliquidação»). Por baixo das datas há a secção fechada **Operações especiais**, com **Classificação intracomunitária?**, **Tipo de transação SAF-T?**, **Completar Automaticamente?**, **Data de pagamento/colocação à disposição do rendimento?** e **Comissão de intermediação?**. Numa compra comum, como a do exemplo, ficam vazios. <span className="fd-pending">Pendente de validação por contabilista certificado: em que compras se preenche cada campo de Operações especiais.</span> **Deduzir o IVA de caixa no período seguinte?** não aparece na fatura de uma empresa fora do regime de IVA de caixa (ver «Notas importantes»).
+5. Em **Data da Fatura de Fornecedor**, escreva a data da fatura, por exemplo `27/10/2026`. A **Data Contabilística** fica com a data de hoje (`29/10/2026`): é a data do lançamento. Por baixo aparece a **Data de receção**, igual à data contabilística (`29/10/2026`): é o dia em que recebeu a fatura, e é ela que decide o período em que o IVA se deduz (ver «Notas importantes»). Se a recebeu noutro dia, escreva essa data: a data que escolher mantém-se mesmo que depois mude a **Data Contabilística** ou a data da fatura; só a data por omissão, igual à **Data Contabilística**, acompanha as mudanças desta. Uma data de receção num período cuja declaração periódica de IVA já foi entregue é recusada (ver «Notas importantes»). A **Data de Vencimento** passa a ser a data da fatura (`27/10/2026`). Se a fatura tem prazo de pagamento, escreva a data de vencimento que vem no papel ou escolha o prazo no campo ao lado, depois de «ou» (por exemplo **30 Dias**).
+   ![Fatura em rascunho com o Fornecedor Papelaria Central, Lda, a Referência da Fatura FT A2026/318, a Data da Fatura de Fornecedor 27/10/2026, a Data Contabilística 29/10/2026 e a Data de receção 29/10/2026 assinalada](/images/accounting-pt/fatura-de-fornecedor/02-fornecedor-referencia-e-datas.png)
+6. Em **Linhas da Fatura**, carregue em **Adicionar uma linha**. As colunas são, por esta ordem, **Artigo**, **Categoria de despesa**, **Conta**, **Analítica**, **Quantidade**, **Unidade**, **Preço**, **Impostos**, **Dedutível**, **IVA dedutível** e **Valor**. Deixe **Artigo** vazio quando compra algo que não está na lista de artigos e escreva a descrição, por exemplo `Papel de fotocópia A4 (20 resmas)`.
+7. Escolha a **Categoria de despesa** ou a **Conta**:
+   - a **Categoria de despesa** preenche a **Conta** e, quando a categoria a tem, a percentagem **Dedutível**; abre-se uma janela **Categoria de despesa** que diz o que mudou, por exemplo «A conta 6228 Outros foi substituída por 6242 Combustíveis, a conta da categoria “Combustível: gasóleo”.» Feche-a com **Fechar**;
+   - sem categoria, escolha a **Conta** do gasto, por exemplo `6233 Material de escritório`. A lista começa pelas contas de compras e de gastos.
+   ![Linha da fatura com o Artigo vazio e a descrição Papel de fotocópia A4 (20 resmas), a Categoria de despesa vazia, a Conta 6233 Material de escritório, o Preço 100,00 e o imposto 23%](/images/accounting-pt/fatura-de-fornecedor/03-linha-artigo-categoria-e-conta.png)
+8. Em **Preço**, escreva o valor sem IVA (`100,00`). Em **Impostos**, escreva `23` e escolha **23%**, a taxa de IVA que vem na fatura. A lista abre com as taxas de IVA (**23%**, **13%**, **6%**, **0%**…) e, ao escrever `23`, mostra também outros impostos com 23, como **Retenção IRS 23% — trabalho independente (art. 151.º)**: escolha uma retenção só quando a fatura a tem.
+9. Grave e confira **Dedutível** (100%) e **IVA dedutível** (23,00 €) na linha, e o quadro dos totais: **Valor sem Impostos** 100,00 €, **IVA 23%** 23,00 €, **Total** 123,00 €. O total tem de ser igual ao da fatura em papel. Enquanto não grava, **IVA dedutível** mostra 0,00 €.
+   ![Linha da fatura com Impostos 23%, Dedutível 100%, IVA dedutível 23,00 € e Valor 100,00 €, e os totais Valor sem Impostos 100,00 €, IVA 23% 23,00 € e Total 123,00 €](/images/accounting-pt/fatura-de-fornecedor/04-linha-com-iva-dedutivel.png)
+10. Carregue em **Confirmar**.
+    ![Botão Confirmar assinalado ao lado de Sugerir classificação (IA)](/images/accounting-pt/fatura-de-fornecedor/05-botao-confirmar.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- A fatura passa a **Publicada** e recebe o número do diário de compras, no exemplo `FTF/2026/00046`. No topo aparecem os botões **Pagar**, **Nota de Crédito** e **Mudar para Rascunho**.
+  ![Fatura FTF/2026/00046 publicada, com os botões Pagar, Nota de Crédito e Mudar para Rascunho e o fornecedor Papelaria Central, Lda](/images/accounting-pt/fatura-de-fornecedor/06-fatura-confirmada.png)
+- No separador **Linhas de lançamento**: `6233 Material de escritório` a débito 100,00 €, `2432 IVA - Dedutível` a débito 23,00 € e `2211 Fornecedores gerais` a crédito 123,00 €.
+- A fatura entra na lista **Por pagar** do fornecedor.
+- Ao lado do número aparece a etiqueta vermelha «Em atraso há 2 dias»: a **Data de Vencimento** ficou a data da fatura (27/10/2026), que já passou. Não é um erro do lançamento; quer dizer que, para o fiscaldoo, a fatura devia estar paga. Para a evitar, escreva o vencimento ou o prazo no passo 5.
+
+## Vídeo demonstrativo
+
+O vídeo começa na fatura nova, já aberta com **Novo** (passo 1), e mostra os passos 2 a 10 com o exemplo do artigo: **Papelaria Central, Lda**, `FT A2026/318` de 27/10/2026, a linha `Papel de fotocópia A4 (20 resmas)` na conta `6233` com 100,00 € e **23%**, os totais (123,00 €) e **Confirmar**. Não mostra a **Categoria de despesa** nem a coluna **IVA dedutível**, que não cabe na largura do vídeo.
+
+<VideoTutorial src="/videos/fatura-de-fornecedor.mp4" captions="/videos/fatura-de-fornecedor.vtt" poster="/videos/fatura-de-fornecedor-poster.png" width="1440" height="1140" title="Lançar uma fatura de fornecedor" duration="34 s" />
+
+{/* Nota interna (DOCS-021, DOC-0073, fatura FTF/2026/00046): exemplos à parte, em rascunho, na base docs_demo_loteb1_test: retenção sem IVA (Ana Ferreira, FR 2026/41) e com IVA (FR 2026/42), autoliquidação UE (Software Berlin GmbH, INV-2026-1187), gasóleo a 50 % (Fornecedor Teste Um, FT C2026/77), construção com M31 (Construções Rápidas, FT CR2026/12). */}
+
+## Quando há retenção na fonte ou autoliquidação
+
+- **Retenção na fonte.** Quando o fornecedor indica na fatura uma retenção (por exemplo trabalho independente ou rendas), escolha-a em **Impostos**, ao lado da taxa de IVA. A retenção calcula-se sobre o valor sem IVA, e o **Total** é o valor sem IVA, mais o IVA, menos a retenção. Com a categoria **Honorários**, a linha vem já com **Retenção IRS 23% — trabalho independente (art. 151.º)**: confira-a com a fatura. Numa fatura sem retenção, não escolha nenhuma. Os dois casos da demonstração, com honorários de 500,00 € da Ana Ferreira:
+  - **com IVA**, a fatura `FR 2026/42` (a situação mais comum): em **Impostos**, **Retenção IRS 23%…** e **23%**. Os totais são **IVA 23%** 115,00 €, **Retenção na fonte** -115,00 € e **Total** 500,00 €. Nas **Linhas de lançamento**: `6224 Honorários` a débito 500,00 €, `2432 IVA - Dedutível` a débito 115,00 €, `242 Retenção de impostos sobre rendimentos` a crédito 115,00 € e `2211 Fornecedores gerais` a crédito 500,00 €. A retenção é 23 % de 500,00 €, não do total com IVA (615,00 €);
+  - **sem IVA**, a fatura `FR 2026/41` de uma fornecedora isenta de IVA, que o indica na fatura: só a retenção em **Impostos**. Fica **Retenção na fonte** -115,00 € e **Total** 385,00 €; nas linhas, 500,00 € a débito de `6224 Honorários`, 115,00 € a crédito de `242` e 385,00 € a crédito de `2211`.
+
+  ![Totais da fatura FR 2026/42 com Valor sem Impostos 500,00 €, IVA 23% 115,00 €, Retenção na fonte -115,00 € e Total 500,00 €](/images/accounting-pt/fatura-de-fornecedor/07-retencao-com-iva-totais.png)
+
+  <span className="fd-pending">Pendente de validação por contabilista certificado: em que faturas a empresa tem de reter (CIRS, art. 101.º; CIRC, art. 94.º), a taxa de cada caso e quando uma fornecedora isenta de IVA fica também dispensada de retenção (CIRS, art. 101.º-B).</span>
+- **Autoliquidação de um fornecedor da União Europeia.** Num serviço comprado a uma empresa de outro país da UE, o fornecedor fatura sem IVA e é a empresa que o liquida e deduz. Com um fornecedor da UE com NIF (na demonstração, a Software Berlin GmbH, `DE999999987`), o Odoo preenche a **Posição Fiscal** «Intra-comunitário (UE)» (separador **Outra Informação**) e põe na linha a taxa **23% EU S**. As taxas «EU S» (serviços) e «EU G» (bens) só aparecem em **Impostos** nas faturas destes fornecedores: numa fatura de um fornecedor português, a procura por `23` não as mostra. Confira a taxa com a fatura: **23% EU S** num serviço, **23% EU G** em bens. Na demonstração, um serviço de 200,00 € na conta `6221` com **23% EU S** ficou com **IVA 23%** 0,00 € e **Total** 200,00 €, e as **Linhas de lançamento** foram:
+  - `6221 Trabalhos especializados` a débito 200,00 €;
+  - `2432 IVA - Dedutível` a débito 46,00 €;
+  - `2433 IVA - Liquidado` a crédito 46,00 €;
+  - `2211 Fornecedores gerais` a crédito 200,00 €.
+
+  A lista tem também **23% AUT UE**, que o Odoo não propôs. <span className="fd-pending">Pendente de validação por contabilista certificado: quando se usa 23% EU S, 23% EU G ou 23% AUT UE (CIVA, art. 2.º, n.º 1, alínea e), e art. 6.º, n.º 6, alínea a); RITI nas aquisições de bens).</span>
+- **Autoliquidação em Portugal** (sucatas, construção civil, licenças de emissão de gases com efeito de estufa, cortiça e eletricidade, do CIVA, art. 2.º, n.º 1, alíneas i) a n), com os motivos **M30** a **M34**; e os casos do DL n.º 21/2007, imóveis, com o motivo **M42**, e do DL n.º 362/99, ouro, com o motivo **M43**): o fornecedor fatura sem IVA e indica o motivo, e é a empresa que liquida o IVA dessa compra e o deduz. Os passos seguintes servem só para **M30** a **M34**; com **M42** e **M43**, veja o aviso «Imóveis (M42) e ouro (M43)» a seguir. Faça assim:
+  1. No passo 4, antes de acrescentar as linhas, escolha em **Motivo de isenção do fornecedor?** o motivo que vem na fatura. A lista mostra **M30**, **M31**, **M32**, **M33**, **M34**, **M42** e **M43**, todos «IVA - autoliquidação». Em **Pesquisar mais…**, a coluna **Artigo legal** diz a lei de cada um: **M30** a **M34** são as alíneas i), j), l), m) e n) do «Artigo 2.º n.º 1 … do CIVA» (a j), **M31**, é a da construção civil). A coluna **Campo da DP IVA**, ao lado, diz «Campo 8 — isentas com direito a dedução» em todos os motivos: é o campo da declaração de quem vende sem IVA, o fornecedor, e não o da sua compra. Na compra, o campo é o que a linha da fatura mostra (no exemplo a seguir, o «campo 102»). <span className="fd-pending">Pendente de validação por contabilista certificado: campos da declaração periódica do fornecedor (campo 8) e do adquirente nas compras com autoliquidação.</span>
+  2. Com **M30** a **M34**, cada linha nova vem com a taxa «AUT» do motivo. Na demonstração: **M30**, **23% AUT sucata**; **M31**, **23% AUT construção**; **M32**, **23% AUT emissões GEE**; **M33**, **23% AUT cortiça**; **M34**, **23% AUT eletricidade**. Confira-a com a fatura e mude-a se for outra (por exemplo, **6% AUT construção** numa obra a 6 %). As linhas que já existiam antes de escolher o motivo não mudam: escolha nelas a taxa à mão.
+  3. Grave e confira primeiro a coluna **Impostos** da linha: tem de ter uma taxa «AUT». Sem taxa, o **Total** também é o valor sem IVA, mas o IVA não é lançado. Depois confira o quadro dos totais: **IVA 23%** fica a 0,00 €, porque o IVA liquidado e o dedutível se anulam, e o **Total** é o valor sem IVA, o que se paga ao fornecedor. Depois carregue em **Confirmar**.
+
+  Na demonstração, a fatura `FT CR2026/13` da Construções Rápidas, Lda, de 1.000,00 € na conta `6221 Trabalhos especializados`, com **M31** e **23% AUT construção**, ficou com **Total** 1.000,00 € e o número `FTF/2026/00048`. As linhas, conferidas em **Contabilidade › Consultar › Livros e balancetes › Razão** (outubro de 2026), foram:
+  - `6221 Trabalhos especializados` a débito 1.000,00 €;
+  - `2432 IVA - Dedutível` a débito 230,00 €;
+  - `2433 IVA - Liquidado` a crédito 230,00 €;
+  - `2211 Fornecedores gerais` a crédito 1.000,00 €.
+
+  A coluna opcional **Natureza da inversão do sujeito passivo** da linha mostra «Serviços de construção civil (CIVA art. 2.º n.º 1 j)) - campo 102». <span className="fd-pending">Pendente de validação por contabilista certificado: tratamento de cada caso do CIVA, art. 2.º, n.º 1, alíneas i) a n); taxa de cada obra de construção (23 % ou 6 %); dedução do IVA autoliquidado (CIVA, art. 19.º e art. 20.º); campos da declaração periódica onde entra cada valor.</span>
+
+<HelpCallout type="risco" title="Imóveis (M42) e ouro (M43): não use este procedimento">
+Com **M42** (DL n.º 21/2007, imóveis com renúncia à isenção) e **M43** (DL n.º 362/99, ouro para investimento), o fiscaldoo ainda não propõe a taxa. Na demonstração, a linha nova ficou com **Impostos** vazio, o quadro dos totais ficou só com **Valor sem Impostos** e **Total** (1.000,00 €), sem linha de IVA, e a lista **Impostos** não tem nenhuma taxa «AUT» para imóveis nem para ouro. As **Linhas de lançamento** ficaram só com o gasto e a dívida ao fornecedor: sem o IVA liquidado (`2433`) e sem o dedutível (`2432`). Uma fatura confirmada assim deixa de fora o IVA que a empresa tem de liquidar. Não lance estas compras por este procedimento até o produto ser corrigido: peça o lançamento ao contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: lançamento da autoliquidação nas aquisições de imóveis com renúncia à isenção (DL n.º 21/2007) e de ouro para investimento (DL n.º 362/99).</span>
+</HelpCallout>
+
+<HelpCallout type="risco" title="Autoliquidação em Portugal: não use a taxa «(sem dedução)»">
+A lista **Impostos** tem **6% AUT construção (sem dedução)**. Na demonstração, uma fatura de 500,00 € com esta taxa lançou o IVA como a **23% AUT construção**: 30,00 € a débito da `2432 IVA - Dedutível` e 30,00 € a crédito da `2433 IVA - Liquidado`. O IVA foi deduzido, ao contrário do que diz o nome. Não a use até o produto ser corrigido. Se a empresa não pode deduzir o IVA de uma compra com autoliquidação (por exemplo, por só fazer operações isentas), peça o lançamento ao contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: lançamento da autoliquidação sem direito à dedução (CIVA, art. 2.º, n.º 1, alínea j), 2.ª parte, nas empreitadas da verba 2.42 da lista I, na redação do DL n.º 97/2026, desde 01/07/2026, ou desde 01/01/2026 por opção conjunta do prestador e do adquirente, art. 18.º, n.º 7, desse DL).</span>
+</HelpCallout>
+
+{/* Nota interna (DOCS-039, #3499, A1/A2, master 54a9f5f03, base docs_demo_video_fx1_test, perfil Contabilista): a autoliquidação em Portugal já lança o IVA (VAT-061). FTF/2026/00048 (FT CR2026/13, M31, 23% AUT construção) confirmada, linhas conferidas no Razão de outubro e depois anulada pelo ecrã. FTF/2026/00047 (documento criado por RPC na cópia desse lote; não existe na base-mãe de hoje, lote 99) (FT CR2026/14): M31 escolhido depois da linha não mudou a taxa; com M31 e 23% normal confirmou-se sem aviso (Total 615,00 €); com 6% AUT construção (sem dedução) deu 2432 D 30,00 e 2433 C 30,00 (defeito A5, cartão VAT-064: rever o aviso «(sem dedução)» quando o cartão fechar); anulada. UE: a Software Berlin GmbH tem agora Posição Fiscal «Intra-comunitário (UE)» e 23% EU S propostas (o B1-11 já não se reproduz); rascunho INV-2026-1190 eliminado. As taxas EU só aparecem com um fornecedor da UE (a procura por «23» numa fatura de um fornecedor português mostra «23% AUT UE», não «23% EU S»). */}
+
+{/* Nota interna (lote v23-BL, DOCS-064 #3900, master c689f7580, docs_demo_v23bl_test, 12/11/2026, req. 46883): o NIF da Software Berlin GmbH passa a DE999999987 (antes DE123456704, com estrutura de número real) pelo guião da base-mãe do lote v23-BL; na cópia, o produto aceitou a troca (só tem a FTF/2026/00034, não certificada). As capturas e o vídeo deste artigo não mostram o número. */}
+
+{/* Nota interna (DEC-1343, 3.ª correção do fix-art1, NA1-01 a NA1-04; master 54a9f5f03, base docs_demo_video_fx1_test, perfil Contabilista, 30/10/2026): rascunhos «FIX3 M32/M33/M34/M42/M43» da Construções Rápidas, 1.000,00 € na 6221, eliminados pelo ecrã. M32 → 23% AUT emissões GEE, M33 → 23% AUT cortiça, M34 → 23% AUT eletricidade, cada um com 2432 D 230,00 e 2433 C 230,00 e Total 1.000,00. M42 e M43 → linha sem taxa, totais sem linha de IVA, só 6221 D e 2211 C (defeito P-01, cartão VAT-064: rever o aviso «Imóveis (M42) e ouro (M43)» quando fechar). «Pesquisar mais…» do motivo: a coluna «Campo da DP IVA» diz «Campo 8 — isentas com direito a dedução» nos 7 motivos, numa compra (defeito P-02, cartão VAT-064: rever a frase do subpasso 1 quando fechar). M30 não foi repetido nesta correção (visto pelo 1.º corretor). */}
+
+## Notas importantes
+
+- **IVA dedutível e período.** O IVA da coluna **IVA dedutível** vai para a conta 2432 e deduz-se na declaração do período em que **recebeu** a fatura, ou num período posterior (CIVA, art. 22.º, n.os 2 e 3), e não no do mês da data da fatura. É pela **Data de receção** que o fiscaldoo escolhe o período do [apuramento do IVA](/accounting-pt/apuramento-do-iva). Por omissão é igual à **Data Contabilística**; mude-a enquanto a fatura está em rascunho, se a recebeu noutro dia. Exemplo: uma fatura de 15/09/2026 recebida a 10/10/2026 leva a data de receção `10/10/2026` e o IVA entra na declaração de outubro, sem mexer na de setembro. A **Data da Fatura de Fornecedor** e a **Data Contabilística** não mudam.
+  - O fiscaldoo recusa uma data de receção num período fechado (com a data de bloqueio da contabilidade), anterior ao mês da fatura ou mais de quatro anos depois da data da fatura (CIVA, art. 98.º, n.º 2): ver «Problemas frequentes».
+  - O fiscaldoo recusa uma data de receção num período cuja declaração periódica de IVA já foi entregue (submetida, aceite ou paga), mesmo sem data de bloqueio: o IVA da fatura ficaria numa declaração que já não se altera. Na demonstração, a data de receção `20/06/2026` foi recusada ao gravar, porque a declaração de junho de 2026 está paga (ver «Problemas frequentes»); uma data em setembro, cuja declaração ainda não foi entregue, gravou-se sem recusa. A data de receção é verificada de novo ao confirmar (se for igual à data contabilística, ou não tiver sido escolhida, também): se a declaração do período já foi entregue, a fatura (ou nota de crédito) de compra não se confirma e pede uma data de receção num período por declarar. O IVA dedutível pode deduzir-se num período seguinte (CIVA, art. 22.º e 98.º). Com uma declaração de **substituição** em curso para esse período, a compra confirma-se e entra nela (ver [Declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva)). Visto ao **Confirmar** uma fatura de compra com a data da fatura em 20/06/2026 (a **Data de receção** ficou em 30/06/2026), com a declaração de junho de 2026 paga: «A data de receção 30/06/2026 está num período cuja declaração periódica de IVA (2026/6) já foi entregue. O IVA desta fatura ficaria numa declaração que já não se altera. Escolha uma data de receção num período que ainda não tenha sido declarado.» A mesma fatura com a **Data de receção** em 25/09/2026 (setembro, por entregar) confirmou-se e ficou com o número `FTF/2026/00046`. Depois de **Substituir** a declaração de junho (a versão 2 em rascunho), a fatura com a data de receção em 30/06/2026 confirmou-se (`FTF/2026/00047`) e entrou na substituição. A recusa ao gravar foi vista no ecrã com o perfil **Contabilista**; as confirmações, como administrador, com o mesmo método do botão **Confirmar**.
+  - Depois de confirmar, a data de receção fica só de leitura. Para deduzir o IVA de uma linha num período posterior, o contabilista certificado muda a data do IVA dessa linha.
+  - A autoliquidação é diferente: numa compra a um fornecedor da União Europeia ou com motivo de autoliquidação, o IVA liquidado e o dedutível ficam no período da data da fatura, como antes. Na demonstração, um serviço da Software Berlin GmbH com **23% EU S**, faturado a 15/10/2026 e recebido a 10/11/2026, ficou com a data do IVA da linha em 15/10/2026.
+  - As faturas confirmadas antes de o campo existir não têm data de receção e não o mostram.
+- **IVA que não se deduz (Dedutível abaixo de 100 %).** Há despesas em que só parte do IVA, ou nenhum, é dedutível (por exemplo combustíveis, viaturas ligeiras de passageiros, despesas de representação). A **Categoria de despesa** propõe a percentagem: na demonstração, **Combustível: gasóleo** pôs **Dedutível** a 50% e, para 60,00 € + 13,80 € de IVA, **IVA dedutível** de 6,90 €. A janela da categoria **Honorários** avisa quando a categoria não tem percentagem: «… a linha fica com 100 %. Consulte o art. 21.º do CIVA e indique a percentagem à mão se o IVA não for totalmente dedutível.» <span className="fd-pending">Pendente de validação por contabilista certificado: percentagem dedutível de cada tipo de despesa (CIVA, art. 21.º).</span>
+- **Hoje, confira as linhas de lançamento quando Dedutível fica abaixo de 100 %.** No exemplo do gasóleo, o IVA não dedutível (6,90 €) foi para `6228 Outros` com a descrição «parte privada (impostos)», e metade do valor sem IVA (30,00 €) passou de `6242 Combustíveis` para `6228 Outros` («parte privada»). O gasto total (66,90 €) está certo, mas a repartição não é a de um gasto da empresa. Não use estas linhas como estão para despesas da empresa sem as rever com o contabilista certificado.
+- **Taxas das Regiões Autónomas.** A lista **Impostos** tem as taxas da Madeira (marcadas «MA») e dos Açores (marcadas «AÇ»), além das do continente. Escolha a taxa que vem na fatura. <span className="fd-pending">Pendente de validação por contabilista certificado: em que compras se aplica a taxa de uma Região Autónoma.</span>
+- **IVA de caixa.** **Deduzir o IVA de caixa no período seguinte?** é para uma empresa no regime de IVA de caixa: o IVA dessa compra deduz-se no período do recibo do fornecedor (o do pagamento), ou no período seguinte se marcar a opção. Numa empresa fora desse regime, como a da demonstração, o campo não aparece na fatura, nem em **Operações especiais**. <span className="fd-pending">Pendente de validação por contabilista certificado: quando se marca a opção (regime de IVA de caixa, DL n.º 71/2013).</span>
+- **Uma fatura confirmada não se altera à mão.** Se o fornecedor emitiu uma nota de crédito, registe-a com **Nota de Crédito**. Se foi um erro de lançamento, fale com o contabilista antes de usar **Mudar para Rascunho**.
+- **Com o PDF da fatura,** o botão **Carregar fatura (PDF, foto ou QR)** da lista prepara o rascunho a partir do ficheiro. Confira sempre os dados com o documento antes de confirmar.
+
+{/* Nota interna (DOCS-021, ACC-202 #3440 e cartão novo do lote B1): «Dedutível» abaixo de 100 % reparte também o valor sem IVA para 6228 «parte privada» (defeito novo); IVA dedutível a 0,00 € até gravar (B1-08); campos IVA de caixa e Motivo de isenção sem ajuda no campo (P-B1-C). Rever as duas notas quando os cartões fecharem. */}
+
+{/* Nota interna (lote 98, FIX-M267, M282 e M286, master 73d6a5fed, docs_demo_98_test, porta 9760, 19/11/2026, perfil Contabilista): rascunho da Papelaria Central FT A2026/318 (data da fatura 05/06/2026) criado por RPC na cópia e aberto por clique: Data de receção 20/06/2026 recusada ao gravar com a mensagem acima (declaração 2026/6 paga; 2026/1 a 2026/8 submetidas ou pagas, 2026/9 validada); 20/09/2026 gravou; mudar a Data Contabilística para 05/11/2026 manteve a Data de receção escolhida. NÃO visto: a recusa e a substituição ao Confirmar (a sessão não permite confirmar documentos). */}
+
+{/* Nota interna (lote 97, VAT-085 #4321, master 3a28c9b91, docs_demo_lote97_test, porta 8597, 18/11/2026, utilizador criado na cópia só com o perfil Contabilista): rascunho da Papelaria Central FT A2026/318 feito por clique com a Data Contabilística escrita 29/10/2026 para manter o dia do exemplo (a cópia está a 18/11/2026): a Data de receção ficou 29/10/2026; captura 02 refeita a 400 px com o NIF tapado; o rascunho ficou na cópia por confirmar (não se publicou nada nesta ronda). Mudar a Data Contabilística depois de escrever a data de receção (10/11 → Data Contabilística 05/11) pôs a data de receção a 05/11/2026. As três recusas por clique em rascunhos novos, que não ficaram gravados. Por RPC, com o mesmo utilizador, rascunhos apagados a seguir: fatura de 15/09/2026 com receção 10/10/2026 → data do IVA da linha 10/10/2026; Software Berlin 23% EU S, fatura 15/10/2026, receção 10/11/2026 → data do IVA 15/10/2026; receção 20/06/2026 (junho declarado, sem data de bloqueio) aceite. Só leitura depois de confirmada: pela vista (readonly fora de rascunho) e pela mensagem do produto «A data de receção de … não pode ser alterada: o documento já está publicado…», não vista no ecrã. As faturas FTF/2026/00040 a 00045 da base não têm data de receção (a FTF/2026/00045 aberta por clique não mostra o campo). Resposta do contabilista certificado de 17/11/2026 (iva-38): marca de pendente retirada. */}
+
+## Problemas frequentes
+
+### A fatura não tem IVA (Total igual ao Valor sem Impostos)
+
+- **Causa:** a coluna **Impostos** da linha ficou vazia. Numa linha sem artigo de um fornecedor português, o Odoo só propõe a taxa quando um motivo de autoliquidação de **M30** a **M34** foi escolhido antes da linha; sem isso, na demonstração, a coluna ficou vazia. Com **M42** e **M43**, também fica vazia.
+- **O que fazer:** antes de confirmar, escolha a taxa em **Impostos** e confira o **Total** com o papel. Numa autoliquidação, o **Total** é mesmo o valor sem IVA, mas a taxa «AUT» ou «EU» tem de estar na linha (ver «Quando há retenção na fonte ou autoliquidação»). Com **M42** e **M43** não há taxa «AUT» na lista: não confirme a fatura e peça o lançamento ao contabilista certificado.
+
+### O Total tem IVA numa fatura com motivo de autoliquidação
+
+- **Sintoma:** a fatura tem um motivo de autoliquidação em **Motivo de isenção do fornecedor?**, mas o **Total** é maior do que o valor sem IVA. Na demonstração, com **M31** e a taxa **23%**, 500,00 € deram **IVA 23%** 115,00 € e **Total** 615,00 €, e **Confirmar** publicou a fatura sem nenhum aviso.
+- **Causa:** a linha tem uma taxa normal em vez da taxa «AUT» do motivo. Acontece quando o motivo é escolhido depois de a linha existir (a taxa da linha não muda) ou quando a taxa é mudada à mão. O Odoo não avisa.
+- **O que fazer:** antes de confirmar, escolha em **Impostos** a taxa «AUT» do motivo e confira que **IVA 23%** fica a 0,00 € e que o **Total** é o valor sem IVA. Se a fatura já foi confirmada, fale com o contabilista antes de usar **Mudar para Rascunho**.
+
+### A data de receção é recusada ao gravar
+
+- **Sintoma:** ao gravar a fatura em rascunho abre-se **Operação inválida** com uma destas mensagens (provocadas na demonstração com o perfil **Contabilista**):
+  - «A data de receção 30/09/2026 é anterior ao mês da fatura (27/10/2026): a fatura não pode ser recebida antes de ser emitida. Escolha uma data de receção no mês da fatura ou depois.»
+  - «A data de receção 20/12/2025 está num período fechado. O IVA não se deduz num período fechado e a declaração já entregue não é alterada. Escolha uma data de receção num período aberto.»
+  - «A data de receção 18/11/2026 é mais de 4 anos depois da data da fatura (10/01/2022): o direito à dedução do IVA caducou (CIVA, art. 98.º, n.º 2). Escolha uma data de receção até 10/01/2026.»
+  - «A data de receção 20/06/2026 está num período cuja declaração periódica de IVA (2026/6) já foi entregue. O IVA desta fatura ficaria numa declaração que já não se altera. Escolha uma data de receção num período que ainda não tenha sido declarado.»
+    ![Janela Operação inválida: a data de receção 20/06/2026 está num período cuja declaração periódica de IVA (2026/6) já foi entregue](/images/accounting-pt/fatura-de-fornecedor/08-recusa-dp-ja-entregue.png)
+- **O que fazer:** carregue em **Fechar** e escreva a data em que recebeu de facto a fatura. Se a recebeu num período fechado ou já declarado, ou se passaram mais de quatro anos, fale com o contabilista certificado: o fiscaldoo não deixa deduzir esse IVA por esta fatura.
+
+### «Este documento pode ser um duplicado de …»
+
+- **Sintoma:** ao gravar uma fatura com a **Referência da Fatura** de outra do mesmo fornecedor, aparece no topo «Este documento pode ser um duplicado de FT A2026/318 at 123,00 €».
+- **Causa:** já há uma fatura desse fornecedor com a mesma referência.
+- **O que fazer:** procure a fatura com essa referência na lista. Se é a mesma, descarte o rascunho; não lance a mesma fatura duas vezes, porque o IVA seria deduzido duas vezes.
+
+### «Há campos obrigatórios por preencher»
+
+- **Sintoma:** ao gravar ou confirmar aparece «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** falta um campo obrigatório; no teste, a **Data da Fatura de Fornecedor**.
+- **O que fazer:** preencha o campo a vermelho e grave de novo.
+
+### A fatura em rascunho mostra «… dias desde o fim do mês a que este lançamento respeita»
+
+- **Sintoma:** faixa amarela no topo, por exemplo «121 dias desde o fim do mês a que este lançamento respeita (limite do CIRC, art. 123.º, n.º 3). Lance-o ou reveja a sua data; nada é bloqueado.»
+- **Causa:** a fatura está em rascunho há mais de 90 dias contados do fim do mês da sua data.
+- **O que fazer:** confira e confirme a fatura. Ver [Que documentos estão com atraso de contabilização](/accounting-pt/atrasos-de-registo).
+
+{/* Nota interna (DOCS-021, I18N): a mensagem de duplicado tem «at» em inglês («… FT A2026/318 at 123,00 €»). */}

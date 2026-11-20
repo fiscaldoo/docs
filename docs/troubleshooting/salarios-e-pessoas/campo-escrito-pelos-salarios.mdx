@@ -1,0 +1,76 @@
+---
+id: campo-escrito-pelos-salarios
+slug: /troubleshooting/campo-escrito-pelos-salarios
+title: Uma integração recebe «não se pode definir diretamente» nos salários
+sidebar_label: «Não se pode definir diretamente»
+description: Estados, totais, IRS e Segurança Social são escritos pelos botões do processamento. A mensagem aparece a uma integração, porque no ecrã estes campos não se escrevem.
+keywords: [não se pode definir diretamente, nao se pode definir diretamente, não se define diretamente, nao se define diretamente, estado do recibo, estado do lote, IRS retido, integração, integracao, importar recibos, rasto de auditoria, escrito pelos salários]
+doc_id: DOC-0393
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 25deacc94)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado, payroll-pt/processar-e-pagar/processar-o-mes]
+---
+
+## Sintoma
+
+Uma integração não consegue escrever um valor dos salários, e a mensagem diz que ele «não se pode definir diretamente».
+
+No ecrã não a verá: o estado, os totais, o IRS e a Segurança Social do recibo estão bloqueados no formulário. Vem de um programa externo ligado ao fiscaldoo.
+
+## Mensagem
+
+Numa integração com o acesso **Administrador de Salários**, ao tentar mudar o estado de um recibo já pago:
+
+> «Estado não se pode definir diretamente. O que aconteceu: o registo está fechado (ou o campo deriva de outro registo) e o que foi registado, pago ou aprovado nunca se reescreve; nenhum campo se pode alterar. Como corrigir: use as ações do documento (um recibo validado corrige-se com um recibo corretivo, as férias cancelam-se e registam-se de novo). A tentativa ficou registada no rasto de auditoria.»
+
+<span className="fd-pending">Pendente de validação no ecrã: esta mensagem foi obtida por uma chamada de integração, porque o ecrã não oferece o campo.</span>
+
+## Causas verificadas
+
+- **Estes valores são o resultado de um passo.** O estado de um recibo ou de um lote muda com os botões, que verificam as regras e deixam rasto. Os totais, o IRS e a Segurança Social saem do cálculo.
+- **O registo está fechado.** Num recibo validado ou pago, nada se reescreve.
+- **O ecrã de importação não abre esta porta.** Em **Recibos de vencimento** e em **Processar o mês**, **Ações › Importar** não reconhece colunas como o estado ou o IRS retido: a coluna fica em «Para importar, selecione um campo...» e não é importada. Visto com o perfil **Processador de salários**, num ficheiro com as colunas **Referência**, **Estado** e **IRS retido**:
+
+  ![Ecrã de importação dos recibos de vencimento: as colunas Referência, Estado e IRS retido do ficheiro ficam todas em Para importar, selecione um campo...](/images/troubleshooting/campo-escrito-pelos-salarios/01-importar-coluna-estado-sem-campo.png)
+
+## O que confirmar
+
+1. Quem escreveu o valor: uma integração, um ficheiro, uma automatização ou uma pessoa no ecrã.
+2. Qual é o campo. A mensagem começa pelo nome dele (por exemplo, **Estado**).
+3. O estado do registo: um rascunho ainda se calcula de novo; um registo validado ou pago já não muda.
+
+## Como resolver
+
+Use o passo certo, em vez de escrever o valor:
+
+| Quer mudar | Faça isto |
+|---|---|
+| O estado de um recibo ou de um lote | Use os botões do lote, em **Salários › Processar › Processar o mês** ([Processar o mês](/payroll-pt/processar-o-mes)) |
+| Totais, IRS ou Segurança Social de um rascunho | Corrija o dado de origem (contrato, ausência, rubrica) e carregue em **Calcular** |
+| Um valor de um recibo fechado | Crie um recibo corretivo ([O recibo já está validado e não se altera](/troubleshooting/recibo-validado-nao-se-altera)) |
+
+Numa integração, peça a quem a mantém que tire esse campo do envio e use as ações do documento.
+
+## Resultado esperado
+
+- O valor muda pelo botão do passo, e o histórico do documento mostra quem o fez.
+- A integração deixa de receber a mensagem depois de deixar de enviar o campo.
+
+## Quando contactar o suporte
+
+- A mensagem aparece ao carregar num botão normal do processamento (**Calcular**, **Validar**, **Marcar como pago**).
+- A mensagem aparece a escrever num campo que o formulário deixa editar, num registo em **Rascunho**.
+- A integração não indica os campos que está a enviar e a mensagem não diz o suficiente para os encontrar.
+
+## Informação a enviar
+
+- O texto completo da mensagem.
+- O que estava a fazer: o menu e o botão, ou o nome da integração e o que ela envia.
+- O documento (trabalhador e mês, ou lote) e o seu estado.
+- O perfil ou o utilizador com que a ação foi feita.
+
+{/* Nota interna (DOCS-005 #3400, lote CAP-01, 10/11/2026, master ce51f2d47, docs_demo_cap01_test, porta 8504): por clique com um utilizador criado na cópia só com o perfil Processador de salários: Salários › Processar › Recibos de vencimento, botão Ações (⋮) › Importar, ficheiro CSV inventado com Referência, Estado e IRS retido; as três colunas ficam sem campo (captura 01). Não se carregou em Importar. A mensagem da integração continua sem ecrã (pendente acima); Processar o mês não foi reaberto neste lote. */}

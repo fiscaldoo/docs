@@ -1,0 +1,67 @@
+---
+id: painel-da-direcao
+slug: /management/painel-da-direcao
+title: O que mostra o painel da Direção
+sidebar_label: Painel da Direção
+sidebar_position: 1
+description: Os cartões do Painel da Direção (vendas, margem, bancos, dívidas de clientes, pagamentos ao Estado, obrigações fiscais e IVA), de onde vem cada número e o que o painel não vê.
+keywords: [painel da direção, painel da direcao, painel da gerência, painel da gerencia, direção, direcao, gerência, gerencia, indicadores, vendas do mês, vendas do mes, margem, dinheiro nos bancos, vencido a receber, pagamentos ao Estado, obrigações fiscais, obrigacoes fiscais, semáforo, semaforo, IVA a pagar, modo de consulta]
+doc_id: DOC-0270
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 54a9f5f03)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/declaracoes/calendario-fiscal, accounting-pt/iva/apuramento-do-iva, management/aprovar-pagamentos-e-despesas]
+---
+
+O Painel da Direção mostra numa página como está a empresa: vendas, bancos, dívidas de clientes e o que há a pagar ao Estado. Cada número abre a lista que o soma.
+
+Abre-se em **Direção › Início › Painel da Direção**, com o perfil **Gerência**, que só consulta (no topo aparece **Modo de consulta: só leitura**). As decisões estão em [Como aprovar pagamentos a fornecedores e despesas](/management/aprovar-pagamentos-e-despesas).
+
+![Topo do Painel da Direção com o mês Outubro de 2026 escolhido, o botão Perguntar aos números e os cartões Vendas do mês, Margem, Dinheiro nos bancos e Vencido a receber](/images/management/painel-da-direcao/01-cartoes-do-painel.png)
+
+## Os cartões
+
+| Cartão | O que soma | Ao carregar, abre |
+| --- | --- | --- |
+| **Vendas do mês** | Faturas do mês menos notas de crédito, sem IVA. | Os documentos. |
+| **Margem** | Vendas menos custos diretos do mês (custo das mercadorias vendidas e semelhantes). | Os custos diretos. |
+| **Dinheiro nos bancos** | Saldo dos bancos no fim do mês. | A **Previsão de tesouraria**, não os movimentos. |
+| **Vencido a receber** | Faturas de clientes vencidas e por receber, hoje. | As faturas e os dias de atraso. |
+| **Próximos pagamentos ao Estado** | Impostos que a Previsão de tesouraria conta pagar até daqui a 30 dias, incluindo os atrasados. | As linhas da previsão. |
+| **Custo total com pessoal** | Salários, contribuições da empresa e outros custos do mês. | Os totais por trabalhador. |
+| **Obrigações fiscais** | Semáforo do Calendário fiscal: vermelho, quantas passaram o prazo; âmbar, quantas vencem em 30 dias; verde, «Tudo em ordem». | Essas obrigações. |
+| **IVA** | IVA da próxima declaração periódica por entregar, a pagar ou a recuperar, com o prazo. | As linhas de IVA do período. |
+
+No exemplo, «4 faturas de clientes vencidas» abre quatro faturas com o total de 6.588,13 €; os 19,00 € de vendas são uma fatura simplificada de 20,14 € com IVA.
+
+## O mês escolhido
+
+A lista do mês muda **Vendas do mês**, **Margem**, **Custo total com pessoal** e **Dinheiro nos bancos**. Os outros cartões contam a partir de hoje: em setembro, **Vencido a receber** continua nos 6.588,13 €.
+
+O painel é da empresa indicada por baixo do título; para ver outra, mude de empresa na barra de cima.
+
+## IVA e pagamentos ao Estado
+
+![Cartões Próximos pagamentos ao Estado, Custo total com pessoal, Obrigações fiscais com uma fora de prazo e IVA com o IVA a pagar de 519,60 € e o prazo de 20/11/2026](/images/management/painel-da-direcao/02-obrigacoes-e-iva.png)
+
+**IVA** usa o prazo do Calendário fiscal (20/11/2026 para o IVA de setembro); **Próximos pagamentos ao Estado** usa a data da Previsão de tesouraria (25/11/2026, o mesmo IVA). Confirme os prazos no [Calendário fiscal](/accounting-pt/calendario-fiscal) e o valor no [apuramento do IVA](/accounting-pt/apuramento-do-iva). <span className="fd-pending">Pendente de validação por contabilista certificado: prazo da declaração e prazo do pagamento do IVA mensal.</span>
+
+## Os outros blocos
+
+- **Benefício fiscal ao alcance** e a tabela **Pessoas** vêm dos aumentos salariais e do salário mínimo do ano seguinte e aparecem com o perfil **Gerência**. Hoje, carregar neles não abre nada.
+- **Perguntar aos números** faz uma pergunta ao Copiloto; se estiver desligado, veja [Como ligar ou desligar o Copiloto](/copilot/privacidade-e-consentimentos).
+
+{/* Nota interna (DOCS-034): o cartão «Benefício fiscal ao alcance» e as linhas de «Pessoas» não abrem nada ao clicar (defeito V2D-02 do LOTE_D). Atualizar a frase quando o cartão entrar em master. */}
+
+## O que o painel não vê
+
+- Só conta o que está lançado: faturas por introduzir e extratos por importar ficam de fora.
+- O semáforo só conhece o Calendário fiscal. Numa empresa nova, sem dados, **Obrigações fiscais** mostra «Tudo em ordem» e **IVA** «Nenhuma declaração de IVA à espera».
+- O bloco **O que está pendente** diz «Está tudo em ordem» mesmo com uma obrigação fora de prazo. Não o use como prova: confira o cartão **Obrigações fiscais**.
+
+{/* Nota interna (DOCS-034): «O que está pendente» do painel da Direção nunca lista nada (defeito V2D-01 do LOTE_D). Retirar o último ponto quando o defeito entrar em master. */}
+
+{/* Nota interna (DOCS-034): vídeo previsto (video=sim, corrente DOCS-006): abrir o painel com o perfil Gerência, mudar o mês e carregar em «Vencido a receber». Entra como secção «Vídeo demonstrativo» depois de «IVA e pagamentos ao Estado» quando existir. */}

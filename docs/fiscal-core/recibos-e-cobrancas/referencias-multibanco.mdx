@@ -1,0 +1,141 @@
+---
+id: referencias-multibanco
+slug: /fiscal-core/referencias-multibanco
+title: Como cobrar com referências Multibanco
+sidebar_label: Referências Multibanco
+sidebar_position: 5
+description: Emitir referências Multibanco numa fatura (uma ou por prestações), anulá-las, importar o ficheiro de cobranças do canal, ver os 9 resultados possíveis e saber que o pagamento importado não tem recibo certificado; o que o ecrã recusa.
+keywords: [Multibanco, referência anulada, referência caducada, outra entidade, recibo do recebimento Multibanco, referência Multibanco, entidade, prestações, ficheiro de cobranças, importar cobranças, MB, pagamento por referência, anular referência, recebimentos Multibanco, cliente pagou no multibanco]
+doc_id: DOC-0044
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/recibos-e-cobrancas/emitir-um-recibo, fiscal-core/recibos-e-cobrancas/devolucoes-de-debitos-diretos]
+---
+
+## Para que serve?
+
+Uma referência Multibanco (entidade e referência de 9 dígitos) deixa o cliente pagar a fatura no Multibanco ou no homebanking. O fiscaldoo emite as referências a partir da fatura, em uma ou mais prestações, e, quando importa o ficheiro de cobranças do canal, cria o pagamento do cliente e liga-o à fatura.
+
+## Quando utilizar?
+
+- Quando quer dar ao cliente uma referência para pagar uma fatura emitida e por pagar, em euros.
+- Quando recebeu o ficheiro de cobranças do canal Multibanco e quer registar o que foi pago.
+- Não o use para pagamentos online com ligação a um prestador (Eupago, ifthenpay): esses têm o seu próprio percurso. Para cobrar por débito direto, [lotes de débito direto](/fiscal-core/debitos-diretos-lotes).
+
+## Onde encontrar?
+
+- Emitir: na fatura, botão **Referências Multibanco**.
+- Ver as referências: botão **Multibanco** da fatura, ou **Contabilidade › Reconciliar › Pagamentos online › O que há para fazer com os pagamentos online?**, ligação **Referências Multibanco**.
+- Importar cobranças: **Contabilidade › Lançar › Cobranças a clientes › Cobranças Multibanco**.
+- Recebimentos: **Contabilidade › Reconciliar › Pagamentos online › O que há para fazer com os pagamentos online?**, ligação **Recebimentos Multibanco por período**. Antes de importar o primeiro ficheiro, o relatório diz «Aqui aparecem os recebimentos Multibanco por período, depois de importado um ficheiro Multibanco.».
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** (ou quem tem o acesso extra **Tesouraria: Gestor**, dado nos **Ajustes avançados** do utilizador, campo **Tesouraria**).
+- A fatura está emitida, por pagar e em euros. Uma fatura em rascunho, paga ou noutra moeda não tem referências (regra do produto, não provocada no ecrã).
+- A empresa tem canal Multibanco. Na demonstração o canal é de teste (`mock`, entidade `00000`) e a referência só vale nesta base: não se paga no Multibanco verdadeiro. <span className="fd-pending">Pendente de validação no ecrã: canal real (entidade e algoritmo da referência dependem do contrato com a entidade gestora ou com o prestador; a demonstração não os tem).</span>
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a fatura e carregue em **Referências Multibanco**.
+   ![Botão Referências Multibanco na barra de botões da fatura](/images/fiscal-core/referencias-multibanco/01-botao-referencias.png)
+2. Na janela **Emitir referências Multibanco**, veja o **Valor em aberto** (104,55 €), escolha as **Prestações** (por exemplo `2`), o **Tipo de valor** (valor fixo, em que só o montante exato paga a referência, ou variável) e a **Validade (dias)**. A janela explica: «É emitida uma referência por prestação; a última fica com o arredondamento. Nada é enviado a ninguém.» Carregue em **Emitir**.
+   ![Janela Emitir referências Multibanco com 2 prestações](/images/fiscal-core/referencias-multibanco/02-assistente-prestacoes.png)
+3. A fatura passa a ter o botão **Multibanco** com o número de referências (2). Carregue nele.
+   ![Botão Multibanco com 2 referências na fatura](/images/fiscal-core/referencias-multibanco/03-fatura-com-referencias.png)
+4. A lista mostra uma referência por prestação: **Entidade**, **Referência formatada** (grupos de três dígitos), **Montante** e **Válida até**. Com duas prestações, a primeira de 52,28 € vale até 01/12/2026 e a segunda, de 52,27 € (o arredondamento), até 31/12/2026. Todas ficam **Ativo**.
+   ![Lista de referências da fatura FT D26/55 com as duas prestações ativas](/images/fiscal-core/referencias-multibanco/04-lista-de-referencias.png)
+5. Abra uma referência: mostra o **Tipo de valor**, o montante, a validade, a **Prestação** e o **Canal**. Para a deixar de aceitar, carregue em **Anular a referência**, escreva o **Motivo** na janela e carregue em **Anular a referência**: fica **Anulado** (uma referência não se edita nem se apaga).
+   ![Ficha de uma referência Multibanco ativa, com o botão Anular a referência](/images/fiscal-core/referencias-multibanco/05-referencia.png)
+   ![Janela Anular referência Multibanco com o campo Motivo](/images/fiscal-core/referencias-multibanco/06-anular-referencia.png)
+6. Quando o cliente pagar, importe o ficheiro de cobranças. Abra **Cobranças Multibanco**: numa empresa sem importações a lista diz «Ainda não foi importado nenhum ficheiro de cobranças». Carregue em **Importar ficheiro de cobranças**.
+   ![Lista Cobranças Multibanco vazia, com o botão Importar ficheiro de cobranças](/images/fiscal-core/referencias-multibanco/07-importar-lista.png)
+7. Na janela **Importar cobranças Multibanco**, escolha o **Diário bancário** e o ficheiro (**Escolher ficheiro**) e carregue em **Importar**. A janela avisa: «O ficheiro é apenas lido (nada é obtido de nenhum serviço).»
+   ![Janela Importar cobranças Multibanco com o diário bancário e o ficheiro](/images/fiscal-core/referencias-multibanco/08-importar-assistente.png)
+8. Abre-se a importação (`MBI/…`): **Paga**, **Exceções** e **Valor recebido**, e, em **Pagamentos**, cada linha com o resultado. Uma referência paga mostra **Paga** e a nota «Pagamento … criado e reconciliado.» Todas as outras linhas são exceções: veja [os resultados da importação](#os-resultados-da-importação).
+   ![Importação MBI/00001 com uma referência paga e o pagamento criado e reconciliado](/images/fiscal-core/referencias-multibanco/09-importacao-paga.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, as referências Multibanco são as do fiscaldoo. Numa fatura emitida, **Referências Multibanco** abre a mesma janela **Emitir referências Multibanco**, com **Valor em aberto**, **Prestações**, **Tipo de valor** e **Validade (dias)**. **Contabilidade › Lançar › Cobranças a clientes › Cobranças Multibanco** tem o botão **Importar ficheiro de cobranças**, e **Contabilidade › Reconciliar › Pagamentos online › O que há para fazer com os pagamentos online?** tem os mesmos grupos e **Listas de apoio** (visto com um utilizador só com o perfil **Contabilista**).
+
+{/* Nota interna (lote EE-12, DOCS-073 #4142, DEC-1794, master 589ecfd27, base Enterprise docs_ee_ee12_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee12_test): DOC-0044. Contabilista: FT D26/31 › Referências Multibanco abriu a janela com «É emitida uma referência por prestação; a última fica com o arredondamento. Nada é enviado a ninguém.», fechada com Descartar (nenhuma referência emitida); Cobranças Multibanco (vazia); painel dos pagamentos online com Recebimentos Multibanco por período e Retornos de débito direto por motivo. Igual na cópia Community. Ver reports/LOTE_EE-12.md. */}
+
+## Resultado esperado
+
+- Para a referência de 52,28 € paga em 01/11/2026 cria-se um pagamento de 52,28 € no diário do banco, com o lançamento: débito de 52,28 € em «Recebimentos Pendentes» (120002) e crédito de 52,28 € em «Clientes gerais» (2111). O pagamento fica reconciliado com a fatura.
+- O dinheiro **ainda não está na conta do banco**: o débito fica em «Recebimentos Pendentes» (120002). A conta do banco (121 Depósitos à ordem) só recebe o valor quando importar o extrato do banco. Depois, ao reconciliar a linha do extrato com este pagamento, o valor deixa de estar pendente: o fiscaldoo debita a conta transitória (120001) e credita «Recebimentos Pendentes» (120002).
+- A fatura fica parcialmente paga (**Pago em parte**), com 52,27 € em dívida, e o botão **Pagamentos** da fatura a 1.
+  ![Fatura com o estado Pago em parte e o botão Pagamentos a 1](/images/fiscal-core/referencias-multibanco/10-fatura-parcial.png)
+- **Recebimentos Multibanco por período** (ligação do painel dos pagamentos online) soma o montante por mês (novembro de 2026: 52,28 €).
+  ![Relatório Recebimentos Multibanco por período, com 52,28 € em novembro de 2026](/images/fiscal-core/referencias-multibanco/11-relatorio.png)
+
+## O pagamento importado não tem recibo certificado
+
+A importação cria um pagamento simples. **Não emite o recibo certificado (RG)**: o pagamento não tem série nem ATCUD, ao contrário de um recibo emitido na fatura, que os tem.
+![Pagamento PBNK1/… criado pela importação, sem série nem ATCUD, sem botão de recibo](/images/fiscal-core/referencias-multibanco/15-pagamento-multibanco.png)
+
+<HelpCallout type="atencao" title="Emitir recibo não emite o recibo do que o Multibanco já cobrou">
+O botão **Emitir recibo** da fatura emite o recibo do que **ainda está por pagar** (aqui, 52,27 €), sem ligação ao pagamento Multibanco. Não o use para o recebimento já importado: se alterar o valor para 52,28 €, regista o mesmo recebimento duas vezes.
+</HelpCallout>
+
+![Janela Emitir recibo da fatura FT D26/55 com o valor de 52,27 €](/images/fiscal-core/referencias-multibanco/14-emitir-recibo-so-o-que-falta.png)
+
+- Hoje, o fiscaldoo **ainda não emite o recibo do recebimento Multibanco**: na ficha do pagamento não há nenhum botão para o certificar: só **Mudar para Rascunho**, **Marcar como Enviada** e **Cancelar com motivo**.
+- <span className="fd-pending">Pendente de validação por contabilista certificado: se a empresa tem de emitir recibo por cada recebimento Multibanco e, se tem, como o regularizar enquanto o produto não o emitir (por exemplo, cancelar o pagamento com motivo e emitir o recibo com a data e o meio de pagamento corretos). Peça-o ao contabilista certificado antes de agir.</span>
+
+## Os resultados da importação
+
+Cada linha do ficheiro acaba num de 9 resultados. Só **Paga** cria um pagamento; nos outros 8 (as exceções) o fiscaldoo não cria nada e a fatura não muda. A tabela mostra o que o ecrã diz em cada um e o que fazer.
+
+![Importação MBI/00003 com os 9 resultados e os contadores Paga 2 e Exceções 8](/images/fiscal-core/referencias-multibanco/13-importacao-resultados.png)
+
+| Resultado | Nota no ecrã | O que fazer |
+| --- | --- | --- |
+| **Paga** | «Pagamento PBNK1/… criado e reconciliado.» | Nada. Confirme o pagamento na fatura. |
+| **Referência não encontrada** | «Nenhuma referência da empresa tem esta entidade e referência.» | A entidade é a da empresa, mas nenhuma referência tem esse número. Confirme o número no cliente e na lista de referências. |
+| **Outra entidade** | «A entidade não é a da empresa.» | O pagamento é de uma referência de outra entidade. Confirme com o canal; não é um recebimento desta empresa. |
+| **Valor diferente** | «A referência é de 104.55 e foram pagos 50.0.» | Só acontece numa referência de **valor fixo**. Fale com o cliente: se o valor pago estiver certo, anule a referência e emita outra, de valor variável. |
+| **Mais do que a fatura deve** | «200.0 é mais do que os 104.55 que a fatura ainda deve.» | O cliente pagou mais do que a fatura deve. Acerte a diferença com ele. |
+| **Referência caducada** | «A referência era válida até 02/11/2026.» | O pagamento é posterior à validade. A fatura continua por pagar: fale com o cliente e, se ainda quer cobrar por Multibanco, anule a referência e emita outra. |
+| **Referência anulada** | «A referência foi anulada:» seguido do motivo que escreveu ao anulá-la. | O cliente pagou por uma referência que o fiscaldoo já não aceita. Fale com ele e trate o recebimento. |
+| **Já paga** | «A referência já foi paga.» | A referência já tem pagamento. O fiscaldoo não cria um segundo. |
+| **Transação repetida** | «Já foi recebido um pagamento com este identificador de transação.» | O mesmo movimento já foi importado antes. Não se duplica; nada a fazer. |
+
+## Notas importantes
+
+<HelpCallout type="atencao" title="Uma referência anulada ou caducada não aceita pagamentos">
+Anule as referências que o cliente não deve usar (por exemplo, depois de lhe dar uma só). Uma referência já paga não se anula. O ficheiro de cobranças só liga o pagamento a uma referência **ativa** com a mesma entidade e referência, com o valor certo (na de valor fixo) e com a data do pagamento **dentro da validade**: a data não tem de ser igual à da emissão. O resto fica como exceção e o fiscaldoo não faz nada com ele.
+</HelpCallout>
+
+- O **Valor fixo** só aceita o montante da referência; o **variável** aceita qualquer montante até ao que a fatura ainda deve, mas **só um pagamento**: depois do primeiro (por exemplo, 40,00 € de 104,55 €) a referência fica **Paga** e o pagamento seguinte dá «Já paga». Para o cliente pagar por partes, emita prestações.
+- O fiscaldoo não envia a referência ao cliente: copie-a da lista ou imprima-a, ou envie a fatura por outro meio.
+
+## Problemas frequentes
+
+### «O ficheiro não pode ser lido pelo canal … (bad_amount)»
+
+- **Sintoma:** ao importar um ficheiro com o valor escrito com vírgula: «O ficheiro não pode ser lido pelo canal Test channel (mock) (bad_amount): Line 1: invalid amount '52,28'. Nada foi alterado.» A mensagem está em inglês.
+- **Causa:** o canal de teste lê valores com ponto decimal (`52.28`). O ficheiro de um canal real tem o formato do contrato.
+- **O que fazer:** corrija o ficheiro ou peça-o de novo ao canal.
+  ![Mensagem Operação inválida ao importar um ficheiro com o valor 52,28](/images/fiscal-core/referencias-multibanco/12-erro-ficheiro.png)
+
+### Uma linha fica com «Referência não encontrada»
+
+- **Sintoma:** o ficheiro importa-se, mas a linha fica com o resultado **Referência não encontrada**, a nota «Nenhuma referência da empresa tem esta entidade e referência.», **Exceções** a 1 e **Valor recebido** a 0,00 €.
+- **Causa:** a entidade é a da empresa, mas nenhuma referência tem esse número. Uma referência anulada não dá este resultado: dá **Referência anulada**, e a de outra entidade dá **Outra entidade** (ver [os resultados da importação](#os-resultados-da-importação)).
+- **O que fazer:** confirme a referência no cliente e na lista de referências; não se cria pagamento.
+
+{/* Nota interna (DOCS-046 v3-FC2 corretor docs-v3fc2cor, DOC-0044, master f16f4a3e0, base docs_demo_v3fc2_test, perfil Contabilista): fatura FT D26/55 (Papelaria Central, Lda, 104,55 €, enchimento) com 2 prestações (00000 000000102, 52,28 €, e 000000291, 52,27 €, anulada); ficheiros CSV fictícios feitos para a demonstração (entidade;referência;montante;data;transação) MBI/00001 (paga), MBI/00002 (exceção) e MBI/00003 (mb_cobrancas_3_todos_os_casos.csv: os 9 resultados, referências emitidas em FT D26/49, 50, 51 (validade 1 dia), 52, 53 e 56). Testado: referência variável paga a 40,00 € fica Paga e o 2.º pagamento dá «Já paga»; data do pagamento (10/11/2026) diferente da emissão aceite dentro da validade; anular a referência de valor fixo e emitir outra variável (FT D26/53; com a ativa o ecrã diz «já tem referências Multibanco ativas … Anule-as antes de emitir novas»); Emitir recibo na FT D26/55 abre com 52,27 €; o pagamento PBNK1/… não tem série nem ATCUD (o RG D26/16 tem). O passo do recibo do recebimento importado fica pendente do contabilista certificado e o produto ainda não o emite (cartão #3636 BNK-035; sem aviso nem botão para o certificar, V3FC2-11). Não percorrido: recusas da fatura em rascunho/paga/noutra moeda; reconciliação do extrato: provado pela 2.ª ronda (extrato fictício importado e reconciliado; 121 recebe o valor na importação e 120002 fecha na reconciliação). Defeitos: mensagem de formato em inglês; notas de «Valor diferente» e «Mais do que a fatura deve» com ponto decimal (50.0); menus Referências e relatório só em modo programador; contas do lançamento em inglês na lista via RPC (Outstanding Receipts / General customers); o pagamento não emite RG. */}
+
+{/* Nota interna (lote v23-AT, DOC-0044, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); acesso extra Tesouraria: Gestor visto nos Ajustes avançados (grupo Bancos e tesouraria (PT), campo Tesouraria) e provado com um utilizador sem valor no campo Perfil e só com ele: tem Lotes, Mandatos e Retornos de débito direto e Cobranças Multibanco */}
+
+{/* Nota interna (lote v23-AU, DOC-0044, depois do comboio 181 com o UX-149 (8), master 09afad64d, docs_demo_v23au_test, porta 8504): por clique, sem modo de programador, Contabilidade › Reconciliar › Pagamentos online › O que há para fazer com os pagamentos online?, ligações Recebimentos Multibanco por período e Retornos de débito direto por motivo abertas com utilizadores criados por RPC só com o perfil Contabilista, Contabilista certificado, Auditor / ROC e Gerência (na base-mãe, sem ficheiros importados, cada uma mostra o estado vazio: «Aqui aparecem os recebimentos Multibanco por período, depois de importado um ficheiro Multibanco.» e «Aqui aparecem os retornos de débitos diretos, agrupados por motivo, depois de importado um ficheiro de retornos.»); o Administrativo não tem o painel. As entradas de Contabilidade › Consultar › Impostos e tesouraria só aparecem com o modo de programador, também ao administrador. */}

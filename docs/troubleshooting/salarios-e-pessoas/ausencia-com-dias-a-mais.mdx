@@ -1,0 +1,63 @@
+---
+id: ausencia-com-dias-a-mais
+slug: /troubleshooting/ausencia-com-dias-a-mais
+title: A ausência tem mais dias do que os permitidos
+sidebar_label: Ausência com dias a mais
+description: "O pedido de férias pede mais dias do que o trabalhador tem; como ver os dias disponíveis e ajustar o pedido."
+keywords: [dias a mais, atribuição válida, dias disponíveis, apenas dias disponíveis, saldo de férias insuficiente, férias anuais, erro de validação, calendário de feriados]
+doc_id: DOC-0386
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master acd623385)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/ausencia-recusada, people/ausencias-e-presencas/saldos-de-ferias, people/o-meu-espaco/pedir-ferias]
+---
+
+## Sintoma
+
+O pedido de férias não se guarda, ou guarda-se com um aviso, porque os dias pedidos são mais do que os que o trabalhador tem.
+
+## Mensagem
+
+Ao escolher o tipo e as datas, por baixo do tipo aparece a frase «Tem *5* dias disponíveis; depois deste pedido, *-1*.» e, por baixo da duração, o aviso a vermelho:
+
+> «Apenas *5.0* dia(s) disponível(is)»
+
+![Pedido de Férias anuais de 14/12/2026 a 21/12/2026 com 6 dias, a frase de que tem 5 dias disponíveis e o aviso Apenas 5.0 dia(s) disponível(is)](/images/troubleshooting/ausencia-com-dias-a-mais/01-dias-disponiveis.png)
+
+Ao guardar, a janela **Erro de Validação** diz:
+
+> «*Eva Cristina Rocha* não tem uma atribuição válida para o tipo de ausência *Férias anuais* que cubra este pedido.»
+
+![Janela Erro de Validação: o trabalhador não tem uma atribuição válida para o tipo de ausência Férias anuais que cubra este pedido](/images/troubleshooting/ausencia-com-dias-a-mais/02-sem-atribuicao-valida.png)
+
+## Causas verificadas
+
+- **Os dias do pedido passam os dias de férias que restam.** No exemplo, o trabalhador tinha 22 dias, já tinha pedido 10, 2 e 5 dias e pediu mais 6: sobravam 5. Os pedidos **Para Aprovar** também descontam: a frase «Tem *N* dias disponíveis» e o cartão de **Pedir férias** já não contam os dias de pedidos por decidir.
+- **O pedido acaba em 31/12/2026.** Não precisa do calendário de 2027: com 28/12/2026 a 31/12/2026, o pedido guarda-se com 4 dias. Um pedido com dias de um ano sem calendário de feriados é que precisa dele, e o ecrã recusa-o ao guardar («Não existe calendário de feriados para 2027 …»): o **Trabalhador** não o cria e tem de pedir a quem tem o acesso extra **Administrador de Salários**, ou ao administrador, que o gere **na empresa do trabalhador** (passo 2 de [Feriados](/people/feriados)). {/* Nota interna (auditoria v23-BH, 12/11/2026, master 2c8d358c0, docs_demo_audbh_test): Trabalhador (Eva Cristina Rocha), Férias anuais de 28/12/2026 a 31/12/2026, sem calendário de 2027 na Empresa Demonstração: gravado Para Aprovar com 4 dias (o primeiro dia útil de regresso fica vazio). Desde o HR-034, um pedido até 31/12 não pede o ano seguinte; o RH-046 mantém-no (teste test_a_request_ending_on_the_last_day_of_the_year_does_not_need_the_next) e volta a recusar, ao gravar, um pedido com dias de um ano sem calendário. Lote EE-14 (docs_demo_ee14_test, master acd623385, porta 8526, 12/11/2026): o RH-046 (ba2d2a2ab) está em master; por clique, num pedido novo de Dádiva de sangue para Bruno Miguel Teixeira a 14/01/2027 (sem calendário de 2027 na Empresa Demonstração; nada gravado), o utilizador só com o perfil Gestor de RH leu «… Como resolver: peça a um utilizador com o acesso extra «Administrador de Salários» (ou ao administrador) que crie o calendário desse ano.» e o administrador «… Como resolver: crie o calendário em Salários › Configurar › Empresa › Faltas e feriados › Calendários de feriados e carregue em «Gerar feriados».»; no mesmo ecrã, 28/12/2026 a 31/12/2026 mostrou 4,00 dias (não gravado). Em 15/12/2025 a recusa que aparece primeiro é a do catálogo dos tipos de falta («Não existe o tipo de falta «DADIVA_SANGUE» em vigor em 15/12/2025. …»), por isso o exemplo passou a 2027. */}
+- **Quando já não restam dias**, o tipo **Férias anuais** deixa de ser oferecido: ao escrever «Férias» em **Tipo de tempo**, a lista diz «Sem registos», e o cartão de **Pedir férias** mostra «0 Férias anuais Disponível».
+- <span className="fd-pending">Pendente de validação no ecrã: as causas do motivo da ausência sem horas, do encerramento da empresa, da renúncia a dias de férias e do banco de horas, que o ecrã **Pedir férias** não mostrou nesta demonstração.</span>
+
+## O que confirmar
+
+1. Os dias que restam: **O meu espaço › Ausências e presenças › Pedir férias** mostra o cartão **Férias anuais**, e o pedido diz «Tem *N* dias disponíveis; depois deste pedido, *M*.». O Gestor de RH vê-os em **Pessoas › Férias e ausências › Saldos de férias**.
+2. Se algum pedido **Para Aprovar** ou **Aprovado** já ocupa dias que julga livres.
+
+## Como resolver
+
+- **Faz o próprio trabalhador:** reduza o pedido aos dias que restam, ou recuse-se a marcar o excedente.
+- **Pede ao Gestor de RH:** se faltam dias porque a atribuição do ano está errada, só o RH a corrige. Para o calendário de feriados, o **Administrador** gera o ano seguinte **na empresa do trabalhador**, no passo 2 de [Feriados](/people/feriados).
+
+## Resultado esperado
+
+O aviso «Apenas *N* dia(s) disponível(is)» desaparece e o pedido guarda-se em **Para Aprovar**.
+
+## Quando contactar o suporte
+
+O trabalhador tem dias livres a mais no ecrã e a mensagem continua.
+
+## Informação a enviar
+
+O nome do trabalhador, as datas, o tipo de tempo, os dias que o ecrã diz que restam e o texto completo da mensagem.

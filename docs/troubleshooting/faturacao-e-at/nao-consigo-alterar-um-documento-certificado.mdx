@@ -1,0 +1,187 @@
+---
+id: nao-consigo-alterar-um-documento-certificado
+slug: /troubleshooting/nao-consigo-alterar-um-documento-certificado
+title: Não consigo alterar uma fatura já emitida
+sidebar_label: Não consigo alterar uma fatura emitida
+description: Porque uma fatura ou um recibo emitidos não se alteram, e o que fazer em cada caso para os corrigir.
+keywords: [alterar fatura, alterar fatura emitida, editar fatura, corrigir fatura, cancelar fatura, fatura bloqueada, voltar a rascunho, mudar para rascunho, documento certificado, documento emitido e assinado, já não se altera, ja nao se altera, não pode voltar a rascunho, nao pode voltar a rascunho, alterar recibo, dados do cliente errados, NIF do cliente errado, alterar NIF do cliente, correção auditada, correcao auditada, já é usado em documentos certificados]
+doc_id: DOC-0329
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 80e240b3b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/emitir-uma-nota-de-credito, fiscal-core/faturacao/anular-uma-fatura]
+---
+
+## Sintoma
+
+Quer corrigir uma fatura (ou uma nota de crédito, uma fatura-recibo, um recibo) que já foi emitida, e:
+
+- os campos não deixam escrever e não há botão para voltar a rascunho; ou
+- ao tentar alterar, aparece uma mensagem a dizer que o documento certificado não pode ser alterado.
+
+## Mensagem
+
+No topo de uma fatura emitida, com os perfis **Administrativo** e **Contabilista**, aparece este aviso:
+
+> «Documento emitido e assinado: já não se altera. Para o corrigir, emita uma nota de crédito.»
+
+Com os mesmos perfis aparece por baixo um segundo aviso:
+
+> «Um documento emitido não se apaga nem se altera. Se foi emitido por engano, peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que o anule (botão «Anular documento certificado», com o motivo), ou emita uma nota de crédito que lhe faça referência (botão «Nota de Crédito»).»
+
+O botão **Anular documento certificado** só aparece a quem pode anular.
+
+{/* Nota interna (DOCS-017, NC-043): rever estes dois parágrafos quando o #3424 entrar em master (o segundo aviso cita os botões «Anular» e «Nota de crédito», que no ecrã são «Anular documento certificado» e «Nota de Crédito»). */}
+
+Com o perfil **Contabilista certificado** há só um aviso, que termina em «Para corrigir, emita uma nota de crédito ou anule-o indicando o motivo.»
+
+![Fatura FT D26/30 emitida com o aviso Documento emitido e assinado: já não se altera. Para o corrigir, emita uma nota de crédito, e por baixo o aviso de quem a pode anular](/images/troubleshooting/nao-consigo-alterar-um-documento-certificado/01-aviso-documento-emitido.png)
+
+Se tentar alterar o documento por outro caminho (uma importação, uma integração, outra aplicação), a recusa diz:
+
+> «O documento certificado “*FT D26/48*” não pode ser alterado: só são editáveis as notas internas, os anexos, as mensagens e as atividades (campo(s) recusado(s): *partner_id*). Para o corrigir, emita uma nota de crédito ou de débito, ou anule-o registando o motivo (DL 28/2019, art. 7.º).»
+
+Se tentar voltar a rascunho:
+
+> «O(s) documento(s) certificado(s) *FT D26/48* não pode(m) voltar a rascunho: o número, o ATCUD e a assinatura já fazem parte do registo fiscal (DL 28/2019, art. 7.º). Para corrigir um documento, emita uma nota de crédito (ou de débito) que o refira; se foi emitido por engano, anule-o com «Anular documento certificado» (motivo obrigatório), que mantém o número intacto.»
+
+Se tentar eliminar:
+
+> «O documento “*FT D26/48*” tem de ser conservado até *31/12/2036*: os documentos fiscais são conservados durante 10 anos, salvo prazo superior (CIVA art. 52.º, CIRC art. 123.º) e não podem ser eliminados antes dessa data, nem por administradores. Se foi emitido por engano, anule-o ou emita uma nota de crédito.»
+
+As três mensagens foram copiadas da base de demonstração em português, tentando a alteração por integração; o nome do campo entre parênteses muda com o que se tentou alterar. <span className="fd-pending">Pendente de validação por contabilista certificado: o prazo de conservação que a mensagem cita (10 anos).</span>
+
+Se tentar alterar o NIF ou o nome na ficha de um cliente que já tem documentos emitidos, ao gravar aparece, com qualquer perfil:
+
+> «“*Padaria Aurora, Lda*” já é usado em documentos certificados, por isso o seu NIF (“*PT599990015*”) não pode ser alterado aqui: os ficheiros mestre do SAF-T e os documentos já emitidos dependem dele. Os documentos guardam os dados com que foram emitidos. Se foi um erro de escrita, peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que o corrija com a correção auditada (botão “Correção auditada” na ficha); caso contrário, crie um registo novo.»
+
+## Causas verificadas
+
+- **O documento já foi emitido.** Ao carregar em **Confirmar**, a fatura recebeu número, ATCUD e assinatura e passou a **Publicada**. A lei proíbe alterar um documento nesse estado (Decreto-Lei 28/2019, art. 7.º) e o fiscaldoo recusa sempre, incluindo para administradores. A tentativa fica no registo de auditoria.
+- **A ficha do cliente ou do artigo já foi usada num documento emitido.** O nome e o NIF do cliente deixam de se alterar diretamente na ficha, porque o SAF-T e os documentos dependem deles; a morada continua a alterar-se na ficha. Os documentos guardam os dados com que foram emitidos.
+
+## O que confirmar
+
+1. O estado do documento: se está em **Rascunho**, pode alterá-lo. Se está **Publicada**, já não.
+2. O que está errado: o **valor ou as linhas** (preço, quantidade, artigo, IVA), os **dados do cliente** (nome, morada, NIF) ou o **documento inteiro** (emitido por erro).
+3. Se a operação aconteceu mesmo ou se o documento não devia existir.
+
+## Como resolver
+
+Escolha o caso que corresponde ao que está errado.
+
+### Preço, quantidade, artigo, desconto ou devolução
+
+Emita uma nota de crédito a partir da fatura: [Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito). Se faltou faturar, emita uma nota de débito ou uma fatura nova.
+
+**Quem faz:** Administrativo ou Contabilista.
+
+### Nome, morada ou NIF do cliente
+
+Há dois sítios a corrigir, e às vezes os dois:
+
+- **a fatura emitida**, se saiu para o cliente errado ou com dados errados: **Corrigir os dados do cliente**, a seguir;
+- **a ficha do cliente**, se o nome ou o NIF foram mal escritos na ficha: **Correção auditada**, mais abaixo. Só muda a ficha, para os documentos seguintes; as faturas já emitidas com o dado errado corrigem-se com **Corrigir os dados do cliente**.
+
+Para um NIF ou uma morada errados, o Ofício-Circulado 25120/2026 manda anular a fatura e emitir outra, sem nota de crédito: [Como corrigir uma fatura](/fiscal-core/corrigir-uma-fatura). O botão **Corrigir os dados do cliente**, descrito abaixo, segue o ofício para o NIF (anula a fatura e prepara a nova, sem nota de crédito) e, para as outras diferenças, emite uma nota de crédito total e prepara uma fatura nova. <span className="fd-pending">Em preparação: a morada errada ainda segue o caminho da nota de crédito; até lá, anule a fatura e emita outra. Pendente de validação por contabilista certificado: quando usar este botão.</span>
+
+#### Corrigir a fatura: Corrigir os dados do cliente
+
+Com o perfil **Administrativo**, na fatura abra **Ações** e escolha **Corrigir os dados do cliente**; com os perfis **Contabilista** e **Contabilista certificado**, **Corrigir os dados do cliente** é um botão da fatura.
+
+![Menu Ações de uma fatura emitida, com a opção Corrigir os dados do cliente](/images/troubleshooting/nao-consigo-alterar-um-documento-certificado/02-acoes-corrigir-os-dados-do-cliente.png)
+
+A janela **Corrigir os dados do cliente** mostra o **Cliente na fatura emitida** e traz já preenchidos o **Motivo** («Correção dos dados do cliente», que pode mudar), o **Cliente corrigido** (o mesmo cliente: escolha o certo, ou corrija antes o contacto), o **Motivo da regularização de IVA** e a **Data de referência da regularização** (a data de hoje). O motivo de IVA não se escolhe: vem como «Anulação ou redução da operação (invalidade, resolução, rescisão, redução do contrato, devolução de mercadorias, abatimentos ou descontos)» e a janela explica: «A nota de crédito que anula a fatura é uma regularização de IVA a favor do sujeito passivo (CIVA art. 78.º n.º 2, campo 40 da declaração de IVA); a fatura nova liquida o IVA de novo. O motivo é definido por este passo: preencha a data e a prova (como o cliente foi informado da correção).»
+
+Confira a data e preencha a **Prova da regularização** (por exemplo, o e-mail enviado ao cliente com a fatura nova). Sem a prova, a janela recusa com «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.». Carregue em **Emitir nota de crédito e preparar fatura nova**: a nota de crédito da fatura inteira é emitida com esse motivo de IVA e abre-se a fatura nova em rascunho, com o cliente corrigido. Confira-a e carregue em **Confirmar**. Na demonstração, com o perfil **Administrativo**, a `FT D26/40` (12,30 €, à «Papelaria Exemplo, Lda») deu a `NC D26/4` de 12,30 € (711 Mercadorias a débito 10,00 €, 2433 IVA - Liquidado a débito 2,30 €, 2111 Clientes gerais a crédito 12,30 €) e a fatura nova `FT D26/42`, à «Oficina Exemplo, Lda», confirmada pelo mesmo perfil. <span className="fd-pending">Pendente de validação por contabilista certificado: o motivo de IVA e o campo da declaração que a janela define numa correção dos dados do cliente.</span>
+
+{/* Nota interna (DEC-1322, correção do E1): parágrafo revisto a 29/10/2026 no master d88933a51 (base docs_demo_lotee1b_test): o #3416 já está em master e a janela define o motivo de IVA. Alterado depois de aprovado: precisa de nova aprovação humana. */}
+
+A fatura emitida mantém os dados com que saiu.
+
+**Só o NIF: anulação e fatura nova.** Quando só o NIF difere (o contacto escolhido tem o mesmo nome e a mesma morada que a fatura emitida), a janela mostra o **Tipo de correção** **Só o NIF**, o **Motivo da anulação** «Correção do NIF do adquirente» e não pede regularização de IVA. **Anular a fatura e preparar a fatura nova** anula a fatura, que passa a **Anulada**, e abre a fatura nova em rascunho, com o aviso «Em substituição da fatura FT D26/34, anulada para corrigir o NIF do cliente.» (o número muda com a fatura; os números das faturas citados abaixo são os da cópia usada para este exemplo e a sua demonstração terá outros). Para isto o perfil é **Contabilista certificado** (ou o administrador).
+
+**A data do IVA da fatura nova.** No caminho **Só o NIF**, a fatura nova fica sempre com a data do IVA de cada linha igual à da fatura anulada: o período do IVA já entregue não muda (Informação vinculativa n.º 26393). Visto no ecrã: no rascunho a data do IVA da linha foi mudada à mão para 05/12/2026 e, ao confirmar, voltou à da fatura anulada (19/11/2026), com esta nota no histórico: «A data do IVA das linhas foi reposta na da fatura anulada FT D26/34 (estava em 05/12/2026): a fatura que substitui outra para corrigir o NIF é declarada no mesmo período de IVA.»
+
+Se a fatura nova não for igual à anulada nas linhas, nos valores e nos impostos, não se confirma. Visto com um valor alterado (310,00 € em vez de 300,00 €) e com uma taxa alterada (6 % em vez de 23 %); a mensagem foi a mesma: «A fatura Rascunho de fatura substitui a fatura FT D26/38 só para corrigir o NIF, mas as linhas (artigos, quantidades, preços, descontos ou impostos) são diferentes; os valores são diferentes. Porquê: Quando se corrige só o NIF, a fatura nova tem de ter as mesmas linhas, valores e impostos; senão deixa de ser a mesma operação e voltaria a ser declarada. Como resolver: Reponha os valores da fatura anulada. Se a operação mudou de facto, apague este rascunho e crie uma fatura nova de raiz (é uma operação nova, com o seu próprio período do IVA); se a declaração do IVA do período da fatura anulada já foi entregue, a alteração declara-se com uma declaração de substituição.» A fatura nova só se publica para o mesmo cliente (o mesmo nome e a mesma morada, com o NIF certo).
+
+**Outros dados do cliente: nota de crédito e fatura nova.** Quando a diferença é outra (visto com outro cliente), a janela mostra o **Tipo de correção** **Outros dados do cliente**, pede a **Prova da regularização** e emite a nota de crédito. Sem a prova, a recusa é: «A nota de crédito que corrige a fatura FT D26/34 vai ao campo 40 da declaração de IVA (CIVA art. 78.º n.º 2) e precisa, antes de confirmar, de: a "Prova da regularização" (como o cliente foi informado da correção, CIVA art. 78.º n.º 5). Nada foi criado. Preencha-os nesta janela e confirme outra vez.» Neste caminho a fatura nova é uma fatura como as outras: visto com a data do IVA escrita à mão (05/12/2026), manteve-se ao confirmar. <span className="fd-pending">Pendente de validação por contabilista certificado: se, neste caminho, a data do IVA da fatura nova deve também ficar presa à da fatura corrigida.</span>
+
+**Quem faz:** Administrativo ou Contabilista, para **Outros dados do cliente**. Para **Só o NIF** o Administrativo e o Contabilista são recusados: «Corrigir só o NIF da fatura … faz-se anulando a fatura, o que o seu perfil não pode fazer. Porquê: Anular um documento certificado está reservado ao Contabilista certificado, ao Responsável fiscal e ao administrador. Como resolver: Peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que abra esta fatura e use «Corrigir os dados do cliente». Nada foi alterado.» (mensagem lida por chamada ao servidor com os perfis Faturação e Contabilista).
+
+### Nome, morada ou NIF do cliente
+
+Há dois sítios a corrigir, e às vezes os dois:
+
+- **a fatura emitida**, se saiu para o cliente errado ou com dados errados: **Corrigir os dados do cliente**, a seguir;
+- **a ficha do cliente**, se o nome ou o NIF foram mal escritos na ficha: **Correção auditada**, mais abaixo. Só muda a ficha, para os documentos seguintes; as faturas já emitidas com o dado errado corrigem-se com **Corrigir os dados do cliente**.
+
+Para um NIF ou uma morada errados, o Ofício-Circulado 25120/2026 manda anular a fatura e emitir outra, sem nota de crédito: [Como corrigir uma fatura](/fiscal-core/corrigir-uma-fatura). O botão **Corrigir os dados do cliente**, descrito abaixo, segue o ofício para o NIF (anula a fatura e prepara a nova, sem nota de crédito) e, para as outras diferenças, emite uma nota de crédito total e prepara uma fatura nova. <span className="fd-pending">Em preparação: a morada errada ainda segue o caminho da nota de crédito; até lá, anule a fatura e emita outra. Pendente de validação por contabilista certificado: quando usar este botão.</span>
+
+#### Corrigir a fatura: Corrigir os dados do cliente
+
+Com o perfil **Administrativo**, na fatura abra **Ações** e escolha **Corrigir os dados do cliente**; com os perfis **Contabilista** e **Contabilista certificado**, **Corrigir os dados do cliente** é um botão da fatura.
+
+![Menu Ações de uma fatura emitida, com a opção Corrigir os dados do cliente](/images/troubleshooting/nao-consigo-alterar-um-documento-certificado/02-acoes-corrigir-os-dados-do-cliente.png)
+
+A janela **Corrigir os dados do cliente** mostra o **Cliente na fatura emitida** e traz já preenchidos o **Motivo** («Correção dos dados do cliente», que pode mudar), o **Cliente corrigido** (o mesmo cliente: escolha o certo, ou corrija antes o contacto), o **Motivo da regularização de IVA** e a **Data de referência da regularização** (a data de hoje). O motivo de IVA não se escolhe: vem como «Anulação ou redução da operação (invalidade, resolução, rescisão, redução do contrato, devolução de mercadorias, abatimentos ou descontos)» e a janela explica: «A nota de crédito que anula a fatura é uma regularização de IVA a favor do sujeito passivo (CIVA art. 78.º n.º 2, campo 40 da declaração de IVA); a fatura nova liquida o IVA de novo. O motivo é definido por este passo: preencha a data e a prova (como o cliente foi informado da correção).»
+
+Confira a data e preencha a **Prova da regularização** (por exemplo, o e-mail enviado ao cliente com a fatura nova). Sem a prova, a janela recusa com «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.». Carregue em **Emitir nota de crédito e preparar fatura nova**: a nota de crédito da fatura inteira é emitida com esse motivo de IVA e abre-se a fatura nova em rascunho, com o cliente corrigido. Confira-a e carregue em **Confirmar**. Na demonstração, com o perfil **Administrativo**, a `FT D26/40` (12,30 €, à «Papelaria Exemplo, Lda») deu a `NC D26/4` de 12,30 € (711 Mercadorias a débito 10,00 €, 2433 IVA - Liquidado a débito 2,30 €, 2111 Clientes gerais a crédito 12,30 €) e a fatura nova `FT D26/42`, à «Oficina Exemplo, Lda», confirmada pelo mesmo perfil. <span className="fd-pending">Pendente de validação por contabilista certificado: o motivo de IVA e o campo da declaração que a janela define numa correção dos dados do cliente.</span>
+
+{/* Nota interna (DEC-1322, correção do E1): parágrafo revisto a 29/10/2026 no master d88933a51 (base docs_demo_lotee1b_test): o #3416 já está em master e a janela define o motivo de IVA. Alterado depois de aprovado: precisa de nova aprovação humana. */}
+
+A fatura emitida mantém os dados com que saiu.
+
+**A data do IVA da fatura nova.** A fatura nova que substitui a corrigida fica sempre com a data do IVA de cada linha igual à da fatura corrigida: o período do IVA já entregue não muda (Informação vinculativa n.º 26393). Se alguém escrever outra data no rascunho (o perfil **Contabilista certificado** pode editá-la), ao confirmar a data volta à da fatura corrigida e fica uma nota no histórico da fatura. Se o par, a fatura corrigida e a nova, não for igual em base, IVA e data do IVA, a fatura nova não se confirma. A janela **Corrigir os dados do cliente** mostra o **Tipo de correção** (na demonstração, **Outros dados do cliente**).
+<span className="fd-pending">Pendente de validação no ecrã: a data do IVA da fatura nova e a recusa quando o par difere; exigem emitir a nota de crédito e confirmar a fatura nova, e a sessão de produção não podia confirmar documentos. A janela foi aberta e fechada sem emitir nada, com o perfil Contabilista certificado, numa fatura da base.</span>
+
+**Quem faz:** Administrativo (em **Ações**), Contabilista ou Contabilista certificado (botão da fatura).
+
+#### Corrigir a ficha: Correção auditada
+
+A morada altera-se na própria ficha do cliente. O nome e o NIF de um cliente com documentos emitidos não: a ficha recusa-os (ver «Mensagem») e manda pedir a correção auditada, para um erro de escrita, a um utilizador com o perfil **Contabilista certificado**.
+
+{/* Nota interna (lote v23-G, DOCS-066, master 5228a94bd, docs_demo_v23g_test): a 2.ª faixa foi vista no ecrã com um utilizador só com o perfil Contabilista, na FT D26/30 (agora nomeia o perfil «Contabilista certificado (assina, fecha períodos)»). A recusa ao eliminar (conservação, texto novo) e a do NIF de um cliente usado (sem mudança) foram provocadas pela integração (RPC) com um utilizador só com o perfil Administrativo. */}
+
+1. Abra a ficha do cliente e carregue em **Correção auditada**. Dos valores do campo **Perfil**, só o **Contabilista certificado** tem este botão (o administrador também o tem).
+2. Na janela **Correção auditada**, escolha o **Campo a corrigir** (**NIF** ou **Nome**), confira o **Valor atual**, escreva o **Valor corrigido** e o **Motivo** e carregue em **Corrigir**.
+   ![Janela Correção auditada do cliente Padaria Aurora, Lda, com o Campo a corrigir Nome, o Valor atual, o Valor corrigido, o Motivo e os botões Corrigir e Cancelar](/images/troubleshooting/nao-consigo-alterar-um-documento-certificado/03-correcao-auditada.png)
+
+{/* Nota interna (DOCS-017, NC-043): rever o passo 2 quando o #3424 entrar em master (a lista «Campo a corrigir» tem 5 opções; o artigo só cita NIF e Nome; o comportamento das outras três não foi verificado). */}
+
+A ficha fica com o valor novo e o motivo fica no registo de auditoria. Os documentos já emitidos não mudam: guardam o NIF e o nome com que saíram, que são os do código QR e do SAF-T desse documento. Na demonstração, a `FT D26/53` saiu com o NIF PT599999985; depois de corrigido na ficha para PT599999969, a fatura continua com o PT599999985, embora o bloco do cliente, ao abrir a fatura, mostre já os dados novos da ficha.
+
+{/* Nota interna (DOCS-017, NC-043): rever esta frase quando o #3424 entrar em master (o bloco do cliente da fatura emitida mostra os dados novos depois da Correção auditada). */}
+
+**Quem faz:** o Contabilista certificado.
+
+### O documento foi emitido por erro (fatura ou recibo)
+
+Se a operação não aconteceu, o documento anula-se com o motivo, sem o apagar: [Como anular uma fatura ou outro documento certificado](/fiscal-core/anular-uma-fatura).
+
+**Quem faz:** o Contabilista certificado ou o administrador; um recibo, também o Contabilista.
+
+Não tente contornar o bloqueio (duplicar a fatura e apagar a original, mudar a data, alterar no modo programador): o fiscaldoo recusa e cada tentativa fica registada.
+
+## Resultado esperado
+
+- Com nota de crédito: a fatura original fica igual e passa a mostrar a nota de crédito que a corrige.
+- Com a correção dos dados do cliente: existe uma nota de crédito total (a fatura original passa a **Estornado**) e uma fatura nova, com o cliente certo.
+- Com a correção auditada: a ficha do cliente tem o nome ou o NIF certo para os documentos seguintes; os já emitidos ficam como saíram.
+- Com anulação: o documento fica anulado, com o motivo, e o número não volta a ser usado.
+
+## Quando contactar o suporte
+
+- A mensagem aparece num documento que nunca foi emitido (por exemplo, um rascunho que não deixa editar).
+- A série ficou bloqueada com a mensagem «A emissão está parada nesta série: o controlo de integridade encontrou a sua cadeia de assinaturas quebrada.»
+- Precisa de corrigir dados que nenhum dos caminhos acima permite.
+
+## Informação a enviar
+
+- O número do documento (por exemplo `FT D26/12`) e a empresa.
+- O texto completo da mensagem, copiado do ecrã (não uma fotografia).
+- O que estava a tentar fazer e o perfil com que entrou.
+- A hora aproximada, para o suporte encontrar a tentativa no registo de auditoria.

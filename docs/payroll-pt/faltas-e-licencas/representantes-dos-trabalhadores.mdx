@@ -1,0 +1,128 @@
+---
+id: representantes-dos-trabalhadores
+slug: /payroll-pt/representantes-dos-trabalhadores
+title: Como tratar as faltas e o crédito de horas dos representantes dos trabalhadores
+sidebar_label: Representantes dos trabalhadores
+sidebar_position: 9
+description: Registar o mandato de um representante dos trabalhadores e as ausências, e ver o crédito de horas e o que fica por pagar no recibo.
+keywords: [tratar, faltas, crédito, credito, horas, representantes, trabalhadores, delegado sindical, comissão de trabalhadores, comissao de trabalhadores, mandatos de representantes dos trabalhadores, ausências de representantes dos trabalhadores, ausencias de representantes dos trabalhadores, art. 408, art. 409]
+doc_id: DOC-0200
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master acd623385)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/faltas-e-licencas/faltas, payroll-pt/processar-e-pagar/processar-o-mes]
+---
+
+## Para que serve?
+
+Guarda o mandato de quem representa os trabalhadores e as ausências por essas funções. O fiscaldoo conta, mês a mês, as horas dentro do crédito, que são pagas, e as horas acima dele, que não são pagas. Sem comunicação a tempo, a ausência fica injustificada.
+
+## Quando utilizar?
+
+- Quando um trabalhador é eleito ou designado delegado sindical, dirigente sindical ou membro de uma comissão de trabalhadores.
+- Em cada ausência por essas funções.
+- Quando o mandato acaba: preencha **Até**.
+- Não use estas listas para outras faltas: essas ficam em [Ausências](/payroll-pt/faltas).
+
+## Onde encontrar?
+
+- Mandatos: **Salários › Preparar › O que há para fazer este mês?**, no grupo **Sindicatos e representantes**, ou **Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores** › abrir a ficha › **⋮** › **Mandatos de representantes dos trabalhadores**.
+- Ausências: na lista dos mandatos, botão **Ausências** da linha.
+
+
+## Antes de começar
+
+- O seu perfil é **Gestor de RH**, ou tem o acesso extra **Administrador de Salários**.
+- Tem a estrutura e a data de início do mandato.
+- Saiba se o IRCT dá um crédito maior do que a lei.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Na ficha do trabalhador, carregue em **⋮** e escolha **Mandatos de representantes dos trabalhadores**. Carregue em **Novo**: o **Trabalhador** vem preenchido.
+2. Em **Estrutura**, escolha **Delegado sindical (art. 467.º)**, **Delegado sindical numa comissão intersindical (art. 467.º)**, **Membro da direção de um sindicato (art. 468.º)**, **Subcomissão de trabalhadores (art. 422.º)**, **Comissão de trabalhadores (art. 422.º)** ou **Comissão coordenadora (art. 422.º)**.
+3. Preencha **De** e, se já o souber, **Até**. Marque **Microempresa** se a empresa o for. Se o IRCT der mais horas, preencha **Crédito mensal fixado pelo CCT (horas)** e **Cláusula do CCT**. Carregue em **Guardar**.
+   ![Mandato de delegado sindical desde 01/01/2026, com o botão Ausências na linha](/images/payroll-pt/representantes-dos-trabalhadores/01-mandato.png)
+4. Na linha do mandato, carregue em **Ausências** e em **Novo**. Sem registos, a lista diz «As ausências dos representantes dos trabalhadores aparecem aqui; registe uma em «Novo».»
+5. Preencha **Dia** e **Horas**. Em **Comunicada em**, escreva a data do aviso por escrito. Marque **Imprevisível** se não podia ser prevista. Carregue em **Guardar**. O fiscaldoo preenche **Dentro do crédito (pago)**, **Acima do crédito (não pago)**, **Injustificada** e **Aviso tardio do crédito** (crédito usado com menos de dois dias de aviso, sem motivo atendível).
+   ![Quatro ausências de novembro: 3 horas dentro do crédito, depois 2 dentro e 2 acima, e as seguintes acima do crédito](/images/payroll-pt/representantes-dos-trabalhadores/02-ausencias-e-credito.png)
+6. No recibo do mês, carregue em **Calcular**. As linhas entram sozinhas.
+   ![Recibo com o Crédito de horas do representante, informativo, e a Falta acima do crédito de 46,67 € negativos](/images/payroll-pt/representantes-dos-trabalhadores/03-recibo-com-o-credito.png)
+
+</StepByStep>
+
+**Exemplo.** Um delegado sindical tem um crédito de 5 horas por mês. Em novembro de 2026, a tempo parcial, com 800,00 € e 4 horas por dia:
+
+| Dia | Horas | Comunicada em | Dentro do crédito | Acima do crédito | Injustificada |
+| --- | --- | --- | --- | --- | --- |
+| 05/11/2026 | 3 | 02/11/2026 | 3 | 0 | Não |
+| 12/11/2026 | 4 | 10/11/2026 | 2 | 2 | Não |
+| 19/11/2026 | 2 | 19/11/2026 | 0 | 2 | Sim |
+| 26/11/2026 | 3 | (sem aviso) | 0 | 3 | Sim |
+
+O recibo ficou com:
+
+- **Crédito de horas do representante (pago)**: 5 horas, 33,33 €, só informativa. Essas horas já estão na retribuição base.
+- **Falta do representante acima do crédito (não paga)**: 7 horas × 6,67 € = **−46,67 €**. O valor da hora vem do valor diário escolhido pela empresa (800,00 € ÷ 30 ÷ 4 horas).
+- **Como foi calculado?** diz: «Destas, 5 h não foram comunicadas a tempo (art. 409.º/3-4): injustificadas.»
+
+## No Enterprise
+
+No Odoo Enterprise, os mandatos e as ausências registam-se da mesma maneira, com o perfil **Gestor de RH** ou o acesso extra **Administrador de Salários**: o painel tem **Mandatos de representantes dos trabalhadores**, e o **⋮** da ficha também. A recusa do crédito do CCT é a mesma.
+
+Com as quatro ausências do exemplo, as horas dentro e acima do crédito e as ausências injustificadas são as mesmas. O recibo de novembro de 2026 fica com **Crédito de horas do representante (pago)** de 33,33 € e **Falta do representante acima do crédito (não paga)** de −46,67 €. O **⋮** está na ficha do trabalhador, que pode procurar pelo nome na lista **Fichas dos trabalhadores**.
+
+{/* Nota interna (lote EE-14, EEA-084 d4aaabab0 e EEA-083 ed9a8f6c3 em master acd623385, cópia Enterprise docs_ee_ee14_test, porta 8524, 12/11/2026): por clique com utilizadores criados na cópia só com o perfil Gestor de RH e só com o perfil Processador de salários mais o acesso extra Administrador de Salários: em Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores, «Bruno» + Enter deixou 1 cartão, sem «Erro de Acesso», e a ficha abriu pelo cartão. O ⋮ da ficha já não tem «Salary Increase» para nenhum dos dois; o Gestor de RH tem «Fim da colaboração». A ficha do administrador chama-se «Administrador (demonstração)» (DEMO-003). O ⋮ do Gestor de RH tem «Mandatos de representantes dos trabalhadores». */}
+
+{/* Nota interna (lote EE-09, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 12/11/2026): conferido numa cópia local da base Enterprise (docs_ee_ee09_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Gestor de RH: painel › Mandatos de representantes dos trabalhadores (lista com a mesma frase; Novo acrescenta uma linha na lista). Mandato de delegado sindical de Gabriela Sousa Reis (800,00 €, 4 h por dia) desde 01/01/2026, recusa do CCT de 2 h, as quatro ausências e o recibo de novembro calculados com os direitos do Gestor de RH e do Administrador de Salários numa transação desfeita: 3/0, 2/2, 0/2 injustificada, 0/3 injustificada; 5 h × 6,6667 = 33,33 e 7 h = -46,67. O texto de Como foi calculado? diz hoje «Destas, 5 h não foram comunicadas a tempo», não «5.0 h»: corrigido no corpo. O caminho das Fichas dos trabalhadores em «Onde encontrar?» passou a ter o grupo «Trabalhadores e contratos». No Enterprise, procurar o trabalhador pelo nome na barra de pesquisa da lista Fichas dos trabalhadores abre «Erro de Acesso» (campo reservado ao grupo «Folha de Salários / Assistant») e a lista não filtra, com os três perfis de salários; no Community filtra: defeito no relatório do lote. O ⋮ da ficha tem as mesmas entradas do Community e «Salary Increase» (EEA-083). Menus e vistas destes ecrãs comparados, perfil a perfil, com uma cópia da demonstração Community (docs_demo_ee09_test, 2c8d358c0, porta 8524): iguais. Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-09.md. */}
+
+## Resultado esperado
+
+- O mandato fica na lista, com o botão **Ausências**.
+- Cada ausência mostra as horas dentro e acima do crédito, e se ficou injustificada.
+- O recibo mostra as duas linhas. **Como foi calculado?** indica, na linha da falta, «IRS: sujeito. Segurança Social: sujeito.»
+
+## Notas importantes
+
+| Estrutura | Crédito por mês | Lei |
+| --- | --- | --- |
+| Delegado sindical | 5 horas | CT, art. 467.º, n.º 1 |
+| Delegado numa comissão intersindical | 8 horas | CT, art. 467.º, n.º 1 |
+| Membro da direção de um sindicato | 4 dias de trabalho | CT, art. 468.º, n.º 1 |
+| Subcomissão de trabalhadores | 8 horas | CT, art. 422.º, n.º 1 |
+| Comissão de trabalhadores | 25 horas | CT, art. 422.º, n.º 1 |
+| Comissão coordenadora | 20 horas | CT, art. 422.º, n.º 1 |
+
+Numa microempresa, o crédito das estruturas de trabalhadores passa a metade (art. 422.º, n.º 2). Fonte: Código do Trabalho, arts. 408.º, 409.º, 422.º, 467.º e 468.º, texto lido na PGDL a 16/10/2026.
+
+- **Aviso do crédito.** O crédito pede aviso por escrito com, pelo menos, dois dias, salvo motivo atendível (art. 408.º, n.º 3). A falta acima do crédito pede comunicação um dia antes ou, se imprevisível, nas 48 horas seguintes (art. 409.º).
+- **Mais de uma estrutura.** O crédito não se acumula (art. 408.º, n.º 4). O fiscaldoo conta o mais alto.
+- **O fiscaldoo não conserva as provas** da comunicação. Guarde-as no processo do trabalhador.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o método do valor da hora na linha da falta acima do crédito, em contratos a tempo parcial, e o efeito da ausência injustificada nas férias e na antiguidade.</span>
+
+## Problemas frequentes
+
+### O crédito do CCT é recusado
+
+- **Mensagem:** «O crédito do CCT de … é inferior à lei. O que aconteceu: só um instrumento coletivo mais favorável pode fixar outro crédito (art. 250.º). Como resolver: escreva um crédito igual ou superior ao da lei, ou limpe-o.»
+- **Causa:** o valor é menor do que o da lei para a estrutura escolhida.
+- **O que fazer:** corrija o valor, ou limpe o campo.
+
+### A ausência fica toda acima do crédito
+
+- **Sintoma:** **Dentro do crédito (pago)** mostra 0,00.
+- **Causa:** as ausências anteriores do mês já gastaram o crédito.
+- **O que fazer:** nada, se estiver certo. O crédito volta a contar no mês seguinte e não passa de um mês para o outro.
+
+### A ausência fica injustificada
+
+- **Sintoma:** **Injustificada** marcada.
+- **Causa:** **Comunicada em** vazio, ou fora de prazo.
+- **O que fazer:** se houve aviso, escreva a data certa. Se foi imprevisível, marque **Imprevisível** e calcule o recibo de novo.
+
+{/* Nota interna (DOCS-046, lote v13-PAY, master 56504fe86): por clique com Administrador de Salários: mandato, recusa do CCT, 4 ausências, recibo de novembro. O caminho das Ausências em modo programador (Salários › Preparar) não se usa; a ligação do mandato no painel (UX-106) foi conferida em master 2d5e95c9d. */}

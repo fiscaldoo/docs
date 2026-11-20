@@ -1,0 +1,183 @@
+---
+id: contrato-de-trabalho
+slug: /people/contrato-de-trabalho
+title: Como registar um contrato de trabalho
+sidebar_label: Registar o contrato de trabalho
+sidebar_position: 2
+description: Registar na ficha do trabalhador o tipo de contrato, a data de início, o termo e a justificação, a retribuição, o horário e o período experimental, e saber de onde vem o subsídio de refeição.
+keywords: [contrato de trabalho, registar contrato, tipo de contrato, sem termo, termo certo, termo incerto, contrato a termo, justificação do termo, justificacao do termo, motivo do termo, período experimental, periodo experimental, retribuição base, retribuicao base, salário, horário de trabalho, horario de trabalho, tempo parcial, subsídio de refeição, subsidio de refeicao, subsídio de alimentação]
+doc_id: DOC-0241
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/trabalhadores/criar-um-trabalhador, people/trabalhadores/cessacao-do-contrato, payroll-pt/declarar/vinculo-a-seguranca-social]
+---
+
+## Para que serve?
+
+O contrato diz ao fiscaldoo como pagar e declarar o trabalhador: o tipo de contrato (sem termo, a termo, outros), a data de início, a retribuição base e o horário. É daqui que os recibos tiram o vencimento, que a comunicação de admissão à Segurança Social tira o tipo de contrato e que o período experimental conta os dias.
+
+Registar o contrato não gera lançamentos contabilísticos nem comunica nada à Segurança Social ou à Autoridade Tributária e Aduaneira (AT).
+
+## Quando utilizar?
+
+- Acabou de criar a ficha de um trabalhador novo ([Como criar a ficha de um trabalhador](/people/criar-um-trabalhador)) e falta o contrato antes do primeiro recibo.
+- Vai admitir alguém a termo e quer que o fiscaldoo confira a justificação e as datas.
+
+Não use este procedimento para mudar o salário de um contrato que já tem recibos: veja [Como alterar o salário de um trabalhador](/payroll-pt/alterar-o-salario).
+
+## Onde encontrar?
+
+O contrato regista-se na ficha do trabalhador: **Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores** › abrir o trabalhador. O perfil **Gestor de RH** abre a mesma ficha em **Pessoas › Trabalhadores › Trabalhadores**, sem o separador **Folha de Salários**.
+
+- Separador **Trabalho**, grupo **CONTRATO PORTUGUÊS**: tipo, datas, justificação do termo e tempo de trabalho.
+- Separador **Folha de Salários**, grupos **RESUMO DO CONTRATO** e **PLANEAR**: salário e horário.
+- O período experimental tem lista própria: **Pessoas › Contratos e saídas › Períodos experimentais**.
+
+A lista de todos os contratos está em **Pessoas › Contratos e saídas › Contratos**.
+
+## Antes de começar
+
+- Tem o acesso **Administrador de Salários**: os passos foram feitos com um utilizador só com esse acesso.
+- Os outros perfis, cada um provado com um utilizador só com esse perfil:
+  - o **Gestor de RH** tem os separadores **Trabalho**, **Pessoal**, **Currículo**, **Formação** e **Linha da vida**, sem a **Folha de Salários** (salário e horário). A **Data de início** fica só de leitura. O **Tipo de contrato** ainda se altera no dia em que o contrato foi registado; num contrato registado num dia anterior, ao guardar, aparece a recusa «… já está em vigor e Tipo de contrato não pode ser alterado…» (ver «Problemas frequentes»);
+  - o **Processador de salários** vê **Trabalho** e **Folha de Salários** e os campos parecem editáveis, mas ao guardar recebe uma recusa (ver «Problemas frequentes»).
+- A ficha do trabalhador já existe ([Como criar a ficha de um trabalhador](/people/criar-um-trabalhador)). No exemplo, a ficha de Inês Rodrigues Costa, que começa a trabalhar a 02/11/2026.
+- Se o contrato for a termo, tenha à mão o motivo concreto que está no contrato escrito: o fiscaldoo pede-o.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores** e abra a ficha do trabalhador (no exemplo, Inês Rodrigues Costa).
+2. No separador **Trabalho**, desça até **CONTRATO PORTUGUÊS**. Em **Tipo de contrato**, escolha uma das opções: **Sem termo**, **Termo certo**, **Termo incerto**, **Muito curta duração**, **Intermitente**, **Comissão de serviço**, **Trabalho temporário** ou **Cedência temporária por tempo indeterminado**. No exemplo, **Sem termo**.
+3. Em **Data de início**, escreva o primeiro dia de trabalho, por exemplo `02/11/2026`. Deixe **Data de termo** vazia num contrato sem termo.
+   ![Grupo Contrato com o tipo Sem termo e a data de início 02/11/2026](/images/people/contrato-de-trabalho/01-contrato-sem-termo.png)
+4. Se a empresa aplica uma convenção coletiva, escolha-a em **Instrumento de regulamentação coletiva (IRCT)** (o campo **Instrumento de regulamentação coletiva (registo)**, logo abaixo, é o do registo oficial).
+5. No grupo **TEMPO DE TRABALHO**, confira **Regime de horário** (**Normal**, **Adaptabilidade (média)**, **Banco de horas** ou **Horário concentrado (art. 209.º)**). Num tempo parcial, preencha também **Horas semanais a tempo completo (comparável)** e **Dias de trabalho a tempo parcial**.
+6. Carregue no ícone de guardar (a nuvem ao lado de **Novo**).
+7. Abra o separador **Folha de Salários**. Em **RESUMO DO CONTRATO**, a linha **Contrato** já mostra a data de início («02/11/2026 a Indefinido»). Em **Salário**, escreva a retribuição base mensal, por exemplo `1000`. Se ficar abaixo da retribuição mínima mensal garantida (RMMG), aparece logo um aviso por baixo do salário (ver «Problemas frequentes»).
+   ![Resumo do contrato com o contrato desde 02/11/2026 e o salário de 1.000,00 €](/images/people/contrato-de-trabalho/02-salario-e-horario.png)
+8. Em **PLANEAR**, no campo **Horário de Trabalho**, escolha o horário. Na demonstração há **40 horas/semana**, **PT 40.0h/8.0h (demonstração)** e **PT 20.0h/4.0h (demonstração)**; no exemplo, **PT 40.0h/8.0h (demonstração)**.
+   ![Grupo Planear com o horário PT 40.0h/8.0h (demonstração)](/images/people/contrato-de-trabalho/03-horario.png)
+9. Guarde outra vez.
+
+</StepByStep>
+
+### Se o contrato é a termo
+
+<StepByStep>
+
+1. No passo 2, escolha **Termo certo** (ou **Termo incerto**). Aparecem mais campos: **A data de fim é um termo certo**, **Código de justificação**, **Justificação**, **Posto de trabalho ou atividade profissional** e, no grupo das comunicações, **Data de caducidade comunicada**, **Termo certo comunicado em**, **Comunicar a celebração até**, **Fim do termo comunicado em**, **Comunicar o fim até**, **Preferência na admissão até** e **Preferência não respeitada**.
+2. Escreva a **Data de termo** (num termo certo é obrigatória).
+3. Em **Código de justificação**, escolha o motivo na lista (artigo 140.º do Código do Trabalho). Cada opção mostra o código e o motivo, por exemplo **140/2-f - Acréscimo excecional da atividade da empresa**. Em **Justificação**, escreva os factos concretos que estão no contrato escrito.
+4. Guarde. Se a **Data de início** já estava guardada, abre-se a janela **Fim de contrato?**, com «Porque alterou a data de fim do contrato?». Escolha **Correção das condições do contrato** e carregue em **Corrigir as condições**. As outras duas opções, **Fim da colaboração** e **Iniciar um novo contrato**, são para outras situações.
+
+</StepByStep>
+
+Sem justificação, o contrato não se guarda (ver «Problemas frequentes»).
+
+A lista é a mesma nos dois tipos. No **Termo incerto**, os motivos `140/2-d`, `140/4-a` e `140/4-b` são recusados ao guardar (ver «Problemas frequentes»).
+
+### Registar o período experimental
+
+O período experimental tem a sua própria ficha, ligada à versão do contrato. Quando está criada, o fiscaldoo calcula a duração legal e o último dia.
+
+<StepByStep>
+
+1. Abra **Pessoas › Contratos e saídas › Períodos experimentais** e carregue em **Novo**.
+2. Em **Trabalhador**, escolha o trabalhador. A **Versão de contrato** e o **Início da execução** preenchem-se sozinhos com o contrato em vigor. Se o trabalhador tiver mais do que uma versão, a lista da **Versão de contrato** só mostra as dele.
+   ![Período experimental novo: trabalhador Inês Rodrigues Costa, versão de contrato e início da execução propostos com 02/11/2026, e o tipo Sem termo: geral](/images/people/contrato-de-trabalho/05-periodo-experimental-novo.png)
+3. Em **Tipo**, escolha: **Sem termo: geral (art. 112.º/1-a)**, **Sem termo: 180 dias (art. 112.º/1-b)**, **Sem termo: direção ou quadro superior (art. 112.º/1-c)**, **Termo (art. 112.º/2)** ou **Comissão de serviço (art. 112.º/3)**.
+4. Se o período foi reduzido por acordo ou por um contrato anterior, preencha **Dias acordados (redução)**, **Dias do contrato anterior** ou **Dias de formação**.
+5. Guarde. Depois de guardar, o **Trabalhador** já não se altera: o período experimental de outra pessoa faz-se numa ficha nova.
+
+</StepByStep>
+
+O **Gestor de RH** também tem o botão **Novo** nesta lista. O **Processador de salários** abre-a sem **Novo**.
+
+O resultado abaixo é o do período experimental de Inês Rodrigues Costa: com o tipo **Sem termo: geral (art. 112.º/1-a)** e início a 02/11/2026, a **Duração legal (dias)** é 90 e o **Último dia do período experimental** é 30/01/2027. A explicação diz: «Duração legal: 90 dias. Contado desde 02/11/2026; 0 dias não contam (faltas, licenças, suspensão, formação acima de metade): termina em 30/01/2027 (art. 113.º).»
+
+![Resultado do período experimental: 90 dias, último dia 30/01/2027](/images/people/contrato-de-trabalho/04-periodo-experimental.png)
+
+{/* Nota interna (DOCS-034 #3470, vaga DOCS-046 #3616; auditoria de 03/11/2026, master 8f78854ec, base docs_demo_aud0241_test): tudo feito no ecrã com o perfil Administrador de Salários (utilizador de teste criado nessa base só com esse perfil e o de trabalhador de ausências): tipo Sem termo, data 02/11/2026, salário 1000 e 800 (aviso), horário PT 40.0h/8.0h; termo certo com a janela do fim do contrato, código errado e certo; período experimental pelo ecrã, também com o perfil RH. Revisto a 04/11/2026 (v8-REV, master 8c5a23228, base docs_demo_v8rev3_test), utilizador só com o perfil Administrador de Salários: código de justificação em lista, com os 10 motivos nos dois tipos; janela do fim do contrato em português; os 3 motivos recusados no termo incerto. */}
+
+## No Enterprise
+
+No Odoo Enterprise, o contrato regista-se na mesma ficha e nos mesmos grupos: **CONTRATO PORTUGUÊS** no separador **Trabalho**, e o resumo do contrato, o **Salário** e o **Horário de Trabalho** (grupo **PLANEAR**) no separador **Folha de Salários**. O separador **Folha de Salários** é o mesmo que no Community: os campos do contrato dos salários do Enterprise não aparecem. As listas **Pessoas › Contratos e saídas › Contratos** e **Pessoas › Contratos e saídas › Períodos experimentais** têm as mesmas colunas.
+
+Com o perfil **Gestor de RH**, o separador **Trabalho** começa por um campo **Contrato**, com a data de início do contrato em vigor, que este perfil não vê no Community. O resto do contrato continua no grupo **CONTRATO PORTUGUÊS**.
+
+{/* Nota interna (lote EE-10, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): cópia Enterprise docs_ee_ee10b_test no portátil (pg_dump da odoo20_ee_test, -u dos módulos mudados até master e -i de hr_payroll, planning, hr_appraisal e hr_recruitment), porta 8504, guarda de rede ligada; utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): ee10_adms na ficha de Bruno Miguel Teixeira (Folha de Salários: RESUMO DO CONTRATO, Salário, Exceção à irredutibilidade, PLANEAR com Baseado em presenças e Horário de Trabalho, DECLARAÇÃO DE IRS, OPÇÕES E PAGAMENTO; o mesmo conjunto de campos que a vista Community); ee10_proc nas listas Contratos e Períodos experimentais (colunas iguais); ee10_rh: campo Contrato (contract_date_start, «Data Inicial») no topo do separador Trabalho, só na vista Enterprise. Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee10_test (master e4dd4ae90, a do lote EE-10 interrompido) e com o texto do artigo. Ver reports/LOTE_EE-10.md. */}
+
+## Resultado esperado
+
+- Na **Folha de Salários**, o **RESUMO DO CONTRATO** mostra o contrato desde 02/11/2026 e o **Salário** de 1.000,00 €. É esta retribuição que o primeiro recibo usa.
+- A lista **Pessoas › Contratos e saídas › Contratos** passa a mostrar o contrato.
+- Na lista **Períodos experimentais**, a linha do trabalhador mostra o **Tipo**, o **Início da execução**, a **Duração aplicada (dias)** e o **Último dia do período experimental** (no exemplo, 90 e 30/01/2027).
+
+O passo seguinte é a comunicação da admissão à Segurança Social: [Como comunicar a admissão, a cessação ou alterações à Segurança Social](/payroll-pt/vinculo-a-seguranca-social).
+
+## Notas importantes
+
+- **O subsídio de refeição não se escreve no contrato.** Vem da rubrica **Subsídio de alimentação** (código `MEAL`), em **Salários › Configurar › Rubricas › Rubricas salariais**, com 6,15 € por dia na versão 2026.1 (desde 01/01/2026, origem **Regra da empresa**). O recibo multiplica esse valor pelos dias com direito do mês. Se a empresa paga outro valor, regista-se uma versão nova da rubrica, não se altera a que existe. O valor de 6,15 € é o limite diário isento em dinheiro de 2026 que o produto traz como predefinição: o que passar do limite é tributado em IRS e entra na base da Segurança Social. <span className="fd-pending">Pendente de validação por contabilista certificado: limite isento de 2026 em dinheiro e em cartão.</span>
+- **Período experimental: o produto conta os dias pela lei.** Em regra 90 dias num contrato sem termo, 180 para os casos do art. 112.º/1-b e 240 para direção ou quadros superiores; nos contratos a termo, 30 ou 15 dias conforme a duração. As faltas, licenças e suspensões não contam e alongam o período. <span className="fd-pending">Pendente de validação por contabilista certificado: contagem dos dias de formação e das suspensões no período experimental.</span>
+- **O contrato a termo tem de ter o motivo escrito.** Sem ele, a lei considera o contrato sem termo (art. 147.º/1-c do Código do Trabalho); o fiscaldoo não o reclassifica sozinho e recusa guardar.
+- **Mudar o contrato depois de haver recibos** faz-se com uma versão nova do contrato, a partir da data da mudança, e não alterando a antiga ([Como alterar o salário de um trabalhador](/payroll-pt/alterar-o-salario)).
+- **Dever de informação.** O registo do que foi entregue ao trabalhador por escrito sobre o contrato está em **Salários › Preparar › O que há para fazer este mês?**, grupo **Situações e deveres com um trabalhador**, **Informação ao trabalhador**; não faz parte deste procedimento.
+
+{/* Nota interna (DOCS-054, lote v18-C, master 0289754a8, docs_demo_v18c_test): o Administrador de Salários já não tem o item Trabalhadores em Pessoas › Trabalhadores; a ficha abre-se em Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores, com Trabalho e Folha de Salários. O perfil RH tem o caminho de Pessoas, sem Folha de Salários. Num contrato em vigor, mudar o tipo dá outra recusa: «O contrato de … já está em vigor e Tipo de contrato não pode ser alterado…» (por clique). Só este caminho foi revisto nesta ronda. Lote v22-A (06/11/2026, master d83bdf7ae, base docs_demo_v22a_test): ficha da Inês criada por RPC (nome, nascimento, empresa); contrato sem termo, 02/11/2026, 1000 e PT 40.0h/8.0h registados por clique com um utilizador só com o acesso Administrador de Salários; período experimental pelo ecrã (90 dias, 30/01/2027); capturas 01 a 05 refeitas. Perfis provados por clique com utilizadores criados só com um perfil (DEC-1777): Gestor de RH (separadores, campos só de leitura, Novo nos períodos experimentais) e Processador de salários (recusa ao guardar o salário; sem Novo nos períodos experimentais). A parte «Se o contrato é a termo» e o aviso da RMMG não foram repetidos (v8-REV, 04/11). */}
+
+## Problemas frequentes
+
+### O contrato a termo não guarda e fala em «SEM TERMO por lei»
+
+- **Sintoma:** ao guardar um contrato **Termo certo** com as datas preenchidas, a janela **Erro de Validação**: «Art. 147.º/1-c): um contrato «Termo certo» sem código nem texto de justificação é considerado SEM TERMO por lei — este produto nunca o reclassifica silenciosamente. Preencha «Código de justificação» e «Justificação» (art. 141.º/3: os factos concretos, relacionados expressamente com o termo), ou altere o tipo para «Sem termo».»
+- **Causa:** faltam o **Código de justificação** e a **Justificação**.
+- **O que fazer:** escolha o código e escreva os factos que estão no contrato escrito. Se o contrato não tem termo, mude o **Tipo de contrato** para **Sem termo**.
+
+### O contrato a termo certo pede a data de termo
+
+- **Sintoma:** ao guardar: «Art. 141.º/1-e): «Termo certo» exige uma data de termo. Preencha «Data de termo», ou altere o tipo.»
+- **Causa:** o **Tipo de contrato** é **Termo certo** e a **Data de termo** está vazia.
+- **O que fazer:** escreva a data em que o contrato acaba, ou escolha outro tipo.
+
+### O motivo é recusado num contrato a termo incerto
+
+- **Sintoma:** ao guardar: «O motivo «Substituição de trabalhador a tempo completo que passa a tempo parcial por período determinado» não admite um termo incerto (CT art. 140.º/3). Como corrigir: escolha um motivo que o admita ou um termo certo.»
+- **Causa:** a lista mostra os mesmos motivos nos dois tipos, mas `140/2-d`, `140/4-a` e `140/4-b` não servem para o **Termo incerto**.
+- **O que fazer:** escolha outro motivo ou mude o **Tipo de contrato** para **Termo certo**.
+
+### Aparece um aviso por baixo do salário
+
+- **Sintoma:** por baixo de **Salário**: «O salário (800,00 €) está abaixo da retribuição mínima mensal garantida que se aplica a este trabalhador (920,00 €, em vigor em 02/11/2026). O que aconteceu: pagar menos do que a retribuição mínima não é permitido (art. 273.º do Código do Trabalho) e a validação do recibo também a verifica. O mínimo já tem em conta o território do local de trabalho, as reduções da RMMG registadas para o trabalhador e a proporção do tempo parcial. Como resolver: aumente o salário ou registe a redução da RMMG que se aplica (estagiário ou capacidade de trabalho reduzida).»
+- **Causa:** o salário está abaixo do mínimo que se aplica a este trabalhador na data do contrato.
+- **O que fazer:** corrija o salário ou registe a redução que se aplica. O aviso não impede guardar o contrato, mas a validação do recibo também verifica o mínimo.
+
+### Aparece um aviso amarelo sobre a conta bancária
+
+- **Sintoma:** no topo da ficha: «Pago por transferência bancária, mas falta a conta bancária ou o IBAN não é válido. Preencha um IBAN válido em «Contas bancárias» (separador Pessoal) antes do ficheiro de pagamento.»
+- **Causa:** a ficha ainda não tem o IBAN. O aviso não impede guardar o contrato.
+- **O que fazer:** registe o IBAN como em [Como criar a ficha de um trabalhador](/people/criar-um-trabalhador), antes do primeiro pagamento.
+
+### Não vejo o separador Folha de Salários
+
+- **Sintoma:** a ficha só tem **Trabalho**, **Pessoal**, **Currículo**, **Formação** e **Linha da vida**.
+- **Causa:** o seu perfil é **Gestor de RH**, que não vê o salário nem o horário.
+- **O que fazer:** peça o salário, o horário, o tipo e a data de início a quem tem o acesso **Administrador de Salários**. Num contrato em vigor, o **Gestor de RH** não altera a **Data de início**, e o **Tipo de contrato** só o corrige no dia em que o contrato foi registado.
+
+### «… já está em vigor e Tipo de contrato não pode ser alterado»
+
+- **Sintoma:** num contrato registado num dia anterior, depois de mudar o **Tipo de contrato** e carregar no ícone de guardar (visto com o **Gestor de RH**, num contrato de 01/01/2026), a janela **Operação inválida** diz: «O contrato de … (versão de …) já está em vigor e Tipo de contrato não pode ser alterado. O que aconteceu: a classificação, o enquadramento na Segurança Social e o horário de um contrato já aplicado nunca são reescritos (CT art. 147.º/3: uma alteração mantém a antiguidade e é auditável). Como resolver: registe uma versão NOVA do contrato, a começar no dia em que a alteração produz efeitos.»
+- **Causa:** o contrato já faz parte do histórico. No dia em que foi registado, ainda se corrige.
+- **O que fazer:** feche a janela e descarte a alteração. A mudança regista-se numa versão nova do contrato, a partir do dia em que produz efeitos: veja [Como alterar o salário de um trabalhador](/payroll-pt/alterar-o-salario).
+
+### «O Processador de salários só lê o contrato»
+
+- **Sintoma:** com o perfil **Processador de salários**, o **Salário** (separador **Folha de Salários** da ficha do trabalhador) está só de leitura. Se a alteração chegar pela integração, é recusada com: «O Processador de salários só lê o contrato (Salário). O que aconteceu: o contrato do trabalhador é alterado pelos Recursos Humanos ou por um utilizador com o acesso extra «Administrador de Salários», nunca por quem processa os salários com ele. Como resolver: peça aos Recursos Humanos que registem a alteração como uma versão nova do contrato.»
+- **O que fazer:** peça a alteração a quem tem o acesso extra **Administrador de Salários**, numa versão nova do contrato ([Como alterar o salário de um trabalhador](/payroll-pt/alterar-o-salario)). A mensagem fala dos Recursos Humanos, mas o perfil **Gestor de RH** não vê o **Salário** (ver acima).
+
+{/* Nota interna (DOCS-066 #3947, lote v23-BA, master ce51f2d47, docs_demo_v23ba_test, 10/11/2026, DEF-QA8-c-02): com um utilizador criado só com o perfil Processador de salários, o Salário (Folha de Salários) está só de leitura na ficha; a mensagem «O Processador de salários só lê o contrato» foi provocada pela integração. A mensagem «… já está em vigor e Tipo de contrato não pode ser alterado …» foi provocada por clique com um utilizador só com o Gestor de RH (Bruno Miguel Teixeira, versão de 01/01/2026, Sem termo para Termo certo): é letra a letra a citada. */}

@@ -1,0 +1,11 @@
+{
+  "label": "Novidades",
+  "position": 12,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "slug": "/changelog",
+    "title": "Novidades",
+    "description": "O que mudou no fiscaldoo, por área e em linguagem corrente."
+  }
+}

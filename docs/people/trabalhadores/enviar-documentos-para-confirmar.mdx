@@ -1,0 +1,138 @@
+---
+id: enviar-documentos-para-confirmar
+slug: /people/enviar-documentos-para-confirmar
+title: Como pedir ao trabalhador que confirme um documento
+sidebar_label: Pedir ao trabalhador que confirme um documento
+sidebar_position: 3
+description: "Como os Recursos Humanos pedem ao trabalhador que confirme a declaração de frequência de uma formação, acompanham as confirmações e registam as feitas na sala ou em papel."
+keywords: [confirmar documento, aceite do trabalhador, confirmações dos trabalhadores, declaração de frequência, pedir ao trabalhador que aceite, assinado em papel, registar no ecrã, formação]
+doc_id: DOC-0245
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/formacao/registar-formacao, people/o-meu-espaco/confirmar-um-documento, people/assinaturas/assinaturas-eletronicas]
+---
+
+## Para que serve?
+
+Os Recursos Humanos enviam ao trabalhador um documento para ele ler e confirmar, e acompanham numa lista o que já foi confirmado. Hoje o documento que segue por este caminho é a **declaração de frequência** de uma ação de formação.
+
+## Quando utilizar?
+
+- Terminou uma ação de formação e quer a confirmação de cada participante na sua declaração de frequência.
+- Quer saber que declarações ainda estão à espera do trabalhador.
+- O trabalhador assinou na sala, no ecrã, ou numa folha de papel, e quer deixar isso registado.
+
+## Onde encontrar?
+
+- O pedido faz-se na ação de formação: **Pessoas › Formação › Dia a dia › Ações de formação**, na linha de cada participante.
+- O acompanhamento faz-se em **Pessoas › Trabalhadores › Confirmações dos trabalhadores**.
+
+## Antes de começar
+
+- O perfil é o **Gestor de RH**. Todos os passos abaixo foram feitos até ao fim com esse perfil. Os perfis **Processador de salários** e **Contabilista** não têm acesso a esta lista («Não tem acesso a «Confirmação de um documento pelo trabalhador». Quem faz: «Gestor de RH», «Trabalhador» ou «Auditor / ROC». […]»).
+- A ação de formação tem de estar registada (estado **Concluída**) e o participante não pode ter faltado: a **Presença** é **Presente** ou **Parcial** (com **Faltou** não há declaração). Veja [Como registar uma ação de formação](/people/registar-formacao).
+
+## Como utilizar
+
+### Pedir a confirmação
+
+<StepByStep>
+
+1. Abra **Pessoas › Formação › Dia a dia › Ações de formação** e a ação em causa. Se o estado ainda é **Planeado**, carregue em **Registar**: o estado passa a **Concluída**.
+2. Na lista de participantes, na linha do trabalhador, carregue no primeiro ícone a seguir à coluna **Assinatura** (ao passar com o rato aparece **Pedir ao trabalhador que aceite**). Repita para cada participante.
+   ![Linha da participante com a Assinatura Por assinar e o ícone Pedir ao trabalhador que aceite assinalado](/images/people/enviar-documentos-para-confirmar/01-pedir.png)
+
+</StepByStep>
+
+Aparece a mensagem «Confirmação pedida. A declaração de frequência foi enviada a *nome do trabalhador*. Fica à espera em «O meu espaço» do trabalhador e em «Confirmações dos trabalhadores» até ser confirmada.». A linha continua **Por assinar** até o trabalhador confirmar. O trabalhador encontra a declaração em **O meu espaço › Recibos e documentos › Documentos por confirmar** e confirma-a como explica [Como confirmar ou assinar um documento que a empresa me enviou](/people/confirmar-um-documento).
+
+### Acompanhar as confirmações
+
+<StepByStep>
+
+1. Abra **Pessoas › Trabalhadores › Confirmações dos trabalhadores**. A lista tem **Documento**, **Trabalhador**, **Estado**, **Confirmado em** e **Como foi confirmado**, e abre com o filtro **Aguarda confirmação**: só mostra o que o trabalhador ainda não confirmou.
+2. Para ver também as confirmações feitas, tire o filtro **Aguarda confirmação** (o **x** ao lado do nome do filtro).
+   ![Lista Confirmações dos trabalhadores sem filtro, com uma declaração assinada em papel, uma confirmada no ecrã na sala e uma confirmada pelo trabalhador no O meu espaço](/images/people/enviar-documentos-para-confirmar/02-lista.png)
+
+</StepByStep>
+
+### Registar uma confirmação feita na sala ou em papel
+
+Use isto quando o trabalhador não confirma no **O meu espaço**: porque assina consigo, no ecrã, ou porque assinou a declaração impressa.
+
+<StepByStep>
+
+1. Em **Confirmações dos trabalhadores**, abra a linha **Aguarda confirmação** do trabalhador.
+2. Escolha uma das duas opções:
+   - **Registar no ecrã (sala):** abre **Confirmar o documento** com o **Nome** do trabalhador. O trabalhador carrega na caixa **Assinatura**, escolhe **Automática**, **Desenhar** ou **Carregar** e carrega em **Aceitar e Assinar**.
+   - **Registar assinado em papel:** abre **Confirmar o documento** com **Digitalização do papel assinado**. Carregue em **Escolher ficheiro** e escolha a digitalização da folha assinada.
+3. Carregue em **Confirmar**.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o pedido, a lista **Confirmações dos trabalhadores** e o registo na sala ou em papel são os mesmos, com o perfil **Gestor de RH**. A diferença é que a confirmação também pode seguir pela aplicação **Assinar** do Enterprise: o trabalhador recebe por e-mail uma ligação e assina o documento aí.
+
+<StepByStep>
+1. Em **Pessoas › Trabalhadores › Confirmações dos trabalhadores**, abra a linha **Aguarda confirmação**. Além de **Registar no ecrã (sala)** e **Registar assinado em papel**, há o botão **Enviar para o Sign**.
+2. Carregue em **Enviar para o Sign**. A confirmação passa a mostrar **Estado no Sign** com **Para Assinar**, o histórico diz «Enviado a *nome do trabalhador* para assinar no Sign.» e o botão **Enviar para o Sign** desaparece.
+   ![Confirmação de uma declaração de frequência com o Estado no Sign Para Assinar e os botões Registar no ecrã (sala) e Registar assinado em papel](/images/people/enviar-documentos-para-confirmar/04-no-enterprise-sign.png)
+</StepByStep>
+
+Enquanto o documento está à espera no **Assinar**, o trabalhador já não tem **Ler e confirmar** em **O meu espaço › Recibos e documentos › Documentos por confirmar**: vê o **Estado no Sign** e assina pela ligação do e-mail. Não registe a confirmação na sala nem em papel enquanto isso (ver o último problema abaixo).
+
+**Enviar logo tudo pelo Assinar.** O administrador pode fazer com que cada pedido siga diretamente para o **Assinar**: em **Definições › Utilizadores e empresas › Empresas**, abra a empresa e, no separador **Pessoas**, grupo **INTERRUPTORES (DESLIGADOS POR OMISSÃO)**, ligue **Pedir as confirmações pelo Sign** e guarde. A partir daí, ao carregar em **Pedir ao trabalhador que aceite**, a confirmação nasce já enviada para o **Assinar**. Para ver que seguiu, abra a linha em **Confirmações dos trabalhadores**: mostra **Estado no Sign** com **Para Assinar**.
+
+**Problemas frequentes no Enterprise**
+
+- **«… não tem e-mail. O que aconteceu: o Sign envia a ligação de assinatura por e-mail. Como resolver: preencha o e-mail profissional do trabalhador ou deixe-o confirmar em «O meu espaço».»** A ficha do trabalhador não tem **E-mail profissional**. Preencha-o na ficha do trabalhador (se o seu perfil não o deixar guardar, peça a quem administra os utilizadores) ou deixe o trabalhador confirmar no **O meu espaço**.
+- **«Configure os endereços de e-mail dos remetentes (*o seu nome*)».** O seu utilizador não tem e-mail, e o **Assinar** precisa dele para enviar. Peça ao administrador que o preencha.
+- **Confirmar na sala ou em papel um documento já enviado para o Assinar.** Enquanto a confirmação mostra **Estado no Sign** com **Para Assinar**, o documento está à espera do trabalhador no **Assinar**: espere pela assinatura aí e não a registe na sala nem em papel.
+
+{/* Nota interna (lote EE-10, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): cópia Enterprise docs_ee_ee10b_test no portátil (pg_dump da odoo20_ee_test, -u dos módulos mudados até master e -i de hr_payroll, planning, hr_appraisal e hr_recruitment), porta 8504, guarda de rede ligada; utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): ee10_rh por clique: ação de formação FOR-2026-001 «Primeiros socorros» (criada e registada por RPC com o Gestor de RH, Bruno Miguel Teixeira presente), Pedir ao trabalhador que aceite, Confirmações dos trabalhadores, Enviar para o Sign: 1.º recusa «… não tem e-mail …» (Bruno sem e-mail); o Gestor de RH preencheu o E-mail profissional na ficha e guardar foi recusado com «Sem acesso … «Contacto» …» (defeito D1 do relatório); o e-mail do trabalhador e o do utilizador ee10_rh foram postos pelo administrador por RPC; 2.ª recusa «Configure os endereços de e-mail dos remetentes (Perfil rh (ee10))» antes do e-mail do utilizador; depois, Estado no Sign Para Assinar e a nota «Enviado a … para assinar no Sign.»; Registar no ecrã (sala) com assinatura Automática e Confirmar com o pedido aberto: «Sem acesso. Não tem acesso a «Pedido de assinatura» …» em vez da recusa prevista no código (defeito D2); ee10_trab: Documentos por confirmar sem Ler e confirmar e com Estado no Sign; administrador por clique: interruptor ligado e guardado; ação FOR-2026-002 (RPC, Carla Sofia Mendes, sem utilizador) e pedido por clique: mensagem «Confirmação pedida, mas ninguém lhe pode responder …» e confirmação já com «Enviado a Carla Sofia Mendes para assinar no Sign.» (defeito D3). Os caminhos de Formação do corpo passam a Pessoas › Formação › Dia a dia › Ações de formação (UX-160, comboio 192, nas duas edições). Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee10_test (master e4dd4ae90, a do lote EE-10 interrompido) e com o texto do artigo. Ver reports/LOTE_EE-10.md. */}
+
+## Resultado esperado
+
+- Na lista, o **Estado** passa a **Confirmado pelo trabalhador** (no **O meu espaço** ou no ecrã, na sala) ou a **Assinado em papel**, com a data e a hora em **Confirmado em** e o modo em **Como foi confirmado**: «Pelo trabalhador, em O meu espaço», «No ecrã, na sala» ou «Em papel».
+- A ficha mostra o **Nome assinado**, **Confirmado em**, o **Endereço IP**, quem registou (**Registado por**), as impressões digitais (**SHA-256 do PDF**, **SHA-256 do PDF final** e, se a assinatura foi feita no ecrã, **SHA-256 da assinatura**), o **PDF com a página de confirmação** e, se foi em papel, a **Digitalização do papel**. Na sala e em papel, **Confirmado em** e **Endereço IP** são do momento e do computador em que os Recursos Humanos registaram, e não do dia em que o trabalhador assinou o papel.
+  ![Ficha de uma declaração no estado Assinado em papel, com o modo Em papel, a data, o endereço IP, quem registou e a digitalização](/images/people/enviar-documentos-para-confirmar/03-em-papel.png)
+- Na ação de formação, a **Assinatura** do participante passa a **Assinado** e os ícones de pedir e marcar desaparecem da linha.
+
+## Notas importantes
+
+- **Uma confirmação por documento e por trabalhador.** Pedir outra vez para o mesmo participante é recusado (veja «Problemas frequentes»).
+- **Depois de confirmada, a declaração não se muda nem se apaga.** É a prova de que o trabalhador a leu. Se o documento estava errado, emita um novo e peça uma nova confirmação.
+- **Os botões Registar no ecrã (sala) e Registar assinado em papel só existem para os Recursos Humanos.** O botão **Ler e confirmar** é só do próprio trabalhador, no **O meu espaço**.
+- **Trabalhador sem acesso ao O meu espaço.** O pedido faz-se na mesma, e o ecrã avisa: «Confirmação pedida, mas ninguém lhe pode responder. A declaração de frequência foi pedida a *nome do trabalhador*, que não tem utilizador, por isso não aparece em «O meu espaço» e ninguém a pode confirmar aí. Como resolver: abra a ficha do trabalhador e preencha «Utilizador» no separador «Definições», ou registe a assinatura em papel em «Confirmações dos trabalhadores».». A linha fica em **Aguarda confirmação** até a registar na sala ou em papel.
+- **O mapa mensal de deslocações não passa por aqui:** o trabalhador aceita-o em **O meu espaço › Deslocações e despesas › Os meus mapas mensais de deslocações** (veja [Como gerar os mapas mensais de deslocações](/people/mapas-mensais-de-deslocacoes)).
+- **Se não precisa do registo do trabalhador**, o ícone **Marcar como assinado** da linha do participante (ou **Marcar todos como assinados**, no topo da ação) marca a assinatura sem criar nenhuma confirmação nesta lista.
+- **Para um PDF qualquer** (por exemplo uma declaração de receção de equipamento), use a assinatura eletrónica: veja [Como pedir a assinatura eletrónica de um documento](/people/assinaturas-eletronicas).
+
+{/* Nota interna (DOCS-046, 3.ª ronda, master 52d1dd3ad): refeito. HR-034/F3-01 já não se reproduz: com a ação registada o pedido cria a confirmação (provado com o Gestor de RH em «Primeiros socorros», FOR-2026-002, Eva e Bruno). V4PPL-13, 14 e 15 revistos no DOCS-065 (master c643480c2, demo.rh): já não acontecem. */}
+
+## Problemas frequentes
+
+### «Não se pode imprimir a declaração de frequência…»
+
+- **Sintoma:** ao carregar em **Pedir ao trabalhador que aceite**, a janela **Operação inválida** diz «Não se pode imprimir a declaração de frequência de … O que aconteceu: a formação não está feita ou o trabalhador faltou. Como resolver: registe primeiro a formação.»
+- **Causa:** a ação ainda está **Planeado** (ou o participante faltou).
+- **O que fazer:** carregue em **Registar** na ação e volte a pedir. Um participante que faltou não tem declaração.
+
+### «Este documento já foi enviado a … para confirmação»
+
+- **Sintoma:** a janela **Operação inválida** diz «Este documento já foi enviado a … para confirmação. Como resolver: abra a confirmação existente.»
+- **Causa:** já tinha pedido a confirmação deste participante.
+- **O que fazer:** abra **Confirmações dos trabalhadores** e veja o estado; se o trabalhador não consegue confirmar, registe na sala ou em papel.
+
+### «Anexe a digitalização do papel assinado»
+
+- **Sintoma:** em **Registar assinado em papel**, **Confirmar** diz «Anexe a digitalização do papel assinado. Como resolver: escolha o ficheiro em «Digitalização do papel assinado».»
+- **Causa:** não escolheu o ficheiro.
+- **O que fazer:** carregue em **Escolher ficheiro**, escolha a digitalização e confirme outra vez.
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Salários passou a Processador de salários e o Recursos Humanos a Gestor de RH; menus lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); recusa vista por clique com o Processador de salários, ao abrir a ligação da lista Confirmações dos trabalhadores (menu só do Gestor de RH e do administrador) */}

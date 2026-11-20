@@ -1,0 +1,131 @@
+---
+id: subsidios-de-ferias-e-natal
+slug: /payroll-pt/subsidios-de-ferias-e-natal
+title: Como pagar os subsídios de férias e de Natal
+sidebar_label: Subsídios de férias e de Natal
+sidebar_position: 6
+description: Criar um lote próprio para o subsídio de Natal ou de férias, conferir o valor, a Segurança Social e o IRS retido à parte, e respeitar o prazo de 15 de dezembro.
+keywords: [subsídio de Natal, subsidio de natal, subsídio de férias, subsidio de ferias, 13.º mês, 14.º mês, décimo terceiro, duodécimos, duodecimos, lote de Natal, lote de férias, prazo 15 de dezembro, retenção autónoma]
+doc_id: DOC-0205
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master f7a265901)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/processar-e-pagar/retencao-de-irs, payroll-pt/processar-e-pagar/pagar-os-salarios]
+---
+
+## Para que serve?
+
+O subsídio de Natal e o subsídio de férias pagam-se num lote próprio, separado do lote normal do mês. O fiscaldoo calcula o valor de cada trabalhador pela retribuição e pelo tempo de serviço no ano, desconta o que já tenha sido pago em duodécimos e retém o IRS do subsídio à parte, sem o somar ao salário do mês.
+
+## Quando utilizar?
+
+- Para pagar o subsídio de Natal, até 15 de dezembro.
+- Para pagar o subsídio de férias de quem tem férias aprovadas no período do lote.
+
+O acerto dos subsídios de quem sai da empresa faz-se no lote do tipo **Acerto final**, e não por este artigo.
+
+## Onde encontrar?
+
+**Salários › Processar › Processar o mês** › **Novo** › **Tipo**
+
+## Antes de começar
+
+- Perfil **Processador de salários**: cria o lote, cria os recibos, calcula e valida. Também volta um lote calculado a rascunho (**Repor em rascunho**), enquanto nenhum recibo estiver validado.
+- Para o subsídio de férias, as férias do trabalhador estão aprovadas nas **Ausências** e começam dentro do período do lote.
+- Os trabalhadores com contrato terminado antes do período não entram. No exemplo, Hugo Miguel Santos, com contrato até 30/11/2026, não entra no lote de Natal de dezembro.
+- No lote de Natal, quem sai dentro do período também fica de fora, porque o recibo final já paga o subsídio de Natal proporcional. O aviso do lote diz quem foi deixado de fora e porquê (ver «Problemas frequentes»).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Processar › Processar o mês** e carregue em **Novo**.
+2. Em **Tipo**, escolha **Natal** ou **Férias**. As opções são **Normal**, **Férias**, **Natal**, **Acerto final**, **Corretivo** e **Simulação**. O **Nome** preenche-se sozinho, por exemplo «Natal de dezembro de 2026».
+3. Em **Início do período** e **Fim do período**, escolha as datas. O último dia útil do período é a data de vencimento dos recibos; no subsídio de Natal, tem de ser até 15 de dezembro (ver «Notas importantes»).
+4. Guarde e carregue em **Criar os recibos do mês**. No lote de Natal entra cada trabalhador com contrato no período (7 no exemplo); no lote de Férias, só quem tem férias aprovadas a começar no período.
+5. Carregue em **Calcular**. O lote passa a **Calculado** e a lista mostra o **Líquido a receber** de cada recibo e o total.
+   ![Lote Natal de dezembro de 2026 calculado, com o Tipo Natal, 7 recibos e o total de 8.232,88 €](/images/payroll-pt/subsidios-de-ferias-e-natal/01-lote-de-natal-calculado.png)
+6. Abra o recibo de um trabalhador e, na linha **Subsídio de Natal** (ou **Subsídio de férias**), carregue em **Como foi calculado?**. Confira a base, a proporção e o que já foi pago em duodécimos.
+7. Carregue em **Validar** (demora alguns segundos). O lote e os recibos passam a **Validado** e o total mantém-se: 8.232,88 € no exemplo. O lote paga só o subsídio: a viatura de uso pessoal e a prestação de um adiantamento em curso ficam para o recibo normal do mês, que se cria à parte, no lote **Normal** de dezembro. Os dois lotes de dezembro convivem: nenhum mostra o aviso de recibo duplicado. Depois, contabilize e pague como o lote do mês: ver [Como processar os salários do mês](/payroll-pt/processar-o-mes) e [Como pagar os salários](/payroll-pt/pagar-os-salarios).
+
+</StepByStep>
+
+### O que o fiscaldoo calcula sozinho
+
+- **Valor do subsídio de Natal:** base × proporção − duodécimos já pagos. A base é a retribuição do mês do pagamento (CT art. 263.º); a proporção conta os dias ao serviço no ano (método «D — dias ao serviço / dias do ano»), por isso um trabalhador admitido a meio do ano recebe só a parte do tempo de serviço.
+- **Segurança Social:** o subsídio entra na base da Segurança Social, com as mesmas taxas do mês (11 % do trabalhador e 23,75 % da empresa no regime geral).
+- **IRS:** o IRS do subsídio é calculado à parte e nunca somado ao salário do mês. O separador **Segurança Social e IRS** do recibo diz «Retido à parte, nunca somado ao mês (art. 99.º-C/5 do CIRS)». A tabela é a do perfil de IRS do trabalhador (ver [Como se calcula a retenção de IRS nos salários](/payroll-pt/retencao-de-irs)).
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: base do subsídio de Natal (retribuição do mês do pagamento), proporção por dias ao serviço / dias do ano no ano de admissão, de cessação ou de suspensão (CT art. 263.º/2), arredondamento ao cêntimo e retenção autónoma do IRS dos subsídios (CIRS art. 99.º-C).</span>
+
+**Exemplo.** Ana Margarida Pinto ganha 2.400,00 € e esteve ao serviço todo o ano de 2026. No recibo do lote «Natal de dezembro de 2026»:
+
+- **Subsídio de Natal**: 2.400,00 € (base 2.400,00 × proporção 1,0000, 365 dias de serviço em 365, menos 0,00 já pagos em duodécimos);
+- **Segurança Social (trabalhador)**: 11 % de 2.400,00 € = 264,00 €; **Contribuição da empresa para a Segurança Social**: 570,00 €;
+- **Total de IRS retido**: 171,00 €, retido à parte;
+- **Líquido a receber**: 1.965,00 €; **Custo total para a empresa**: 2.970,00 €.
+
+Gabriela Sousa Reis, admitida a 01/03/2026 com 800,00 €, recebe 670,68 € de subsídio de Natal (800,00 × 306 ÷ 365) e um líquido de 596,91 €, depois de 73,77 € de Segurança Social e sem IRS retido.
+
+![Janela Como foi calculado? do Subsídio de Natal de Ana Margarida Pinto: base 2.400,00 vezes proporção 1,0000, 365 dias de serviço em 365, menos 0,00 já pagos em duodécimos](/images/payroll-pt/subsidios-de-ferias-e-natal/02-como-foi-calculado-o-natal.png)
+
+Criar e calcular o lote não gera lançamentos contabilísticos. O subsídio chega à contabilidade com os recibos do lote, como os salários do mês.
+
+## No Enterprise
+
+No Odoo Enterprise, os subsídios de férias e de Natal pagam-se da mesma maneira: com o perfil **Processador de salários**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
+
+{/* Nota interna (lote EE-06, DOCS-073 #4142, DEC-1794, master ce51f2d47, 10/11/2026): conferido numa cópia Enterprise da demonstração (docs_ee_ee06_test, computador 2) com utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): Processador de salários em Salários › Processar › Processar o mês; o menu Métodos do subsídio de Natal só o vê o administrador, nas duas edições. Menus e vistas comparados, perfil a perfil, com uma cópia Community do mesmo master (docs_demo_ee06_test). Ver reports/LOTE_EE-06.md. */}
+
+## Resultado esperado
+
+- O lote está **Calculado**, com um recibo por trabalhador e o total na lista; depois de **Validar**, o lote e os recibos ficam **Validado**, com o mesmo total.
+- Cada recibo tem só a linha do subsídio, os descontos da Segurança Social, o IRS retido à parte e, se houver uma penhora ativa, a penhora.
+- Com o lote até 31/12/2026, o recibo mostra o aviso de **Pagamento** do prazo de 15 de dezembro (ver «Notas importantes»); com o lote a terminar até 15/12/2026 não o mostraria.
+
+## Notas importantes
+
+- **Prazo do subsídio de Natal.** O recibo vence no último dia útil do período do lote. Com o lote de dezembro até 31/12/2026, o recibo avisa: «Pagamento: O subsídio de Natal deste recibo vence-se em 31/12/2026, depois de 15 de dezembro (15/12/2026): o CT art. 263.º/1 exige o pagamento até esse dia (contra-ordenação muito grave).». Escolha o **Fim do período** antes de carregar em **Criar os recibos do mês**: mudar a data depois não muda os recibos já criados (no exemplo, o lote passou a terminar a 15/12/2026 e os recibos continuaram até 31/12/2026). Um lote criado logo com o período até 15/12/2026 dá os mesmos 7 recibos e o mesmo total.
+  ![Totais do recibo de Natal de Ana Margarida Pinto, com o líquido de 1.965,00 € e o aviso de pagamento depois de 15 de dezembro assinalado](/images/payroll-pt/subsidios-de-ferias-e-natal/03-aviso-do-prazo-de-pagamento.png)
+- **Subsídio de férias.** O lote de Férias cria recibos só para as férias aprovadas que começam no período e cujo subsídio ainda não foi pago noutro recibo. <span className="fd-pending">Pendente de validação no ecrã: valor do subsídio de férias. Na demonstração, as férias de Gabriela Sousa Reis de 09/12/2026 a 22/12/2026 não geraram recibo, porque ela já tem o recibo de Natal de dezembro (ver «Problemas frequentes»).</span>
+- **Duodécimos.** Pagar um subsídio em duodécimos exige um acordo escrito com o trabalhador; o fiscaldoo desconta do subsídio o que os duodécimos já pagaram. O acordo de duodécimos regista-se em **Salários › Preparar › Acordos escritos de pagamento**, com o documento assinado, a data de assinatura, a validade e a referência legal (por exemplo «CT art. 264.º/3; acordo escrito»). {/* Nota interna (auditoria do lote 102): defeito do produto FIX-M324 — na cópia de teste este menu não aparece na barra para o Processador de salários nem para o Administrador de Salários (visto por clique, em Preparar); a lista só abre por endereço. Quando o FIX-M324 entrar, repetir o caminho por clique e tirar a marca. */} <span className="fd-pending">Pendente de validação no ecrã: o registo do acordo por clique (o menu não aparece na barra: defeito do produto FIX-M324).</span>
+- **Duodécimos e aumento retroativo depois de dezembro.** Se o subsídio (de férias ou de Natal) foi pago em duodécimos e o aumento retroativo é lançado depois de o recibo de dezembro (ou o recibo final) estar validado, o recibo corretivo desse recibo leva a linha **Subsídio de férias — diferença** (ou **Subsídio de Natal — diferença**) com o que falta pagar do ano: a parte do ano com a retribuição de hoje, menos os duodécimos e as diferenças já pagos. O IRS é o do subsídio inteiro pela tabela, menos o já retido nos duodécimos, e a diferença leva Segurança Social (no Natal, também o código A4 da DMR). Se dezembro ainda não estava validado, o duodécimo de acerto já lê a retribuição nova e não há diferença. Exemplo: 2.000,00 € por mês em duodécimos de 166,67 €; dezembro validado a 166,63 €; aumento para 2.100,00 € desde março: diferença de 100,00 € (Segurança Social 11,00 € do trabalhador e 23,75 € da empresa; no Natal, IRS 31,00 €); um segundo aumento, para 2.200,00 €, dá nova diferença de 100,00 €. Isto substitui a ideia de que, em duodécimos, não há recibo corretivo. (CT art. 264.º, n.º 3, nas férias e art. 263.º no Natal; CIRS art. 99.º-C, n.º 5.) Visto no ecrã numa cópia de teste, com o Processador de salários: um trabalhador com 2.000,00 € por mês desde 2025, acordo de duodécimos das férias a 100 %, 12 recibos de 2026 validados (duodécimo de 166,67 € até novembro e de 166,63 € em dezembro). Depois do aumento para 2.100,00 € desde 01/03/2026, o recibo corretivo de dezembro, em **Rascunho**, tem **Retribuição base** de 100,00 € e **Subsídio de férias — diferença** de 100,00 €: **Bruto** 200,00 €, **Descontos** 84,00 € (Segurança Social 22,00 € e IRS 62,00 €) e **Líquido a pagar** 116,00 €, com 47,50 € de contribuição da empresa; validou-se sem recusa e o recibo de dezembro ficou como estava. O mesmo caso com outro trabalhador e o subsídio de Natal em duodécimos deu **Subsídio de Natal — diferença** de 100,00 € e os mesmos valores. A rubrica das férias leva o código A3 na DMR e F na Segurança Social; a do Natal, A4 e N. O segundo aumento, para 2.200,00 € desde 01/04/2026, deu nova diferença de 100,00 € e IRS de 34,00 € + 34,00 € = 68,00 €, líquido 110,00 €.
+- **Duodécimos pagos em novembro de 2026.** O duodécimo pago entre 1 e 30/11/2026 retém 50 % do imposto da sua parte (Despacho n.º 12523-A/2026); os outros meses retêm a parte proporcional do imposto do subsídio do ano. Visto no ecrã numa cópia de teste, com um trabalhador de 2.000,00 € por mês (subsídio de férias em duodécimos de 166,67 €; o imposto do subsídio sozinho é 301,34 €): em **Como se chegou aos valores** de cada recibo, a linha «Retido à parte (subsídios e trabalho suplementar)» dá, de janeiro a dezembro, 25,00, 25,00, 25,00, 25,00, 25,00, 25,00, 25,00, 25,00, 26,00, 25,00, 12,00 e 25,00 €: total 288 em vez de 301, e a diferença é a redução legal de novembro. O recibo de novembro, com pagamento em 30/11/2026, diz «Redução de novembro de 2026 (Despacho n.º 12523-A/2026 …): as tabelas dão 301,34 €, mas só se retém 50 % desse valor» e retém 150,00 € do ordenado mais 12,00 € à parte, 162,00 € no total. O «já retido» do corretivo de duodécimos, e o duodécimo de acerto de dezembro com o aumento antes, contam o que se teria retido sem a redução de novembro: no exemplo, o corretivo de dezembro retém 31 e não 44 (332 menos 288), e a redução já feita não se recupera (Despacho n.os 5 e 8): o recibo escreve «Já retido sobre ele: 301,00 €». <span className="fd-pending">Pendente de validação por contabilista certificado: a redução de 50 % só sobre a parte do duodécimo (DEC-997) e a regra de não recuperar a redução já feita.</span>
+- **Penhoras.** Uma penhora no estado **Ativa** desconta no lote de Natal. No exemplo, Fábio Nuno Carvalho ganha 1.450,00 € e tem uma penhora ativa de 2.000,00 € (registada como explica [Como aplicar uma penhora de salário](/payroll-pt/penhoras)). No seu recibo do lote «Natal de dezembro de 2026», sem lote normal de dezembro, **Como foi calculado?** da linha **Penhora de retribuição** mostra a parte líquida (bruto 1.450,00 − IRS 43,00 − Segurança Social 159,50 = 1.247,50 €), o impenhorável de 920,00 € (um salário mínimo, porque os dois terços, 831,67 €, ficam abaixo) e o retido de 327,50 €. O **Líquido a receber** passa de 1.247,50 € a 920,00 €. Uma penhora só **Validada** ainda não desconta: o líquido fica em 1.247,50 €. Se o recibo do mês (lote normal) do mesmo mês já estiver calculado, a penhora conta os dois recibos juntos: o mínimo impenhorável protege-se uma só vez e o recibo de Natal desconta o que o do mês já reteve (exemplo em [Como aplicar uma penhora de salário](/payroll-pt/penhoras)).
+  ![Janela Como foi calculado? da penhora no recibo de Natal: parte líquida 1.247,50, impenhorável 920,00, retido 327,50](/images/payroll-pt/subsidios-de-ferias-e-natal/04-penhora-no-recibo-de-natal.png)
+  <span className="fd-pending">Pendente de validação por contabilista certificado: se o subsídio de Natal deve ficar sujeito à penhora (CPC art. 738.º).</span>
+- **Método do subsídio.** O exemplo usa o método por omissão da lei. Os métodos próprios da empresa registam-se em **Salários › Configurar › Rubricas › Métodos do subsídio de Natal** e **Métodos do subsídio de férias**, que só o administrador vê na barra; quem tem o acesso extra **Administrador de Salários** vê-os com o modo programador ativo, e o **Processador de salários** não os tem, nem com o modo programador. <span className="fd-pending">Pendente de validação no ecrã: registo de um método próprio da empresa.</span>
+
+{/* Nota interna (DOCS-022): o aviso do código DMR da rubrica SUB_NAT já não aparece no lote de Natal calculado (master 7281543f). Defeitos D34 a D36 do LOTE_C (lote especial sem recibos para quem já tem recibo no mês; data do lote alterada sem mudar os recibos; menus dos métodos e dos acordos escondidos; Repor em rascunho visível ao Processador sem acesso) por reverificar. Revisto a 04/11/2026 (v8-REV, master 8c5a23228, base docs_demo_v8rev3_test): 7 recibos, líquido total de 8.232,88 €, Validar feito com o Processador de Salários. */}
+
+{/* Nota interna (DOCS-063 req. 46220, v16-REV1, master 00c68a6d8, base docs_demo_v16rev1b_test): os 295,00 entre 7.937,88 (capturas até 01/11, base do lote C) e 8.232,88 são dois trabalhadores; os outros cinco têm o mesmo líquido. Bruno: 1.297,00 contra 1.264,50 (-32,50): o lote C criou uma versão do contrato de 1.700,00 desde 01/11; 1.700,00 - 187,00 SS - 216,00 IRS = 1.297,00; hoje 1.650,00 - 181,50 - 204,00 = 1.264,50. Reproduzido nesta base com a mesma versão: 1.297,00. Fábio: 920,00 contra 1.247,50 (+327,50): o lote C tinha uma penhora ativa, e 920,00 é o valor impenhorável; 1.450,00 - 159,50 - 43,00 = 1.247,50, menos 327,50 retidos = 920,00. Reproduzido na auditoria de 05/11/2026: penhora Ativa, 920,00 e 327,50 retidos; penhora só Validada, 1.247,50, que era o estado na base do produtor. PAY-091 visto só com a prestação de um adiantamento (líquido igual, 8.232,88); a viatura vem dos testes do PAY-091. Aviso de pagamento num recibo de lote até 15/12 não lido. Lote v22-C (DOCS-055 req. 45893, master d83bdf7ae com o PAY-091 e o PAY-120, docs_demo_v22c_test), por clique com um utilizador só Processador de Salários: lote Natal de dezembro de 2026 com 7 recibos e 8.232,88 €, Calculado e depois Validado com o mesmo total; recibo da Ana Margarida Pinto só com a linha do subsídio (2.400,00); lote Normal de dezembro criado ao lado (7 recibos, 9.207,40 €, Calculado); nenhum dos dois lotes mostra o aviso de qualidade (sem «recibo duplicado» nem «Bloqueia o fecho»), quando no master 0289754a8 os dois o mostravam. Passo 6 (Como foi calculado?) e o aviso do prazo não repetidos. */}
+
+{/* Nota interna (v23-BI, DOCS-063 #3853, master 2c8d358c0, base docs_demo_v23bi_test, 11/11/2026): exemplo da penhora refeito no ecrã com o Processador de salários: lote «Natal de dezembro de 2026» (01/12 a 31/12) sem lote normal de dezembro; com a penhora só Validada, líquido 1.247,50; depois de Ativar e Calcular de novo, Penhora de retribuição 327,50 e líquido 920,00 (IRS do subsídio 43,00 em dezembro; a auditoria do v23-BG viu 21,00 num lote de Natal de novembro). */}
+
+## Problemas frequentes
+
+### «Criar os recibos do mês» diz «Não há nada a criar»
+
+- **Mensagem:** «Não há nada a criar. Todos os 7 trabalhadores com contrato no período deste lote (01/12/2026 a 31/12/2026) já têm recibo. Se o período não for o mês que quer, corrija as datas do lote.»
+- **Causa:** os trabalhadores já têm um recibo nesse período, noutro lote do mesmo tipo (no exemplo, um segundo lote de Natal de dezembro).
+- **O que fazer:** confirme as férias aprovadas e as datas do lote. Não apague recibos de outro lote para fazer espaço: fale com o Administrador de Salários.
+
+### Um trabalhador não aparece no lote de Natal
+
+- **Mensagem:** a mensagem «Recibos criados» e o aviso **Trabalhadores deixados de fora do lote** dizem quem ficou de fora e porquê, por exemplo: «Ficaram de fora porque o contrato terminou antes deste período: …» e «Ficaram de fora porque o recibo final já paga o subsídio de Natal: …».
+- **Causa:** a primeira frase é de quem já tinha saído antes do período, por cessação confirmada. A segunda é de quem sai dentro do período: o recibo final paga o subsídio de Natal proporcional.
+- **O que fazer:** nada no lote. Os outros recibos criam-se na mesma. O subsídio de quem sai faz-se no recibo final: ver [Saída de um trabalhador](/people/cessacao-do-contrato). Sem cessação confirmada não há aviso: no exemplo, Hugo Miguel Santos, com o contrato a termo até 30/11/2026, fica de fora e a mensagem diz só «7 recibos criados; 0 trabalhadores já tinham recibo.»
+
+### «Criar os recibos do mês» diz «Nenhum recibo criado»
+
+- **Mensagem:** «Nenhum recibo criado. Nenhum trabalhador tem contrato em vigor neste mês. Confirme as datas dos contratos dos trabalhadores.»
+- **Causa:** hoje, esta mensagem também aparece no lote de Férias quando ninguém tem férias aprovadas a começar no período, mesmo com contratos em vigor.
+- **O que fazer:** confirme as férias aprovadas nas **Ausências** e as datas do lote. Enquanto o lote não tiver recibos, não aparece o botão **Calcular**.
+
+### «Repor em rascunho» pede um motivo
+
+- **Sintoma:** abre-se uma janela: «O lote «…» volta a «Rascunho» e mantém os seus recibos em rascunho, para serem calculados de novo ou removidos. Se algum recibo estiver validado ou pago, o lote é recusado.»
+- **O que fazer:** escreva o **Motivo** e carregue em **Repor em rascunho**, na janela. Com o Processador de salários, o lote de outubro voltou a **Rascunho**, com os 8 recibos.

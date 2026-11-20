@@ -1,0 +1,136 @@
+---
+id: modelo-10
+slug: /accounting-pt/modelo-10
+title: Como preparar e entregar o Modelo 10
+sidebar_label: Preparar e entregar o Modelo 10
+sidebar_position: 3
+description: Gerar o Modelo 10 do ano a partir das retenções, conferi-lo com as guias pagas e com o razão, descarregar o ficheiro, entregá-lo no Portal da Autoridade Tributária e registar a entrega.
+keywords: [Modelo 10, modelo 10, declaração anual de retenções, declaracao anual de retencoes, rendimentos e retenções, Anexo J, ficheiro do Modelo 10, entregar o Modelo 10, conferir com as guias de pagamento, linhas do Modelo 10, serviço de finanças, justo impedimento, registar a entrega à AT, retenções de residentes]
+doc_id: DOC-0105
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 3a28c9b91)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/retencoes/pagar-as-retencoes, accounting-pt/retencoes/configurar-retencoes-na-fonte]
+---
+
+{/* Nota interna (v3-A1, DOC-0105, risco alto; corrigido em docs-v3acor, NV3A-05 a NV3A-07): validado na base docs_demo_v3acor_test (8211, master f16f4a3e) com o Responsável fiscal (demo.gestor_contabilidade); o Contabilista (demo.contabilista) abre a lista e não tem o botão Novo. Modelo 10 de 2026: Ana Ferreira 1.500,00 € / 345,00 € e Rui Matos 800,00 € / 184,00 €; total 2.300,00 € / 529,00 €; guias de março (230,00), abril (115,00) e junho (184,00) pagas. Ficheiro descarregado: 10 linhas, 2 beneficiários, total retido 529,00 €. Estado vazio: Empresa Teste Portugal, 0,00 €. A fatura FTF/2026/00044 (Rui Matos, 138,00 €, por pagar) fica fora do Modelo 10. Registar a entrega (provado a 01/11): sem campos, «Há campos obrigatórios por preencher»; data futura, «A data da entrega está no futuro»; registo válido grava o comprovativo como anexo da ficha (o contador de anexos sobe de 1 para 2) e cria um registo imutável (modelo l10n_pt.declaration.communication, com data, referência e utilizador); segunda entrega recusada. Depois de Submetido: reabrir, alterar, eliminar e criar outro Modelo 10 do mesmo ano são recusados; o produto não tem ecrã para a «declaração de substituição». Defeito V3A1-04: a verificação «lançamentos por publicar» cita os rascunhos de diferimento em inglês («Recognition of FTF/2026/00045»). Defeito V3A1-05 (ACC-212): a data e a referência da entrega gravadas não se veem em nenhum ecrã (só o comprovativo, nos anexos); pedir o cartão. */}
+
+## Para que serve?
+
+O Modelo 10 é a declaração anual dos rendimentos pagos a residentes e das retenções feitas. O fiscaldoo gera-o a partir das faturas de fornecedores com retenção, compara-o com as guias pagas e com o razão, e prepara o ficheiro que se entrega no Portal da Autoridade Tributária.
+
+A entrega faz-se no Portal: o fiscaldoo não envia nada. Depois de entregar, regista-se a data, a referência e o comprovativo na ficha.
+
+## Quando utilizar?
+
+- No início do ano seguinte, para o ano que acabou, antes do prazo (a ficha mostra o **Prazo de entrega**).
+- Para conferir, durante o ano, se as retenções feitas coincidem com o que se pagou em guias.
+- Os rendimentos pagos a residentes com retenção a **taxas liberatórias** (por exemplo, juros de suprimentos de um sócio, com a **Retenção IRS 28% — rendimentos de capitais (taxa liberatória)**) somam-se no campo **Retenções a taxas liberatórias** da ficha, que é o Campo 10 do Quadro 4, e **não** têm linha no separador **Linhas** (Quadro 5). As **retenções de IRC** (CIRC, art. 94.º) vão ao Campo 08 e ao Quadro 5 com o código da natureza do rendimento, de `R3` a `R12` (ver «Retenções de IRC e taxas liberatórias»). Os pagamentos a **não residentes** nunca entram no Modelo 10: declaram-se no [Modelo 30](/accounting-pt/modelo-30).
+- Não serve para os rendimentos do trabalho dependente (categoria A): esses têm outro ecrã, **Salários › Declarar › Modelo 10 dos trabalhadores**, que este artigo não descreve. ([Como pagar as retenções do mês](/accounting-pt/pagar-as-retencoes) explica a diferença na guia.) <span className="fd-pending">Pendente de validação por contabilista certificado: o que cada um dos dois Modelos 10 inclui na entrega única à AT.</span>
+
+## Onde encontrar?
+
+- **Contabilidade › Declarar › Retenções na fonte › Modelo 10 (declaração anual)**: a lista, com **Nome**, **Ano**, **Rendimento do ano**, **Valor retido**, **Prazo de entrega** e **Estado**.
+- **Contabilidade › Declarar › Retenções na fonte › O que há para fazer com as retenções?**: o botão **Modelo 10 (declaração anual)** leva ao mesmo sítio.
+
+## Antes de começar
+
+- O perfil é **Contabilista certificado**: é o único com o botão **Novo**. O **Contabilista** abre a lista e as fichas, mas não cria nem altera.
+- Para descarregar o ficheiro (passo 7) é preciso também o acesso **Responsável fiscal**. O perfil **Contabilista certificado** já o traz; um utilizador a quem o administrador o tirou (em **Ajustes avançados**) gera, confere e confirma o Modelo 10, mas não vê o botão **Descarregar o ficheiro da AT** (ver «Problemas frequentes»).
+- As faturas de fornecedores com retenção estão confirmadas e **pagas**: o Modelo 10 conta os rendimentos pagos no ano. Na demonstração, a fatura FTF/2026/00044 (Rui Matos, 138,00 €) ainda não foi paga e por isso não entra.
+- As guias do ano estão pagas ([Como pagar as retenções do mês](/accounting-pt/pagar-as-retencoes)): no exemplo, março, abril e junho de 2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Modelo 10 (declaração anual)**, carregue em **Novo**. **Ano** abre com o ano anterior (2025); escreva `2026`. O **Prazo de entrega** aparece sozinho: 01/03/2027 (28/02/2027 é um domingo, e o prazo passa para o dia útil seguinte). <span className="fd-pending">Pendente de validação por contabilista certificado: prazo de entrega do Modelo 10 (CIRS, art. 119.º).</span>
+2. Carregue em **Gerar**. No separador **Linhas** há uma linha por beneficiário, com **NIF**, **Código de rendimento**, **Local**, **Rendimento**, **Dispensado de retenção** e **Retido**. No exemplo: Ana Ferreira, código `B`, **Continente**, 1.500,00 € e 345,00 €; Rui Matos, código `B`, 800,00 € e 184,00 €. No topo: **Rendimento do ano** 2.300,00 €, **Valor retido** 529,00 €, **Retido na contabilidade** 529,00 € e **Diferença para a contabilidade** 0,00 €. Pode gerar de novo enquanto o Modelo 10 está em rascunho.
+   ![Modelo 10 de 2026 com Rendimento do ano 2.300,00 €, Valor retido 529,00 € e as linhas de Ana Ferreira e Rui Matos, com o botão Gerar assinalado](/images/accounting-pt/modelo-10/01-modelo-10-gerado.png)
+3. Carregue em **Conferir com as guias de pagamento**. A tabela **Retenções e guias de pagamento** compara, por mês, o **Retido (contabilidade)** com o **Pago em guias**. No exemplo: março 230,00 €, abril 115,00 € e junho 184,00 €, total 529,00 €, todos **Coincide**, e o título passa a **Coincide com as guias**. Uma linha **Diferença** quer dizer que um mês tem retenção sem guia paga, ou o contrário.
+   ![Tabela Retenções e guias de pagamento com março, abril e junho de 2026 a coincidir com as guias, 529,00 € no total](/images/accounting-pt/modelo-10/02-conferido-com-as-guias.png)
+4. Carregue em **Correr verificações** e abra o separador **Verificações**. Cada linha é **OK** ou **Aviso**, com a mensagem e os documentos a corrigir. No exemplo: **OK** nas retenções que coincidem com as guias e nas linhas que coincidem com o razão; **Aviso** em **Lançamentos ainda por publicar no período** (quatro rascunhos de diferimento da fatura FTF/2026/00045) e em **Ano fechado a alterações** (a data de bloqueio é 31/12/2025, anterior ao fim do período). Na demonstração aparece ainda um terceiro **Aviso**, **Contas com saldo pouco habitual**: a conta `111 Caixa` termina o período com saldo do lado pouco habitual. Resolva os avisos, ou confirme que não alteram a declaração, e corra as verificações outra vez.
+   ![Separador Verificações com avisos sobre lançamentos por publicar e sobre o ano não fechado, e verificações OK](/images/accounting-pt/modelo-10/03-verificacoes.png)
+5. No separador **Ficheiro de entrega**, preencha **Serviço de Finanças** (4 algarismos), **NIF do contabilista certificado** e **NIF do declarante / representante legal**. **Facto do justo impedimento** só se preenche se houver. Na demonstração usou-se o código `1111`, o NIF `399999981` do contabilista certificado e o NIF `399999906` do representante legal (NIF de exemplo de pessoas).
+   ![Separador Ficheiro de entrega com Serviço de Finanças, NIF do contabilista certificado, NIF do declarante e Facto do justo impedimento](/images/accounting-pt/modelo-10/04-ficheiro-de-entrega.png)
+6. Carregue em **Confirmar**. O estado passa a **Confirmado** e aparecem **Descarregar o ficheiro da AT**, **Reabrir** e **Marcar como submetido**. Se descobrir um erro, **Reabrir** volta ao rascunho. Depois de **Confirmado** a ficha já não se altera: só o **Reabrir** a devolve ao rascunho.
+7. Carregue em **Descarregar o ficheiro da AT** (só aparece com o acesso **Responsável fiscal**). No exemplo, o ficheiro `MODELO10_599999993_2026_modelo10-at-2024.txt` tem 10 linhas: cabeçalho, uma linha do Anexo J por beneficiário (dois) e o total de 529,00 €.
+8. Entregue o ficheiro no Portal da Autoridade Tributária. Depois, na ficha, carregue em **Marcar como submetido**: o estado passa a **Submetido** e já não há **Reabrir**. Uma ficha **Submetida** não se altera, não se elimina e não se pode criar outra do mesmo ano (ver «Corrigir um Modelo 10 já submetido»).
+   ![Barra de estado do Modelo 10 de 2026 em Submetido, com os botões Descarregar o ficheiro da AT e Registar a entrega à AT](/images/accounting-pt/modelo-10/06-submetido.png)
+9. Tenha à mão o comprovativo do Portal: **só se regista uma vez e não se altera**. Carregue em **Registar a entrega à AT**. A janela diz «Daqui não se envia nada». Escreva **Entregue em** (hoje ou uma data passada), a **Referência da Autoridade Tributária** que o Portal deu, anexe o **Comprovativo** e carregue em **Registar**. A janela fecha e a ficha fica igual, com uma diferença: o comprovativo passa a estar nos anexos da ficha (o clipe do histórico, em **Ficheiros**).
+   ![Janela Registar a entrega à Autoridade Tributária com Entregue em, Referência e Comprovativo preenchidos](/images/accounting-pt/modelo-10/07-registar-entrega.png)
+
+</StepByStep>
+
+### Retenções de IRC e taxas liberatórias
+
+- **IRC (CIRC, art. 94.º).** A **Retenção IRC 25% — retenção geral** cobre rendimentos de naturezas diferentes, por isso o código não vem da retenção: numa fatura de fornecedor com uma retenção de IRC aparece o campo **Código de rendimento do Modelo 10 (IRC)**. Escolha nele o código da natureza do rendimento, de `R3` a `R12` (por exemplo `R3`, rendimentos prediais, para rendas pagas a uma sociedade; `R6`, juros de depósitos). A lista só oferece os códigos `R3` a `R12` (ao abrir o campo, vêm `R3` a `R10` e **Pesquisar mais…** mostra os restantes). A ajuda do campo diz que o código vai ao Quadro 5 do Modelo 10, que sem ele (nem o da regra de retenção) o Modelo 10 não se confirma, e que pode indicá-lo depois de a fatura estar publicada.
+- **Taxas liberatórias.** O campo **Retenções a taxas liberatórias** preenche-se com **Gerar**, com o IRS retido a taxas liberatórias a residentes e pago no ano. Na demonstração não há retenções destas: o campo fica a 0,00 €. Com só retenções a taxas liberatórias e nenhuma linha, os botões **Confirmar** e **Descarregar o ficheiro da AT** aparecem na mesma. <span className="fd-pending">Pendente de validação no ecrã: exige uma fatura com retenção a taxa liberatória publicada e paga, que a demonstração não tem.</span>
+- **Não residentes.** Os documentos com retenção a um não residente, pagos no ano, ficam de fora, e a ficha mostra o aviso «… documento(s) com retenção a não residentes (…) não estão neste Modelo 10: declaram-se no Modelo 30.». Na demonstração não há nenhum, por isso o aviso não aparece.
+<span className="fd-pending">Pendente de validação por contabilista certificado: código R de cada natureza de rendimento e taxas liberatórias que entram no Campo 10.</span>
+
+{/* Nota interna (lote 97, M10-011 #4346, master 3a28c9b91, docs_demo_lote97_test, porta 8597, 18/11/2026): Modelo 10 de 2026 criado e gerado por clique com um utilizador só com o Perfil Contabilista certificado (traz o Responsável fiscal): 2.300,00 € / 529,00 €, «Retenções a taxas liberatórias» 0,00 €, «Linhas com problemas» 0, botões Gerar, Conferir com as guias de pagamento, Confirmar, Descarregar o ficheiro da AT e Correr verificações; ficheiro descarregado em rascunho (10 linhas) depois de preencher o separador Ficheiro de entrega; não se confirmou. Utilizador com o Perfil Contabilista certificado e o Responsável fiscal retirado: os mesmos botões sem Descarregar o ficheiro da AT. Contabilista: nenhum botão. Campo «Código de rendimento do Modelo 10 (IRC)» visto num rascunho com a Retenção IRC 25% — retenção geral, criado por RPC e apagado. Não visto no ecrã (exige publicar e pagar faturas, o que esta ronda não fez): Campo 10 com valor, linha R3 no Quadro 5, recusa do Confirmar sem código e aviso dos não residentes (texto da tradução do master). Reabrir pede o Responsável fiscal ou a Administração fiscal (vista). As somas do Quadro 4 no ficheiro de 2027 (campos 09 e 12) ficaram fora do artigo: não se veem no ecrã. */}
+
+## Resultado esperado
+
+- O Modelo 10 fica **Submetido**, com o **Rendimento do ano** e o **Valor retido** que entregou, e o comprovativo da entrega fica nos anexos da ficha. A data e a referência ficam gravadas num registo que não se altera, mas o ecrã de hoje não as mostra: guarde-as também no seu arquivo.
+- Gerar, conferir e confirmar não fazem nenhum lançamento: o Modelo 10 só lê as retenções do razão.
+- Quando não há contabilista certificado registado, a ficha regista na conversa o aviso «Não há hoje nenhum contabilista certificado registado como responsável por …»: registe-o em **Configurar › Sistema e segurança › Contabilista certificado**.
+- Numa empresa sem retenções (na demonstração, a Empresa Teste Portugal), **Gerar** dá **Rendimento do ano** 0,00 €, sem linhas.
+
+## Notas importantes
+
+- **O Modelo 10 conta pagamentos, não faturas.** Uma fatura com retenção só entra no ano em que for paga. Confirme que as faturas do fim do ano estão pagas antes de gerar. <span className="fd-pending">Pendente de validação por contabilista certificado: data que decide o ano do rendimento (CIRS, art. 101.º, n.º 8, e art. 119.º).</span>
+- **Percentagem do volume de negócios.** A ficha pode mostrar «O CAE 46900 não tem percentagem do volume de negócios. O ficheiro até 2026 escreve-se com ela vazia.»: preencha-a nas definições da empresa, quando aplicável. <span className="fd-pending">Pendente de validação por contabilista certificado: obrigatoriedade desta percentagem no ficheiro.</span>
+- **O registo da entrega é único.** A janela recusa uma segunda entrega do mesmo Modelo 10 e uma data de entrega no futuro (ver «Problemas frequentes»). Por isso, confirme a referência e o comprovativo antes de carregar em **Registar**.
+{/* Nota interna (V3A1-05): data e referência gravadas não se veem em nenhum ecrã (o comprovativo vê-se nos anexos). Pedir cartão ao Gestor. */}
+
+### Corrigir um Modelo 10 já submetido
+
+Um Modelo 10 **Submetido** não se reabre, não se altera nem se elimina, e não se cria outro do mesmo ano: o fiscaldoo diz «Uma correção é uma declaração de substituição», mas não tem hoje um ecrã para a preparar. Se descobrir um erro depois de submeter, a substituição faz-se com o contabilista certificado, no Portal da Autoridade Tributária. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo e forma da declaração de substituição do Modelo 10.</span> Antes de submeter, corra sempre **Conferir com as guias de pagamento** e **Correr verificações**.
+
+## Problemas frequentes
+
+### Não vejo o botão «Descarregar o ficheiro da AT»
+
+- **Causa:** o utilizador não tem o acesso **Responsável fiscal**. Visto com um utilizador com o perfil **Contabilista certificado** a quem esse acesso foi retirado: depois de **Gerar**, a ficha mostra **Gerar**, **Conferir com as guias de pagamento**, **Confirmar** e **Correr verificações**, sem **Descarregar o ficheiro da AT**. Com o perfil **Contabilista**, a ficha não mostra nenhum botão.
+- **O que fazer:** peça ao administrador o acesso **Responsável fiscal** (**Definições › Utilizadores e empresas › Utilizadores**, separador **Ajustes avançados**, grupo **LOCALIZAÇÃO PT**, linha **Localização PT — Responsável fiscal (submete à AT)**), ou que outra pessoa com esse acesso descarregue o ficheiro.
+
+### «Não é possível gerar o ficheiro do Modelo 10 de 2026»
+
+- **Sintoma:** ao carregar em **Descarregar o ficheiro da AT**, «Operação inválida — Não é possível gerar o ficheiro do Modelo 10 de 2026. O que aconteceu: O ficheiro do Modelo 10 não é válido: Quadro 1: falta o serviço de finanças (4 caracteres).. Como resolver: corrija o que está indicado (serviço de finanças, NIF, códigos de rendimento).»
+- **O que fazer:** **Reabrir** e preencha os campos do passo 5; volte a **Confirmar**.
+
+### «… não pode avançar: 1 verificação(ões) a bloquear» ao descarregar o ficheiro
+
+- **Sintoma:** em rascunho, **Descarregar o ficheiro da AT** responde «Operação inválida. «*Modelo 10 2026 — Empresa Demonstração, Lda*» não pode avançar: 1 verificação(ões) a bloquear.», seguido do que cada verificação encontrou e do que fazer (no exemplo, os lançamentos ainda por publicar no período, com o nome de alguns deles).
+- **Causa:** uma das [verificações antes de submeter](/accounting-pt/verificacoes-antes-de-submeter) do Modelo 10 foi posta a **Sempre bloqueia** e ainda bloqueia. Enquanto bloquear, o ficheiro não se gera em rascunho, tal como **Confirmar** não avança.
+- **O que fazer:** corrija o que a mensagem diz e volte a correr as verificações. Com as verificações do Modelo 10 em **Sempre um aviso** (o valor de partida), o ficheiro sai em rascunho mesmo com avisos.
+
+### «Há campos obrigatórios por preencher» ao registar a entrega
+
+- **Sintoma:** ao carregar em **Registar** sem referência nem comprovativo, «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **O que fazer:** escreva a **Referência da Autoridade Tributária** e anexe o comprovativo do Portal.
+
+### Uma linha mostra **Diferença** ao conferir com as guias
+
+- **Causa:** o mês tem retenção no razão sem guia paga com esse mês, ou uma guia paga com o mês errado.
+- **O que fazer:** abra a guia do mês ([Como pagar as retenções do mês](/accounting-pt/pagar-as-retencoes)) e confira o **Período da guia** do pagamento. Depois, **Conferir com as guias de pagamento** outra vez.
+
+### «A data da entrega está no futuro»
+
+- **Sintoma:** ao carregar em **Registar**, com **Entregue em** 30/11/2026 (hoje é 01/11/2026), «Operação inválida — A data da entrega está no futuro. O que aconteceu: uma entrega não se regista antes de acontecer. Como resolver: escreva a data em que a entregou no Portal.»
+- **O que fazer:** carregue em **Fechar** e corrija **Entregue em**.
+
+### «A entrega … já está registada»
+
+- **Sintoma:** ao registar de novo, «Operação inválida — A entrega de «Modelo 10 2026 — Empresa Demonstração, Lda» já está registada. O que aconteceu: cada entrega regista-se uma só vez e não se altera. Como resolver: nada a fazer, a data, a referência e o comprovativo já registados mantêm-se.»
+  ![Janela Operação inválida: a entrega do Modelo 10 de 2026 já está registada](/images/accounting-pt/modelo-10/08-segunda-entrega.png)
+- **O que fazer:** nada. O botão **Registar a entrega à AT** continua visível, mas o primeiro registo mantém-se.
+
+{/* Nota interna (DOCS-063 #3853, lote v23-S, master cebcb888d, docs_demo_v23s_test, porta 8458): DPIVA-107 no Modelo 10 visto por clique com um utilizador só com o Perfil Contabilista certificado: Modelo 10 de 2026 criado e gerado pelo ecrã; a verificação «Lançamentos ainda por publicar no período» posta a «Sempre bloqueia» por RPC (como o Responsável fiscal faria em Verificações antes de submeter) e reposta a «Sempre um aviso» no fim. A mensagem repete «Como resolver» e mostra os períodos como 2026-12 (defeito DPIVA-110): o Sintoma cita só a parte estável; rever quando o cartão entrar. Auditoria docs-aud-v23s: com a verificação reposta a «Sempre um aviso» e o Serviço de Finanças e os NIF do separador Ficheiro de entrega preenchidos, o ficheiro saiu em rascunho. */}
+
+{/* Nota interna (lote 99, FIX-M268, master 73d6a5fed, docs_demo_99_test, porta 9784, 19/11/2026, administrador): fatura de fornecedor em rascunho com a retenção «Retenção IRC 25% — retenção geral»; o campo Código de rendimento do Modelo 10 (IRC) abre com R3 a R10 e «Pesquisar mais…» (domínio do campo exclui R, R1 e R2). R11 e R12 não foram abertos no ecrã. Não confirmado com o perfil Contabilista: visto com o administrador. */}

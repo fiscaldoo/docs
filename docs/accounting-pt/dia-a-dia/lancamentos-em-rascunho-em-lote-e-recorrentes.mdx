@@ -1,0 +1,119 @@
+---
+id: lancamentos-em-rascunho-em-lote-e-recorrentes
+slug: /accounting-pt/lancamentos-em-rascunho-em-lote-e-recorrentes
+title: Como publicar ou eliminar vários lançamentos em rascunho e repetir um lançamento todos os meses
+sidebar_label: Rascunhos em lote e lançamentos mensais
+sidebar_position: 10
+description: Publicar de uma vez vários lançamentos em rascunho, eliminar os rascunhos que já não servem e pôr um lançamento a repetir-se todos os meses até uma data.
+keywords: [lançamentos em rascunho, lancamentos em rascunho, publicar em lote, confirmar entradas, eliminar rascunhos, lançamento recorrente, lancamento recorrente, lançar automaticamente, mensalmente, renda mensal, lançamento mensal]
+doc_id: DOC-0438
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/dia-a-dia/lancamentos-contabilisticos, accounting-pt/dia-a-dia/modelos-de-lancamento, accounting-pt/dia-a-dia/estornar-um-lancamento]
+---
+
+## Para que serve?
+
+Na lista de lançamentos pode tratar vários rascunhos de uma vez: publicá-los todos ou eliminar os que já não servem. Num lançamento que se repete todos os meses, como uma renda, o campo **Lançar automaticamente** cria sozinho o rascunho do mês seguinte, até à data que escolher.
+
+Como se faz um lançamento manual está em [Como fazer um lançamento contabilístico manual](/accounting-pt/lancamentos-contabilisticos).
+
+## Quando utilizar?
+
+- Preparou vários lançamentos em rascunho ao longo da semana e quer publicá-los juntos.
+- Tem rascunhos repetidos ou feitos por engano.
+- Paga a mesma renda, avença ou seguro todos os meses e não quer escrever o lançamento de cada mês.
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Lançamentos › Lançamentos contabilísticos**: na lista, o menu **Ações**; no lançamento, o separador **Outra Informação**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**: publica, elimina rascunhos e põe a repetição. Provado com um utilizador criado só com esse perfil.
+- A lista abre com o filtro **Publicados**. Para ver os rascunhos, tire esse filtro e escolha **Rascunho** nos filtros.
+- Feito a 8 de novembro de 2026 na `Empresa Demonstração, Lda`, no diário **Operações Diversas**: «Comissões bancárias da semana» (7,50 €) e «Portes de correio da semana» (18,40 €), de 06/11/2026; «Renda do armazém» (300,00 €), de 01/11/2026.
+
+## Como utilizar
+
+### Publicar vários rascunhos de uma vez
+
+<StepByStep>
+
+1. Na lista **Lançamentos contabilísticos**, mostre os rascunhos (ver «Antes de começar») e marque a caixa à esquerda de cada um.
+   ![Lista de lançamentos com dois rascunhos de 06/11/2026 marcados: Portes de correio da semana, 18,40 €, e Comissões bancárias da semana, 7,50 €](/images/accounting-pt/lancamentos-em-rascunho-em-lote-e-recorrentes/01-rascunhos-escolhidos.png)
+2. Carregue em **Ações** e escolha **Confirmar entradas**. Os rascunhos com data de hoje ou anterior passam logo a **Publicada**, sem mais nenhuma janela, e recebem o número do diário, por ordem: no exemplo, OD/2026/00139 e OD/2026/00140.
+3. Se escolheu algum rascunho com data **futura**, abre-se a janela **Confirmar entradas**. Carregue em **Confirmar**: esses rascunhos ficam por publicar até à sua data. Se antes marcar **Confirmar agora**, são publicados já, com a data futura.
+   ![Janela Confirmar entradas, com o aviso sobre lançamentos de data futura e os botões Confirmar e Descartar](/images/accounting-pt/lancamentos-em-rascunho-em-lote-e-recorrentes/02-confirmar-entradas.png)
+
+</StepByStep>
+
+Um rascunho com data **futura** não é publicado: fica em rascunho com **Lançar automaticamente** em **Na data** e é publicado sozinho nesse dia. No exemplo, os rascunhos de 30/11/2026 ficaram assim.
+
+### Eliminar rascunhos
+
+<StepByStep>
+
+1. Na lista, mostre os rascunhos e marque os que quer eliminar, por exemplo «Comissões bancárias em duplicado».
+2. Carregue em **Ações › Eliminar**.
+3. Na janela «Quer mesmo fazer desaparecer este registo? Tem a certeza? Fica perdido para sempre! Pense bem antes de clicar em «Eliminar»!», carregue em **Eliminar**. O rascunho desaparece da lista.
+
+</StepByStep>
+
+Um lançamento publicado não se elimina: corrige-se com um estorno (ver «Problemas frequentes»).
+
+### Repetir um lançamento todos os meses
+
+<StepByStep>
+
+1. Abra o lançamento em rascunho, por exemplo «Renda do armazém» de 01/11/2026, e o separador **Outra Informação**.
+2. Em **Lançar automaticamente**, escolha **Mensalmente**. As outras opções são **Não**, **Na data**, **Trimestral** e **Anualmente**.
+3. Em **Lançar automaticamente até**, escolha o último mês, por exemplo `31/01/2027`. Sem data, a repetição não acaba.
+   ![Separador Outra Informação com Lançar automaticamente em Mensalmente e Lançar automaticamente até 31/01/2027](/images/accounting-pt/lancamentos-em-rascunho-em-lote-e-recorrentes/03-lancar-automaticamente.png)
+4. Guarde. Por cima do lançamento aparece um aviso com a data do lançamento e o fim da repetição, que termina em «A recorrência terminará em 31/01/2027 (inclusive).».
+5. Carregue em **Publicar**. O lançamento de novembro fica **Publicada** (OD/2026/00141) e nasce um rascunho igual com a data de 01/12/2026, com as mesmas contas e valores (débito 6261 Rendas e alugueres e crédito 2781 Outros devedores e credores, 300,00 €) e o mesmo **Lançar automaticamente até**.
+
+</StepByStep>
+
+O rascunho do mês seguinte é publicado sozinho na sua data e, ao ser publicado, cria o do mês a seguir. O último é o do mês da data de fim.
+
+## O que diz a lei
+
+- **Conservação dos lançamentos:** a mensagem do fiscaldoo que recusa eliminar um lançamento publicado cita o Código do IVA, art. 52.º, e o Código do IRC, art. 123.º: os documentos fiscais conservam-se durante 10 anos, salvo prazo superior. *Pendente de validação por contabilista certificado.*
+
+## Resultado esperado
+
+- Os rascunhos escolhidos ficam publicados, com número, ou eliminados.
+- O lançamento mensal fica publicado e há sempre um só rascunho à espera do mês seguinte.
+
+## Notas importantes
+
+- **O rascunho seguinte não leva a Referência.** No exemplo, o rascunho de 01/12/2026 tem as linhas com «Renda do armazém», mas o campo **Referência** vem vazio: preencha-o, se o usa para encontrar o lançamento.
+- **Rascunho do mês seguinte sem o botão Publicar.** Num lançamento com repetição e data futura, a ficha não tem **Publicar**, embora o aviso amarelo diga «A data deste lançamento é futura. Publicá-lo contabiliza-o já, no período dessa data…». Espere pela data, ou ponha **Lançar automaticamente** em **Não** para o publicar à mão.
+- **Duplicar não repete.** A repetição nasce da publicação; um lançamento duplicado é um rascunho novo.
+- **Exercício fechado:** não se cria nem se publica um lançamento com data num exercício fechado (ver [Como bloquear períodos e gerir exceções](/accounting-pt/datas-de-bloqueio)).
+
+## Problemas frequentes
+
+### «O documento “…” tem de ser conservado até 31/12/2036 …» ao eliminar
+
+![Janela Erro de Acesso: o documento OD/2026/00139 tem de ser conservado até 31/12/2036 e não pode ser eliminado; se foi lançado por engano, estorne-o](/images/accounting-pt/lancamentos-em-rascunho-em-lote-e-recorrentes/04-publicado-nao-se-elimina.png)
+
+- **Causa:** escolheu um lançamento já publicado. A mensagem completa: «O documento “OD/2026/00139 (Comissões bancárias da semana)” tem de ser conservado até 31/12/2036: os documentos fiscais são conservados durante 10 anos, salvo prazo superior (CIVA art. 52.º, CIRC art. 123.º) e não podem ser eliminados antes dessa data, nem por administradores. Se foi lançado por engano, estorne-o (ação «Estornar lançamento»): o estorno conserva os dois lançamentos.»
+- **O que fazer:** carregue em **Fechar** e faça o estorno, como em [Como estornar um lançamento](/accounting-pt/estornar-um-lancamento).
+
+### «O exercício 2025 (…) está fechado: não pode criar o lançamento …»
+
+- **Causa:** a data do lançamento cai num exercício fechado.
+- **O que fazer:** use uma data do exercício aberto. Se for mesmo preciso lançar no exercício fechado, fale com o contabilista certificado.
+
+### Carreguei em Confirmar entradas e os rascunhos continuam em rascunho
+
+- **Causa:** têm data futura. Ficaram com **Lançar automaticamente** em **Na data**.
+- **O que fazer:** nada, se é para publicar nessa data. Se a data está errada, corrija-a no lançamento e volte a confirmar.
+
+{/* Nota interna (lote v23-AA, #4052 DOCS-069, tema que só a pasta congelada tinha: Contabilidade/lancamentos-em-rascunho-em-lote-e-recorrentes.md; master 97b34fac3, docs_demo_v23aa_test, porta 8478). Percorrido por clique com um utilizador só com o Perfil Contabilista (aa.contab). Rascunhos criados por RPC como aa.contab (511 Renda do armazém, 512/513 de 30/11, 514 em duplicado, 515/516 de 06/11); a criação de um de 20/12/2025 foi recusada (exercício 2025 fechado, mensagem citada). Por clique: Confirmar entradas sobre 515/516 (OD/2026/00139 e 00140) e sobre 512/513 (ficaram Na data); Eliminar de OD/2026/00139 recusado; Eliminar do rascunho 514 feito; Mensalmente em 511 e Publicar (OD/2026/00141), rascunho 517 de 01/12/2026 nascido sem Referência; Lançar automaticamente até 31/01/2027 posto no 517. O aviso «monthly auto-posting enabled. Next accounting date» está em inglês e a janela Confirmar entradas tem português do Brasil («Os selecionados lançamentos», «respectivas»): defeitos no LOTE_V23-AA. O limite de crédito de clientes, que o guia antigo juntava, é outra necessidade e não foi escrito (fica para um sucessor). */}

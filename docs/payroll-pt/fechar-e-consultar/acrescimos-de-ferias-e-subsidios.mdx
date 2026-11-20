@@ -1,0 +1,156 @@
+---
+id: acrescimos-de-ferias-e-subsidios
+slug: /payroll-pt/acrescimos-de-ferias-e-subsidios
+title: Como lançar o acréscimo mensal de férias e subsídios
+sidebar_label: Acréscimo de férias e subsídios
+description: Calcular todos os meses a estimativa das férias e dos subsídios, lançá-la na conta 2722, recalculá-la quando algo muda e ver como é usada quando os subsídios são pagos.
+keywords: [acréscimo de férias, acrescimo de ferias, acréscimos de férias e subsídios, acrescimos de ferias e subsidios, especialização, conta 2722, conta 272, estimativa de férias, subsídio de Natal, saldo do acréscimo, duodécimo, duodecimo]
+doc_id: DOC-0233
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/configurar/contabilizar-os-salarios, payroll-pt/processar-e-pagar/subsidios-de-ferias-e-natal, payroll-pt/processar-e-pagar/processar-o-mes]
+---
+
+## Para que serve?
+
+As férias e os subsídios ganham-se ao longo do ano, mas pagam-se mais tarde. O gasto pertence ao mês em que o trabalho é feito. Por isso, todos os meses, regista-se uma estimativa: gasto com o pessoal contra a conta **2722 Credores por acréscimos de gastos**.
+
+O recibo de vencimento não muda. Quando um recibo paga o subsídio, o lançamento desse recibo usa primeiro o que está acrescido e só o resto vai a gasto.
+
+## Quando utilizar?
+
+- Todos os meses, depois de processar os salários. Uma vez por mês, o fiscaldoo já prepara sozinho o rascunho do mês que acabou: aparece na lista em **Rascunho**, por exemplo **Acréscimo 2026-10**, e não vai para a contabilidade enquanto ninguém o lançar. Quem o lança é o **Administrador de Salários**, com os valores decididos com o contabilista certificado.
+- Quando algo mudou num mês já lançado (um salário, uma admissão): use **Recalcular o mês**.
+
+Não use este ecrã para pagar nada: o pagamento faz-se no lote de salários. Uma empresa com subsídios pagos em duodécimos só acresce a parte que não é paga em duodécimos.
+
+## Onde encontrar?
+
+- **Salários › Fechar e consultar › Controlo e inventário › Acréscimos de férias e subsídios**
+- **Salários › Fechar e consultar › Controlo e inventário › Saldo do acréscimo por trabalhador**
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador. Para lançar e recalcular, este acesso chega, também com o perfil **Processador de salários**. Só o botão **Lançamento contabilístico** pede ainda um perfil que consulta a contabilidade: **Administrativo**, **Contabilista** ou **Contabilista certificado**.
+- O **Processador de salários** só calcula: não tem o botão **Lançar na contabilidade**.
+- Existem os modelos de contabilização das três rubricas do acréscimo. Quem os cria tem o acesso extra **Administrador de Salários**: com ele, também com o perfil **Processador de salários**, escolhe a **Conta a débito**, a **Conta a crédito** e o **Diário de salários**. A escolha das contas é decidida com o contabilista certificado. O diário tem de ser o mesmo nos três (ver [Como contabilizar o processamento dos salários](/payroll-pt/contabilizar-os-salarios)).
+
+| Rubrica (em **Modelos de contabilização**) | Débito | Crédito |
+|---|---|---|
+| Acréscimo: férias e subsídio de férias | 632 | 2722 |
+| Acréscimo: subsídio de Natal | 632 | 2722 |
+| Acréscimo: contribuições da entidade patronal sobre os subsídios | 635 | 2722 |
+
+A quarta rubrica, **Acréscimo: seguro de acidentes de trabalho sobre os subsídios**, só precisa de modelo quando a corrida tiver valor nessa coluna. A crédito, a 231 é recusada: «O acréscimo … não pode ser creditado na conta 231290 Remunerações em processamento. …».
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Fechar e consultar › Controlo e inventário › Acréscimos de férias e subsídios**. Abra o rascunho do mês, se já lá estiver. Se não estiver, carregue em **Novo**.
+2. Confira **Ano** e **Mês**. A **Data do lançamento** acompanha o mês e o nome preenche-se sozinho, por exemplo **Acréscimo 2026-10**, com a data 31/10/2026.
+3. Em **Método**, escolha **Um duodécimo, proporcional aos dias de serviço no mês** ou **Um duodécimo inteiro por cada mês com serviço**. Deixe marcado **Com as contribuições da entidade patronal**, se for o critério da empresa, e escolha o **Arredondamento**.
+4. Carregue em **Calcular**. Aparece uma linha por trabalhador, com **Base do mês**, **Férias e subsídio**, **Subsídio de Natal**, **Contribuições**, **Seguro de acidentes de trabalho** e **Total**.
+   ![Acréscimo calculado, com os totais por componente e uma linha por trabalhador; o botão Lançar na contabilidade está assinalado](/images/payroll-pt/acrescimos-de-ferias-e-subsidios/01-acrescimo-calculado.png)
+5. Confira os valores e carregue em **Lançar na contabilidade**. O estado passa a **Lançado** e aparecem **Recalcular o mês** e **Estornar**. Quem tem também um perfil que consulta a contabilidade (veja «Antes de começar») vê também **Lançamento contabilístico**.
+6. Se algo mudar no mês, carregue em **Recalcular o mês** e em **Confirmar**. Abre-se uma corrida nova em **Rascunho**. Carregue em **Calcular** e em **Lançar na contabilidade**: só nessa altura a corrida anterior é estornada.
+
+</StepByStep>
+
+**Exemplo.** Em outubro de 2026, com 8 trabalhadores, o total acrescido é de 3.576,37 €. O Trabalhador A, com base de 2.400,00 €, tem:
+
+- **Férias e subsídio**: 2.400,00 € × 2 ÷ 12 = 400,00 €.
+- **Subsídio de Natal**: 2.400,00 € ÷ 12 = 200,00 €.
+- **Contribuições**: 23,75 % de 600,00 € = 142,50 €.
+- **Total**: 742,50 €.
+
+O lançamento, no diário **Salários**, com a data 31/10/2026:
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| 632 Remunerações do pessoal (férias, subsídio de férias e Natal) | 2.890,00 € | |
+| 635 Encargos sobre remunerações | 686,37 € | |
+| 2722 Credores por acréscimos de gastos | | 3.576,37 € |
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: as contas 632, 635 e 2722, a base de dois duodécimos para férias e subsídio de férias e a taxa das contribuições sobre o acréscimo.</span>
+
+## No Enterprise
+
+No Odoo Enterprise, o acréscimo calcula-se, lança-se e consulta-se da mesma maneira. Com o perfil **Contabilista** e o acesso extra **Administrador de Salários**, um acréscimo novo tem **Calcular** e **Lançar na contabilidade**; depois de lançado, passa a ter **Recalcular o mês**, **Estornar** e **Lançamento contabilístico**. Este botão abre o lançamento, no estado **Publicada**, sem sair de **Salários**, como no Community.
+
+{/* Nota interna (lote EE-07, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee07b_test: cópia da odoo20_ee_test com a aplicação de salários do Enterprise (hr_payroll) instalada e o código de master; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado: Contabilista com o acesso Administrador de Salários: acréscimo próprio de novembro de 2026 (Acréscimo 2026-11, data 30/11/2026) criado, calculado e lançado na cópia só para chegar ao botão Lançamento contabilístico, que abriu o lançamento SAL/2026/00005 (Publicada); o Acréscimo 2026-10 da demonstração ficou em Rascunho, sem lhe tocar. Processador de salários com o acesso Administrador de Salários: Calcular e Lançar na contabilidade. Caminhos do artigo conferidos com o verificador do test_doc_paths na mesma cópia (0 erros). Ver reports/LOTE_EE-07.md. */}
+
+## Resultado esperado
+
+- A corrida está **Lançada** e a lista mostra-a com o **Total acrescido** e o valor **Em vigor**. O rodapé da lista soma só **Em vigor**: uma corrida em **Rascunho** conta 0,00.
+- Depois de **Recalcular o mês**, a corrida antiga fica **Substituído por uma nova corrida** e tem um lançamento de estorno. Para cada mês e empresa, só uma corrida conta. Nada se duplica.
+- Em **Saldo do acréscimo por trabalhador**, o saldo de cada componente sobe. Depois de outubro, o total é igual ao saldo da conta 2722: 3.576,37 €.
+
+![Lista dos acréscimos: outubro lançado e a corrida anterior de outubro substituída](/images/payroll-pt/acrescimos-de-ferias-e-subsidios/02-lista-depois-de-recalcular.png)
+
+## Quando os subsídios são pagos
+
+Não há nada a fazer neste ecrã. O abatimento acontece sozinho quando o recibo que paga o subsídio é contabilizado (ver [Como pagar os subsídios de férias e de Natal](/payroll-pt/subsidios-de-ferias-e-natal)).
+
+**Exemplo.** Só outubro estava acrescido. O lote **Natal de dezembro de 2026**, com 7 trabalhadores, tem 10.083,01 € de subsídio. Ao carregar em **Contabilizar**, o lançamento debitou:
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| 2722 Credores por acréscimos de gastos (Natal 859,16 € e contribuições 204,05 €) | 1.063,21 € | |
+| 632 Remunerações do pessoal (o subsídio que não estava acrescido) | 9.223,85 € | |
+| 635 Encargos sobre remunerações (o resto das contribuições) | 2.190,68 € | |
+| 2312 Ao pessoal (líquido a receber) | | 8.232,88 € |
+| 242 Retenção de impostos sobre rendimentos | | 741,00 € |
+| 245 Contribuições para a Segurança Social | | 3.503,86 € |
+
+O mesmo lançamento mostra também a conta 231290 Remunerações em processamento, com 10.083,01 € a débito e a crédito, que se anulam.
+
+O saldo total desceu de 3.576,37 € para 2.513,16 € (a diferença é de 1.063,21 €), e o saldo do **Subsídio de Natal** dos 7 trabalhadores ficou a 0,00 €. O Trabalhador H, com contrato até 30/11/2026, não entra neste lote e mantém os 104,17 €.
+
+![Saldo do acréscimo por trabalhador depois do lote de Natal: Subsídio de Natal a 0,00 € em sete linhas, 104,17 € na oitava e 2.513,16 € no total](/images/payroll-pt/acrescimos-de-ferias-e-subsidios/03-saldo-depois-do-natal.png)
+
+Na saída de um trabalhador, o tratamento do saldo faz parte de [Como tratar a saída de um trabalhador](/people/cessacao-do-contrato).
+
+## Notas importantes
+
+- **O rascunho do mês.** Uma vez por mês, o fiscaldoo prepara sozinho um rascunho do mês que acabou, já calculado, por exemplo **Acréscimo 2026-10**, com 8 trabalhadores e 3.576,37 €. Nunca o lança: é o **Administrador de Salários** que o revê, com os valores decididos com o contabilista certificado, e carrega em **Lançar na contabilidade**.
+- **Quando o lote já está contabilizado.** O botão **Contabilizar** sai do lote, porque já não há recibos por contabilizar.
+
+- **É uma estimativa.** O valor real só se conhece quando se paga. O acréscimo não altera o recibo nem a Segurança Social do mês.
+- **O saldo tem de bater com a conta 2722.** Se não bater, houve um lançamento feito à mão nessa conta: o saldo por trabalhador só vê o que veio dos acréscimos e dos recibos.
+- **Um estorno não se desfaz.** **Estornar** cria o lançamento inverso e a corrida deixa de contar. Uma corrida lançada nunca se altera nem se apaga. Depois de um recibo ter usado o acréscimo, **Estornar** recusa (veja **Problemas frequentes**).
+
+## Problemas frequentes
+
+### «Contabilização bloqueada: 1 rubrica(s) com valor não têm modelo de contabilização»
+
+- **Mensagem:** por agora, em **Lançar na contabilidade**, abre-se «Ops! Algo correu mal... Se não conseguir avançar, envie o relatório ao suporte técnico.». A frase que explica o caso está em **Ver detalhes técnicos**: «Contabilização bloqueada: 1 rubrica(s) com valor não têm modelo de contabilização em 31/10/2026: Acréscimo: férias e subsídio de férias. O que aconteceu: o lançamento não pode ser construído sem uma conta para cada linha. Como corrigir: crie um modelo para cada uma (Salários › Configurar › Rubricas › Modelos de contabilização).»
+- **O que fazer:** peça a quem tem o acesso extra **Administrador de Salários** que crie os três modelos da tabela de «Antes de começar», com a data **Válido desde** anterior à do lançamento, e carregue de novo em **Lançar na contabilidade**.
+
+### «Não é possível calcular o acréscimo»
+
+- **Mensagem:** «Não é possível calcular o acréscimo de Acréscimo 2026-11. O que aconteceu: sem classe contabilística: Novo Colaborador, Novo Colaborador 2. Como resolver: registe a classe do trabalhador (Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores) e o regime de Segurança Social no contrato; nada é assumido.»
+- **O que fazer:** na ficha de cada trabalhador indicado, no separador **Trabalho**, preencha a **Classe contabilística** e o **Regime de Segurança Social** e carregue de novo em **Calcular**. Um trabalhador arquivado com contrato em vigor também conta: a mensagem junta-lhe «(arquivado: abra o filtro «Arquivados» da lista de trabalhadores para o encontrar)».
+
+### «O ano … não é válido»
+
+- **Sintoma:** ao guardar uma corrida nova com o **Ano** mal escrito (por exemplo `20`): «O ano 20 não é válido. Como resolver: escreva um ano como 2026.»
+- **O que fazer:** escreva o ano com quatro algarismos.
+
+{/* Nota interna (lote v23-AH, DOCS-069 #4052, master 97b34fac3, docs_demo_v23ah_test): mensagem vista por clique com o Processador de Salários da demonstração (Novo, Ano 20, guardar; nada gravado, descartado). Vinha do guia congelado Salários/acrescimo-mensal-de-ferias-e-subsidios-conta-272.md. */}
+
+### «A corrida … não tem trabalhadores»
+
+- **Mensagem:** «A corrida Acréscimo 2026-11 não tem trabalhadores. O que aconteceu: nada foi calculado, ou nenhum trabalhador tem serviço e retribuição no mês. Como resolver: carregue em Calcular; se continuar vazia, não há nada a acrescer.»
+- **O que fazer:** carregue em **Calcular**. Numa empresa sem trabalhadores (testado numa empresa sem contratos), a corrida continua vazia, com total de 0,00 €, e não há nada a lançar.
+
+### «O saldo … ficaria negativo»
+
+- **Mensagem:** «O saldo de «Subsídio de Natal» de *Nome do trabalhador* ficaria negativo (- 200,00 €). O que aconteceu: os recibos já usaram mais do que esta corrida deixa acrescido. Como resolver: mantenha a corrida, ou lance uma nova com pelo menos o que foi usado.»
+- **O que fazer:** mantenha a corrida. No exemplo, apareceu em **Estornar**, com o lote de Natal já contabilizado. Se os valores do mês mudaram, use **Recalcular o mês**: no exemplo, funcionou com o lote de Natal já contabilizado.
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): contas e diário editáveis nos Modelos de contabilização com Processador + Administrador de Salários (por clique); o botão Lançamento contabilístico lido nos grupos da vista (leitura ou faturação da contabilidade) e na matriz de grupos, sem clique: lançar o acréscimo da base seria publicar um documento da base. */}

@@ -1,0 +1,105 @@
+---
+id: mapas-fiscais-dos-ativos
+slug: /accounting-pt/mapas-fiscais-dos-ativos
+title: Como gerar os mapas fiscais dos ativos (Modelos 31 e 32)
+sidebar_label: Gerar os mapas fiscais dos ativos
+sidebar_position: 4
+description: Gerar o mapa de depreciações e amortizações (Modelo 32), o mapa de mais-valias e menos-valias (Modelo 31) e o quadro de ativos fixos do exercício, conferir os totais e arquivá-los depois de fechar o exercício.
+keywords: [mapas fiscais, mapas fiscais dos ativos, modelo 32, modelo 31, mapa de depreciações, mapa de depreciacoes, mapa de amortizações, mapa de amortizacoes, mapa de mais-valias, mais-valias, menos-valias, quadro de ativos fixos, mapas fiscais arquivados, arquivar mapas, diferenças fiscais dos ativos, diferencas fiscais dos ativos, quota não aceite, quota nao aceite, dossier fiscal, processo de documentação fiscal]
+doc_id: DOC-0128
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/ativos/abater-ou-vender-um-ativo, accounting-pt/ativos/processar-depreciacoes]
+---
+
+## Para que serve?
+
+No fim de cada exercício, a empresa guarda no processo de documentação fiscal os mapas dos ativos: o **Modelo 32** (depreciações e amortizações do ano, com a parte que não é aceite fiscalmente) e o **Modelo 31** (mais-valias e menos-valias dos ativos vendidos ou abatidos). A janela **Mapas fiscais dos ativos** gera os dois, e o **Quadro de ativos fixos**, a partir das fichas dos ativos, em PDF, XLSX ou CSV, e, com o exercício fechado, arquiva os três em PDF. <span className="fd-pending">Pendente de validação por contabilista certificado: obrigação e conteúdo dos mapas (Decreto Regulamentar n.º 25/2009, art. 21.º; CIRC, art. 130.º).</span>
+
+## Quando utilizar?
+
+- No fecho do exercício, depois de processar as depreciações de dezembro: para conferir os mapas e, depois de fechar o exercício, arquivá-los.
+- Antes do fecho, para ver como vão ficar a quota não aceite e as mais ou menos-valias do ano (os valores ainda mudam).
+- Para preparar a declaração de IRC: a quota não aceite e as mais ou menos-valias fiscais vêm destes mapas.
+
+## Onde encontrar?
+
+**Contabilidade › Fechar › Fecho do exercício › Painel do fecho do exercício**. No fim da página, em **Listas de apoio**, carregue em **Mapas fiscais dos ativos**.
+
+![Listas de apoio do painel do fecho do exercício com Mapas fiscais dos ativos assinalado](/images/accounting-pt/mapas-fiscais-dos-ativos/01-listas-de-apoio-mapas.png)
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**. Os passos 1 a 9, incluindo o **Arquivar**, foram feitos do princípio ao fim com esse perfil. Quem tem só o acesso extra **Responsável fiscal** também tem **Mapas fiscais dos ativos** nas **Listas de apoio** do painel do fecho do exercício, e também arquiva os mapas. O perfil **Contabilista** não tem o painel do fecho do exercício, mas abre a mesma janela em **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**, nas **Listas de apoio**.
+- As depreciações do ano estão processadas até dezembro ([Como processar as depreciações do mês](/accounting-pt/processar-depreciacoes)) e as vendas e abates do ano estão registados ([Como abater ou vender um ativo](/accounting-pt/abater-ou-vender-um-ativo)). Os mapas leem as fichas dos ativos, não o razão: um ativo que não tem ficha não aparece.
+- O exemplo é o da Empresa Demonstração, Lda, a 29/10/2026, depois do artigo [Como abater ou vender um ativo](/accounting-pt/abater-ou-vender-um-ativo): o `AF/00011` «Computador da contabilidade» vendido nesse dia (menos-valia de 200,01 €) e o `AF/00017` «Impressora da receção» abatido (menos-valia de 706,69 €), entre as 6 saídas do ano na base de demonstração.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Mapas fiscais dos ativos**, abre-se a janela **Mapas fiscais dos ativos**.
+   ![Janela Mapas fiscais dos ativos com Exercício de 03/11/2026, Segmento Todos, Ótica Contabilística e fiscal, Comparar com o exercício anterior marcado, os botões PDF, XLSX, CSV, Detalhe e Linhas de lançamento de cada mapa e, no grupo FECHO, Arquivar os mapas do exercício e Mapas arquivados](/images/accounting-pt/mapas-fiscais-dos-ativos/02-janela-mapas-fiscais.png)
+2. Em **Exercício de**, escreva qualquer dia do exercício (`31/12/2026`): os mapas cobrem o ano inteiro.
+3. Deixe **Segmento** em **Todos**. As outras opções separam os ativos **Adquiridos antes de 1989**, **Adquiridos desde 1989** e **Reavaliados**, como pede o art. 21.º do Decreto Regulamentar n.º 25/2009.
+4. Em **Ótica**, deixe **Contabilística e fiscal** para ter as duas colunas lado a lado; **Só contabilística** e **Só fiscal** imprimem só uma. **Localização** limita os mapas aos ativos de um sítio; vazio, entram todos.
+5. **Comparar com o exercício anterior** (marcado ao abrir) acrescenta os totais do ano anterior por baixo dos de cada grupo. **Simular as alienações previstas** junta ao Modelo 31 as vendas previstas nas fichas (**Data prevista da alienação** e **Preço previsto da alienação**), marcadas como simulação, sem lançar nada.
+6. Se houver uma mais-valia em ativos detidos há pelo menos um ano, aparece por baixo das opções uma caixa azul, sem título, com o reinvestimento (sem mais-valia, não aparece nada). Diz quanto da mais-valia fica fora do lucro tributável se o valor da venda for reinvestido até ao fim do segundo ano seguinte, quanto já foi reinvestido e a majoração se não for. No teste, com o `AF/00003` «Mobiliário de escritório» com venda prevista a 15/12/2026 por 7.000,00 € e **Simular as alienações previstas** marcada: «Mais-valia de 2.133,33 € em ativos vendidos depois de detidos pelo menos um ano. Se os 7.000,00 € recebidos forem reinvestidos em ativos tangíveis até 31/12/2028, 50% da mais-valia (1.066,67 €) fica fora do lucro tributável. […] Indique a intenção na declaração.» A caixa só informa: não se escreve nela e não muda os mapas. Não use os valores dela na declaração sem os conferir com o contabilista certificado: o «Reinvestido até agora» soma as aquisições do período. <span className="fd-pending">Pendente de validação por contabilista certificado: reinvestimento dos valores de realização e prazo (CIRC, art. 48.º).</span>
+   ![Janela Mapas fiscais dos ativos com Simular as alienações previstas marcada e a caixa azul do reinvestimento assinalada, com a mais-valia de 2.133,33 € e o prazo de 31/12/2028](/images/accounting-pt/mapas-fiscais-dos-ativos/03-reinvestimento.png)
+7. Carregue em **Detalhe** do mapa que quer conferir. No exemplo (sem a simulação), o **Detalhe** do Modelo 31 lista 6 saídas de 2026, com o total de -6.570,04 € de **Mais/(menos)-valia contabilística** e -7.006,82 € de **Mais/(menos)-valia fiscal**; a linha do «Computador da contabilidade» tem **Valor de venda** 900,00 €, **Coeficiente** 1,00 e -200,01 € nas duas colunas, e a da «Impressora da receção» -706,69 € nas duas.
+8. Volte à janela e carregue em **PDF**, **XLSX** ou **CSV** do mapa. O **Quadro de ativos fixos** só tem **PDF** e **XLSX**. Confira que os totais do ficheiro são os do **Detalhe**: no exemplo, o PDF, o XLSX e o CSV do Modelo 31 têm as mesmas 6 linhas e os mesmos -6.570,04 € e -7.006,82 €, e o PDF termina com «Total da mais/(menos)-valia fiscal: -7.006,82», o CSV acaba numa linha **Total** com os dois valores, e o XLSX tem a mesma linha **Total**, seguida de uma linha **Total do exercício anterior** (vazia no exemplo). O CSV separa as colunas com «;» e usa o ponto nas casas decimais e datas como `2026-10-29`: ao abri-lo numa folha de cálculo, indique esse formato na importação, ou os valores ficam como texto.
+9. Depois de fechar o exercício, carregue em **Arquivar os mapas do exercício** (grupo **FECHO**) e em **Confirmar** na pergunta «São arquivados 5 ficheiros PDF (Modelo 32 por segmento, Modelo 31 e Quadro de ativos fixos), conservados durante o prazo legal. Continuar?». O exercício está fechado quando a **Data de bloqueio global**, ou a **Data de bloqueio definitivo**, é igual ou posterior ao último dia do exercício (ver [Como bloquear períodos e gerir exceções](/accounting-pt/datas-de-bloqueio)). A janela fica uns segundos à espera enquanto os PDF se fazem (12 segundos no teste), fecha-se e aparece a mensagem «5 mapas arquivados (Modelo 32 por segmento, Modelo 31 e Quadro de ativos fixos). 0 já estavam arquivados neste exercício e ficaram como foram emitidos: um mapa arquivado nunca é substituído.». No exemplo, o exercício de 2026 ainda está aberto e o arquivo é recusado (ver «Problemas frequentes»); a mensagem acima é a do exercício de 2025, fechado na demonstração com a **Data de bloqueio global** a 31/12/2025, com **Exercício de** `31/12/2025`.
+
+</StepByStep>
+
+<HelpCallout type="atencao" title="Antes de fechar o exercício, os mapas são provisórios">
+O Modelo 32 conta a quota do ano inteiro pelo plano de cada ativo, mesmo os meses ainda não processados: no exemplo, o `AF/00012` «Programa de gestão documental», com só setembro processado (16,67 €), aparece com **Quota praticada** 66,68 € (setembro a dezembro). Até o exercício estar fechado, use os PDF, XLSX e CSV só para conferir. Por isso **Arquivar os mapas do exercício** recusa um exercício aberto e não arquiva nada.
+</HelpCallout>
+
+## No Enterprise
+
+No Odoo Enterprise, os mapas fiscais dos ativos tiram-se no mesmo sítio: com o perfil **Contabilista certificado**, o **Painel do fecho do exercício** tem **Mapas fiscais dos ativos** nas **Listas de apoio**, e a janela tem os mesmos grupos (**QUADRO DE ATIVOS FIXOS**, **MODELO 32 - DEPRECIAÇÕES E AMORTIZAÇÕES**, **MODELO 31 - MAIS-VALIAS E MENOS-VALIAS** e **FECHO**), com **PDF**, **XLSX**, **CSV**, **Detalhe** e **Arquivar os mapas do exercício**. Os mapas leem as fichas dos **Ativos fixos** do fiscaldoo, as únicas que uma empresa portuguesa usa no Enterprise.
+
+{/* Nota interna (lote EE-02, DOCS-073 #4142, DEC-1794, master 7a46de91a, base Enterprise docs_ee_ee02_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): Contabilista certificado: Painel do fecho do exercício › Listas de apoio › Mapas fiscais dos ativos; janela com Exercício de, Segmento, Ótica, Localização, Comparar com o exercício anterior e Simular as alienações previstas, e os quatro grupos com os mesmos botões. Os ficheiros não se geraram nem se arquivou nada na cópia. Ver reports/LOTE_EE-02.md. */}
+
+## Resultado esperado
+
+- **Modelo 32** (PDF «Mapa de depreciações e amortizações (Modelo 32)»): um bloco por grupo de ativos (por exemplo **Equipamento administrativo**), com **Taxa (%)**, **Quota mínima**, **Quota máxima**, **Quota praticada**, **Quota aceite**, **Quota não aceite**, **Recuperada** e **Depreciação perdida**, e no fim o «Total não aceite (Declaração, Quadro 07)» (o que esse total representa na declaração está na nota «Quota não aceite e declaração de IRC», abaixo). No exemplo (provisório), o `AF/00011` tem 50,00 € de quota mínima e 99,99 € de quota máxima, praticada e aceite (julho a setembro, porque foi vendido em outubro).
+- **Modelo 31** (PDF «Mapa de mais-valias e menos-valias (Modelo 31)»): uma linha por ativo vendido ou abatido no ano, com as datas, o valor de aquisição, as depreciações contabilísticas e as aceites, os valores líquidos, o valor de venda, o coeficiente e as mais ou menos-valias contabilística e fiscal.
+- **Linhas de lançamento** abre as linhas do razão que sustentam o mapa. No Modelo 31 do exemplo são as 18 linhas dos 6 lançamentos de saída (contas 4385, 435 e 6871), com 8.400,00 € a débito e a crédito; a fatura da venda (`FT D26/31`, 900,00 € a crédito da 435) e o lançamento em rascunho da regularização do IVA da «Impressora da receção» não estão nesta lista.
+- Depois de arquivar ficam guardados 5 PDF do exercício: o **Modelo 32** de cada segmento (`modelo32_pre_1989_…`, `modelo32_post_1989_…` e `modelo32_revalued_…`, com o segmento **Adquiridos antes de 1989**, **Adquiridos desde 1989** e **Reavaliados**), o **Modelo 31** (`modelo31_…`) e o **Quadro de ativos fixos** (`quadro_fiscal_…`), estes dois com o segmento **Todos os segmentos**. No teste de 2025, os 5 ficaram com **Conservação até** 31/12/2035, e o Modelo 31 arquivado, sem saídas nesse ano, termina em «Total da mais/(menos)-valia fiscal: 0».
+
+## Notas importantes
+
+- **Quota não aceite e declaração de IRC.** A **Quota não aceite** do Modelo 32 é acrescentada ao lucro na declaração de IRC e a **Recuperada** deduz-se; a mais ou menos-valia fiscal do Modelo 31 substitui a contabilística. <span className="fd-pending">Pendente de validação por contabilista certificado: quadro e linhas da declaração de IRC que recebem estes valores, e reinvestimento das mais-valias (CIRC, art. 48.º).</span>
+- **Coeficiente.** É o coeficiente de desvalorização da moeda do ano de aquisição, aplicado só a bens com pelo menos dois anos; os bens do exemplo têm 1,00. <span className="fd-pending">Pendente de validação por contabilista certificado: coeficientes do ano (CIRC, art. 47.º).</span>
+- **O que os mapas não veem.** Só entram ativos com ficha. Um bem lançado diretamente numa conta 43 ou 44, sem ficha, não aparece em nenhum mapa; e as quotas processadas pela ficha do ativo (botão **Processar períodos contabilísticos**) ficam só do lado contabilístico até o lote do mês ser confirmado.
+- **Mapas arquivados.** Abra-os no botão **Mapas arquivados** da janela (grupo **FECHO**) ou em **Mapas fiscais arquivados**, nas **Listas de apoio** do painel do fecho do exercício. A lista tem as colunas **Fim do exercício**, **Segmento**, **Nome do ficheiro**, **Mapa (PDF)** e **Conservação até**, uma linha por PDF arquivado. Um mapa arquivado nunca é substituído: arquivar outra vez o mesmo exercício dá «0 mapas arquivados (Modelo 32 por segmento, Modelo 31 e Quadro de ativos fixos). 5 já estavam arquivados neste exercício e ficaram como foram emitidos: um mapa arquivado nunca é substituído.» e não junta cópias. A **Conservação até** é 10 anos depois do fim do exercício. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo de conservação do processo de documentação fiscal (CIRC, art. 130.º).</span>
+
+## Problemas frequentes
+
+### Não vejo o Painel do fecho do exercício
+
+- **Causa:** o seu perfil é **Contabilista**.
+- **O que fazer:** abra os mapas em **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**, nas **Listas de apoio**: o perfil **Contabilista** também os tem lá.
+
+### A quota de um ativo não bate com o que foi lançado
+
+- **Sintoma:** a **Quota praticada** do Modelo 32 é maior do que as quotas lançadas no razão.
+- **Causa:** o exercício ainda não acabou e o mapa conta os meses planeados até dezembro.
+- **O que fazer:** processe os meses em falta e gere o mapa de novo. Se o exercício já acabou, confira no separador **Plano de depreciação** do ativo se há meses por processar.
+
+### «O exercício que termina em 31/12/2026 ainda está aberto…»
+
+- **Sintoma:** ao **Confirmar** o arquivamento, aparece **Operação inválida** com «O exercício que termina em 31/12/2026 ainda está aberto: os mapas ficariam arquivados com valores provisórios. Feche primeiro o exercício (Contabilidade › Fechar › Contabilidade do mês › Fechar o mês › Datas de bloqueio: a Data de bloqueio global, ou a Data de bloqueio definitivo, igual ou posterior a 31/12/2026) e arquive os mapas depois.». Nada é arquivado.
+- **Causa:** a **Data de bloqueio global** e a **Data de bloqueio definitivo** da empresa são anteriores ao fim do exercício escolhido em **Exercício de**.
+- **O que fazer:** processe as depreciações até dezembro, confira os mapas e feche o exercício: a **Data de bloqueio global** passa a 31/12, na janela **Fixar datas de bloqueio**, que se abre no botão **Datas de bloqueio** do ecrã **Fechar o mês** (ver [Como bloquear períodos e gerir exceções](/accounting-pt/datas-de-bloqueio)). Depois arquive os mapas. A **Data de bloqueio definitivo** também fecha o exercício, mas não volta atrás: ao fixá-la, o programa avisa «Esta data não pode voltar atrás.» e pede uma caixa de confirmação. Se escreveu em **Exercício de** um dia do ano errado, corrija a data.
+
+### Um ativo vendido não aparece no Modelo 31
+
+- **Causa:** a saída não foi registada com **Alienar / Abater** (por exemplo, só se emitiu a fatura de venda), ou foi registada noutro exercício.
+- **O que fazer:** registe a saída na ficha do ativo, com a data real, e gere o mapa de novo.

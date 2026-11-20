@@ -1,0 +1,90 @@
+---
+id: novidades
+slug: /changelog/novidades
+title: O que há de novo no fiscaldoo
+sidebar_label: O que há de novo
+sidebar_position: 1
+description: "As novidades mais recentes do fiscaldoo, por área e em linguagem corrente: faturação, IVA, contabilidade, salários e pessoas, migração, Copiloto e segurança."
+keywords: [novidades, o que há de novo, novidade, atualização, versão, alterações, melhorias, fiscaldoo novidades, histórico, últimas alterações]
+doc_id: DOC-0371
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ba9c8bd7)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [getting-started/o-fiscaldoo/edicoes-e-versoes-suportadas]
+---
+
+Esta página resume o que mudou no fiscaldoo entre 29 de outubro e 1 de novembro de 2026, a versão 20.0 do dia 1 de novembro (a última é a `ba9c8bd7`). Cada linha diz o que muda para quem usa o produto.
+
+## Faturação e certificação
+
+- As notas de crédito passam a ter séries próprias por diário, e ficam limitadas pelo valor de cada linha da fatura.
+- O recibo emitido num diário de caixa certificado passa a ser assinado, com a cadeia de assinaturas contínua.
+- Um documento emitido mantém no SAF-T o mesmo código de cliente, mesmo depois de corrigir a ficha do cliente. As notas de uma fatura certificada ficam fixas depois de emitida.
+- O ficheiro mensal das vendas deixa de levar os fornecedores das compras: um fornecedor sem NIF já não bloqueia a comunicação.
+- O SAF-T deteta falhas de numeração no início e no fim do mês, e as falhas podem ser justificadas. A janela **Gerar SAF-T** propõe sempre o mês anterior e conta também as guias e os documentos de conferência.
+- «Deixar fora da cobrança» passa a poder mudar-se numa fatura emitida, só por quem trata da cobrança e com registo na auditoria.
+- Nas guias: a guia nova já vem com o tipo de operação, há «Imprimir guia» na entrega, e uma guia de devolução a um fornecedor sem NIF é recusada com o pedido do NIF.
+- No balcão, o pagamento de uma fatura simplificada ou fatura-recibo já não se desfaz por nenhum caminho.
+- Um cliente sem NIF sai no SAF-T como consumidor final (999999990), e um recibo acima do valor em dívida é recusado. A lista de impostos do artigo mostra primeiro o IVA e as taxas da região fiscal da empresa.
+- Empresas em regime de isenção (art. 53.º / art. 9.º) faturam sem IVA com o motivo e a menção certos, e o recibo em PDF deixa de ter o QR por cima do montante. A data de início prevista de uma série acompanha o primeiro dia do exercício, e o QR de um documento emitido usa sempre o país da emissão.
+- Uma declaração já entregue à AT (declaração periódica de IVA, Modelo 10, IES, DMR, recapitulativa, SAF-T enviado…) nunca volta a rascunho nem se apaga, por nenhum perfil: a tentativa fica registada e a correção faz-se por declaração de substituição.
+- As comunicações à AT mostram sempre o estado e o que fazer, e as credenciais de teste são pedidas antes de comunicar. As credenciais têm «Ver a prontidão» e o histórico das comunicações com o documento.
+
+## IVA
+
+- Uma fatura com IVA a 0 % a um cliente da UE só sai com o NIF validado no VIES. Sem isso, só o perfil **Contabilista certificado** a emite, com o motivo registado. Depois de validar o NIF, o rascunho oferece «Recalcular o IVA».
+- Cada situação tem um só aviso, e uma fatura sem país, ou com o NIF sem o código do país, é recusada ao confirmar, com o que fazer.
+- A declaração recapitulativa avisa quando falta o contabilista certificado e tem o botão «Registar entrega», com a data e o comprovativo.
+- As taxas isentas ligam ao campo certo da declaração periódica, e a declaração não se valida com o mês anterior por apurar. A declaração calcula-se muito mais depressa com histórico migrado.
+- Os pagamentos por conta aparecem no calendário fiscal sem esperar pelo Modelo 22.
+- Nas compras a fornecedores de outro país da UE, a autoliquidação é automática (bens e serviços), e as taxas de autoliquidação nacional (construção, sucata…) geram o IVA liquidado e o dedutível.
+- A dedução parcial do IVA (por exemplo, gasóleo a 50 %) leva todo o valor sem IVA para o gasto e só o IVA não dedutível para o custo. Os estornos não podem ter data anterior ao original.
+
+## Contabilidade, bancos e ativos
+
+- Nas microentidades, o plano de contas usa só as linhas da Taxonomia M que se aplicam, e o Balanço e a demonstração de resultados batem. O balanço abre sem erro, também para quem só lê.
+- Os mapas fiscais dos ativos ficam visíveis ao perfil **Contabilista certificado**, e o IVA deduzido de um ativo vem da fatura de compra.
+- O envio de extratos por e-mail pede confirmação.
+- Depreciações: anular um lote estorna nas datas originais, sem duplicar. A venda ou o abate de um ativo emite fatura e recusa datas anteriores a quotas processadas, e os mapas fiscais só se arquivam com o exercício fechado.
+- **Tesouraria:** os valores já vencidos por receber e por pagar entram na previsão, um atraso nos recebimentos nunca faz o saldo subir, o IVA pago ao Estado deixa de aparecer como recebimento e **A quem devo** mostra as dívidas em positivo.
+
+## Salários e pessoas
+
+- Marcar os salários como pagos pede confirmação (quantos recibos, valor e data) e exige motivo também fora do ecrã. Só quem tem o acesso extra **Administrador de Salários** anula um pagamento, e nunca um já executado; pode repor o lote, com motivo. O perfil **Processador de salários** gera os pagamentos e o ficheiro de transferências.
+- Um recibo de janeiro de 2027 fica à espera das tabelas de IRS de 2027, em vez de usar as de 2026 sem avisar, e é recusado também em «Validar».
+- A agenda social de quem tem o acesso extra **Administrador de Salários** mostra só obrigações sociais, o Modelo 10 avisa quando há DMR por entregar e o comprovativo anual de um ano a decorrer sai como provisório, com confirmação. Referências de pagamento, nomes das comunicações à Segurança Social e títulos dos modelos de contabilização aparecem sem códigos e com valores em euros e datas portuguesas.
+- Uma falta num mês já pago passa a gerar um recibo corretivo, e os subsídios de Natal e de férias explicam o cálculo.
+- Os prazos da Segurança Social e da DMR vêm do calendário fiscal, no fuso de Portugal.
+- O mesmo NIF não pode ser dado a dois trabalhadores. As ausências de saúde ficam reservadas a quem pode ver o motivo.
+- O trabalhador volta a descarregar o PDF do seu recibo em «O meu espaço» (e só o seu), e os pedidos de alteração de dados mostram quem decide.
+- A prova de uma ausência entregue cala o aviso, e as férias aparecem na ficha do trabalhador. Um trabalhador não pode aprovar a sua própria despesa, e a **Gerência** aprova ou recusa as despesas pelos botões **Aprovar** e **Recusar**, sem as alterar.
+
+## Migração da versão anterior
+
+- A migração importa os documentos certificados e liga os extratos aos lançamentos do histórico.
+- Num ano migrado, a declaração periódica, a demonstração de resultados, o Modelo 22 e o Modelo 10 contam o histórico, com aviso quando o histórico importado não tem imposto.
+- Importar o mesmo ficheiro do histórico duas vezes já não dá erro, e as entradas recusadas são listadas com o motivo.
+
+## Copiloto
+
+- O Copiloto responde com ligações para os artigos da documentação, lê faturas em PDF e imagem anexadas, e esconde melhor os NIF, os NISS e os IBAN escritos de várias formas.
+- O assistente da empresa diz que o Copiloto fica desligado até o administrador o ligar.
+- As ligações à IA têm o botão «Testar a ligação» (com o simulador nas bases de teste), e o registo do Copiloto aparece em português.
+
+## Segurança, menus e mensagens
+
+- Cada perfil vê só os menus que lhe cabem: a **Gerência** sem **Configurar**, o **Administrativo** e o **Auditor / ROC** sem **Definições**. O **Auditor / ROC** não pode receber perfis que alterem dados.
+- Cada empresa deixa de ver as reconciliações, os trabalhadores e as numerações das outras.
+- As exportações de listas para Excel e CSV ficam protegidas contra fórmulas e respondem com a mensagem normal do produto quando os dados são inválidos.
+- Cerca de 1000 textos deixam de mostrar códigos internos, 134 mensagens indicam o menu que cada perfil vê, e mais campos aparecem na língua de quem os vê.
+- As credenciais da AT dizem o ambiente na língua de quem lê («teste» ou «produção»).
+- O **Contabilista** passa a descarregar o SAF-T, e juntar o perfil **Auditor / ROC** a um perfil que altera dados mostra um aviso e fica registado. Os módulos que usam senhas guardadas (pagamentos, Copiloto) nunca as devolvem a quem os chama.
+- A página «Alterar palavra-passe» abre em português sem janela de erro, e o assistente de extratos migrados mostra as colunas em português.
+- Novos caminhos nos menus: **Raio-X de permissões** na Contabilidade, linhas de banco do Copiloto no painel dos bancos e exceções às datas de bloqueio no painel mensal dos salários.
+
+{/* Nota interna (DOCS-040, corrigido na ronda F-cor, NF5-01/02/03): as frases vêm da página /update (versões aa45851a a ba9c8bd7, comboio 126), sem as alterações só técnicas; a frase sobre «desfazer uma reconciliação bancária e extratos com números portugueses» foi retirada porque as funcionalidades são de versões anteriores a 29/10 (99618d26, 0410d162). Confirmado no ecrã em ba9c8bd7: Tesouraria (vencidos na previsão, atraso sem subir o saldo, A quem devo em positivo), página Alterar palavra-passe em português e extratos migrados com colunas em português; o resto é o texto da página /update. Ligar o histórico de versões (DOC-0372) quando existir. */}
+
+{/* Nota interna (v23-T, DOC-0371, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

@@ -1,0 +1,92 @@
+---
+id: comprovativos-anuais
+slug: /payroll-pt/comprovativos-anuais
+title: Como emitir a declaração anual de rendimentos aos trabalhadores
+sidebar_label: Comprovativos anuais aos trabalhadores
+sidebar_position: 6
+description: Gerar e emitir a cada trabalhador o comprovativo anual dos rendimentos pagos, do IRS retido e das contribuições, a partir dos recibos pagos no ano, e imprimir o PDF.
+keywords: [comprovativo anual, comprovativos anuais, declaração anual de rendimentos, declaracao anual de rendimentos, comprovativo de rendimentos e retenções, comprovativo de rendimentos e retencoes, 20 de janeiro, IRS retido no ano, rendimentos do ano, gerar os comprovativos anuais, comprovativos aos trabalhadores]
+doc_id: DOC-0229
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7281543f)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/declarar/modelo-10-dos-trabalhadores, payroll-pt/declarar/dmr]
+---
+
+## Para que serve?
+
+Cada trabalhador recebe da empresa, até 20 de janeiro, um documento com o que lhe foi pago no ano anterior, o IRS retido e as contribuições obrigatórias. O fiscaldoo cria um comprovativo por trabalhador a partir dos recibos **pagos** no ano e imprime-o em PDF.
+
+## Quando utilizar?
+
+- Em janeiro, depois de pagos os salários de dezembro, para o ano anterior.
+
+## Onde encontrar?
+
+- Para criar os comprovativos do ano: **Salários › Preparar › O que há para fazer este mês?** › bloco **Listas de apoio** › **Gerar os comprovativos anuais**.
+- Para os abrir, emitir e imprimir: **Salários › Declarar › Comprovativos aos trabalhadores**.
+
+## Antes de começar
+
+- O seu perfil é **Processador de salários**: gera, emite e imprime.
+- Os salários do ano estão todos pagos, incluindo os de dezembro e as diferenças de [correções](/payroll-pt/corrigir-um-processamento). Um pagamento ainda não executado não entra.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários**. No ecrã **O que há para fazer este mês?**, desça até **Listas de apoio** e carregue em **Gerar os comprovativos anuais**.
+2. Na janela, em **Ano do rendimento**, escreva o ano do exemplo, `2026` (por omissão vem o anterior ao de hoje, 2025 a 01/11/2026). Em **Departamento**, escolha um departamento só se quiser gerar parte dos trabalhadores. Carregue em **Gerar**.
+   ![Janela Gerar os comprovativos anuais: «Cria um rascunho para cada trabalhador com pagamentos no ano (os que já existem ficam como estão). Cada trabalhador tem de o receber até 20 de janeiro.», Ano do rendimento 2026 e o botão Gerar assinalado](/images/payroll-pt/comprovativos-anuais/01-gerar.png)
+3. Abre-se **Comprovativos aos trabalhadores**, agrupada por ano, com um comprovativo em **Rascunho** por trabalhador com pagamentos no ano: **Tipo** «Anual (até 20 de janeiro)», **Prazo**, **Rendimentos** e **IRS retido**.
+4. Abra o grupo do ano e o comprovativo de um trabalhador (a lista vem agrupada por ano) e confira os **Totais** (**Rendimentos**, **IRS retido**, **Contribuições obrigatórias**, **Quotizações sindicais**, **Rendimentos sem retenção na fonte** e **Prémio isento (A41)**), o separador **Rendimento por código** e o separador **Pagamentos**, com os recibos que entraram.
+   ![Comprovativo de Ana Margarida Pinto de 2026 em Rascunho, com rendimentos 12.129,15, IRS retido 855,00, contribuições obrigatórias 1.320,00 e os códigos A e A21](/images/payroll-pt/comprovativos-anuais/02-comprovativo.png)
+5. Se mudou algum recibo do ano depois de gerar, carregue em **Calcular** para refazer os totais.
+6. Carregue em **Emitir**. Se o ano ainda está a decorrer, o botão chama-se **Emitir como provisório** e abre a janela «O ano deste comprovativo ainda está a decorrer, por isso só indicará os rendimentos pagos até hoje e ficará marcado como provisório. Depois de emitido não se altera. Emitir como provisório?», com **Confirmar** e **Descartar**. O comprovativo passa a **Emitido**, com a data em **Emitido em**, e já não se altera; num ano a decorrer mostra «Comprovativo provisório: emitido com o ano ainda a decorrer, só indica os rendimentos pagos até ao dia da emissão. Depois de o ano terminar, gere e emita o definitivo.»
+   ![Janela de confirmação de Emitir como provisório](/images/payroll-pt/comprovativos-anuais/03-emitir-como-provisorio.png)
+7. Carregue em **Imprimir (PDF)** e entregue o PDF ao trabalhador.
+
+</StepByStep>
+
+**Exemplo.** Ana Margarida Pinto recebeu em 2026, até 01/11/2026, quatro salários de 2.400,00 € (pagos a 30/06, 31/07, 31/08 e 30/09/2026) e o de outubro (2.529,15 €, com 129,15 € de subsídio de alimentação, pago a 01/11/2026). O comprovativo de 2026 tem:
+
+- **Rendimentos** 12.129,15 €: 12.000,00 € com o código **A** «Rendimentos do trabalho dependente sujeitos (exceto os referidos com outros códigos)» e 129,15 € com o código **A21** «Subsídio de refeição (parte não sujeita)»;
+- **IRS retido** 855,00 € (5 × 171,00 €);
+- **Contribuições obrigatórias** 1.320,00 € (11 % de 12.000,00 €);
+- **Quotizações sindicais** e **Rendimentos sem retenção na fonte** 0,00 €.
+
+O PDF «Comprovativo de rendimentos e retenções» repete estes totais, tem a marca «PROVISÓRIO: emitido com o ano ainda a decorrer, só indica os rendimentos pagos até ao dia da emissão.» e lista os cinco pagamentos com a data, os rendimentos e o IRS retido de cada um. Os 8 comprovativos de 2026 da Empresa Demonstração, Lda somam 57.843,30 € de rendimentos e 4.233,00 € de IRS retido.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: prazo de 20 de janeiro (CIRS art. 119.º, n.º 1, alínea b)); e se a parte não sujeita do subsídio de alimentação (A21, 129,15 € no exemplo) deve somar nos **Rendimentos** do comprovativo, como hoje faz, ou ficar fora deles.</span>
+
+Emitir os comprovativos não gera lançamentos contabilísticos.
+
+## Resultado esperado
+
+- Cada trabalhador tem um comprovativo **Emitido**, com o PDF.
+- Os totais de cada comprovativo batem certo com os recibos pagos do ano e com as [DMR](/payroll-pt/dmr) do ano.
+
+## Notas importantes
+
+- **Emita só depois do último pagamento do ano.** Num ano a decorrer o fiscaldoo pede confirmação e marca o comprovativo como provisório, mas emite-o na mesma, só com o que foi pago até hoje, e um comprovativo emitido já não se altera. Para entregar ao trabalhador, gere e emita o definitivo em janeiro do ano seguinte, depois de pagos os salários de dezembro.
+- **Só conta o que foi pago.** O recibo de novembro, validado mas por pagar, não entra num comprovativo gerado hoje: só entram os pagamentos executados.
+- **Ano sem pagamentos.** Para 2025, ano sem salários na empresa (e o ano que vem por omissão), **Gerar** não cria nenhum comprovativo e não aparece nenhuma mensagem: confirme o **Ano do rendimento**.
+- **Gerar outra vez** não mexe nos comprovativos que já existem: só cria os que faltam.
+- **Trabalhador que sai a meio do ano.** <span className="fd-pending">Pendente de validação no ecrã: o comprovativo pedido na saída não foi ensaiado.</span>
+
+## Problemas frequentes
+
+### Gerar não criou nenhum comprovativo
+
+- **Causa:** o ano escolhido não tem pagamentos executados (por exemplo 2025 na demonstração), ou o **Departamento** escolhido não tem trabalhadores com pagamentos.
+- **O que fazer:** confirme o **Ano do rendimento** e deixe o **Departamento** vazio.
+
+### Falta um salário no comprovativo
+
+- **Causa:** o pagamento desse salário não foi executado (está gerado mas não pago), ou foi pago já no ano seguinte.
+- **O que fazer:** execute o pagamento ([Como pagar os salários](/payroll-pt/pagar-os-salarios)) e, no comprovativo ainda em **Rascunho**, carregue em **Calcular**.
+
+{/* Nota interna (DOCS-022, master 7281543f): «Emitir» num ano a decorrer pede agora confirmação e marca o comprovativo como provisório (PAY-062, DOC-0229); D50 (LOW) «Gerar» para um ano sem pagamentos não dá mensagem; o comprovativo emitido mostra «Este registo já está fechado… anule-o ou crie uma correção» sem botão para isso (como o D15). */}

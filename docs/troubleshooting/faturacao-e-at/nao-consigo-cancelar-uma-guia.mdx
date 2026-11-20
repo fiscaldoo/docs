@@ -1,0 +1,93 @@
+---
+id: nao-consigo-cancelar-uma-guia
+slug: /troubleshooting/nao-consigo-cancelar-uma-guia
+title: Não consigo cancelar uma guia de transporte emitida
+sidebar_label: Não consigo cancelar uma guia
+description: Porque o botão Cancelar recusa uma guia de transporte emitida, quem pode usar Anular a guia e o que fazer quando o transporte já começou.
+keywords: [cancelar guia, cancelar guia de transporte, anular guia, anular a guia, guia emitida, guia de transporte, transferência, transferencia, não pode ser cancelada, nao pode ser cancelada, não pode ser anulada, nao pode ser anulada, transporte começou, transporte comecou, guia de devolução, guia de devolucao]
+doc_id: DOC-0341
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 8c5a23228)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/transporte/emitir-uma-guia-de-transporte, troubleshooting/faturacao-e-at/guia-sem-codigo-da-at]
+---
+
+## Sintoma
+
+Uma transferência já tem guia emitida e, ao carregar em **Cancelar** e depois em **Confirmar**, o fiscaldoo recusa. Ou carrega em **Anular a guia** e também é recusado.
+
+## Mensagem
+
+Com o perfil **Administrativo**:
+
+> «O seu perfil não pode anular uma guia de transporte. O que aconteceu: as guias de transporte são de quem tem acesso ao stock (e do perfil «Contabilista certificado (assina, fecha períodos)»), e a matriz de permissões do produto não dá esta ação ao perfil «Administrativo». Como resolver: peça a um utilizador com acesso ao stock que a faça, ou peça ao administrador que acrescente esse acesso ao seu perfil.»
+
+Com o perfil **Contabilista certificado**:
+
+> «A guia de transporte “*GT D26/4*” não pode ser cancelada como uma transferência normal: foi emitida. Para anular uma guia use «Anular a guia»: regista o motivo e é uma operação própria. Esse botão só aparece ao perfil «Contabilista certificado (assina, fecha períodos)»: se o seu for outro, peça a um utilizador com esse perfil que anule a guia.»
+
+![Recusa do botão Cancelar na guia GT D26/4, a indicar o botão Anular a guia](/images/troubleshooting/nao-consigo-cancelar-uma-guia/01-recusa-cancelar.png)
+
+Em **Anular a guia**, com o transporte já iniciado:
+
+> «A guia “*GT D26/4*” não pode ser anulada: o transporte começou em *01/11/2026 10:39:33* e uma guia só se anula antes do início do transporte. Corrija-a com uma guia de devolução ou outro documento.»
+
+E com um motivo demasiado curto, com o transporte ainda por começar (depois de começar, a recusa é a anterior, seja qual for o motivo):
+
+> «Escreva porque a guia é anulada (pelo menos 10 carateres): o motivo fica guardado com a guia, o utilizador e a data.»
+
+## Causas verificadas
+
+- **Cancelar a transferência não é o mesmo que anular a guia.** Uma guia emitida tem número e assinatura. **Cancelar** só serve para uma transferência sem guia emitida; a guia emitida sai de circulação com **Anular a guia**, que guarda o motivo.
+- **O seu perfil não tem o botão.** **Anular a guia** só aparece ao perfil **Contabilista certificado** e ao administrador; os perfis **Administrativo**, **Contabilista**, **Gerência** e **Auditor / ROC** não o têm. Com o perfil **Administrativo**, uma guia por comunicar mostra **Imprimir guia**, **Comunicar à AT**, **Registar o código da AT à mão** e **Cancelar**; uma guia já aceite pela AT mostra só **Imprimir guia** e **Cancelar**.
+- **O transporte já começou.** A data e hora de início de transporte da guia já passaram. A recusa da `GT D26/4` mostra este caso.
+
+## O que confirmar
+
+1. Na transferência, o número da guia (`GT …`) e a data e hora de início do transporte.
+2. Se a mercadoria saiu mesmo.
+3. O seu perfil: vê o botão **Anular a guia**?
+
+## Como resolver
+
+### O transporte ainda não começou
+
+Com o perfil **Contabilista certificado**, ou como administrador: a transferência e carregue em **Anular a guia**.
+2. Leia a janela, que avisa: «Não se pode desfazer.» Escreva o **Motivo**, com pelo menos 10 carateres.
+   ![Janela Anular a guia, com o aviso, a guia de transporte, o Motivo e o botão Anular a guia](/images/troubleshooting/nao-consigo-cancelar-uma-guia/02-anular-a-guia.png)
+3. Carregue em **Anular a guia**.
+
+Se precisar de uma guia nova, copie a transferência (menu **⋮**, **Duplicar**), como a janela indica, e emita-a: [Como emitir uma guia de transporte](/fiscal-core/emitir-uma-guia-de-transporte).
+
+
+**Quem faz:** o perfil Contabilista certificado, ou o administrador.
+
+### O transporte já começou
+
+A guia já não se anula. Siga o que a mensagem indica: corrija-a com uma guia de devolução ou outro documento. <span className="fd-pending">Pendente de validação por contabilista certificado: qual o documento certo em cada caso, depois de o transporte começar.</span>
+
+### O seu perfil não tem o botão
+
+Peça a anulação a um utilizador com o perfil **Contabilista certificado**, ou ao administrador. Indique o número da guia e o motivo.
+
+## Resultado esperado
+
+A transferência fica **Cancelada** e o único botão que resta é **Imprimir guia**. Na demonstração, a `GT D26/5` (início do transporte a 20/11/2026) ficou assim, com o motivo guardado. Segundo a janela, a guia mantém o número e a assinatura e passa a aparecer como «Anulada»; se foi comunicada automaticamente, a anulação também é enviada à Autoridade Tributária.
+
+{/* Nota interna (v8-TS6, DOC-0341, master 8c5a23228, base docs_demo_v8ts6_test): recusas provocadas por clique com demo.faturacao e demo.gestor_contabilidade na GT D26/4 e na GT D26/5. A GT D26/5 veio de uma cópia da transferência, feita por RPC com o administrador e com o início do transporte a 20/11/2026; na auditoria v10, a emissão e a anulação foram por clique. Só simulador. Por provar: envio da anulação à AT de uma guia comunicada e as mensagens de fatura com guia anulada, por isso não entram como causas. */}
+
+## Quando contactar o suporte
+
+- O botão **Anular a guia** não aparece com o perfil **Contabilista certificado**.
+- A data de início do transporte está no futuro e, mesmo assim, a anulação é recusada por o transporte ter começado.
+
+## Informação a enviar
+
+- O número da guia (por exemplo `GT D26/5`) e a referência da transferência.
+- O texto completo da mensagem, copiado do ecrã.
+- O perfil com que entrou e a hora aproximada.
+
+{/* Nota interna (v23-T, DOC-0341, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

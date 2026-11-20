@@ -1,0 +1,87 @@
+---
+id: ligar-a-uma-ia
+slug: /copilot/ligar-a-uma-ia
+title: Como ligar o Copiloto a um fornecedor de IA
+sidebar_label: Ligar a uma IA
+sidebar_position: 1
+description: Criar a ligação ao fornecedor de IA com a chave da empresa, escolher o modelo e o limite de gasto, e saber o que a ligação autoriza.
+keywords: [ligar o copiloto, fornecedor de IA, chave de API, ligação à IA, ligacao a IA, modelo, limite mensal, dados sensíveis, dados sensiveis, Anthropic, OpenAI, Mistral, DeepSeek, Z.ai, AMÁLIA]
+doc_id: DOC-0280
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master 7b476ad71)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [copilot/configurar/o-que-e-o-copiloto, copilot/configurar/registo-do-copiloto]
+---
+
+## Para que serve?
+
+Uma **ligação à IA** diz ao Copiloto que fornecedor usar, com que modelo e com que chave. A empresa pode ter várias ligações e uma é a **Por omissão**.
+
+## Quando utilizar?
+
+- Ao ligar o Copiloto pela primeira vez.
+- Ao mudar de fornecedor ou de modelo.
+- Ao pôr um limite de gasto numa ligação.
+
+## Onde encontrar?
+
+**Copiloto › Ligações às IAs › Ligações**. No mesmo menu: **Definições da IA**, **Fornecedores de IA**, **Preços da IA** e **Agentes e ligações**.
+
+## Antes de começar
+
+- Entra como administrador do sistema (ou tem o acesso extra **Administração fiscal**). Os perfis **Contabilista**, **Contabilista certificado**, **Gerência** e **Auditor / ROC** só veem **Fornecedores de IA** em **Copiloto › Ligações às IAs**.
+- Precisa de uma chave de API da conta do fornecedor. No exemplo usou-se uma chave fictícia: a IA nunca foi chamada.
+- Feito a 1 de novembro de 2026, na Empresa Demonstração, Lda.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Copiloto › Ligações às IAs › Fornecedores de IA** e veja os fornecedores, o **País dos servidores**, o **Modelo sugerido** e se **Precisa do consentimento do cliente**.
+2. Abra **Copiloto › Ligações às IAs › Ligações** e carregue em **Novo**.
+3. Escreva o **Nome** da ligação. Em **Fornecedor**, escolha o fornecedor. O seletor tem 7 opções, com nomes como «Chave de API do próprio cliente (Anthropic)»; **Subscrição (indisponível)** não se pode usar. **Modelo** abre com o modelo sugerido.
+4. Cole a chave em **Chave de API / token de acesso**. Se quiser, preencha o **Limite mensal desta ligação (EUR)** e marque **Por omissão**. Deixe **Ligada** marcada. O ecrã guarda a ligação mesmo sem chave, sem avisar: confirme que **Chave guardada** fica marcada.
+5. Guarde. A chave passa a aparecer como pontos, e **Chave guardada** fica marcada. **Retirar a chave** apaga-a.
+   ![Ligação à IA guardada, com a chave guardada no cofre e os botões Testar a ligação e Retirar a chave](/images/copilot/ligar-a-uma-ia/01-ligacao-guardada.png)
+6. Para os dados pessoais e sensíveis, não marque nada: **Autorizar dados pessoais e sensíveis nesta ligação?** está desligado por omissão. Só o liga o botão **Autorizar dados pessoais e sensíveis…**, que é uma decisão da empresa. Os dados sobre saúde, filiação sindical ou greves só seguem tal como estão com esta opção ligada. As credenciais, as palavras-passe e as chaves nunca são enviadas, com ou sem ela.
+7. Em **Copiloto › Controlo › Interruptores**, ligue **Ligação à IA (chamadas ao fornecedor de IA)** e os agentes que quer usar. Sem isto, nenhum agente de IA funciona.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, a ligação prepara-se da mesma maneira, com o administrador: **Copiloto › Ligações às IAs › Ligações › Novo** abre a mesma ficha, com os grupos **LIGAÇÃO**, **CHAVE E CONSENTIMENTO**, **DADOS PESSOAIS E SENSÍVEIS**, **GASTO** e **AGENTES QUE ESCOLHERAM ESTA LIGAÇÃO**, e o **Fornecedor** tem as mesmas 7 opções, entre elas **Subscrição (indisponível)**. **Fornecedores de IA**, **Definições da IA**, **Preços da IA** e **Agentes e ligações** têm as mesmas colunas. Se o administrador instalar o módulo **fiscaldoo · Copiloto — Configuração dentro da app de IA do Enterprise — Enterprise** (não se instala sozinho, nem com a aplicação **IA** do Enterprise), estas entradas passam para **IA › Configurar**, no grupo **Ligações às IAs** (veja [O que é o Copiloto e o que pode fazer](/copilot/o-que-e-o-copiloto#no-enterprise)). O aviso da janela do Copiloto, enquanto não há fornecedor pronto, manda então para **IA › Configurar › Ligações às IAs › Ligações**, e a **Ajuda passo a passo** cita os caminhos de **IA › Configurar**. Se o administrador desinstalar o módulo, as entradas voltam a **Copiloto › Ligações às IAs** e o aviso volta a citar **Copiloto › Ligações às IAs › Ligações**.
+
+{/* Nota interna (lote EE-13, DOCS-073 #4142, req 46633, DEC-1794, master 7f41ce71b, base Enterprise docs_ee_ee13_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee13_test): DOC-0280. Administrador: Novo em Ligações (ficha vista e descartada, sem chave: o lote não escreve chaves; por isso os passos 4 e 5, a chave guardada e Testar a ligação, não foram repetidos no Enterprise) e opções do Fornecedor (as mesmas 7 na cópia Community); as quatro listas com as mesmas colunas nas duas cópias. Ver reports/LOTE_EE-13.md. */}
+
+{/* Nota interna (lote EE-15, comboio 197, master c689f7580, 12/11/2026; cópia Enterprise docs_ee_ee15_test (portas 8530/8531, cópia da odoo20_ee_test com ee_neutralizar) e cópia Community docs_demo_ee15_test (porta 8532), utilizadores criados nas cópias só com o perfil indicado): DOC-0280, EEA-091 (0dfcc9667). Contabilista, janela do Copiloto com a ponte: «… liga-o em IA › Configurar › Ligações às IAs › Ligações (fornecedor e chave).» e, em Importar faturas de fornecedor, «… O administrador liga-o em IA › Configurar › Ligações às IAs › Ligações.». Ver reports/LOTE_EE-15.md. */}
+
+{/* Nota interna (lote EE-16, comboios 198 e 199, master 7b476ad71, 13/11/2026; cópia Enterprise docs_ee_ee16_test (portas 8524/8525, cópia da odoo20_ee_test com ee_neutralizar) e cópia Community docs_demo_ee16_test (porta 8526), utilizadores criados nas cópias só com o perfil indicado): DOC-0280, COP-070 (94ed8e913) e EEA-093 (8c3f7ae57), em master. Utilizador só com o perfil Contabilista, janela do Copiloto por clique, com ai_agentic e a ponte l10n_pt_fiscaldoo_ee_copilot_app instaladas na cópia (pgvector criado só na cópia; ee_neutralizar antes e construir): aviso com IA › Configurar › Ligações às IAs › Ligações; Ajuda passo a passo, «Onde ligo o Copiloto?» e «Interruptores do Copiloto»: os passos dizem «Abra IA › Configurar › Controlo › Interruptores» e Outros resultados IA › Configurar › Controlo › Interruptores e › Lidos pelo Copiloto; o resumo do artigo em «Na documentação» continua «Ligar e desligar: Copiloto › Controlo › Interruptores.» (texto do site). Depois, o administrador desinstalou a ponte por clique (Aplicações, ficha do módulo, Desinstalar, janela «Desinstalar módulo», Desinstalar): o Contabilista voltou a ter a aplicação Copiloto (Agentes: Redator, Sugestões das regras, Correções do leitor; Ligações às IAs: Fornecedores de IA; Controlo: 7 entradas) e IA só com Agentes e Configurar › Skills (menus lidos da sessão do utilizador); o aviso e a Ajuda passo a passo voltaram a Copiloto › … (Abra Copiloto › Controlo › Interruptores). A cópia fica sem a ponte. Ver reports/LOTE_EE-16.md. */}
+
+## Resultado esperado
+
+A ligação aparece na lista **Ligações** com **Chave guardada**. No **Registo** ficam duas linhas: «Ligação à IA «…» criada.» e «Chave da IA guardada no cofre (…; a chave em si não fica registada).». A chave aparece também no [cofre de credenciais](/administration/cofre-de-credenciais).
+
+**Definições da IA** mostra a **Ligação por omissão**, o **Limite mensal de gasto da empresa (EUR)**, o **Limite mensal por pessoa (EUR)** e o **Gasto este mês**.
+
+## Notas importantes
+
+- **Há um botão «Testar a ligação»** neste ecrã, acrescentado depois de este artigo ter sido validado; a sua descrição completa fica para uma revisão. A primeira chamada a sério é a de um agente, depois de ligar o interruptor do passo 7.
+- <span className="fd-pending">Pendente de validação no ecrã: a chamada ao fornecedor e a mensagem de recusa de uma chave inválida. A demonstração não tem rede e a chave é fictícia.</span>
+- **O gasto é uma estimativa**, calculada com a lista **Preços da IA** (USD por milhão de tokens).
+
+## Problemas frequentes
+
+### O Copiloto continua a dizer que a IA está desligada
+
+- **Causa:** o interruptor geral ou o da função está desligado, ou a ligação não está **Ligada**.
+- **O que fazer:** em **Copiloto › Controlo › Interruptores**, ligue o interruptor geral e o da função.
+
+{/* Nota interna (DOCS-040, lote F4): visto com admin; a ligação criada ficou na base com uma chave fictícia. O seletor Fornecedor é um campo de escolha: não se listaram as opções no ecrã; o artigo diz só «escolha». Perfil «Administração fiscal» vem do texto do próprio ecrã da janela do Copiloto. A ligação para o interruptor «Ligação à IA» está nos Interruptores (visto). Sem IA real. O botão «Testar a ligação» (COP-055, comboio 126) não existia quando o artigo foi escrito: descrever o botão e o seu resultado na revisão. */}
+
+{/* Nota interna (v23-T, DOC-0280, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}
+
+{/* Nota interna (lote v23-BK, DOCS-064 #3900 req. 46431, master acd623385, cópia docs_demo_v23bk_test): captura 01 refeita por clique com o administrador na Empresa Demonstração, Lda (a antiga mostrava o nome «Ligação de teste (fictícia)», criado numa cópia de um lote antigo; a base-mãe não o tem). Ligação nova «Anthropic (conta da empresa)», Chave de API do próprio cliente (Anthropic), chave fictícia, guardada no cofre com a chave de cifra só na memória da instância. A ficha mostra hoje também o botão Testar a ligação (não carregado). */}

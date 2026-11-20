@@ -1,0 +1,80 @@
+---
+id: atrasos-de-registo
+slug: /accounting-pt/atrasos-de-registo
+title: Que documentos estão com atraso de contabilização
+sidebar_label: Atrasos de contabilização
+sidebar_position: 3
+description: Ver os lançamentos e as faturas que estão em rascunho há mais de 90 dias depois do fim do mês a que respeitam, e pô-los em dia.
+keywords: [atrasos de registo, atraso de registo, atrasos de contabilização, atrasos de contabilizacao, atraso na contabilidade, contabilidade atrasada, 90 dias, prazo de escrituração, prazo de escrituracao, artigo 123, CIRC 123, rascunhos antigos, faturas em rascunho, dias desde o fim do mês, dias desde o fim do mes]
+doc_id: DOC-0069
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 3a28c9b91)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/compras/fatura-de-fornecedor, accounting-pt/dia-a-dia/lancamentos-contabilisticos]
+---
+
+## Para que serve?
+
+O Código do IRC fixa um prazo máximo para a contabilidade estar em dia: no fiscaldoo, os 90 dias contados do último dia do mês a que o documento respeita. <span className="fd-pending">Pendente de validação por contabilista certificado: o artigo e o número do CIRC que fixam o prazo (o produto cita o art. 123.º, n.º 3) e se a contagem parte da data da operação, do documento ou da receção.</span>
+
+A lista **Atrasos de contabilização** mostra os documentos que **já estão no Odoo em rascunho** e passaram esse prazo, para os confirmar ou corrigir. É só informação: o Odoo não bloqueia nada.
+
+## Quando utilizar?
+
+- No início de cada mês, para ver se ficou algum rascunho de meses anteriores por lançar.
+- Antes de fechar o mês, junto com a verificação dos documentos que ainda não entraram no Odoo (ver «Notas importantes»).
+- Quando uma fatura ou um lançamento em rascunho mostra a faixa amarela «… dias desde o fim do mês a que este lançamento respeita».
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Início › O que há para fazer?** e, no quadro **Listas de apoio**, **Atrasos de contabilização**.
+
+![Quadro Listas de apoio da página O que há para fazer?, com Atrasos de contabilização assinalado entre Painel de diários e Níveis de aviso de cobrança](/images/accounting-pt/atrasos-de-registo/01-listas-de-apoio-atrasos-de-registo.png)
+
+{/* Nota interna (DOCS-021, B1-07; auditoria docs-aud-v23y, 08/11/2026): a ligação e a lista dizem hoje «Atrasos de contabilização» e o título do artigo acompanha-as; o endereço continua /accounting-pt/atrasos-de-registo e «atrasos de registo» fica nas palavras-chave. Lote 98: a lista já mostra Parceiro, Referência e Dias de atraso, e o problema «A lista não diz de que fornecedor é» saiu. */}
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**.
+- A lista só conta documentos em **Rascunho**. Um documento publicado, mesmo que tarde, já não aparece, e um documento que ainda não foi introduzido no Odoo também não.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Atrasos de contabilização**. Cada linha é um documento em rascunho fora do prazo, com a **Data da Fatura/Conta**, a **Data**, o **Diário**, o **Parceiro**, a **Referência**, os **Dias de atraso** e o **Total**.
+
+   Na demonstração a lista está vazia: para ver um caso, crie uma fatura de fornecedor em rascunho com a **Data da Fatura de Fornecedor** `05/06/2026` (por exemplo, da Papelaria Central, Lda, com a **Referência da Fatura** `FT A2026/318`) e deixe-a em rascunho. Fica na lista, e a captura mostra-a em 19/11/2026, com 142 dias. Se a lista estiver vazia, aparece «Nenhum lançamento em rascunho ultrapassou o prazo de contabilização»: nenhum rascunho está em atraso (mas veja «Notas importantes»).
+   ![Lista Atrasos de contabilização com uma fatura de fornecedor em rascunho: a Papelaria Central, Lda, referência FT A2026/318, data da fatura 05/06/2026, 142 dias de atraso](/images/accounting-pt/atrasos-de-registo/02-lista-atrasos-de-contabilizacao.png)
+2. Carregue numa linha para abrir o documento. No topo aparece a faixa amarela com os dias passados, por exemplo «142 dias desde o fim do mês a que este lançamento respeita (limite do CIRC, art. 123.º, n.º 3). Lance-o ou reveja a sua data; nada é bloqueado.»
+   ![Fatura de fornecedor em Rascunho com os botões Pré-visualizar lançamento e Confirmar e a faixa amarela dos 142 dias](/images/accounting-pt/atrasos-de-registo/03-aviso-na-fatura-em-rascunho.png)
+3. Confira o documento com o original em papel ou PDF: fornecedor, data, valores e IVA. No exemplo, a linha é o rascunho que criou, da Papelaria Central, Lda, com a **Data da Fatura de Fornecedor** de 05/06/2026; na sua empresa serão os seus documentos.
+4. Se o documento está certo, carregue em **Confirmar** (fatura) ou **Publicar** (lançamento manual). Se tem dúvidas sobre o documento, fale com o contabilista antes de o confirmar.
+
+</StepByStep>
+
+## Resultado esperado
+
+- O documento confirmado recebe o número seguinte da série e sai da lista **Atrasos de contabilização**.
+  Visto no ecrã: o rascunho do exemplo (Papelaria Central, Lda, `FT A2026/318`, 142 dias) confirmou-se com a **Data de receção** em 25/09/2026, recebeu o número seguinte da série de compras (na cópia ficou `FTF/2026/00048`, porque a cópia já tinha outros documentos de compra criados antes) e saiu da lista **Atrasos de contabilização**.
+- Com todos os rascunhos tratados, a lista mostra «Nenhum lançamento em rascunho ultrapassou o prazo de contabilização…».
+
+## Notas importantes
+
+- **O que a lista não vê.** Só conhece o que já está no Odoo. Uma fatura que está na gaveta, no e-mail ou no Portal das Finanças (e-Fatura) e ainda não foi introduzida não aparece, e esse é o atraso que o prazo da lei procura evitar. Uma lista vazia não quer dizer que a contabilidade está em dia: compare também as faturas do e-Fatura com as lançadas (**Lançar › Compras › Faturas do e-Fatura**) e os documentos em papel por lançar.
+- **Como se contam os dias.** O Odoo conta os dias desde o último dia do mês da data do documento (a data da fatura, ou a data do lançamento quando não há data da fatura) e mostra o documento a partir do 91.º dia. Uma fatura de 15/06/2026 tem o mês a acabar a 30/06/2026; a 29/10/2026 passaram 121 dias (31 + 31 + 30 + 29).
+- **Confirmar tarde tem efeito no IVA.** O IVA de uma compra deduz-se no período em que a fatura foi recebida, ou num posterior (CIVA, art. 22.º, n.os 2 e 3). Na fatura de fornecedor, é a **Data de receção** (por omissão igual à **Data Contabilística**) que decide esse período: antes de confirmar uma fatura antiga, confira-a e escreva o dia em que a recebeu de facto. Uma data de receção num período fechado é recusada, e uma declaração já entregue nunca é alterada (ver [Como lançar uma fatura de fornecedor](/accounting-pt/fatura-de-fornecedor), «Notas importantes»).
+  {/* Nota interna (lote 98, master 73d6a5fed, docs_demo_98_test, porta 9760, 19/11/2026, perfil Contabilista): a base-mãe não tem rascunhos de fornecedor em atraso (a lista só tinha o rascunho criado na cópia por RPC: Papelaria Central, FT A2026/318, 05/06/2026, 142 dias); a fatura da Telecom Atlântico FTF/2026/00047 e a FT EN2026/0615 da Energia Norte citadas antes não existem na base (as Telecom são FTF/2026/00023, 00026 e outras, já confirmadas). Capturas 02 e 03 refeitas. */}
+
+{/* Nota interna (lote 97, VAT-085 #4321, master 3a28c9b91, 18/11/2026): frase reescrita pela resposta do contabilista certificado de 17/11/2026 (iva-38), marca de pendente retirada; o comportamento da Data de receção foi visto no artigo da fatura de fornecedor (docs_demo_lote97_test, perfil Contabilista). A fatura da Telecom Atlântico de 10/06/2026 do Resultado esperado já não existe na base-mãe. */}
+- **Datas antigas em exercícios fechados.** Um lançamento com data de um exercício fechado não se publica: ver [Como fazer um lançamento contabilístico manual](/accounting-pt/lancamentos-contabilisticos), «Problemas frequentes».
+
+## Problemas frequentes
+
+### Um documento antigo não aparece na lista
+
+- **Causa:** já está publicado, ainda não passaram 90 dias desde o fim do mês da sua data, ou nunca foi introduzido no Odoo.
+- **O que fazer:** procure-o em **Lançamentos contabilísticos** ou em **Faturas de fornecedores** com o filtro **Rascunho**. Se não está em nenhuma das listas, lance-o a partir do documento original.

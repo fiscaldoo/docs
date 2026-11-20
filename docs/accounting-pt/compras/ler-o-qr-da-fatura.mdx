@@ -1,0 +1,136 @@
+---
+id: ler-o-qr-da-fatura
+slug: /accounting-pt/ler-o-qr-da-fatura
+title: Como lançar uma fatura de compra lendo o código QR
+sidebar_label: Lançar uma fatura pelo código QR
+description: Carregar o PDF ou a fotografia de uma fatura de fornecedor com código QR, deixar o Copiloto preparar o rascunho sem inteligência artificial e conferir os avisos antes de confirmar.
+keywords: [código QR da fatura, QR da fatura, ler QR, fatura de fornecedor, rascunho de fatura, ATCUD, Copiloto, Faturas pelo código QR, carregar fatura, PDF, fotografia, comprador, consumidor final, fatura repetida]
+doc_id: DOC-0074
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 0289754a8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/compras/fatura-de-fornecedor, accounting-pt/compras/importar-faturas-do-efatura, accounting-pt/compras/criar-ativo-a-partir-da-fatura]
+---
+
+## Para que serve?
+
+As faturas portuguesas trazem um código QR com o emitente, o comprador, a data, o número, o ATCUD e os valores por taxa de IVA. O Copiloto lê esse código no PDF ou na fotografia da fatura e prepara um **rascunho** de fatura de fornecedor, sem escrever nada à mão. Esta leitura **não usa inteligência artificial**: lê o código, por isso não envia a fatura a nenhum fornecedor externo. O Copiloto nunca confirma: o rascunho é seu.
+
+## Quando utilizar?
+
+- Recebeu a fatura de um fornecedor em PDF ou em fotografia e quer o rascunho já com o fornecedor, a data, a referência e a base e o IVA por taxa.
+- Tem várias faturas para lançar de uma vez.
+
+Se a fatura não tem código QR (por exemplo, é de um fornecedor estrangeiro) ou se prefere ler os documentos com inteligência artificial, veja [Como lançar uma fatura de fornecedor](/accounting-pt/fatura-de-fornecedor). Para as faturas que já estão no e-Fatura, veja [Como importar faturas do e-Fatura](/accounting-pt/importar-faturas-do-efatura).
+
+## Onde encontrar?
+
+- Em **Contabilidade › Lançar › Início › O que há para fazer?**, o botão **Carregar fatura (PDF, foto ou QR)**.
+- Na lista **Faturas de fornecedores**, o mesmo botão **Carregar fatura (PDF, foto ou QR)**, para os mesmos dois perfis.
+
+![Botão Carregar fatura (PDF, foto ou QR) assinalado](/images/accounting-pt/ler-o-qr-da-fatura/74-01-botao-carregar-fatura.png)
+
+## Antes de começar
+
+- O **Copiloto** e o interruptor **Faturas de fornecedor pelo código QR** têm de estar ligados na empresa, em **Copiloto › Controlo › Interruptores**. O administrador liga-os um a um. O perfil **Contabilista certificado** (e o administrador) liga todos os «Seguro» de uma vez com o botão **Ligar o essencial**; com os perfis **Contabilista**, **Gerência** e **Auditor / ROC**, os interruptores aparecem só para leitura e sem esse botão. **Ligar o essencial** responde «Copiloto. O essencial ficou ligado para “Empresa Demonstração, Lda”: 6 interruptores. Os que comunicam para fora ficam desligados.» Estes interruptores são «Seguro»: não enviam nada para fora, ao contrário dos de inteligência artificial, que ficam desligados.
+- O botão só aparece aos perfis **Contabilista** e **Contabilista certificado**: na lista **Faturas de fornecedores**, os perfis **Auditor / ROC** e **Administrativo** não o têm, e o **Trabalhador** não tem a aplicação **Contabilidade**.
+- Ler PDF e fotografia depende da biblioteca `zxing-cpp` no servidor; sem ela a janela diz que não se leem imagens e manda colar o texto.
+- O PDF ou a fotografia tem de mostrar o código QR inteiro. Se o seu leitor de telemóvel lhe der o texto do código (começa por `A:`), pode colá-lo em vez do ficheiro.
+- Confira a empresa em que está: o comprador do código QR é comparado com o NIF dessa empresa.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Contabilidade › Lançar › Início › O que há para fazer?**, carregue em **Carregar fatura (PDF, foto ou QR)**. Se os interruptores estão desligados, a janela diz «O leitor de faturas está desligado, por isso por agora não se lê nada» e indica quem os liga; peça-o e volte a este passo.
+2. Arraste os ficheiros para **PDF ou fotografias das faturas** (ou escolha-os). Pode juntar vários. No exemplo, cinco PDF fictícios de um fornecedor de equipamento.
+   ![Janela Carregar fatura com cinco PDF escolhidos e o botão Ler os códigos QR](/images/accounting-pt/ler-o-qr-da-fatura/74-02-ficheiros-escolhidos.png)
+3. Carregue em **Ler os códigos QR**. A janela diz o que fez a cada ficheiro: «rascunho preparado», «COM AVISO, confira-a» ou a razão de não ter feito nada.
+   ![Resultado da leitura: dois rascunhos preparados, dois COM AVISO e um ficheiro sem código QR](/images/accounting-pt/ler-o-qr-da-fatura/74-03-resultado-da-leitura.png)
+4. Carregue em **Abrir os rascunhos**. Cada fatura é um rascunho de fatura de fornecedor, com o ficheiro anexado.
+   ![Lista com os cinco rascunhos criados, de 20/10/2026 a 24/10/2026](/images/accounting-pt/ler-o-qr-da-fatura/74-04-rascunhos-preparados.png)
+5. Abra o rascunho e confira o que foi lido. O separador **O que o Copiloto leu** guarda a **Chave da fatura no Copiloto** (`NIF do emitente|tipo|número|ATCUD`) e o texto lido: fornecedor, número, data, ATCUD e a base e o IVA por taxa.
+   ![Separador O que o Copiloto leu com a chave da fatura, o fornecedor e a base à taxa normal de 200,00 € com IVA de 46,00 €](/images/accounting-pt/ler-o-qr-da-fatura/74-05-o-que-o-copiloto-leu.png)
+6. Em **Linhas da Fatura**, confira a linha. O Copiloto cria **uma linha por taxa de IVA**, com a descrição «Base à taxa normal (Continente, lida do código QR)», o preço (200,00 €), o imposto `23%` e uma **conta** que ele escolhe. O código QR não diz o que foi comprado: a conta é a que o fornecedor já tinha nas suas faturas, por isso **troque-a** se não for a certa.
+   ![Linha da fatura lida do código QR, com a conta 435, o imposto 23 % e IVA dedutível 44,16 €](/images/accounting-pt/ler-o-qr-da-fatura/74-06-linha-lida-do-qr.png)
+7. Carregue em **Confirmar**. No exemplo trocámos a conta para `6233 Material de escritório` (o QR vinha de um candeeiro de secretária). A fatura passa a **Publicada** com o número `FTF/2026/00062`.
+
+</StepByStep>
+
+## Resultado esperado
+
+- Um rascunho por fatura lida, **nunca** uma fatura confirmada. O fornecedor vem do NIF do emitente, a referência é o número do documento e a data é a da fatura.
+- Ao confirmar a fatura do exemplo (200,00 € + 46,00 € de IVA), o lançamento é o de uma fatura de compra, e a empresa de demonstração tem pró-rata de 96 % (coluna **Dedutível** na linha; ver [Como calcular e regularizar o pró-rata](/accounting-pt/pro-rata)):
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| `6233 Material de escritório` | 200,00 € | |
+| `6233 Material de escritório` (IVA não dedutível, art. 23.º) | 1,84 € | |
+| `2432 IVA - Dedutível` | 44,16 € | |
+| `2211 Fornecedores gerais` | | 246,00 € |
+
+Além destas, o razão tem duas linhas de 8,00 € (uma a débito e outra a crédito) que se anulam, na conta do gasto («parte privada» da dedução parcial). A mesma fatura sem pró-rata teria só o gasto de 200,00 €, o IVA de 46,00 € e o fornecedor de 246,00 €.
+
+## Notas importantes
+
+### Os avisos do Copiloto
+
+A janela do resultado diz **COM AVISO, confira-a**, e o rascunho mostra uma faixa amarela «O Copiloto tem um aviso sobre este rascunho. Leia «O que o Copiloto leu» no separador abaixo antes de confirmar.» Os avisos testados:
+
+- **Comprador diferente da empresa.** «AVISO: o comprador da fatura tem o NIF 599999977 e a empresa tem o NIF 599999993. Pode pertencer a outra empresa: confirme antes de a usar.»
+- **Fatura a consumidor final.** «AVISO: a fatura foi emitida a «consumidor final» (sem NIF), não à empresa (NIF 599999993). O IVA pode não ser dedutível: peça ao fornecedor que a corrija.»
+
+![Rascunho de uma fatura emitida a consumidor final, com a faixa de aviso e o texto lido no separador O que o Copiloto leu](/images/accounting-pt/ler-o-qr-da-fatura/74-07-aviso-comprador.png)
+
+Um rascunho com um destes dois avisos **não se confirma** com **Confirmar**: aparece o botão **Confirmar o adquirente** (pede confirmação e fica escrito no histórico quem a deu) e só depois **Confirmar** funciona. Se a fatura não é da empresa, não a confirme: peça ao fornecedor uma fatura com o seu NIF.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: dedução do IVA de uma fatura emitida a consumidor final ou a outro NIF (CIVA, art. 19.º e 20.º) e quando é preciso pedir ao fornecedor que a retifique. O Copiloto bloqueia a confirmação até alguém confirmar o adquirente, mas não decide se o IVA é dedutível.</span>
+
+### Fornecedor que ainda não existe
+
+Se não há contacto com o NIF do emitente, o Copiloto cria-o com o nome «Fornecedor NIF 599999985» e escreve em **O que o Copiloto leu**: «Não havia contacto com o NIF 599999985: o Copiloto criou o fornecedor «Fornecedor NIF 599999985». Complete o nome e os dados.» A conta do rascunho vem como `6228 Outros`. O QR não traz o nome, por isso abra o fornecedor e complete-o antes de pagar. Se o NIF do emitente não é válido, o Copiloto não cria o fornecedor: «O NIF do emitente (504000099) não é válido, por isso não foi possível criar o fornecedor. Verifique o documento e crie o rascunho à mão.»
+
+### Ficheiro sem código QR
+
+Um PDF onde o código não se vê não é recusado: a janela diz «não foi lido neste ficheiro nenhum código QR de fatura portuguesa, por isso nada foi preenchido a partir de um código QR. O rascunho foi criado com o ficheiro anexado e já traz o que os outros leitores encontraram nele (…): confira-o e preencha o resto à mão.» O rascunho tem uma faixa «Esta fatura foi preenchida a partir de um PDF. Confira o fornecedor, a data, os valores e o IVA com o PDF e carregue em «Confirmar a revisão». Até lá não pode ser confirmada.» Não tem linhas, e no ecrã de teste trouxe o fornecedor e a referência: confira tudo com o PDF.
+
+![Rascunho criado a partir de um PDF sem código QR, com a faixa que pede Confirmar a revisão](/images/accounting-pt/ler-o-qr-da-fatura/74-08-rascunho-sem-qr.png)
+
+### Fatura repetida
+
+A mesma fatura não se carrega duas vezes. Ao repetir o ficheiro, a janela diz «recusada, esta fatura (mesmo emitente e mesmo ATCUD) já está na contabilidade como Rascunho de fatura de fornecedor (FT AB2026/0123). Não se criou nada.» Com o texto do código colado, diz «O Copiloto não a carregou de novo e retira sozinho este rascunho vazio.»
+
+### A conta e o ativo fixo
+
+A conta que o Copiloto propõe é a do histórico do fornecedor. Se for uma conta de ativos fixos (43, 44 ou 45), ao confirmar a fatura nasce a ficha do ativo: veja [Como criar o ativo a partir da fatura](/accounting-pt/criar-ativo-a-partir-da-fatura). Se o bem não é um ativo, troque a conta antes de confirmar.
+
+{/* Nota interna (DOCS-046, V3A2-18/19): (a) a mensagem do texto colado que não é um QR já está toda em português (auditoria v20-A, master 0289754a8, porta 8328, Contabilista por clique); (b) um PDF sem QR diz «não se preencheu nada», mas o rascunho vem com o fornecedor e a referência preenchidos (lidos do texto do PDF). Descrever o ecrã de hoje; o Gestor abre os cartões. v22-G (DOCS-064, #3900, master d83bdf7ae, base docs_demo_v22g_test, Administrador, Empresa Demonstração): o NIF do fornecedor que não existe passou a 599999985, o 2.º exemplo da DEC-1780 (o anterior era válido e podia ser real; 599999993 fica para a empresa de demonstração); texto de um código QR colado com o emitente 599999985 (FT QR2026/8) e sem contacto com esse NIF: o rascunho veio com «Fornecedor NIF 599999985», a conta 6228 Outros e a frase do artigo, letra a letra, em O que o Copiloto leu (interruptores ligados com Ligar o essencial). Auditoria v22-G (porta 8374, Contabilista por clique): o texto colado com o emitente 599999985 deu a mesma frase, letra a letra; os 5 PDF de exemplo, com o fornecedor novo a 599999985, deram as capturas 74-03 e 74-04 refeitas; a janela do PDF sem QR já diz «nada foi preenchido a partir de um código QR … já traz o que os outros leitores encontraram nele», por isso o ponto (b) acima está resolvido. v23-B (master 2bfd78d1a, docs_demo_v23b_test, Contabilista por clique, interruptores ligados pelo administrador com Ligar o essencial): três PDF de exemplo do fornecedor Equipamentos e Mobiliário Lusitano, Lda (NIF 599990198 na base-mãe nova), com o comprador 599999993, 999999990 (consumidor final) e 599999977; os dois avisos citados, letra a letra, e as capturas 74-05 e 74-07 refeitas. */}
+
+## Problemas frequentes
+
+### «O leitor de faturas está desligado»
+
+- **Sintoma:** ao carregar em **Ler os códigos QR**, janela **Operação inválida**: «O Copiloto está desligado para a empresa “…”. Nada foi feito. Peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que o ligue: Copiloto › Controlo › Interruptores.»
+- **Causa:** o interruptor geral do Copiloto ou o de **Faturas de fornecedor pelo código QR** está desligado na empresa em que está.
+- **O que fazer:** peça a quem tem o perfil **Contabilista certificado** que carregue em **Ligar o essencial**, em **Copiloto › Controlo › Interruptores** (liga o Copiloto e os interruptores «Seguro», incluindo **Faturas de fornecedor pelo código QR**), ou ao administrador que os ligue (cada empresa tem os seus). Este botão nunca os liga sozinho.
+
+### «O texto não é o código QR de uma fatura portuguesa»
+
+- **Sintoma:** ao colar texto em **Ou o texto de um código QR?**, janela **Operação inválida**: «O texto não é o código QR de uma fatura portuguesa (não começa por A: ou não tem o campo do adquirente (B:)). Copie o texto todo, a começar por A:, e tente de novo.»
+- **Causa:** o texto colado não começa por `A:` ou não tem o campo do comprador (`B:`).
+- **O que fazer:** copie o texto inteiro do leitor de QR, desde o `A:` até ao fim.
+
+### «Não há nada para ler»
+
+- **Sintoma:** ao carregar em **Ler os códigos QR** sem ficheiro nem texto, janela **Operação inválida**: «Não há nada para ler. Arraste um ou mais PDF ou fotografias das faturas, ou cole o texto de um código QR, e tente de novo.» (perfil **Contabilista**).
+- **O que fazer:** escolha pelo menos um ficheiro, ou cole o texto do código, e carregue de novo.
+
+### O rascunho não tem linhas ou a conta está errada
+
+- **Causa:** o ficheiro não tinha código QR legível, ou a conta proposta vem do histórico do fornecedor.
+- **O que fazer:** preencha as linhas à mão (carregue em **Confirmar a revisão** quando o rascunho vem de um PDF sem QR) ou troque a conta.
+
+{/* Nota interna (v23-T, DOC-0074, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

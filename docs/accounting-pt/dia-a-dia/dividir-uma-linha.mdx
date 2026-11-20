@@ -1,0 +1,110 @@
+---
+id: dividir-uma-linha
+slug: /accounting-pt/dividir-uma-linha
+title: Como dividir uma linha de lançamento
+sidebar_label: Dividir uma linha
+sidebar_position: 7
+description: Repartir uma linha de um lançamento manual em rascunho por duas ou mais contas, sem desequilibrar o lançamento e com o motivo no histórico.
+keywords: [dividir linha, dividir uma linha, repartir linha, repartir valor, separar conta, linha de lançamento, linha de lancamento, lançamento manual, lancamento manual, rascunho, ainda por distribuir]
+doc_id: DOC-0067
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 6fb7ee1d4)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/dia-a-dia/lancamentos-contabilisticos, accounting-pt/dia-a-dia/estornar-um-lancamento]
+---
+
+## Para que serve?
+
+Quando uma linha de um lançamento manual junta valores que pertencem a contas diferentes, a janela **Dividir linha** reparte-a em duas ou mais linhas, cada uma com a sua conta, descrição, terceiro e valor. A soma das novas linhas tem de ser igual à linha original, por isso o lançamento continua equilibrado. O motivo fica no histórico do lançamento.
+
+## Quando utilizar?
+
+- Um lançamento manual em **rascunho** tem um valor numa só conta que deve ir para duas ou mais (é o exemplo deste artigo: água e eletricidade lançadas juntas em `6241 Eletricidade`).
+- **Não** serve para lançamentos já publicados: esses corrigem-se com um [estorno](/accounting-pt/estornar-um-lancamento) e um lançamento novo. Também não serve para faturas nem recibos, que se corrigem nas suas linhas de fatura.
+- Não muda a data nem o diário: cada nova linha fica com a data do lançamento.
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Lançamentos › Linhas de lançamento**: marque **uma** linha à esquerda e escolha **Ações › Dividir linha**.
+
+A lista abre com o filtro **Publicada**, que esconde os rascunhos. Tire esse filtro (o **x** ao lado de «Publicada» na pesquisa) para ver as linhas do lançamento em rascunho.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** (o Contabilista certificado também pode). O **Auditor / ROC** não pode (ver «Problemas frequentes») e o **Administrativo** não tem a aplicação **Contabilidade**.
+- O lançamento é **manual** e está em **Rascunho**, num período que não está bloqueado.
+- No exemplo, o rascunho do diário **Operações Diversas**, com a referência «Água e eletricidade do armazém (outubro)» e a data 31/10/2026, tem duas linhas: 240,00 € a débito da `6241 Eletricidade` e 240,00 € a crédito da `2722 Credores por acréscimos de gastos`. Os 240,00 € são 160,00 € de eletricidade e 80,00 € de água.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Linhas de lançamento**, tire o filtro **Publicada** e pesquise `Água e eletricidade do armazém`.
+2. Marque a linha da `6241 Eletricidade` de 240,00 € e escolha **Ações › Dividir linha**. Abre-se a janela **Dividir linha**, com o **Sentido** (Débito), o **Valor da linha** (240,00 €) e duas linhas novas, já com a conta e a descrição da original e metade do valor em cada uma (120,00 €).
+3. Na primeira linha, mude o **Valor** para `160`.
+4. Na segunda linha, escolha a **Conta** `6243 Água`, escreva na **Descrição** `Água do armazém` e mude o **Valor** para `80`. Se precisar de mais partes, carregue em **Adicionar uma linha**. A coluna **Parceiro** só é precisa quando a nova linha é de um cliente ou fornecedor.
+5. Confira que **Ainda por distribuir** mostra `0,00 €`. Escreva em **Motivo** a razão, por exemplo `Separar a água da eletricidade` (é opcional, mas fica no histórico).
+   ![Janela Dividir linha com o Valor da linha 240,00 €, Ainda por distribuir 0,00 € assinalado, as linhas 6241 Eletricidade e 6243 Água e o Motivo Separar a água da eletricidade](/images/accounting-pt/dividir-uma-linha/01-janela-dividir-linha.png)
+6. Carregue em **Dividir linha**. A janela fecha-se e a lista mostra as linhas novas.
+
+</StepByStep>
+
+## Resultado esperado
+
+- O lançamento continua em **Rascunho** e equilibrado, agora com três linhas (conferidas na lista **Linhas de lançamento**):
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| 6241 Eletricidade | 160,00 € | |
+| 6243 Água | 80,00 € | |
+| 2722 Credores por acréscimos de gastos | | 240,00 € |
+
+- A primeira parte fica na própria linha original (com o valor novo); as restantes são linhas novas.
+- O histórico do lançamento regista «Linha dividida em 2 linhas por …», com o nome do utilizador e o motivo.
+- Publique depois o lançamento como os outros lançamentos manuais: ver [Como fazer um lançamento contabilístico manual](/accounting-pt/lancamentos-contabilisticos).
+
+## Notas importantes
+
+- **Uma linha de cada vez.** Para repartir duas linhas, divida uma, feche a janela e divida a outra.
+- **Só linhas normais.** Uma linha de imposto, de secção ou de nota não se divide.
+- **Moeda estrangeira.** Os valores da janela estão na moeda da linha; o contravalor em euros é repartido na mesma proporção e a última parte acerta o arredondamento. <span className="fd-pending">Pendente de validação no ecrã: a demonstração não tem lançamentos manuais em moeda estrangeira em rascunho.</span>
+- **Período bloqueado.** Se a data do lançamento está num período fechado pelas [datas de bloqueio](/accounting-pt/datas-de-bloqueio), a janela recusa: abra o período ou mude a data do lançamento antes de dividir.
+
+## Problemas frequentes
+
+### «Só se divide uma linha de cada vez…»
+
+- **Causa:** marcou mais de uma linha (por exemplo, todas com a caixa do cabeçalho). A mensagem é «Só se divide uma linha de cada vez. Escolha uma única linha e tente de novo.».
+- **O que fazer:** desmarque todas e marque só a linha a dividir.
+
+### «As novas linhas somam … mas a linha a dividir tem …»
+
+- **Sintoma:** ao carregar em **Dividir linha** aparece, no exemplo com 160 e 70, «As novas linhas somam 230,00 mas a linha a dividir tem 240,00. A diferença de 10,00 tem de ser distribuída para o lançamento ficar equilibrado.».
+- **O que fazer:** corrija os valores até **Ainda por distribuir** mostrar 0,00 €. Nada foi alterado no lançamento.
+
+{/* Nota interna (DOCS-046 v5-ACC, V5ACC-01): o defeito fechou; lote v23-AE (master 97b34fac3) viu «somam 290,00 … tem 300,00 … diferença de 10,00», com vírgula e sem «€». */}
+
+### «Uma divisão precisa de pelo menos duas linhas…»
+
+- **Sintoma:** ao carregar em **Dividir linha** com uma só linha nova aparece «Uma divisão precisa de pelo menos duas linhas. Acrescente as outras linhas e distribua o valor.».
+- **O que fazer:** acrescente a segunda linha e reparta o valor pelas duas.
+
+### «Cada nova linha precisa de um valor superior a zero…»
+
+- **Sintoma:** uma das linhas novas está a 0,00. Aparece «Cada nova linha precisa de um valor superior a zero. Retire as linhas que não são precisas.».
+- **O que fazer:** apague a linha a zero ou dê-lhe um valor.
+
+### «O lançamento … não está em rascunho…»
+
+- **Sintoma:** «O lançamento OD/2026/00074 (…) não está em rascunho: um lançamento registado, certificado ou anulado nunca é reescrito. Para o corrigir, estorne-o e lance as linhas certas.»
+- **O que fazer:** estorne o lançamento ([Como estornar um lançamento](/accounting-pt/estornar-um-lancamento)) e faça um lançamento novo com as linhas certas.
+
+### Não consigo abrir a janela
+
+- **Causa:** o perfil não pode. Com o **Auditor / ROC**, marcar uma linha não mostra o menu **Ações**, por isso **Dividir linha** não aparece; o **Administrativo** não tem a aplicação **Contabilidade**.
+- **O que fazer:** peça a divisão a quem tem o perfil **Contabilista** ou **Contabilista certificado**.
+
+{/* Nota interna (DOCS-046 v5-ACC, DOC-0067, master 6fb7ee1d4, base docs_demo_v5acc_test): caminho, janela, recusa de duas linhas, recusa da soma e divisão feitos no ecrã com o Contabilista; recusa de lançamento publicado (OD/2026/00074) e recusas do Auditor e da Faturação provadas por RPC com esses perfis; o Gestor de contabilidade abre a janela. Rascunho do exemplo: lançamento 577. */}

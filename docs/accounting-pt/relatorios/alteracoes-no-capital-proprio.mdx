@@ -1,0 +1,87 @@
+---
+id: alteracoes-no-capital-proprio
+slug: /accounting-pt/alteracoes-no-capital-proprio
+title: Como obter a demonstração das alterações no capital próprio
+sidebar_label: Alterações no capital próprio
+sidebar_position: 8
+description: Obter a demonstração das alterações no capital próprio do SNC, com a posição no início e no fim de dois períodos, e conferir o total do capital próprio com o balanço.
+keywords: [alterações no capital próprio, alteracoes no capital proprio, demonstração das alterações no capital próprio, DACP, capital subscrito, resultados transitados, resultado líquido, reservas, SNC]
+doc_id: DOC-0146
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/usar-os-relatorios, accounting-pt/relatorios/demonstracao-de-resultados, accounting-pt/relatorios/exportar-pdf-para-assinar]
+---
+
+## Para que serve?
+
+A demonstração das alterações no capital próprio mostra, coluna a coluna (capital, reservas, resultados transitados, resultado líquido…), o que mexeu no capital próprio durante o período: o resultado do ano, as entradas de capital, as distribuições. Vem sempre com dois períodos, o anterior (N-1) e o corrente (N), e faz parte das demonstrações financeiras do SNC.
+
+## Quando utilizar?
+
+- No fim do exercício, para preparar as demonstrações financeiras.
+- Para confirmar que o resultado do ano anterior passou para resultados transitados.
+- **Não** a use para analisar os gastos e os rendimentos do ano: para isso há a [demonstração de resultados](/accounting-pt/demonstracao-de-resultados).
+
+## Onde encontrar?
+
+**Contabilidade › Consultar › Demonstrações financeiras › Alterações no capital próprio**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. Com ele faz todos os passos deste artigo (testado com o perfil Contabilista).
+- Os lançamentos do exercício e do anterior estão publicados.
+- O exemplo é a Empresa Demonstração, Lda, no exercício de 2026 (N) e no de 2025 (N-1), a 03/11/2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Consultar › Demonstrações financeiras › Alterações no capital próprio**. Abre a **Demonstração das Alterações no Capital Próprio (SNC)** em `01/01/2026 – 31/12/2026`. As colunas vão de **Capital subscrito** a **Total**, passando por **Reservas**, **Resultados transitados** e **Resultado líquido do período**.
+2. Leia o primeiro bloco, o do período anterior, de **POSIÇÃO NO INÍCIO DO PERÍODO N-1** a **POSIÇÃO NO FIM DO PERÍODO N-1**. No exemplo, 2025 começa a 0,00 €, tem **RESULTADO LÍQUIDO DO PERÍODO** de 31.104,16 € e **Realizações de capital** de 100.000,00 €, e termina com 131.104,16 €.
+3. Leia o segundo bloco, o do período corrente, a partir de **POSIÇÃO NO INÍCIO DO PERÍODO N**: abre com os 131.104,16 € com que o anterior terminou (100.000,00 € de capital e 31.104,16 € de resultado líquido). Em **RESULTADO LÍQUIDO DO PERÍODO** do período N, a coluna **Resultados transitados** sobe 31.104,16 € (a aplicação do resultado de 2025), a coluna **Resultado líquido do período** tem -90.896,00 € (retira esses 31.104,16 € e acrescenta o prejuízo de 2026, de 59.791,84 €) e o **Total** é -59.791,84 €.
+   ![Demonstração das alterações no capital próprio de 2026, só com as colunas Resultados transitados, Resultado líquido do período e Total: posição no início do período N de 131.104,16 euros, resultado líquido do período de -59.791,84 euros e posição no fim do período N de 71.312,32 euros](/images/accounting-pt/alteracoes-no-capital-proprio/01-posicao-do-periodo.png)
+4. Confira o fim: **POSIÇÃO NO FIM DO PERÍODO N** tem **Capital subscrito** 100.000,00 €, **Resultados transitados** 31.104,16 €, **Resultado líquido do período** -59.791,84 € e **Total** 71.312,32 €. O total tem de ser igual ao **Total do capital próprio** do [balanço](/accounting-pt/balanco) do mesmo exercício: no exemplo, 71.312,32 € nos dois.
+5. Para entregar a demonstração a assinar, carregue em **Exportar** e escolha **Exportar PDF para assinar** ([como fazer](/accounting-pt/exportar-pdf-para-assinar)). Para mudar de período ou guardar opções, veja [Como filtrar, comparar períodos e exportar um relatório](/accounting-pt/usar-os-relatorios).
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, **Alterações no capital próprio** abre a mesma **Demonstração das Alterações no Capital Próprio (SNC)**, com as mesmas colunas, a mesma barra e o **Exportar PDF para assinar** em **Exportar** (visto com um utilizador só com o perfil **Contabilista**). O **Balanço** com que se confere o total (passo 4) e a **Demonstração de resultados** também são os do fiscaldoo.
+
+{/* Nota interna (lote EE-04, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee04_test, cópia da odoo20_ee_test com EE_FASE=construir, 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0146. Contabilista: /odoo/fiscaldoo-demonstracao-alteracoes-capital-proprio-snc com as colunas de Capital subscrito a Total e POSIÇÃO NO INÍCIO DO PERÍODO N-1; Exportar com as 6 opções; Balanço e Demonstração de resultados abrem o visualizador do fiscaldoo (ir.actions.server). No cabeçalho, «Prejuízo» com o valor do exercício e sem o aviso «linhas ainda não geradas», tanto no Enterprise como na cópia Community docs_demo_ee04_test (master 7cd24fcc9): o texto Community do artigo («Lucro 0,00 €» e o problema do aviso) está desatualizado; ver reports/LOTE_EE-04.md, observações. Ver reports/LOTE_EE-04.md. */}
+
+## Resultado esperado
+
+- A posição no fim de N-1 é igual à posição no início de N (131.104,16 €).
+- A posição no fim de N é igual ao capital próprio do balanço, mesmo antes do apuramento.
+- Cada linha tem o valor em cada coluna e o **Total** da linha.
+- Nenhum lançamento é criado: a demonstração só lê.
+
+## Notas importantes
+
+- **O resultado do ano entra antes do apuramento.** O prejuízo de 2026 já está na demonstração, com o exercício ainda por apurar, e bate com a [demonstração de resultados](/accounting-pt/demonstracao-de-resultados) (-59.791,84 €).
+- **O cabeçalho mostra o resultado do exercício.** Por cima da tabela, o ecrã mostra **Prejuízo** 59.791,84 €, o mesmo valor da tabela e da demonstração de resultados.
+- <span className="fd-pending">Pendente de validação por contabilista certificado: a apresentação do resultado do período corrente antes do apuramento e da aprovação das contas.</span>
+
+## Problemas frequentes
+
+### Todas as linhas estão a zero
+
+- **Causa:** o período escolhido não tem movimentos nem saldos nas contas do capital próprio.
+- **O que fazer:** confira o período na barra do topo e, no [razão](/accounting-pt/diario-e-razao), o saldo das contas do capital próprio.
+
+### «O referencial contabilístico de “…” não está definido, por isso esta demonstração não pode ser mostrada…»
+
+- **Causa:** a empresa ainda não tem o referencial contabilístico escolhido (por exemplo, uma empresa acabada de criar). A mensagem continua: «…sem ele as demonstrações financeiras sairiam vazias ou desequilibradas. Nada foi calculado nem exportado.» O [balanço](/accounting-pt/balanco) recusa-se da mesma maneira.
+- **O que fazer:** peça a um utilizador com o perfil **Contabilista certificado** ou ao administrador do sistema que escolha o referencial em **Definições › Utilizadores e empresas › Empresas** › a empresa › separador **Localização PT** › **Referencial contabilístico**, e abra de novo a demonstração.
+
+{/* Nota interna (DOCS-046, DOC-0146): visto em docs_demo_v6a4_test (master 8f78854ec) com o Contabilista, na base final do lote. ACC-213: a DACP já traz o resultado por apurar e o total é igual ao Balanço (NV3E-02 resolvida). Os valores lidos no ecrã. Defeitos: V6A4-05 (aviso de linhas por gerar com valores) e V6A4-06 (cabeçalho Lucro 0,00 € com prejuízo). A captura esconde linhas, as colunas a zero e o Capital subscrito (o alt diz). Sem caminho no ecrã do Contabilista para as regras de classificação das colunas: fora do artigo. Empresa vazia vista na auditoria de 03/11; regeneração tentada numa cópia: recusada, valores iguais. Não testado: depois do apuramento. */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): números da base-mãe lidos no ecrã com o Contabilista (DACP, DR e Balanço: -59.791,84 €, 71.312,32 €); captura 01 refeita com as mesmas colunas e linhas. */}
+
+{/* Nota interna (lote v23-BI, DOCS-063 #3853, master 2c8d358c0, docs_demo_v23bi_test, 11/11/2026): com o Contabilista, por clique, o cabeçalho mostra «Prejuízo 59.791,84 €» e o aviso «As linhas desta demonstração ainda não foram geradas…» já não aparece (V6A4-05 e V6A4-06 resolvidos): saíram a nota do cabeçalho e o problema do aviso. Com o administrador, noutra empresa da cópia sem referencial, a demonstração recusa com a mensagem citada. */}

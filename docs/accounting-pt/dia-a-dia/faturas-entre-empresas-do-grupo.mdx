@@ -1,0 +1,102 @@
+---
+id: faturas-entre-empresas-do-grupo
+slug: /accounting-pt/faturas-entre-empresas-do-grupo
+title: Como faturar entre empresas do mesmo grupo
+sidebar_label: Faturas entre empresas do grupo
+sidebar_position: 9
+description: Quando uma empresa do grupo fatura a outra na mesma base de dados, o fiscaldoo cria sozinho a fatura de fornecedor na empresa que compra, em rascunho ou já publicada.
+keywords: [faturas do grupo, empresas do grupo, intercompany, entre empresas, fatura de fornecedor automática, diário de compras do grupo, criar em rascunho, criar e publicar, multiempresa]
+doc_id: DOC-0070
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c60255305)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/compras/fatura-de-fornecedor, accounting-pt/dia-a-dia/atrasos-de-registo]
+---
+
+## Para que serve?
+
+Quando duas empresas do mesmo grupo trabalham na mesma base de dados do fiscaldoo e uma fatura à outra, a fatura de venda é registada na empresa que vende e a mesma compra tem de ser registada na empresa que compra. Com a opção **Faturas do grupo** ligada na empresa que compra, o fiscaldoo cria essa **fatura de fornecedor** sozinho, no momento em que a fatura de venda é publicada: com as mesmas linhas, os mesmos valores, as datas e o número da fatura de venda como referência.
+
+Assim, ninguém escreve a mesma fatura duas vezes e as duas empresas ficam com os mesmos valores.
+
+## Quando utilizar?
+
+- Quando as empresas do grupo estão todas na mesma base de dados e faturam entre si (serviços partilhados, refaturação de custos, vendas de mercadoria).
+- **Não** serve para empresas de fora da base de dados, nem para empresas que não sejam portuguesas: nesses casos registe a [fatura de fornecedor](/accounting-pt/fatura-de-fornecedor) como habitualmente.
+
+## Onde encontrar?
+
+Não tem menu próprio. Configura-se na ficha da **empresa que compra**: **Definições › Utilizadores e empresas › Empresas**, abra a empresa, separador **Contabilidade**, grupo **Empresas do grupo**.
+
+## Antes de começar
+
+- **Configurar:** Administrador (é ele quem abre a ficha das empresas).
+- **Emitir a fatura de venda:** quem emite as faturas de venda (no exemplo, o perfil **Administrativo**, em **Faturação › Faturar › Faturas de clientes**).
+- As duas empresas são portuguesas e estão na mesma base de dados. No exemplo: a **Empresa Demonstração, Lda** vende serviços de contabilidade à **Empresa Teste Portugal**.
+- Na empresa que vende, a empresa que compra existe como cliente: é o próprio contacto da empresa (no exemplo, **Empresa Teste Portugal**).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a ficha da **empresa que compra** (Empresa Teste Portugal), separador **Contabilidade**.
+2. Em **Faturas do grupo**, escolha o que acontece quando outra empresa do grupo lhe fatura:
+   - **Não criar** (o que vem por omissão): nada;
+   - **Criar em rascunho**: uma fatura de fornecedor em rascunho, para o contabilista rever;
+   - **Criar e publicar**: a fatura de fornecedor já publicada.
+3. Em **Diário de compras do grupo**, escolha o diário onde ficam estas faturas (no exemplo, **Compras**). Vazio quer dizer o primeiro diário de compras da empresa. Grave.
+   ![Grupo Empresas do grupo da ficha da empresa, com Faturas do grupo em Criar em rascunho e Diário de compras do grupo Compras](/images/accounting-pt/faturas-entre-empresas-do-grupo/01-empresas-do-grupo.png)
+4. Na **empresa que vende** (Empresa Demonstração, Lda), emita a fatura ao cliente **Empresa Teste Portugal** como qualquer outra e confirme-a. No exemplo: FT D26/34, artigo **[SERV] Serviço genérico**, «Serviços de contabilidade (outubro)», 500,00 € com IVA a 23 %.
+5. Passe para a empresa que compra (no topo do ecrã) e abra **Contabilidade › Lançar › Compras › Faturas de fornecedores**: a fatura do grupo está lá em rascunho. Confira-a e publique-a.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, as faturas do grupo são as do fiscaldoo: na ficha da **Empresa Teste Portugal**, separador **Contabilidade**, o grupo **Empresas do grupo** tem o mesmo campo **Faturas do grupo**, com **Não criar**, **Criar em rascunho** e **Criar e publicar** (visto com o administrador). A função do próprio Enterprise para transações entre empresas não está instalada na base Enterprise de teste: use a do fiscaldoo, como neste artigo.
+
+A lista do **Diário de compras do grupo** só mostra os diários das empresas assinaladas no seletor de empresas do topo do ecrã. Com só a **Empresa Demonstração, Lda** assinalada, a lista não mostrou o diário **Compras** da Empresa Teste Portugal e ofereceu só **Criar “Compras”** e **Criar e editar…**: não carregue nessas opções, que criam outro diário. Assinale também a **Empresa Teste Portugal** no seletor e carregue em **Confirmar**: a lista passa a mostrar **Compras**. Também pode deixar o campo vazio, que quer dizer o primeiro diário de compras da empresa que compra.
+
+<span className="fd-pending">Pendente de validação no ecrã: no Enterprise, a criação da fatura de fornecedor na empresa que compra não foi vista, porque só acontece ao publicar a fatura de venda, um documento certificado que não se emitiu na base de teste.</span>
+
+{/* Nota interna (lote EE-05, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee05_test (cópia da odoo20_ee_test com EE_FASE=construir), 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0070. Administrador (todos os grupos, as 3 empresas): Definições › Utilizadores e empresas › Empresas › Empresa Teste Portugal, separador Contabilidade com os grupos Contas de clientes e fornecedores, Empresas do grupo, Ativos fixos e Salários; Faturas do grupo com as 3 opções (Não criar na base); o campo Diário de compras do grupo (domínio: diários de compras da própria empresa) só ofereceu «Criar “Compras”» e «Criar e editar…» com a sessão na Empresa Demonstração; nada gravado. Módulos: l10n_pt_fiscaldoo_interco instalado; account_inter_company_rules (Enterprise) por instalar. A arquitetura diz «Só Community»: o artigo passa a Community e Enterprise. Fatura de venda não emitida na cópia Enterprise. Ver reports/LOTE_EE-05.md. */}
+
+## Resultado esperado
+
+- Na fatura de venda FT D26/34, o histórico diz: «Fatura do grupo criada em Empresa Teste Portugal: Rascunho de fatura de fornecedor (FT D26/34).»
+- Na Empresa Teste Portugal há uma fatura de fornecedor em rascunho, no diário **Compras**, com o fornecedor **Empresa Demonstração, Lda**, a **Referência** `FT D26/34`, a mesma data de fatura e a mesma data de vencimento, e 500,00 € + 115,00 € de IVA = 615,00 €.
+- As linhas das duas faturas, conferidas no razão:
+
+| Empresa | Conta | Débito | Crédito |
+|---|---|---|---|
+| Empresa Demonstração (venda) | 21110026 Empresa Teste Portugal | 615,00 € | |
+| Empresa Demonstração (venda) | 721 Prestações de serviços | | 500,00 € |
+| Empresa Demonstração (venda) | 2433 IVA - Liquidado | | 115,00 € |
+| Empresa Teste Portugal (compra, ao publicar) | 6221 Trabalhos especializados | 500,00 € | |
+| Empresa Teste Portugal (compra, ao publicar) | 2432 IVA - Dedutível | 115,00 € | |
+| Empresa Teste Portugal (compra, ao publicar) | 2211 Fornecedores gerais | | 615,00 € |
+
+- As contas de gasto e de rendimento vêm da configuração do artigo em cada empresa. O IVA da compra é o imposto de compra da empresa que compra com a mesma taxa e o mesmo código do imposto de venda.
+
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a dedução do IVA da fatura de fornecedor criada desta forma (a empresa que compra tem de ter a fatura emitida pelo fornecedor; o documento criado pelo fiscaldoo é o registo dessa fatura, não a substitui).</span>
+
+## Notas importantes
+
+- **Só quando a fatura de venda é publicada.** Um rascunho de venda não cria nada na outra empresa.
+- **Rascunho é o mais seguro.** Com **Criar e publicar**, a compra entra logo na contabilidade e no IVA da empresa que compra, sem ninguém a ver.
+
+## Problemas frequentes
+
+### A fatura de venda foi publicada mas não apareceu a fatura de fornecedor
+
+- **Causa:** a empresa que compra tem **Faturas do grupo** em **Não criar**, o cliente da fatura não é o contacto da empresa do grupo, ou uma das empresas não é portuguesa. Se a opção e o cliente estão certos, o histórico da fatura de venda diz porque não se criou a fatura de fornecedor (por exemplo, a empresa que compra não tem um imposto de compra com a mesma taxa e o mesmo código, ou não tem diário de compras).
+- **O que fazer:** confirme a opção na ficha da empresa que compra e o cliente da fatura. Para esta fatura, registe a fatura de fornecedor à mão.
+
+
+{/* Nota interna (DOCS-046 v5-ACC 2.ª ronda, DOC-0070, master 6fb7ee1d4, base docs_demo_v5acc_test): ficha da Empresa Teste Portugal no ecrã com o admin (Definições › Gerir empresas, separador Contabilidade): Faturas do grupo = Criar em rascunho, Diário Compras, gravado. Fatura FT D26/34 (lançamento 584) criada e publicada por RPC com o perfil Faturação na Empresa Demonstração; espelho 585 (rascunho, Compras, ref FT D26/34) lido por RPC na empresa 1; mensagem do histórico lida. Só a Empresa Demonstração tem diários de venda certificados, por isso o sentido inverso não se testou. Nota de crédito, «Criar e publicar» e a falta de imposto de compra igual (mensagem no histórico) não provados: lidos no programa. Caminho do passo 5 lido na árvore de menus (não aberto no ecrã nesta ronda). A Empresa Demonstração já vinha com Faturas do grupo = Criar em rascunho. Nas Definições existe também a opção nativa «Transações entre empresas»: não testada em conjunto. auditoria v20-A, master 0289754a8, porta 8328: Faturas do grupo = Criar em rascunho e Diário Compras gravados por clique com o admin na Empresa Teste Portugal; FT D26/37 confirmada por clique com um utilizador só com o perfil Faturação; histórico «Fatura do grupo criada em Empresa Teste Portugal: Rascunho de fatura de fornecedor (FT D26/37).» e rascunho no diário Compras, 500,00 € + 115,00 €, com as mesmas datas. */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AZ, 10/11/2026, master bfedd3b23, docs_demo_v23az_test, porta 8508, DEF-QA7-c-01): «Faturação» não é valor do campo Perfil. Com um utilizador só Administrativo (Empresa Demonstração), Faturação › Faturar › Faturas de clientes aberto por clique, fatura própria ao cliente Empresa Teste Portugal (rascunho criado por RPC com esse utilizador, [SERV], 500,00 € + IVA) emitida com Confirmar por clique (FT D26/31 nessa cópia, fora do exemplo). O resto do artigo não foi refeito neste lote. */}

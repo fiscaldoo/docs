@@ -1,0 +1,130 @@
+---
+id: regra-de-salarios-ja-usada
+slug: /troubleshooting/regra-de-salarios-ja-usada
+title: Não consigo alterar uma regra, taxa ou tabela de salários já usada
+sidebar_label: Regra, taxa ou tabela já usada
+description: Métodos, taxas, tabelas e pacotes legais que já começaram não se alteram nem se apagam. Fecham-se com Válido até e regista-se uma versão nova.
+keywords: [regra já começou, regra ja comecou, taxa da segurança social, TSU, tabela de IRS, arquivar tabela, pacote legal, método do subsídio, metodo do subsidio, válido até, valido ate, nova versão, nova versao, elegibilidade do subsídio de refeição, não pode ser eliminada, calendário de feriados, arquivar calendário]
+doc_id: DOC-0392
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado, payroll-pt/configurar/configurar-os-salarios, payroll-pt/configurar/atualizacoes-legais]
+---
+
+## Sintoma
+
+Em **Salários › Configurar**, quer mudar, arquivar ou apagar um método, uma taxa ou uma tabela e o fiscaldoo recusa. Em alguns casos o formulário só deixa escrever **Válido até**. Noutros, nem há botão para mudar.
+
+## Mensagem
+
+Vistas na Empresa Demonstração, Lda, em novembro de 2026.
+
+**Com o acesso Administrador de Salários**
+
+Regra de **Elegibilidade do subsídio de refeição** com início em 01/07/2026, ao guardar uma alteração ou em **Ações › Eliminar**:
+
+> «A regra de elegibilidade «*Subsídio de refeição: regra geral*» já começou e não pode ser alterada nem apagada. O que aconteceu: uma regra que se aplicou a recibos nunca é reescrita. Como corrigir: feche-a com «Válido até» e registe uma nova a partir do dia seguinte.»
+
+![Janela Operação inválida: a regra de elegibilidade já começou e não pode ser alterada nem apagada](/images/troubleshooting/regra-de-salarios-ja-usada/04-regra-ja-comecou.png)
+
+Na lista **Métodos do subsídio de férias**, em **Ações › Eliminar**:
+
+> «O método do subsídio de férias «*Subsídio de férias: regra da empresa*» já começou e não pode ser eliminado: arquive-o ou feche a sua vigência.»
+
+**Reduções do salário mínimo**, ao guardar uma alteração:
+
+> «A redução do RMMG de *Bruno Miguel Teixeira* já começou e não pode ser alterada. O que aconteceu: uma redução que se aplicou a recibos nunca se reescreve. Como resolver: termine-a (preencha «Termina em») e registe uma nova.»
+
+**Definições de salários**, em **Ações › Eliminar**:
+
+> «A configuração de salários de «*Empresa Demonstração, Lda*» não se apaga: a empresa tem *32* recibo(s). O que aconteceu: os recibos foram calculados com estas escolhas e apagá-las repunha os valores por omissão sem rasto. Como resolver: altere as escolhas (a alteração fica auditada).»
+
+**Calendários de feriados**, em **Salários › Configurar › Empresa › Faltas e feriados › Calendários de feriados**, ao abrir **Feriados 2026 — Continente** e usar **Ações › Arquivar**:
+
+> «A versão e a referência legal de um calendário de feriados não se escrevem à mão, e um calendário com dias só é arquivado pelos dados legais nacionais. O que aconteceu: o calendário de um ano já usado pelos recibos faz parte do registo legal. Como resolver: peça ao utilizador dos dados legais nacionais que o arquive, ou crie um calendário novo. A tentativa ficou registada na auditoria.»
+
+![Janela Operação inválida: um calendário com dias só é arquivado pelos dados legais nacionais](/images/troubleshooting/regra-de-salarios-ja-usada/05-calendario-arquivar.png)
+
+**Tabelas de retenção de IRS**: esta tabela não é do acesso **Administrador de Salários**. Com ele, a lista não tem **Arquivar**: com o perfil **Contabilista**, **Ações** só tem **Exportar**; com o perfil **Processador de salários**, nem aparece **Ações**. A tabela abre só para leitura, sem **Ações**, por isso não chega a aparecer mensagem.
+
+**Com o administrador do sistema**
+
+**Tabelas de retenção de IRS**, em **Ações › Arquivar**:
+
+> «A(s) tabela(s) *I* não se pode(m) arquivar: está(ão) em vigor ou já foram usadas em recibos. O que aconteceu: arquivá-la deixaria um rascunho ou um recibo corretivo ser recalculado com outra tabela. Como resolver: registe uma tabela NOVA com nova data de início e feche o «Válido até» desta (um recibo corretivo usa a tabela do período que corrige).»
+
+![Janela Operação inválida: a tabela I não se pode arquivar porque está em vigor ou já foi usada em recibos](/images/troubleshooting/regra-de-salarios-ja-usada/01-tabela-irs-arquivar.png)
+
+**Taxas da Segurança Social (TSU)**, em **Ações › Arquivar** e **Ações › Eliminar**. Nesta versão, a data ainda vem na mensagem como 2026-01-01, e não como 01/01/2026:
+
+> «A taxa de «*GERAL*» (desde *2026-01-01*) não se pode arquivar: está em vigor ou foi usada em recibos do seu período. O que aconteceu: arquivá-la deixaria um rascunho ou um recibo corretivo desse período ser recalculado com outra taxa. Como resolver: registe uma taxa NOVA com nova data de início e feche o «Válido até» desta (um recibo corretivo usa a taxa do período que corrige).»
+
+![Janela Operação inválida: a taxa GERAL não se pode arquivar](/images/troubleshooting/regra-de-salarios-ja-usada/02-taxa-arquivar.png)
+
+> «A(s) taxa(s) de «*GERAL*» não pode(m) ser eliminada(s): já está(ão) em vigor (desde *2026-01-01*). O que aconteceu: uma taxa que se aplicou a um período tem de ficar para reprodutibilidade — os recibos apontam para ela. Como corrigir: feche o seu «Válido até» ou arquive-a.»
+
+**Pacotes de atualização legal**, em **Ações › Eliminar**:
+
+> «Um pacote instalado não pode ser eliminado. O que aconteceu: podem ter sido calculados recibos com ele. Como corrigir: deixe-o como está — uma correção é uma nova versão.»
+
+![Janela Operação inválida: um pacote instalado não pode ser eliminado](/images/troubleshooting/regra-de-salarios-ja-usada/03-pacote-eliminar.png)
+
+## Causas verificadas
+
+- **O que já começou fica como estava.** Um recibo guarda o resultado calculado, mas um rascunho ou um recibo corretivo desse período volta a ler a regra. Se a regra mudasse, o mesmo mês daria outro valor. Por isso, o fiscaldoo avalia pela data de início: basta **Válido desde** estar no passado, mesmo que a regra acabe de ser criada e nenhum recibo a tenha usado.
+- **O formulário fecha-se sozinho.** Nos métodos do subsídio de Natal e do subsídio de férias já começados, o único campo que se escreve é **Válido até**. Por isso, nestes casos pode não chegar a ver uma mensagem ao alterar: só ao eliminar.
+- **As tabelas e as taxas legais não são do Administrador de Salários.** Com este acesso extra, as **Tabelas de retenção de IRS**, as **Taxas da Segurança Social (TSU)** e os **Pacotes de atualização legal** são só de leitura e não têm **Novo**. Quem as mantém é o administrador do sistema ou quem tem também o acesso extra **Dados legais nacionais** (nenhum valor do campo **Perfil** o traz; dá-se em **Ajustes avançados**), e vêm nas atualizações legais.
+
+As restantes regras e configurações de salários (por exemplo os mínimos das categorias e os valores por fonte legal) têm proteções parecidas. <span className="fd-pending">Pendente de validação no ecrã: as mensagens destas outras regras não foram provocadas nesta ronda, por isso não se citam. Siga o que cada mensagem pede.</span>
+
+## O que confirmar
+
+1. A data de **Válido desde** da regra. Se já passou, a regra já começou.
+2. Se quer corrigir o passado ou mudar a partir de agora. Mudar a partir de agora faz-se com uma versão nova. O passado não se reescreve: corrige-se com um recibo corretivo ([Corrigir um processamento](/payroll-pt/corrigir-um-processamento)).
+3. O perfil com que entrou. Se a mensagem fala dos dados legais nacionais, o pedido é para quem tem o acesso extra **Dados legais nacionais**.
+
+## Como resolver
+
+### Regras e métodos que o Administrador de Salários gere
+
+1. Abra a regra em **Salários › Configurar › Rubricas** (por exemplo **Métodos do subsídio de Natal**).
+2. Preencha **Válido até** com o último dia em que a regra se aplica e guarde.
+3. Volte à lista, carregue em **Novo** e registe a regra certa, com **Válido desde** no dia seguinte.
+
+Numa **Redução do salário mínimo**, em **Salários › Preparar**, o campo que fecha é **Termina em**.
+
+### Tabelas, taxas e pacotes legais
+
+Peça ao administrador do sistema, ou a quem tem o acesso extra **Dados legais nacionais**, que siga a mensagem, ou aguarde a atualização legal ([Atualizações legais](/payroll-pt/atualizacoes-legais)). Não apague nem arquive o que está em vigor.
+
+### Calendários de feriados
+
+Peça a quem tem o acesso extra **Dados legais nacionais** que arquive o calendário, ou carregue em **Novo** e crie um calendário novo.
+
+### Definições de salários
+
+Não se apagam. Abra **Salários › Configurar › Empresa › Definições de salários** e altere a escolha que precisa de mudar. A alteração fica registada.
+
+## Resultado esperado
+
+- A regra antiga fica com **Válido até** preenchido e continua na lista. No exemplo, o método do subsídio de férias guardou **Válido até** = 30/06/2026 sem mensagem, e o método novo guardou-se com **Válido desde** = 01/07/2026.
+- Os recibos e os recibos corretivos dos meses anteriores continuam a usar a regra antiga, e os meses seguintes usam a nova.
+
+## Quando contactar o suporte
+
+- A regra tem **Válido desde** no futuro e mesmo assim diz que já começou.
+- Não consegue guardar **Válido até** numa regra que a mensagem manda fechar.
+- Saiu uma lei nova e a atualização legal com a taxa ou a tabela ainda não chegou.
+
+## Informação a enviar
+
+- O menu, o nome da regra, **Válido desde** e **Válido até**.
+- O texto completo da mensagem, copiado do ecrã.
+- O que quer mudar e a partir de que data.
+- O perfil com que entrou.
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): Tabelas de retenção de IRS com Contabilista + Administrador de Salários: lista só com Ações › Exportar, ficha sem Ações; a mensagem «Quem faz: Dados legais nacionais, Administrador» já não se provoca. Dados legais nacionais é acesso extra (Novo na TSU). */}

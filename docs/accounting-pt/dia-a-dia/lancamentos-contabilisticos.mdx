@@ -1,0 +1,107 @@
+---
+id: lancamentos-contabilisticos
+slug: /accounting-pt/lancamentos-contabilisticos
+title: Como fazer um lançamento contabilístico manual
+sidebar_label: Lançamento contabilístico manual
+sidebar_position: 1
+description: Registar nas contas uma operação que não vem de uma fatura, de um recibo ou do banco, por exemplo a estimativa de um gasto no fecho do mês, com o débito igual ao crédito.
+keywords: [lançamento manual, lancamento manual, lançamento contabilístico, lancamento contabilistico, lançamento de diário, lancamento de diario, operações diversas, operacoes diversas, acréscimo de gastos, acrescimo de gastos, especialização, especializacao, publicar lançamento, publicar lancamento, lançamento desequilibrado, lancamento desequilibrado, diferença, equilibrado, movimento, lançamento rápido, lancamento rapido, tipo de transação SAF-T, tipo de transacao SAF-T, contas de caixa, conta de bancos, Sem registos]
+doc_id: DOC-0064
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/dia-a-dia/estornar-um-lancamento, accounting-pt/dia-a-dia/atrasos-de-registo]
+---
+
+## Para que serve?
+
+Um lançamento manual regista nas contas uma operação que não nasce de outro documento do Odoo: uma estimativa de fim de mês, uma reclassificação entre contas, um acerto pedido pelo contabilista. Cada lançamento tem pelo menos duas linhas e o total a débito tem de ser igual ao total a crédito.
+
+## Quando utilizar?
+
+- Para registar um gasto de um mês que ainda não tem fatura, por exemplo a eletricidade de setembro estimada no fecho de setembro.
+- Para passar um valor de uma conta para outra, quando foi lançado na conta errada e o lançamento original já foi [estornado](/accounting-pt/estornar-um-lancamento).
+- Para um acerto que o contabilista certificado indicou, com as contas que ele indicou.
+- **Não** use um lançamento manual para faturas, notas de crédito ou recibos que a empresa emite: esses documentos têm numeração e assinatura próprias e emitem-se nos seus menus. As faturas que recebe de fornecedores também não: lançam-se em [Faturas de fornecedores](/accounting-pt/fatura-de-fornecedor), para entrarem no IVA dedutível e no que há a pagar.
+- Para acertos às contas de caixa e de bancos (11 e 12), o Odoo não deixa usar o lançamento manual: ver «Notas importantes».
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Lançamentos › Lançamentos contabilísticos**. Abre a lista de todos os lançamentos, filtrada por **Publicados**.
+
+![Menu Lançar da Contabilidade, com a opção Lançamentos contabilísticos assinalada no grupo Lançamentos](/images/accounting-pt/lancamentos-contabilisticos/01-menu-lancar-lancamentos.png)
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** ou **Contabilista certificado**. O perfil **Administrativo** não tem o menu **Lançar** da Contabilidade.
+- Sabe as duas contas, o valor e a data. Se não sabe que contas usar, pergunte ao contabilista certificado antes de publicar.
+- A data está num exercício aberto. Na demonstração, 2025 está fechado: um lançamento com data de 2025 não se publica (ver «Problemas frequentes»).
+- A data não está no futuro. O Odoo publica um lançamento com data futura sem avisar, e ele entra logo no balancete desse mês: uma estimativa do mês publica-se no último dia do mês ou depois (no exemplo, a estimativa de setembro tem data de 30/09/2026 e foi publicada a 29/10/2026, no fecho de setembro).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Na lista **Lançamentos contabilísticos**, carregue em **Novo**. O lançamento abre em **Rascunho**, com o **Diário** **Operações Diversas** e a data de hoje.
+2. Em **Data**, escreva a data da operação, por exemplo `30/09/2026`. Em **Referência**, escreva o que aconteceu, por exemplo `Eletricidade de setembro por faturar`. A referência é o que aparece na lista e no diário.
+   ![Cabeçalho do lançamento em Rascunho, com o Diário Operações Diversas, a Data 30/09/2026, a Referência Eletricidade de setembro por faturar e o campo Tipo de transação SAF-T](/images/accounting-pt/lancamentos-contabilisticos/02-cabecalho-diario-data-referencia.png)
+3. Deixe **Tipo de transação SAF-T** como está, salvo indicação do contabilista certificado. O campo fica vazio enquanto escreve e, ao gravar ou publicar, recebe o tipo do diário: **N — Normal** no diário **Operações Diversas**. Ver «Notas importantes».
+4. No separador **Linhas de lançamento**, carregue em **Adicionar uma linha**. Em **Conta**, escreva o número ou o nome da conta e escolha-a na lista, por exemplo `6241 Eletricidade`. Escreva a **Descrição** e o valor em **Débito**: `150,00`.
+
+   Enquanto só houver um lado, por baixo das linhas aparece a etiqueta vermelha **Diferença de 150,00 €**.
+   ![Linhas do lançamento com só a linha a débito de 150,00 € e a etiqueta Diferença de 150,00 € ao lado dos totais](/images/accounting-pt/lancamentos-contabilisticos/03b-diferenca-por-equilibrar.png)
+5. Carregue outra vez em **Adicionar uma linha** e escolha a outra conta, por exemplo `2722 Credores por acréscimos de gastos`. O Odoo já propõe o valor que falta no lado contrário (150,00 € em **Crédito**); confirme-o.
+6. Confirme que a etiqueta passou a **Equilibrado** e que **Total de débitos** e **Total de créditos** são iguais.
+   ![Linhas do lançamento com 150,00 € a débito na conta 6241 e 150,00 € a crédito na 2722, e a etiqueta Equilibrado](/images/accounting-pt/lancamentos-contabilisticos/03-linhas-equilibradas.png)
+7. Carregue em **Publicar**.
+   ![Botão Publicar assinalado, ao lado de Guardar como modelo, com o estado Rascunho](/images/accounting-pt/lancamentos-contabilisticos/04-botao-publicar.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- O lançamento passa a **Publicada** e recebe o número do diário, no exemplo `MISC/2026/00110`, com **Tipo de transação SAF-T** **N — Normal**.
+- A etiqueta **Equilibrado** fica no cabeçalho, ao lado dos botões **Balancete do mês**, **Diário do mês** e **Razão do mês**.
+  ![Lançamento MISC/2026/00110 publicado, com a etiqueta Equilibrado e os botões Balancete do mês, Diário do mês e Razão do mês](/images/accounting-pt/lancamentos-contabilisticos/05-lancamento-publicado.png)
+- O valor entra no balancete, no razão e no diário do mês da data do lançamento. No exemplo, 150,00 € a débito da `6241 Eletricidade` e a crédito da `2722 Credores por acréscimos de gastos` em setembro de 2026.
+
+## Vídeo demonstrativo
+
+<VideoTutorial src="/videos/lancamentos-contabilisticos.mp4" captions="/videos/lancamentos-contabilisticos.vtt" poster="/videos/lancamentos-contabilisticos-poster.png" width="1440" height="1140" title="Fazer um lançamento manual e publicá-lo" duration="33 s" />
+
+## Notas importantes
+
+- **Contas de caixa e de bancos: limitação do Odoo, não regra contabilística.** O SNC permite lançar acertos, regularizações e reclassificações nas contas 11 (caixa) e 12 (depósitos à ordem). O Odoo é que não as mostra nas linhas de um lançamento manual (a lista diz «Sem registos»): o dinheiro que entra e sai, e os acertos a essas contas (uma comissão do banco, uma diferença de caixa), registam-se pela linha do extrato desse banco ou dessa caixa ([Como reconciliar os movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios), **Lançamento direto**), ou em **Contabilidade › Lançar › Lançamentos › Lançamento rápido** («Paguei uma despesa», «Recebi dinheiro de um cliente», «Transferi dinheiro entre as minhas contas»…). Assim a conta 12 fica sempre igual ao extrato.
+- **Tipo de transação SAF-T.** É o tipo com que o lançamento sai no SAF-T de contabilidade. As opções são **N — Normal**, **R — Regularização do período de tributação**, **A — Apuramento de resultados** e **J — Movimento de ajustamento**. O Odoo nunca o deduz do conteúdo: vem do diário (N nos diários correntes; A e J nos diários de apuramento e de ajustamento) e muda-se à mão **antes** de publicar; depois de publicado já não muda. Ao escolher **J** ou **A** em **Operações Diversas**, aparece o aviso «… Use-o noutro diário só se tiver a certeza de que este lançamento é um deles; caso contrário, mantenha “N — Normal”.» Um lançamento com **A** que use contas fora das classes 6, 7 e 81 não se publica. <span className="fd-pending">Pendente de validação por contabilista certificado: em que acertos manuais se escolhe R (regularização do período de tributação) ou J em vez de N.</span>
+- **Depois de publicado, corrija com um estorno.** O lançamento estornado e o estorno ficam ligados e com o motivo escrito: ver [Como estornar um lançamento](/accounting-pt/estornar-um-lancamento).
+- **Estimativas do fim do mês.** A estimativa do exemplo (setembro) é estornada no primeiro dia do mês seguinte, 01/10/2026, e a fatura verdadeira lança-se quando chegar. É o exemplo do artigo do estorno.
+
+{/* Nota interna (DOCS-021, ACC-202 #3440): um lançamento manual publica-se com data futura sem aviso (P-B1-B); quando o cartão fechar, rever a frase de «Antes de começar». O aviso de J mostra «J — Adjustment entry» em inglês dentro do texto em português (I18N, lote B1, 2.ª passagem). */}
+
+## Problemas frequentes
+
+### Publicar é recusado: «O lançamento não está equilibrado»
+
+- **Sintoma:** janela **Operação inválida** com «O lançamento não está equilibrado, por isso não pode ser confirmado: … Débito 150,00 € ≠ Crédito 0,00 € — diferença 150,00 €. Corrija uma linha (um valor, ou acrescente a linha em falta) para que o total do débito seja igual ao total do crédito. A diferença não é arredondada: basta um cêntimo para bloquear o lançamento.»
+- **Causa:** o total a débito é diferente do total a crédito, mesmo que por um cêntimo.
+- **O que fazer:** feche a janela, corrija o valor da linha errada ou acrescente a linha em falta, e confirme a etiqueta **Equilibrado** antes de publicar.
+
+### A conta de caixa ou do banco não aparece: «Sem registos»
+
+- **Causa:** o Odoo não mostra as contas de caixa e de bancos nas linhas de um lançamento manual. É uma limitação do programa, não uma regra contabilística.
+- **O que fazer:** registe o movimento, ou o acerto a essa conta, pela linha do extrato do banco ou da caixa, ou em **Contabilidade › Lançar › Lançamentos › Lançamento rápido**. Se o acerto não cabe em nenhum dos dois, fale com o contabilista certificado antes de usar outra conta.
+
+### Publicar é recusado: «O exercício … está fechado»
+
+- **Sintoma:** ao escrever uma data antiga aparecem dois avisos no topo do lançamento: «A data está a ser definida para antes de: Data de bloqueio geral (31/12/2025). O lançamento de diário será contabilizado em 29/10/2026 ao ser lançado.» e «302 dias desde o fim do mês a que este lançamento respeita…». Ao carregar em **Publicar**, a janela **Operação inválida** diz: «O exercício 2025 (01/01/2025 a 31/12/2025) está fechado: não pode criar o lançamento … datado de 15/12/2025. Porquê: um exercício fechado fica bloqueado para as contas já aprovadas não mudarem. Como resolver: lance-o num exercício aberto ou, se for mesmo necessário, peça ao administrador uma exceção com motivo…»
+
+{/* Nota interna (lote v23-Q, #3947, master 808f8ca1f, docs_demo_v23q_test, porta 8452): «peça ao administrador uma exceção» (antes «peça à Administração fiscal uma exceção») provocado no ecrã com um utilizador criado só com o perfil Contabilista (DEC-1777): lançamento de 15/12/2025, Publicar → Operação inválida; a variante «não pode alterar o lançamento» provocada pela integração (Voltar a rascunho do OD/2025/00049; no ecrã, o Contabilista tem Voltar a rascunho no menu Ações do lançamento e recebe a mesma recusa (auditoria docs-aud-v23q)). O resto da mensagem não mudou. */}
+- **Causa:** a data está num exercício fechado. Apesar do primeiro aviso, o lançamento não passa para a data de hoje: fica em **Rascunho**.
+- **O que fazer:** escreva uma data do exercício aberto. Se o lançamento tem mesmo de ficar no exercício fechado, a decisão é do contabilista certificado. O «administrador» da mensagem é o administrador do sistema da sua empresa, **não** a Autoridade Tributária: é a ele que se pede a exceção.
+
+{/* Nota interna (lote v23-G, DOCS-066, master 5228a94bd, docs_demo_v23g_test): a mensagem do exercício fechado foi provocada de novo pela integração (RPC) com um utilizador só com o perfil Contabilista (lançamento de 15/12/2025): o texto citado, até às reticências, não mudou. */}
+
+{/* Nota interna (DOCS-021, ACC-201 #3436): a faixa «será contabilizado em 29/10/2026» contradiz a recusa do exercício fechado (B1-02); quando o cartão fechar, rever este problema. */}

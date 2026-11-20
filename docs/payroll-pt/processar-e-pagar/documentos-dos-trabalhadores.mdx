@@ -1,0 +1,97 @@
+---
+id: documentos-dos-trabalhadores
+slug: /payroll-pt/documentos-dos-trabalhadores
+title: Como controlar os documentos dos trabalhadores com validade
+sidebar_label: Documentos com validade
+sidebar_position: 22
+description: Registar documentos dos trabalhadores com data de validade e receber uma tarefa antes de caducarem.
+keywords: [controlar, documentos, trabalhadores, validade, documentos dos trabalhadores, cartão de cidadão, cartao de cidadao, autorização de residência, autorizacao de residencia, carta de condução, carta de conducao, cédula profissional, cedula profissional, a expirar, expirado]
+doc_id: DOC-0214
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/avisos-ao-trabalhador]
+---
+
+## Para que serve?
+
+Guarda os documentos de cada trabalhador que caducam, com o número, as datas e a digitalização. Antes de um documento caducar, o fiscaldoo cria uma tarefa a avisar.
+
+## Quando utilizar?
+
+- Quando um trabalhador entrega um documento com validade, por exemplo uma autorização de residência.
+- Quando um documento é renovado.
+- Não use esta lista para contratos nem para recibos: os documentos gerados pelo fiscaldoo ficam em cada registo.
+
+## Onde encontrar?
+
+**Pessoas › Trabalhadores › Documentos dos trabalhadores**.
+
+## Antes de começar
+
+O seu perfil é **Processador de salários** (com ou sem o acesso extra **Administrador de Salários**) ou **Gestor de RH**. Tem à mão o documento e a data de validade.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a lista. Abre com o filtro **A expirar ou expirados**: para ver todos, retire-o na barra de pesquisa.
+2. Carregue em **Novo**. Escolha o **Trabalhador** e o **Tipo**: **Cartão de Cidadão**, **Passaporte**, **Autorização de residência**, **Carta de condução**, **Cédula ou licença profissional** ou **Outro documento**.
+3. Preencha **Número**, **Emitido em** e **Válido até**.
+4. Em **Avisar com estes dias de antecedência**, deixe `30` ou aumente. Para uma autorização de residência, por exemplo, pode pôr `90`.
+5. Em **Digitalização**, junte o ficheiro. Carregue em **Guardar**. A **Situação** preenche-se sozinha.
+   ![Autorização de residência válida até 20/11/2026, com aviso a 30 dias e Situação A expirar](/images/payroll-pt/documentos-dos-trabalhadores/01-documento-a-expirar.png)
+6. Quando o documento for renovado, abra-o e escreva a nova data em **Válido até**. A **Situação** muda, e o aviso volta a contar para a nova data.
+
+</StepByStep>
+
+**Exemplo.** A 04/11/2026, uma autorização de residência válida até 20/11/2026, com 30 dias de aviso, fica **A expirar**: faltam 16 dias. Com a validade a 20/05/2027, fica **Válido**.
+
+![Lista com o filtro A expirar ou expirados: tipo, número, validade e situação](/images/payroll-pt/documentos-dos-trabalhadores/02-lista-a-expirar.png)
+
+## No Enterprise
+
+No Odoo Enterprise, os documentos registam-se da mesma maneira, com os mesmos perfis e o mesmo menu. A lista abre com o filtro **A expirar ou expirados**, e **Novo** tem os mesmos campos e os mesmos seis tipos. Uma autorização de residência válida até 20/11/2026, com 30 dias de aviso, fica **A expirar**; com a validade a 20/05/2027, fica **Válido**. A data de validade anterior à emissão tem a mesma recusa.
+
+Na ficha do trabalhador, o perfil **Gestor de RH** vê também o botão **Documentos**, da aplicação **Documentos** do Enterprise. Os documentos com validade e o aviso continuam a registar-se nesta lista.
+
+{/* Nota interna (lote EE-09, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 12/11/2026): conferido numa cópia local da base Enterprise (docs_ee_ee09_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Gestor de RH: lista com o filtro e a frase de lista vazia; Novo com os seis tipos (descartado). Situação calculada com os direitos do Processador de salários numa transação desfeita, a 12/11/2026 (aviso a partir de 21/10/2026). Botão Documentos (documents_hr) na vista da ficha do Gestor de RH. Menus e vistas destes ecrãs comparados, perfil a perfil, com uma cópia da demonstração Community (docs_demo_ee09_test, 2c8d358c0, porta 8524): iguais. Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-09.md. */}
+
+## Resultado esperado
+
+- A lista mostra a **Situação**: **Válido**, **A expirar** ou **Caducado**.
+- Quando o documento entra no período de aviso, o fiscaldoo cria, uma vez, uma tarefa para o responsável do trabalhador, com a data da validade. Sem responsável, a tarefa fica para quem registou o documento.
+
+## Notas importantes
+
+- **O trabalhador não recebe este aviso.** Vai para quem o gere. Veja [Que avisos o fiscaldoo envia aos trabalhadores](/payroll-pt/avisos-ao-trabalhador).
+- **Não bloqueia nada.** Um documento expirado não impede o processamento de salários.
+- **A tarefa diz**, por exemplo, «Documento a expirar: Cartão de Cidadão de …» e, na nota, «Como resolver: renove-o e registe a nova validade.»
+- **A lista não vê** documentos que não tenha registado: não lê o número do cartão do separador **Pessoal** da ficha.
+
+## Problemas frequentes
+
+### A data de validade é recusada
+
+- **Mensagem:** «O documento de … expira antes de ter sido emitido. Como resolver: corrija as datas.»
+- **Causa:** **Válido até** é anterior a **Emitido em**.
+- **O que fazer:** corrija as datas.
+
+### Não guarda: campos a vermelho
+
+- **Mensagem:** «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** falta **Trabalhador**, **Tipo** ou **Válido até**.
+- **O que fazer:** preencha-os.
+
+### Registei um documento e não aparece na lista
+
+- **Sintoma:** a lista fica vazia, ou sem o documento acabado de criar.
+- **Causa:** o filtro **A expirar ou expirados** esconde os válidos.
+- **O que fazer:** retire o filtro na barra de pesquisa.
+
+{/* Nota interna (DOCS-046, lote v13-PAY, master 56504fe86): por clique com Administrador de Salários (registo, recusa, renovação, volta). Tarefa: cron 85 disparado por RPC; conferida (responsável sem utilizador: foi para quem registou). */}
+
+{/* Nota interna (lote v23-BE, depois do comboio 188 com o I18N-041 #4146, master 7a46de91a, docs_demo_v23be_test, porta 8504): «Caducados» passou a «Caducado». Carta de condução de Bruno Miguel Teixeira válida até 31/10/2026 criada por RPC na cópia; por clique, com um utilizador só Gestor de RH, Pessoas › Trabalhadores › Documentos dos trabalhadores: Situação «Caducado», filtro «A expirar ou expirados» (sem alteração). O resto do artigo não foi percorrido. */}

@@ -1,0 +1,81 @@
+---
+id: contagem-fisica-dos-ativos
+slug: /troubleshooting/contagem-fisica-dos-ativos
+title: A contagem física ou as etiquetas dos ativos não avançam
+sidebar_label: Contagem física ou etiquetas
+sidebar_position: 41
+description: A campanha de inventário não inicia, a folha de contagem não entra ou as etiquetas não imprimem. O que quer dizer cada mensagem e o que corrigir.
+keywords: [contagem física, contagem fisica, inventário físico, inventario fisico, etiquetas, campanha, folha de contagem, não há ativos em uso, nao ha ativos em uso, não há ativos para etiquetar, a folha está vazia, colunas da folha de contagem]
+doc_id: DOC-0384
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master f671d6842)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/ativos/inventario-fisico-dos-ativos, troubleshooting/contabilidade-e-iva/depreciacoes-nao-sao-processadas]
+---
+
+## Sintoma
+
+Abre-se a janela **Operação inválida** ao iniciar uma campanha de inventário físico, ao importar a folha de contagem ou ao imprimir etiquetas. Os dois ecrãs, **Inventário físico dos ativos** e **Etiquetas de ativos**, estão em **Contabilidade › Lançar › Terceiros e ativos › O que há para fazer com os ativos?** › **Listas de apoio**. Nada mudou: a campanha fica como estava e nenhuma contagem entrou.
+
+## Mensagem
+
+Copiadas do ecrã, com o perfil **Contabilista**. As partes em itálico mudam de caso para caso.
+
+- Ao carregar em **Iniciar campanha**:
+  > «Não há ativos em uso nas localizações escolhidas: escolha outras localizações (ou nenhuma, para a empresa toda) antes de iniciar a campanha.»
+
+  ![Janela Operação inválida com a frase Não há ativos em uso nas localizações escolhidas](/images/troubleshooting/contagem-fisica-dos-ativos/01-sem-ativos-na-localizacao.png)
+
+- Ao importar uma folha que não é a da campanha:
+  > «A folha não tem as colunas da folha de contagem (encontradas: *Nome, Valor*). As colunas, por esta ordem, são: Etiqueta, Ativo, Localização esperada, Contado (Sim), Localização encontrada, Nota; a 4.ª marca cada ativo encontrado. Nada foi importado: use “Folha de contagem (XLSX)” ou “Folha de contagem (CSV)” na campanha para exportar a folha, preencha-a e importe-a de novo.»
+
+  ![Janela Operação inválida com a frase A folha não tem as colunas da folha de contagem](/images/troubleshooting/contagem-fisica-dos-ativos/02-colunas-erradas.png)
+
+- Ao importar uma folha sem linhas:
+  > «A folha está vazia: acrescente a linha de cabeçalho e pelo menos um ativo e importe-a de novo.»
+
+- Ao carregar em **Imprimir etiquetas (PDF)**:
+  > «Não há ativos para etiquetar com estes filtros. Selecione ativos, escolha uma localização ou alargue o período, e imprima de novo.»
+
+## Causas verificadas
+
+- **Nenhum ativo em uso nessas localizações.** A campanha só conta ativos em uso. Uma localização sem nenhum não dá lista para contar.
+- **A folha foi feita à mão ou mudou de colunas.** A importação só aceita a folha exportada da campanha, com as colunas pela mesma ordem.
+- **A folha não tem linhas.**
+- **Os filtros das etiquetas não encontram ativos.** A localização, o período de aquisição e o estado escolhidos não apanham nenhum ativo.
+
+Os botões **Folha de contagem (XLSX)**, **Folha de contagem (CSV)**, **Registar contagens** e **Importar contagens** só aparecem com a campanha **Em curso**. Numa campanha em **Rascunho**, só há **Iniciar campanha**: se procura a folha e não a vê, inicie primeiro a campanha.
+
+## O que confirmar
+
+1. Em **Ativos fixos**, se há ativos em uso na localização escolhida.
+2. Se a campanha está **Em curso**.
+3. Se a folha que está a importar foi exportada desta campanha e se a primeira linha tem os títulos das colunas.
+
+## Como resolver
+
+Quem faz: o **Contabilista**.
+
+1. Na campanha, escolha outras localizações em **Localizações** ou deixe o campo vazio, para contar a empresa toda. Carregue em **Iniciar campanha**.
+2. Na folha, carregue em **Folha de contagem (XLSX)** ou **Folha de contagem (CSV)**, escreva **Sim** na coluna **Contado (Sim)** de cada ativo encontrado, sem mudar as colunas, e carregue em **Importar contagens**.
+3. Nas etiquetas, alargue o período, retire a localização ou selecione os ativos, e imprima de novo.
+
+Se um ativo já foi lido na mesma campanha, o ecrã diz «Já contado» e não conta duas vezes. Não é um erro: siga para o seguinte, como em [Como fazer o inventário físico dos ativos](/accounting-pt/inventario-fisico-dos-ativos).
+
+## Resultado esperado
+
+A campanha passa a **Em curso** e **Esperados** mostra o número de ativos a contar. A folha importada atualiza a lista **Contagens**. As etiquetas descarregam-se em PDF.
+
+## Quando contactar o suporte
+
+- A folha foi exportada da campanha, sem alterar as colunas, e a mesma frase aparece.
+- Há ativos em uso na localização e a campanha continua a recusar.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com a frase completa e a folha que tentou importar.
+
+{/* Nota interna (DOCS-046, v13-TS): 4 frases por clique. Não provocadas e não citadas: ERR-0672 («Atualizar localizações» não apareceu sem ativo noutra localização), ERR-0686 (a folha só aparece com a campanha Em curso), ERR-0677 (a leitura dupla responde «Já contado»), ERR-0808 (pesquisa avançada) e ERR-0825 (apagar uma localização com ativos). */}

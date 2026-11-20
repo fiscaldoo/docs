@@ -1,0 +1,83 @@
+---
+id: conferir-vendas
+slug: /accounting-pt/conferir-vendas
+title: Como conferir as vendas faturadas com a contabilidade
+sidebar_label: Conferir as vendas
+sidebar_position: 2
+description: Conferir os documentos de venda emitidos (com o ATCUD) e procurar diferenças entre a faturação e os lançamentos da contabilidade.
+keywords: [conferir vendas, conferência de documentos de venda, faturação contra contabilidade, inconsistências, ATCUD, auditoria, faturas de venda, notas de crédito]
+doc_id: DOC-0169
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/auditoria/lancamentos-desequilibrados, accounting-pt/relatorios/balancete]
+---
+
+## Para que serve?
+
+Dois relatórios da **Auditoria** conferem as vendas: **Conferência dos documentos de venda** lista cada documento emitido, com o NIF, o valor e o **ATCUD**; **Faturação contra contabilidade** mostra os documentos cujo total difere do valor do lançamento que lhes corresponde.
+
+## Quando utilizar?
+
+- Antes de entregar o SAF-T ou fechar o ano, para ver se tudo o que foi faturado está na contabilidade com o mesmo valor.
+- Quando o auditor pede a lista dos documentos de venda do período.
+- **Não** serve para ver o que os clientes devem: para isso, veja [as dívidas de clientes](/accounting-pt/por-cobrar).
+
+## Onde encontrar?
+
+**Auditoria › Conferências › Conferência dos documentos de venda** e **Auditoria › Conferências › Faturação contra contabilidade**. Perfil **Auditor / ROC**, **Contabilista certificado** ou **Gerência**; o **Contabilista** não tem o menu **Auditoria**.
+
+## Antes de começar
+
+- Perfil: **Contabilista certificado** (a **Gerência** e o **Auditor / ROC** também têm o menu **Auditoria**). O exemplo é a Empresa Demonstração, Lda, ano de 2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Auditoria › Conferências › Conferência dos documentos de venda**. O ano de 2026 vem escolhido (01/01/2026 – 31/12/2026); mude para **Mês** ou **Trimestre** e escolha o período. Cada linha é um documento, com **NIF do cliente**, **Data**, **Valor líquido**, **Total**, **ATCUD** e **Observações**.
+   ![Conferência dos documentos de venda do ano de 2026](/images/accounting-pt/conferir-vendas/01-conferencia-vendas.png)
+2. Confira o fim da lista. A linha **Total** soma o **Valor líquido**: 38.073,00 € em 38 documentos, o mesmo das vendas da [demonstração de resultados](/accounting-pt/demonstracao-de-resultados) de 2026, com as notas de crédito a negativo (a NC D26/1 vale −600,00 €). A coluna **Observações** está vazia: não há ocorrências no exemplo.
+   ![Fim da lista, com o total do valor líquido](/images/accounting-pt/conferir-vendas/02-total.png)
+3. Carregue em **Documento** para abrir o documento de cada linha. Para guardar a lista, use **Exportar PDF** ou **Exportar**; **Copiar ligação** copia a ligação ao relatório com os filtros e **Guardar opções** guarda os filtros. Em **Mais filtros** estão **Incluir rascunhos** (sem efeito no exemplo, que só tem documentos certificados), **Desdobrar tudo**, **Agrupar por hierarquia** e **Mostrar valores em**.
+4. Abra **Auditoria › Conferências › Faturação contra contabilidade**. As colunas são **NIF**, **Data**, **Diário**, **Documentos**, **Total do documento**, **Valor do lançamento** e **Diferença**. No exemplo mostra só a linha **Total** com **0** e **0,00 €**: não há nenhum documento em que a faturação e a contabilidade difiram.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, **Conferência dos documentos de venda** e **Faturação contra contabilidade**, em **Auditoria › Conferências**, são os mesmos relatórios do fiscaldoo, com as mesmas colunas e a mesma barra (visto com um utilizador só com o perfil **Contabilista certificado**). A **Demonstração de resultados** com que se confere o total (passo 2) também é a do fiscaldoo.
+
+{/* Nota interna (lote EE-04, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee04_test, cópia da odoo20_ee_test com EE_FASE=construir, 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0169. Contabilista certificado: /odoo/fiscaldoo-vendas-conferencia (Linha, NIF do cliente, Data, Valor líquido, Total, ATCUD, Observações) e /odoo/fiscaldoo-inconsistencias-faturacao (só Total, 0 e 0,00 €). Ver reports/LOTE_EE-04.md. */}
+
+## Resultado esperado
+
+- A lista tem uma linha por documento de venda do período, com o ATCUD de cada um. Um documento sem ATCUD, ou com uma observação, pede análise.
+- **Faturação contra contabilidade** a **0** significa que nenhum documento tem total diferente do lançamento.
+
+## Notas importantes
+
+- A conferência é **do que está no produto**: não compara com o que a AT recebeu. Veja a comunicação à AT no ecrã próprio.
+- Um relatório a zero **não prova** que as vendas estão completas: documentos nunca emitidos ou lançados por fora não aparecem.
+- Não se consegue provocar uma diferença pelo ecrã: um documento certificado não se altera e o lançamento é criado com o documento. <span className="fd-pending">Pendente de validação no ecrã: o aspeto de uma linha com diferença, porque a demonstração não tem nenhuma e o produto não deixa criá-la.</span>
+
+## Problemas frequentes
+
+### Não vejo o menu «Conferências»
+
+- **Causa:** o perfil é **Contabilista**, sem o menu **Auditoria**.
+- **O que fazer:** peça a um utilizador com o perfil **Contabilista certificado**, **Gerência** ou **Auditor / ROC** que o abra.
+
+### O total não bate com o do balancete
+
+- **Causa:** o relatório soma o valor líquido (sem IVA) dos documentos; o balancete mostra contas.
+- **O que fazer:** compare as contas de vendas e de prestações de serviços do [balancete](/accounting-pt/balancete) com o total do valor líquido, no mesmo período.
+
+{/* Nota interna (DOCS-046, DOC-0169, risco alto): visto em docs_demo_v3a5_test (master f16f4a3e) com demo.gestor_contabilidade. 41 linhas contadas pelo texto («Documento»), não por contagem no ecrã. «Mais filtros» não aberto (o texto do painel não foi lido: V3A5-06 candidato a verificação). Total da coluna «Observações» aparece como 0. A comparação do total da conferência com a conta de vendas do balancete NÃO foi feita (o balancete tem outras contas de vendas e serviços); o «O total não bate» é uma orientação, a confirmar na auditoria. */}
+
+{/* Nota interna (lote v23-AT, DOC-0169, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): menus lidos com utilizadores criados por RPC só com um valor do campo Perfil (sem modo de programador): o menu Auditoria aparece ao Contabilista certificado, à Gerência, ao Auditor / ROC e ao administrador; o Contabilista (opera) não o tem. O acesso Responsável fiscal vem só com o perfil Contabilista certificado */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AY, 10/11/2026, master fa7915ea8, docs_demo_v23ay_test, porta 8505): lista de 2026 lida por clique com um utilizador só com o perfil Auditor / ROC: 38 documentos (FT D26/1 a D26/30, FR, FS, NC D26/1 e FS POS26/1 de 06/11/2026), Total 38.073,00 €, Observações vazias; Faturação contra contabilidade: Total 0 e 0,00 €. Capturas 01 e 02 refeitas (datas hoje em dd/mm/aaaa; NIF dos clientes tapados, só o 999999990 de consumidor final fica). */}

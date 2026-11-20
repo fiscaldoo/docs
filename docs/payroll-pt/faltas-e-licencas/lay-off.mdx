@@ -1,0 +1,120 @@
+---
+id: lay-off
+slug: /payroll-pt/lay-off
+title: Como tratar um lay-off nos salários, nas férias e nos subsídios
+sidebar_label: Lay-off
+sidebar_position: 10
+description: Registar a suspensão ou redução por lay-off como ausência, conferir a compensação no recibo do mês e a parte da Segurança Social no subsídio de Natal, com as férias intactas.
+keywords: [lay-off, layoff, lay off, suspensão do contrato, redução do horário, crise empresarial, compensação retributiva, compensação de lay-off, subsídio de Natal lay-off, férias lay-off, art. 305.º, art. 306.º]
+doc_id: DOC-0433
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master b605851c7)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/faltas-e-licencas/faltas, payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/processar-e-pagar/subsidios-de-ferias-e-natal]
+---
+
+## Para que serve?
+
+Num lay-off, a empresa suspende os contratos ou reduz o horário por um motivo que lhe diz respeito (por exemplo uma crise empresarial). O trabalhador perde a retribuição das horas não trabalhadas, mas recebe uma compensação, e não perde as férias nem os subsídios.
+
+No fiscaldoo, o lay-off regista-se como uma ausência. Depois, o recibo do mês faz sozinho duas coisas:
+
+- desconta as horas não trabalhadas e junta a linha **Compensação de lay-off**;
+- no recibo do subsídio de Natal, mostra quanto desse subsídio cabe à Segurança Social, numa linha só informativa.
+
+## Quando utilizar?
+
+- A empresa suspendeu o contrato de um trabalhador ou reduziu-lhe o horário ao abrigo do regime de lay-off (Código do Trabalho, arts. 298.º a 308.º).
+- **Não** use este tipo para uma falta do trabalhador nem para uma baixa: veja [Como tratar faltas e atrasos no recibo](/payroll-pt/faltas) e [Como tratar uma baixa por doença ou acidente de trabalho](/payroll-pt/baixas-por-doenca).
+
+## Onde encontrar?
+
+- O lay-off: **Salários › Preparar › Ausências e presenças › Ausências** › **Novo**, com o **Tipo de tempo** «Suspensão ou redução por facto do empregador (lay-off, CT art. 298.º e seguintes)».
+- O efeito: no recibo do mês (**Salários › Processar › Recibos de vencimento**) e no recibo do lote de Natal.
+
+## Antes de começar
+
+- **Quem regista:** o perfil **Gestor de RH** cria a ausência, aprova-a e dá a segunda aprovação (**Validar**). Provado com um utilizador criado só com esse perfil.
+- **Quem calcula:** o lote do mês é calculado por quem tem o perfil **Processador de salários**, também no primeiro lay-off da empresa. Provado com um utilizador criado só com esse perfil.
+- O lote do mês do lay-off ainda não está validado. Um lay-off num mês já pago vai para um recibo corretivo (ver «Problemas frequentes»).
+- Tenha à mão as datas da suspensão ou da redução de cada trabalhador.
+- Feito a 9 de novembro de 2026 na `Empresa Demonstração, Lda`, com a trabalhadora Eva Cristina Rocha (960,00 € por mês), suspensa de 19/10/2026 a 23/10/2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Com o perfil **Gestor de RH**, abra **Salários › Preparar › Ausências e presenças › Ausências** e carregue em **Novo**.
+2. Em **Trabalhador**, escolha o trabalhador, por exemplo `Eva Cristina Rocha`.
+3. Em **Tipo de tempo**, escreva `lay-off` e escolha **Suspensão ou redução por facto do empregador (lay-off, CT art. 298.º e seguintes)**.
+4. Em **Datas**, escreva o primeiro e o último dia da suspensão, por exemplo `19/10/2026` e `23/10/2026`. Aparecem **5,00 dia(s)**, **Regresso ao trabalho em** 24/10/2026 e **Primeiro dia útil de regresso** 26/10/2026. Esta ausência não pede documento de prova.
+5. Guarde (a ausência fica **Para Aprovar**) e carregue em **Aprovar**. Passa a **Segunda Aprovação**, com a **Classificação** «Art. 249.º/2, alínea l: falta justificada.».
+6. Carregue em **Validar**. A ausência fica **Aprovado**.
+   ![Ausência aprovada de Eva Cristina Rocha com o tipo Suspensão ou redução por facto do empregador (lay-off), de 19/10/2026 a 23/10/2026, 5 dias, e o resumo de 2026 com os 5 dias de lay-off](/images/payroll-pt/lay-off/01-ausencia-de-lay-off.png)
+7. Com o perfil **Processador de salários**, calcule o lote do mês (ver [Como processar os salários do mês](/payroll-pt/processar-o-mes)). No exemplo, o lote **Salários de outubro de 2026**, com **Criar os recibos do mês**.
+8. Abra o recibo do trabalhador. Nas linhas aparecem **Retribuição perdida por faltas** e **Compensação de lay-off**. Carregue em **Como foi calculado?** na linha da compensação para ver a conta.
+   ![Linhas do recibo de outubro de Eva Cristina Rocha: Retribuição base 960,00 €, Compensação de lay-off de 40,00 horas com 120,00 € assinalada, Subsídio de alimentação de 16 dias com 98,40 € e Retribuição perdida por faltas de -160,00 €; total de abonos 1.018,40 €](/images/payroll-pt/lay-off/02-recibo-de-outubro.png)
+9. No lote de Natal (ver [Como pagar os subsídios de férias e de Natal](/payroll-pt/subsidios-de-ferias-e-natal)), abra o recibo do mesmo trabalhador e carregue em **Como foi calculado?** na linha **Lay-off: parte da Segurança Social no subsídio de Natal**.
+   ![Janela Como foi calculado? da linha Lay-off: parte da Segurança Social no subsídio de Natal: 6,14 €, subsídio de Natal pago por inteiro (960,00) num ano com 7 dias de lay-off, compensação sobre o subsídio 12,27, a Segurança Social paga 6,14 e o empregador 953,86](/images/payroll-pt/lay-off/03-parte-da-seguranca-social-no-natal.png)
+
+</StepByStep>
+
+### O que o fiscaldoo calcula sozinho
+
+**No recibo do mês** (outubro, no exemplo):
+
+- **Retribuição perdida por faltas**: 40,00 horas, −160,00 € (960,00 € ÷ 30 × 5 dias).
+- **Compensação de lay-off**: 120,00 €. **Como foi calculado?** mostra a conta: dois terços das horas perdidas dão 106,67 € (40,00 horas × 4,0000 € de valor de uma hora × 66,67 %); com 800,00 € de trabalho prestado, a trabalhadora ficava abaixo da retribuição mínima mensal garantida de 920,00 €, por isso a compensação sobe para 120,00 € (Código do Trabalho, art. 305.º, n.º 1, alínea a)). A Segurança Social paga 70 % (84,00 €) e a empresa 30 % (36,00 €) (art. 305.º, n.º 4). A explicação acaba com «Fonte: CT arts. 305.º e 306.º». A compensação não passa de 2.760,00 €, o triplo da retribuição mínima (art. 305.º, n.º 3); no exemplo, fica longe desse teto. <span className="fd-pending">Pendente de validação por contabilista certificado: a forma como o mínimo se aplica num mês com trabalho prestado (o próprio ecrã diz «Por confirmar») e o valor de uma hora de 4,0000 € (960,00 ÷ 30 ÷ 8).</span>
+- **Subsídio de alimentação**: só os 16 dias trabalhados, 98,40 €.
+- **Bruto** 1.018,40 €, **Descontos** 101,20 € e **Líquido a pagar** 917,20 €. A Segurança Social do trabalhador é 11 % de 920,00 € (960,00 + 120,00 − 160,00) = 101,20 €, e a da empresa 23,75 %, 218,50 €. Esta trabalhadora não tem IRS retido. <span className="fd-pending">Pendente de validação por contabilista certificado: a compensação entrar na base da Segurança Social e do IRS, como o recibo faz hoje («IRS: sujeito. Segurança Social: sujeito.»).</span>
+- **Remuneração de referência da Segurança Social:** no recibo validado, separador **Segurança Social e IRS**, aparece a **Remuneração mensal**. É só informativa: não muda nenhum valor do recibo. <span className="fd-pending">Pendente de validação: no exemplo, o ecrã mostra 1.018,40 €, que inclui o subsídio de alimentação (98,40 €) e fica acima da base de contribuições de 920,00 €. Este valor está em revisão: não o use no pedido do apoio à Segurança Social sem o confirmar com o contabilista certificado.</span>
+
+**No recibo de Natal** (lote **Natal de dezembro de 2026**):
+
+- **Subsídio de Natal**: 960,00 €, por inteiro. O lay-off não o reduz.
+- **Lay-off: parte da Segurança Social no subsídio de Natal**: o ecrã mostra 6,14 €. A conta é dois terços de 960,00 € × 7 dias de lay-off no ano ÷ 365 = 12,27 € (a explicação escreve os dois terços como «0.666667», com ponto), de que a Segurança Social paga metade, 6,14 €, e a empresa o resto, 953,86 €. Os 7 dias são os 5 de outubro e os 2 de setembro do exemplo de «Problemas frequentes». A metade é a da lei (art. 306.º, n.º 3). <span className="fd-pending">Pendente de validação por contabilista certificado: a conta parte dos mesmos dois terços, sem o mínimo da compensação, e reparte-os por dias de lay-off ÷ dias do ano (o próprio ecrã diz «não confirmado»).</span> A linha é só informativa: não altera nenhum total do recibo.
+
+**Num mês incompleto** (o trabalhador é admitido ou sai a meio do mês): o valor de uma hora (art. 271.º) vem do salário inteiro e do contrato do último dia ao serviço, e a retribuição, a retribuição mínima mensal garantida e o teto de 3 × RMMG da compensação passam a ser os dos dias ao serviço, pela mesma proporção que a empresa usa na linha de retribuição base (30 dias ou dias de calendário). Uma saída a meio do mês já não é recusada por causa do lay-off, e o bruto nunca passa do ordinário do mês incompleto. Exemplo do programador: admissão a 16/05, 960,00 € por mês, 5 dias de lay-off: retribuição 480,00, mínimo 460,00, compensação 201,54 e bruto 460,00. Visto no ecrã, no recibo em rascunho do lote de novembro de 2026 de um trabalhador admitido a 16/11/2026 com 960,00 € por mês e 5 dias úteis de lay-off (23 a 27/11): **Retribuição base** 480,00 €, **Retribuição perdida por faltas** de 40,00 horas, −221,54 €, e compensação de 201,54 €, o que dá 460,00 € (480,00 − 221,54 + 201,54). Um trabalhador com saída a 15/11/2026 e 5 dias de lay-off (9 a 13/11) dá os mesmos valores, e o recibo calcula sem recusa. A Segurança Social do trabalhador é 11 % de 460,00 €. O exemplo da admissão a 16/05 é o do programador e usa a mesma proporção, 15 dias em 30. <span className="fd-pending">Pendente de validação por contabilista certificado: a lei não diz como proporcionar a retribuição, o mínimo e o teto num mês incompleto; a proporção usada é a da linha de retribuição base.</span>
+
+**Nas férias:** nada muda. Em **Salários › Preparar › Ausências e presenças › Saldos de férias**, o direito de 2026 de Eva Cristina Rocha continua com 22,00 dias depois do lay-off.
+
+O lay-off não gera lançamentos contabilísticos por si: as linhas chegam à contabilidade com o recibo.
+
+## O que diz a lei
+
+Os artigos do lay-off no Código do Trabalho (Lei n.º 7/2009), conferidos a 8 de novembro de 2026 no texto consolidado da Procuradoria-Geral Distrital de Lisboa:
+
+- **Art. 305.º, n.º 1, alínea a):** durante o lay-off, o trabalhador recebe por mês, no mínimo, dois terços da retribuição normal ilíquida ou o valor da retribuição mínima mensal garantida correspondente ao seu horário, o que for mais alto.
+- **Art. 305.º, n.º 3:** a compensação retributiva é o necessário para, somada à retribuição do trabalho prestado, chegar a esse mínimo, até ao triplo da retribuição mínima mensal garantida (redação da Lei n.º 13/2023).
+- **Art. 305.º, n.º 4:** a compensação é paga em 30 % pela empresa e em 70 % pela Segurança Social.
+- **Art. 306.º, n.os 1 e 2:** o lay-off não afeta o direito a férias, a sua duração nem o seu gozo; o subsídio de férias é pago pela empresa, como em condições normais.
+- **Art. 306.º, n.º 3:** o subsídio de Natal é devido por inteiro; a Segurança Social paga um montante igual a metade da compensação retributiva e a empresa paga o resto.
+
+O Guia Prático «Regime de Layoff» da Segurança Social (publicado a 15 de maio de 2026) aplica estas regras com os valores de 2026: o trabalhador recebe por mês pelo menos dois terços da retribuição normal ou 920,00 €, o que for mais alto; a compensação não passa de 2.760,00 €; e a Segurança Social paga 70 % dela.
+
+{/* Nota interna (auditoria docs-aud-v23w, #4052): marca do contabilista certificado tirada da vista do leitor. Decidido pela lei e escrito no artigo: 70 % da Segurança Social (CT art. 305.º/4), mínimo e teto (art. 305.º/1-a e /3; RMMG de 920,00 € pelo DL 139/2025). Defeitos no PAY-132 (#4064): «0.5» em vez de 70 %, sem mínimo nem teto, e valor de uma hora 960 ÷ 30 ÷ 8 = 4,0000 em vez de (Rm × 12) ÷ (52 × n) do art. 271.º/1 (5,54 €). Fica para o contabilista certificado: a repartição do subsídio de Natal por dias de lay-off ÷ dias do ano, o mínimo num mês com só alguns dias de lay-off e a sujeição da compensação a IRS e Segurança Social (o recibo diz «IRS: sujeito. Segurança Social: sujeito.»). O PAY-132 entrou em master: valores do exemplo e capturas 02 e 03 refeitos no lote v23-AR. */}
+
+## Resultado esperado
+
+- A ausência de lay-off está **Aprovado**, com a **Classificação** preenchida.
+- O recibo do mês tem a **Retribuição perdida por faltas** e a **Compensação de lay-off**, cada uma com a explicação em **Como foi calculado?**.
+- O recibo de Natal paga o subsídio por inteiro e mostra, só para informação, a parte da Segurança Social.
+- O saldo de férias não muda.
+
+## Notas importantes
+
+- **O fiscaldoo não comunica nada à Segurança Social.** O pedido do apoio e da parte da Segurança Social faz-se fora do fiscaldoo; as linhas do recibo servem para conferir os valores.
+- **Corrigir um lay-off.** Corrija as datas da ausência antes de calcular o lote. Num mês já pago, a diferença vai para um recibo corretivo (ver «Problemas frequentes» e [Como corrigir um processamento de salários](/payroll-pt/corrigir-um-processamento)).
+
+## Problemas frequentes
+
+### «Falta num mês já pago…» ao validar um lay-off num mês fechado
+
+- **Causa:** o lay-off tem dias num mês cujo lote já foi pago. Com o perfil **Gestor de RH**, o **Validar** é recusado: «A ausência de «Eva Cristina Rocha» tem dias num mês já pago (setembro 2026) e não pode ser aprovada com o seu perfil. O que aconteceu: aprová-la abre um recibo corretivo com a diferença, e o perfil «Gestor de RH» não vê recibos de vencimento. Quem faz: quem tem o acesso extra «Administrador de Salários». Como resolver: peça-lhe que carregue em «Validar» nesta ausência.». Quem tem o acesso **Administrador de Salários** carrega em **Validar**, e o fiscaldoo avisa: «Falta num mês já pago. A falta de «Eva Cristina Rocha» tem dias num mês já pago (setembro 2026) e esse recibo está fechado: não é alterado. O que aconteceu: a diferença ficou escrita no recibo corretivo Eva Cristina Rocha (01/09/2026 — 30/09/2026), em rascunho. Como resolver: abra-o a partir do campo «Recibos corretivos» da falta, confira o valor e valide-o, para que a diferença seja paga ou descontada.».
+- **O que fazer:** abra o recibo corretivo, confira a **Retribuição perdida por faltas** e a **Compensação de lay-off** (no exemplo, 2 dias de setembro, de 14 a 15/09/2026: −64,00 € e 42,67 €, dois terços das 16 horas perdidas) e valide-o. <span className="fd-pending">Pendente de validação por contabilista certificado: os 42,67 € partem do mesmo valor de uma hora de 4,0000 € e não aplicam o mínimo da compensação; confirme o valor antes de validar o recibo corretivo.</span>
+
+{/* Nota interna (lote v23-AR, #4052, master d277b0e80 com o PAY-132 e o PAY-104b, docs_demo_v23ar_test, porta 8508): por clique, com utilizadores criados só com um Perfil: Gestor de RH criou, aprovou e validou a ausência de 19 a 23/10/2026 (datas escritas no campo, com Enter); Processador de salários criou o lote Salários de outubro de 2026 (Criar os recibos do mês: «Recibos criados. 8 recibos criados; 0 trabalhadores já tinham recibo.») e o recibo de Eva Cristina Rocha ficou com 960,00 / 120,00 / 98,40 / -160,00, bruto 1.018,40, descontos 101,20, líquido 917,20 (captura 02); Como foi calculado? da compensação com 70 % (84,00) e 30 % (36,00) e «Fonte: CT arts. 305.º e 306.º»; recibo validado: Remuneração de referência da Segurança Social, Remuneração mensal 1.018,40 €. Lay-off de 14 a 15/09/2026: recusa nova do Gestor de RH e «Falta num mês já pago» com o Administrador de Salários, por clique; recibo corretivo -64,00 / 42,67. Lote Natal de dezembro de 2026 criado e calculado pelo Processador: linha de 6,14 € e «Fonte: CT art. 306.º» (captura 03). Primeiro lay-off da empresa provado numa cópia limpa (docs_demo_v23ar2_test, 8509, b605851c7, sem linhas de lay-off antes): o Processador de salários criou o lote de outubro sem recusa, a rubrica Compensação de lay-off nasceu nesse cálculo, 120,00 € e líquido 917,20 €. Captura 01 mantida (o ecrã só ganhou Primeiro dia útil de regresso, abaixo da zona recortada). */}
+{/* Nota interna (lote v23-W, #4052 DOCS-069, tema que só a pasta congelada tinha: Salários/lay-off-efeito-nas-ferias-e-nos-subsidios.md; master cebcb888d, docs_demo_v23w_test, porta 8468). Percorrido por clique: utilizador só com o Perfil Gestor de RH criou, aprovou e validou a ausência de 19 a 23/10/2026 de Eva Cristina Rocha; utilizador só com o Perfil Processador de salários criou o lote de outubro pelo ecrã do mês e o Calcular foi recusado (rubrica LAY_COMP criada sem permissão, pt_payroll_w2e_links.link_rule); demo.admsalarios (acesso Administrador de Salários) calculou. Lote de Natal de dezembro criado por RPC (admin), recibos criados e calculados por clique. Falha provocada: lay-off de 14 a 15/09/2026 (setembro pago): o Gestor de RH recebe a recusa do Método do valor diário (a mensagem diz «Quem faz: Processador de salários ou Gerência», mas o Processador não tem o botão Validar); o Administrador de Salários valida e nasce o recibo corretivo. Diferenças em relação ao guia antigo e à lei, listadas como possíveis defeitos no LOTE_V23-W: parte da Segurança Social «0.5 da compensação» (lei: 70 %, art. 305.º/4); sem mínimo nem teto do art. 305.º; valor de uma hora 4,0000 (960/30/8); taxas com ponto decimal na explicação. */}

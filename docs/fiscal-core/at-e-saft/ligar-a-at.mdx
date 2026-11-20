@@ -1,0 +1,159 @@
+---
+id: ligar-a-at
+slug: /fiscal-core/ligar-a-at
+title: Como ligar o fiscaldoo à Autoridade Tributária
+sidebar_label: Ligar o fiscaldoo à AT
+sidebar_position: 1
+description: Iniciar o cofre de credenciais numa empresa nova, guardar as credenciais da AT da empresa (subutilizador, certificado .pfx e chave pública da AT), testá-las contra o simulador e confirmar na Prontidão das comunicações o que já está pronto para séries, faturas e guias.
+keywords: [ligar à AT, ligar a at, credenciais da AT, credenciais da at, subutilizador, webservice, webservices, certificado da AT, pfx, chave pública da AT, chave publica da at, prontidão das comunicações, prontidao das comunicacoes, WSE, WFA, WDT, testar a ligação, testar a ligacao, ambiente de testes, produção, producao, usado para envio, cofre, iniciar o cofre, permissões do cofre, permissoes do cofre, empresa nova]
+doc_id: DOC-0050
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/certificacao/series-documentais, fiscal-core/at-e-saft/comunicar-faturas-a-at]
+---
+
+## Para que serve?
+
+Para comunicar diretamente à Autoridade Tributária e Aduaneira (AT) as séries, as faturas e as guias de transporte, o fiscaldoo usa os dados de acesso da empresa aos webservices da AT: o subutilizador e a sua palavra-passe, o certificado e a chave pública da AT. Estes dados guardam-se uma vez por empresa e por ambiente (**Teste** ou **Produção**), protegidos pelo cofre de credenciais: depois de guardados, a palavra-passe e a chave privada já não se leem.
+
+O administrador guarda e altera estas credenciais em qualquer empresa. Outra pessoa só o faz com a permissão **Editar** no cofre da empresa, e numa empresa nova ninguém a tem ainda: por isso o primeiro passo é iniciar o cofre, para depois a poder dar.
+
+Emitir não precisa desta ligação. Uma empresa sem credenciais emite e imprime faturas; o que fica por fazer é a comunicação, que então se faz pelo ficheiro mensal ou pelo Portal das Finanças.
+
+## Quando utilizar?
+
+- Para a empresa passar a comunicar as séries, as faturas e as guias pelo fiscaldoo, sem ir ao Portal das Finanças.
+- Numa empresa nova, quando a **Prontidão das comunicações com a AT** diz «Não há dados de acesso para o ambiente…».
+- Quando o certificado da AT está perto do fim (**Válido até**) e a AT lhe deu um novo.
+
+## Onde encontrar?
+
+- **Contabilidade › Configurar › Cofre de credenciais › Iniciar o cofre** (só numa empresa em que ninguém tem **Editar**).
+- **Contabilidade › Configurar › Cofre de credenciais › Permissões** (quem pode guardar e dar permissões).
+- **Contabilidade › Configurar › Faturação certificada › Credenciais da AT** (os dados de acesso). O botão **Ver a prontidão** do registo abre a **Prontidão das comunicações com a AT** da empresa.
+
+## Antes de começar
+
+- Faça os passos como administrador. Os passos 1 a 10 foram feitos assim do princípio ao fim, a 8 de novembro de 2026, numa empresa nova da demonstração (`Empresa Nova Exemplo, Lda`). No menu **Cofre de credenciais**, o administrador vê **Credenciais**, **Permissões**, **Iniciar o cofre**, **Tipos de portal**, **Domínios permitidos** e **Rodar a chave de cifra**.
+- Um utilizador com o acesso extra **Administração fiscal** também vê **Credenciais da AT** e, no cofre, **Credenciais**, **Permissões** e **Iniciar o cofre**, mas só guarda as credenciais da AT com **Editar** no cofre da empresa (veja «Problemas frequentes»). Nenhum valor do campo **Perfil** dá este acesso: o administrador junta-o em **Definições › Utilizadores e empresas › Utilizadores**, na ficha da pessoa, separador **Ajustes avançados**, em **Localização PT — Faturação, contabilidade e fiscal**. Veja [Perfis e permissões](/administration/perfis-e-permissoes).
+- A empresa já tem o número de contribuinte. O certificado do programa não se regista à mão numa empresa nova: ao criar a empresa, ele é copiado sozinho para **Certificados de software** (na demonstração, o n.º 9876 apareceu logo na Empresa Nova Exemplo, Lda). Veja [Como preparar a empresa para emitir documentos certificados](/fiscal-core/preparar-a-faturacao-certificada).
+- No Portal das Finanças, a empresa tem um subutilizador para os webservices, com os perfis dos serviços que vai usar: **WSE** (séries), **WFA** (faturas) e **WDT** (guias de transporte). O fiscaldoo não consegue confirmar estes perfis: a **Prontidão** lembra-os em cada linha. <span className="fd-pending">Pendente de validação no ecrã: a criação do subutilizador no Portal das Finanças (a demonstração nunca liga à AT verdadeira, só ao simulador).</span>
+- Tem o ficheiro do certificado que a AT deu à empresa (.pfx) e a sua palavra-passe, e a chave pública da AT para o ambiente escolhido. <span className="fd-pending">Pendente de validação por contabilista certificado: como e a quem a empresa pede o certificado e a chave pública, e quem os guarda.</span>
+- O servidor tem a chave de cifra do cofre. Isto é com o administrador de sistema.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Confirme, no canto superior direito, que está na empresa certa. Abra **Contabilidade › Configurar › Cofre de credenciais › Iniciar o cofre**. Abre a janela **Iniciar o cofre de credenciais**: «Ainda ninguém tem «Editar» no cofre de credenciais desta empresa, por isso ninguém pode dar permissões nem guardar credenciais. Se confirmar, RECEBE «Editar» em todos os portais desta empresa, uma só vez, e fica registado no registo de auditoria (quem, quando, que empresa).…» Se alguém da empresa já tem **Editar**, a janela di-lo em vez desse texto, por exemplo «O cofre de credenciais desta empresa já está iniciado: Administrador (demonstração) pode(m) dar permissões, por isso não há nada a iniciar. As permissões dão-se em Contabilidade › Configurar › Cofre de credenciais › Permissões.»:
+   não inicie o cofre, carregue em **Cancelar**, peça a permissão a essa pessoa e passe ao passo 3.
+   ![Janela Iniciar o cofre de credenciais com o texto do arranque, que acaba em «Ninguém, nem o administrador técnico, lê uma palavra-passe guardada», e os botões Confirmar e Cancelar](/images/fiscal-core/ligar-a-at/01-iniciar-o-cofre.png)
+2. Carregue em **Confirmar**. Abre **Permissões do cofre** com uma linha: o seu utilizador, a empresa, **Portal** vazio (todos os portais), **Nível** **Editar** e o **Aviso** «Não pode ler uma palavra-passe guardada. Fica registado no registo de auditoria.».
+   ![Permissões do cofre com uma linha: Administrador (demonstração), Empresa Nova Exemplo, Lda, nível Editar e o aviso «Não pode ler uma palavra-passe guardada. Fica registado no registo de auditoria.»](/images/fiscal-core/ligar-a-at/02-permissoes.png)
+3. Abra **Contabilidade › Configurar › Faturação certificada › Credenciais da AT** e carregue em **Novo**. O formulário avisa «Estas credenciais estão incompletas: falta(m) utilizador do serviço web, palavra-passe, certificado de cliente, chave privada. Enquanto não forem preenchidas, esta empresa não pode comunicar com a Autoridade Tributária.». O aviso atualiza-se enquanto preenche: o utilizador e a palavra-passe saem logo que os escreve, e o certificado de cliente e a chave privada saem quando escolhe o .pfx (passo 6). Com tudo preenchido, o aviso desaparece antes de guardar.
+4. Confirme a **Empresa** (vem a empresa em que está a trabalhar). **Ambiente** vem em **Teste**; as opções são **Teste** e **Produção**. Comece por **Teste**.
+5. Em **Utilizador do webservice**, escreva o subutilizador, no formato NIF/número (no exemplo, `599999985/1`). Em **Palavra-passe do webservice**, escreva a palavra-passe dele.
+6. No bloco **FICHEIRO DO CERTIFICADO DA AT (.PFX)**, escolha o ficheiro em **Ficheiro do certificado (.pfx)** e escreva a **Palavra-passe do .pfx**. O ecrã explica: «Escolha o .pfx que a AT lhe enviou e escreva a sua palavra-passe; depois grave: o certificado e a chave privada são extraídos e guardados abaixo. O ficheiro e a palavra-passe não ficam guardados.» Em **Chave pública da AT (PEM)**, cole a chave pública da AT para este ambiente.
+7. Marque **Usado para envio**. É o ambiente com que a empresa comunica; só pode haver um por empresa. Se o outro ambiente da mesma empresa já estava marcado, o formulário avisa logo, por exemplo: «As credenciais do ambiente Teste são as usadas para o envio. Ao guardar estas, o ambiente Produção passa a ser aquele com que esta empresa comunica, e o outro fica desmarcado.» Ao guardar, o outro ambiente fica desmarcado.
+8. Carregue em **Guardar** (ícone da nuvem). **Válido até** preenche-se com a data de fim do certificado (na imagem, 03/11/2027) e a palavra-passe passa a aparecer como uma fila de pontos, que não se lê. Aparece o botão **Testar a ligação (simulador)**, ao lado de **Ver a prontidão**, que já estava no registo novo.
+   ![Credenciais da AT guardadas para a Empresa Nova Exemplo, Lda no ambiente Teste, com Usado para envio marcado, Válido até 03/11/2027, o utilizador do webservice 599999985/1 e a palavra-passe em máscara](/images/fiscal-core/ligar-a-at/03-credenciais-guardadas.png)
+9. Carregue em **Testar a ligação (simulador)**. O fiscaldoo confere se as credenciais estão completas e pergunta à AT simulada; não envia nada à AT verdadeira.
+   ![Mensagem Teste passou: as credenciais estão completas e válidas e a Autoridade Tributária simulada respondeu (aceite)](/images/fiscal-core/ligar-a-at/04-testar-a-ligacao.png)
+10. Carregue em **Ver a prontidão**. Abre a **Prontidão das comunicações com a AT** desta empresa, agrupada por empresa e por ambiente. Abra os grupos e confirme as linhas do ambiente que guardou.
+
+</StepByStep>
+
+**Para o ambiente de produção**, repita os passos 3 a 8 com **Ambiente** **Produção** e as credenciais de produção, e marque **Usado para envio** nesse registo. Não precisa de iniciar o cofre outra vez: o **Editar** do passo 2 vale para os dois ambientes. <span className="fd-pending">Pendente de validação no ecrã: credenciais de produção (a demonstração nunca usa dados reais nem a AT verdadeira).</span>
+
+**Partilhadas da empresa-mãe.** Numa empresa filha (por exemplo, um estabelecimento) com o mesmo NIF da empresa-mãe, escolha neste campo as credenciais da empresa-mãe para o mesmo ambiente, em vez de as repetir. Nada é copiado.
+
+**Dar a permissão a outras pessoas.** Quem tem **Editar** dá, muda ou retira permissões a outros em **Contabilidade › Configurar › Cofre de credenciais › Permissões** (colunas **Utilizador**, **Empresa**, **Portal** e **Nível**). Ninguém a dá a si próprio. Veja [Como guardar senhas de portais no cofre de credenciais](/administration/cofre-de-credenciais).
+
+## Resultado esperado
+
+- **Teste passou: as credenciais estão completas e válidas e a Autoridade Tributária simulada respondeu (aceite). Nada foi enviado à Autoridade Tributária verdadeira.**
+- Na **Prontidão das comunicações com a AT**, a empresa tem seis linhas: **Teste** e **Produção** para **Séries**, **Faturas** e **Guias de transporte**. As três de **Teste** passaram a **Pronto**. As de **Produção** continuam em **Falta alguma coisa**, com o botão **Resolver** e a mensagem «Não há dados de acesso para o ambiente de produção da Autoridade Tributária. Sem eles não se pode enviar nada. O administrador introduz-os em Contabilidade › Configurar › Faturação certificada › Credenciais da AT.»
+- Em **Avisos**, cada linha lembra o perfil do subutilizador no Portal das Finanças, por exemplo «O subutilizador tem de ter o perfil WSE no Portal das Finanças. Só se confirma lá, por isso não é verificado aqui.». Em **Ligação à AT**, a demonstração diz **Desligada: nada é enviado à Autoridade Tributária**.
+
+![Prontidão das comunicações com a AT da Empresa Nova Exemplo, Lda: Teste Pronto para Séries, Faturas e Guias de transporte, e Produção com Falta alguma coisa](/images/fiscal-core/ligar-a-at/05-prontidao.png)
+
+- Em **Permissões do cofre**, a pessoa que iniciou o cofre tem **Editar** nesta empresa, e o arranque ficou no registo de auditoria.
+- Guardar credenciais não gera lançamentos contabilísticos e não comunica nada.
+
+As credenciais das imagens são fictícias.
+
+{/* Nota interna (DOCS-020): lugar do vídeo VID-0050 (corrente própria DOCS-006). A secção «Vídeo demonstrativo» entra aqui quando o vídeo existir (guia editorial §3.1). */}
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Pronto não quer dizer ligado">
+**Pronto** diz que as credenciais estão completas. A coluna **Ligação à AT** diz se o servidor envia mesmo: com **Desligada**, nada sai para a AT, e as séries, as faturas e as guias continuam por comunicar. Ligar o envio verdadeiro é uma configuração do servidor, feita pelo administrador de sistema, e não um botão deste ecrã. Confirme com ele antes de deixar de comunicar pelo Portal das Finanças. <span className="fd-pending">Pendente de validação no ecrã: a ligação ao envio verdadeiro e o primeiro envio em produção (a demonstração só usa o simulador).</span>
+</HelpCallout>
+
+- **Iniciar o cofre é uma vez por empresa.** Depois, só quem tem **Editar** dá permissões. **Editar** serve para guardar e mudar credenciais e para dar permissões; não mostra palavras-passe: ninguém lê uma palavra-passe guardada, nem o administrador. Dê-o só a quem trata das credenciais.
+- **O que a Prontidão não vê.** Não confirma os perfis do subutilizador no Portal das Finanças, nem se a palavra-passe está certa na AT. O teste do passo 9 usa o simulador e não lê a palavra-passe guardada: não o use para confirmar que o servidor ainda consegue usar as credenciais depois de a chave de cifra do cofre mudar ou se perder.
+- **Credenciais da AT e Credenciais do cofre são coisas diferentes.** As **Credenciais da AT** são as deste artigo e ligam o fiscaldoo aos webservices. O menu **Cofre de credenciais › Credenciais** guarda as palavras-passe dos portais para as pessoas da empresa: guardar lá a palavra-passe do subutilizador não liga o fiscaldoo à AT. As duas dependem da mesma permissão do cofre.
+- **Segredos.** A palavra-passe do webservice e a chave privada só se escrevem: depois de guardadas aparecem como máscara e não se leem, só se substituem. O ficheiro .pfx e a sua palavra-passe não ficam guardados.
+- Quando o certificado chegar ao fim (**Válido até**), abra o registo, escolha o .pfx novo com a sua palavra-passe e guarde.
+
+{/* Nota interna (DOCS-020, ATWS-046 em master b8b9f3217): o perfil que chega ao fim passou a ser a Administração fiscal (Iniciar o cofre + Ver a prontidão). Os três defeitos do relatório do produtor (o aviso «incompletas» só se atualizava ao guardar; as mensagens diziam «Configuração › Cofre de credenciais»; a mensagem do certificado do programa só falava do modo programador) foram corrigidos pelo ATWS-047 (master 5086447e8); texto revisto no ecrã a 03/11 (docs-aud-052). A recusa por falta da chave de cifra do servidor não se reproduziu na demonstração (o servidor encontra uma chave no seu ambiente) e saiu de «Problemas frequentes». */}
+
+{/* Nota interna (lote v23-O, DOCS-066, master dbbb5ac5c, docs_demo_v23o_test): a frase da Produção («O administrador introduz-os…») foi lida pela integração (RPC) com um utilizador só com o perfil Contabilista certificado, ao abrir a Prontidão (o Contabilista é recusado: «Só o perfil «Contabilista certificado (assina, fecha períodos)» e o administrador podem ver…»); a auditoria docs-aud-v23o viu a mesma frase no ecrã com esse perfil, abrindo a Prontidão pelo endereço da ação (o menu Configurar do Contabilista certificado não a mostra e a base-mãe v2 não tem credenciais da AT, onde está o botão Ver a prontidão); no ecrã, o Contabilista recebe «Sem acesso». */}
+
+{/* Nota interna (lote v23-T2, DOCS-066, master cebcb888d, docs_demo_v23t2_test): Empresa Nova Exemplo, Lda criada por RPC (PT599999985) pelo administrador; Certificados de software, com essa empresa ativa no seletor, mostra logo o 9876 (copiado); Credenciais da AT › Novo › Ver a prontidão: as linhas de Séries do ambiente Teste só pedem as credenciais, sem «Falta o número do certificado do programa». A frase continua no código (para uma empresa sem certificado), por isso o problema fica, com a causa nova. */}
+{/* Nota interna (lote v23-AC, #3740, master 97b34fac3 depois do SEC-116, docs_demo_v23ac_test, porta 8482): janela Iniciar o cofre aberta com o administrador numa empresa sem ninguém com «Editar» (texto igual, captura 01 refeita, Cancelar) e na Empresa Nova Exemplo, Lda (criada por RPC, sem NIF) depois de Confirmar: a janela passou a dizer «já está iniciado… não há nada a iniciar» e Confirmar recusa com «Dê as permissões em…» (SEC-116). */}
+
+{/* Nota interna (lote v23-R, #3740, master 808f8ca1f, docs_demo_v23r_test, porta 8456, chave do cofre só na memória da instância, ambiente Teste e só o simulador): passos 1 a 10 refeitos no ecrã com o administrador na Empresa Nova Exemplo, Lda (criada por RPC, NIF 599999985): janela Iniciar o cofre (SEC-115: sem «revelar»), Permissões com o aviso novo (capturas 01 e 02 refeitas), Credenciais da AT com um .pfx de teste gerado em memória (o aviso «incompletas» foi encolhendo a cada campo e desapareceu antes de guardar), palavra-passe só em pontos, «Teste passou…» do simulador. O administrador guardou credenciais da AT na Empresa Teste Portugal sem permissão nenhuma no cofre (tem «Editar» em todas as empresas, DEC-1260). A recusa das credenciais (SEC-113: «Peça ao administrador…») foi provocada com um utilizador com o perfil Contabilista certificado e o acesso Administração fiscal (dado por RPC), sem permissão no cofre (captura 06 refeita); «já está iniciado» provocado com o administrador. */}
+
+## Problemas frequentes
+
+### «Não tem permissão para criar, alterar ou apagar as credenciais da AT…»
+
+- **Sintoma:** **Guardar** abre **Erro de Acesso**: «Não tem permissão para criar, alterar ou apagar as credenciais da AT. Peça que lhe deem a permissão «Editar» para esta empresa e para o portal da Autoridade Tributária no cofre de credenciais. Peça ao administrador que a dê, em Contabilidade › Configurar › Cofre de credenciais › Permissões. Se ninguém tem ainda «Editar» nesta empresa, o primeiro passo é Contabilidade › Configurar › Cofre de credenciais › Iniciar o cofre.» Visto com um utilizador com o perfil **Contabilista certificado** e o acesso extra **Administração fiscal**, sem permissão no cofre da Empresa Nova Exemplo, Lda, ao mudar o **Utilizador do webservice** e guardar. O administrador não recebe esta recusa.
+  ![Janela Erro de Acesso: não tem permissão para criar, alterar ou apagar as credenciais da AT; peça ao administrador que dê a permissão, em Permissões, ou comece por Iniciar o cofre](/images/fiscal-core/ligar-a-at/06-sem-permissao.png)
+- **Causa:** não tem **Editar** no cofre da empresa em que está a trabalhar.
+- **O que fazer:** carregue em **Fechar** e descarte a alteração. Peça a permissão ao administrador (ou a quem já tem **Editar** nesta empresa), em **Permissões**. Se ninguém a tem, o administrador inicia o cofre (passos 1 e 2) e dá-lha.
+
+### «O cofre da empresa … já está iniciado…»
+
+- **Sintoma:** **Confirmar**, na janela **Iniciar o cofre de credenciais**, abre **Operação inválida**: «O cofre da empresa Empresa Nova Exemplo, Lda já está iniciado: Administrador (demonstração) pode(m) dar permissões. Dê as permissões em Contabilidade › Configurar › Cofre de credenciais › Permissões.»
+  (visto com o administrador, que já tinha **Editar**). Antes de confirmar, a janela já avisa: «O cofre de credenciais desta empresa já está iniciado: Administrador (demonstração) pode(m) dar permissões, por isso não há nada a iniciar.…»
+- **Causa:** alguém da empresa já tem **Editar**. O cofre só se inicia uma vez.
+- **O que fazer:** carregue em **Fechar**. Para dar a permissão a outra pessoa, use **Permissões**; se não a pode dar, peça-a a uma das pessoas indicadas na mensagem.
+
+### «As credenciais ainda não estão prontas: - Falta o número do certificado do programa…»
+
+- **Sintoma:** **Testar a ligação (simulador)** mostra, no canto do ecrã, «As credenciais ainda não estão prontas: - Falta o número do certificado do programa na Autoridade Tributária. As séries e as faturas têm de o levar.…». Na **Prontidão**, as linhas de **Séries** e **Faturas** ficam em **Falta alguma coisa** com a mesma frase; a de **Guias de transporte** fica em **Pronto**.
+- **Causa:** a empresa não tem o certificado do programa em **Certificados de software**. Numa empresa nova isto já não acontece: o certificado é copiado ao criar a empresa, e a **Prontidão** de uma empresa acabada de criar não fala dele (só das credenciais em falta).
+- **O que fazer:** o administrador regista-o em **Definições › fiscaldoo · Certificação**, grupo **Configurar a certificação: séries e chaves**, linha **Certificados de software**, botão **Abrir**, ou no painel **Contabilidade › Lançar › Início › O que há para fazer?**, grupo **Certificação do programa**, ligação **Certificados de software**, com **Novo**. O **Contabilista certificado** também tem esta ligação do painel, mas só para consultar: a lista abre-lhe sem o botão **Novo**. Veja [Como preparar a empresa para emitir documentos certificados](/fiscal-core/preparar-a-faturacao-certificada). Depois repita o passo 9.
+
+### «A operação não pode ser concluída: Esta empresa já tem credenciais para este ambiente.»
+
+- **Sintoma:** **Guardar** abre **Erro de Validação** com esta mensagem.
+- **Causa:** carregou em **Novo** para uma empresa e um ambiente que já têm registo (na demonstração, um segundo registo **Teste** da Empresa Nova Exemplo, Lda).
+- **O que fazer:** carregue em **Fechar** e descarte o registo novo. Abra o registo que já existe na lista e substitua nele o que mudou.
+
+### «O certificado cliente não é um certificado PEM válido…»
+
+- **Sintoma:** **Guardar** abre **Erro de Validação**: «O certificado cliente não é um certificado PEM válido. Cole o certificado inteiro, de «-----BEGIN CERTIFICATE-----» até «-----END CERTIFICATE-----».»
+- **Causa:** em vez do .pfx, colou texto em **Certificado cliente (PEM)** e esse texto não é um certificado completo (falta a primeira ou a última linha, ou é outro ficheiro).
+- **O que fazer:** carregue em **Fechar** e apague o campo. Use o .pfx (passo 6) ou cole o certificado inteiro, com as linhas «-----BEGIN CERTIFICATE-----» e «-----END CERTIFICATE-----».
+
+### «A empresa não tem número de contribuinte…»
+
+- **Sintoma:** o formulário avisa «A empresa não tem número de contribuinte e a Autoridade Tributária identifica quem comunica por ele. Preencha-o nos dados da empresa.» e **Testar a ligação (simulador)** mostra «As credenciais ainda não estão prontas: - A empresa não tem número de contribuinte. A Autoridade Tributária identifica quem comunica por esse número. Preencha-o nos dados da empresa.»
+- **Causa:** a ficha da empresa não tem o NIF.
+- **O que fazer:** peça ao administrador que preencha o NIF da empresa ([Como preencher os dados fiscais da empresa](/administration/dados-da-empresa)) e repita o passo 9.
+
+### A Prontidão continua em «Falta alguma coisa» depois de guardar
+
+- **Causa:** as credenciais são de outro ambiente (as de **Teste** não servem as linhas de **Produção**), de outra empresa, ou falta outro dado da empresa.
+- **O que fazer:** leia a coluna **O que falta** da linha e carregue em **Resolver**. Confirme o **Ambiente** e a **Empresa** do registo e a empresa escolhida no canto superior direito.
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-02, master c2bf63c34, docs_demo_v23at_test, porta 8504): Definições › fiscaldoo · Certificação › Configurar a certificação: séries e chaves › Certificados de software › Abrir visto por clique com o administrador, sem modo de programador. Contabilidade › Configurar › Faturação certificada › Certificados de software só aparece com o modo de programador, ao administrador e ao Contabilista certificado (reportado como defeito do produto); o artigo já não manda ligar esse modo */}
+
+{/* Nota interna (lote v23-AU, depois do comboio 181 com o UX-149, master 09afad64d, docs_demo_v23au_test, porta 8504): por clique, sem modo de programador, Contabilidade › Lançar › Início › O que há para fazer?, grupo Certificação do programa, ligação Certificados de software: com o administrador abre a lista com Novo; com um utilizador só com o perfil Contabilista certificado abre a lista (9876, válido desde 01/01/2026) sem Novo; o Contabilista, o Auditor / ROC e a Gerência não têm a ligação. A entrada Contabilidade › Configurar › Faturação certificada › Certificados de software continua só com o modo de programador (admin e CC): o caminho para quem não é administrador é o painel (UX-119). */}

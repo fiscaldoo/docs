@@ -1,0 +1,99 @@
+---
+id: analise-de-vendas
+slug: /accounting-pt/analise-de-vendas
+title: Como analisar as vendas por cliente e por artigo
+sidebar_label: Vendas por cliente e por artigo
+description: Ver quanto vendeu a cada cliente e de cada artigo num período, sem IVA, e comparar os anos.
+keywords: [analisar vendas, vendas por cliente, vendas por artigo, evolução anual das vendas, evolucao anual das vendas, vendas líquidas, vendas liquidas, melhores clientes, artigos mais vendidos]
+doc_id: DOC-0153
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c60255305)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [management/vendas-e-clientes, accounting-pt/relatorios/por-cobrar, accounting-pt/relatorios/usar-os-relatorios]
+---
+
+{/* Nota interna (v13-ACC2, DOC-0153): base docs_demo_v13acc2_test, porta 8262, master f671d6842. Por clique com Contabilista; caminhos conferidos com Gerência e Auditor; Faturação sem menu. Total 38.393,00 conferido por RPC: 40 faturas 38.993,00 e 1 nota de crédito -600,00, sem IVA (46.294,37 com IVA). XLSX: Total 41, 217, 38393. Diferença Enterprise não vista: ponte l10n_pt_arxi_ee_reports fora desta base. */}
+
+## Para que serve?
+
+Mostra quanto vendeu num período, a cada cliente e de cada artigo. Responde a perguntas como «quais são os meus melhores clientes?» ou «que artigo vendi mais este ano?». Estes mapas só consultam: não criam lançamentos e não comunicam nada à AT.
+
+## Quando utilizar?
+
+- Quando quer saber quem compra mais, antes de negociar condições.
+- Quando quer ver os artigos que mais contribuem para as vendas.
+- Quando quer comparar as vendas de um ano com as do ano anterior.
+- Não use para saber quanto lhe devem: isso vê-se no [que os clientes devem](/accounting-pt/por-cobrar).
+
+## Onde encontrar?
+
+- **Contabilidade › Consultar › Análise › Vendas por cliente**.
+- **Contabilidade › Lançar › Início › O que há para fazer?** › **Análises e relatórios**: **Vendas por artigo** e **Evolução anual das vendas**.
+
+![Grupo Análises e relatórios do painel da Contabilidade, com a ligação Vendas por artigo assinalada](/images/accounting-pt/analise-de-vendas/01-analises-no-painel.png)
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**, **Contabilista certificado**, **Gerência** ou **Auditor / ROC**. O perfil **Administrativo** não tem estas entradas: não tem a aplicação **Contabilidade**.
+- As faturas do período estão emitidas. Um rascunho só conta se o pedir.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Vendas por cliente**. O mapa abre no ano atual ou, se já o usou nesta sessão, no último período escolhido. **Repor** volta ao ano atual.
+2. No topo, escolha **Mês**, **Trimestre** ou **Ano** e, ao lado, qual deles.
+3. Para ver os documentos de um cliente, carregue na seta da linha.
+4. Para ver os lançamentos, carregue no número da coluna **Documentos**.
+5. Para guardar o mapa, carregue em **Exportar PDF**, ou em **Exportar** › **Exportar XLSX**.
+
+</StepByStep>
+
+**Vendas por artigo** funciona da mesma forma, com um artigo em cada linha. Em **Mais filtros**, pode escolher um período à medida, em **De** e **até**, ou só alguns clientes, em **Clientes e fornecedores**. As restantes opções estão em [como usar os relatórios](/accounting-pt/usar-os-relatorios).
+
+## No Enterprise
+
+No Odoo Enterprise, os três mapas das vendas são os do fiscaldoo (visto com um utilizador só com o perfil **Contabilista**): **Contabilidade › Consultar › Análise › Vendas por cliente** no menu, e **Vendas por artigo** e **Evolução anual das vendas** em **Análises e relatórios** do painel. Abrem no ano atual, com **Mês**, **Trimestre** e **Ano**, **Mais filtros**, **Exportar PDF**, **Exportar**, **Guardar opções**, **Copiar ligação** e **Repor**. O perfil **Administrativo** também não tem a aplicação **Contabilidade**.
+
+{/* Nota interna (lote EE-05, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee05_test (cópia da odoo20_ee_test com EE_FASE=construir), 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0153. Contabilista: Vendas por cliente, Vendas por artigo e Evolução anual das vendas abrem os relatórios do fiscaldoo (endereços fiscaldoo-vendas-*), com as colunas Documentos, Quantidade e Vendas líquidas (e as variações face ao ano anterior na evolução). Os valores da base Enterprise não são os da demonstração Community e não entram no artigo. Administrativo: só a aplicação Faturação. Ver reports/LOTE_EE-05.md. */}
+
+## Resultado esperado
+
+Cada linha mostra o número de **Documentos**, a **Quantidade** e as **Vendas líquidas**. O maior valor aparece primeiro.
+
+![Vendas por cliente de 2026, com as colunas Documentos, Quantidade e Vendas líquidas](/images/accounting-pt/analise-de-vendas/02-vendas-por-cliente.png)
+
+No exemplo, as vendas de 2026 somam 38.073,00 € em 38 documentos (30 faturas, 4 faturas simplificadas, 2 faturas-recibo, 1 nota de débito e 1 nota de crédito), o mesmo valor de **Vendas e serviços prestados** na [demonstração de resultados](/accounting-pt/demonstracao-de-resultados) de 2026. **Vendas por artigo** dá o mesmo total, com o **Computador portátil 15"** à frente, com 19.474,00 €.
+
+## O que entra nas vendas líquidas
+
+- **Faturas e notas de crédito de clientes já emitidas.** As notas de crédito descontam: no exemplo abaixo, a fatura de 600,00 € e a nota de crédito de 600,00 € deixam o cliente a 0,00 €, com 2 documentos.
+- **Sem IVA.** Os 38.073,00 € do exemplo correspondem a 45.900,77 € com IVA. Por isso, estes valores não são o que o cliente pagou.
+- **A data é a do lançamento do documento.**
+
+![Cliente aberto, com uma fatura de 600,00 € e a nota de crédito de -600,00 € por baixo, e o total do mapa](/images/accounting-pt/analise-de-vendas/03-nota-de-credito-desconta.png)
+
+## Comparar os anos
+
+**Evolução anual das vendas** mostra um ano em cada linha. A seta abre os meses desse ano. As colunas **Variação face ao ano anterior** comparam com o ano civil anterior. Ficam vazias quando esse ano não tem documentos, como 2026 no exemplo. Para ver vários anos, em **Mais filtros** alargue **De** e **até**. O resultado está ilustrado nas [compras](/accounting-pt/analise-de-compras#comparar-os-anos), que funcionam da mesma forma.
+
+## Notas importantes
+
+- Os mapas não veem encomendas nem orçamentos: só o que já foi faturado.
+- A coluna **Quantidade** soma unidades diferentes (horas, caixas, unidades). Num cliente com vários artigos, serve apenas como ordem de grandeza.
+- Cada empresa tem os seus valores. Confirme a empresa escolhida no canto superior direito.
+
+## Problemas frequentes
+
+**«A data de início do período não pode ser posterior à data de fim.»** Em **Mais filtros**, **De** é depois de **até**. Corrija as datas: o mapa volta a aparecer.
+
+**O mapa só mostra a linha Total, a zero.** Não há faturas emitidas no período. No exemplo, acontece em 2023. Escolha outro período ou, se a fatura ainda está por emitir, marque **Incluir rascunhos** em **Mais filtros**.
+
+**Um cliente aparece com 0,00 €.** A fatura foi creditada por uma nota de crédito do mesmo valor. Abra a linha para confirmar.
+
+**Não encontro o mapa com o perfil Administrativo.** Estas entradas são da Contabilidade. Peça o mapa ao contabilista.
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AY, 10/11/2026, master fa7915ea8, docs_demo_v23ay_test, porta 8505): totais de 2026 lidos por clique com um utilizador só com o perfil Contabilista: Vendas por cliente e Vendas por artigo com Total 38, 214,00 e 38.073,00 € (portátil 19.474,00 €); igual à DR. RPC (leitura): 37 faturas 38.673,00 € e a NC D26/1 -600,00 €; com IVA 45.900,77 € (= 38.073,00 + IVA cobrado 7.827,77 do Resumo dos impostos). Captura 03 refeita; a 02 não mostra o total e continua certa. */}

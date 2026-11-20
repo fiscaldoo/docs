@@ -1,0 +1,145 @@
+---
+id: series-documentais
+slug: /fiscal-core/series-documentais
+title: Como criar uma série e comunicá-la à AT
+sidebar_label: Criar e comunicar uma série
+description: Criar a série de um tipo de documento, comunicá-la à AT para obter o código de validação e começar a emitir com ATCUD.
+keywords: [terminar série, terminar serie, finalizar série, série ativa, série do ano seguinte, série, serie, séries fiscais, series fiscais, criar série, criar serie, comunicar série, comunicar serie, código de validação, codigo de validacao, ATCUD, numeração, numeracao, Portaria 195/2020, série de recuperação, serie de recuperacao, nova série do ano]
+doc_id: DOC-0012
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7a46de91a)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/emitir-uma-nota-de-credito, fiscal-core/faturacao/anular-uma-fatura]
+---
+
+## Para que serve?
+
+Cada tipo de documento certificado (fatura, fatura simplificada, nota de crédito, recibo, guia de transporte…) é numerado numa série própria, normalmente uma por ano. Antes de a série numerar o primeiro documento, tem de ser comunicada à Autoridade Tributária e Aduaneira (AT), que devolve um **código de validação**.
+
+O fiscaldoo junta esse código ao número de cada documento para formar o ATCUD (código único do documento), que sai impresso no documento e no código QR. Sem código de validação a série não fica ativa e não se emite nenhum documento nela.
+
+## Quando utilizar?
+
+- Antes de emitir o primeiro documento de cada tipo, quando a empresa começa a faturar.
+- No início de cada ano, para as séries do novo exercício.
+- Quando cria um diário novo (por exemplo, para outro estabelecimento) que precisa de numeração própria.
+- Quando precisa de uma série de recuperação, para registar documentos emitidos à mão ou noutro programa durante uma falha.
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Faturação certificada › Séries fiscais**
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado** (o administrador também pode comunicar). Os perfis **Administrativo** e **Contabilista** não veem este menu.
+- A empresa tem Portugal como país fiscal e o NIF preenchido.
+- Existe o diário onde os documentos desta série vão ser emitidos, e esse diário emite o tipo de documento da série (um diário de faturas emite **[FT] Fatura** e as suas notas de crédito **[NC] Nota de crédito**).
+- O diário ainda não tem uma série **ativa** do mesmo tipo para o mesmo exercício. Se tiver, a AT aceita a série nova mas o fiscaldoo não a ativa (ver «Problemas frequentes»). Não termine a série que está a usar só para abrir lugar à nova: veja primeiro o aviso «Terminar uma série não se desfaz».
+- A empresa tem as credenciais de comunicação com a AT configuradas. Se não tem, comunique a série no Portal das Finanças e registe aqui o código (ver «Se comunicou a série no Portal das Finanças»).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Séries fiscais** e carregue em **Criar e comunicar**, ao lado de **Novo**.
+   ![Lista Séries fiscais com o botão Criar e comunicar assinalado, ao lado de Novo](/images/fiscal-core/series-documentais/01-lista-com-criar-e-comunicar.png)
+2. Confirme a **Empresa**: vem preenchida com a empresa em que está a trabalhar. Só muda se trabalha com várias empresas.
+3. Em **Identificador da série**, escreva o nome da série, por exemplo `A27`. Use só letras e algarismos.
+4. Em **Tipo de documento SAF-T**, escolha o tipo, por exemplo **[NC] Nota de crédito**. Atenção à lista: aparecem vários tipos com nomes parecidos; confirme o código entre parênteses retos.
+5. Em **Diário**, escolha o diário onde os documentos vão ser emitidos e que ainda não tem série ativa deste tipo para o exercício. No exemplo, **Vendas**, que tem séries ativas de 2026 mas nenhuma de 2027.
+6. Em **Exercício**, escreva o ano da série; confirme o **Número inicial** (normalmente 1) e, em **Data de início prevista**, a data a partir da qual vai usar a série (para as séries do ano seguinte, 1 de janeiro). Deixe **Série de recuperação** desmarcada, salvo se for esse o caso.
+7. Marque **Confirmo que estes dados estão corretos e podem ser comunicados**. A **Chave de pedido** é preenchida pelo fiscaldoo e não se altera: identifica este pedido, para que repetir a operação depois de uma falha continue a mesma série.
+   ![Janela Criar e comunicar uma série preenchida: série A27, tipo [NC] Nota de crédito, diário Vendas, exercício 2027, início 01/01/2027, confirmação marcada](/images/fiscal-core/series-documentais/02-assistente-criar-e-comunicar.png)
+8. Carregue em **Criar e comunicar** e espere pela resposta.
+9. Leia o **Resultado da comunicação**. **Comunicada e ativa** quer dizer que a série está pronta para 2027, o exercício para que foi criada (começa a 01/01/2027). Carregue em **Abrir a série** para a ver.
+   ![Resultado da comunicação: Comunicada e ativa, série NC A27 no estado Ativa, com o código de validação, e o que fazer a seguir: já pode emitir documentos com esta série a partir de 01/01/2027](/images/fiscal-core/series-documentais/03-resultado-comunicada-e-ativa.png)
+
+   Em **O que fazer a seguir**, o ecrã diz a partir de quando pode emitir: «Nada mais a fazer: já pode emitir documentos com esta série a partir de 01/01/2027.»
+   {/* Nota interna (auditoria v23-BD, master ce51f2d47): o I18N-029 já não se reproduz, a frase do ecrã diz a data de início. Captura 03 refeita numa cópia (NC A27, [NC] Nota de crédito, Vendas, 2027, simulador a aceitar), com a janela em largura estreita. */}
+
+</StepByStep>
+
+As imagens são da base de demonstração, onde a AT é substituída por um simulador: o código de validação que se vê é fictício.
+
+### Se a série já existe em rascunho
+
+1. Abra a série (estado **Rascunho**) e carregue em **Comunicar à AT**.
+2. Na janela **Comunicar a série à Autoridade Tributária**, confira os dados em «O que vai ser enviado», marque **Confirmo que estes dados estão corretos e podem ser comunicados** e carregue em **Comunicar**.
+3. Com a resposta aceite, a série passa a **Ativo**, com o **Código de validação** e **Comunicação com a AT: Aceite**. Se o diário já tiver uma série ativa do mesmo tipo para o exercício, o resultado é «Aceite, ainda não aplicada» (ver «Problemas frequentes»).
+
+### Se comunicou a série no Portal das Finanças
+
+1. Na lista, carregue em **Novo**, preencha a série com os mesmos dados que comunicou (identificador, tipo de documento, diário, exercício) e guarde.
+2. Carregue em **Registar código de validação (Portal)**. Na janela **Registar código de validação**, escreva o **Código de validação** exatamente como a AT o devolveu e confirme **Comunicada em**. **Comprovativo (PDF)** é opcional: a lista só mostra os PDF que já estão guardados no fiscaldoo. Carregue em **Registar**.
+3. Carregue em **Ativar**. A janela pergunta «Ativar esta série? A sua identidade deixa de poder ser alterada.»; carregue em **Confirmar**.
+
+A série fica **Ativo**, com o código que registou e a comunicação feita pelo **Portal das Finanças (PF)**.
+
+## Resultado esperado
+
+- A série está no estado **Ativo**, com o **Código de validação** preenchido, **Comunicação com a AT: Aceite** e a data e o utilizador da comunicação.
+- Por cima da ficha aparece «Esta série já está em uso: a identificação, a numeração e o código de validação já não se podem alterar.»
+- Na ficha, o menu **Ações** passa a ter **Finalizar na AT**, **Anular na AT**, **Terminar**, **Cancelar** e **Verificar numeração** (ver «Terminar uma série não se desfaz»).
+- O primeiro documento da série leva o ATCUD no formato `código de validação-número`, por exemplo `4J3PMHN5-1`.
+
+## Vídeo demonstrativo
+
+<VideoTutorial src="/videos/series-documentais.mp4" captions="/videos/series-documentais.vtt" poster="/videos/series-documentais-poster.png" width="1440" height="1140" title="Criar uma série e comunicá-la à AT" duration="31 s" />
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Terminar uma série não se desfaz">
+Na ficha de uma série ativa, o menu **Ações** tem três opções que acabam com a série. Nenhuma se desfaz:
+
+- **Anular na AT** comunica à AT que a série não chegou a ser usada. Só é possível se foi comunicada hoje ou ontem e ainda não numerou nenhum documento.
+- **Finalizar na AT** comunica à AT o último número emitido e termina a série, aqui e na AT: a numeração acaba e a série não volta a ficar ativa. Só é possível depois de a série ter numerado pelo menos um documento.
+- **Terminar** termina a série **só no fiscaldoo e não comunica nada à AT**: para a AT a série continua ativa. **Cancelar** também é só local. Para fechar uma série que já não vai usar, use **Finalizar na AT**.
+
+Não termine uma série que ainda está a usar só para criar outra; para as séries do ano seguinte, crie-as para o novo exercício, como no exemplo, sem terminar as do ano em curso. Se não tem a certeza de que séries criar ou terminar (por ano, por estabelecimento, de recuperação), decida-o com o contabilista certificado antes de comunicar. <span className="fd-pending">Pendente de validação por contabilista certificado: número de séries e quando terminar uma série.</span>
+
+![Menu Ações de uma série ativa com Finalizar na AT, Anular na AT, Terminar, Cancelar e Verificar numeração](/images/fiscal-core/series-documentais/04-menu-acoes-da-serie.png)
+</HelpCallout>
+
+- Depois de ativa, a identificação da série (identificador, tipo de documento, diário, exercício, número inicial) já não se altera; o próprio ecrã o diz.
+- As séries de formação não se comunicam à AT e os seus documentos não têm valor fiscal.
+
+## Problemas frequentes
+
+### «A série … numera [FR] Fatura-recibo, mas o diário … não emite esse tipo»
+
+- **Causa:** o tipo de documento escolhido não é o que o diário emite.
+- **O que fazer:** feche a mensagem e escolha o tipo certo (por exemplo **[FT] Fatura**) ou outro diário. Nada foi comunicado.
+
+### O resultado diz «Aceite, ainda não aplicada»
+
+- **Causa:** a AT aceitou a série, mas o fiscaldoo não a pôde ativar. A explicação fica no histórico de mensagens da série; o caso mais comum é «O diário … já tem uma série ativa para [FT] Fatura em 2026».
+- **O que fazer:** se escolheu o diário errado, deixe esta série e crie outra no diário certo. Se a série ativa antiga deixou mesmo de ser usada, o perfil **Contabilista certificado** pode fechá-la com **Ações › Finalizar na AT**, que também a termina na AT (leia antes «Terminar uma série não se desfaz»), e depois carregar em **Repetir a operação** na série nova: a resposta guardada é aplicada sem comunicar uma segunda vez.
+
+### A AT recusou a série
+
+- **Sintoma:** o **Resultado da comunicação** diz **Recusada pela Autoridade Tributária** e **Estado da série** **Rascunho**. **O que aconteceu** traz o código e o texto da recusa; **O que fazer a seguir** diz «Corrija os dados na série (rascunho) e carregue de novo em «Comunicar à AT», ou cancele a série. Repetir esta operação não a envia outra vez.»
+  ![Resultado da comunicação de uma série recusada: Recusada pela Autoridade Tributária, série FT B27 em Rascunho, o que aconteceu e o que fazer a seguir, com os botões Abrir a série, Repetir a operação e Fechar](/images/fiscal-core/series-documentais/05-resultado-recusada.png)
+- **Exemplo:** na demonstração, a AT é um simulador, e a recusa foi provocada nele, numa série criada para isso (FT B27, [FT] Fatura, diário Vendas, exercício 2027). **O que aconteceu** disse: «A Autoridade Tributária recusou a série “*FT B27*”: *[MOCK-0001] Recusa simulada (feita pelo simulador da AT, não pela AT real).* A série ficou em rascunho, sem código de validação.» Numa recusa verdadeira, o código e o texto que vêm depois dos dois pontos são os da AT.
+- **O que fazer:**
+  1. Leia o código e o texto da AT em **O que aconteceu**. Se não percebe o que está errado, guarde-os e fale com o contabilista certificado antes de voltar a comunicar.
+  2. Carregue em **Abrir a série** e corrija o dado indicado.
+  3. Carregue em **Comunicar à AT**. Na janela **Comunicar a série à Autoridade Tributária**, confira «O que vai ser enviado», marque **Confirmo que estes dados estão corretos e podem ser comunicados** e carregue em **Comunicar**. Na demonstração, com o simulador de novo a aceitar, a FT B27 passou a **Ativa**, com código de validação.
+  4. Se a série não devia existir, não a comunique de novo: cancele-a.
+
+  **Repetir a operação** não volta a enviar uma série recusada, como diz o ecrã: só abre de novo a janela **Criar e comunicar uma série**. Feche-a e siga os passos acima.
+
+### A AT não respondeu
+
+- **Sintoma:** o **Resultado da comunicação** diz **Sem resposta da Autoridade Tributária** e a série fica em **Rascunho**. Na demonstração, com a falta de resposta provocada no simulador numa série criada para isso, **O que aconteceu** disse «A Autoridade Tributária não respondeu para a série “*NC C27*”; pode ter recebido o pedido. A série é um rascunho e não foi ativada.»
+- **O que fazer:** siga **O que fazer a seguir**: «Repita esta operação dentro de alguns minutos (mesma chave de pedido): o estado é perguntado primeiro à Autoridade Tributária e nada é enviado duas vezes. Se continuar sem resposta, verifique a comunicação em Comunicações com a AT.» Carregue em **Repetir a operação**: volta a abrir a janela **Criar e comunicar uma série**, onde carrega de novo em **Criar e comunicar**. Na demonstração, com o simulador de novo a responder, a mesma série NC C27 ficou **Comunicada e ativa**, com código de validação. Não crie outra série com os mesmos dados.
+{/* Nota interna (lote v23-BD, DOCS-064 #3900, master ce51f2d47, docs_demo_v23bd_test, porta 8504): credenciais de Teste fictícias guardadas no ecrã pelo administrador (cofre iniciado na cópia, .pfx em memória, transporte simulado, nunca Produção). Cenário «reject» do simulador posto por RPC (parâmetro l10n_pt_fiscaldoo_at_ws.mock_scenario) e reposto em «accept». Por clique, com um utilizador só Contabilista certificado: Séries fiscais › Criar e comunicar, FT B27, [FT] Fatura, Vendas, 2027, confirmação marcada → resultado «Recusada pela Autoridade Tributária» (captura 05); com «accept», Abrir a série › Comunicar à AT › Comunicar → FT B27 Ativo com código de validação. O código MOCK-0001 é o do simulador. Lote v23-BE (depois do comboio 188 com o ATWS-050 #4140, master 7a46de91a, docs_demo_v23be_test, porta 8504, credenciais de Teste fictícias, chave do cofre só na memória da instância): recusa repetida por clique com um utilizador só Contabilista certificado, cenário «reject» posto por RPC, série FT B27 ([FT] Fatura, Vendas, 2027) → o texto de O que aconteceu já não tem os dois pontos seguidos; captura 05 refeita; cenário reposto em «accept». A FT B27 fica em rascunho na cópia. Falta de resposta: cenário «timeout» posto por RPC, Criar e comunicar NC C27 ([NC] Nota de crédito, Vendas, 2027) → «Sem resposta da Autoridade Tributária» e o texto citado; Repetir a operação reabriu a janela Criar e comunicar uma série; não foi carregado de novo Criar e comunicar nessa série (fica em rascunho na cópia). Uma 3.ª série, NC D27, ficou ativa por engano do guião (o cenário já estava em «accept»): não entra no artigo. Cenário reposto em «accept». */}
+
+{/* Nota interna (lote v23-BL, DOCS-064 #3900, master c689f7580, docs_demo_v23bl_test, 12/11/2026, req. 46884): vídeo VID-0012 regravado com scripts/video/series-documentais.mjs e compose.mjs (FD_ACTION=984, FD_MENU=706), com um utilizador só Contabilista certificado e credenciais de Teste fictícias guardadas na cópia pelo administrador (cofre iniciado na cópia, .pfx em memória, simulador, nunca Produção): a lista Diário mostra «Faturas (2.ª série)» em vez de «Faturas (série de teste da AT)»; NC A27, 2027, Comunicada e ativa; 31,0 s; cartaz e legendas novos. */}
+
+### O código de validação é recusado
+
+- **Sintoma:** ao carregar em **Registar**: «O código de validação da série “FT REG2026” (“AB-12 34”) contém caracteres que não são letras nem algarismos: os códigos da AT são alfanuméricos, e um hífen ou um espaço quebraria o ATCUD de todos os documentos da série. Copie o código exatamente como a AT o devolveu, sem espaços, hífenes ou outros símbolos.»
+- **O que fazer:** copie o código exatamente como a AT o devolveu, sem espaços nem hífenes.

@@ -1,0 +1,105 @@
+---
+id: prova-da-ausencia-ou-baixa
+slug: /troubleshooting/prova-da-ausencia-ou-baixa
+title: A prova da ausência ou a baixa por doença não é aceite
+sidebar_label: Prova ou baixa não aceite
+description: O tipo de prova, o prazo da prova, os dados de saúde protegidos ou quem paga a baixa não estão certos. Veja o que cada mensagem pede.
+keywords: [prova da ausência, prova da ausencia, compromisso de honra, prova pendente, baixa por doença, baixa por doenca, acidente de trabalho, seguradora, pagador da baixa, texto livre, RGPD, erro de envio, certificado de incapacidade, ver ausência médica]
+doc_id: DOC-0389
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 8d5d6c606)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/ausencia-recusada, payroll-pt/faltas-e-licencas/baixas-por-doenca]
+---
+
+## Sintoma
+
+Ao guardar ou aprovar uma ausência, o fiscaldoo recusa a prova escolhida, diz que a prova está pendente ou não deixa escrever o motivo. Numa baixa, não aceita o anexo ou quem paga.
+
+## Mensagem
+
+Vistas em novembro de 2026, na Empresa Demonstração, Lda, com o perfil **Gestor de RH**. As que falam de doença ou acidente foram vistas com o acesso extra **Ver ausência médica** acrescentado, salvo o texto livre e o anexo recusados, que se veem sem ele.
+
+A declaração do trabalhador num tipo que não a admite (**Dádiva de sangue**):
+
+> «A declaração do trabalhador sob compromisso de honra só prova a ausência para que está prevista (art. 254.º). Como resolver: escolha outra prova ou outro tipo.»
+
+![Janela Erro de Validação: a declaração do trabalhador sob compromisso de honra só prova a ausência para que está prevista](/images/troubleshooting/prova-da-ausencia-ou-baixa/01-compromisso-de-honra-tipo.png)
+
+A mesma declaração numa ausência de **Doença** de 12 dias:
+
+> «A declaração do trabalhador sob compromisso de honra cobre no máximo 3 dias consecutivos (art. 254.º) e esta ausência tem 12. Como resolver: peça a prova que a lei exige.»
+
+![Janela Erro de Validação: a declaração cobre no máximo 3 dias consecutivos e esta ausência tem 12](/images/troubleshooting/prova-da-ausencia-ou-baixa/02-compromisso-de-honra-dias.png)
+
+**Aprovar** com a prova pedida, ainda dentro do prazo e sem data de entrega:
+
+> «A prova desta ausência ainda está pendente (devida até 30/12/2026). Como resolver: espere pela prova ou pelo fim do prazo e valide então.»
+
+![Janela Operação inválida: a prova desta ausência ainda está pendente, devida até 30/12/2026](/images/troubleshooting/prova-da-ausencia-ou-baixa/03-prova-pendente.png)
+
+Um motivo escrito em **Descrição** numa ausência cujo tipo revela saúde ou greve:
+
+> «Este tipo de ausência não pode ter texto livre. O que aconteceu: os «Motivos» e a «Descrição» de uma ausência são lidos por colegas e chefias e, numa ausência por motivo de saúde ou greve, revelariam uma categoria especial de dados (RGPD art. 9.º). Como resolver: deixe-os vazios; quem tem o acesso «Ver ausência médica» escreve o motivo no registo médico.»
+
+![Janela Operação inválida: este tipo de ausência não pode ter texto livre](/images/troubleshooting/prova-da-ausencia-ou-baixa/04-texto-livre.png)
+
+**Paga a prestação** = **Segurança Social** no registo médico de um **Acidente de trabalho**. Nesta versão, a mensagem ainda mostra o nome em inglês: «Social Security» é **Segurança Social**, «Nobody» é **Ninguém**. O «Empregador» que ela sugere é a opção **Entidade empregadora**:
+
+> «O pagador desta ausência não pode ser «Social Security». O que aconteceu: esse pagador não se aplica ao tipo desta ausência. Como resolver: escolha «Seguradora» (com a apólice em vigor) ou «Empregador» (sem apólice).»
+
+![Janela Erro de Validação: o pagador desta ausência não pode ser Social Security](/images/troubleshooting/prova-da-ausencia-ou-baixa/05-pagador-errado.png)
+
+**Anexar ficheiro** numa ausência de doença, sem o acesso **Ver ausência médica**, não guarda o ficheiro. O aviso no canto do ecrã:
+
+> «Erro de envio. Não se podem anexar ficheiros a esta ausência. O que aconteceu: um ficheiro desta ausência é um dado de saúde (RGPD, art. 9.º) e os colegas e chefias leem a ausência. Como resolver: peça ao acesso «Ver ausência médica» que o anexe (na ausência de um familiar, essa pessoa precisa também de um perfil que abra as ausências, como «RH»).»
+
+O motivo está em «Causas verificadas».
+
+## Causas verificadas
+
+- **A declaração do trabalhador é para casos limitados.** Só é aceite no tipo a que se destina e até 3 dias consecutivos.
+- **O prazo da prova ainda corre.** Com **Prova pedida em** e **Prova devida até** preenchidos, e sem **Prova entregue em**, **Estado da prova** diz **Pendente** e o **Aprovar** é recusado até a prova chegar ou o prazo acabar.
+- **Os dados de saúde são protegidos.** Colegas e chefias leem a ausência. Por isso, numa ausência de doença ou de acidente não há motivo escrito, e quem não tem o acesso **Ver ausência médica** não anexa ficheiros. O certificado e o motivo ficam no registo médico, que só esse acesso abre.
+- **Num acidente de trabalho, só a seguradora ou o empregador pagam.** **Segurança Social** e **Ninguém** são recusados, com a mesma mensagem.
+
+<span className="fd-pending">Pendente de validação no ecrã: a recusa de «Seguradora» quando a empresa não tem apólice em vigor. A Empresa Demonstração, Lda aceita a seguradora sem mensagem, e esta ronda não experimentou uma empresa sem apólice.</span>
+
+## O que confirmar
+
+1. Em **Pessoas › Férias e ausências › Pedidos de ausência**, abra a ausência e o separador **Lei portuguesa: comunicação, prova e efeito**. Veja **Prova**, **Prova devida até**, **Prova entregue em** e **Estado da prova**.
+2. O tipo de tempo e os dias do pedido, por causa do limite de 3 dias da declaração.
+3. Numa baixa, se tem o acesso extra **Ver ausência médica** (nos **Ajustes avançados** do utilizador). Sem ele, não vê o botão **Registo médico** nem o menu **Salários › Preparar › Ausências e presenças › Baixas por incapacidade**, e o tipo aparece como **Falta justificada — impossibilidade de prestar trabalho (CT art. 249.º/2-d)**, só com a letra A, B ou C no fim. Com ele, o Gestor de RH vê o botão, o menu e o nome real do tipo, por exemplo **Doença**.
+
+## Como resolver
+
+- **Declaração recusada:** em **Prova**, escolha **Declaração médica ou equivalente** numa doença, ou **Outro documento** nos outros tipos. Se o tipo estiver errado, corrija o tipo de tempo.
+- **Prova pendente:** quando a prova chegar, preencha **Prova entregue em**, guarde e carregue em **Aprovar**.
+- **Texto livre recusado:** apague o texto de **Descrição** e guarde. Quem tem o acesso **Ver ausência médica** escreve o motivo no registo médico.
+- **Anexo recusado:** não anexe o certificado à ausência. Peça a quem tem o acesso **Ver ausência médica** que o junte no separador **Certificados** do registo médico ([Baixas por doença e acidente](/payroll-pt/baixas-por-doenca)).
+- **Quem paga recusado:** no registo médico (botão **Registo médico** da ausência), em **Paga a prestação**, deixe **Seguradora** ou escolha **Entidade empregadora**.
+
+Se a ausência já entrou num recibo fechado, a prova e o pagador corrigem-se de outra forma: veja [A ausência já foi usada num recibo fechado e não se altera](/troubleshooting/ausencia-ja-paga-num-recibo).
+
+## Resultado esperado
+
+- A ausência guarda-se e, depois de **Aprovar**, fica em **Segunda Aprovação**. No exemplo, com **Prova entregue em** preenchida dentro do prazo, **Estado da prova** passou a **Entregue a tempo**.
+- O registo médico guarda-se com o pagador certo.
+
+## Quando contactar o suporte
+
+- A prova está entregue e **Estado da prova** continua **Pendente**.
+- Tem o acesso **Ver ausência médica** e o botão **Registo médico** não aparece numa ausência de doença ou de acidente.
+- Tem o acesso **Ver ausência médica** e o **Anexar ficheiro** dá **Erro de envio**.
+
+## Informação a enviar
+
+- O trabalhador, o tipo de tempo e as datas da ausência.
+- O texto completo da mensagem, copiado do ecrã, e o campo que estava a preencher.
+- O perfil com que entrou e se tem o acesso **Ver ausência médica**.
+- Nunca envie o diagnóstico nem o certificado médico ao suporte.
+
+{/* Nota interna (lote v23-AM, DOCS-069 #4052 e DOCS-066 #3947, master 8d5d6c606, docs_demo_v23am_test, porta 8502): «perfil Ver ausência médica» passou a acesso extra. Por clique, com perfil.rh (só Gestor de RH) e perfil.rhmed (com o acesso): botão Registo médico e nome real Doença só com o acesso; texto livre e anexo recusados a perfil.rh com as mensagens novas (o anexo já não dá o aviso genérico); com o acesso o anexo grava. Captura 04 refeita. */}

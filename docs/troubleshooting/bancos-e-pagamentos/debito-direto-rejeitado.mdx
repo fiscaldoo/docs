@@ -1,0 +1,129 @@
+---
+id: debito-direto-rejeitado
+slug: /troubleshooting/debito-direto-rejeitado
+title: O débito direto foi rejeitado ou o lote não é gerado
+sidebar_label: Débito direto rejeitado
+description: O que fazer quando o lote de débito direto não se cria, não se valida ou não se marca como enviado (mandato, identificador de credor, data, pré-notificação) e quando o banco rejeita uma cobrança (AM04, MD07).
+keywords: [débito direto rejeitado, debito direto rejeitado, lote SDD, lote não é gerado, lote nao e gerado, mandato, mandato SDD, sem mandato ativo, mandato B2B, Validado pelo banco do devedor, identificador de credor, ficheiro SEPA, pré-notificação, pre-notificacao, marcar como enviado, data de cobrança, demasiado próxima, reenviar os erros, causa resolvida, AM04, MD07, falta de provisão, Nenhuma cobrança pode ser enviada de novo]
+doc_id: DOC-0357
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 52dd90689)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/recibos-e-cobrancas/debitos-diretos-lotes, fiscal-core/recibos-e-cobrancas/devolucoes-de-debitos-diretos, troubleshooting/bancos-e-pagamentos/nota-de-pagamento-nao-e-emitida]
+---
+
+## Sintoma
+
+Quer cobrar uma fatura por débito direto e o lote não se cria, não se valida ou não se marca como enviado, ou o banco já respondeu que rejeitou a cobrança e o reenvio é recusado.
+
+Os caminhos normais estão em [Como criar e enviar um lote de débitos diretos](/fiscal-core/debitos-diretos-lotes) e em [Como tratar as devoluções de débitos diretos](/fiscal-core/devolucoes-de-debitos-diretos). Para pagar a fornecedores, veja [Não consigo emitir a nota de pagamento a fornecedores](/troubleshooting/nota-de-pagamento-nao-e-emitida).
+
+Os exemplos foram feitos a 04/11/2026 com o perfil **Contabilista**, na Empresa Demonstração, Lda, com a fatura `FT D26/33` da Clínica Dentária Sorriso, SA, de 147,60 €, e com ficheiros de ensaio do banco.
+
+## Mensagem
+
+**Sem mandato ativo.** Em **Ações › Criar lote SDD**, ao carregar em **Criar lote SDD**:
+
+> «Nenhuma das faturas pode ser cobrada por débito direto: - FT D26/33: Clínica Dentária Sorriso, SA não tem mandato SDD ativo.»
+
+![Janela Operação inválida: a fatura FT D26/33 não pode ser cobrada porque o cliente não tem mandato SDD ativo](/images/troubleshooting/debito-direto-rejeitado/01-sem-mandato-ativo.png)
+
+**Mandato B2B sem a confirmação do banco.** Em **Ativar**, com o **Esquema** **B2B (empresas)**:
+
+> «Um mandato B2B precisa da confirmação do banco do devedor antes da primeira cobrança: marque «Validado pelo banco do devedor» quando a tiver.»
+
+![Janela Operação inválida: um mandato B2B precisa da confirmação do banco do devedor antes da primeira cobrança](/images/troubleshooting/debito-direto-rejeitado/02-b2b-sem-confirmacao.png)
+
+**Identificador de credor em falta ou errado.** Em **Validar e gerar o ficheiro**:
+
+> «Não é possível gerar o ficheiro SEPA: - o identificador de credor SEPA da empresa falta ou não é válido (peça ao administrador que o corrija em Definições › Contabilidade › Débito direto SEPA)»
+
+**Data de cobrança demasiado próxima, ou fatura já noutro lote.** Em **Validar e gerar o ficheiro**, num lote com a cobrança para hoje e a fatura já noutro lote:
+
+> «O lote não pode ser validado: - RUM/00001: uma fatura já está no lote SDD/00002. - RUM/00001: a data de cobrança 04/11/2026 é demasiado próxima. CORE precisa de pelo menos 1 dia(s) útil(eis) depois de hoje: escolha 05/11/2026 ou uma data posterior.»
+
+**Mandato noutro lote por enviar.** Em **Validar e gerar o ficheiro**, com o outro lote já validado:
+
+> «O lote não pode ser validado: - RUM/00001: uma fatura já está no lote SDD/00002. - RUM/00001: o mandato já está no lote validado SDD/00002, que não foi enviado. Envie-o (ou cancele-o) antes de validar este, para que o tipo de sequência (primeira ou recorrente) fique certo.»
+
+**Já não há tempo para avisar o cliente.** Em **Pré-notificar os clientes**, com a cobrança a 05/11/2026 e o prazo de 14 dias:
+
+> «Não é possível fazer as pré-notificações: - RUM/00001: o cliente tem de ser avisado 14 dia(s) antes da data de cobrança 05/11/2026, ou seja até 22/10/2026, e já é tarde. Registe no mandato um prazo mais curto acordado com o cliente, ou mude a data de cobrança.»
+
+Em **Marcar como enviado**, depois de **Confirmar**, no mesmo lote:
+
+> «O lote não pode ser marcado como enviado: alguns clientes seriam debitados sem a pré-notificação. - RUM/00001: o cliente tinha de ser avisado 14 dia(s) antes da data de cobrança 05/11/2026, ou seja até 22/10/2026, e já é tarde. Mude a data de cobrança (cancele este lote e faça outro) ou registe no mandato um prazo mais curto acordado com o cliente.»
+
+![Janela Operação inválida: o lote não pode ser marcado como enviado, porque o cliente seria debitado sem a pré-notificação](/images/troubleshooting/debito-direto-rejeitado/05-envio-sem-pre-notificacao.png)
+
+**O banco rejeitou e o código exige correção (por exemplo, AM04).** Em **Reenviar os erros**, depois de **Confirmar**, com o **Reenvio** em **Exige correção**:
+
+> «Nenhuma cobrança pode ser enviada de novo. Veja os motivos abaixo e resolva-os primeiro com o cliente: - RUM/00001: o código do banco AM04 exige que a causa seja corrigida primeiro. Corrija-a, use «Causa resolvida» na cobrança e volte a reenviar.»
+
+![Janela Operação inválida: o código do banco AM04 exige que a causa seja corrigida primeiro](/images/troubleshooting/debito-direto-rejeitado/03-reenvio-sem-correcao.png)
+
+**O banco rejeitou e o código está bloqueado (por exemplo, MD07).** Em **Reenviar os erros**, depois de **Confirmar**, com o **Reenvio** em **Bloqueado**:
+
+> «Nenhuma cobrança pode ser enviada de novo. Veja os motivos abaixo e resolva-os primeiro com o cliente: - RUM/00001: o código do banco MD07 está bloqueado (ou é desconhecido): o cliente recusou, ou o mandato ou a conta não são válidos. Resolva primeiro com o cliente.»
+
+![Janela Operação inválida: o código do banco MD07 está bloqueado](/images/troubleshooting/debito-direto-rejeitado/04-codigo-bloqueado.png)
+
+## Causas verificadas
+
+- **O cliente não tem um mandato ativo**, ou o mandato B2B ainda não tem a confirmação do banco dele.
+- **A empresa não tem um identificador de credor válido.** O identificador é atribuído pelo banco e fica nas definições da empresa.
+- **A data de cobrança não dá tempo ao banco.** O lote em **Rascunho** guardou a data de hoje sem aviso: a recusa só aparece ao validar.
+- **A fatura ou o mandato já estão noutro lote.** Hoje, a janela de criação deixa criar um segundo lote com a mesma fatura: a recusa também só aparece ao validar.
+- **O prazo do aviso ao cliente já passou e não há pré-notificação feita.** O prazo vem do mandato ou, sem nada no mandato, das definições da empresa (14 dias no exemplo). A pré-notificação e o envio ao banco são recusados.
+- **O banco rejeitou a cobrança**, e o **Reenvio** de cada cobrança diz o que pode fazer. Importe a resposta do banco como explica [Como tratar as devoluções de débitos diretos](/fiscal-core/devolucoes-de-debitos-diretos). A fatura continua por pagar: no exemplo, a `FT D26/33` ficou com os 147,60 € em aberto.
+
+## O que confirmar
+
+1. Em **Contabilidade › Lançar › Cobranças a clientes › Mandatos de débito direto**, se o mandato do cliente está **Ativo**, com o **Esquema** certo.
+2. A **Data de cobrança** do lote e a data até à qual o cliente devia ser avisado, que a mensagem indica.
+3. Se a fatura já está noutro lote, em **Lotes de débito direto**.
+4. No lote, a **Resposta do banco**, o **Código do motivo** e o **Reenvio** de cada cobrança.
+
+## Como resolver
+
+**O que faz sozinho:**
+
+1. **Sem mandato:** crie e ative o mandato com a data em que o cliente o assinou. A lista **Conta do devedor** só mostra as contas que o cliente já tem: se estiver vazia, acrescente primeiro o IBAN na ficha do cliente.
+2. **B2B sem confirmação:** peça ao cliente que confirme o mandato junto do banco dele. Depois de ter a confirmação, marque **Validado pelo banco do devedor**, guarde e carregue em **Ativar**.
+3. **Data demasiado próxima:** num lote em **Rascunho**, mude a **Data de cobrança** para a que a mensagem indica, ou uma posterior.
+4. **Fatura ou mandato noutro lote:** fique com um dos lotes e carregue em **Anular** no outro, ou envie primeiro o lote validado, como a mensagem pede.
+5. **Já não há tempo para avisar o cliente:** carregue em **Anular** e crie um lote com uma **Data de cobrança** que deixe cumprir o prazo. Só registe um prazo mais curto em **Dias de pré-notificação acordados**, no mandato, se o tiver acordado com o cliente. O novo prazo também tem de caber: no exemplo, a 04/11/2026, com a cobrança a 05/11/2026, 2 dias foram recusados e 1 dia foi aceite. Depois, carregue em **Pré-notificar os clientes** e em **Marcar como enviado**.
+6. **Código que exige correção:** fale com o cliente e resolva a causa. Na linha da cobrança, carregue em **Causa resolvida**: o **Reenvio** passa a **Elegível para reenvio**. Carregue em **Reenviar os erros** e em **Confirmar**. Abre-se um lote novo em **Rascunho**, só com as cobranças rejeitadas ou devolvidas. Como a janela avisa, daqui não se envia nada ao banco: valide esse lote e leve o ficheiro ao banco.
+7. **Código bloqueado:** esta cobrança não tem o botão **Causa resolvida**. Fale com o cliente e cobre a fatura de outra forma, ou faça um mandato novo se a conta mudou. O mandato do exemplo continuou **Ativo**: não muda sozinho com esta resposta.
+
+**O que pede a outra pessoa:**
+
+8. **Identificador de credor:** peça ao perfil **Administrador** que o preencha, como explica o passo 1 de [Como criar e enviar um lote de débitos diretos](/fiscal-core/debitos-diretos-lotes), e volte a carregar em **Validar e gerar o ficheiro**.
+
+<HelpCallout type="risco" title="Faça a pré-notificação antes de levar o ficheiro ao banco">
+Hoje, a recusa de **Marcar como enviado** só atua depois de passar o prazo do aviso. Antes disso, o fiscaldoo não exige que a pré-notificação esteja feita: no exemplo, um lote com a cobrança a 30/12/2026 ficou **Enviado** sem nenhuma. Confirme-a no próprio lote antes de o marcar e de levar o ficheiro ao banco: o botão **Pré-notificações** só aparece quando já há pelo menos uma. Sem esse botão, carregue em **Pré-notificar os clientes**.
+</HelpCallout>
+
+## Resultado esperado
+
+- O mandato fica **Ativo**.
+- O lote passa de **Rascunho** a **Validado**, com **Descarregar o ficheiro**, e a **Enviado** depois de **Marcar como enviado**.
+- Depois da correção, o lote novo leva só as cobranças rejeitadas ou devolvidas. A fatura continua em aberto até o banco a cobrar.
+
+## Quando contactar o suporte
+
+- A mensagem continua depois de seguir o que ela indica.
+- A sua mensagem não está neste artigo. O IBAN errado, o mandato caducado e a referência do mandato inválida têm mensagens próprias, que este artigo não cobre.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com:
+
+- o número do lote, por exemplo `SDD/00034`, e a referência do mandato;
+- a **Data de cobrança** e a data em que tentou;
+- o texto completo da mensagem e, se o banco rejeitou, o **Código do motivo**.
+
+{/* Nota interna (DOCS-062, lote v9-E, master 52dd90689): 9 de 9 mensagens por clique com demo.contabilista, no mesmo percurso: mandato, lote SDD/00002, pré-notificação recusada com 14 e 2 dias, aceite com 1 dia, envio, AM04, Causa resolvida, lote de reenvio SDD/00003, MD07. Identificador de credor posto por API como administrador, depois de provocada a recusa, também com um identificador inválido. BNK-039: a auditoria V8TS4 pedia dizer que o fiscaldoo não impede o envio; hoje impede depois do prazo, por isso o artigo descreve a recusa. Auditoria V9E: a falta de exigência antes do prazo foi provada por clique (lote SDD/00006, cobrança a 30/12/2026, Enviado sem pré-notificação). */}

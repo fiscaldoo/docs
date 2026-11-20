@@ -1,0 +1,86 @@
+---
+id: conservar-os-extratos
+slug: /accounting-pt/conservar-os-extratos
+title: Como guardar os extratos bancários
+sidebar_label: Guardar os extratos
+description: Cada extrato importado fica guardado durante 10 anos e não se pode apagar. Como confirmar a data, descarregar o ficheiro e o que fazer se importou o ficheiro errado.
+keywords: [guardar extratos, conservar extratos, extratos bancários, extratos bancarios, conservação dos extratos, conservacao dos extratos, conservar até, conservar ate, registo de importações, registo de importacoes, 10 anos, art. 123 CIRC, apagar extrato]
+doc_id: DOC-0115
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master c60255305)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/importar-extrato-bancario, administration/seguranca-e-arquivo/arquivo-digital, accounting-pt/bancos-e-tesouraria/movimentos-de-caixa]
+---
+
+{/* Nota interna (v13-ACC, DOC-0115): base docs_demo_v13acc_test, porta 8254, master 56504fe86. Ficheiros importados por clique com o perfil Contabilista (extrato_banco_2026-10-30.xml e extrato_banco_2026-10-31.xml, CAMT.053 de exemplo, 1 movimento de -0,50 €). Eliminar o extrato recusado por clique. O ícone de remover na linha do anexo tira a linha da ficha sem aviso e o ficheiro continua guardado (o anexo mantém a data e o registo de importações mantém a sua cópia): defeito no relatório LOTE_V13ACC. A regra de eliminação depois da data vem do módulo l10n_pt_arxi_bank e não se prova nesta demonstração. Revisto em v15-REV, base docs_demo_v15rev_test, master 00c68a6d8: ficheiro CAMT.053 sintético importado por clique com Contabilista; registo, Extratos, retirar o anexo, eliminar e reimportar por clique; capturas 01 e 02 refeitas. O defeito do ícone de remover foi corrigido no ACC-256; a frase antiga da nota acima já não se aplica. */}
+
+## Para que serve?
+
+Quando importa o ficheiro do banco, o Odoo guarda-o sozinho durante 10 anos e impede que seja apagado ou alterado. Não tem de fazer nada para isso começar. Este artigo mostra como confirmar que o ficheiro está guardado, até quando, e como o voltar a descarregar, por exemplo numa inspeção.
+
+Os extratos são documentos que justificam a contabilidade. O Código do IRC manda conservá-los durante 10 anos (CIRC, art. 123.º). <span className="fd-pending">Pendente de validação por contabilista certificado.</span>
+
+## Quando utilizar?
+
+- Quando o contabilista ou um inspetor pede o extrato original de um mês.
+- Quando quer confirmar até quando um ficheiro fica guardado.
+- Quando importou o ficheiro errado e quer saber o que fazer.
+- Não use para extratos que só tem em papel ou em PDF, sem os ter importado: o que fica aqui é o ficheiro importado. Guarde os outros no [arquivo digital](/administration/arquivo-digital).
+
+## Onde encontrar?
+
+- **Contabilidade › Reconciliar › Bancos e caixa › O que há para fazer com os bancos?** › **Listas de apoio** › **Registo de importações**: uma linha por cada ficheiro importado.
+- **Contabilidade › Reconciliar › Bancos e caixa › Extratos bancários**: uma linha por extrato, com o ficheiro em anexo na ficha.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. O **Auditor / ROC** também vê estes menus.
+- O extrato foi importado. Veja [como importar o extrato do banco](/accounting-pt/importar-extrato-bancario).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Reconciliar › Bancos e caixa › O que há para fazer com os bancos?**. Em **Listas de apoio**, carregue em **Registo de importações**.
+2. Abra a linha do ficheiro, por exemplo `extrato_banco_2026-10-31.xml`.
+3. Confirme a data em **Conservar até**. São 10 anos a contar do dia em que importou o ficheiro, não da data do extrato. No exemplo, um extrato de 31/10/2026 importado a 05/11/2026 fica guardado até 05/11/2036.
+   ![Registo de uma importação, com os botões Descarregar o ficheiro e Extratos, o nome do ficheiro e a data Conservar até 05/11/2036](/images/accounting-pt/conservar-os-extratos/01-registo-de-importacao.png)
+4. Para ter o ficheiro original, carregue em **Descarregar o ficheiro**.
+5. Para passar ao extrato, carregue em **Extratos** e abra a linha. Na ficha do extrato, o ficheiro aparece em anexo com a mesma data.
+   ![Anexo da ficha do extrato, com o nome do ficheiro, o extrato e a data Conservar até](/images/accounting-pt/conservar-os-extratos/02-anexo-do-extrato.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o **Registo de importações** é o mesmo (visto com um utilizador só com o perfil **Contabilista**): um extrato CAMT.053 importado por **Contabilidade › Lançar › Lançamentos › Importar** › **Importar extrato** deixou a linha com o nome do ficheiro, o **Hash do ficheiro (SHA-256)**, a data **Conservar até** a 10 anos do dia da importação e os botões **Descarregar o ficheiro** e **Extratos**.
+
+Muda a ficha do extrato, que é a do Enterprise: tem o separador **Statement Lines** (em inglês) e o botão **Voltar para provisório**, e não tem a lista do anexo com a data **Conservar até** do passo 5. O ficheiro está no clipe do fundo da ficha, em **Ficheiros**, com o nome e o tamanho. Para ver a data **Conservar até**, use a ficha do **Registo de importações** (passo 3). A lista **Extratos** tem também os botões **Novo** e **Enviar**, que são do Enterprise.
+
+{/* Nota interna (lote EE-05, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee05_test (cópia da odoo20_ee_test com EE_FASE=construir), 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0115. Contabilista: a base Enterprise não tinha nenhuma importação; importei por clique um CAMT.053 de exemplo (extrato_banco_2026-11-10.xml, diário Banco, IBAN do diário, 1 movimento de -0,50 € «IMPOSTO DO SELO S/ COMISSAO», saldo 1.000,00 → 999,50 €), fora dos números do artigo. Registo: CAMT.053 (ISO 20022), Linhas lidas 1, importadas 1, Conservar até 11/11/2036, «Este registo é a prova de uma importação…». Extratos de extrato_banco_2026-11-10.xml com Novo, Enviar e Importar extrato; ficha BNK1 Extrato 10/11/2026 do Enterprise (Statement Lines, Reconciliation Model em inglês); anexo no clipe (Ficheiros: extrato_banco_2026-11-10.xml, 1 KB). No assistente, com um ficheiro CAMT, aparece a faixa «Os ficheiros OFX, QIF e CAMT importam-se com o importador do Enterprise (botão Importar do diário bancário)…», mas a importação pelo fiscaldoo correu (ver o relatório). Ver reports/LOTE_EE-05.md. */}
+
+## Resultado esperado
+
+O **Registo de importações** tem uma linha por ficheiro, e cada ficha mostra o ficheiro e a data **Conservar até**. Este procedimento só consulta: não gera lançamentos.
+
+## Notas importantes
+
+- A lista só vê o que foi importado. Um extrato que nunca foi importado não aparece aqui, por isso uma lista completa não prova que os extratos de todos os meses estão guardados. Confira os meses.
+- O registo de cada importação nunca se pode editar nem eliminar, mesmo que o ficheiro estivesse errado.
+- O ficheiro importado também não se retira da ficha do extrato. O ícone de remover tira a linha do ecrã, mas ao guardar a alteração é recusada.
+- Depois da data **Conservar até**, só o administrador (ou quem tem o acesso extra **Administração fiscal**) pode eliminar o anexo do extrato. O ficheiro do registo de importação nunca se elimina. <span className="fd-pending">Pendente de validação no ecrã: a demonstração não tem ficheiros com mais de 10 anos.</span>
+
+## Problemas frequentes
+
+**Ao eliminar um extrato: «O ficheiro *extrato_banco_2026-10-31.xml* é um extrato bancário conservado como documento justificativo até *05/11/2036* (conservação legal de 10 anos, art. 123.º do CIRC) e não pode ser eliminado. O extrato a que pertence também não pode ser eliminado.»** A recusa é intencional e protege a prova. Carregue em **Fechar**. Não há nada a corrigir.
+
+**Ao guardar a ficha do extrato: «O ficheiro *extrato_banco_2026-10-31.xml* não pode ser retirado do extrato. Porquê: É o documento de suporte do extrato, conservado até *05/11/2036* (conservação legal de 10 anos, CIRC art. 123.º): tirá-lo da lista escondê-lo-ia, embora o ficheiro continue guardado. Como resolver: Mantenha o ficheiro no extrato. Se for o ficheiro errado, junte também o correto.»** Carregue em **Fechar** e descarte a alteração. A linha volta à ficha.
+
+**Importei o ficheiro errado.** Não tente apagá-lo: importe o ficheiro certo. O registo do ficheiro errado fica, como prova do que aconteceu. Se o ficheiro errado criou um extrato com movimentos que não existem, fale com o contabilista certificado antes de reconciliar esses movimentos.
+
+**Ao voltar a importar um ficheiro: «Este ficheiro já foi importado neste diário em *05/11/2026 10:36:06* por *perfil* (*extrato_banco_2026-10-31.xml (Banco)*): importá-lo outra vez é recusado, a menos que marque “Importar mesmo assim” e escreva a justificação.»** O ficheiro já está guardado e não precisa de o importar outra vez. Abra o **Registo de importações** para o descarregar.
+
+**A ficha do extrato não mostra o anexo.** O extrato não veio de um ficheiro. Procure o ficheiro no **Registo de importações**. Se o extrato veio de um ficheiro, a linha está lá.

@@ -1,0 +1,93 @@
+---
+id: motivo-de-isencao-em-falta
+slug: /troubleshooting/motivo-de-isencao-em-falta
+title: A linha não tem taxa de IVA, ou o imposto a 0 % não se guarda sem motivo de isenção
+sidebar_label: Linha sem IVA ou sem motivo de isenção
+description: Porque a fatura não se confirma quando uma linha não tem taxa de IVA, porque um imposto a 0 % não se guarda sem motivo de isenção, de onde vem o motivo e como o Contabilista certificado o indica no imposto.
+keywords: [não tem taxa de IVA, nao tem taxa de iva, Escolha uma taxa de IVA, Há campos obrigatórios por preencher, motivo de isenção, motivo de isencao, isenção de IVA, isencao de iva, IVA 0%, iva a 0, taxa 0%, isento, M07, M05, M16, M40, M99, não tem taxa de IVA, nao tem taxa de iva, linha sem IVA, linha sem imposto, AT recusa a fatura, sem motivo de isenção, artigo 9.º do CIVA, menção de isenção, mencao de isencao, não sujeito, nao sujeito, autoliquidação]
+doc_id: DOC-0336
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master d88933a51)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/emitir-uma-fatura-certificada, fiscal-core/faturacao/artigos, accounting-pt/iva/declaracao-periodica-de-iva]
+---
+
+## Sintoma
+
+- Ao carregar em **Confirmar** numa fatura, abre-se **Operação inválida** a dizer que uma linha não tem taxa de IVA; ou
+- ao criar ou alterar um imposto de IVA a 0 %, o imposto não se guarda e o campo **Motivo de isenção** fica a vermelho.
+
+O fiscaldoo não deixa emitir uma fatura com uma linha sem taxa de IVA, nem guardar um imposto isento sem motivo de isenção. A recusa acontece no ecrã, antes de a fatura ser emitida: uma fatura assim não chega a ser numerada nem comunicada à AT.
+
+## Mensagem
+
+Numa fatura com uma linha a que se tirou o imposto (perfil **Administrativo**):
+
+> «A linha “*[KIT-CAN] Kit de canetas*” da fatura *FT D26/37* não tem taxa de IVA. Escolha uma taxa de IVA (ou uma taxa de IVA a 0% com motivo de isenção, ou uma taxa «não sujeito»).»
+
+![Janela Operação inválida: a linha Kit de canetas da fatura não tem taxa de IVA](/images/troubleshooting/motivo-de-isencao-em-falta/01-linha-sem-iva.png)
+
+A mensagem mostra o número que a fatura teria (`FT D26/37`), mas a fatura continua em **Rascunho** e esse número não foi usado.
+
+{/* Nota interna (DOCS-036, P-E1-02): a mensagem nomeia um número que a fatura recusada não tem; rever a frase quando o defeito for corrigido. */}
+
+Num imposto novo de IVA com o **Código de imposto PT** **Isento** e sem motivo (perfil **Contabilista certificado**), ao carregar em guardar aparece «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.» e o **Motivo de isenção** fica a vermelho.
+
+![Separador Portugal de um imposto novo: Tipo de imposto PT IVA, Código de imposto PT Isento, Região Continente e o campo Motivo de isenção vazio, a vermelho](/images/troubleshooting/motivo-de-isencao-em-falta/02-imposto-isento-sem-motivo.png)
+
+As duas recusas foram provocadas na base de demonstração. O imposto não ficou gravado.
+
+## Causas verificadas
+
+- **A linha não tem imposto.** Alguém tirou a taxa da coluna **Impostos** da linha, ou o artigo não tem imposto de venda. Toda a linha de uma fatura precisa de uma taxa de IVA: normal, intermédia, reduzida, a 0 % com motivo de isenção, ou «não sujeito».
+- **O motivo de isenção vem do imposto, não da fatura.** Na fatura escolhe-se só a taxa (por exemplo **0%**). O motivo está no separador **Portugal** do imposto e sai no PDF: na demonstração, a `FS D26/8` mostra «IVA 0% (1)» na linha e, por baixo, «(1) Isento artigo 9.º do CIVA».
+- **Um imposto a 0 % de IVA não se grava sem motivo.** Com o **Código de imposto PT** **Isento**, o **Motivo de isenção** é obrigatório.
+
+Os impostos a 0 % que vêm com a empresa de demonstração têm todos o motivo preenchido, por exemplo **0%** com «M07 — Isento artigo 9.º do CIVA», **0% EX** com «M05 — Isento artigo 14.º do CIVA», **0% EU** com «M16 — Isento artigo 14.º do RITI» e **0% NS** com «M99 — Não sujeito ou não tributado».
+
+## O que confirmar
+
+1. Na linha da fatura, a coluna **Impostos**: está vazia, ou tem a taxa certa?
+2. Se a operação é mesmo isenta ou não sujeita, e porquê (o artigo da lei). A escolha é do contabilista certificado.
+3. Se o artigo tem o imposto de venda certo na ficha: [Como criar um artigo com os dados fiscais certos](/fiscal-core/artigos).
+
+## Como resolver
+
+### A linha está sem imposto (perfil Administrativo ou Contabilista)
+
+1. Carregue em **Fechar**. A fatura continua em **Rascunho**.
+2. Na linha, carregue na coluna **Impostos** e escolha a taxa. Se a venda tem IVA, é a taxa normal, intermédia ou reduzida. Se é isenta ou não sujeita, escolha a taxa a 0 % que o contabilista certificado indicou para esse caso. A lista mostra só o nome da taxa (por exemplo **0%** ou **0% EX**); o motivo vê-se no imposto e no PDF.
+3. Carregue em **Confirmar**.
+
+Se a taxa em falta vem do artigo, peça para corrigir a ficha do artigo, senão o erro repete-se na próxima fatura.
+
+### Falta um imposto a 0 % com o motivo certo (perfil Contabilista certificado)
+
+O Contabilista certificado cria ou corrige o imposto em **Contabilidade › Configurar › Geral › Impostos** (os perfis **Administrativo** e **Contabilista** não têm este menu). No separador **Portugal**, com o **Tipo de imposto PT** **IVA** e o **Código de imposto PT** **Isento**, escolha o **Motivo de isenção** na lista. A lista tem 33 motivos da tabela da AT, de «M01 — Artigo 16.º n.º 6 do CIVA» a «M99 — Não sujeito ou não tributado».
+
+Os outros campos obrigatórios do separador são o **Tipo de imposto PT** e a **Região do imposto PT** (**Continente**, **Açores**, **Madeira**). As opções do **Código de imposto PT** são **Taxa normal**, **Taxa intermédia**, **Taxa reduzida**, **Isento**, **Outras** e **Não sujeito**.
+
+<HelpCallout type="risco" title="O motivo decide a declaração">
+O motivo de isenção sai na fatura e no SAF-T e decide em que campo da declaração periódica de IVA a operação entra. Um motivo errado não se corrige depois na fatura emitida: corrige-se com nota de crédito e fatura nova. Escolha o motivo com o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: o motivo de cada tipo de operação (CIVA, art. 36.º, n.º 5, alínea e)) e o campo da declaração que cada motivo alimenta.</span>
+</HelpCallout>
+
+## Resultado esperado
+
+- A fatura confirma-se e, no PDF, cada linha a 0 % tem uma chamada (1), (2)… com o motivo de isenção por baixo do quadro do IVA.
+- O imposto novo fica gravado com o motivo e aparece na coluna **Impostos** das linhas.
+
+## Quando contactar o suporte
+
+- A AT recusou uma fatura já emitida por falta do motivo de isenção (o fiscaldoo não deveria deixar emiti-la; na demonstração isso não se consegue provocar).
+- Um imposto a 0 % que já foi usado em faturas não tem motivo, ou tem o motivo errado.
+- O motivo de que precisa não está na lista.
+
+## Informação a enviar
+
+- O número da fatura (ou «rascunho») e a empresa.
+- O texto completo da mensagem, copiado do ecrã.
+- O nome do imposto da linha e o motivo que esperava.
+- O perfil com que entrou.

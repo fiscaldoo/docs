@@ -1,0 +1,91 @@
+---
+id: fatura-eletronica-documento-nao-aceite
+slug: /troubleshooting/fatura-eletronica-documento-nao-aceite
+title: A fatura eletrónica não se aplica a este documento
+sidebar_label: Fatura eletrónica não se aplica
+description: Porque falta o botão Enviar ao FE-AP e o que significam as recusas de uma nota de débito sem documento, de um cliente sem NIF ou de uma empresa fora de Portugal.
+keywords: [fatura eletrónica, fatura eletronica, não se aplica, Enviar ao FE-AP, botão não aparece, nota de débito, nota de debito, documento retificado, cliente sem NIF, país fiscal, Assinar PDF, CIUS-PT]
+doc_id: DOC-0373
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/faturacao-e-at/fatura-eletronica-nao-gerada, troubleshooting/faturacao-e-at/fatura-eletronica-valores-das-linhas, fiscal-core/faturacao-eletronica/fatura-edi]
+---
+
+## Sintoma
+
+O botão **Enviar ao FE-AP** não aparece no documento, ou o documento é recusado por não poder ter fatura eletrónica.
+
+## Mensagem
+
+Ao carregar em **Enviar ao FE-AP** numa fatura a um cliente sem NIF:
+
+> «Nada foi enviado ao portal FE-AP, por causa destes documentos:
+> - O cliente de «FT D26/44» não tem NIF: a fatura eletrónica ao Estado exige-o.»
+
+Ao carregar em **Confirmar** numa nota de débito sem o documento que complementa. A recusa surge ao emitir, antes de haver fatura eletrónica:
+
+> «A nota de crédito/débito “Rascunho de fatura” não diz que documento retifica. Porquê: A lei exige que uma nota de crédito ou de débito refira o documento que retifica (CIVA art. 36.º n.º 6). Como resolver: Preencha “Documento retificado” (ou, para um documento emitido por outro software, o seu número) antes de publicar.»
+
+![Janela Operação inválida ao confirmar uma nota de débito sem documento retificado](/images/troubleshooting/fatura-eletronica-documento-nao-aceite/01-nota-de-debito-sem-documento.png)
+
+Depois de preencher esse campo, a recusa seguinte pede o motivo:
+
+> «A nota de crédito/débito “Rascunho de fatura” não diz porque foi emitida. Porquê: O motivo da retificação vai para o ficheiro fiscal (no máximo 50 carateres). Como resolver: Preencha “Motivo da retificação” antes de publicar.»
+
+## Causas verificadas
+
+Na maioria dos casos não há mensagem: o botão não aparece. Foi isto que o ecrã mostrou:
+
+| Documento | **Enviar ao FE-AP** | Porquê |
+|---|---|---|
+| Fatura de venda emitida | Aparece | É o caso normal |
+| Fatura em rascunho | Não aparece | Só uma fatura emitida se envia. Só tem **Confirmar**, **Cancelar**, **Pré-visualizar lançamento** e **Deduzir adiantamento** |
+| Fatura de fornecedor | Não aparece | Só se envia uma fatura de venda ou uma nota de crédito de venda |
+| Fatura já aceite | Desaparece | Um documento aceite não se envia outra vez. Fica a ligação **Histórico FE-AP** |
+| Fatura de uma empresa com outro país fiscal (testada com Espanha) | Não aparece, nem **Assinar PDF** | Estes passos são só para empresas com Portugal como país fiscal |
+| Qualquer fatura, com o perfil **Contabilista** ou **Administrativo** | Não aparece | O envio é do **Contabilista certificado** e do **Administrador** |
+
+Uma fatura com cliente sem NIF tem o botão, mas é recusada, como na **Mensagem**.
+
+## O que confirmar
+
+1. O tipo do documento e o estado, no canto superior direito.
+2. A empresa do documento e o país fiscal dela.
+3. O perfil com que entrou.
+4. Na nota de débito, se indicou o documento retificado e o motivo da retificação.
+
+## Como resolver
+
+- **Rascunho:** carregue em **Confirmar** e veja se o botão aparece. Os dados em falta têm artigo próprio: [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada).
+- **Cliente sem NIF:** este envio não se aplica enquanto o cliente não tiver NIF. Uma fatura emitida não se altera; se o NIF do cliente existia, veja [Emiti uma fatura com os dados do cliente errados](/troubleshooting/dados-do-cliente-errados-numa-fatura).
+- **Nota de débito sem documento:** preencha **Documento retificado** e **Motivo da retificação** e carregue outra vez em **Confirmar**. No teste, a nota de débito ficou emitida e o botão **Enviar ao FE-AP** apareceu.
+- **Perfil sem o botão:** peça o envio a quem tenha o perfil **Contabilista certificado**.
+- **Empresa com outro país fiscal e fatura de fornecedor:** este envio não se aplica. Não há nada a corrigir.
+
+## Se tentar por outro caminho
+
+Estas recusas não aparecem nos botões da fatura, porque o botão não existe nesse caso.
+
+Tentando por integração, numa empresa com Espanha como país fiscal:
+
+- «FT/2026/00001 pertence a uma empresa cujo país fiscal não é Portugal: a assinatura portuguesa da fatura eletrónica não se aplica.»
+
+<span className="fd-pending">Não provocada no ecrã: «A nota de débito «...» não refere o documento que complementa. A fatura eletrónica ao Estado exige essa referência: crie a nota de débito a partir do documento original.» O produto recusa antes a nota de débito sem documento, ao emitir, por isso esta frase não chega a aparecer.</span>
+
+## Resultado esperado
+
+Num documento a que o envio se aplica, o botão **Enviar ao FE-AP** aparece. O que acontece depois está em [A fatura eletrónica não pode ser gerada](/troubleshooting/fatura-eletronica-nao-gerada). **O envio ao FE-AP é, aqui, simulado: nada sai do computador, mesmo que o estado diga Aceite.**
+
+## Quando contactar o suporte
+
+Se o botão não aparecer numa fatura de venda emitida, de uma empresa com Portugal como país fiscal, com o perfil **Contabilista certificado**, e a fatura não estiver aceite, [peça suporte](/troubleshooting/como-pedir-suporte).
+
+## Informação a enviar
+
+- O número do documento e a empresa.
+- O perfil com que entrou.
+- O texto da mensagem, se houver.

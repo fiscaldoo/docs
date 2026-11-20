@@ -1,0 +1,122 @@
+---
+id: vinculo-a-seguranca-social
+slug: /payroll-pt/vinculo-a-seguranca-social
+title: Como comunicar a admissão, a cessação ou alterações à Segurança Social
+sidebar_label: Admissão e cessação na Segurança Social
+sidebar_position: 4
+description: Preparar no fiscaldoo a comunicação da admissão, da cessação, da suspensão ou de uma alteração do contrato à Segurança Social, conferir o prazo e registar a entrega feita na Segurança Social Direta.
+keywords: [vínculo laboral, vinculo laboral, admissão Segurança Social, admissao seguranca social, comunicar admissão, comunicar admissao, cessação Segurança Social, cessacao seguranca social, fim de contrato, suspensão do contrato, suspensao do contrato, Segurança Social Direta, seguranca social direta, NISS, comprovativo de admissão]
+doc_id: DOC-0227
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 25deacc94)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/declarar/declaracao-a-seguranca-social, payroll-pt/declarar/agenda-das-obrigacoes-sociais]
+---
+
+## Para que serve?
+
+A empresa tem de comunicar à Segurança Social a entrada de cada trabalhador, o fim do contrato, as suspensões e algumas alterações do contrato. O fiscaldoo prepara cada comunicação com os dados do trabalhador e do contrato, calcula o prazo, avisa quando está fora de prazo e guarda o registo da entrega.
+
+O fiscaldoo não envia nada à Segurança Social. A comunicação faz-se na Segurança Social Direta; no fiscaldoo regista-se que foi feita e o que a Segurança Social respondeu.
+
+## Quando utilizar?
+
+- **Admissão:** antes de o trabalhador começar.
+- **Cessação:** depois de confirmar a cessação do contrato. A comunicação aparece sozinha.
+- **Suspensão e alterações:** aparecem sozinhas quando aprova uma ausência longa ou altera a retribuição, o horário ou o tipo de contrato de um trabalhador cuja admissão já foi comunicada.
+
+## Onde encontrar?
+
+**Salários › Preparar › O que há para fazer este mês?** › bloco **Listas de apoio** › **Vínculo laboral à Segurança Social**
+
+A lista abre com o filtro **A comunicar**. O filtro **Fora de prazo** mostra só as atrasadas.
+
+## Antes de começar
+
+- O seu perfil é **Processador de salários**, com ou sem o acesso extra **Administrador de Salários**. Com ou sem esse acesso, faz todos os passos.
+- O trabalhador tem o **Número da Segurança Social (NISS)** na ficha. Na admissão, escolha a **Versão de contrato** e confirme a **Remuneração permanente**: sem elas, a comunicação não se valida.
+
+## Como utilizar
+
+### Comunicar a cessação de um contrato
+
+<StepByStep>
+
+1. Confirme a cessação em **Salários › Preparar › Trabalhadores e contratos › Cessações** (no exemplo, Hugo Miguel Santos, **Caducidade — termo certo (arts. 343.º a), 344.º)**, último dia 30/11/2026). Em **Novo**, além da **Modalidade** e do último dia, preencha o **Iniciador** (por exemplo **Entidade empregadora**) e a **Data do aviso**: sem eles, **Confirmar** é recusado com «Há campos obrigatórios por preencher». Ao carregar em **Confirmar**, a comunicação da cessação é criada.
+2. Abra **Vínculo laboral à Segurança Social**. A lista mostra a linha **Cessação**, com o **Trabalhador**, a **Data do facto**, o **Prazo**, os **Dias de atraso** e o **Estado** «Rascunho».
+   ![Lista Vínculo laboral à Segurança Social com o filtro A comunicar: cessação de Hugo Miguel Santos, data do facto 30/11/2026, prazo 10/12/2026, 0 dias de atraso, Rascunho](/images/payroll-pt/vinculo-a-seguranca-social/01-lista.png)
+3. Abra a linha. Confira o **Motivo** (vem da cessação), o **NISS**, o **Prazo** e a **Base legal**.
+4. Carregue em **Verificar e validar**. O fiscaldoo confere os dados e a comunicação passa a **Dados validados**.
+5. Faça a comunicação na Segurança Social Direta, com os dados do bloco **Conteúdo da comunicação**.
+6. No fiscaldoo, carregue em **Entregar (simulação)** e, na janela «Nada é enviado à Segurança Social: isto só gera os dados e uma referência simulada.», em **Confirmar**. A comunicação passa a **Entregue (simulação)**, com **Entregue em** e uma **Referência simulada** (por exemplo `SIM-SSLINK-1`).
+7. Quando a Segurança Social Direta confirmar, carregue em **Registada pela Segurança Social**. Se recusar, carregue em **Rejeitada pela Segurança Social** e corrija os dados antes de voltar a comunicar.
+   ![Comunicação da cessação de Hugo Miguel Santos Registada, com o motivo, o NISS, o prazo 10/12/2026, a base legal, Entregue em 01/11/2026, a referência simulada e o conteúdo da comunicação](/images/payroll-pt/vinculo-a-seguranca-social/02-cessacao-registada.png)
+
+</StepByStep>
+
+### Comunicar uma admissão
+
+<StepByStep>
+
+1. Em **Vínculo laboral à Segurança Social**, carregue em **Novo**. A **Comunicação** vem como **Admissão**.
+2. Escolha o **Trabalhador**. O **NISS** vem da ficha.
+3. Escolha a **Versão de contrato** e confirme a **Data do facto** (o primeiro dia de trabalho). A versão preenche o **Tipo de contrato** (por exemplo **Sem termo**), mas a **Remuneração permanente** não vem do contrato: escreva-a (o conteúdo da comunicação mostra-a depois, por exemplo «Remuneração permanente: 800,00»). Marque **Caso especial (24 horas)** só se o tipo de contrato o pedir.
+4. Siga os passos 4 a 7 da cessação.
+5. Junte em **Comprovativo para o trabalhador** (**Escolher ficheiro**) a cópia da comunicação que vai dar ao trabalhador; a data em que lha deu fica em **Comprovativo entregue em**. O campo é opcional e existe desde o **Rascunho**: a comunicação regista-se sem ele.
+
+</StepByStep>
+
+A admissão de Gabriela Sousa Reis foi levada até **Registada** (referência simulada `SIM-SSLINK-1`), com a versão do contrato escolhida e a remuneração permanente escrita (800); sem a versão ou sem a remuneração, **Verificar e validar** é recusado (ver «Problemas frequentes»).
+
+**Exemplo.** O contrato a termo certo de Hugo Miguel Santos termina a 30/11/2026. Confirmada a cessação a 01/11/2026, a comunicação aparece com a **Data do facto** 30/11/2026 e o **Prazo** 10/12/2026, e a **Base legal** diz: «gov.pt, serviço «Entidade empregadora — comunicação da cessação da atividade de trabalhador por conta de outrem»: até ao dia 10 do mês seguinte (CRC art. 32.º); suspensão e alterações: mesmo dia, NÃO confirmado (a confirmar pelo contabilista certificado)». A admissão de uma trabalhadora que começou a 01/03/2026 tem o **Prazo** 01/03/2026 e a **Base legal** «Decreto-Lei n.º 127/2025, art. 29.º/2 a) do CRC: a admissão é comunicada até ao início da execução do contrato». <span className="fd-pending">Pendente de validação por contabilista certificado: prazos da admissão (até ao início do contrato, ou 24 horas seguintes nos casos especiais), da cessação (dia 10 do mês seguinte), da suspensão e das alterações (o próprio fiscaldoo diz «NÃO confirmado»).</span>
+
+Comunicar o vínculo não gera lançamentos contabilísticos.
+
+## No Enterprise
+
+No Odoo Enterprise, a admissão, a cessação e as alterações comunicam-se à Segurança Social da mesma maneira: com o perfil **Processador de salários**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
+
+{/* Nota interna (lote EE-06, DOCS-073 #4142, DEC-1794, master ce51f2d47, 10/11/2026): conferido numa cópia Enterprise da demonstração (docs_ee_ee06_test, computador 2) com utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): Processador de salários em Salários › Preparar › Trabalhadores e contratos › Cessações e em O que há para fazer este mês?. Menus e vistas comparados, perfil a perfil, com uma cópia Community do mesmo master (docs_demo_ee06_test). Ver reports/LOTE_EE-06.md. */}
+
+## Resultado esperado
+
+- A comunicação fica **Registada**, com **Entregue em**, a **Referência simulada** e **Resposta em**, e sai do filtro **A comunicar**.
+
+## Notas importantes
+
+- **Fora de prazo.** Uma comunicação atrasada mostra, por exemplo, «Fora de prazo há 245 dia(s): a admissão devia ter sido comunicada até 01/03/2026. Sem ela presume-se que o trabalho começou no primeiro dia do terceiro mês anterior à verificação (CRC art. 29.º/4) e a falta é uma contraordenação; o valor da coima não é indicado aqui. Comunique-a agora e guarde o comprovativo.» Comunique na mesma, e cedo.
+- **Uma comunicação entregue não se altera.** A partir de **Entregue (simulação)**, a ficha diz «Este registo já está fechado…». O que se pode fazer depois depende do tipo de comunicação:
+  - **Admissão:** **Anular** só é possível no mês em que o facto começou (a **Data do facto**). Visto com um trabalhador cujo contrato começa a 02/11/2026, em novembro: a admissão levada até **Registada** (referência `SIM-SSLINK-3`), com **Anular** e depois **Confirmar** na pergunta «Anular esta comunicação?», passa a **Anulada**. Uma anulada não se anula outra vez: «já está anulada. Porquê: uma comunicação anulada é definitiva e não se anula duas vezes. Como corrigir: confira a lista e, se o vínculo ainda tem de ser comunicado, crie uma nova comunicação.» Uma admissão de um mês anterior (a de Gabriela Sousa Reis, de 01/03/2026, **Registada**) não se anula: a janela diz «a anulação de um vínculo já comunicado só é possível no mês em que começou (03/2026)». Uma admissão ainda em **Rascunho** anula-se em qualquer altura.
+    ![Admissão de Ricardo Novo Admitido, com data do facto 02/11/2026, no estado Anulada](/images/payroll-pt/vinculo-a-seguranca-social/05-admissao-anulada.png)
+  - **Cessação entregue:** **Anular** é recusado, mesmo no mês do facto. Visto com a cessação de Hugo Miguel Santos, **Data do facto** 30/11/2026 e comunicação **Registada** em 01/11/2026: depois de **Confirmar** na pergunta «Anular esta comunicação?», a janela diz «não pode ser anulada aqui. O que aconteceu: a anulação de um vínculo já comunicado só é possível no mês em que começou (11/2026). Como resolver: dirija-se a um balcão da Segurança Social e peça a correção; registe a resposta na nota.». A correção pede-se no balcão da Segurança Social e a resposta regista-se na **Nota** da comunicação.
+    ![Janela Operação inválida: a cessação de Hugo Miguel Santos não pode ser anulada aqui; dirija-se a um balcão da Segurança Social](/images/payroll-pt/vinculo-a-seguranca-social/03-anular-cessacao-recusada.png)
+  - **Suspensão e alterações entregues:** são recusadas da mesma maneira, mesmo no mês do facto. Visto em novembro com uma suspensão (02/11/2026 a 30/11/2026) e com uma alteração da remuneração permanente, ambas **Registadas**: «não pode ser anulada aqui. O que aconteceu: a anulação de um vínculo já comunicado só é possível no mês em que começou (11/2026). Como resolver: dirija-se a um balcão da Segurança Social e peça a correção; registe a resposta na nota.» Só a admissão se anula no mês em que começou.
+  - **Eliminar** é recusado em todas («Um registo fechado não se apaga… A tentativa ficou registada na auditoria»).
+  - **Duplicar** cria um segundo rascunho da mesma cessação: não o use, porque ficaria duplicada a comunicação de um facto que já está comunicado.
+  - **Reabrir** a cessação, em **Cessações**: é recusado quando a comunicação já foi entregue. A janela diz «A cessação de «Hugo Miguel Santos» não se reabre: a comunicação à Segurança Social já foi entregue (Cessação / Hugo Miguel Santos / 30/11/2026). O que aconteceu: confirmá-la de novo criaria uma segunda comunicação para o mesmo facto. Como corrigir: se a comunicação está errada, dirija-se a um balcão da Segurança Social, peça a correção e registe a resposta na nota da comunicação.»
+    ![Janela Operação inválida: a cessação de Hugo Miguel Santos não se reabre, porque a comunicação à Segurança Social já foi entregue](/images/payroll-pt/vinculo-a-seguranca-social/04-reabrir-cessacao-recusado.png)
+- **O que a lista não vê.** Só tem as comunicações que nasceram no fiscaldoo: as feitas na Segurança Social Direta sem passar por aqui não aparecem. A admissão nunca aparece sozinha: crie-a com **Novo** para cada trabalhador que entra.
+- A declaração mensal das remunerações à Segurança Social é outra obrigação: ver [Como enviar a declaração de remunerações à Segurança Social](/payroll-pt/declaracao-a-seguranca-social).
+
+## Problemas frequentes
+
+### «A comunicação … não pode ser validada»
+
+- **Sintoma:** «Operação inválida. A comunicação «Admissão / Gabriela Sousa Reis / 01/03/2026» não pode ser validada. O que aconteceu: a versão do contrato não está escolhida; falta a remuneração permanente. Como resolver: corrija estes dados e valide de novo.»
+- **Causa:** faltam dados obrigatórios da comunicação; a mensagem diz quais.
+- **O que fazer:** carregue em **Fechar**, preencha o que a mensagem pede e carregue de novo em **Verificar e validar**.
+
+### Não aparece a comunicação da cessação
+
+- **Causa:** a cessação ainda está em **Rascunho** em **Cessações**, ou a lista tem o filtro **A comunicar** e a comunicação já foi registada.
+- **O que fazer:** confirme a cessação; para ver todas, tire o filtro **A comunicar** da pesquisa.
+
+### Ao carregar em Verificar e validar aparece «Há campos obrigatórios por preencher»
+
+- **Causa:** falta a **Data do facto**.
+- **O que fazer:** escolha a data e carregue de novo em **Verificar e validar**.
+
+{/* Nota interna (cor5, NC-1 da AUDITORIA_COR4, 01/11): refeito no master b1c81051 (comboio 128, PAY-067 em master) na base docs_demo_cor5_test, com o Processador de Salários (no ecrã: a cessação de Hugo até Registada, Anular e Reabrir recusados; as restantes comunicações foram criadas e entregues por chamada ao servidor com o mesmo perfil, para obter os resultados). Criados na base: trabalhador «Ricardo Novo Admitido» (contrato a 02/11/2026, tipo de contrato Sem termo escrito pelo RH, NISS escrito pelo Processador) com a admissão registada e depois anulada; uma suspensão e uma alteração da remuneração permanente da Eva Cristina Rocha, ambas Registadas; a admissão de Gabriela Sousa Reis, Registada; uma admissão de Gabriela em rascunho, anulada, para ler o aviso de atraso e o erro de validação. Já não se aplica: o Reabrir aceite, os meses em ISO («2026-11») e o valor com ponto decimal. A confirmar pelo executor: o texto da janela de Anular diz «só é possível no mês em que começou» também para a cessação, a suspensão e as alterações, onde nunca é possível (LOW, já assinalado no PAY-067). */}

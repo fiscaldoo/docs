@@ -1,0 +1,121 @@
+---
+id: modelo-22-nao-e-gerado
+slug: /troubleshooting/modelo-22-nao-e-gerado
+title: "O Modelo 22 não pode ser gerado"
+sidebar_label: Modelo 22 não é gerado
+description: O que quer dizer cada recusa ao gravar ou exportar o Modelo 22 (dimensão da empresa, propostas do Quadro 07 por confirmar, taxa de IRC em falta, datas e códigos) e como a resolver.
+keywords: [modelo 22, modelo 22 não gera, modelo 22 nao gera, exportar modelo 22, xml modelo 22, irc, propostas quadro 07, dimensão da empresa, dimensao da empresa, pme, campo 351, coleta, derrama municipal, código do concelho, codigo do concelho, serviço de finanças, servico de financas]
+doc_id: DOC-0352
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master f684b47f1)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/declaracoes/modelo-22, troubleshooting/contabilidade-e-iva/fecho-do-exercicio-bloqueado]
+---
+
+## Sintoma
+
+Em **Contabilidade › Declarar › IRC › Declaração de IRC (Modelo 22)**, o **Exportar XML (formato da AT)** não descarrega o ficheiro e abre uma janela **Operação inválida**. Ou a declaração não se grava e abre **Erro de Validação**. Ou a lista abre, mas a declaração não.
+
+O programa nunca envia nada à AT: a exportação só gera o ficheiro para descarregar.
+
+## Mensagem
+
+{/* Exceção CC campos 1, 351 e 701: texto copiado do ecrã, dentro das mensagens do produto, e a nota da declaração de 2019 diz só o que se viu; a regra fiscal do campo 351 tem a marca do contabilista certificado em «Causas verificadas». */}
+
+As mensagens abaixo foram provocadas no ecrã, na declaração de 2025 da empresa de demonstração e numa declaração nova de 2019.
+
+**Ao abrir a declaração, com um perfil sem acesso** (janela **Sem acesso**):
+
+> «Não tem acesso a «Categoria da entidade por exercício (SNC)». Quem faz: «Contabilista certificado (assina, fecha períodos)» ou «Auditor / ROC». Quem atribui o perfil: o administrador do sistema (Definições › Utilizadores e empresas › Utilizadores). Peça-lhe o perfil de que precisa, ou peça a um utilizador com esse perfil que o faça.»
+
+**Ao exportar, sem a dimensão da empresa:**
+
+> «A Modelo 22 não pode ser exportada: a caixa «Pequena ou média empresa» está ligada mas a dimensão da empresa do Quadro 03-A está vazia, e a dimensão decide a taxa (347-A ou 347-B). Escolha a dimensão no separador «Dados do impresso» (use a proposta se estiver certa) ou desligue a caixa, e exporte de novo.»
+
+**Ao gravar, com a dimensão Não PME e a caixa ligada de novo:**
+
+> «A dimensão «Não PME» contradiz a caixa PME; desmarque a caixa ou escolha outra dimensão.»
+
+**Ao gravar, com a caixa Startup ligada e a dimensão Não PME:**
+
+> «Uma startup usa a taxa das PME do art. 87.º, n.º 2 do CIRC, reduzida pelo n.º 8; assinale também a caixa PME e grave de novo.»
+
+**Ao exportar, com propostas por confirmar.**
+
+> «O Modelo 22 não se pode exportar: há 1 proposta do Quadro 07 por confirmar (campos 719). Só o contabilista certificado confirma propostas: abra o separador «Correções fiscais» e confirme ou apague cada uma.» <span className="fd-pending">Pendente de validação por contabilista certificado: o campo 719 e as propostas do Quadro 07.</span>
+
+![Janela Operação inválida: há uma proposta do Quadro 07 por confirmar](/images/troubleshooting/modelo-22-nao-e-gerado/02-propostas-por-confirmar.png)
+
+**Ao exportar, sem taxa de IRC para o período:**
+
+> «A Modelo 22 não pode ser exportada porque a coleta (campo 351) não foi calculada, por isso carregue a taxa nas regras legais ou escreva a coleta à mão no campo 351 e exporte de novo. Motivo: Não há taxa de IRC em vigor para o período iniciado em 01/01/2019 (CIRC art. 87.º), por isso o imposto não foi calculado. Carregue a taxa nas regras legais ou escreva o imposto à mão no campo 351.»
+
+**Ao gravar:**
+
+> «O período de tributação começa depois de acabar. Corrija as datas do Modelo 22.»
+
+> «Serviço de finanças da sede (Quadro 02, campo 1) tem o tamanho errado: tem de ter exatamente 4 algarismos; corrija-o e grave de novo.»
+
+> ««ABC» não é um código de concelho. Use os quatro algarismos da tabela da Autoridade Tributária (por exemplo, 1106 para Lisboa).»
+
+**Avisos que aparecem na declaração e não impedem a exportação:**
+
+> «O exercício não está fechado: o campo 701 é provisório e muda com qualquer novo lançamento. Feche o exercício antes de entregar o Modelo 22.»
+
+> «Não há Anexo A da IES gerado para o período que termina em 31/12/2025, por isso o campo 701 não foi conferido. Gere o Anexo A nas declarações IES e abra este Modelo 22 de novo.»
+
+> «A derrama municipal não foi calculada. A empresa «Empresa Demonstração, Lda» não tem código de concelho, por isso o programa não sabe que taxa de concelho usar. Preencha o código do concelho da sede (quatro algarismos, por exemplo 1106 para Lisboa) na ficha da empresa (peça ao administrador do sistema se não a puder editar), ou acrescente uma linha por concelho no separador Derramas.»
+
+<span className="fd-pending">Pendente de validação no ecrã: o bloqueio por anexos que o programa não produz e o bloqueio por falta do esquema da AT do ano. Na demonstração não se chegou a nenhum deles: a declaração de 2019, com o campo 351 escrito à mão, exportou sem janela. Estes dois textos não se citam aqui.</span>
+
+## Causas verificadas
+
+| Causa | Como se reconhece |
+| --- | --- |
+| O perfil não pode abrir a declaração | Janela **Sem acesso** ao clicar na linha da lista. Hoje, o perfil **Contabilista** vê a lista, mas não abre a declaração |
+| A dimensão da empresa está vazia | **Pequena ou média empresa** ligada e **Dimensão da empresa (Quadro 03-A)** sem valor |
+| A dimensão e as caixas contradizem-se | Dimensão **Não PME** com a caixa **Pequena ou média empresa** ligada de novo, ou com a caixa **Startup** ligada |
+| Há propostas do Quadro 07 por confirmar | Depois de **Propose adjustments from the books**, a exportação recusa até confirmar ou apagar cada proposta |
+| Não há taxa de IRC para o início do período | O período começa num ano sem taxa nas regras legais (no exemplo, 2019). <span className="fd-pending">Pendente de validação por contabilista certificado: a coleta escrita à mão no campo 351.</span> |
+| Datas ou códigos errados | Período invertido, serviço de finanças sem 4 algarismos, concelho sem 4 algarismos |
+
+## O que confirmar
+
+1. O perfil com que entrou. A mensagem acima diz quem chega à categoria da entidade: os perfis **Contabilista certificado** e **Auditor / ROC**.
+2. Em **Dados do impresso (Quadros 02 a 05, 10 e 11)**: a caixa **Pequena ou média empresa** e a **Dimensão da empresa (Quadro 03-A)**.
+3. Em **Correções fiscais**: as linhas ainda por confirmar.
+4. As datas do período.
+5. Em **Derramas**: as linhas e os avisos.
+
+## Como resolver
+
+1. **Sem acesso.** Peça ao administrador do sistema o perfil, ou peça a quem o tem que exporte a declaração.
+2. **Dimensão.** Abra **Dados do impresso (Quadros 02 a 05, 10 e 11)**, escolha a **Dimensão da empresa (Quadro 03-A)** e grave. Ao escolher **Não PME**, a caixa **Pequena ou média empresa** desliga-se sozinha e a caixa **Startup** deixa de se ver. Se a **Startup** estava ligada, a gravação é recusada com a mensagem acima. A dimensão decide a taxa: não a escolha só para desbloquear a exportação.
+3. **Propostas.** Abra **Correções fiscais** e reveja cada proposta. Hoje, a proposta e o botão **Confirm proposals** só aparecem depois de voltar a abrir a declaração. Se estiver certa, carregue em **Confirm proposals**. Se não estiver, apague a linha. Confirmar muda o lucro tributável: no exemplo, a proposta de 0,04 € no campo 719 passou-o de 32.104,16 € para 32.104,20 €. <span className="fd-pending">Pendente de validação por contabilista certificado: o que cada campo do Quadro 07 aceita.</span>
+4. **Taxa de IRC.** Peça ao administrador do sistema a taxa do ano nas regras legais, ou escreva a coleta no campo 351 em **Imposto e deduções (Quadro 10)**.
+5. **Datas e códigos.** Corrija o campo que a mensagem nomeia.
+6. **Derrama municipal.** Preencha o código do concelho na ficha da empresa, ou acrescente uma linha por concelho em **Derramas**.
+
+## Resultado esperado
+
+- **Exportar XML (formato da AT)** descarrega o ficheiro, sem janela. No exemplo, `Modelo22_<NIF da empresa>_2025.xml`.
+- No exemplo, com a dimensão **Pequena empresa**: lucro tributável de 32.104,20 € e imposto de 5.136,67 € (16 % da matéria coletável). <span className="fd-pending">Pendente de validação por contabilista certificado: a taxa aplicada.</span>
+- Para o resto do preenchimento, siga [Como preparar a declaração de IRC (Modelo 22)](/accounting-pt/modelo-22). Se o exercício não fecha, siga [O fecho do mês ou do exercício está bloqueado por verificações pendentes](/troubleshooting/fecho-do-exercicio-bloqueado).
+
+## Quando contactar o suporte
+
+- A mesma mensagem continua depois de corrigir o que ela pede.
+- Aparece uma mensagem que pede ao suporte para corrigir a exportação ou completar um anexo.
+- O ficheiro é recusado pela AT, apesar de ter sido gerado sem erro.
+
+## Informação a enviar
+
+- A empresa, o período e o regime da declaração.
+- A **Dimensão da empresa (Quadro 03-A)** e o estado da caixa **Pequena ou média empresa**.
+- O texto completo da mensagem, copiado do ecrã.
+- O perfil com que entrou.
+
+{/* Nota interna (v23-T, DOC-0352, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

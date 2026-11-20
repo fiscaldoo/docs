@@ -1,0 +1,82 @@
+---
+id: nao-vejo-um-menu
+slug: /troubleshooting/nao-vejo-um-menu
+title: Não vejo um menu ou um botão
+sidebar_label: Não vejo um menu ou um botão
+sidebar_position: 1
+description: Porque um menu, uma aplicação ou um botão que os colegas têm não lhe aparece, como confirmar em «Porque não vejo…?» e a quem pedir.
+keywords: [não vejo, nao vejo, menu escondido, botão escondido, botao escondido, falta um menu, não aparece, nao aparece, porque não vejo, porque nao vejo, nenhum menu encontrado, pesquisar menu, aplicação não aparece, aplicacao nao aparece, perfil, sem botão, sem botao]
+doc_id: DOC-0366
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master a67618a71)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/utilizadores-e-permissoes/perfis-e-permissoes, troubleshooting/acesso-e-dados/sem-permissao, getting-started/primeira-configuracao/ativar-as-aplicacoes]
+---
+
+## Sintoma
+
+Um colega ou um artigo indica um menu, uma aplicação ou um botão (por exemplo **Contabilidade**, **Registar submissão** ou **Confirmar**) e no seu ecrã ele não existe. Não aparece nenhuma mensagem.
+
+## Mensagem
+
+Não há mensagem: o fiscaldoo esconde o que o seu perfil não pode usar. Há dois sítios onde o confirma.
+
+No menu da sua pessoa (o seu nome ou a inicial, no canto superior direito), **Porque não vejo…?** lista as áreas escondidas de propósito, o motivo e a quem pedir:
+
+![Menu da pessoa aberto, com a opção Porque não vejo…? assinalada](/images/troubleshooting/nao-vejo-um-menu/01-menu-pessoal-porque-nao-vejo.png)
+
+> «Porque não vejo…? Estas áreas estão escondidas de propósito, por causa do seu perfil ou para proteger dados pessoais. Não falta nem está avariado nada.»
+
+Cada área diz porquê e a quem pedir. Com o perfil **Administrativo**, a página tem nove áreas. Sete acabam a dizer que perfil pedir ao administrador: **Recibos de vencimento e salários**, «Peça ao administrador o perfil «Processador de salários» ou «Gerência».»; **Salários** e **Pessoas**, «Peça ao administrador o perfil «Processador de salários», «Gestor de RH» ou «Gerência».»; **Contabilidade**, «Peça ao administrador o perfil «Contabilista (opera)», «Contabilista certificado (assina, fecha períodos)», «Gerência» ou «Auditor / ROC».»; **Auditoria**, «Peça ao administrador o perfil «Contabilista certificado (assina, fecha períodos)», «Gerência» ou «Auditor / ROC».»; **Direção**, «Peça ao administrador o perfil «Gerência».»; **Cofre de credenciais**, «Peça ao administrador o perfil «Contabilista certificado (assina, fecha períodos)».». As outras duas dizem: **Definições, utilizadores e aplicações**, «Peça ao administrador técnico.»; **Dados de saúde (ausências médicas)**, «Pergunte ao administrador se precisa desse acesso.».
+
+O «Administrador de Salários» não é um valor do campo **Perfil**: é um acesso extra que o administrador dá, e a página não o nomeia. Dos perfis, só o **Processador de salários** e a **Gerência** têm o menu **Recibos de vencimento**: se precisa de os ver, peça ao administrador um desses perfis.
+
+{/* Nota interna (lote v23-AI, DOCS-069 #4052, master 7a3b55244, docs_demo_v23ai_test): página aberta por clique (menu da pessoa › Porque não vejo…?) com o utilizador da demonstração de perfil Administrativo; hoje lista também Contabilidade, Auditoria, Direção, Cofre de credenciais, Definições, utilizadores e aplicações e Dados de saúde (ausências médicas), além das três da captura 02 (auditoria docs-aud-v23ai: menus de cada perfil conferidos; Recibos de vencimento só no Processador de salários e na Gerência) (a captura mostra só o início da página; a OCR da captura confirma as duas frases). Vinha do guia congelado Segurança/porque-nao-vejo.md. */}
+
+{/* Nota interna (lote v23-AO, DOCS-069 #4052, master a67618a71, docs_demo_v23ao_test, 09/11/2026): UX-147. Página aberta de novo por clique (menu da pessoa › Porque não vejo…?) com um utilizador só com o perfil Administrativo: nove áreas, cada uma com os perfis a pedir; já não manda pedir ao Administrador de salários. Captura 02 refeita. */}
+
+![Página Porque não vejo…? de um utilizador com o perfil Administrativo, com as áreas Recibos de vencimento e salários, Salários e Pessoas](/images/troubleshooting/nao-vejo-um-menu/02-porque-nao-vejo.png)
+
+Na caixa **Pesquisar menu…**, no topo, um menu que o seu perfil não tem dá «Nenhum menu encontrado.». Na demonstração, com o perfil **Administrativo**, «Reconciliação» não dá nada; com o **Contabilista** dá **Contabilidade › Reconciliar › Bancos e caixa › Reconciliação bancária** e mais três.
+
+![Caixa Pesquisar menu com a palavra Reconciliação e a resposta Nenhum menu encontrado.](/images/troubleshooting/nao-vejo-um-menu/03-pesquisar-menu-sem-resultado.png)
+
+## Causas verificadas
+
+- **O perfil não inclui esse menu ou botão.** Exemplos vistos na demonstração:
+  - o perfil **Administrativo** não tem a aplicação **Contabilidade** (o trabalho dele está em **Faturação**);
+  - o **Contabilista** simula as **Depreciações do mês** mas não vê o botão **Confirmar**, que só o **Contabilista certificado** tem;
+  - o **Contabilista** abre uma declaração periódica de IVA validada e não vê **Registar submissão**, que é do **Contabilista certificado**.
+- **A área está protegida por ter dados pessoais**, como os recibos de vencimento e as ausências médicas. **Porque não vejo…?** diz quem as vê.
+- **A aplicação não está instalada nesta base de dados.** Nesse caso não aparece a ninguém, nem ao administrador: [Como ativar a faturação e as aplicações do fiscaldoo](/getting-started/ativar-as-aplicacoes).
+
+## O que confirmar
+
+1. Abra **Porque não vejo…?** e procure a área. Se lá estiver, o motivo e a pessoa a quem pedir estão escritos.
+2. Escreva o nome do menu em **Pesquisar menu…**. Se aparece, o menu existe para si: o caminho mostrado leva-o lá.
+3. Se é um botão: confirme o estado do documento. Muitos botões só aparecem num estado (por exemplo **Registar submissão** só numa declaração **Validada**).
+4. Pergunte a um colega que vê o menu qual é o perfil dele.
+
+## Como resolver
+
+- **A tarefa é de outra pessoa:** peça-lhe a operação. Por exemplo, o **Contabilista** simula as depreciações e o **Contabilista certificado** confirma-as.
+- **A tarefa passa a ser sua:** peça ao administrador que lhe dê o perfil, no separador **Perfil** ou nos **Ajustes avançados** da sua ficha de utilizador: [Como dar a cada utilizador o perfil certo](/administration/perfis-e-permissoes).
+- **A aplicação não está instalada:** só o administrador a instala.
+
+**Quem faz:** o administrador técnico (só ele vê as **Definições**).
+
+## Resultado esperado
+
+Depois de o administrador mudar o perfil, o menu ou o botão aparece na próxima entrada no fiscaldoo, e **Porque não vejo…?** deixa de listar essa área.
+
+## Quando contactar o suporte
+
+- Um colega com o mesmo perfil vê o menu e o utilizador não.
+- O administrador também não vê o menu, e a aplicação está instalada.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte). Junte o nome do menu ou do botão, o caminho onde o esperava e o perfil que tem.

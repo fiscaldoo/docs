@@ -1,0 +1,93 @@
+---
+id: por-cobrar
+slug: /accounting-pt/por-cobrar
+title: Como ver o que os clientes devem e há quanto tempo
+sidebar_label: Dívidas de clientes por antiguidade
+sidebar_position: 6
+description: Ver o que cada cliente deve, separado por escalões de dias de atraso, e abrir as faturas que compõem cada valor.
+keywords: [por cobrar, antiguidade de saldos, dívidas de clientes, saldos a receber, aging, vencimento, escalões de atraso, clientes em atraso, balance aging]
+doc_id: DOC-0152
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master acd623385)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/extratos-de-terceiros, accounting-pt/relatorios/balancete]
+---
+
+## Para que serve?
+
+A antiguidade de saldos a receber mostra, por cliente, quanto está por receber e há quantos dias esse valor venceu. Cada coluna é um escalão de atraso: **Não vencido**, **1 - 30 dias**, **31 - 60 dias**, **61 - 90 dias**, **91 - 120 dias** e **Mais de 120 dias**.
+
+Serve para decidir a quem ligar primeiro e para avaliar o risco de cobrança.
+
+## Quando utilizar?
+
+- Para preparar a cobrança do mês: ver os clientes com mais valor em atraso.
+- Para saber quanto estava por vencer numa data (hoje, o fim do mês).
+- Para conferir o saldo de clientes da contabilidade com as faturas que o compõem.
+
+## Onde encontrar?
+
+- **Faturação › Receber › Por cobrar** (perfil **Administrativo**).
+- **Contabilidade › Consultar › Terceiros › Antiguidade de saldos** (perfil **Contabilista**).
+
+O ecrã chama-se **Antiguidade de saldos**. O **Contabilista** tem ainda o separador **A pagar**, que mostra o mesmo relatório para as dívidas a fornecedores; o perfil **Administrativo** vê só as dívidas dos clientes, sem separadores.
+
+## Antes de começar
+
+- As faturas de clientes estão emitidas (as de rascunho não entram, salvo a opção **Incluir rascunhos**).
+- O exemplo é a Empresa Demonstração, Lda, a 05/11/2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Consultar › Terceiros › Antiguidade de saldos**. O ecrã abre com o ano de 2026 (de 01/01/2026 a 31/12/2026) e os dias de atraso contam até hoje, porque o período ainda não acabou. A coluna **Não vencido** mostra o que ainda não venceu e as outras colunas o que está em atraso: no exemplo, **Total** de 5.241,03 €, todo em **1 - 30 dias**.
+   ![Antiguidade de saldos a 05/11/2026: cada cliente com o valor por escalão de atraso e o total de 5.241,03 €](/images/accounting-pt/por-cobrar/01-antiguidade-hoje.png)
+2. Carregue em **Mais filtros** e marque **Desdobrar tudo** para ver as faturas de cada cliente, com o **Documento** e o **Vencimento**. No exemplo, a fatura FT D26/30 de Papelaria Central, Lda, com vencimento a 19/10/2026, está em **1 - 30 dias**: passaram 17 dias.
+3. Para ver a posição noutra data, escreva-a em **até:**, ou escolha uma opção em **Período predefinido**. Com 18/10/2026, a FT D26/30 passa a **Não vencido** (4.847,43 €) e reaparece a FT D26/29 de Maria João Ferreira (ENI), de 1.461,72 €, que estava por receber nessa data e já foi paga.
+   ![Antiguidade desdobrada até 18/10/2026: cada fatura por baixo do cliente, com o documento, o vencimento e o valor no escalão](/images/accounting-pt/por-cobrar/02-desdobrado.png)
+4. Se o escalão for outro, mude **Limites dos escalões (dias)** ou **Dias por período** e **Períodos**. Em **Dias contados desde**, escolha **Vencimento** (por omissão) ou **Data do documento**: com a data do documento, os dias contam desde a emissão da fatura.
+5. Para a ter em papel, carregue em **Exportar PDF** (ou em **Exportar** para folha de cálculo). O PDF traz a empresa, o NIF, o período, a data e o utilizador que o emitiu.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, **Faturação › Receber › Por cobrar** abre a mesma **Antiguidade de saldos** deste artigo, com a mesma barra (visto com um utilizador só com o perfil **Administrativo**). Para o **Contabilista**, **Contabilidade › Consultar › Terceiros › Antiguidade de saldos** abre o relatório do Enterprise, com o mesmo nome e outra barra (visto com um utilizador só com esse perfil):
+
+- As colunas são **Data**, **Na data**, **1-30**, **31-60**, **61-90**, **91-120**, **Mais antigo** e **Total**.
+- A data escolhe-se no botão com a data de hoje (por exemplo, `A 11/11/2026`), com **Hoje**, **Fim do mês**, **Fim do trimestre**, **Fim do exercício** e **Data específica**, para escrever outra data. {/* Nota interna (lote EE-14, EEA-080 7867c0729 e EEA-079 5199048cc em master acd623385; cópia docs_ee_ee14_test, porta 8524, 12/11/2026): por clique com um utilizador criado na cópia só com o perfil Contabilista: a data da Antiguidade de saldos oferece «Hoje», «Fim do mês», «Fim do trimestre», «Fim do exercício» e «Data específica»; no Diário, o quadro chama-se «Grelhas de imposto afetadas». */}
+- **Com base em** escolhe **Data de Vencimento** ou **Data da fatura**, e o botão **30 Dias** muda o número de dias de cada escalão.
+- **Relatório** troca para **Antiguidade de saldos a pagar**, no lugar do separador **A pagar**. **Tipo de conta** acrescenta as **Contas a receber não comerciais**.
+- **Lançamentos feitos** tem **Lançamentos provisórios** (os rascunhos) e **Desdobrar Tudo**.
+- Para guardar, carregue em **Imprimir** (PDF) ou, no ícone de engrenagem ao lado do título, em **XLSX**.
+
+A barra destes relatórios está em [Como filtrar, comparar períodos e exportar um relatório](/accounting-pt/usar-os-relatorios).
+
+{/* Nota interna (lote EE-04, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee04_test, cópia da odoo20_ee_test com EE_FASE=construir, 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0152. Administrativo: Por cobrar = /odoo/fiscaldoo-antiguidade-receber (Exportar PDF, Exportar, Copiar ligação, Repor, sem Guardar opções). Contabilista: Antiguidade de saldos = /odoo/aged-receivable (account_reports, nome dado pela ponte l10n_pt_fiscaldoo_ee_reports); botões Imprimir, A 11/11/2026, Tipo de conta: A Receber, Parceiros (Parceiros, Etiquetas), Com base em Data de Vencimento, 30 Dias, Lançamentos feitos (Lançamentos provisórios, Desdobrar Tudo, Mostrar moeda, Mostrar conta, Ocultar linhas em 0), Relatório: Antiguidade de saldos a receber, Em .€; engrenagem XLSX e Copiar para Documentos (não carregado); primeira linha «Recebimentos Vencidos». «Specific Date» em inglês: defeito EEA-080 #4188. Total da base Enterprise 6.599,85 € (base diferente da base-mãe). Ver reports/LOTE_EE-04.md. */}
+
+## Resultado esperado
+
+- Uma linha por cliente e uma linha de **Total**. O total do exemplo, 5.241,03 €, é a soma dos três clientes (246,00 €, 147,60 € e 4.847,43 €).
+- Cada fatura aparece uma só vez, no escalão que resulta da data do relatório menos o vencimento.
+- Uma empresa sem faturas por receber mostra só a linha **Total** a 0,00 €.
+
+## Notas importantes
+
+- **Até que dia contam os dias.** Enquanto o período não acabou, os dias contam até hoje, mesmo com o ano inteiro escolhido. Num período já acabado, contam até ao último dia dele. Em **Dias contados desde**, com **Data do documento**, a FT D26/30, emitida a 19/09/2026, passa de **1 - 30 dias** a **31 - 60 dias**.
+- **O relatório só vê o que está lançado.** Faturas ainda não emitidas, recibos ainda não registados e pagamentos por reconciliar mudam o resultado. Para o saldo do cliente com os movimentos, abra os [extratos de terceiros](/accounting-pt/extratos-de-terceiros).
+
+## Problemas frequentes
+
+### A coluna «Não vencido» está a 0,00 €
+
+- **Causa:** nenhuma das faturas por receber tem o vencimento depois da data do relatório. No exemplo, a 05/11/2026, todas já venceram.
+- **O que fazer:** nada, se a data for a certa. Para ver o que estava por vencer noutra data, mude-a em **até:** (passo 3).
+
+{/* Nota interna (DOCS-046, DOC-0152, risco normal): visto em docs_demo_v3a5_test (master f16f4a3e) com o Contabilista (Contabilidade › Consultar › Terceiros › Antiguidade de saldos) e com Faturação (Faturação › Receber › Por cobrar; sem o separador A pagar nem «Guardar opções»). Contas conferidas à mão: 246,00+147,60+1.597,60+143,10+4.847,43 = 6.981,73 + 78,92 = 7.060,65. Escalões conferidos: FT D26/31 vencimento 30/10 a 31/12 = 62 dias (61-90); FT D26/29 vencimento 15/10 a 01/11 = 17 dias (1-30). PDF conferido com a vista A pagar (Empresa_Demonstracao_Lda_Antiguidade_de_Saldos_a_Pagar_2026-01-01_2026-12-31.pdf): o texto do PDF da vista A receber não foi aberto. Empresa vazia: Empresa Teste Filial (admin), só a linha Total a 0,00 €. «Comparar com período anterior» e «Agrupar contas por hierarquia» não testados. Defeito V3A5-01: o ano inteiro deixa «Não vencido» a 0 (por desenho); V3A5-02: «Sem terceiro» entra no total. */}
+{/* Nota interna (DOCS-046 req. 45727, lote v18-C, master 0289754a8, docs_demo_v18c_test): refeito com o Contabilista e a abrir com Faturação. Deixou de citar a FT D26/33, que noutros artigos é outro documento. O BNK-033 e o ACC-216 mudaram o ecrã: dias até hoje se o período inclui hoje e sem apuramentos do IVA. A linha «Sem terceiro» saiu do artigo: o produto recusa hoje um lançamento na 2111 sem cliente («Falta indicar o cliente ou o fornecedor…», provado por RPC). Empresa sem faturas não voltou a ser aberta nesta ronda: vem da v3a5. */}
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); Faturação › Receber › Por cobrar aberto por clique com o Administrativo: Antiguidade de saldos só com clientes, sem os separadores A receber e A pagar */}

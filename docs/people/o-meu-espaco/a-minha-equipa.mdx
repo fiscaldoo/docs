@@ -1,0 +1,76 @@
+---
+id: a-minha-equipa
+slug: /people/a-minha-equipa
+title: Como acompanhar a minha equipa
+sidebar_label: A minha equipa
+description: "O que uma chefia vê em A minha equipa: os prazos das pessoas que dependem de si, como férias por marcar e formação em falta, e o que este ecrã não mostra."
+keywords: [a minha equipa, chefia, a tratar na minha equipa, prazos da equipa, férias por marcar, formação em falta, saldo de férias alto]
+doc_id: DOC-0268
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/ausencias-e-presencas/aprovar-ausencias, people/o-meu-espaco/confirmar-um-documento, people/trabalhadores/departamentos-e-organigrama]
+---
+
+{/* Nota interna (DOCS-046, lote v13-PPL): percorrido com demo.gerencia, depois de o demo.rh lhe dar uma pessoa na equipa (campo Gestor). O resumo da arquitetura fala em ausências, pedidos e documentos; o ecrã de hoje mostra prazos da equipa, e o artigo descreve o ecrã. */}
+
+## Para que serve?
+
+Mostra a quem chefia uma equipa os prazos das pessoas que dependem de si, para não deixar passar nada: férias por marcar, muitos dias de férias por gozar ou formação em falta. É só para ler: aqui não se aprova nem se altera nada.
+
+## Quando utilizar?
+
+- Quer saber, numa consulta rápida, o que está em atraso na sua equipa.
+- Vai falar com um trabalhador sobre as férias ou a formação dele.
+
+## Onde encontrar?
+
+**O meu espaço › A minha equipa**. O menu só aparece a quem tem pelo menos uma pessoa a depender de si.
+
+## Antes de começar
+
+- Tem de ser **Gestor** de alguém: o campo **Gestor** da ficha do trabalhador tem de ter o seu nome. Quem o preenche é o **Gestor de RH**. Veja [Como organizar departamentos e ver o organigrama](/people/departamentos-e-organigrama).
+- Os passos foram feitos até ao fim com o perfil **Gerência**, como chefia de uma trabalhadora. Vale para qualquer perfil que tenha equipa: um **Trabalhador** sem equipa não vê o menu.
+
+## Como utilizar
+
+Abra **O meu espaço › A minha equipa**. O ecrã **A tratar na minha equipa** mostra:
+
+- no topo, o cartão **A tratar**, com o número de assuntos em atraso e quantos vencem **nos próximos 30 dias**;
+- em **O que está pendente**, uma linha por assunto, com **O quê**, **Detalhe** e **Prazo**.
+
+![Ecrã A tratar na minha equipa, com 1 assunto em atraso e as linhas Férias por marcar, Saldo de férias alto e Formação em falta; o detalhe está tapado](/images/people/a-minha-equipa/01-a-tratar.png)
+
+Depois, trate cada assunto no sítio certo, porque as linhas não abrem nenhuma ficha.
+
+## No Enterprise
+
+No Odoo Enterprise, **O meu espaço › A minha equipa** funciona da mesma maneira. Com o perfil **Gerência**, como chefia de um trabalhador, o menu apareceu depois de o **Gestor de RH** escolher essa chefia no campo **Gestor** da ficha do trabalhador, e o ecrã **A tratar na minha equipa** mostrou o cartão **A tratar** e, em **O que está pendente**, as linhas desse trabalhador (entre elas **Férias por marcar**, **Saldo de férias alto** e **Formação em falta**). As avaliações da aplicação **Avaliações** do Enterprise não aparecem neste ecrã.
+
+{/* Nota interna (lote EE-11, DOCS-073 #4142, DEC-1794, master 589ecfd27, 12/11/2026): cópia Enterprise docs_ee_ee11_test no portátil (pg_dump da odoo20_ee_test, já em 589ecfd27; -i de hr_payroll, planning, hr_appraisal e hr_recruitment e -u de fiscaldoo_ux_kit e l10n_pt_fiscaldoo_demo; ee_neutralizar antes e construir), porta 8508, guarda de rede ligada; utilizadores criados por RPC na cópia, cada um só com um valor do campo Perfil: ee11_ger (ligado à ficha de Diogo Ferreira Lopes): antes, O meu espaço sem A minha equipa; depois de ee11_rh pôr Diogo como Gestor de Hugo Miguel Santos, «A tratar 1 mais 2 nos próximos 30 dias» com Férias por marcar (em atraso desde 15/04/2026), Último dia para comunicar o fim de um termo certo e Contrato termina em breve (o contrato de Hugo é a termo; estas linhas vêm do mesmo módulo do Community), Saldo de férias alto e Formação em falta. Nenhuma linha de avaliações. Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee11_test (master 589ecfd27, porta 8518), com os mesmos utilizadores. Ver reports/LOTE_EE-11.md. */}
+
+## Resultado esperado
+
+Vê os prazos só das pessoas que dependem de si. No exemplo, para uma trabalhadora:
+
+- **Férias por marcar**, com os dias ainda por marcar, em atraso desde 15/04/2026;
+- **Saldo de férias alto**, com os dias de férias por gozar;
+- **Formação em falta**, com as horas que faltam das 40 do ano.
+
+## Notas importantes
+
+- **O que este ecrã não mostra.** Não mostra salários, valores nem motivos de saúde. Também não mostra os pedidos de ausência à espera de decisão: para os decidir, veja [Como aprovar pedidos de férias e de ausência](/people/aprovar-ausencias).
+- **Só lê.** Corrigir os dados de uma pessoa é com os Recursos Humanos.
+- **Mudou a chefia?** O menu e as linhas seguem o campo **Gestor**. Se alguém deixou de depender de si, as linhas dessa pessoa deixam de aparecer.
+- **Vale a mesma regra das 40 horas de formação** do artigo [Como acompanhar as horas de formação obrigatórias do ano](/people/horas-de-formacao).
+
+## Problemas frequentes
+
+### Não vejo A minha equipa
+
+- **Sintoma:** em **O meu espaço** não há o menu **A minha equipa**.
+- **Causa:** nenhum trabalhador tem o seu nome no campo **Gestor**, ou a sua ficha de trabalhador não está ligada ao seu utilizador.
+- **O que fazer:** peça aos Recursos Humanos que preencham o campo **Gestor** das fichas da sua equipa.

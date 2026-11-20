@@ -1,0 +1,63 @@
+---
+id: dados-do-cliente-errados-numa-fatura
+slug: /troubleshooting/dados-do-cliente-errados-numa-fatura
+title: Emiti uma fatura com os dados do cliente errados
+sidebar_label: Dados do cliente errados numa fatura
+description: Porque o nome, a morada ou o NIF do cliente não se corrigem numa fatura emitida, nem na ficha do cliente, e qual o caminho certo.
+keywords: [dados do cliente errados, NIF errado, nif errado, NIF do cliente errado, nome do cliente errado, morada errada, cliente errado, fatura ao cliente errado, corrigir NIF, alterar NIF, já é usado em documentos certificados, ja e usado em documentos certificados, Corrigir os dados do cliente, Correção auditada, correcao auditada]
+doc_id: DOC-0328
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master d88933a51)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/faturacao-e-at/nao-consigo-alterar-um-documento-certificado, fiscal-core/faturacao/emitir-uma-nota-de-credito]
+---
+
+## Sintoma
+
+Emitiu uma fatura e reparou que o nome, a morada ou o NIF do cliente estão errados, ou que a fatura saiu para o cliente errado. A fatura já não deixa alterar o cliente e, se tentar corrigir o NIF na ficha do cliente, a ficha não grava.
+
+## Mensagem
+
+Com o perfil **Administrativo**, ao mudar o NIF na ficha de um cliente que já tem faturas emitidas e carregar em guardar:
+
+> «“*Papelaria Central, Lda*” já é usado em documentos certificados, por isso o seu NIF (“*PT599990058*”) não pode ser alterado aqui: os ficheiros mestre do SAF-T e os documentos já emitidos dependem dele. Os documentos guardam os dados com que foram emitidos. Se foi um erro de escrita, peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que o corrija com a correção auditada (botão “Correção auditada” na ficha); caso contrário, crie um registo novo.»
+
+{/* Nota interna (lote v23-G, DOCS-066, master 5228a94bd, docs_demo_v23g_test): provocada de novo pela integração (RPC) com um utilizador só com o perfil Administrativo (NIF da Papelaria Central, Lda): o texto não mudou e continua a dizer «Responsável fiscal». Auditoria docs-aud-v23m (master dbbb5ac5c): provocada no ecrã com um utilizador criado só com o perfil Administrativo (NIF e nome da Papelaria Central, Lda); o texto manda agora pedir a um utilizador com o perfil Contabilista certificado. */}
+
+![Janela Operação inválida: o cliente Papelaria Central, Lda já é usado em documentos certificados, por isso o seu NIF não pode ser alterado na ficha](/images/troubleshooting/dados-do-cliente-errados-numa-fatura/01-nif-do-cliente-com-documentos.png)
+
+Na própria fatura, no topo, aparece «Documento emitido e assinado: já não se altera. Para o corrigir, emita uma nota de crédito.» A mensagem foi provocada na base de demonstração; as partes em itálico mudam com o cliente. A ficha não gravou e o NIF continuou o antigo.
+
+## Causas verificadas
+
+A fatura emitida guarda os dados do cliente com que saiu (nome, NIF, morada), que são os do código QR, da assinatura e do ficheiro SAF-T. Por isso não se altera. A ficha do cliente também protege o nome e o NIF de quem já tem documentos emitidos: mudá-los na ficha não corrigiria as faturas já emitidas.
+
+## O que confirmar
+
+1. O que está errado: o nome, a morada ou o NIF, ou o cliente inteiro (a fatura devia ser de outra pessoa ou empresa).
+2. Onde está o erro: só na fatura, ou também na ficha do cliente (as faturas seguintes sairiam com o mesmo erro).
+
+## Como resolver
+
+A fatura emitida corrige-se com **Corrigir os dados do cliente** (com o perfil **Administrativo**, está em **Ações** da fatura) e, se o erro também está na ficha, a ficha corrige-se com **Correção auditada**. Os passos, quem os faz e o que fica em cada documento estão em [Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado), na secção «Nome, morada ou NIF do cliente». <span className="fd-pending">Pendente de validação por contabilista certificado: numa fatura já emitida com o NIF errado, quando basta corrigir a ficha e quando é preciso nota de crédito e fatura nova.</span>
+
+Se o cliente é outra pessoa ou empresa (não um erro de escrita), não corrija a ficha: crie um cliente novo, como a mensagem indica, e use-o na fatura nova.
+
+## Resultado esperado
+
+- A fatura errada fica corrigida por uma nota de crédito e há uma fatura nova para o cliente certo; a fatura errada mantém os dados com que saiu.
+- A ficha do cliente tem os dados certos para os documentos seguintes.
+
+## Quando contactar o suporte
+
+- A ficha recusa a alteração e o cliente não tem nenhum documento emitido.
+- **Corrigir os dados do cliente** não aparece numa fatura emitida.
+
+## Informação a enviar
+
+- O número da fatura (por exemplo `FT D26/35`) e o nome do cliente.
+- O texto completo da mensagem, copiado do ecrã.
+- O perfil com que entrou e o dado que queria corrigir.

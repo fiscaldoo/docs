@@ -1,0 +1,98 @@
+---
+id: orcamentos
+slug: /accounting-pt/orcamentos
+title: Como criar um orçamento e compará-lo com o realizado
+sidebar_label: Orçamento e realizado
+sidebar_position: 7
+description: Criar o orçamento anual por conta analítica, confirmá-lo, revê-lo e ver os desvios contra o que já foi gasto ou recebido.
+keywords: [orçamento, orcamento, orçamento versus realizado, desvio orçamental, revisão de orçamento, conta analítica, controlo orçamental, budget]
+doc_id: DOC-0155
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/demonstracao-de-resultados, accounting-pt/relatorios/balancete]
+---
+
+## Para que serve?
+
+O orçamento fixa quanto se prevê gastar (ou receber) em cada conta analítica num período, normalmente o exercício. O relatório **Orçamento versus realizado** compara esse valor com o que já foi lançado e mostra o **Desvio**.
+
+O orçamento não faz lançamentos contabilísticos: serve só para comparar.
+
+## Quando utilizar?
+
+- No início do exercício, para fixar o limite de cada centro de custo.
+- Durante o ano, para ver quem já gastou mais do que o previsto.
+- Quando o orçamento muda a meio do ano: crie uma revisão, que guarda o orçamento anterior como **Revisto** (ver «Notas importantes»).
+- **Não** o use para gastos sem conta analítica: a linha do orçamento exige uma conta analítica ou contas contabilísticas, e o realizado só conta o que tem essa ligação.
+
+## Onde encontrar?
+
+- Orçamentos: **Contabilidade › Consultar › Análise › Orçamentos**.
+- Relatório: **Contabilidade › Consultar › Análise › Relatório de orçamento versus realizado**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** (cria, confirma, revê, cancela e repõe em rascunho). O **Auditor / ROC** abre os orçamentos e o relatório, mas não tem **Novo** nem botões: só lê.
+- As contas analíticas existem (no exemplo, **Interno**, **Administração**, **Comercial** e **Operações**).
+- O exemplo é a Empresa Demonstração, Lda, a 01/11/2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Consultar › Análise › Orçamentos**. A lista abre com o filtro **Em vigor**, que esconde os orçamentos **Revisto** e **Cancelado**; retire o filtro para os ver. A lista mostra os orçamentos, com o **Tipo**, o período, o **Número da revisão**, o **Total orçamentado** e o **Estado**. No exemplo já há três orçamentos de 2026 **Confirmado**: Administração (16.000,00 €), Comercial (800,00 €) e Operações (17.000,00 €).
+2. Carregue em **Novo**. Escreva o nome, por exemplo `Orçamento 2026 - Interno`, deixe **Tipo** em **Anual** e escreva o **Início do período** (`01/01/2026`) e o **Fim do período** (`31/12/2026`).
+3. No separador **Linhas**, carregue em **Adicionar uma linha**. Escolha a **Conta analítica** (`Interno`) e escreva o valor em **Orçamentado** (`3000`). A **Natureza** fica **Gasto**; para um valor a receber escolha **Rendimento** (ver «Notas importantes»). As colunas **Teórico**, **Realizado**, **Desvio** e **Alerta** calculam-se sozinhas. Em vez da conta analítica pode escolher **Contas** contabilísticas.
+4. Carregue em **Confirmar**. O estado passa a **Confirmado** e o orçamento já não se edita diretamente: só tem os botões **Criar revisão** e **Cancelar**. No exemplo, **Teórico** 2.506,85 €, **Realizado** 0,00 €, **Desvio** 3.000,00 € e o **Alerta** **Dentro do previsto**.
+   ![Orçamento confirmado: linha de gasto da conta analítica Interno com o orçamentado, o teórico, o realizado, o desvio e o alerta](/images/accounting-pt/orcamentos/01-orcamento-confirmado.png)
+5. Para mudar um valor, abra o orçamento confirmado e carregue em **Criar revisão**. O orçamento original passa a **Revisto** e abre-se a revisão em **Rascunho**, com o **Número da revisão** 1 e as mesmas linhas. A revisão chama-se «… (cópia)». Altere o que for preciso e carregue em **Confirmar**: só então a revisão entra no relatório.
+   ![Revisão em rascunho do orçamento, com o orçamento original indicado em «Revisão de?» e o número da revisão 1](/images/accounting-pt/orcamentos/02-revisao.png)
+6. Abra **Contabilidade › Consultar › Análise › Relatório de orçamento versus realizado**. Em **Mais filtros**, marque **Desdobrar tudo**. A tabela mostra, por plano analítico e por conta, o **Orçamentado**, o **Realizado**, o **Desvio** e o **Desvio %**. No exemplo, com a revisão do orçamento «Interno» confirmada, o **Total** é 36.800,00 € orçamentado (33.800,00 € no plano «Centro de Custo» e 3.000,00 € no «Plano de projeto»), 24.495,00 € realizado e 12.305,00 € de desvio (33,44 %).
+   ![Relatório de orçamento versus realizado desdobrado por plano e conta analítica, com o total](/images/accounting-pt/orcamentos/03-relatorio.png)
+7. Carregue em **Exportar PDF** para a versão em papel (traz a empresa, o NIF, o período e quem o emitiu), em **Exportar** para folha de cálculo ou em **Mostrar gráfico** para ver as barras.
+
+</StepByStep>
+
+## Resultado esperado
+
+- O orçamento aparece na lista como **Confirmado** e as suas linhas entram no relatório. Os valores do relatório batem com os da linha do orçamento: Operações tem 17.000,00 € orçamentado e 12.390,00 € realizado nos dois ecrãs.
+- Num gasto, o **Desvio** é o **Orçamentado** menos o **Realizado**; num rendimento é o contrário (o **Realizado** menos o **Orçamentado**). **Comercial**, com 800,00 € orçamentado e 855,00 € realizado, tem desvio de −55,00 €, **Desvio %** de −6,88 % e o alerta **Orçamento excedido** na linha.
+- **Teórico** é o valor que deveria estar gasto hoje, repartindo o orçamento pelos dias do período: com 3.000,00 € e 305 dos 365 dias decorridos, 2.506,85 €.
+
+## Notas importantes
+
+- **O relatório só conta orçamentos confirmados.** Um orçamento em **Rascunho**, **Revisto** ou **Cancelado** não entra: ao criar a revisão, o original deixa de contar até a revisão ser confirmada.
+- **Como se altera um orçamento confirmado.** O caminho certo é **Criar revisão** (passo 5): o orçamento anterior fica guardado como **Revisto** e a revisão leva o **Número da revisão**, por isso o histórico não se perde. O produto deixa, porém, **Cancelar** um orçamento confirmado. Passa a **Cancelado**, sai do relatório (no exemplo, o total desce para 33.800,00 € orçamentado, 24.495,00 € realizado e 9.305,00 € de desvio, 27,53 %) e o botão **Repor em rascunho** devolve-o a **Rascunho**, onde se edita **sem deixar revisão**; **Confirmar** volta a pô-lo em vigor. Use esse caminho só para corrigir um engano de escrita; para uma mudança de orçamento durante o ano, crie uma revisão.
+  ![Orçamento cancelado: o botão Repor em rascunho e o estado Cancelado](/images/accounting-pt/orcamentos/05-cancelado.png)
+- **Rendimento.** Em cada linha a **Natureza** é **Gasto** ou **Rendimento**. Numa linha de rendimento com 1.000,00 € na conta analítica «Interno» e nada recebido, o ecrã mostra **Teórico** 835,62 €, **Realizado** 0,00 €, **Desvio** −1.000,00 € e o alerta **Abaixo do teórico**; o mesmo alerta aparece numa linha de gasto de 13.000,00 € em «Operações» com 12.390,00 € realizados, acima dos 10.863,01 € do teórico. A etiqueta é a mesma nos dois casos: confira sempre os valores ao lado.
+  ![Linhas de rendimento e de gasto com o alerta Abaixo do teórico](/images/accounting-pt/orcamentos/06-rendimento.png)
+- O produto só deixa eliminar um orçamento em rascunho ou cancelado.
+- **Realizado só com conta analítica.** Os gastos sem conta analítica não aparecem no realizado nem no desvio. O relatório não mostra gastos «sem orçamento»: para o total da empresa use a [demonstração de resultados](/accounting-pt/demonstracao-de-resultados).
+
+## Problemas frequentes
+
+### «Operação inválida: O orçamento «…» não tem linhas. Acrescente pelo menos uma conta analítica antes de o confirmar.»
+
+- **Causa:** carregou em **Confirmar** sem nenhuma linha.
+- **O que fazer:** carregue em **Fechar**, acrescente uma linha no separador **Linhas** e volte a **Confirmar**.
+
+### «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+
+- **Causa:** faltam o **Início do período** ou o **Fim do período**.
+- **O que fazer:** preencha as duas datas com o formato `dd/mm/aaaa` e carregue em **Confirmar**.
+
+### «Uma linha de orçamento precisa de uma conta analítica ou de pelo menos uma conta…»
+
+- **Causa:** ao guardar, há uma linha sem **Conta analítica** nem **Contas**. O ecrã chama-lhe **Erro de Validação** e diz «sem isso não há com que comparar o orçamento».
+- **O que fazer:** carregue em **Fechar**, escolha a conta analítica (ou as contas) na linha, ou apague a linha em branco.
+
+### O orçamento que criei não aparece no relatório
+
+- **Causa:** o orçamento está em **Rascunho** ou foi **Revisto**, ou o período do relatório não o cobre.
+- **O que fazer:** confirme o orçamento (ou a revisão) e confira o período do relatório.
+
+{/* Nota interna (DOCS-046 corretor, DOC-0155, risco normal): visto em docs_demo_v3a5cor_test (master b1c81051; -u dos módulos tocados do comboio 128) com o Contabilista. Provado: na revisão «(cópia)» Cancelar leva a Cancelado (relatório 33.800 / 24.495 / 9.305, 27,53 %), Repor em rascunho e Confirmar repõem 36.800 / 24.495 / 12.305 (33,44 %); linha Rendimento e alerta provados num orçamento de rascunho que foi depois eliminado; erro de linha sem conta provado. Menu real: Consultar › Análise (cabeçalho) › Orçamentos; o texto anterior punha «Orçamentos» dentro de um grupo «Orçamentos» de Consultar. Defeito V3A5-10: a etiqueta «Abaixo do teórico» aparece também no gasto que já ultrapassou o teórico. Não testado: Tipo diferente de Anual. Defeito V3A5-03: a revisão chama-se «… (cópia)». */}

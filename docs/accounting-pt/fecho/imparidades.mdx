@@ -1,0 +1,98 @@
+---
+id: imparidades
+slug: /accounting-pt/imparidades
+title: Como registar imparidades de dívidas a receber
+sidebar_label: Imparidades de dívidas a receber
+sidebar_position: 3
+description: Ver o mapa de imparidades de créditos em mora, perceber a imparidade fiscal e a contabilística, e obter a sugestão do lançamento (débito 6511, crédito 21911) para registar no fecho.
+keywords: [imparidades, imparidade de créditos, imparidade de dívidas a receber, créditos em mora, creditos em mora, perdas por imparidade, 651, 219, limite fiscal, CIRC 28.º-B, mapa de imparidades, lançamento de imparidades sugerido]
+doc_id: DOC-0136
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/fecho/simular-o-resultado, accounting-pt/relatorios/demonstracao-de-resultados, accounting-pt/relatorios/diario-e-razao]
+---
+
+## Para que serve?
+
+No fecho do exercício, as dívidas de clientes em atraso podem ter de ser reconhecidas como perda por imparidade. O produto faz duas coisas, **sem lançar nada**: o **mapa de imparidades** mede o atraso de cada dívida e calcula a imparidade, e o **lançamento de imparidades sugerido** diz quanto reforçar (ou reverter) em relação ao que já está contabilizado. O lançamento é feito por si.
+
+## Quando utilizar?
+
+- No fecho do exercício (ou de um trimestre), para decidir o reforço da imparidade de clientes.
+- Para saber que parte da imparidade contabilística excede o limite fiscal e tem de ser acrescida no Modelo 22.
+- **Não** use o mapa como decisão final de cobrabilidade: ele mede só o atraso (ver as notas abaixo).
+
+## Onde encontrar?
+
+**Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**, em **Listas de apoio**:
+
+- **Imparidades de créditos** abre o mapa.
+- **Lançamento de imparidades sugerido** abre a sugestão, que tem o botão **Abrir o mapa de imparidades** para ir ao mapa.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** (testado com ele até ao último passo). A **Gerência** e o **Auditor / ROC** abrem o mapa, mas nas listas de apoio **não têm** o **Lançamento de imparidades sugerido**.
+- As faturas e as cobranças estão lançadas e as dívidas pagas estão reconciliadas: o mapa parte do saldo por liquidar à data.
+- O exemplo é o fecho de **2026** da Empresa Demonstração, Lda, visto a 10/11/2026: as dívidas de clientes e, só para este exemplo, uma dívida antiga de 1.000,00 € da Padaria Aurora, Lda, vencida a 31/03/2026 (um saldo trazido de outro programa). As faturas da demonstração venceram todas depois de junho de 2026: sem essa dívida, 2026 dá imparidade de 0,00 €, o caso de «Nada a lançar» (ver «Problemas frequentes»). Com os seus dados, use o fim do exercício que está a fechar.
+- Para reproduzir o exemplo na demonstração, crie primeiro a dívida antiga em **Contabilidade › Lançar › Lançamentos › Lançamentos contabilísticos**: **Novo**, **Diário** Operações Diversas, **Data** 31/03/2026, **Referência** «Saldo trazido de outro programa»; em **Adicionar uma linha**, a conta **2111 Clientes gerais**, o **Parceiro** Padaria Aurora, Lda e 1.000,00 € em **Débito**; noutra linha, a conta **2781 Outros devedores e credores (CORRENTE)** e 1.000,00 € em **Crédito**. Guarde e carregue em **Publicar** (no exemplo, ficou OD/2026/00139). Ao guardar, o ecrã avisa «224 dias desde o fim do mês a que este lançamento respeita (limite do CIRC, art. 123.º, n.º 3). Lance-o ou reveja a sua data; nada é bloqueado.» (os dias contam até hoje). A linha não tem data de vencimento: o mapa usa a data do lançamento, 31/03/2026. Com os seus dados, não crie nada: o mapa lê as dívidas que já estão lançadas. <span className="fd-pending">Pendente de validação por contabilista certificado: a conta de contrapartida de um saldo de cliente trazido de outro programa (a 2781 é só a do exemplo).</span>
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês** e, em **Listas de apoio**, **Imparidades de créditos**. O mapa abre no ano de hoje. Em 2026, com a dívida antiga do exemplo, os três clientes somam 7.588,13 € e a imparidade é 250,00 €. Este total é igual à linha **Clientes** do [balanço](/accounting-pt/balanco) de 2026.
+2. Confirme o ano na lista dos anos: o mapa mede o atraso no último dia desse ano.
+3. Leia as colunas. Cada dívida cai numa coluna de atraso (a contar do vencimento): **Não vencido**, **Até 6 meses**, **Mais de 6 até 12 meses**, **Mais de 12 até 18 meses**, **Mais de 18 até 24 meses** e **Mais de 24 meses**. Seguem-se o **Total**, a **Imparidade fiscal (limite fiscal, CIRC 28.º-B)**, a **Imparidade contabilística** e o **Excesso sobre o limite fiscal (a acrescer no Modelo 22)**. No exemplo, 6.588,13 € estão em **Até 6 meses**, sem imparidade, e a dívida antiga de 1.000,00 € está em **Mais de 6 até 12 meses**, com imparidade de 250,00 € (25 %).
+4. Carregue no triângulo à esquerda de um cliente para ver os documentos. A **Padaria Aurora, Lda** tem a dívida antiga, vencida a 31/03/2026 (1.000,00 €, com imparidade de 250,00 €), e a FT D26/28, vencida a 09/10/2026 (143,10 €, sem imparidade).
+   ![Mapa de imparidades de 2026, só com as colunas Linha, Vencimento, Total e Imparidade contabilística: cada cliente e o total de 7.588,13 euros, com 250,00 euros de imparidade](/images/accounting-pt/imparidades/01-mapa.png)
+5. Em **Listas de apoio**, abra **Lançamento de imparidades sugerido**. A **Data de referência** vem com 31 de dezembro do ano anterior (31/12/2025): com ela, tudo está a 0,00 € e o ecrã diz «Nada a lançar: a imparidade já contabilizada é a do mapa.». Carregue na data e escreva `31/12/2026`.
+6. A sugestão atualiza-se: **Imparidade fiscal** 250,00 €, **Imparidade contabilística** 250,00 €, **Imparidade acumulada contabilizada** 0,00 €, **Conta a débito** 6511 Clientes, **Conta a crédito** 21911 Clientes gerais e **Valor do lançamento** 250,00 €, com a nota «Apenas uma sugestão: nada é lançado. Lance-a, se concordar.».
+   ![Sugestão do lançamento de imparidades a 31/12/2026: débito 6511, crédito 21911, valor de 250,00 euros](/images/accounting-pt/imparidades/02-sugestao.png)
+7. Se concordar, lance o movimento em **Contabilidade › Lançar › Lançamentos › Lançamentos contabilísticos**: **Novo**, diário **Operações Diversas**, a **Data** de referência, uma linha de débito na 6511 e outra de crédito na 21911, ambas com o valor sugerido, e **Publicar**. Se publicar antes dessa data, o ecrã avisa: «A data deste lançamento é futura. Publicá-lo contabiliza-o já, no período dessa data. Para ficar publicado sozinho nessa data, ponha «Lançar automaticamente» em «Na data» em vez de o publicar.»
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, **Imparidades de créditos** e **Lançamento de imparidades sugerido** estão nas mesmas **Listas de apoio** de **Fechar o mês**, e o mapa é o mesmo do fiscaldoo, com as colunas de atraso, a **Imparidade fiscal (limite fiscal, CIRC 28.º-B)**, a **Imparidade contabilística** e o **Excesso sobre o limite fiscal (a acrescer no Modelo 22)** (visto com um utilizador só com o perfil **Contabilista**). O lançamento faz-se como no passo 7.
+
+{/* Nota interna (lote EE-03, DOCS-073 #4142, DEC-1794, master e4dd4ae90, base Enterprise docs_ee_ee03_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0136. Contabilista: mapa de 2026 na base Enterprise (sem a dívida antiga do exemplo) com Maria João Ferreira (ENI) 1.597,60 € e Padaria Aurora, Lda 143,10 € em Até 6 meses, sem imparidade nessas linhas. Lançamento de imparidades sugerido não aberto. Ver reports/LOTE_EE-03.md. */}
+
+## Resultado esperado
+
+- Um lançamento publicado (no exemplo, OD/2026/00140) com **débito de 250,00 € na 6511 Clientes** e **crédito de 250,00 € na 21911 Clientes gerais**. No **Razão** de 2026, a 6511 mostra 250,00 € a débito e a 21911 mostra 250,00 € a crédito, com saldo de -250,00 €.
+  ![Razão da conta 6511 em 2026, só com as colunas Linha, Débito, Crédito e Saldo: o lançamento OD/2026/00140 de 250,00 euros a débito](/images/accounting-pt/imparidades/03-razao-6511.png)
+- Na [demonstração de resultados](/accounting-pt/demonstracao-de-resultados) de 2026, a linha **Imparidade de dívidas a receber (perdas/reversões)** passa a -250,00 € e o **Resultado líquido do período** de -59.791,84 € para -60.041,84 €. No [balanço](/accounting-pt/balanco) de 2026, a linha **Clientes** passa de 7.588,13 € para 7.338,13 €. Reveja a [simulação do resultado](/accounting-pt/simular-o-resultado), se já tinha feito uma.
+- Com a mesma data, a sugestão passa a **Imparidade acumulada contabilizada** 250,00 €, **Valor do lançamento** 0,00 € e a nota «Nada a lançar: a imparidade já contabilizada é a do mapa.».
+  ![Sugestão com a imparidade já contabilizada: valor do lançamento de 0,00 euros e a nota Nada a lançar](/images/accounting-pt/imparidades/04-sugestao-ja-lancada.png)
+
+## Notas importantes
+
+- **O que o mapa conta.** Só as dívidas de clientes (com terceiro) por liquidar, com o vencimento anterior à data. Os apuramentos de IVA e a própria conta de imparidade acumulada não entram: depois do lançamento, o mapa continua com o mesmo total.
+- **As taxas.** A imparidade é de **25 %** se o atraso passa 6 meses, **50 %** 12 meses, **75 %** 18 meses e **100 %** 24 meses. No exemplo, se nada for cobrado, a imparidade passa a 4.044,07 € em 2027 e, em 2028, com tudo em **Mais de 24 meses**, a 7.588,13 €. A imparidade contabilística sai igual à fiscal e a coluna do excesso fica a 0,00 €. <span className="fd-pending">Pendente de validação por contabilista certificado: taxas fiscais por escalão e dedutibilidade (CIRC, artigo 28.º-B), exclusões do n.º 3 (Estado, créditos com seguro ou garantia real, partes relacionadas) e taxa contabilística própria da entidade.</span>
+- **O que o mapa não vê.** Não sabe se a dívida é cobrável, se houve diligências de cobrança, nem se o crédito está excluído do limite fiscal. Essa avaliação, e a prova da imparidade, são suas. Os créditos de um terceiro excluído não se marcam no ecrã.
+- **Reverter.** Se a imparidade já contabilizada for maior do que a do mapa, a sugestão inverte-se. No exemplo, com 350,00 € contabilizados, sugere **Conta a débito** 21911, **Conta a crédito** 6511 e **Valor do lançamento** 100,00 €, com **Reforçar** desligado. O produto credita a 6511, a conta da perda, embora o plano tenha uma conta própria para as reversões, a 76211 Clientes. <span className="fd-pending">Pendente de validação por contabilista certificado: se a reversão se lança na 76211 em vez da 6511.</span>
+- **O botão do mapa não leva a data.** **Abrir o mapa de imparidades** abre o mapa do ano de hoje, seja qual for a data de referência: escolha o ano na lista.
+- **Estornar com data futura.** O estorno de um lançamento com data futura fica em rascunho, para se publicar nessa data («Este movimento está configurado para ser lançada automaticamente em 31/12/2026»). A imparidade acumulada só muda quando o estorno fica publicado. Ver [estornar um lançamento](/accounting-pt/estornar-um-lancamento).
+
+## Problemas frequentes
+
+### «Nada a lançar: a imparidade já contabilizada é a do mapa.»
+
+- **Causa:** a data de referência é de um ano sem dívidas com mais de 6 meses de atraso (31/12/2025, no exemplo; sem a dívida antiga, também 31/12/2026), ou a imparidade já está contabilizada.
+- **O que fazer:** confirme a **Data de referência** (o fim do exercício) e se já fez o lançamento. Valores a 0,00 € com as contas em branco são o esperado.
+
+### Não encontro «Lançamento de imparidades sugerido»
+
+- **Causa:** o seu perfil é **Gerência** ou **Auditor / ROC**, que veem só o mapa.
+- **O que fazer:** peça a um **Contabilista** ou **Contabilista certificado** que o abra e lance.
+
+{/* Nota interna (DOCS-046, DOC-0136): visto em docs_demo_v6a4_test (master 8f78854ec) com o Contabilista; Gerência e Auditor confirmados na lista de apoio. Depois do ACC-213 o mapa já não traz a linha «Sem terceiro» nem a 21911, e 2026 dá imparidade 0,00 €: por isso o exemplo usa uma dívida antiga acrescentada numa cópia à parte (auditoria 03/11, master cf08b95ce): OD/2026/00108 de 01/09/2026, D 2111 / C 2781, 1.000 €, vencimento 31/03/2026. Imparidade OD/2026/00109 publicada no ecrã, razão das 2 contas, DR, Balanço e reversão (00110, 100 €) conferidos; estorno a 31/12/2026 não repetido (motivo obrigatório): a frase vem do caso a 31/12/2027 da 1.ª versão. Capturas 01 e 03 com colunas escondidas (alt diz quais). Não testado: empresa sem contas 6511/21911. */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): resultado e Clientes do Balanço de 2026 lidos no ecrã (Contabilista): -59.791,84 € e 6.588,13 € na base-mãe; com a dívida antiga de 1.000,00 € do exemplo (lançamento próprio na cópia da auditoria docs-aud-v23aw, vencimento 31/03/2026), mapa e Balanço com 7.588,13 €, imparidade 250,00 € em 2026, 4.044,07 € em 2027 e 7.588,13 € em 2028, resultado sem mudança; captura 01 refeita na auditoria. */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AY, 10/11/2026, master fa7915ea8, docs_demo_v23ay_test, porta 8505): dívida antiga criada por clique com um utilizador só com o perfil Contabilista (OD/2026/00139, D 2111 Padaria Aurora / C 2781, 1.000,00 €, 31/03/2026), depois de lidos os números dos outros artigos do lote; aviso do art. 123.º n.º 3 copiado do ecrã. Mapa relido: três clientes, 7.588,13 €, 1.000,00 € em Mais de 6 até 12 meses, imparidade 250,00 €, vencimento 31/03/2026. Passos 5 a 7 não repetidos (iguais aos do v23-AW). */}

@@ -1,0 +1,60 @@
+---
+id: so-o-contabilista-certificado-pode
+slug: /troubleshooting/so-o-contabilista-certificado-pode
+title: Aparece «Só o perfil «Contabilista certificado (assina, fecha períodos)» pode…»
+sidebar_label: «Só o perfil «Contabilista certificado…» pode…»
+sidebar_position: 5
+description: Confirmar as depreciações do mês, correr as verificações de auditoria e fechar o exercício são do perfil Contabilista certificado.
+keywords: [contabilista certificado, só o contabilista certificado, so o contabilista certificado, gestor fiscal, contabilista certificado ou gestor fiscal, confirmar depreciações, confirmar depreciacoes, lote de depreciações, verificações de auditoria, verificacoes de auditoria, fecho do exercício, fecho do exercicio, perfil]
+doc_id: DOC-0411
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-permissao, administration/empresa/contabilista-certificado, accounting-pt/ativos/processar-depreciacoes]
+---
+
+## Sintoma
+
+Uma operação que fecha ou confirma a contabilidade é recusada com uma mensagem que nomeia o perfil: «Só o perfil «Contabilista certificado (assina, fecha períodos)» pode…».
+
+## Mensagem
+
+Exemplos copiados da base de demonstração em português, com o perfil **Contabilista**:
+
+- Ao confirmar um lote de depreciações do mês:
+  > «Só o perfil «Contabilista certificado (assina, fecha períodos)» pode confirmar um lote de depreciações. Simule-o e peça-lhe que o confirme.»
+- Ao correr as verificações de auditoria de um exercício:
+  > «Só o perfil «Contabilista certificado (assina, fecha períodos)» pode correr as verificações de auditoria de um exercício. Peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que as corra.»
+
+No ecrã, o **Contabilista** não vê estes botões: em **Contabilidade › Fechar › Contabilidade do mês › Depreciações do mês** carrega em **Simular**, e o botão **Confirmar** só aparece ao **Contabilista certificado**. O menu **Fechar › Fecho do exercício** também não lhe aparece. As mensagens foram provocadas pela integração; a segunda também com o perfil **Gerência**.
+
+## Causas verificadas
+
+O perfil **Contabilista certificado** é o de quem assina a contabilidade. Fica com o que fecha ou confirma o que o **Contabilista** preparou: confirmar as depreciações, o fecho do exercício e as verificações de auditoria. O **Contabilista** prepara e simula.
+
+## O que confirmar
+
+1. Se o trabalho preparatório está feito (por exemplo, a simulação das depreciações do mês, com os valores conferidos).
+2. Quem é o contabilista certificado da empresa e se tem o perfil no fiscaldoo: [Como indicar o contabilista certificado responsável](/administration/contabilista-certificado).
+
+## Como resolver
+
+- **Peça ao contabilista certificado que confirme.** Deixe a simulação feita: ele abre o mesmo lote e carrega em **Confirmar** ([Como processar as depreciações do mês](/accounting-pt/processar-depreciacoes)).
+- **Se é o contabilista certificado da empresa:** o administrador escolhe o perfil **Contabilista certificado** no separador **Perfil** da sua ficha: [Como dar a cada utilizador o perfil certo](/administration/perfis-e-permissoes). Esse perfil inclui também o acesso **Responsável fiscal**.
+
+**Quem faz:** o contabilista certificado; ou o administrador, que dá o perfil.
+
+## Resultado esperado
+
+Com o perfil **Contabilista certificado**, o botão **Confirmar** aparece no lote de depreciações simulado e a operação passa.
+
+## Quando contactar o suporte
+
+- O utilizador tem **Contabilista Certificado / Gestor fiscal** no grupo **LOCALIZAÇÃO PT** dos **Ajustes avançados** e a mensagem continua.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com o lote ou o exercício em causa e a mensagem completa.

@@ -1,0 +1,116 @@
+---
+id: referencial-contabilistico
+slug: /accounting-pt/referencial-contabilistico
+title: Como escolher o referencial contabilístico e a categoria da entidade
+sidebar_label: Referencial contabilístico e categoria da entidade
+sidebar_position: 1
+description: Com o assistente Configurar a empresa, registar os valores que dão a categoria da entidade (micro, pequena, média ou grande), ver o enquadramento sugerido e escolher o referencial contabilístico da empresa, com o que muda no balanço e nas taxonomias.
+keywords: [referencial contabilístico, referencial contabilistico, enquadramento contabilístico, enquadramento contabilistico, enquadramento sugerido, configurar a empresa, categoria da entidade, microentidade, pequena entidade, SNC, SNC-ME, SNC-PE, NC-ME, ESNL, IFRS, normalização contabilística para microentidades, alterar referencial contabilístico, referencial sugerido, total do balanço, volume de negócios, número médio de trabalhadores, DL 158/2009, Controlo do Balanço]
+doc_id: DOC-0081
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/plano-de-contas/taxonomias, accounting-pt/relatorios/balanco, accounting-pt/relatorios/demonstracao-de-resultados]
+---
+
+## Para que serve?
+
+O **referencial contabilístico** é o conjunto de normas que a empresa segue: SNC (regime geral), SNC-PE (pequenas entidades), SNC-ME (microentidades), SNC-ESNL (entidades do setor não lucrativo) ou IFRS / IAS. Ele decide o modelo do [balanço](/accounting-pt/balanco) e da [demonstração de resultados](/accounting-pt/demonstracao-de-resultados) e o conjunto de [taxonomias](/accounting-pt/taxonomias) das contas no SAF-T. Sem referencial, o balanço e a demonstração de resultados não se mostram.
+
+A **categoria da entidade** (micro, pequena, média ou grande) calcula-se com os valores de cada exercício e serve para o fiscaldoo sugerir o referencial. A escolha é sempre de quem configura a empresa.
+
+Escolher o referencial ou registar os valores não cria lançamentos.
+
+## Quando utilizar?
+
+- Ao configurar uma empresa nova, antes de tirar o primeiro balanço. Se é uma microentidade, leia primeiro o aviso de «Antes de começar».
+- Quando a empresa muda de categoria (por exemplo, deixa de ser pequena entidade em dois exercícios seguidos) e o contabilista certificado decide mudar de referencial. A passagem a SNC-ME tem o mesmo aviso.
+
+## Onde encontrar?
+
+- **Contabilidade › Configurar › Geral › Configurar a empresa**, passo **2. Enquadramento contabilístico**: os valores do exercício, a **Categoria da entidade**, o **Enquadramento sugerido** e o **Enquadramento contabilístico**. Não precisa do modo de programador.
+- **Definições › Utilizadores e empresas › Empresas**, a empresa, separador **Localização PT**, grupo **REFERENCIAL CONTABILÍSTICO E INVENTÁRIO**: o resultado (**Referencial contabilístico**, **Categoria da entidade**, **Referencial sugerido** e **Referência de taxonomia do SAF-T**) e o botão **Alterar referencial contabilístico**, que muda só o referencial.
+
+## Antes de começar
+
+- Faz estes passos com o perfil de **administrador** (testado com esse perfil até ao último passo). Na demonstração, o perfil **Contabilista certificado** tem **Configurar a empresa** no menu **Configurar**, mas nem ele nem o **Contabilista** têm a aplicação **Definições**.
+- O contabilista certificado decidiu o referencial. <span className="fd-pending">Pendente de validação por contabilista certificado: que referencial a empresa deve seguir com a categoria calculada, e a partir de que exercício se muda (DL 158/2009, art. 9.º e 9.º-A).</span>
+- Tem os valores do último exercício fechado: **Volume de negócios do ano**, **Total do balanço** e **Número médio de trabalhadores**.
+- No exemplo, a Empresa Teste Portugal (COMMUNITY), com lançamentos de 2025 e 2026 e ainda sem referencial: o balanço dizia «O referencial contabilístico de “Empresa Teste Portugal (COMMUNITY)” não está definido…». Valores de 2025: 3.000.000,00 € de volume de negócios, 1.500.000,00 € de total do balanço e 20 trabalhadores.
+
+<HelpCallout type="nota" title="Ao passar a SNC-ME, algumas contas ficam por escolher">
+Com **SNC-ME (microentidades)**, o fiscaldoo dá a cada conta a linha do Anexo III. Uma conta que pode ir para mais do que uma linha fica por escolher, porque essa decisão é contabilística: até a tomar, a demonstração diz quais são (ver «Problemas frequentes»). Vale também para uma empresa nova, porque o plano de contas que o fiscaldoo instala é sempre o SNC. Marcar a caixa **Microentidade** na ficha da empresa, deixar o **Enquadramento contabilístico** vazio numa microentidade (o assistente usa o **Enquadramento sugerido**) ou mudar o **Referencial contabilístico** na ficha têm o mesmo efeito do botão **Alterar referencial contabilístico**.
+</HelpCallout>
+
+{/* Nota interna (DOCS-065, lote v19-DEF, master c643480c2): com o admin, Empresa Teste Portugal posta em SNC-ME pelo botão Alterar referencial contabilístico. B2-15 e PD-V2E-01 saíram com o ACC-206: a mensagem passou a nomear 32 contas (eram 317). As 32 receberam por RPC a 1.ª sugestão (só para testar: não são escolhas contabilísticas); o campo Taxonomia vê-se e edita-se no separador Portugal da conta. A DR ficou com valores (lucro 8.124,00 €) e o Balanço abriu, com o Controlo do Balanço dos 3.200,00 € descrito em «Problemas frequentes». A empresa nova foi confirmada no código, não no ecrã. */}
+
+## Como utilizar
+
+<StepByStep>
+
+1. Escolha a empresa no canto superior direito e abra **Contabilidade › Configurar › Geral › Configurar a empresa**. No passo **1. Identificação**, confira os dados da empresa e carregue em **Seguinte**. O assistente avisa que carregar em **Seguinte** não liga o Copiloto: fica desligado para esta empresa, e o assistente funciona sem ele. No exemplo, o **Ponto de partida** ficou em **Empresa nova**, a opção que vem marcada.
+2. No passo **2. Enquadramento contabilístico**, em **2. COMO A EMPRESA FAZ A CONTABILIDADE**, escreva o **Ano dos valores** (`2025`), o **Volume de negócios do ano** (`3000000`), o **Total do balanço** (`1500000`) e o **Número médio de trabalhadores** (`20`). Se a empresa é uma associação ou fundação, escolha também a **Forma jurídica**. A **Categoria da entidade** e o **Enquadramento sugerido** preenchem-se sozinhos: no exemplo, **Pequena entidade** e **SNC-PE (pequenas entidades)**. A tabela **PORQUE É QUE O ASSISTENTE PROPÕE ISTO** explica: «Com os valores de 2025 a empresa é uma «Pequena entidade»: uma empresa está numa categoria quando não ultrapassa dois dos três limites dessa categoria (limite do volume de negócios lido aqui: 8.000.000,00 €). O enquadramento é só uma sugestão; escolhe o utilizador.»
+3. Em **Enquadramento contabilístico**, escolha o referencial: **SNC (regime geral)**, **SNC-PE (pequenas entidades)**, **SNC-ME (microentidades)**, **SNC-ESNL (entidades do setor não lucrativo)**, **IFRS / IAS** ou **Outro**. Se o deixar vazio, o assistente usa o **Enquadramento sugerido**. Se o sugerido é **SNC-ME (microentidades)**, não deixe o campo vazio e não escolha SNC-ME: pare aqui e fale com o suporte (aviso de «Antes de começar»). Confira **O exercício termina em** e **Dia em que termina o exercício** (no exemplo, **Dezembro** e `31`).
+   ![Passo 2 do assistente Configurar a empresa: valores de 2025, Categoria da entidade Pequena entidade, Enquadramento sugerido SNC-PE e o campo Enquadramento contabilístico com SNC-PE (pequenas entidades) assinalado](/images/accounting-pt/referencial-contabilistico/01-enquadramento-contabilistico.png)
+4. Carregue em **Ir para o resumo**. Em **O QUE VAI SER CRIADO E ALTERADO**, a linha **Enquadramento contabilístico e exercício** mostra o antes e o depois (no exemplo, «Referencial contabilístico: -» e «Referencial contabilístico: SNC-PE (pequenas entidades)»). O resumo tem também as linhas dos outros passos, com as respostas que o assistente propôs. No exemplo: os valores da categoria de 2025, a periodicidade do IVA (**Mensal**), diários e séries de faturação em rascunho, o modo de formação, os avisos de cobrança, os prazos de clientes e fornecedores e a dimensão da empresa. As linhas **Sugestão (não aplicada)** não se aplicam. Se alguma linha não serve, carregue em **Voltar** até ao passo dela e mude a resposta.
+   ![Resumo do assistente: O que vai ser criado e alterado, com a linha Enquadramento contabilístico e exercício assinalada, de Referencial contabilístico vazio para SNC-PE (pequenas entidades)](/images/accounting-pt/referencial-contabilistico/02-resumo.png)
+5. Carregue em **Aplicar o que o resumo mostra** e, na janela **Confirmação** («Aplicar as alterações do resumo? Nada é validado, numerado nem enviado à AT.»), em **Confirmar**. O assistente passa a **15. Verificação final**, com a lista **O QUE FOI FEITO** e o resultado **Feito** em cada linha.
+6. Abra **Contabilidade › Consultar › Demonstrações financeiras › Balanço**. O título passa a ser o do referencial (no exemplo, **Balanço (SNC-PE, modelo reduzido)**).
+   Da primeira vez aparece também: «As linhas desta demonstração nunca tinham sido geradas para a empresa Empresa Teste Portugal, por isso foram geradas agora a partir da tabela de taxonomias da AT (versão AT-SVAT-2021-01, 29 linhas). Não precisa de fazer nada; para as refazer mais tarde procure «Contabilidade › Configurar › Plano e regras legais › Gerar linhas das demonstrações» na pesquisa de menus. (O modo programador tem de estar ligado para o ver; o menu é dos perfis «Contabilista (opera)» e «Contabilista certificado (assina, fecha períodos)»: se tiver outro perfil, peça a um utilizador com um deles.)»
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o referencial escolhe-se nos mesmos dois sítios, com o administrador: o assistente **Configurar a empresa** tem os mesmos passos, de **1. Identificação** a **7. Ativos**, com **2. Enquadramento contabilístico** e **Ir para o resumo**, e a ficha da empresa tem o separador **Localização PT**, com o grupo **REFERENCIAL CONTABILÍSTICO E INVENTÁRIO** e o botão **Alterar referencial contabilístico**. A ficha da empresa do Enterprise tem mais separadores (por exemplo **Intrastat**).
+
+{/* Nota interna (lote EE-02, DOCS-073 #4142, DEC-1794, master 7a46de91a, base Enterprise docs_ee_ee02_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): Administrador (utilizador criado na cópia com os grupos do administrador): Contabilidade › Configurar › Geral › Configurar a empresa abriu na Empresa Demonstração, Lda, com Seguinte e Ir para o resumo; Definições › Utilizadores e empresas › Empresas, separadores Informação geral … Localização PT … Intrastat. O assistente não se aplicou: a empresa da demonstração já tem referencial. Ver reports/LOTE_EE-02.md. */}
+
+## Resultado esperado
+
+- Na ficha da empresa (separador **Localização PT**), o **Referencial contabilístico** é o escolhido, a **Categoria da entidade** é a calculada e a **Referência de taxonomia do SAF-T** é a desse referencial. No exemplo, SNC-PE, **Pequena entidade** e **S - SNC base**.
+- Mais abaixo, a mesma ficha mostra **Microentidade** (por marcar: só fica marcada com o SNC-ME), **Classificação proposta** e **Classificação da entidade (confirmada)**. A **Classificação proposta** pode dizer outra categoria, porque se calcula de outra maneira: aplica os mesmos limites aos lançamentos da empresa nos dois exercícios anteriores (fechados ou não) e ao número de trabalhadores, e não aos valores que escreveu no passo 2. A **Categoria da entidade** vem desses valores ou, se o administrador a definiu à mão, da que ele escolheu (ver «Notas importantes»). No exemplo, a **Classificação proposta** diz **Microentidade**, porque a empresa de teste tem poucos lançamentos em 2025 (3.200,00 € de vendas), e a **Classificação da entidade (confirmada)** está vazia. O referencial segue a **Categoria da entidade**. A classificação proposta e a confirmada servem para propor a obrigação de inventário permanente.
+  {/* Nota interna (DOCS-035, 2.ª ronda da aud-v2e, NB2b2-03; ACC-207 #3516, DEC-1372): a ficha mostra duas categorias que não coincidem (l10n_pt_entity_category, de l10n_pt.company.size, e l10n_pt_entity_size_proposed, do módulo do inventário, calculada pelos lançamentos publicados dos dois exercícios anteriores). Lido no código e, no ecrã, pelo auditor da 2.ª ronda (Teste Portugal na 8101). Rever esta frase quando o ACC-207 entrar em master. */}
+- O balanço e a demonstração de resultados abrem no modelo do referencial. No exemplo, **Balanço (SNC-PE, modelo reduzido)** e **Demonstração de Resultados por Naturezas (SNC-PE, modelo reduzido)**.
+- Nenhum lançamento foi criado: a empresa do exemplo tinha 43 lançamentos antes e depois. Foi criado o resto do que o resumo listava (no exemplo, os diários **FRA**, **FTA** e **NCA**, as séries em rascunho, que ainda é preciso ativar com o código da AT, e o diário e a série de formação).
+
+## Notas importantes
+
+- **A sugestão não decide.** O **Enquadramento sugerido** é só isso: o referencial só muda quando se aplica o resumo (ou com **Alterar referencial contabilístico**). Com valores de dois exercícios, a categoria só muda quando dois exercícios seguidos o pedem. Na demonstração, com os valores de 2024 e 2025 de outra empresa, o produto disse em 2025: «Mantém-se a categoria anterior: a mudança exige dois exercícios consecutivos (DL 158/2009, art. 9.º-A).»
+- **Os limites dependem do ano dos valores.** Com os valores de 2025, o assistente usa os limites do DL 158/2009 na redação do DL 98/2015 (a tabela diz «exercícios de 2016 a 2025»). Para os exercícios de 2026 e seguintes, o produto usa os limites do DL 126-B/2025. No menu **Categoria da entidade** (o Administrador vê-o sem o modo de programador), o campo **Limites em vigor desde** mostra o início do exercício dos valores (por exemplo 01/01/2025), não a data em que esses limites passaram a valer. <span className="fd-pending">Pendente de validação por contabilista certificado: que limites se aplicam aos valores de cada exercício (DL 98/2015 e DL 126-B/2025).</span>
+- **A categoria pode ser definida à mão.** No menu **Categoria da entidade** há o campo **Categoria definida por um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)»**, que substitui a categoria calculada. Use-o só por decisão do contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: em que casos a categoria definida à mão substitui a calculada.</span>
+- **O assistente aplica tudo o que o resumo mostra.** Para mudar só o referencial de uma empresa já configurada, o administrador tem o botão **Alterar referencial contabilístico** na ficha da empresa, que pede o **Motivo**. A janela avisa que «a taxonomia das contas da empresa é recalculada (as suas escolhas manuais mantêm-se)».
+- **A variante do balanço não substitui o referencial.** A lista **Variante** do balanço deixa ver os outros modelos, mas eles só servem à empresa que segue esse referencial (ver [Como obter o balanço](/accounting-pt/balanco)).
+
+## Problemas frequentes
+
+### «O referencial contabilístico de … não está definido…»
+
+- **Sintoma:** no balanço ou na demonstração de resultados: «O referencial contabilístico de “Empresa Teste Portugal” não está definido, por isso esta demonstração não pode ser mostrada: sem ele as demonstrações financeiras sairiam vazias ou desequilibradas. Nada foi calculado nem exportado. Peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» ou ao administrador do sistema que o escolha em Definições › Utilizadores e empresas › Empresas › “Empresa Teste Portugal” › separador Localização PT › Referencial contabilístico (SNC, SNC-PE, SNC-ME - modelo NC-ME - ou SNC-ESNL - modelo NCRF-ESNL) e abra de novo a demonstração.»
+- **O que fazer:** escolha o referencial com o assistente (passos 1 a 5).
+
+### «A categoria da entidade não é conhecida…»
+
+- **Sintoma:** na ficha da empresa e na janela **Alterar referencial contabilístico**, «A categoria da entidade não é conhecida: registe os indicadores no menu «Categoria da entidade». Até lá o referencial escolhe-se à mão, sem sugestão.»
+- **O que fazer:** escreva os valores no passo 2 do assistente (passos 1 e 2). O Administrador vê o menu que a mensagem indica sem o modo de programador; o Contabilista certificado só com ele; o Contabilista e o Auditor / ROC não o veem.
+
+### «… ainda não se podem gerar: 32 conta(s) sem taxonomia…» depois de passar a SNC-ME
+
+- **Sintoma:** na demonstração de resultados: «As linhas desta demonstração não estão geradas para a empresa Empresa Teste Portugal e a geração automática não funcionou: As demonstrações financeiras de “Empresa Teste Portugal” ainda não se podem gerar: 32 conta(s) sem taxonomia, o código que põe a conta no Balanço e na Demonstração dos resultados (2691 Acionistas c/ subscrição, 26961 Empréstimos concedidos - empresa-mãe (CORRENTE), […] e mais 17). Abra cada uma destas contas no plano de contas, escolha a taxonomia e abra a demonstração outra vez.». Por baixo, a demonstração apresenta zero.
+- **Causa:** a empresa tinha o plano SNC e passou a SNC-ME, e estas contas podem ir para mais do que uma linha do Anexo III.
+- **O que fazer:** com o contabilista certificado, abra cada conta da lista no plano de contas e, no separador **Portugal**, escolha a **Taxonomia**: a tabela **Sugestões**, por baixo, mostra as que servem para essa conta. Carregue em **Escolher** na linha certa, ou escreva no campo o código (`M63`, ou só `63`) ou parte da descrição (por exemplo, `Quotas não liberadas`) e escolha da lista. O campo só oferece as taxonomias que começam por **M**: escrever `S1` dá «Sem registos». Com as contas tratadas, abra a demonstração outra vez: as linhas são geradas e os valores aparecem. Veja [Como atribuir as taxonomias SNC às contas](/accounting-pt/taxonomias).
+
+### «Controlo do Balanço em …: o Ativo (…) não é igual ao Capital próprio mais o Passivo…»
+
+- **Sintoma:** o balanço abre, mas com **Desequilibrado** e esta mensagem. No exemplo, depois de aplicar o resumo: «Controlo do Balanço em 31/12/2026: o Ativo (30.564,60) não é igual ao Capital próprio mais o Passivo (27.364,60); a diferença é 3.200,00. Nada foi ajustado. …», seguida de «1 conta(s) com saldo não têm rubrica no Balanço e ficam fora dos seus totais, pelo que o Ativo pode diferir do Capital próprio mais o Passivo (soma desses saldos: -3.200,00): 711 (-3.200,00). …».
+- **Causa verificada:** contas com saldo que o balanço não põe em nenhuma rubrica. No exemplo, as vendas de 2025 da empresa de teste (3.200,00 € na conta `711`) nunca foram apuradas no fecho desse exercício. A mudança de referencial não criou a diferença: mostrou-a.
+- **O que fazer:** veja as contas que a mensagem lista com o contabilista certificado. Uma conta sem taxonomia corrige-se como em [Como atribuir as taxonomias SNC às contas](/accounting-pt/taxonomias); um exercício anterior por apurar corrige-se no fecho desse exercício.
+
+{/* Nota interna (DOCS-065 req. 46421, lote v23-I, master 5228a94bd, docs_demo_v23i_test): depois do ACC-263, com o administrador na Empresa Teste Filial passada a SNC-ME por RPC (Referencial contabilístico na ficha; a referência de taxonomia passou a M): na conta 2691, «M63» e «63» acham a M63, «Quotas não liberadas» dá M57 e M63, «S1» dá «Sem registos»; as Sugestões têm o botão Escolher. A recusa da taxonomia S já não se provoca pelo campo, por isso saiu. */}
+
+{/* Nota interna (DOCS-035, correção da aud-v2e, 30/10/2026, base docs_demo_loteb2b_test na 8101, perfil administrador, por clique): NB2b-05 e NB2b-06. Empresa Teste Portugal (COMMUNITY), sem referencial e com 43 lançamentos (40 publicados): balanço com «O referencial contabilístico … não está definido…» (copiado); Comparar o plano com o SNC: nenhuma conta sem taxonomia. Assistente Configurar a empresa (grupo Geral, sem modo de programador): passo 2 com 2025 / 3.000.000 / 1.500.000 / 20 → Pequena entidade, SNC-PE; Enquadramento contabilístico SNC-PE; Ir para o resumo (17 linhas, 3 sugestões); Aplicar o que o resumo mostra → Confirmação → Confirmar → 15. Verificação final, tudo Feito. Depois: referencial pe, Referência de taxonomia «S - SNC base», categoria Pequena entidade (ficha da empresa); 43 lançamentos; 7 séries em rascunho (A2026 ×4, NCFRA2026, NCFTA2026, FORM2026). Balanço (SNC-PE, modelo reduzido) aberto com as linhas geradas na hora (29) e o Controlo do Balanço de 3.200,00 (711, 2025 por apurar: a DR mostra 3.200,00 de vendas em 2025). Demonstração de Resultados por Naturezas (SNC-PE, modelo reduzido) aberta. Filial (SNC-ME, deixada assim pelo produtor): mensagem do bloqueio copiada por inteiro com o administrador. A ficha da Teste Portugal mostra também «Classificação proposta: Microentidade» ao lado de «Categoria da entidade: Pequena entidade» (observação para o Gestor). Textos em inglês na nota da sugestão («Small entity», «small entities»): B2-16. O CC não tem o assistente em Configurar (PD-V2E-06, a confirmar no ACC-206). */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-BA, master ce51f2d47, docs_demo_v23ba_test, 10/11/2026, DEF-QA8-c-02): por clique com o administrador. O rótulo do campo foi lido em Contabilidade › Configurar › Plano e regras legais › Regras legais e referencial › Categoria da entidade; a mensagem do referencial saiu em Direção › Resultados › Balanço com a Empresa Teste Portugal escolhida (o nome da empresa no ecrã é «Empresa Teste Portugal»). */}

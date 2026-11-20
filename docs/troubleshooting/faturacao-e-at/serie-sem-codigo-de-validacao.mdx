@@ -1,0 +1,112 @@
+---
+id: serie-sem-codigo-de-validacao
+slug: /troubleshooting/serie-sem-codigo-de-validacao
+title: A série não tem código de validação da AT (ATCUD)
+sidebar_label: Série sem código de validação
+description: Porque a fatura não se confirma quando a série ainda não está ativa, porque uma série não se ativa sem o código de validação da AT e como registar o código.
+keywords: [código de validação, codigo de validacao, série sem código, serie sem codigo, ATCUD, série não ativa, serie nao ativa, ainda não está ativa, ainda nao esta ativa, não pode ser ativada sem um código de validação, nao pode ser ativada, Registar código de validação, registar codigo, código demasiado curto, codigo demasiado curto, 8 caracteres, Ir para as séries fiscais, comunicar série, comunicar serie, Portal das Finanças]
+doc_id: DOC-0332
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master d88933a51)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/certificacao/series-documentais, fiscal-core/at-e-saft/ligar-a-at, troubleshooting/faturacao-e-at/serie-ativa-em-falta-ou-repetida]
+---
+
+## Sintoma
+
+- Ao carregar em **Confirmar** numa fatura, abre-se **Ainda não é possível confirmar** e a fatura fica em **Rascunho**; ou
+- numa série em **Rascunho**, o Contabilista certificado carrega em **Ativar** e a série não fica ativa; ou
+- ao registar o código de validação, o fiscaldoo recusa o código.
+
+## Mensagem
+
+Na fatura (perfil **Administrativo**), quando o diário escolhido tem a série do ano mas ela ainda está em rascunho:
+
+> «Ainda não é possível confirmar
+> Falta uma coisa:
+> O diário «*Faturas (2.ª série)*» tem a série *REG2026* para *2026*, mas ainda não está ativa.
+> Cada documento é numerado por uma série comunicada à Autoridade Tributária; sem ela não é possível dar-lhe número.
+> Registe o código de validação que a Autoridade Tributária deu à série (Portal) e ative-a em Contabilidade › Configurar › Faturação certificada › Séries fiscais.»
+
+A janela tem os botões **Ir para as séries fiscais** e **Fechar**.
+
+![Janela Ainda não é possível confirmar: o diário tem a série REG2026 para 2026, mas ainda não está ativa, com o botão Ir para as séries fiscais](/images/troubleshooting/serie-sem-codigo-de-validacao/01-serie-nao-ativa.png)
+
+Na série, ao carregar em **Ativar** e confirmar (perfil **Contabilista certificado**):
+
+> «A série “*FT REG2026*” não pode ser ativada sem um código de validação com pelo menos 8 caracteres e uma data prevista de início. Comunique a série à AT e registe o código que ela devolve; depois ative.»
+
+![Janela Erro de Validação: a série FT REG2026 não pode ser ativada sem um código de validação com pelo menos 8 caracteres e uma data prevista de início](/images/troubleshooting/serie-sem-codigo-de-validacao/02-ativar-sem-codigo.png)
+
+Ao registar um código com menos de 8 carateres:
+
+> «O código de validação da série “*FT REG2026*” é demasiado curto: os códigos da AT têm pelo menos 8 caracteres. Copie o código completo devolvido pela AT.»
+
+![Janela Erro de Validação: o código de validação da série FT REG2026 é demasiado curto](/images/troubleshooting/serie-sem-codigo-de-validacao/03-codigo-curto.png)
+
+As três mensagens foram provocadas na base de demonstração.
+
+## Causas verificadas
+
+- **A série foi criada mas não foi comunicada à AT.** Uma série nasce sempre em **Rascunho**. Só fica ativa (**Ativa** na lista, **Ativo** no formulário) depois de ter o código de validação que a AT devolve e uma **Data prevista de início**. Até lá, não numera documentos.
+- **A série foi comunicada no Portal das Finanças, mas o código não foi registado no fiscaldoo.** A AT deu o código, mas a ficha da série continua com o **Código de validação** vazio.
+- **O código foi copiado incompleto ou com espaços e hífenes.** Os códigos da AT têm pelo menos 8 carateres, só letras e algarismos.
+
+O código de validação é a primeira parte do ATCUD de cada documento (o ATCUD é o código, um hífen e o número do documento). Por isso, sem código, a série não emite.
+
+## O que confirmar
+
+1. Em **Contabilidade › Configurar › Faturação certificada › Séries fiscais**, a coluna **Código de validação AT** e o **Estado da série** da série do diário e do ano da fatura. Na demonstração, a `FT REG2026` estava em **Rascunho**, sem código.
+2. Se a série já foi comunicada à AT (no fiscaldoo, com **Comunicar à AT**, ou no Portal das Finanças). Os campos **Comunicada em** e **Comunicada por** da ficha mostram-no.
+3. Se a fatura está no diário certo. Se escolheu por engano um diário que não usa, mude o **Diário** da fatura para o diário habitual e confirme.
+
+## Como resolver
+
+**Quem faz:** o Contabilista certificado (os perfis **Administrativo** e **Contabilista** chegam à lista pelo botão **Ir para as séries fiscais**, mas a série comunica-se e ativa-se com o Contabilista certificado).
+
+### A série ainda não foi comunicada
+
+Abra a série e carregue em **Comunicar à AT**. Leia o que vai ser enviado, marque **Confirmo que estes dados estão corretos e podem ser comunicados** e carregue em **Comunicar**. Quando a AT aceita, o código fica registado e a série fica **Ativa**. Os passos e o que fazer se a AT recusar estão em [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais).
+
+Para comunicar a partir do fiscaldoo, a empresa precisa das credenciais da AT: [Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at).
+
+<HelpCallout type="risco" title="A comunicação não se desfaz">
+A resposta da AT fica registada e a série comunicada não se apaga: uma série com código já não pode ser eliminada, só cancelada. Confira o identificador, o tipo de documento, o diário e o exercício antes de comunicar.
+</HelpCallout>
+
+### A série foi comunicada no Portal das Finanças
+
+1. Abra a série e carregue em **Registar código de validação (Portal)**.
+2. Em **Código de validação**, escreva o código exatamente como a AT o devolveu, sem espaços nem hífenes. Confira **Comunicada em** e, se tiver, junte o **Comprovativo (PDF)**.
+   Se o código tiver os algarismos «0» ou «1», a janela mostra um **Aviso**: «O código contém “0” ou “1”: a FAQ oficial diz que a AT nunca devolve estes algarismos num código de validação — confirme se foi copiado corretamente. É só um aviso (este pormenor não está no texto da Portaria): o assistente continua a permitir gravar.» Confira o código no comprovativo (por exemplo, uma letra «O» lida como zero) antes de registar.
+3. Carregue em **Registar**.
+4. Carregue em **Ativar** e, na janela **Confirmação** («Ativar esta série? A sua identidade deixa de poder ser alterada.»), em **Confirmar**.
+
+Depois de registado o código, o botão **Registar código de validação (Portal)** deixa de aparecer na série.
+
+### Depois de ativar
+
+Volte à fatura e carregue em **Confirmar**. A fatura recebe o número da série e o ATCUD.
+
+## Resultado esperado
+
+- Na lista **Séries fiscais**, a série passa a **Ativa** (no formulário, **Ativo**), com o **Código de validação AT** preenchido.
+- A fatura confirma-se e mostra o ATCUD, que começa pelo código de validação da série.
+
+Na demonstração, com o perfil **Contabilista certificado**, o código `DOCSXEKR` foi registado na `FT REG2026` por **Registar código de validação (Portal)**, a série foi ativada e ficou **Ativa** na lista. Depois, com o perfil **Administrativo**, a fatura que tinha sido recusada no diário **Faturas (2.ª série)** confirmou-se como `FT REG2026/1`, com o ATCUD `DOCSXEKR-1`.
+
+## Quando contactar o suporte
+
+- A AT aceitou a série (tem o comprovativo), mas o fiscaldoo diz que o código já pertence a outra série ou não o guarda.
+- A série tem código e **Data prevista de início**, e **Ativar** continua a ser recusado.
+- Precisa de corrigir um código de validação que já foi registado numa série ativa.
+
+## Informação a enviar
+
+- A empresa, a série (por exemplo `FT REG2026`) e o diário.
+- O texto completo da mensagem, copiado do ecrã.
+- O comprovativo da comunicação no Portal das Finanças, se a fez lá (sem senhas).
+- O perfil com que entrou.

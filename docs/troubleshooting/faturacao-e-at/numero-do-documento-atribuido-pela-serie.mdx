@@ -1,0 +1,147 @@
+---
+id: numero-do-documento-atribuido-pela-serie
+slug: /troubleshooting/numero-do-documento-atribuido-pela-serie
+title: "A fatura não pode ser publicada: o número tem de ser atribuído pela série fiscal"
+sidebar_label: O número tem de vir da série
+description: O que fazer quando uma fatura importada de um ficheiro já traz número e não se confirma, ou quando a importação é recusada por trazer o número ou o estado publicado.
+keywords: [não pode ser publicado, nao pode ser publicado, número tem de ser atribuído pela série, numero tem de ser atribuido pela serie, número que não vem de uma série, numero que nao vem de uma serie, não pode ser criado com número, nao pode ser criado com numero, não pode ser criado já publicado, nao pode ser criado ja publicado, importar faturas, importar faturas de um ficheiro, importação, importacao, ficheiro CSV, Excel, integração, integracao, série fiscal, serie fiscal, número da fatura, numero da fatura, Migração / Importação fiscal, migracao, está a ser usada por outro documento, esta a ser usada por outro documento]
+doc_id: DOC-0375
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master d88933a51)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/certificacao/series-documentais, fiscal-core/faturacao/emitir-uma-fatura-certificada, troubleshooting/faturacao-e-at/serie-ativa-em-falta-ou-repetida]
+---
+
+## Sintoma
+
+Acontece uma destas coisas:
+
+- uma fatura em rascunho, que veio de uma importação, já tem um número no topo (por exemplo `FT IMP26/3`) e, ao carregar em **Confirmar**, aparece a janela **Operação inválida**;
+- ao importar faturas de um ficheiro, a importação é recusada com «Erro na linha …» a dizer que o documento não pode ser criado com número;
+- um programa ligado ao fiscaldoo (uma integração) recebe a recusa de criar uma fatura com número ou já publicada.
+
+Numa empresa portuguesa, o número de uma fatura é dado pela série fiscal no momento em que a fatura é confirmada, junto com o ATCUD e a assinatura. Um número escrito à mão, ou trazido num ficheiro, não tem nenhum dos dois.
+
+## Mensagem
+
+Ao carregar em **Confirmar** numa fatura em rascunho que já tem número:
+
+> «O documento “Rascunho da Fatura *FT IMP26/3*” não pode ser publicado: o seu número tem de ser atribuído pela série fiscal do diário “*Vendas*” quando é publicado, mas já tem um número que não vem de uma série.»
+
+![Janela Operação inválida: o documento Rascunho da Fatura FT IMP26/3 não pode ser publicado, o seu número tem de ser atribuído pela série fiscal do diário Vendas](/images/troubleshooting/numero-do-documento-atribuido-pela-serie/01-numero-nao-vem-da-serie.png)
+
+Ao importar um ficheiro com as colunas do número e do diário, no botão **Teste** ou **Importar**:
+
+> «Erro na linha *1*: “Um documento do diário certificado ‘*Vendas*’ não pode ser criado com número: o número é atribuído pela série fiscal quando é publicado.”»
+
+![Ecrã de importação de faturas com o erro na linha 1: um documento do diário certificado Vendas não pode ser criado com número](/images/troubleshooting/numero-do-documento-atribuido-pela-serie/02-importar-com-numero.png)
+
+Numa integração que tenta criar a fatura já publicada:
+
+> «Um documento de uma empresa portuguesa não pode ser criado já publicado: crie-o em rascunho e confirme-o.»
+
+Raramente, ao confirmar:
+
+> «A série “*…*” está a ser usada por outro documento a ser publicado ao mesmo tempo. Tente de novo daqui a pouco.»
+
+<span className="fd-pending">Pendente de validação no ecrã: esta última mensagem só aparece quando dois documentos da mesma série são confirmados no mesmo instante, o que não se consegue provocar pelo ecrã da demonstração. O texto é o do produto.</span>
+
+As partes em itálico mudam com o documento. As três primeiras mensagens foram provocadas na base de demonstração: a 1.ª com o perfil **Administrativo**, a 2.ª numa importação feita pelo administrador e a 3.ª por uma integração com o utilizador do perfil **Administrativo**.
+
+## Causas verificadas
+
+- **A importação trouxe o número, mas não o diário.** Um ficheiro com a coluna do número (**Número**) e sem a coluna do diário é aceite: a fatura fica em rascunho, no diário certificado por omissão (**Vendas**), já com o número do ficheiro. A recusa só aparece ao **Confirmar**. Na demonstração, o ficheiro com o número `FT IMP26/3` e uma linha de **[KIT-CAN] Kit de canetas** foi importado com «1 registos importados com sucesso».
+- **A importação trouxe o número e o diário.** O fiscaldoo recusa a linha logo na importação (2.ª mensagem) e não cria nada.
+- **Um programa externo tentou criar a fatura com número ou já publicada.** A fatura já publicada é sempre recusada. A fatura com número é recusada quando o programa indica o diário; se não o indica, fica em rascunho com o número, e a recusa só aparece ao confirmar (o 1.º caso). Na demonstração, as recusas foram dadas sem criar nenhum documento, e um pedido com número e sem diário criou o rascunho `FT XPTO/2`, depois eliminado.
+- **Duas confirmações ao mesmo tempo na mesma série.** A segunda espera pela primeira e, se não conseguir, é recusada (4.ª mensagem).
+
+{/* Nota interna (DOCS-036, P-E1-15): a recusa «não pode ser criado com número» só verifica a criação quando o diário vem no pedido; uma importação sem a coluna do diário cria o rascunho com número no diário certificado por omissão, e o erro só aparece ao Confirmar. Ver LOTE_E1b. */}
+
+Uma coluna de estado com o valor publicado (`posted`) não publica nada: na demonstração, a fatura importada assim ficou em **Rascunho**, sem número e sem aviso.
+
+## O que confirmar
+
+1. O número no topo da fatura em rascunho, por baixo de **Fatura de Cliente**. Uma fatura que vai ser numerada pela série mostra **Rascunho**; se mostra um número, esse número veio do ficheiro ou foi escrito à mão.
+
+   ![Topo de uma fatura em rascunho com o número FT IMP26/3, que veio do ficheiro importado](/images/troubleshooting/numero-do-documento-atribuido-pela-serie/04-numero-no-rascunho.png)
+
+2. De onde veio a fatura. Se é uma venda nova, que nunca foi faturada, segue o primeiro caso de «Como resolver». Se é uma fatura já emitida noutro programa, segue o segundo.
+3. Quem pode importar. A importação de faturas exige a permissão **Migração / Importação fiscal**, que vem com o perfil **Contabilista certificado** (ou administrador do sistema). Na demonstração, os perfis **Administrativo** e **Contabilista** receberam, no botão **Teste**:
+
+   > «Não tem permissão para carregar registos fiscais a partir de um ficheiro: é necessário o perfil «Contabilista certificado (assina, fecha períodos)», que o seu utilizador não tem. As submissões e exportações oficiais estão limitadas às pessoas que a empresa autorizou para isso. Peça ao administrador que lhe atribua esse acesso, ou peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que o faça por si.»
+
+   ![Ecrã de importação com a recusa: não tem permissão para carregar registos fiscais a partir de um ficheiro](/images/troubleshooting/numero-do-documento-atribuido-pela-serie/03-importar-sem-permissao.png)
+
+## Como resolver
+
+### A fatura é de uma venda nova: tire o número e confirme
+
+Com o perfil **Administrativo** (ou outro que emita faturas):
+
+1. Abra **Faturação › Faturar › Faturas de clientes** e a fatura em rascunho com número.
+2. Carregue no número, no topo da fatura, e apague-o todo, até o campo ficar vazio.
+3. Carregue em **Guardar manualmente** (o ícone da nuvem, ao lado do nome da fatura). O topo passa a mostrar **Rascunho**.
+4. Confira o cliente, a data e as linhas.
+5. Carregue em **Confirmar**. A série do diário dá o número, o ATCUD e a assinatura.
+
+Na demonstração, a fatura importada com o número `FT IMP26/1` para a Papelaria Exemplo, Lda (com uma linha de 1 × Kit de canetas a 10,00 € + IVA 23 %, acrescentada no rascunho) ficou, depois destes passos, **`FT D26/47`**, com o ATCUD `DEMOFT2026-47`, 12,30 €. Os lançamentos são os de qualquer fatura (conferidos no razão):
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| 2111 Clientes gerais | 12,30 € | |
+| 711 Mercadorias | | 10,00 € |
+| 2433 IVA - Liquidado | | 2,30 € |
+
+Ao corrigir o ficheiro para as importações seguintes, retire a coluna do número: o fiscaldoo numera cada fatura quando ela é confirmada. Como emitir a fatura está em [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada).
+
+**Quem faz:** quem emite faturas (perfil **Administrativo**, **Contabilista** ou **Contabilista certificado**).
+
+### A fatura já foi emitida noutro programa: não a confirme
+
+<HelpCallout type="risco" title="Confirmar volta a faturar a mesma venda">
+Ao confirmar, o fiscaldoo emite uma fatura **nova**, com um número da sua série. Se a venda já foi faturada noutro programa, ficam duas faturas e o IVA liquidado duas vezes. Uma fatura confirmada já não se elimina: corrige-se com uma nota de crédito ou com a anulação. <span className="fd-pending">Pendente de validação por contabilista certificado: como trazer para o fiscaldoo as faturas emitidas noutro programa certificado (só para consulta e para o SAF-T) sem as voltar a emitir.</span>
+</HelpCallout>
+
+1. Não carregue em **Confirmar**.
+2. Elimine o rascunho: na fatura, abra o menu **Ações** (os três pontos ao lado do nome da fatura), carregue em **Eliminar** e, na janela **Adeus, registo!**, em **Eliminar**. Na demonstração, o perfil **Administrativo** eliminou assim o rascunho `FT IMP26/3`, sem usar nenhum número da série.
+3. Fale com quem está a fazer a migração e com o contabilista certificado antes de importar de novo. Os documentos certificados de outro programa têm um ecrã próprio, **Contabilidade › Configurar › Migração e importações › Migração de documentos certificados**: o administrador vê «Aqui aparecem as migrações de documentos certificados de outro sistema; cria-se uma com «Novo», escolhendo o ficheiro a importar.»; com o perfil **Contabilista certificado**, a lista também tem **Novo**.
+
+**Quem faz:** quem importou a fatura, com o contabilista certificado.
+
+{/* Nota interna (correção da aud-v2e, NE1b-02, 30/10/2026): ecrã Migração de documentos certificados visto na 8102 (docs_demo_lotee1c_test) com o administrador (texto com «Novo») e com o demo.gestor_contabilidade (lista sem Novo: «Quem tem permissão para criar acrescenta-os aqui.»). O procedimento é do DOC-0301, ainda por escrever: ligar quando existir. A marca do CC mantém-se. */}
+
+### A integração foi recusada
+
+Corrija o programa que envia as faturas: deve criá-las em rascunho, sem número e sem estado publicado, e confirmá-las depois, como se faz no ecrã. Nada foi criado com a recusa, por isso não há nada a apagar no fiscaldoo. Se o programa enviou a fatura com número mas sem diário, ela foi criada em rascunho com esse número: trate-a como no primeiro caso.
+
+{/* Nota interna (correção da aud-v2e, NE1b-01, 30/10/2026): PD-V2E-02 (integração com o perfil Faturação cria rascunho com número e sem journal_id num diário certificado; a guarda só olha para o diário do pedido) está no CERT-134b #3508, junto com o P-E1-15. Quando entrar em master, provar de novo e tirar a frase do rascunho com número. */}
+
+**Quem faz:** quem mantém a integração (suporte ou parceiro).
+
+### A série estava a ser usada ao mesmo tempo
+
+Espere uns segundos e carregue de novo em **Confirmar**. A fatura continua em rascunho e não perdeu nada.
+
+**Quem faz:** quem estava a emitir a fatura.
+
+## Resultado esperado
+
+- A fatura fica **Publicada**, com o número da série do diário (no exemplo, `FT D26/47`) e o ATCUD.
+- A importação seguinte, sem a coluna do número, cria rascunhos que mostram **Rascunho** no topo.
+- Nenhuma venda faturada noutro programa foi emitida de novo.
+
+## Quando contactar o suporte
+
+- Apagou o número, guardou, e a fatura continua a mostrar um número no topo.
+- A mensagem da série «a ser usada por outro documento» repete-se durante vários minutos.
+- Precisa de trazer faturas emitidas noutro programa e não sabe por onde.
+
+## Informação a enviar
+
+- A mensagem completa, copiada da janela ou do ecrã de importação.
+- O número que a fatura mostra no topo e o diário.
+- Se a fatura veio de uma importação (e as colunas do ficheiro, sem dados de clientes) ou de uma integração.
+- A empresa e o perfil com que entrou.

@@ -1,0 +1,82 @@
+---
+id: pagamentos-por-conta
+slug: /accounting-pt/pagamentos-por-conta
+title: Como calcular os pagamentos por conta do IRC
+sidebar_label: Pagamentos por conta do IRC
+sidebar_position: 3
+description: Calcular as três prestações dos pagamentos por conta do IRC a partir do Modelo 22 do ano anterior, pô-las no calendário fiscal e reduzir a terceira quando se justifica.
+keywords: [pagamentos por conta, pagamento por conta, PPC, pagamentos por conta do irc, prestações do irc, prestacoes do irc, IRC julho setembro dezembro, reduzir o 3.º pagamento, reduzir terceira prestação, reduzir terceira prestacao, pagamento especial por conta, PEC, campo 360, CIRC 105, CIRC 107]
+doc_id: DOC-0162
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 436524736)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/declaracoes/calendario-fiscal]
+---
+
+## Para que serve?
+
+Durante o ano, a empresa adianta ao Estado parte do IRC que vai pagar, em três prestações: os pagamentos por conta. O valor sai do IRC do ano anterior. O Odoo calcula as três prestações no Modelo 22 do ano, põe-nas no [calendário fiscal](/accounting-pt/calendario-fiscal) com a data-limite e, no fim do ano, soma o que foi pago no campo 360 do Modelo 22. <span className="fd-pending">Pendente de validação por contabilista certificado: pagamentos por conta e campo 360 do Modelo 22 (CIRC, art. 104.º e 105.º).</span>
+
+## Quando utilizar?
+
+- No princípio do ano, depois de o Modelo 22 do ano anterior estar preparado: para saber quanto e quando pagar.
+- Quando o calendário fiscal não mostra os pagamentos por conta do IRC do ano: aparecem só depois deste cálculo.
+- Antes de 15 de dezembro, se o lucro do ano for bem menor do que o do ano anterior e o contabilista certificado decidir reduzir ou não pagar a 3.ª prestação.
+- Não serve no primeiro ano de atividade: sem Modelo 22 do ano anterior não há pagamentos por conta (ver «Problemas frequentes»).
+
+## Onde encontrar?
+
+- **Contabilidade › Declarar › IRC › Declaração de IRC (Modelo 22)**: abra o Modelo 22 do ano; o botão **Calcular pagamentos por conta** está no topo e as prestações no separador **Pagamentos por conta**.
+- **Contabilidade › Declarar › IRC › O que há para fazer com o IRC?** › **Listas de apoio** › **Pagamentos por conta do IRC**: a lista de todas as prestações. Antes do cálculo fica em branco e não tem botão **Novo**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** (com ele fez-se todo o exemplo).
+- Existe o Modelo 22 do ano anterior, com o **IRC liquidado**, as retenções e o volume de negócios. No exemplo, o de 2025 da Empresa Demonstração, Lda: imposto de 5.136,67 € e volume de negócios de 279.000,00 €.
+- Para o ano em curso, abra o Modelo 22 com **Novo**: escolha o **Exercício** (`2026`); a **Data de início** e a **Data de fim** passam a `01/01/2026` e `31/12/2026` e o **Regime** fica **Regime geral** (as outras opções são **Regime simplificado**, **Grupo de sociedades** e **Organismo de investimento coletivo**). Grave. O Modelo 22 do ano em curso é provisório até ao fecho; aqui só serve para as prestações. O resto do Modelo 22 (correções fiscais, derramas, tributações autónomas) tem artigo próprio.
+
+## Como utilizar
+
+<StepByStep>
+
+1. No Modelo 22 de 2026, carregue em **Calcular pagamentos por conta**.
+   ![Topo do Modelo 22 de 2026 com o botão Calcular pagamentos por conta assinalado, ao lado de Calcular derramas e Sugerir deduções dos PEC](/images/accounting-pt/pagamentos-por-conta/01-botao-calcular.png)
+2. Abra o separador **Pagamentos por conta**. Há uma linha por prestação, com **Prestação**, **Data limite**, **Percentagem (%)**, **Imposto do período de referência**, **Montante**, **Pagamento**, **Pago** e **Estado**. No exemplo:
+   - **1.ª** a 31/07/2026, **2.ª** a 30/09/2026 e **3.ª** a 15/12/2026;
+   - **Percentagem (%)** 80,00 (o volume de negócios de 2025 é de 279.000,00 €) sobre o **Imposto do período de referência** de 5.136,67 €;
+   - **Montante** 1.370,00 € em cada uma, 4.110,00 € no total: 80 % de 5.136,67 € são 4.109,34 €, e cada terço (1.369,78 €) é arredondado por excesso ao euro.
+   ![Separador Pagamentos por conta com as três prestações de 1.370,00 € a 31/07, 30/09 e 15/12/2026, a 80 % sobre 5.136,67 €, e o total de 4.110,00 €, por baixo de Retenções na fonte (campo 359) e Pagamentos por conta efetuados (campo 360)](/images/accounting-pt/pagamentos-por-conta/02-prestacoes-calculadas.png)
+3. Confira o **Imposto do período de referência** com o Modelo 22 do ano anterior: o Odoo usa o IRC liquidado sem a derrama estadual e menos as retenções na fonte. A **Percentagem (%)** depende do volume de negócios desse ano (80 % no exemplo). <span className="fd-pending">Pendente de validação por contabilista certificado: base, percentagens, limite de volume de negócios e arredondamento (CIRC, art. 105.º).</span>
+4. Abra o [calendário fiscal](/accounting-pt/calendario-fiscal): passaram a existir as obrigações «Pagamento por conta de IRC - 1.ª prestação — julho 2026», «… 2.ª prestação — setembro 2026» e «… 3.ª prestação — dezembro 2026», com as mesmas datas-limite.
+5. Para reduzir a 3.ª prestação, abra a linha **3.ª** no separador e carregue em **Reduzir o 3.º pagamento**. A janela **Reduzir o 3.º pagamento por conta** mostra o **Valor calculado pela lei** (1.370,00 €), o **Novo valor** e o **Motivo**, com o aviso «Reduzir demasiado pode trazer juros compensatórios quando o valor por pagar excede 20% do imposto devido (CIRC art. 107.º).». Escreva o novo valor e o motivo e carregue em **Reduzir** só por decisão do contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: redução ou dispensa da 3.ª prestação e juros compensatórios (CIRC, art. 107.º).</span>
+
+</StepByStep>
+
+## Resultado esperado
+
+- O separador **Pagamentos por conta** tem as três prestações com o total de 4.110,00 € e o **Estado** de cada uma pela data de hoje: no exemplo, calculadas a 29/10/2026, a 1.ª e a 2.ª ficaram **Em atraso** e a 3.ª **A pagar**. A lista **Pagamentos por conta do IRC** mostra as mesmas três.
+- **Calcular pagamentos por conta** não faz nenhum lançamento: conferido, nenhum lançamento novo no razão.
+- O calendário fiscal tem as três obrigações. As de prazo passado ficam **Em atraso** (no exemplo, as de julho e setembro).
+
+## Notas importantes
+
+- **Pagar e registar o pagamento.** O pagamento faz-se no Portal das Finanças com a guia. Na contabilidade, o pagamento ao Estado vai à conta `241 Imposto sobre o rendimento`; depois, abra a prestação e escolha-o em **Pagamento**, para o **Pago** e o campo 360 o contarem. <span className="fd-pending">Pendente de validação no ecrã: o pagamento ao Estado não foi lançado, para não mudar o saldo do banco de outubro de 2026 que os artigos da reconciliação bancária usam.</span>
+- **Pagamento especial por conta.** Os pagamentos especiais por conta de anos anteriores ainda por deduzir estão em **O que há para fazer com o IRC?** › **Pagamento especial por conta**, e o botão **Sugerir deduções dos PEC** do Modelo 22 propõe a dedução. <span className="fd-pending">Pendente de validação por contabilista certificado: regime atual do pagamento especial por conta e dedução dos PEC por deduzir.</span>
+- **Pagamentos adicionais por conta.** A derrama estadual não entra na base destas prestações; os pagamentos adicionais por conta são outro cálculo do Modelo 22. <span className="fd-pending">Pendente de validação por contabilista certificado: pagamentos adicionais por conta (CIRC, art. 104.º-A e 105.º-A).</span>
+
+{/* Nota interna (DOCS-021, DOC-0162, defeito novo B1-33): as obrigações dos pagamentos por conta criadas pelo cálculo ficam «Pendente» com o prazo passado (julho e setembro de 2026), em vez de «Atrasada». Exemplo: Modelo 22 de 2026 (l10n_pt.irc.return 2) criado pelo Contabilista a 29/10/2026. A lista de apoio «Pagamentos por conta do IRC» vazia não tem mensagem (a ajuda da ação explica o cálculo, mas não aparece). Prestação «Não exigido» (imposto abaixo do limite, CIRC art. 104.º) não testada: a demonstração tem 5.136,67 €. */}
+
+## Problemas frequentes
+
+### «Não existe Modelo 22 do período anterior…»
+
+- **Sintoma:** ao carregar em **Calcular pagamentos por conta**, «Operação inválida» com «Não existe Modelo 22 do período anterior (que terminou em 31/12/2024), pelo que não há pagamentos por conta: o primeiro período de atividade não os tem (CIRC art. 105.º, n.º 1). Se a empresa já existia, abra primeiro o Modelo 22 do período anterior.» (no teste, no Modelo 22 de 2025, o primeiro da empresa).
+- **O que fazer:** se é o primeiro ano de atividade, não há pagamentos por conta. Se a empresa já existia, crie o Modelo 22 do ano anterior com os valores entregues e calcule de novo.
+
+### Os pagamentos por conta não aparecem no calendário fiscal
+
+- **Causa:** ainda não se carregou em **Calcular pagamentos por conta** no Modelo 22 do ano. **Gerar as obrigações** do calendário não os cria.
+- **O que fazer:** siga os passos 1 a 4.

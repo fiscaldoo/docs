@@ -1,0 +1,87 @@
+---
+id: metodos-de-pagamento
+slug: /fiscal-core/metodos-de-pagamento
+title: Como acrescentar um método de pagamento (MB WAY, cartão, outro)
+sidebar_label: Métodos de pagamento
+sidebar_position: 11
+description: Acrescentar ao diário dos recibos um método de pagamento novo (por exemplo MB WAY), com o mecanismo de pagamento do SAF-T, e escolhê-lo ao emitir o recibo.
+keywords: [método de pagamento, metodo de pagamento, métodos de pagamento, meio de pagamento, MB WAY, cartão, cartao, cartão de crédito, cartão de débito, numerário, mecanismo de pagamento SAF-T, PaymentMechanism, recibo, diário de recibos]
+doc_id: DOC-0030
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c2bf63c34)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/recibos-e-cobrancas/emitir-um-recibo, fiscal-core/recibos-e-cobrancas/pagamentos-online, fiscal-core/at-e-saft/gerar-o-saft]
+---
+
+## Para que serve?
+
+O método de pagamento diz **como** o cliente pagou: transferência, numerário, MB WAY, cartão. Fica no recibo e segue no SAF-T, com um código da lista oficial (o **mecanismo de pagamento SAF-T**).
+
+Cada diário tem a sua lista de métodos. Um método novo só aparece na janela **Emitir recibo** quando se escolhe o diário onde foi acrescentado.
+
+## Quando utilizar?
+
+- Quando a empresa passa a receber de uma forma nova, por exemplo MB WAY ou cartão no terminal.
+- Quando quer separar, nos recibos, formas que hoje entram todas como **Pagamento manual**.
+
+Este método só **regista** como o cliente pagou. Para o cliente pagar sozinho, pela página da fatura, veja [Como receber pagamentos online](/fiscal-core/pagamentos-online).
+
+## Onde encontrar?
+
+- Métodos: **Contabilidade › Configurar › Geral › Diários**, abra o diário e o separador **Pagamentos recebidos**.
+- Uso: na fatura emitida, botão **Emitir recibo**, campo **Método de Pagamento**.
+
+## Antes de começar
+
+- Para acrescentar o método (passos 1 a 5), o seu perfil é **Contabilista certificado** ou **Administrador**: são os perfis com o menu **Diários**. Os passos foram feitos com o **Contabilista certificado**.
+- Para usar o método ao emitir o recibo (passos 6 e 7) chega o perfil **Administrativo**, com que esses passos foram feitos.
+- Saiba que código do SAF-T o método leva (passo 4). Na dúvida, pergunte ao contabilista certificado.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › Geral › Diários** e abra o diário onde emite os recibos. Na demonstração é **Recibos (RG)**, o diário da série de recibos.
+2. Abra o separador **Pagamentos recebidos** e carregue em **Adicionar uma linha**.
+3. Em **Método de Pagamento**, escolha **Pagamento manual**. As outras opções da lista, **Eupago** e **ifthenpay**, são dos prestadores de pagamentos online. Em **Nome**, escreva o nome que quer ver no recibo (no exemplo, «MB WAY»).
+4. Em **Mecanismo de pagamento SAF-T**, escolha o código. A lista tem os 14 códigos oficiais, de **CC — Cartão crédito** e **CD — Cartão débito** a **NU — Numerário**, **TB — Transferência bancária ou débito direto autorizado** e **OU — Outros meios aqui não assinalados**. No exemplo, ficou **OU**. A coluna **Método de pagamento da fatura eletrónica B2G** preenche-se sozinha com o mesmo código.
+5. Grave.
+   ![Separador Pagamentos recebidos do diário Recibos (RG) com Pagamento manual (TB) e a linha nova MB WAY com o mecanismo OU — Outros meios aqui não assinalados](/images/fiscal-core/metodos-de-pagamento/01-linha-mb-way.png)
+6. **Use o método.** Abra a fatura emitida e carregue em **Emitir recibo**. Na janela, com o **Diário** **Recibos (RG)**, abra **Método de Pagamento**: a lista mostra **Pagamento manual** e **MB WAY**.
+   ![Janela Emitir recibo com o Diário Recibos (RG) e o Método de Pagamento MB WAY](/images/fiscal-core/metodos-de-pagamento/02-registar-pagamento.png)
+7. Escolha **MB WAY**, confira o valor e a data e carregue em **Criar Pagamento**. O resto do recibo é igual ao de [Como registar um pagamento recebido e emitir o recibo](/fiscal-core/emitir-um-recibo).
+
+</StepByStep>
+
+## Resultado esperado
+
+- No exemplo, o recibo da `FT D26/32` (António Carlos Sousa (ENI), 123,00 €) saiu como `RG D26/16`, de 02/11/2026, **Reconciliado**, com o método **MB WAY (Recibos (RG))**.
+- O método fica disponível em todos os recibos desse diário. Nos outros diários não aparece: acrescente-o também a cada diário onde o quer usar (por exemplo, o diário **Banco**, se regista ali recebimentos).
+
+## Notas importantes
+
+- **O código do SAF-T é obrigatório.** A ajuda do campo diz: «Obrigatório para exportar os pagamentos de um documento (fatura-recibo, venda a dinheiro) e de um recibo: um pagamento feito com um método sem mecanismo bloqueia a geração do SAF-T.» Não deixe o campo vazio num método que vai usar em recibos: sem ele, o SAF-T gerado fica **Inválido**, com um erro que abre o registo a corrigir.
+- **Qual o código do MB WAY?** A lista oficial não tem um código próprio para o MB WAY nem para outras aplicações de pagamento. O exemplo usa **OU**, e um pagamento com cartão bancário teria **CC** ou **CD**. <span className="fd-pending">Pendente de validação por contabilista certificado: o código do SAF-T para pagamentos MB WAY (OU, TB ou outro).</span>
+- **O que já vem preenchido.** Só os métodos habituais vêm preenchidos: o **Pagamento manual** dos diários **Banco** e **Recibos (RG)** vem com **TB**, e o dos diários de caixa com **NU**. Os métodos de um prestador de pagamentos em linha, como **Eupago** e **ifthenpay** no diário **Banco**, vêm **sem** mecanismo, porque o fiscaldoo não adivinha o código pelo nome do método: se os usar em recibos, preencha o código antes.
+- **O diário conta.** O recibo com número da série de recibos (`RG …`) sai do diário **Recibos (RG)**. Um recebimento registado no diário **Banco** fica com outro número (no exemplo, `PBNK1/2026/00040`, da `FT D26/31`) e não é o recibo da série certificada.
+
+{/* Nota interna (DOCS-046, lote v5-FC, master 6fb7ee1d4): passos 1-5 com demo.gestor_contabilidade nos diários Banco e Recibos (RG) (linha MB WAY, OU, em ambos); 6-7 com demo.faturacao: FT D26/31 pelo diário Banco (PBNK1/2026/00040) e FT D26/32 pelo Recibos (RG) (RG D26/16, MB WAY). Bloqueio provado na auditoria DOCS-065 (master c643480c2): recibo RG com Eupago sem mecanismo, e o SAF-T do mês ficou Inválido, com o erro a apontar o método. V5FC-02 saiu com o UX-098; Eupago e ifthenpay vazios são o comportamento previsto (SAFT-094: o código nunca se adivinha). */}
+
+## Problemas frequentes
+
+### O método novo não aparece na janela Emitir recibo
+
+- **Sintoma:** em **Método de Pagamento** só aparecem os métodos de sempre.
+- **Causa:** o método foi acrescentado a outro diário. Por exemplo, com o MB WAY acrescentado só ao **Recibos (RG)**, a janela com o diário **Banco** mostra apenas **Pagamento manual**, **Eupago** e **ifthenpay**.
+- **O que fazer:** confirme o **Diário** da janela e acrescente o método a esse diário (passos 1 a 5).
+
+### Não vejo o menu Diários
+
+- **Sintoma:** em **Contabilidade › Configurar › Geral** não há **Diários**.
+- **Causa:** o seu perfil é **Contabilista**. O **Administrativo** nem tem a aplicação **Contabilidade**.
+- **O que fazer:** peça ao **Contabilista certificado** ou ao **Administrador** que acrescente o método.
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo (os passos feitos antes com o utilizador de faturação da demonstração, que hoje tem o perfil Administrativo, com o mesmo grupo de faturação); menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); menu Diários só do Contabilista certificado e do administrador; Emitir recibo visto por clique na FT D26/30 com o Administrativo */}

@@ -1,0 +1,93 @@
+---
+id: taxas-de-cambio
+slug: /accounting-pt/taxas-de-cambio
+title: Como importar as taxas de câmbio do BCE
+sidebar_label: Taxas de câmbio do BCE
+sidebar_position: 6
+description: Carregar o ficheiro de taxas de referência do Banco Central Europeu, ver as taxas importadas por moeda e dia e consultar o registo de cada importação.
+keywords: [taxas de câmbio, taxas de cambio, importar câmbios, importar cambios, BCE, banco central europeu, eurofxref, moeda estrangeira, dólar, registo de importação, taxas de referência]
+doc_id: DOC-0119
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+---
+
+## Para que serve?
+
+As faturas e os movimentos em moeda estrangeira (por exemplo dólares) usam a taxa de câmbio do dia. O fiscaldoo importa as taxas de referência do Banco Central Europeu (BCE) **a partir de um ficheiro que guarda da página do BCE**: nada é descarregado da internet. Cada taxa fica guardada por dia e por moeda, e um dia que já exista não se duplica.
+
+## Quando utilizar?
+
+- No fim do mês, antes de fazer a reavaliação cambial (fecho do mês), para ter as taxas do último dia.
+- Quando lança uma fatura em moeda estrangeira e o dia não tem taxa.
+- **Não** espere que as taxas se atualizem sozinhas: a importação é manual, com o ficheiro XML do BCE (`eurofxref-daily.xml` para um dia, ou o ficheiro de histórico).
+
+## Onde encontrar?
+
+Com o **modo programador** ativo (o Administrador vê estes menus sem ele; os outros perfis não):
+- Importar: **Contabilidade › Configurar › Geral › Câmbios e arredondamentos › Importar câmbios**.
+- Registo das importações: **Contabilidade › Configurar › Geral › Câmbios e arredondamentos › Histórico da importação de câmbios**.
+- Taxas importadas: **Contabilidade › Consultar › Impostos e tesouraria › Taxas de câmbio**.
+
+## Antes de começar
+
+- O perfil que importa é o **Contabilista certificado** (testado). O **Contabilista** vê a lista **Taxas de câmbio**, sem botão **Novo**, e, com o modo de programador ativo, também tem **Importar câmbios** e **Histórico da importação de câmbios** em **Configurar › Geral › Câmbios e arredondamentos**: importa como o Contabilista certificado (testado).
+- Guardou o ficheiro XML do BCE, sem o alterar. A moeda tem de estar **ativa**: as moedas inativas são ignoradas.
+- O exemplo usa um ficheiro de teste com três dias (28, 29 e 30/10/2026) de dólar (USD) e libra (GBP), primeiro numa empresa com a moeda euro e depois numa empresa cuja moeda é o dólar.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › Geral › Câmbios e arredondamentos › Importar câmbios** (fora do administrador, com o modo programador ativo). Abre-se a janela **Importar taxas do BCE**, com a indicação «Nada é descarregado da internet», o campo **Ficheiro do BCE (XML)** e a opção **Substituir taxas que já existem com valor diferente?**.
+2. Em **Escolher ficheiro**, escolha o ficheiro XML do BCE. Deixe a opção de substituir desligada, a não ser que queira corrigir taxas já guardadas.
+   ![Janela Importar taxas do BCE com o ficheiro escolhido e o botão Importar assinalado](/images/accounting-pt/taxas-de-cambio/01-importar-cambios.png)
+3. Carregue em **Importar**. A janela mostra o **Resultado** e a ligação ao **Registo**. Na primeira importação do exemplo: «3 criadas, 0 atualizadas, 0 inalteradas, 0 mantidas com valor diferente; 1 moedas ignoradas (não ativas).» As 3 criadas são o dólar nos três dias; a libra foi ignorada porque a moeda não está ativa. Importar o mesmo ficheiro outra vez dá «0 criadas, 0 atualizadas, 3 inalteradas…».
+   ![Resultado da importação repetida: 0 criadas, 0 atualizadas, 3 inalteradas e 1 moeda ignorada, com a ligação ao registo da importação](/images/accounting-pt/taxas-de-cambio/02-resultado-da-importacao.png)
+4. Abra **Abrir o registo** (ou **Histórico da importação de câmbios**): cada importação fica com a data, o utilizador, o nome e a data de início e de fim do ficheiro, e os totais de **Criadas**, **Atualizadas**, **Inalteradas** e **Mantidas (valor diferente)**. Ninguém cria nem edita os registos à mão.
+5. Para ver as taxas, abra **Taxas de câmbio**. Para cada dia e moeda mostra **Unidades por moeda da empresa** e **Moeda da empresa por unidade**. No exemplo, a 30/10/2026 o dólar vale 1,09 por euro (ficheiro: 1.085), a 29/10/2026 1,08 e a 28/10/2026 1,08.
+
+6. **Taxa que já existe com valor diferente.** Importe um ficheiro em que um dia já guardado tem outro valor (no exemplo, o dólar de 30/10/2026 a 1,09 em vez de 1,085). Com a opção **Substituir taxas que já existem com valor diferente?** desligada, o resultado é «0 criadas, 0 atualizadas, 2 inalteradas, 1 mantidas com valor diferente; 1 moedas ignoradas (não ativas).» e a taxa guardada fica como estava. Com a opção ligada: «0 criadas, 1 atualizadas, 2 inalteradas, 0 mantidas com valor diferente; 1 moedas ignoradas (não ativas).»
+   ![Resultado com a opção de substituir desligada: 1 mantida com valor diferente](/images/accounting-pt/taxas-de-cambio/04-valor-diferente-mantida.png)
+   ![Resultado com a opção de substituir ligada: 1 atualizada](/images/accounting-pt/taxas-de-cambio/05-substituir-atualizada.png)
+7. **Empresa com outra moeda que não o euro.** A janela tem o campo **Empresa**. Numa empresa cuja moeda é o dólar, o ficheiro do BCE entra na mesma e a taxa fica guardada para o euro: em **Taxas de câmbio**, a 30/10/2026 a linha **EUR** mostra **Unidades por moeda da empresa** 0,92 e **Moeda da empresa por unidade** 1,09 (dólares por euro). Importar o mesmo ficheiro outra vez dá «0 criadas, 0 atualizadas, 3 inalteradas, 0 mantidas com valor diferente; 1 moedas ignoradas (não ativas).»
+   ![Taxas de câmbio da empresa em dólares: o euro a 0,92 unidades por dólar e 1,09 dólares por euro](/images/accounting-pt/taxas-de-cambio/06-taxas-empresa-em-dolares.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o ficheiro do BCE também se importa sem ligação à internet, mas por outras entradas: não há **Importar câmbios** nem **Histórico da importação de câmbios** (visto com um utilizador só com o perfil **Contabilista certificado** e outro só com o perfil **Contabilista**). Muda o seguinte:
+
+- Com o **modo de programador** ativo, os dois perfis têm em **Contabilidade › Configurar › Geral** as entradas **Importar taxas de câmbio** e **Taxas de câmbio**. Sem o modo de programador, nenhum deles tem entradas para as taxas.
+- **Importar taxas de câmbio** abre a janela do mesmo nome, com a indicação «Nada é descarregado da internet.», o campo **Ficheiro do BCE (XML)** e a opção **Substituir taxas que já existem com valor diferente?**. Com o ficheiro de teste do exemplo (dólar e libra de 28, 29 e 30/10/2026), **Importar** deu «3 criadas, 0 atualizadas, 0 inalteradas, 0 mantidas com valor diferente; 1 moedas ignoradas (não ativas).» e importar o mesmo ficheiro outra vez deu «0 criadas, 0 atualizadas, 3 inalteradas, 0 mantidas com valor diferente; 1 moedas ignoradas (não ativas).».
+- Não há registo das importações: a janela mostra só o resultado, sem **Abrir o registo**.
+- **Taxas de câmbio** é só de consulta, sem **Novo**, com as colunas **Data**, **Moeda** e **Unidades por moeda da empresa** (no exemplo, o dólar a 1,0850 em 30/10/2026). O perfil **Auditor / ROC** tem esta entrada, mas não a importação.
+- O **Contabilista certificado** tem também, com o modo de programador, **Moedas e taxas de câmbio**, que abre a lista **Moedas** com a **Última atualização da taxa** e a **Taxa Atual** de cada moeda. Em **Definições › Financeiro**, o administrador tem **Taxas de Câmbio Automáticas**, que atualiza as taxas por um serviço na internet (por exemplo **Banco Central Europeu**). Não foi experimentado, porque liga a um serviço externo.
+
+{/* Nota interna (lote EE-03, DOCS-073 #4142, DEC-1794, master e4dd4ae90, base Enterprise docs_ee_ee03_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0119. Contabilista certificado: Configurar › Geral só com Condições de pagamento, Configurar a empresa, Criar um diário, Diários, Impostos, Modelos de lançamento e Plano de contas. Administrador: Moedas (170 moedas, USD 1,080000 a 30/09/2026, nomes das moedas em inglês) e Definições › Contabilidade › Taxas de Câmbio Automáticas (Serviço, Intervalo, Próxima atualização; serviços Banco Central Europeu, xe.com e bancos centrais de outros países). O módulo de câmbios do fiscaldoo não se instala no Enterprise. Ver reports/LOTE_EE-03.md. Auditoria EE-03 (11/11/2026, master 7cd24fcc9, comboio 192 com o EEA-073 #4157, cópia Enterprise docs_ee_audee03_test da odoo20_ee_test, utilizadores só com o perfil indicado): com o modo de programador, Configurar › Geral mostra Importar taxas de câmbio e Taxas de câmbio ao Contabilista e ao Contabilista certificado (este também Moedas e taxas de câmbio, lista Moedas com Novo) e só Taxas de câmbio ao Auditor; sem o modo de programador, nenhum destes perfis tem entradas de taxas. O Contabilista certificado importou um ficheiro de teste (USD e GBP de 28, 29 e 30/10/2026; GBP inativa): 3 criadas e 1 moeda ignorada; o Contabilista repetiu: 0 criadas e 3 inalteradas. Sem registo das importações. Ver reports/AUDITORIA_EE-03.md. */}
+
+## Resultado esperado
+
+- Uma taxa por dia e por moeda ativa, e um registo da importação com os totais. O BCE publica as unidades de moeda estrangeira por 1 euro: com a empresa em euros, a taxa entra como foi publicada.
+- Este artigo não gera lançamentos: só grava taxas. As taxas usam-se nas faturas em moeda estrangeira e na reavaliação cambial.
+
+## Notas importantes
+
+- **O ecrã mostra as taxas com 2 casas decimais.** O ficheiro dizia 1.085 e a lista mostra 1,09. Para conferir a taxa exata, compare com o ficheiro.
+- **Só a moeda ativa entra.** Ative a moeda antes de importar, ou a taxa não é guardada («moedas ignoradas»).
+- **Taxas existentes.** Se o dia já tem a taxa com outro valor, a importação mantém a existente e conta-a em **Mantidas (valor diferente)**; só a substitui se marcar a opção (passo 6).
+- **O Contabilista também importa**, com o modo de programador ativo, pelo mesmo menu **Importar câmbios**.
+
+## Problemas frequentes
+
+### «Operação inválida: o ficheiro não é um ficheiro de taxas de referência do BCE»
+
+- **Sintoma:** ao carregar em **Importar**, aparece «Operação inválida. O ficheiro não é um ficheiro de taxas de referência do BCE: não é um ficheiro XML bem formado. Descarregue o eurofxref-daily.xml (ou o ficheiro de histórico) da página de estatísticas do BCE e carregue-o sem alterações.»
+- **Causa:** o ficheiro não é o XML do BCE, ou foi alterado.
+- **O que fazer:** guarde de novo o ficheiro da página do BCE e carregue-o sem o abrir nem o editar.
+
+{/* Nota interna (DOCS-046 corrigido, DOC-0119): refeito em docs_demo_v3a3cor_test (master f16f4a3e0, 01/11/2026), modo de programador. DEFEITO DE PRODUTO a registar no BNK-034: o Contabilista não tem «Importar câmbios» nem «Histórico da importação de câmbios» (só o Gestor de contabilidade), nem em modo de programador; o artigo descreve o ecrã de hoje. Empresa em dólares criada com o admin da demonstração (res.company «Empresa Dólares (exemplo), Lda», moeda USD, país EUA) e dada ao Gestor de contabilidade; importações feitas no ecrã com o Gestor (cookie de empresa 5). Ficheiros locais ecb_exemplo.xml e ecb_diferente.xml; sem rede. O resumo do DOC-0119 no mapa diz «importação automática»: o ecrã diz que é manual com ficheiro. Defeito V3A3-11 (baixo): taxas com 2 casas na lista. Não testado: ficheiro de histórico real; empresa vazia real. */}

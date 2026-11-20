@@ -1,0 +1,124 @@
+---
+id: importar-dados-mestres
+slug: /migration-toolkit/importar-dados-mestres
+title: Como importar contas, clientes e fornecedores
+sidebar_label: Contas, clientes e fornecedores
+description: Carregar de uma só vez o plano de contas, os clientes e os fornecedores do programa anterior, com os modelos portugueses de ficheiro e a validação do NIF.
+keywords: [importar contas, importar clientes, importar fornecedores, dados mestres, plano de contas, migração, migracao, modelo de ficheiro, NIF inválido, csv, xlsx, parceiros]
+doc_id: DOC-0296
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 461788688)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [migration-toolkit/importar/importar-saldos-de-abertura, migration-toolkit/planear/validar-a-migracao, accounting-pt/plano-de-contas/taxonomias]
+---
+
+## Para que serve?
+
+Carrega as contas do plano, os clientes e os fornecedores que vêm do programa anterior, em vez de os escrever um a um. O produto traz modelos de ficheiro com as colunas certas e recusa o que está mal, por exemplo um NIF com o dígito de controlo errado ou uma conta com um código que já existe.
+
+Este artigo cobre só as **fichas**. Os valores (saldos e faturas por liquidar) entram a seguir, nos [saldos de abertura](/migration-toolkit/importar-saldos-de-abertura) e nos [documentos em aberto](/migration-toolkit/importar-documentos-em-aberto), que dependem de as contas e os parceiros já existirem.
+
+## Quando utilizar?
+
+- Ao migrar de outro programa: contas, clientes e fornecedores são a primeira importação, antes de qualquer saldo.
+- Quando a empresa tem muitas fichas para criar de uma vez.
+- **Não use** para atualizar fichas que já existem: um cliente ou fornecedor com o NIF ou a referência de uma ficha que já existe é recusado no **Teste** (ver «Problemas frequentes»).
+
+## Onde encontrar?
+
+Em cada lista, na roda dentada junto ao título, escolha **Importar**:
+
+- Contas: **Contabilidade › Configurar › Geral › Plano de contas**.
+- Clientes: **Contabilidade › Lançar › Terceiros e ativos › Clientes**.
+- Fornecedores: **Contabilidade › Lançar › Terceiros e ativos › Fornecedores**.
+
+O ecrã **Importar** do menu **Lançar** não tem estas três importações: lá estão os lançamentos, os extratos, os ativos e os saldos de abertura.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**, ou é o administrador: são os que trazem a permissão «Migração / Importação fiscal» na demonstração. Com o **Contabilista**, o **Teste** e o **Importar** são recusados (ver «Problemas frequentes»); o Contabilista, aliás, nem vê o **Plano de contas** no menu.
+- Escolha a empresa certa no canto superior direito: as contas ficam na empresa ativa. Os clientes e fornecedores ficam disponíveis para todas as empresas.
+- O ficheiro é CSV ou XLSX, com cabeçalho na primeira linha. Descarregue o modelo na própria página de importação (passo 2) e **não mude os títulos das colunas**: é por eles que o ecrã sabe para que campo vai cada coluna.
+- Exemplo de contas, com dados inventados:
+
+  | code | name | account_type | reconcile | l10n_pt_taxonomy_code |
+  |---|---|---|---|---|
+  | `211190` | Clientes - loja online | `asset_receivable` | `True` | `10` |
+  | `622190` | Consultoria externa | `expense` | `False` | `357` |
+
+- Exemplo de clientes, com NIF inventados mas com o dígito de controlo certo:
+
+  | name | vat | street | zip | city | country_id | email | phone | property_payment_term_id/id | ref |
+  |---|---|---|---|---|---|---|---|---|---|
+  | Cliente Delta, Lda | `599999950` | Rua do Exemplo 10 | 4000-001 | Porto | Portugal | `geral@delta.invalid` | 220000001 | `account.account_payment_term_30days` | CL001 |
+  | Cliente Épsilon, Lda | `599999942` | Avenida Fictícia 25 | 1000-100 | Lisboa | Portugal | `geral@epsilon.invalid` | 210000002 | `account.account_payment_term_30days` | CL002 |
+
+  O modelo dos fornecedores é o mesmo, sem a coluna dos termos de pagamento.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a lista (por exemplo **Plano de contas**), carregue na roda dentada junto ao título e escolha **Importar**.
+   ![Roda dentada da lista Plano de contas aberta, com a opção Importar assinalada](/images/migration-toolkit/importar-dados-mestres/01-menu-importar.png)
+2. Na página de importação, antes de escolher o ficheiro, descarregue o modelo. Use o que diz **Modelo de contas SNC com taxonomia SAF-T** (CSV ou XLSX), ou, nos clientes e fornecedores, o **Modelo de parceiros com dados fiscais portugueses** (CSV ou XLSX). O primeiro da lista (**Modelo para o plano de contas** nas contas, **Modelo para contactos** nos clientes) é o modelo genérico do Odoo; o das contas não tem a coluna da taxonomia. Apague a linha de exemplo («APAGAR ESTA LINHA») e preencha uma linha por conta ou por parceiro.
+   ![Ligações dos modelos na página de importação, com o Modelo de contas SNC com taxonomia SAF-T em CSV assinalado](/images/migration-toolkit/importar-dados-mestres/02-modelos.png)
+3. Escolha o ficheiro em **Enviar** (ou arraste-o para a página) e confirme à direita que cada coluna ficou ligada ao campo certo (por exemplo `code` a **Código** e `account_type` a **Tipo**). Se o ficheiro tem acentos, confirme a **Codificação** (`utf-8` no modelo) e, se o CSV usa ponto e vírgula, mude o **Separador** (as opções são **Vírgula**, **Ponto e vírgula**, **Tabulação**, **Espaço** e **Outro**).
+   {/* Nota interna (lote v23-AH, DOCS-069 #4052, master 97b34fac3, docs_demo_v23ah_test): os nomes dos modelos de Clientes e as opções do Separador vistos por clique com o administrador (Contabilidade › Lançar › Terceiros e ativos › Clientes, roda dentada, Importar, ficheiro CSV inventado; nada importado). Vinham do guia congelado Migração/importar-dados-mestres.md. */}
+4. Carregue em **Teste**. Com problemas, o ecrã diz o que está mal e **nada é gravado**. Nas contas, o aviso vermelho em cima indica a linha («Erro na linha 3») e a coluna com o valor desconhecido mostra o valor e **Ver valores possíveis**. Corrija o ficheiro, carregue em **Carregar de novo** e escolha-o outra vez.
+   ![Teste de um ficheiro de contas com dois erros: código 2111 repetido, na linha 3, e o tipo «gasto» que não existe](/images/migration-toolkit/importar-dados-mestres/03-contas-erros.png)
+5. Sem erros, o **Teste** diz «Tudo parece válido.» Carregue em **Importar**.
+   ![Teste sem erros: a faixa «Tudo parece válido.» e o botão Importar](/images/migration-toolkit/importar-dados-mestres/04-teste-sem-erros.png)
+6. A lista **Registos importados** mostra o que foi criado e a notificação «2 registos importados com sucesso». Nas contas, a **Classe** (2 - Contas a receber e a pagar; 6 - Gastos) e a **Natureza** (Devedora) ficam preenchidas pelo código e pelo tipo.
+   ![Lista de registos importados com as contas 211190 e 622190, a classe e a natureza preenchidas](/images/migration-toolkit/importar-dados-mestres/05-contas-importadas.png)
+7. Repita para **Clientes** e **Fornecedores**, cada um na sua lista. Num ficheiro de clientes com um NIF errado, o **Teste** recusa só essa linha:
+   ![Teste de um ficheiro de clientes: o NIF 504000889 não é válido, na linha 2, com o motivo e o que fazer](/images/migration-toolkit/importar-dados-mestres/06-nif-invalido.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- **Contas:** as duas contas criadas na empresa ativa, com a classe e a natureza deduzidas do código e do tipo, e a taxonomia SAF-T da coluna. A conta `211190` fica reconciliável e a `622190` não.
+- **Clientes e fornecedores:** as fichas criadas com NIF validado, morada, e-mail e telefone. O telefone é normalizado: `220000001` fica `+351 22 000 0001`. Os clientes ficam com o grau de cliente e os fornecedores com o de fornecedor, e entram nas listas **Clientes** e **Fornecedores**.
+- **Nada de valores:** não há saldos nem lançamentos. A importação não acrescenta nenhum registo ao balancete.
+
+## Notas importantes
+
+- **Uma conta nova não é usada por ninguém sozinha.** Os clientes importados ficaram com a conta de clientes por omissão (`2111` Clientes gerais), não com a `211190` do ficheiro. Se quer clientes numa conta própria, escolha-a na ficha de cada cliente.
+- **Taxonomia SAF-T.** A coluna `l10n_pt_taxonomy_code` liga a conta ao código do SAF-T de contabilidade (ver [taxonomias](/accounting-pt/taxonomias)). Os códigos do exemplo (10 e 357) são os das contas equivalentes do plano de demonstração. <span className="fd-pending">Pendente de validação por contabilista certificado: escolha da taxonomia para contas novas fora do plano base.</span>
+- **Valores em texto.** O tipo da conta aceita o nome técnico (`expense`) e o nome que vê no ecrã («Despesas»); a reconciliação aceita `True`/`False` e «Sim»/«Não».
+- **Contagem das linhas.** «Erro na linha N» conta a partir da primeira linha de dados: N = 1 é a primeira conta ou o primeiro parceiro, sem contar o cabeçalho.
+- **Limites.** Divida os ficheiros muito grandes em partes. O **Teste** recusa as contas com um código que já existe e os clientes ou fornecedores com o NIF ou a referência de uma ficha que já existe.
+- **NIF.** O NIF é validado pelo dígito de controlo, sem confirmar que existe na AT.
+
+## Problemas frequentes
+
+### «Não tem permissão para carregar registos fiscais a partir de um ficheiro»
+
+- **Sintoma:** no **Teste** e no **Importar**, a faixa «Não tem permissão para carregar registos fiscais a partir de um ficheiro: é necessário o perfil «Contabilista certificado (assina, fecha períodos)», que o seu utilizador não tem. As submissões e exportações oficiais estão limitadas às pessoas que a empresa autorizou para isso. Peça ao administrador que lhe atribua esse acesso, ou peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que o faça por si.» (vista no ecrã com o perfil **Contabilista**, no **Teste** da importação de clientes)
+  ![Faixa vermelha de falta de permissão na página de importação, com o Contabilista](/images/migration-toolkit/importar-dados-mestres/07-sem-permissao.png)
+- **Causa:** o perfil não tem a permissão de migração.
+- **O que fazer:** peça a quem tem o perfil **Contabilista certificado** ou a um administrador que importe por si, ou que lhe atribua a permissão. Ver também [Não tenho permissão](/troubleshooting/sem-permissao).
+
+### «O NIF «…» não é válido»
+
+- **Sintoma:** «O NIF «504000889» não é válido. Porquê: o último algarismo (dígito de controlo) não corresponde aos outros oito. Como resolver: Confira o número no cartão de cidadão ou no documento de identificação fiscal e escreva-o de novo.»
+- **O que fazer:** corrija o NIF na linha indicada, no ficheiro, e carregue em **Carregar de novo**.
+
+### «Os códigos de conta devem ser exclusivos»
+
+- **Sintoma:** «Erro na linha 3: “Os códigos de conta devem ser exclusivos. Não é possível criar contas com os códigos duplicados: 2111”».
+- **O que fazer:** mude o código da conta no ficheiro, ou tire a linha se a conta já existe.
+
+### «O valor 'gasto' não foi encontrado no campo de seleção 'Tipo'»
+
+- **O que fazer:** use um dos valores de **Ver valores possíveis** (por exemplo «Despesas» ou `expense`).
+
+### «Já existe: “…” (NIF …, referência …)»
+
+- **Sintoma:** ao importar outra vez um ficheiro de clientes ou de fornecedores, o **Teste** e o **Importar** recusam cada linha que já existe, por exemplo: «Erro na linha 1: “Já existe: ‘Cliente Delta, Lda’ (NIF 599999950, referência CL001). Importá-lo outra vez criaria uma ficha repetida. Retire esta linha do ficheiro ou acrescente a coluna “ID externo” com o identificador externo do contacto existente para o atualizar em vez disso.”». Nada é gravado.
+- **Causa:** a importação não cria fichas repetidas: procura fichas com o mesmo NIF ou a mesma referência.
+- **O que fazer:** tire do ficheiro as linhas que já existem e importe só as novas. Para corrigir uma ficha que já existe, faça-o no ecrã do cliente ou do fornecedor.

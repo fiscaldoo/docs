@@ -1,0 +1,89 @@
+---
+id: fecho-das-ausencias
+slug: /people/fecho-das-ausencias
+title: Como fechar as ausências do mês para os salários
+sidebar_label: Fechar as ausências do mês
+sidebar_position: 8
+description: Conferir as férias e as ausências de um mês, resolver o que está por aprovar e exportar o resumo para Excel antes de processar os salários.
+keywords: [fecho das ausências, fecho das ausencias, fechar o mês, fechar o mes, ausências do mês, ausencias do mes, por aprovar, exportar para Excel, férias do mês, ferias do mes]
+doc_id: DOC-0254
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/ausencias-e-presencas/aprovar-ausencias, people/ausencias-e-presencas/registar-uma-ausencia]
+---
+
+## Para que serve?
+
+Antes de processar os salários convém saber que todas as férias e faltas do mês estão decididas. Este ecrã junta-as por trabalhador, aponta o que ainda está por aprovar e deixa exportar o resumo para Excel.
+
+## Quando utilizar?
+
+- O mês acabou e vai processar os salários.
+- Quer saber que pedidos ficaram por decidir.
+- Precisa de um resumo do mês, por trabalhador, para guardar.
+
+## Onde encontrar?
+
+**Pessoas › Férias e ausências › Fecho das ausências do mês**.
+
+## Antes de começar
+
+- O perfil é o do **Gestor de RH**.
+- Cada vez que abre o menu, o ecrã cria uma ficha nova («Fecho do mês das ausências #*n*»), com o mês anterior ao de hoje.
+- Os pedidos dos trabalhadores têm de estar feitos: veja [Como pedir férias ou outra ausência](/people/pedir-ferias).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Pessoas › Férias e ausências › Fecho das ausências do mês**. O ecrã traz **De** 01/10/2026 e **Até** 31/10/2026 (o mês anterior). Para outro período, escreva as datas nos campos e carregue em **Atualizar**.
+2. Deixe **Só quem teve ausências** assinalado para ver apenas quem tem ausências no período. Se quiser, restrinja por **Departamentos** ou por **Equipa de**.
+3. Carregue em **Atualizar**. Os contadores **Pedidos por aprovar** e **Assuntos a resolver** mostram o que falta; a lista **Trabalhadores** tem uma linha por pessoa com **Férias**, **Ausências justificadas**, **Ausências injustificadas**, **Sem tipo legal**, **Por aprovar** e **Estado**.
+   ![Ecrã de fecho do mês de outubro com um pedido por aprovar: contadores a 1, linha do trabalhador no estado Por aprovar e os botões Aprovar e Ver os pedidos](/images/people/fecho-das-ausencias/01-pedido-por-aprovar.png)
+4. Nos separadores **Pedidos** (cada pedido, com **Dias no período** e **Dias do pedido**) e **A resolver** (o problema, **O que aconteceu** e **O que fazer**), carregue em **Abrir** para ir ao pedido.
+5. Decida o pedido: carregue em **Aprovar** na linha do trabalhador (ou em **Aprovar todos**, no topo, que aprova o que pode e deixa escrito, em **Resultado da aprovação**, o que ficou por decidir e porquê) ou abra o pedido e decida lá (ver [Como aprovar pedidos de férias e de ausência](/people/aprovar-ausencias)).
+6. Volte ao fecho e carregue em **Atualizar**. A linha passa a **Em ordem** e os contadores a 0.
+7. Carregue em **Exportar para Excel**. Descarrega o ficheiro «Ausências 2026-10-01 a 2026-10-31.xlsx», com a folha **Resumo** (uma linha por trabalhador) e a folha **Detalhe** (um pedido por linha: **Tipo**, **De**, **Até**, **Dias no período**, **Dias do pedido**, estado).
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o fecho faz-se no mesmo ecrã e da mesma maneira: com o perfil **Gestor de RH**, **Fecho das ausências do mês** traz os mesmos campos (**De**, **Até**, **Só quem teve ausências**), os botões **Atualizar** e **Exportar para Excel** e as mesmas colunas.
+
+{/* Nota interna (lote EE-10, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): cópia Enterprise docs_ee_ee10b_test no portátil (pg_dump da odoo20_ee_test, -u dos módulos mudados até master e -i de hr_payroll, planning, hr_appraisal e hr_recruitment), porta 8504, guarda de rede ligada; utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): ee10_rh em Pessoas › Férias e ausências › Fecho das ausências do mês: De 01/10/2026, Até 31/10/2026, Só quem teve ausências, Departamentos, Equipa de, Atualizar, Exportar para Excel; colunas Trabalhador, Férias, Ausências justificadas, Ausências injustificadas, Sem tipo legal, Por aprovar, Estado (iguais às da cópia Community). Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee10_test (master e4dd4ae90, a do lote EE-10 interrompido) e com o texto do artigo. Ver reports/LOTE_EE-10.md. */}
+
+## Resultado esperado
+
+No exemplo, as férias de 12/10/2026 a 23/10/2026 (10 dias úteis) aprovadas dão **Férias** 10,00, **Estado** **Em ordem** e, no separador **Pedidos**, a linha «Férias anuais 12/10/2026 23/10/2026 10,00 10,00 Aprovado».
+
+![Linha do trabalhador em ordem, com 10,00 dias de férias, depois de aprovado o pedido](/images/people/fecho-das-ausencias/02-fecho-em-ordem.png)
+
+## Notas importantes
+
+- **Duas contagens.** **Dias no período** são os que caem entre **De** e **Até**; **Dias do pedido** são os do pedido todo.
+- **O ecrã não vê o que ainda ninguém pediu.** Uma ausência que o trabalhador não registou não aparece, nem como problema.
+- Carregue em **Atualizar** depois de cada decisão: os números só mudam ao atualizar.
+
+{/* Nota interna (DOCS-046, V4PPL-03, master 52d1dd3ad): o botão Aprovar do fecho, para Férias anuais em outubro/2026, devolve «Não existe o tipo de falta «FERIAS» em vigor em 12/10/2026…», e o botão Aprovar do próprio pedido (Pedidos de ausência) aprova; confirmar se é defeito do catálogo de tipos de falta (versão por data) ou do fecho. Retirar o problema frequente correspondente quando o cartão entrar em master. Provados na auditoria (NV4P): pedido entre dois meses, Aprovar todos, Departamentos e Equipa de. Não testados: outros perfis. */}
+
+## Problemas frequentes
+
+### «O fim do período é anterior ao início»
+
+- **Sintoma:** janela «Operação inválida»: «O fim do período é anterior ao início. Como resolver: corrija as datas.»
+- **O que fazer:** corrija **De** e **Até** (**De** tem de ser anterior ou igual a **Até**) e carregue em **Atualizar**.
+
+### Aprovar no fecho recusa as férias
+
+- **Sintoma:** com **Aprovar** na linha ou com **Aprovar todos**, em férias anuais, a janela diz «Não existe o tipo de falta «FERIAS» em vigor em 12/10/2026. O que aconteceu: o catálogo (CT art. 249.º) é versionado por data e nenhuma versão cobre esse dia. Como resolver: escolha outro tipo ou registe a versão em Salários › Configurar › Empresa › Faltas e feriados › Tipos de falta.»
+- **O que fazer:** carregue em **Abrir** no separador **Pedidos** e aprove no próprio pedido; depois **Atualizar**. Se a mesma recusa aparecer aí, o catálogo de **Tipos de falta** precisa de uma versão para a data: peça a quem tem o acesso extra **Administrador de Salários**.
+
+### Férias com menos de 10 dias seguidos não se aprovam
+
+- **Sintoma:** ao aprovar no pedido, «As férias de *nome* de 26/10/2026 a 30/10/2026 têm 5.0 dias úteis, menos do que os 10.0 dias consecutivos de um período (CT art. 241.º/8 …)».
+- **O que fazer:** veja [Como aprovar pedidos de férias e de ausência](/people/aprovar-ausencias): assinale **Interpoladas, acordadas por escrito** quando o acordo existir ou alargue o período. <span className="fd-pending">Pendente de validação por contabilista certificado: a regra do artigo 241.º/8 do Código do Trabalho que o ecrã cita.</span>

@@ -1,0 +1,171 @@
+---
+id: balcao
+slug: /fiscal-core/balcao
+title: Como vender ao balcão (fatura simplificada e fatura-recibo)
+sidebar_label: Vender ao balcão
+sidebar_position: 5
+description: Emitir no Balcão uma fatura simplificada (FS) ou uma fatura-recibo (FR) a um cliente que paga na hora, com o pagamento registado sozinho na caixa, e o que fazer quando o valor passa o limite da fatura simplificada.
+keywords: [balcão, balcao, vender ao balcão, venda ao balcao, fatura simplificada, factura simplificada, FS, fatura-recibo, fatura recibo, factura-recibo, FR, consumidor final, pago na hora, pronto pagamento, limite da fatura simplificada, 100 euros, 1000 euros, sujeito passivo, caixa, nova fatura, enviar 2.ª via, registar recebimento]
+doc_id: DOC-0025
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 25a465133)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/emitir-uma-fatura-certificada, fiscal-core/recibos-e-cobrancas/emitir-um-recibo, fiscal-core/at-e-saft/comunicar-faturas-a-at]
+---
+
+## Para que serve?
+
+Quando o cliente paga no momento da venda, não precisa de emitir uma fatura e depois um recibo. Emite um só documento já pago: a fatura simplificada (FS) ou a fatura-recibo (FR). O **Balcão** é a página de entrada da aplicação **Faturação** para isso. Também mostra o que está por cobrar e em atraso.
+
+Ao confirmar uma FS ou uma FR, o fiscaldoo dá-lhe número, ATCUD (código único do documento), código QR e assinatura, como numa fatura. E regista o pagamento sozinho, no diário **Caixa**: o documento fica logo **Pago**.
+
+## Quando utilizar?
+
+- Um particular paga ao balcão uma compra pequena e não precisa de fatura com o NIF dele: fatura simplificada, dentro do limite (veja «Notas importantes»).
+- O cliente paga na hora e quer uma fatura completa com o NIF dele, ou o valor passa o limite da fatura simplificada: fatura-recibo.
+- Para ver, no início do dia, quantas faturas estão por cobrar e quais passaram o vencimento.
+
+Não use a FS nem a FR quando o cliente paga mais tarde: emita uma [fatura](/fiscal-core/emitir-uma-fatura-certificada) e, quando ele pagar, o [recibo](/fiscal-core/emitir-um-recibo). As vendas na caixa registadora do ponto de venda têm o seu próprio caminho, na aplicação **Ponto de venda**.
+
+## Onde encontrar?
+
+**Faturação › Início › Balcão**
+
+## Antes de começar
+
+- O seu perfil é **Administrativo** ou **Contabilista**. Os passos foram feitos do princípio ao fim com o perfil **Administrativo**.
+- O que vai vender já existe como artigo: [Como criar um artigo com o IVA e o tipo certos](/fiscal-core/artigos).
+- A empresa tem as séries de faturas simplificadas e de faturas-recibo ativas para o ano. Na lista **Diário** do passo 3 têm de aparecer **Faturas simplificadas (FS)** e **Faturas-recibo (FR)**. Se não aparecem, peça ao Contabilista certificado que as crie: [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais).
+- Para uma fatura-recibo com o NIF do cliente, a ficha dele já existe: [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Faturação › Início › Balcão**. A página tem quatro botões (**Nova fatura**, **Novo cliente**, **Registar recebimento** e **Enviar 2.ª via**), três cartões (**Por cobrar**, **Em atraso** e **Guias de transporte**) e a lista **O que está pendente**. Carregue em **Nova fatura**.
+   ![Página Balcão com os botões Nova fatura, Novo cliente, Registar recebimento e Enviar 2.ª via, com Nova fatura assinalado](/images/fiscal-core/balcao/01-balcao.png)
+2. Abre-se uma fatura em rascunho. Carregue no campo **Diário**, que vem com **Vendas**, e escolha **Faturas simplificadas (FS)** ou **Faturas-recibo (FR)**. É o diário que decide o tipo de documento: com **Vendas**, sai uma fatura normal (FT), por pagar.
+   ![Lista do campo Diário aberta, com Faturas-recibo (FR) e Faturas simplificadas (FS), esta assinalada](/images/fiscal-core/balcao/02-escolher-o-diario.png)
+3. Em **Cliente**, deixe vazio se o cliente não dá NIF: ao guardar, o fiscaldoo põe **Consumidor final** (NIF 999999990). Se o cliente quer o NIF dele no documento, escreva parte do nome e escolha a ficha.
+4. Deixe **Data da Fatura** vazio, para ficar a data de hoje. **Data de Vencimento** e **Termos de Pagamento** não interessam aqui, porque o documento fica pago.
+5. No separador **Linhas da Fatura**, carregue em **Adicionar uma linha**, escolha o **Artigo** e escreva a **Quantidade**. Repita para cada artigo.
+6. Confira os totais: **Valor sem Impostos**, o IVA de cada taxa e o **Total**. Numa FS, o **Total** com IVA tem de ficar dentro do limite (veja «Notas importantes»).
+   ![Fatura simplificada em rascunho para Portugal 999999990, diário Faturas simplificadas (FS), com uma linha de 1 Kit de canetas a 10,00 € e IVA 23%, total 12,30 €](/images/fiscal-core/balcao/03-rascunho-fs.png)
+7. Receba o dinheiro e só depois carregue em **Confirmar**. O documento recebe o número, o ATCUD, o código QR e a assinatura, e o pagamento fica registado.
+8. Para entregar o documento ao cliente, carregue em **Imprimir** ou em **Enviar** (por e-mail).
+
+</StepByStep>
+
+**Exemplo.** No Balcão da Empresa Demonstração, Lda, a 29/10/2026: 1 `Kit de canetas` a 10,00 € + IVA 23 % = 12,30 €, com o diário **Faturas simplificadas (FS)** e o **Cliente** vazio, ficou `FS D26/4`. Com 2 kits (20,00 € + 4,60 € = 24,60 €) e o diário **Faturas-recibo (FR)**, ficou `FR D26/3`.
+
+### Os campos da fatura simplificada que mexem no imposto
+
+- **Outra Informação › FATURA SIMPLIFICADA › Sujeito passivo (este documento)**, com as opções **Sujeito passivo** e **Não é sujeito passivo**. Decide qual dos dois limites se aplica. Vazio, o fiscaldoo decide pelo NIF da ficha: sem NIF, ou com NIF começado por 1, 2, 3 ou 45, não é sujeito passivo; qualquer outro NIF é. Só o mude se souber que a regra do NIF não serve para este cliente.
+- **Sujeito passivo (fatura simplificada)**, na ficha do cliente: **Faturação › Clientes e artigos › Clientes**, abra o cliente, separador **Faturação**, grupo **DADOS FISCAIS PT**. Tem as mesmas opções e, preenchido, substitui a regra do NIF em todas as FS desse cliente. O campo **Sujeito passivo (este documento)** da fatura, quando preenchido, prevalece sobre o da ficha, só nesse documento. Na demonstração, o perfil **Administrativo** pode alterá-lo.
+  ![Ficha do cliente, separador Faturação, grupo Dados fiscais PT, com o campo Sujeito passivo (fatura simplificada) assinalado](/images/fiscal-core/balcao/09-cliente-sujeito-passivo.png)
+- **Retalhista ou vendedor ambulante**, na ficha do diário: **Contabilidade › Configurar › Geral › Diários**, diário **Faturas simplificadas (FS)**, separador **Certificação PT**. É ele que decide o limite de 1000 € (veja «Notas importantes»): marcado, as FS deste diário com bens vendidos a quem não é sujeito passivo vão até 1000 €; desmarcado, como na demonstração, o limite é sempre 100 €. Na demonstração, o perfil **Contabilista certificado** pode alterá-lo; o **Contabilista** não tem o menu **Diários** e, se tentar, é recusado. Não o marque sem o contabilista certificado confirmar que a empresa é retalhista ou vendedor ambulante.
+  ![Ficha do diário Faturas simplificadas (FS), separador Certificação PT, com a caixa Retalhista ou vendedor ambulante desmarcada e assinalada](/images/fiscal-core/balcao/08-diario-retalhista.png)
+- **Operações especiais** e o resto do formulário são os da fatura, explicados em [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada). Numa venda ao balcão comum ficam como vêm.
+
+### Os outros botões e cartões do Balcão
+
+- **Novo cliente** abre uma ficha de cliente nova.
+- **Registar recebimento** regista o pagamento de uma fatura emitida antes: [Como registar um pagamento recebido e emitir o recibo](/fiscal-core/emitir-um-recibo).
+- **Enviar 2.ª via** abre a lista das faturas: escolha a fatura e carregue em **Enviar e imprimir**.
+- **Por cobrar** e **Em atraso** contam as faturas da empresa que ainda não estão pagas. As linhas estão em **O que está pendente**, com o número, o cliente, o valor e o prazo.
+- **Guias de transporte** é só consulta. O próprio cartão diz: «Só consulta: a guia de mercadorias emite-se a partir de uma entrega, por quem tem acesso ao stock. A fatura com função de transporte emite-se aqui, na própria fatura.» O acesso ao stock não vem com nenhum valor do campo **Perfil**: dá-se em **Ajustes avançados** (veja [Como emitir uma guia de transporte e obter o código da AT](/fiscal-core/emitir-uma-guia-de-transporte)).
+
+**O que o Balcão não vê.** As FS e as FR não aparecem em **Por cobrar** nem em **O que está pendente**, porque ficam pagas ao confirmar. As vendas do ponto de venda também não. As contagens são só da empresa escolhida no canto superior direito.
+
+**Numa empresa sem faturas** (vista numa empresa vazia criada na demonstração), os cartões mostram 0, «Nada por cobrar» e «Nenhuma em atraso», e a lista diz «Ainda não foi emitida nenhuma fatura, por isso não há nada por cobrar.».
+
+![Lista O que está pendente da Empresa Auditoria Vazia, Lda com a mensagem Ainda não foi emitida nenhuma fatura, por isso não há nada por cobrar](/images/fiscal-core/balcao/10-balcao-empresa-vazia.png)
+
+## Resultado esperado
+
+- O documento passa a **Publicada**, com o número no título (`FS D26/4` no exemplo) e a etiqueta **Pago**.
+- O quadro **DOCUMENTO CERTIFICADO** mostra a **Série** (`FS D26`), o **ATCUD** (`DEMOFS2026-4`) e o **Hash**. O **Cliente** é **Consumidor final**, 999999990.
+- Em **Documentos ligados** aparece **Pagamentos 1**. Por baixo dos totais lê-se «Paga em 29/10/2026 12,30 €» e o **Valor em Dívida** fica a zero.
+
+![Fatura simplificada FS D26/4 publicada, com Pagamentos 1, o quadro Documento certificado com a série FS D26 e o ATCUD DEMOFS2026-4, cliente Consumidor final 999999990 e diário Faturas simplificadas (FS)](/images/fiscal-core/balcao/04-fs-emitida.png)
+
+- O pagamento chama-se `PCX/2026/00006`, no diário **Caixa**, com a data do documento e o **Método de Pagamento** **Pagamento manual**.
+- O PDF tem o ATCUD por baixo dos totais e o código QR. Lido com um leitor de QR, o código da `FS D26/4` traz o tipo `FS`, o NIF 999999990, a data 20261029, a base de 10,00, o IVA de 2,30 e o total de 12,30. O título do PDF diz o tipo de documento: «Fatura simplificada FS D26/4». Onde estaria o NIF do cliente, o PDF diz «Consumidor final», por baixo do título e no bloco do cliente, e não «NIF: 999999990»: o número 999999990 fica só no código QR, no SAF-T e no quadro **Cliente** do ecrã. Um documento emitido antes desta forma de imprimir (na demonstração, a `FS D26/3`, de 21/08/2026) continua a imprimir-se como foi emitido, com «NIF: 999999990». <span className="fd-pending">Pendente de validação por contabilista certificado: menção «Consumidor final» no lugar do NIF 999999990 na impressão (Despacho n.º 8632/2014, pontos 2.2.5 e 2.2.15).</span>
+
+{/* Nota interna (lote 96, CERT-151, master 78c1ec1ac, docs_demo_lote96_test, 18/11/2026): FS D26/4 emitida na cópia pela integração com o perfil Administrativo (cliente vazio, preenchido com Consumidor final, 10,00 € + 2,30 €, data 18/11/2026); PDF impresso por clique com o mesmo perfil e lido em texto: «Consumidor final» por baixo do título e no bloco do cliente, sem «NIF: 999999990»; QR (l10n_pt_qr_message) com B:999999990. 2.ª via da FS D26/3 impressa por clique: «NIF: 999999990» no bloco do cliente. O artigo de linha «Kit de canetas» do exemplo já não existe na mãe atual (usou-se o Candeeiro LED a 10,00 €): passos 1 a 5 não refeitos neste lote. */}
+
+As imagens são da base de demonstração: o ATCUD e o número do certificado são fictícios.
+
+{/* Nota interna (DOCS-020): lugar do vídeo VID-0025 (corrente própria DOCS-006). A secção «Vídeo demonstrativo» entra aqui quando o vídeo existir (guia editorial §3.1). */}
+
+### Para o contabilista: os lançamentos
+
+Conferidos no razão da demonstração, com o perfil **Contabilista** (separador **Linhas de lançamento** do documento e lançamento do pagamento). A 03/11/2026, uma FS igual (`FS D26/21`, pagamento `PCX/2026/00026`) deu as mesmas contas e os mesmos valores:
+
+| Documento | Conta | Débito | Crédito |
+|---|---|---|---|
+| `FS D26/4` | 2111 Clientes gerais | 12,30 € | |
+| | 711 Mercadorias | | 10,00 € |
+| | 2433 IVA - Liquidado | | 2,30 € |
+| `PCX/2026/00006` (pagamento da FS) | 111001 Caixa | 12,30 € | |
+| | 2111 Clientes gerais | | 12,30 € |
+
+A `FR D26/3` e o pagamento `PCX/2026/00007` geram as mesmas contas, com 24,60 €, 20,00 € e 4,60 €. O recebimento fica logo na conta 111001 **Caixa**, no diário **Caixa**.
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Limite da fatura simplificada">
+O fiscaldoo recusa confirmar uma FS acima do limite e diz qual se aplica. O limite conta-se no total com IVA: 1000 € para bens vendidos por retalhista ou vendedor ambulante a quem não é sujeito passivo; 100 € em todos os outros casos, incluindo um documento com uma linha de serviço (CIVA, art. 40.º n.º 1). Na demonstração, a série FS não é de retalhista: 1.230,00 € a **Consumidor final** e 123,00 € à Papelaria Exemplo, Lda foram recusados pelo limite de 100,00 €. Acima do limite, emita uma FR (ou uma fatura) pela operação inteira; o fiscaldoo não divide o documento. A FR não tem limite no fiscaldoo e não pede o NIF: na demonstração, a `FR D26/4` de 1.230,00 € a **Consumidor final** (999999990) foi emitida sem nenhum aviso. Se a lei pede a identificação do cliente a partir de certo valor, o fiscaldoo não o confere: antes de emitir uma FR de valor elevado sem o NIF do cliente, confirme com o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: limites em vigor, quem é retalhista, o que a fatura simplificada tem de conter e se uma FR a consumidor final acima de certo valor tem de identificar o cliente.</span>
+</HelpCallout>
+
+<HelpCallout type="atencao" title="Confirmar regista o pagamento">
+Ao confirmar, a FS e a FR ficam pagas, na caixa, pelo valor total. Confirme só depois de receber. O pagamento faz parte do documento: no pagamento, **Mudar para Rascunho** é recusado com «O pagamento “PCX/2026/00026” liquida FS D26/21, uma fatura simplificada (FS) ou fatura-recibo (FR): o pagamento faz parte do documento e não pode ser alterado, voltar a rascunho, ser cancelado, rejeitado nem desreconciliado sozinho, porque o documento ficaria «Pago» sem o dinheiro lançado. Para corrigir, emita uma nota de crédito do documento.» Se o cliente afinal não pagou, corrija com uma [nota de crédito](/fiscal-core/emitir-uma-nota-de-credito), como diz a mensagem, ou peça a quem tem o perfil **Contabilista certificado** que anule o documento: [Como anular uma fatura ou outro documento certificado](/fiscal-core/anular-uma-fatura).
+</HelpCallout>
+
+{/* Nota interna (NC-A27, CORRECOES_AUDITORIA4): continuam abertos F4-02 (FS aceite com 0% e 0% NS, a confirmar), F4-03 (recusa da ficha do diário em inglês ao Contabilista) e F4-04 (FR acima de 1000 € a Consumidor final sem aviso, decisão do CC). */}
+
+{/* Nota interna (lote v23-BL, DOCS-064 #3900, master c689f7580, docs_demo_v23bl_test, 12/11/2026, req. 46884): captura 02 refeita por clique com um utilizador só Administrativo (Faturação › Início › Balcão › Nova fatura, lista do campo Diário aberta, sem guardar): o diário que antes aparecia como «Faturas (série de teste da AT)» chama-se hoje «Faturas (2.ª série)», e «Point of Sale Closing» passou a «Fecho do Ponto de Venda». */}
+{/* Nota interna (DOCS-020, refeito a 03/11/2026 em master 436524736): F4-01, P-A33, P-A34 e P-A35 corrigidos e vistos no ecrã (FS D26/21, PCX/2026/00026 em 111001 Caixa com «Pagamento manual», PDF «Fatura simplificada FS D26/21», Mudar para Rascunho recusado no pagamento, Balcão vazio com a mensagem nova; captura 10 refeita). O exemplo do texto e das capturas 01 a 09 continua o de 29/10/2026. */}
+
+- Uma FS ou uma FR emitida já não se altera. Corrige-se com uma [nota de crédito](/fiscal-core/emitir-uma-nota-de-credito), se a operação aconteceu, ou anula-se, se não existiu, como uma fatura: [Como corrigir uma fatura](/fiscal-core/corrigir-uma-fatura).
+- Emitir não é comunicar. A FS e a FR emitem-se sem ligação à Autoridade Tributária e Aduaneira (AT) e entram na comunicação das faturas do mês: [Como comunicar as faturas à AT e ver o histórico](/fiscal-core/comunicar-faturas-a-at).
+
+## Problemas frequentes
+
+### «… é uma fatura simplificada (FS) de … com IVA, acima do limite legal de 100,00 € …»
+
+- **Sintoma:** ao carregar em **Confirmar** abre-se a janela **Operação inválida**: «O documento “Rascunho da Fatura” é uma fatura simplificada (FS) de 1.230,00 € com IVA, acima do limite legal de 100,00 € que lhe é aplicável (CIVA art. 40.º n.º 1, alínea b): … O documento não é dividido. Emita antes uma fatura (FT) ou uma fatura-recibo (FR) para a operação completa.»
+  ![Janela Operação inválida com a mensagem da fatura simplificada de 1.230,00 € acima do limite legal de 100,00 €](/images/fiscal-core/balcao/05-erro-limite-fs.png)
+- **Causa:** o total com IVA passa o limite da fatura simplificada que se aplica a este cliente e a estes artigos.
+- **O que fazer:** carregue em **Fechar**. No rascunho, mude o **Diário** para **Faturas-recibo (FR)** e carregue em **Confirmar**. O rascunho mantém as linhas.
+
+### «… tem a data …, anterior ao último documento já numerado na série “FS D26” …»
+
+- **Sintoma:** **Confirmar** abre **Operação inválida**: «O documento “(ainda sem número)” tem a data 01/09/2026, anterior ao último documento já numerado na série “FS D26” (FS D26/5, datado de 29/10/2026). Uma série certificada numera documentos por ordem cronológica; corrija a data ou use uma data igual ou posterior a 29/10/2026.»
+  ![Janela Operação inválida com a mensagem da data 01/09/2026 anterior ao último documento da série FS D26](/images/fiscal-core/balcao/06-erro-data-anterior.png)
+- **Causa:** numa série, os números seguem a ordem das datas, e já há um documento com data mais recente.
+- **O que fazer:** carregue em **Fechar**, apague a **Data da Fatura** (fica a de hoje) e confirme. Ao balcão, a data é a do dia da venda.
+
+### «Ainda não é possível confirmar … tem a série A2026 para 2026, mas ainda não está ativa»
+
+- **Sintoma:** numa empresa nova, com o diário **Fatura-recibo - Sede**, **Confirmar** abre «Ainda não é possível confirmar. Falta uma coisa: O diário «Fatura-recibo - Sede» tem a série A2026 para 2026, mas ainda não está ativa. …», com os botões **Ir para as séries fiscais** e **Fechar**. Visto na `Empresa Nova Exemplo, Lda`, criada na demonstração, que também não tem diário de faturas simplificadas.
+  ![Janela Ainda não é possível confirmar com o aviso de que a série A2026 do diário Fatura-recibo - Sede ainda não está ativa](/images/fiscal-core/balcao/07-erro-fr-sem-serie.png)
+- **Causa:** a série das faturas-recibo ainda não tem o código de validação da AT.
+- **O que fazer:** carregue em **Fechar**; o documento fica em rascunho. Peça ao Contabilista certificado que registe o código e ative a série: [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais).
+
+### «… não pode ser uma fatura simplificada (FS): tem um imposto isento …»
+
+- **Sintoma:** **Confirmar** abre **Operação inválida**: «O documento “Rascunho da Fatura” não pode ser uma fatura simplificada (FS): tem um imposto isento por exportação, transporte internacional ou transmissão intracomunitária (M05, M06, M16). São isenções de operações que podem estar localizadas em Portugal, não prova de que o IVA não é devido cá, e exigem o cliente identificado. Emita uma fatura (FT) ou uma fatura-recibo (FR).»
+- **Causa:** o cliente é de outro país (na demonstração, um cliente de Espanha e outro dos Estados Unidos: o fiscaldoo trocou sozinho o IVA de 23 % pela taxa isenta do país), ou escolheu numa linha uma taxa isenta como **0% EX**. A FS não serve para estas vendas.
+- **O que fazer:** carregue em **Fechar**, mude o **Diário** para **Faturas-recibo (FR)** (ou **Vendas**, se o cliente paga depois), confirme que a ficha do cliente tem o NIF e o país, e confirme.
+- **Recusas parecidas, com o Consumidor final:** com a taxa **0% EU S**, «… usa uma taxa de isenção intracomunitária, mas o cliente “Consumidor final” não está estabelecido noutro Estado-Membro da UE (país: Portugal) …»; com uma taxa de autoliquidação (por exemplo **0% AUT sucata**), «… usa uma taxa de autoliquidação (…) mas o parceiro não tem NIF ou é consumidor final (999999990) …». Em ambos os casos, escolha a taxa certa para o cliente (para um particular português, a taxa normal ou reduzida). As taxas **0%** e **0% NS** (não sujeito) foram aceites numa FS ao **Consumidor final** na demonstração: não as use ao balcão sem o contabilista certificado confirmar. <span className="fd-pending">Pendente de validação por contabilista certificado: quando uma FS pode levar uma taxa de 0 % e com que motivo de isenção.</span>
+
+### O diário de faturas simplificadas não aparece na lista
+
+- **Causa:** a empresa não tem série de faturas simplificadas. No assistente da empresa nova, a fatura simplificada não vem marcada nos documentos que a empresa emite (vêm a fatura-recibo, a fatura, a nota de crédito, a guia de transporte e os outros recibos).
+- **O que fazer:** use uma fatura-recibo, ou peça ao Contabilista certificado que crie a série das faturas simplificadas: [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais).
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): texto do cartão Guias de transporte lido no Balcão com um utilizador só Administrativo. */}

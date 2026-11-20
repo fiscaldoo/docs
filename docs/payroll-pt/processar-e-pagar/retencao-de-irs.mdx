@@ -1,0 +1,106 @@
+---
+id: retencao-de-irs
+slug: /payroll-pt/retencao-de-irs
+title: Como se calcula a retenção de IRS nos salários
+sidebar_label: Retenção de IRS
+sidebar_position: 5
+description: De onde vêm a tabela, a taxa e a parcela a abater do IRS retido em cada recibo, que dados do trabalhador mudam o cálculo e como conferir e corrigir uma retenção.
+keywords: [retenção de IRS, retencao de IRS, IRS retido, tabelas de retenção, tabelas de retencao, taxa de IRS, parcela a abater, dependentes, casado único titular, casado unico titular, IRS Jovem, IFICI, taxa de retenção superior, corrigir IRS retido, redução de novembro, reducao de novembro]
+doc_id: DOC-0204
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7a46de91a)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/recibo-de-vencimento, payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/declarar/dmr]
+---
+
+## Para que serve?
+
+Em cada recibo, o fiscaldoo retém o IRS sozinho: escolhe a tabela de retenção pelo perfil de IRS do trabalhador, aplica a taxa e a parcela a abater do escalão da remuneração, desconta os dependentes e arredonda. Este artigo mostra onde se vê cada um destes valores, que dados do trabalhador os mudam e como conferir a conta.
+
+## Quando utilizar?
+
+- O trabalhador pergunta porque lhe retiveram aquele valor.
+- O IRS de um mês é diferente do mês anterior sem o salário ter mudado.
+- O trabalhador entregou uma declaração nova (casamento, um filho, opção por uma taxa superior, IRS Jovem).
+- Foi retido IRS a mais ou a menos num recibo já validado.
+
+## Onde encontrar?
+
+- No recibo: **Salários › Processar › Recibos de vencimento** › abrir o recibo › separador **Segurança Social e IRS** › bloco **Retenção de IRS**.
+- O perfil de IRS do trabalhador: **Salários › Preparar › Trabalhadores e contratos › Histórico de retribuição** › abrir a linha do trabalhador › separador **Folha de Salários** › **Declaração de IRS** e **Opções e pagamento**.
+- As tabelas publicadas: **Salários › Configurar › Segurança Social e IRS › Tabelas de retenção de IRS** (só o **Administrador de Salários**).
+
+## Antes de começar
+
+- Para ler o recibo e o perfil de IRS, o seu perfil é **Processador de salários**, com ou sem o acesso extra **Administrador de Salários**. Para mudar o perfil de IRS do trabalhador, precisa do acesso extra **Administrador de Salários**. Para corrigir o IRS de um recibo validado (**Corrigir o IRS retido**), precisa do acesso extra **Administrador de Salários**: só com o perfil **Processador de salários**, o recibo validado não tem esse botão.
+- O perfil de IRS do trabalhador está preenchido. Sem ele, a configuração da empresa traz por omissão «Nada se presume: não se calcula IRS enquanto não existir o perfil de IRS do trabalhador».
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra o recibo do trabalhador e o separador **Segurança Social e IRS**.
+2. Em **Retenção de IRS**, confira os dados que o recibo usou: **Data de pagamento (IRS)** (editável enquanto o recibo está em Rascunho; vazia, vale a data-limite do pagamento, o último dia útil do mês), **Tabela de retenção na fonte de IRS**, **Estado civil (IRS)**, **Dependentes**, **Dependentes com deficiência de 60 % ou mais**, **Cônjuge com deficiência de 60 % ou mais**, **Pensionista deficiente das Forças Armadas** e **Sem retenção de IRS (declarado expressamente)**.
+3. Confira o cálculo: **Base de IRS (R)**, **Escalão de IRS aplicado**, **Taxa marginal aplicada (%)** (com cinco casas: 22,77000), **Parcela a abater** (289,47000), **IRS retido** e **Taxa efetiva (%)**.
+4. Leia o texto **Como foi calculado?**, por baixo, que está sempre visível neste bloco, para ver a conta completa: a tabela e o despacho que a publicou, o escalão, a dedução por dependentes, as reduções do mês e o arredondamento.
+   ![Bloco Retenção de IRS do recibo de novembro de Ana Margarida Pinto: tabela III do Continente 2026, casado único titular, 2 dependentes, base 2.400,00, IRS retido 85,00](/images/payroll-pt/retencao-de-irs/01-retencao-de-irs-no-recibo.png)
+5. Se um dado do trabalhador estiver errado (estado civil, dependentes, titularidade), corrija-o numa versão nova do contrato, a partir do mês seguinte (ver [Como alterar o salário de um trabalhador](/payroll-pt/alterar-o-salario), que usa a mesma versão nova), e recalcule o lote do mês, se ainda não estiver validado.
+
+</StepByStep>
+
+### Os dados do trabalhador que mudam a retenção
+
+No separador **Folha de Salários** da ficha:
+
+- **Declaração de IRS:** **Residência fiscal** (decide as tabelas do Continente, dos Açores ou da Madeira), **Estado civil (IRS)**, **Dependentes**, **União de facto?**, **Declaração «casado, único titular»**, **O cônjuge ou unido de facto tem rendimentos sujeitos a imposto** (decide entre «casado, único titular» e «casado, dois titulares») e a **Data da declaração do trabalhador**. <span className="fd-pending">Pendente de validação por contabilista certificado: a tabela que cada combinação destes campos escolhe.</span>
+- **Opções e pagamento:** **IRS Jovem: ano do primeiro benefício**, **Opção por uma taxa de retenção superior**, **Remuneração anual variável estimada**, **Rendimento de pensões (categoria H)**, **Regime IFICI (20 %)** e **Reter IRS sobre rendimentos em espécie (a pedido do trabalhador)**.
+
+A tabela não se escolhe à mão: o recibo diz «Tabela escolhida automaticamente pelo perfil de IRS do trabalhador em vigor em *data*».
+
+**Exemplo.** Ana Margarida Pinto (casada, único titular, 2 dependentes, Continente) ganha 2.400,00 €.
+
+- **Outubro de 2026:** tabela III, escalão «Até 2.773,00 €», taxa 22,77 %. 2.400,00 € × 22,77 % − 289,47 € − 2 × 42,86 € = 171,29 €, arredondado à unidade de euro inferior: **171,00 €** retidos.
+- **Novembro de 2026:** a mesma conta dá 171,29 €, mas **Como foi calculado?** explica: «Pago em 30/11/2026: redução de novembro de 2026, retém-se só 50,00 % do montante das tabelas (171,29 € → 85,645 €; Despacho n.º 12523-A/2026, de 14 de outubro, …)». Arredondado: **85,00 €** retidos.
+
+O subsídio de alimentação (129,15 €) não entra na base de IRS de nenhum dos meses. <span className="fd-pending">Pendente de validação por contabilista certificado: tabelas de 2026 (Despacho n.º 233-A/2026), redução de novembro de 2026 (Despacho n.º 12523-A/2026), dedução de 42,86 € por dependente, arredondamento à unidade inferior (CIRS art. 99.º-E) e limite de isenção do subsídio de alimentação.</span>
+
+Ler e conferir a retenção não gera lançamentos contabilísticos. O IRS retido chega à contabilidade com o recibo e declara-se na [declaração mensal de remunerações (DMR)](/payroll-pt/dmr) do mês do pagamento.
+
+## No Enterprise
+
+No Odoo Enterprise, a retenção de IRS confere-se nos mesmos sítios: com o perfil **Processador de salários**, o recibo tem o separador **Segurança Social e IRS**, com o bloco **Retenção de IRS** e o texto **Como foi calculado?**; com o acesso extra **Administrador de Salários**, o **Histórico de retribuição** tem, no separador **Folha de Salários**, os blocos **DECLARAÇÃO DE IRS** e **OPÇÕES E PAGAMENTO**, e **Tabelas de retenção de IRS** tem as mesmas tabelas. Numa empresa portuguesa, a aplicação de salários é a **Salários** do fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
+
+{/* Nota interna (lote EE-02, DOCS-073 #4142, DEC-1794, master 7a46de91a, base Enterprise docs_ee_ee02_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): Processador de salários: recibo de setembro de 2026 da Ana Margarida Pinto (Tabela III — Continente 2026 — Casado, único titular, 2 dependentes, Base 2.400,00, taxa 22,77000, parcela 289,47000, IRS retido 171,00, taxa efetiva 7,12). Na demonstração Enterprise o texto «Como foi calculado?» destes recibos está em inglês, porque foram calculados na instalação da demonstração (o texto fica na língua de quem calcula); defeito no relatório do lote. Administrador de Salários: Tabelas de retenção de IRS (33 em vigor hoje) e Histórico de retribuição › Folha de Salários. Ver reports/LOTE_EE-02.md. */}
+
+## Resultado esperado
+
+- Sabe que tabela, escalão, taxa, parcela e deduções o recibo usou, e a conta do **IRS retido** fecha com **Como foi calculado?**.
+- Se o perfil foi corrigido, o recibo do mês seguinte mostra a tabela nova em **Tabela de retenção na fonte de IRS**.
+
+## Notas importantes
+
+- **Onde se lê a conta.** São três sítios diferentes. (1) No separador **Segurança Social e IRS**, o bloco **Retenção de IRS** tem o texto **Como foi calculado?**, sempre visível, com a conta completa. (2) No separador **Linhas**, o botão **Como foi calculado?** de cada rubrica (**Retribuição base**, **Subsídio de alimentação**) abre uma janela só dessa rubrica, com a regra e a fonte legal; o IRS não tem botão nas linhas. (3) No fim do separador **Linhas**, **Como se chegou aos valores** é o resumo: o recibo de novembro diz «IRS: tabela III de 2026; base 2.400,00 €; taxa 22,77 %; parcela a abater 289,47 €; retido 85,00 €.» e, a seguir, a «Redução de novembro de 2026 (Despacho n.º 12523-A/2026 …): as tabelas dão 171,29 €, mas só se retém 50 % desse valor num pagamento feito em 30/11/2026.»
+- **IRS de um recibo já validado.** O botão **Corrigir o IRS retido** abre uma janela que avisa: «O recibo não é editado. A diferença é levada pelos recibos seguintes do ano: acrescentada se foi retido a menos, devolvida se foi retido a mais (nunca mais do que o recibo retém). Não pode passar do último período de retenção do ano.» Pede **IRS que era devido** e **Motivo**, e regista com **Registar a correção**. O recibo fica com o aviso «Erro de IRS registado: o IRS retido estava errado em 12,00; os recibos seguintes do ano levam-no (falta corrigir: 12,00).» e o botão desaparece. No exemplo de [Como corrigir um recibo já processado](/payroll-pt/corrigir-um-processamento), um recibo de setembro com 17,00 € retidos em vez de 29,00 € fez o recibo seguinte reter 8,00 € + 12,00 € = 20,00 €, com «Correção do IRS … (CIRS art. 98.º n.º 4): 12,00 adicionados.» no **Como foi calculado?** do bloco. <span className="fd-pending">Pendente de validação por contabilista certificado: acerto da retenção nos meses seguintes do mesmo ano e efeito na DMR.</span>
+- **A retenção declara-se no mês do pagamento.** O IRS retido de cada recibo entra na DMR desse mês; o prazo de entrega está no artigo da DMR.
+
+{/* Nota interna (DOCS-022, 3.ª auditoria, master ba9c8bd7): o Processador vê e usa «Corrigir o IRS retido» (PAY-066, #3613). O escalão e a taxa já saem no formato português. «Acertos de IRS» fica vazia depois de registar uma correção: não é lá que se vê. */}
+
+## Problemas frequentes
+
+### O recibo não tem IRS retido
+
+- **Causa 1:** o trabalhador não tem perfil de IRS; a empresa está configurada para não presumir nada.
+- **Causa 2:** **Sem retenção de IRS (declarado expressamente)** está marcado no bloco **Retenção de IRS**.
+- **O que fazer:** confira **Tabela de retenção na fonte de IRS** e **Como foi calculado?** no bloco **Retenção de IRS**. Se faltar o perfil de IRS, peça a quem tem o acesso extra **Administrador de Salários** que o preencha numa versão nova do contrato.
+
+### O IRS de novembro de 2026 e os corretivos
+
+Quando se aumenta o ordenado com efeitos retroativos e o recibo corretivo se paga depois de novembro de 2026, o corretivo retém só o imposto da diferença, contado sobre o que se teria retido **sem** a redução de 50 % do Despacho n.º 12523-A/2026; a redução já feita em novembro não se recupera. Visto no ecrã numa cópia de teste, com um trabalhador de 2.000,00 € por mês que passou para 2.100,00 € desde março (o recibo de novembro reteve 150,00 € do ordenado): o corretivo de novembro, com **Data de pagamento (IRS)** de 15/12/2026, escreve «Imposto do mês recalculado: 2.100,00 € × 31,1 % − 320,66 € = 332,44 € → 332,00 €. Já retido nesse mês: 301,00 €. Retém-se agora: 31,00 €», e não 182 (332 menos 150); o recibo diz que corrige um anterior que tinha retido 162,00 €. Com a data por preencher, o programa usa a data-limite do pagamento do mês do recibo (30/11/2026, ainda em novembro): o corretivo leva a redução, «332,44 € → 166,00 €. Já retido nesse mês: 150,00 €. Retém-se agora: 16,00 €». O mesmo vale para o corretivo dos duodécimos do subsídio, que retém 31,00 € + 31,00 € no recibo de dezembro, e para o duodécimo de acerto de dezembro (ver [Como pagar os subsídios de férias e de Natal](/payroll-pt/subsidios-de-ferias-e-natal)). (Despacho n.os 5 e 8; CIRS art. 99.º-E, n.º 2.) <span className="fd-pending">Pendente de validação por contabilista certificado: a regra de contar o já retido sem a redução de novembro (decisão do Gestor de 18/11/2026).</span>
+
+### O IRS de novembro é metade do de outubro com o mesmo salário
+
+- **Causa:** a redução de novembro de 2026 aplicada pelo fiscaldoo (50 % do montante das tabelas nos pagamentos desse mês).
+- **O que fazer:** nada no recibo. Explique ao trabalhador com o texto de **Como foi calculado?**.

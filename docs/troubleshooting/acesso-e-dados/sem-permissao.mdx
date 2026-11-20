@@ -1,0 +1,105 @@
+---
+id: sem-permissao
+slug: /troubleshooting/sem-permissao
+title: Não tenho permissão para fazer esta operação
+sidebar_label: Não tenho permissão
+sidebar_position: 2
+description: O que quer dizer a janela «Sem acesso» ou uma mensagem «Só o … pode», como saber que perfil falta e a quem o pedir.
+keywords: [sem permissão, sem permissao, não tenho permissão, nao tenho permissao, sem acesso, acesso negado, não tem acesso, nao tem acesso, não tem permissão, nao tem permissao, erro de acesso, perfil em falta, peça ao administrador, peca ao administrador, mostrar detalhe técnico, mostrar detalhe tecnico, esta área é para, esta area e para, quem faz, quem atribui o perfil, o seu perfil chega para esta área]
+doc_id: DOC-0367
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/utilizadores-e-permissoes/perfis-e-permissoes, troubleshooting/acesso-e-dados/nao-vejo-um-menu, troubleshooting/acesso-e-dados/sem-acesso-a-empresa]
+---
+
+## Sintoma
+
+Ao abrir um registo, carregar num botão ou gravar, o fiscaldoo recusa e abre uma janela com a mensagem. Nada foi alterado.
+
+## Mensagem
+
+Há duas formas.
+
+**A janela «Sem acesso»**, quando o registo não é da sua área ou da empresa em que está a trabalhar. Por exemplo, com o perfil **Administrativo**, ao abrir por uma ligação uma fatura de outra empresa:
+
+> «Não tem acesso a este registo de «*Lançamento contabilístico*». O seu perfil chega para esta área, mas o registo é de uma empresa em que não pode trabalhar. …»
+
+A janela diz que a causa é a empresa, e não o perfil: o que fazer está em [Aparece «Não tem acesso a uma das empresas pedidas.» ou «Sem acesso» num documento de outra empresa](/troubleshooting/sem-acesso-a-empresa).
+
+![Janela Sem acesso com a frase O seu perfil chega para esta área, mas o registo é de uma empresa em que não pode trabalhar, a ligação Mostrar detalhe técnico e o botão Fechar](/images/troubleshooting/sem-permissao/01-janela-sem-acesso.png)
+
+A primeira frase muda com a operação: abrir dá «Não tem acesso a…», e alterar, criar ou eliminar dão «Não tem permissão para alterar…», «…para criar…» ou «…para eliminar…». Quando a empresa é sua mas não está marcada no seletor de empresas, a janela diz para a marcar: [Aparece «…uma empresa em que não trabalha» ou «Pode pertencer a outra empresa»](/troubleshooting/empresa-nao-selecionada). Quando lhe falta o perfil, a janela diz com que perfil a área abre. Por exemplo, com o perfil **Administrativo**, ao alterar os dados da empresa pela integração:
+
+> «Não tem permissão para alterar «*Empresa*». O seu perfil só consulta «*Empresa*»: não cria, altera nem elimina nada aí. Esta área abre com o perfil «*Gerência*». Peça ao administrador para lhe atribuir o perfil de que precisa.»
+
+Se o registo também for de outra empresa, a janela acrescenta «Pode pertencer a outra empresa: confirme a empresa escolhida no topo do ecrã.» (com o perfil **Gestor de RH**, ao abrir pela integração uma fatura da «Empresa Teste Portugal»).
+
+Nos ecrãs próprios do fiscaldoo (séries, apuramento do IVA, salários e outros), a janela diz **Quem faz** e quem dá o perfil. Por exemplo, com o perfil **Administrativo**, ao carregar em **Criar a série em falta** numa fatura com data de 2027 (ver [Não há uma série ativa para este documento, ou há mais do que uma](/troubleshooting/serie-ativa-em-falta-ou-repetida)):
+
+> «Não tem permissão para criar «*Série de documentos fiscais*». O seu perfil só consulta «*Série de documentos fiscais*»: não cria, altera nem elimina nada aí. Quem faz: «*Contabilista certificado (assina, fecha períodos)*». Quem atribui o perfil: o administrador do sistema (Definições › Utilizadores e empresas › Utilizadores). Peça-lhe o perfil de que precisa, ou peça a um utilizador com esse perfil que o faça.»
+
+![Janela Sem acesso com as frases O seu perfil só consulta, Quem faz: Contabilista certificado e Quem atribui o perfil, a ligação Mostrar detalhe técnico e o botão Fechar](/images/troubleshooting/sem-permissao/02-janela-quem-faz.png)
+
+Quando a operação depende de um acesso extra que nenhum perfil dá, **Quem faz** diz «quem tem o acesso extra…» e a janela acrescenta que só o administrador dá esse acesso: [Aparece «Só o administrador pode reabrir um exercício fiscal» ou «Peça ao administrador para ligar a IA»](/troubleshooting/so-a-administracao-fiscal-pode).
+
+**Uma mensagem que diz o perfil**, quando a operação é de um perfil que não tem. Por exemplo, com o perfil **Contabilista**, ao registar a submissão de uma declaração periódica de IVA:
+
+> «Só o perfil «Contabilista certificado (assina, fecha períodos)» pode submeter uma declaração de IVA. O que aconteceu: submeter é separado de preparar. Como resolver: peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)».»
+
+As mensagens deste artigo foram copiadas da base de demonstração em português. As do segundo tipo foram provocadas pela integração, porque no ecrã o botão não aparece a quem não tem o perfil (ver [Não vejo um menu ou um botão](/troubleshooting/nao-vejo-um-menu)).
+
+## Causas verificadas
+
+- **Falta-lhe um perfil.** Cada perfil abre só as aplicações, os menus e os botões do seu trabalho. A operação é de outro perfil.
+- **O registo é de outra empresa.** Ou a empresa não está entre as suas, ou está mas não a escolheu no topo do ecrã.
+
+## O que confirmar
+
+1. Se a mensagem diz o perfil («Só o perfil «Contabilista certificado (assina, fecha períodos)» pode…», «O seu perfil não pode…»): é uma questão de perfil. Abra o artigo desse perfil, na lista de **Como resolver**.
+2. Se a janela é **Sem acesso** e diz «O seu perfil chega para esta área, mas o registo é de uma empresa em que não pode trabalhar»: a causa é a empresa, não o perfil. Confirme a empresa no canto superior direito. Se diz «Marque essa empresa aí e tente outra vez.», a empresa é sua: marque-a no seletor de empresas. Se diz «Pode pertencer a outra empresa», confirme a empresa e veja também com que perfil a área abre: pode faltar-lhe o perfil.
+3. O que estava a fazer, em que registo e com que empresa escolhida. Vai precisar disto se pedir ajuda.
+
+{/* Nota interna (lote v23-M, master dbbb5ac5c, docs_demo_v23m_test): janelas 01 e 02 provocadas no ecrã com utilizadores criados só com o perfil Administrativo (fatura de outra empresa por ligação; «Criar a série em falta» numa fatura de 04/01/2027); a da Empresa e a de «Pode pertencer a outra empresa» (Gestor de RH) pela integração. Capturas 01 e 02 refeitas. */}
+
+## Como resolver
+
+### A mensagem diz o perfil
+
+Peça a operação a quem tem o perfil indicado. É o caminho certo quando a tarefa não é sua (por exemplo, entregar uma declaração). Se a tarefa passa a ser sua, peça ao administrador que lhe dê o perfil: [Como dar a cada utilizador o perfil certo](/administration/perfis-e-permissoes).
+
+Cada perfil ou acesso extra tem o seu artigo, com as operações que lhe pertencem:
+
+- Contabilista certificado, para comunicar com a AT: [Aparece «Não tem permissão para comunicar com a Autoridade Tributária»](/troubleshooting/so-o-responsavel-fiscal-pode)
+- Acesso extra Administração fiscal, que só o administrador dá: [Aparece «Só o administrador pode reabrir um exercício fiscal» ou «Peça ao administrador para ligar a IA»](/troubleshooting/so-a-administracao-fiscal-pode)
+- Contabilista certificado: [Aparece «Só o perfil «Contabilista certificado (assina, fecha períodos)» pode…»](/troubleshooting/so-o-contabilista-certificado-pode)
+- Contabilista: [Aparece «Só o contabilista…» ou «Só os perfis «Contabilista (opera)» e…»](/troubleshooting/so-o-contabilista-pode)
+- Acesso extra Administrador de Salários: [Aparece «Só quem tem o acesso extra «Administrador de Salários» pode…»](/troubleshooting/so-o-administrador-de-salarios-pode)
+- Tesouraria, notas de pagamento, referências Multibanco e comunicação de guias de transporte (perfil ou acesso extra): [Aparece «O seu perfil não pode…» na tesouraria, na faturação ou nas vendas](/troubleshooting/so-a-tesouraria-ou-faturacao-pode)
+
+**Quem faz:** quem tem o perfil; ou o administrador, que dá o perfil.
+
+### A mensagem fala da empresa
+
+- Tem acesso à empresa mas não a escolheu: [Aparece «…uma empresa em que não trabalha» ou «Pode pertencer a outra empresa»](/troubleshooting/empresa-nao-selecionada).
+- A empresa não está entre as suas: [Aparece «Não tem acesso a uma das empresas pedidas.» ou «Sem acesso» num documento de outra empresa](/troubleshooting/sem-acesso-a-empresa).
+
+Não peça a palavra-passe de um colega para fazer a operação: cada ação fica registada em nome de quem a faz.
+
+## Resultado esperado
+
+Depois de o administrador lhe dar o perfil (ou de escolher a empresa certa), a mesma operação já não é recusada. Os menus do perfil novo aparecem na próxima entrada no fiscaldoo.
+
+## Quando contactar o suporte
+
+- A mensagem diz um perfil que já tem (confirme-o com o administrador no separador **Perfil** e em **Ajustes avançados**).
+- A janela aparece num registo da sua empresa, escolhida no topo, com o perfil certo.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte). Neste caso junte também o texto de **Mostrar detalhe técnico**, que aparece na janela.
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): rótulos da lista trocados por perfil ou acesso extra (matriz de grupos da cópia: Responsável fiscal vem com o Contabilista certificado; Administração fiscal, Administrador de Salários e Tesouraria são acessos extra). */}

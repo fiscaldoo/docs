@@ -1,0 +1,78 @@
+---
+id: exportar-pdf-para-assinar
+slug: /accounting-pt/exportar-pdf-para-assinar
+title: Como exportar as demonstrações financeiras em PDF para assinar
+sidebar_label: PDF para assinar
+sidebar_position: 9
+description: Exportar o balanço, a demonstração de resultados, os fluxos de caixa e as alterações no capital próprio em PDF com espaço para as assinaturas, e consultar o registo do que foi entregue para assinar.
+keywords: [pdf para assinar, exportar pdf para assinar, assinatura das demonstrações financeiras, assinaturas, contabilista certificado, gestor, sha-256, impressão para assinar, balanço em pdf, demonstrações financeiras em pdf]
+doc_id: DOC-0148
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master 8f78854ec)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/fluxos-de-caixa, accounting-pt/relatorios/alteracoes-no-capital-proprio, accounting-pt/relatorios/usar-os-relatorios]
+---
+
+## Para que serve?
+
+As demonstrações financeiras do fim do exercício assinam-se pelo gestor e pelo contabilista certificado. **Exportar PDF para assinar** dá o PDF pronto para isso: cabeçalho da entidade, título da demonstração, os valores, o espaço das assinaturas e uma impressão digital do conteúdo. Cada exportação fica registada, para provar o que foi entregue para assinar.
+
+## Quando utilizar?
+
+- Quando a demonstração está fechada e vai ser assinada: balanço, demonstração de resultados, fluxos de caixa ou alterações no capital próprio.
+- Para saber, mais tarde, o que foi exportado, por quem e quando.
+- **Não** o use para conferências: para isso, **Exportar PDF** ou a folha de cálculo (ver [Como filtrar, comparar períodos e exportar um relatório](/accounting-pt/usar-os-relatorios)). O balancete, por exemplo, não tem esta opção.
+
+## Onde encontrar?
+
+- A opção: em cada demonstração, **Exportar › Exportar PDF para assinar**. No exemplo, **Contabilidade › Consultar › Demonstrações financeiras › Fluxos de caixa**.
+- O registo: **Contabilidade › Declarar › Declarações anuais › O que há para fazer com as declarações anuais?** e, em **Mapas e ficheiros**, **Exportações de PDF para assinar**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. Com ele faz todos os passos deste artigo (testado com o perfil Contabilista). O **Auditor / ROC** também (testado até ao último passo): entra na aplicação **Auditoria** e abre a **Contabilidade** no menu das aplicações. O PDF e a linha do registo ficam com o nome de quem exporta.
+- O exercício está concluído: o PDF mostra os valores de hoje.
+- O exemplo é a **Demonstração dos Fluxos de Caixa (SNC)** da Empresa Demonstração, Lda, em 2026, a 03/11/2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a demonstração (por exemplo, **Contabilidade › Consultar › Demonstrações financeiras › Fluxos de caixa**) e confira o período na barra do topo.
+2. Carregue em **Exportar**. A lista tem **Exportar com opções…**, **Exportar XLSX**, **Exportar PDF para assinar**, **Exportar CSV (formato PT)**, **Exportar CSV (técnico)** e **Imprimir**. Está no **Balanço**, na **Demonstração de resultados**, nos **Fluxos de caixa** e nas **Alterações no capital próprio**.
+   ![Lista do botão Exportar com a opção Exportar PDF para assinar assinalada](/images/accounting-pt/exportar-pdf-para-assinar/01-menu-exportar.png)
+3. Escolha **Exportar PDF para assinar**. O PDF descarrega-se com o nome da empresa, da demonstração e do período (`Empresa_Demonstracao_Lda_Demonstracao_dos_Fluxos_de_Caixa_SNC_2026-01-01_2026-12-31.pdf`).
+4. Abra o PDF. No exemplo tem uma página, com a entidade e o título «DEMONSTRAÇÃO INDIVIDUAL DE FLUXOS DE CAIXA PERÍODO FINDO EM 31 DE DEZEMBRO DE 2026», a empresa, o NIF, o período, a unidade monetária (euro), a data de emissão e o utilizador, as rubricas com os valores do ecrã, o bloco **Assinaturas** (**Gestor (nome e assinatura)** e **Contabilista certificado (n.º OCC) (nome e assinatura)**: na demonstração, a empresa tem 1 em **Gestores que assinam as demonstrações**) e, no rodapé, o **SHA-256 do conteúdo**.
+5. Para ver o que foi exportado, abra **Contabilidade › Declarar › Declarações anuais › O que há para fazer com as declarações anuais?** e, em **Mapas e ficheiros**, carregue em **Exportações de PDF para assinar**. Cada exportação é uma linha: **Exportado em**, **Relatório**, **Exportado por**, **Nome do ficheiro**, **Páginas** e **SHA-256 do ficheiro**.
+   ![Lista Exportações de PDF para assinar, só com as colunas Exportado em, Relatório e Páginas: as exportações das quatro demonstrações](/images/accounting-pt/exportar-pdf-para-assinar/02-lista-de-exportacoes.png)
+6. Abra uma linha para ver a ficha, com o **Formato**, as **Páginas** e o bloco **PROVA DO QUE FOI ENTREGUE PARA ASSINAR**: o **SHA-256 do ficheiro** e o **SHA-256 do conteúdo**. O do conteúdo é o que está no rodapé do PDF (no exemplo, `dfa32c53…`).
+
+</StepByStep>
+
+## Resultado esperado
+
+- Um PDF com a entidade, os valores do ecrã e o espaço das assinaturas. O balanço, a demonstração de resultados e os fluxos de caixa saem com o título formal; as alterações no capital próprio saem com o título do ecrã (ver «Notas importantes»).
+- Uma linha nova em **Exportações de PDF para assinar** por cada exportação.
+- O PDF não é assinado pelo Odoo: leva os espaços para assinar.
+
+## Notas importantes
+
+- **Cada exportação cria um registo, mesmo repetida.** No exemplo, duas exportações seguidas dos fluxos de caixa deram duas linhas, com **SHA-256 do ficheiro** diferentes. Entregue para assinar o ficheiro cujo código está no registo.
+- **Uma demonstração a zero também se exporta.** Numa empresa sem lançamentos, o PDF sai com os valores a 0,00 € e a linha fica no registo. Os avisos do ecrã não passam para o PDF: confira a demonstração antes de exportar.
+- **As páginas variam.** No exemplo: fluxos de caixa e demonstração de resultados, 1 página; balanço e alterações no capital próprio, 2 páginas. As assinaturas ficam no fim da última.
+- **Quantos gestores assinam.** Os campos de assinatura dos gestores contam-se na ficha da empresa, em **Definições › Utilizadores e empresas › Empresas**, separador **Informação geral**, no campo **Gestores que assinam as demonstrações** (entre 1 e 6, diz a ajuda do campo; o campo do contabilista certificado é sempre acrescentado). Com 1, o PDF tem um só campo **Gestor (nome e assinatura)**. Confirme-o antes de exportar.
+  {/* Nota interna (lote v23-AH, DOCS-069 #4052, master 97b34fac3, docs_demo_v23ah_test): campo visto por clique com o administrador na ficha da Empresa Demonstração, Lda; ajuda e valores lidos por RPC: na cópia de hoje vale 1 nas três empresas, que é o valor por omissão do código (não é defeito). Auditoria docs-aud-v23ah (master 7a3b55244): a ajuda vista no ecrã; os fluxos de caixa de 2026 exportados com o Contabilista deram 1 página com «Gestor (nome e assinatura)» e o campo do contabilista certificado (o PDF de 03/11 tinha Gestor 1 e Gestor 2). Vinha do guia congelado Relatórios/pdf-pronto-a-assinar-demonstracoes-financeiras.md, que dizia «por omissão 2». */}
+- **As alterações no capital próprio ainda não têm o cabeçalho formal.** O PDF sai com «Demonstração das Alterações no Capital Próprio (SNC)», sem a linha «Entidade:» nem «DEMONSTRAÇÃO INDIVIDUAL…» das outras três. Confirme com o contabilista certificado antes de o usar como peça final.
+- **A demonstração tem de estar certa antes de exportar.** Um PDF assinado e entregue não se corrige: se os valores mudarem, exporte outro. <span className="fd-pending">Pendente de validação por contabilista certificado: o formato do cabeçalho e das assinaturas face ao modelo oficial das demonstrações financeiras.</span>
+
+## Problemas frequentes
+
+### Não vejo «Exportar PDF para assinar»
+
+- **Causa:** está num relatório que não é uma demonstração financeira, como o balancete.
+- **O que fazer:** abra o balanço, a demonstração de resultados, os fluxos de caixa ou as alterações no capital próprio.
+
+{/* Nota interna (DOCS-046, DOC-0148): visto em docs_demo_v6a4_test (master 8f78854ec) com o Contabilista. As quatro demonstrações exportadas no ecrã e lidas com pdftotext; Balancete só com Exportar PDF (sem a lista). V3A4-04 resolvido: Gestor 1 e Gestor 2. Defeito V6A4-04: PDF da DACP sem o título formal. Lista e ficha conferidas; duas exportações dos fluxos conferidas. Auditor visto na auditoria de 03/11: exporta, lista e ficha; o SHA do conteúdo (dfa32c53…) igual ao do Contabilista, o «Emitido por» diferente. */}

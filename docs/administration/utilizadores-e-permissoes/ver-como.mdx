@@ -1,0 +1,66 @@
+---
+id: ver-como
+slug: /administration/ver-como
+title: Como ver o fiscaldoo como outro utilizador o vê
+sidebar_label: Ver como outro utilizador
+sidebar_position: 3
+description: Escolher um utilizador e ver, só em leitura, os menus e os acessos que ele tem, sem mudar de sessão nem agir em nome dele.
+keywords: [ver como, utilizador, menus de outro utilizador, acessos, permissões, permissoes, perfil, confirmar o que vê, confirmar o que ve, suporte]
+doc_id: DOC-0313
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 3a28c9b91)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/utilizadores-e-permissoes/perfis-e-permissoes, administration/utilizadores-e-permissoes/lista-de-go-live]
+---
+
+## Para que serve?
+
+Mostra os acessos e os menus de um utilizador, para confirmar o que ele vê sem lhe pedir a palavra-passe nem mudar a sua sessão. É só de leitura: não age em nome dele.
+
+## Quando utilizar?
+
+- Quando um colega diz «não vejo o menu X» e quer confirmar se o perfil dele o tem.
+- Depois de atribuir um perfil, para conferir o resultado.
+- Não use para mudar acessos: para isso, veja [Perfis e permissões](/administration/perfis-e-permissoes).
+
+## Onde encontrar?
+
+**Definições › Utilizadores e empresas › Ver como…**
+
+## Antes de começar
+
+O seu perfil é o do administrador do sistema, que tem as **Definições**. Feito a 1 de novembro de 2026, na Empresa Demonstração, Lda.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Definições › Utilizadores e empresas › Ver como…**.
+   A janela diz «Só de leitura: mostra os menus e os acessos do utilizador escolhido. Não muda a sua sessão nem age em nome desse utilizador.».
+2. Em **Utilizador**, escreva parte do nome, por exemplo «Faturação», e escolha o utilizador na lista. Se escrever um nome que não existe, o campo oferece **Criar “…”**: não o use, porque abre uma ficha de utilizador numa janela só de leitura.
+3. Leia **Acessos (só leitura)**, com **Ler** e **Escrever** para cada área, e a lista **Menus**.
+   ![Janela Ver como com os acessos do utilizador de faturação e o início da lista de menus](/images/administration/ver-como/01-acessos-e-menus.png)
+4. Carregue em **Fechar**.
+
+</StepByStep>
+
+## Resultado esperado
+
+Para o utilizador de faturação da demonstração, a janela mostra **Faturação e lançamentos contabilísticos** com **sim** e **sim**, **Salários individuais** e **Trabalhadores** com **não** e **não**, e **Utilizadores** e **Aplicações e módulos** com **sim** a ler e **não** a escrever. Os menus são os das aplicações **Faturação**, **Ponto de venda**, **Vendas**, **Despesas**, **Contactos**, **EDI**, **Discussões**, **Painéis** e **Calendário**, e não incluem **Contabilidade** nem **Direção**.
+
+## Notas importantes
+
+- **Mostra o que o perfil tem, não o que a empresa configurou.** Um menu pode faltar por falta de dados e não por falta de permissão.
+- **A lista de utilizadores inclui os de exemplo.** Os da demonstração aparecem com o nome e «(demonstração)» ou «(exemplo)».
+
+## Problemas frequentes
+
+### Não encontro o utilizador
+
+- **Causa:** o utilizador está arquivado, ou o nome não coincide.
+- **O que fazer:** escreva menos letras. Se continuar sem aparecer, confirme em **Definições › Utilizadores e empresas › Utilizadores** se está ativo.
+
+{/* Nota interna (DOCS-040, lote F4): visto com o administrador (admin) na Empresa Demonstração. «Utilizadores sim/não» e «Aplicações e módulos sim/não» para o perfil de faturação vêm do ecrã; o significado não foi confrontado com a ficha do utilizador. Os dois «Problemas frequentes» não foram provocados (utilizador arquivado): causa provável, risco normal. */}

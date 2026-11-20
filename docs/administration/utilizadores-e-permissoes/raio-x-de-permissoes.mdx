@@ -1,0 +1,89 @@
+---
+id: raio-x-de-permissoes
+slug: /administration/raio-x-de-permissoes
+title: Como ver as permissões efetivas de um utilizador
+sidebar_label: Raio-X de permissões
+sidebar_position: 4
+description: Abrir o Raio-X de permissões para ver, perfil a perfil, o que cada pessoa pode ver, editar, criar e eliminar, e guardar o PDF como prova da revisão de acessos.
+keywords: [raio-x de permissões, permissões efetivas, permissoes, perfis, quem vê o quê, acessos, revisão de acessos, rgpd, pdf]
+doc_id: DOC-0315
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/utilizadores-e-permissoes/perfis-e-permissoes, administration/utilizadores-e-permissoes/ver-como]
+---
+
+## Para que serve?
+
+O Raio-X mostra, para cada perfil do produto, o que as pessoas desse perfil podem **ver**, **editar**, **criar** e **eliminar**. Serve para decidir quem recebe cada perfil e para provar, a quem o pedir, que cada pessoa só chega ao que precisa (por exemplo, quem lê os salários individuais ou os dados de saúde).
+
+O Raio-X responde por perfil, não por pessoa. Para saber o que vê uma pessoa concreta, descubra os perfis dela na ficha do utilizador ou com [Ver como…](/administration/ver-como) e leia aqui esses perfis.
+
+O Raio-X só consulta: não altera nenhuma permissão.
+
+## Quando utilizar?
+
+- Para rever, uma vez por ano ou antes de uma auditoria, quem tem acesso a quê.
+- Para confirmar, antes de dar um perfil a alguém, o que esse perfil permite.
+- Para entregar ao encarregado de proteção de dados um PDF com a data de emissão.
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Sistema e segurança › Raio-X de permissões**.
+
+O administrador do sistema também o abre pelo botão **Abrir o Raio-X**, nas [Definições, secção Segurança e comunicação](/administration/seguranca-e-comunicacao).
+
+## Antes de começar
+
+- Entra como administrador do sistema, ou tem o acesso extra **Administração fiscal** (nenhum valor do campo **Perfil** o dá). Feito a 3 de novembro de 2026 com os dois.
+- O **Contabilista**, o **Contabilista certificado**, a **Gerência** e o **Auditor / ROC** não têm o menu. A Gerência fica de fora, embora muita gente espere que o veja.
+- Para dar esse acesso extra a alguém: **Definições › Utilizadores e empresas › Utilizadores**, abra a pessoa, separador **Ajustes avançados**, campo **Localização PT — Faturação, contabilidade e fiscal**, escolha **Administração fiscal** e guarde (ver [perfis e permissões](/administration/perfis-e-permissoes)).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › Sistema e segurança › Raio-X de permissões**. O período vem como o ano corrente (01/01/2026 – 31/12/2026). A lista abre com os 27 perfis fechados e as colunas **Vê**, **Edita**, **Cria**, **Elimina** e **Limite**: os números dizem quantos tipos de registo o perfil alcança.
+2. Procure o perfil, por exemplo **Localização PT — Gerência / Gerência**, e carregue na seta ▸ à esquerda do nome. A linha abre por baixo.
+3. Leia as quatro linhas de **Resumo**: **Faturação**, **Contabilidade e fiscal**, **Salários individuais** e **Dados de saúde**. Cada uma diz **Sim** ou **—** em cada coluna e, em **Limite**, **Só os da empresa** onde o perfil tem acesso.
+   ![Perfil Gerência aberto: as quatro linhas de resumo, com Sim só na coluna Vê das três primeiras e — em Dados de saúde, e as primeiras áreas por baixo](/images/administration/raio-x-de-permissoes/01-perfil-aberto.png)
+4. Carregue na seta de uma área mais abaixo (por exemplo **Faturação**) para ver cada tipo de registo.
+5. Para guardar uma prova, abra os perfis que quer mostrar e carregue em **Exportar PDF**. O ficheiro leva a empresa, o NIF, o período, a data de emissão e quem o emitiu.
+
+</StepByStep>
+
+## No Enterprise
+
+Nesta versão, no Odoo Enterprise, o **Raio-X de permissões** está no mesmo caminho, mas abre no visualizador de relatórios do Enterprise (visto com um utilizador que só tem o acesso extra **Administração fiscal**). O que muda nos passos:
+
+- Em vez do período, há uma data, **A** (no exemplo, **A 31/10/2026**), que se muda para **Hoje**, **Fim do mês**, **Fim do trimestre**, **Fim do exercício** ou uma data à escolha.
+- A lista tem os perfis e grupos da base Enterprise (20 linhas na demonstração), com as mesmas colunas **Vê**, **Edita**, **Cria**, **Elimina** e **Limite**. Ao abrir **Localização PT — Gerência / Gerência**, aparecem as mesmas quatro linhas de **Resumo**; na demonstração Enterprise, a linha do perfil traz **Edita** 8, **Cria** 8 e **Elimina** 7. As áreas por baixo têm o nome técnico de cada módulo, alguns em inglês (por exemplo **Account Fiscal Report** ou **Assets Management**).
+- Para guardar a prova, carregue em **Imprimir**: nesta versão, o PDF leva a empresa, o NIF, o título, a data e, no rodapé, o dia e a hora da impressão, mas não diz quem o emitiu. Na roda dentada ao lado do título há também **XLSX**.
+- **Lançamentos feitos** e **Em .€** são botões do visualizador do Enterprise, sem uso neste relatório.
+
+{/* Nota interna (lote EE-02, DOCS-073 #4142, DEC-1794, master 7a46de91a, base Enterprise docs_ee_ee02_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): Acesso extra Administração fiscal: o menu é a ponte l10n_pt_fiscaldoo_ee_reports (relatório do Enterprise); a entrada do fiscaldoo está arquivada nesta edição. Data: Hoje, Fim do mês, Fim do trimestre, Fim do exercício, «Specific Date». Gerência aberta: Vê 456, Edita 8, Cria 8, Elimina 7; resumo Sim só em Vê, Só os da empresa, Dados de saúde —. PDF raio-x_de_permissões_31102026_empresa_demonstração,_lda.pdf, 3 páginas, rodapé com data e hora e a empresa, sem o utilizador. Ver reports/LOTE_EE-02.md. */}
+
+## Resultado esperado
+
+No perfil **Gerência**, o resumo mostra **Sim** só na coluna **Vê** de **Faturação**, **Contabilidade e fiscal** e **Salários individuais**, e **—** em **Dados de saúde**: nessas áreas é só consulta. O perfil não é só de leitura em tudo: a linha dele traz **Edita** 7, **Cria** 6 e **Elimina** 6, em áreas como **Ausência**, que se veem ao abrir cada uma. O PDF descarregado chama-se `Empresa_Demonstracao_Lda_Raio-X_de_permissoes_2026-01-01_2026-12-31.pdf`.
+
+## Notas importantes
+
+- **O PDF leva o que está aberto no ecrã.** Com tudo fechado, traz só os 27 perfis e uma página; para provar o que um perfil faz, abra-o antes de exportar.
+- **A empresa conta.** O relatório sai com a empresa ativa, no canto superior direito: confirme-a antes de exportar.
+- **O Raio-X mostra permissões de dados.** Uma ação que depende de uma condição (por exemplo, quem conclui uma declaração) não aparece aqui.
+
+## Problemas frequentes
+
+### «Nada foi mostrado: peça o relatório ao administrador»
+
+- **Sintoma:** ao abrir o relatório por uma ligação guardada, o ecrã diz «O Raio-X de permissões mostra o que cada perfil pode ver e editar, por isso só o administrador o gera. Nada foi mostrado: peça o relatório ao administrador.»
+- **Causa:** não entrou como administrador do sistema nem tem o acesso extra **Administração fiscal**.
+- **O que fazer:** peça a uma dessas pessoas que gere o Raio-X e lho entregue em PDF.
+
+{/* Nota interna (DOCS-046, lote v7-ADM): visto no master 584213fd9 com o administrador e com Administração fiscal dada pelo ecrã a demo.contabilista (depois reposta). Recusa provada com Contabilista, Gestor de contabilidade, Gerência e Auditor. Captura: tabela estreitada e linhas fora do perfil escondidas só no recorte, para ler no telemóvel; conteúdo igual ao ecrã. */}
+
+{/* Nota interna (v23-T, DOC-0315, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

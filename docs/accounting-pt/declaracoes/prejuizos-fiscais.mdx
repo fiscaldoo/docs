@@ -1,0 +1,114 @@
+---
+id: prejuizos-fiscais
+slug: /accounting-pt/prejuizos-fiscais
+title: Como registar e deduzir prejuízos fiscais
+sidebar_label: Prejuízos fiscais
+sidebar_position: 6
+description: Registar o prejuízo fiscal de um período, deduzi-lo ao lucro tributável de um Modelo 22 seguinte dentro do limite de 65 %, e perceber o prazo, o bloqueio por mudança de titularidade e as recusas do ecrã.
+keywords: [prejuízos fiscais, reporte de prejuízos, deduzir prejuízos ao lucro tributável, limite de 65 por cento, modelo 22 prejuízos, campo 777, mudança de titularidade, prazo de reporte, sugerir prejuízos a deduzir]
+doc_id: DOC-0161
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 8f78854ec)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/declaracoes/modelo-22, accounting-pt/declaracoes/pagamentos-por-conta, accounting-pt/declaracoes/tributacoes-autonomas]
+---
+
+## Para que serve?
+
+Quando uma empresa tem **prejuízo fiscal** num período, esse prejuízo pode ser deduzido ao lucro tributável de períodos seguintes. O fiscaldoo guarda cada prejuízo numa lista (**Prejuízos fiscais reportáveis**), diz quanto já foi deduzido e quanto falta, aplica o limite legal à dedução em cada Modelo 22 e recusa as deduções que a lei não permite.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o limite de 65 %, o prazo («sem prazo» desde a Lei n.º 24-D/2022), o bloqueio por mudança de titularidade (CIRC, art. 52.º), a ordem de dedução, que o ecrã aplica como descrito abaixo, e os números dos campos do Modelo 22 citados neste artigo (777 e 346).</span>
+
+## Quando utilizar?
+
+- O Modelo 22 de um período deu **lucro tributável negativo**: registe o prejuízo para o deduzir nos anos seguintes.
+- Vai preparar o Modelo 22 de um período com lucro e a empresa tem prejuízos de anos anteriores por deduzir.
+- Houve uma mudança de mais de 50 % da titularidade do capital: o prejuízo fica **Bloqueado**.
+- **Não** serve para calcular o lucro tributável: isso faz-se no Modelo 22 ([Como preparar a declaração de IRC](/accounting-pt/modelo-22), que explica as correções fiscais, a tributação autónoma e as derramas).
+
+## Onde encontrar?
+
+- **Contabilidade › Declarar › IRC › O que há para fazer com o IRC? › Prejuízos fiscais reportáveis** (botão do painel, na zona **Listas de apoio**), com o perfil **Contabilista**. A lista não tem um item próprio no menu.
+- Para deduzir: **Contabilidade › Declarar › IRC › Declaração de IRC (Modelo 22)**, separador **Prejuízos fiscais**.
+
+## Antes de começar
+
+- Perfil do exemplo: **Contabilista**.
+- Exemplo: Empresa Demonstração, Lda, com o Modelo 22 de 2025 de lucro tributável 32.104,16 €. Os dois prejuízos do exemplo (2023: 15.000,00 €; 2024: 12.000,00 €) são **inventados** para esta demonstração.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Declarar › IRC › O que há para fazer com o IRC?** e, em **Listas de apoio**, carregue em **Prejuízos fiscais reportáveis**. A lista está vazia: «Registe aqui o prejuízo fiscal de cada período. Deduz-se no Modelo 22 dos períodos seguintes, dentro do limite e do prazo legais.»
+   ![Painel do IRC com as listas de apoio: Pagamentos por conta do IRC, Prejuízos fiscais reportáveis, Pagamento especial por conta e Tributação autónoma das ajudas de custo](/images/accounting-pt/prejuizos-fiscais/01-painel-irc.png)
+2. Carregue em **Novo**. Preencha **Início do período** (01/01/2024), **Fim do período** (31/12/2024) e **Prejuízo fiscal** (12.000,00, **sem sinal de menos**). O ecrã diz logo o **Prazo**: «Sem prazo: prejuízo de um período iniciado em 2023 ou depois (CIRC art. 52.º, n.º 1, Lei n.º 24-D/2022).» Guarde. Repita para 2023 (15.000,00 €).
+   - **Modelo 22 do prejuízo** liga o prejuízo ao Modelo 22 que o apurou (os valores e o período vêm de lá). Sem ligação, escreve-se à mão, como no exemplo.
+   - **Prazo mais longo (PME)** e **Alteração de mais de 50 % da titularidade** mexem no prazo e no bloqueio (ver abaixo).
+   ![Prejuízo de 2024 de 12.000,00 euros registado, sem prazo, por deduzir](/images/accounting-pt/prejuizos-fiscais/02-prejuizo-registado.png)
+3. Abra o **Modelo 22 - 2025**, separador **Prejuízos fiscais**. Lê-se: **Prejuízos fiscais por deduzir** 27.000,00 €; **Limite legal da dedução** 20.867,70 € (65 % de 32.104,16 €); **Prejuízos fiscais deduzidos (campo 777)** 0,00 €. <span className="fd-pending">Pendente de validação por contabilista certificado: os números dos campos do Modelo 22 citados neste artigo (777 e 346).</span>
+4. Carregue em **Sugerir prejuízos a deduzir**, nos botões do topo do Modelo 22. O ecrã preenche a lista pelo prejuízo mais antigo e pára no limite: 15.000,00 € do prejuízo de 2023 e 5.867,70 € do de 2024, **20.867,70 €** no total. O **Lucro tributável depois dos prejuízos fiscais** passa a 11.236,46 €, que é a **Matéria coletável (campo 346)**. Voltar a carregar no botão dá o mesmo resultado, sem duplicar linhas.
+   ![Separador Prejuízos fiscais do Modelo 22 de 2025 com as duas deduções, 20.867,70 euros no total, e a matéria coletável de 11.236,46 euros](/images/accounting-pt/prejuizos-fiscais/04-sugerir.png)
+5. Volte à lista **Prejuízos fiscais reportáveis**: o de 2023 está **Totalmente deduzido** (15.000,00 € deduzidos, 0,00 € por deduzir) e o de 2024 está **Por deduzir**, com 5.867,70 € deduzidos e 6.132,30 € por deduzir, para o Modelo 22 seguinte.
+   ![Lista de prejuízos: 2023 totalmente deduzido e 2024 por deduzir, com 6.132,30 euros em saldo](/images/accounting-pt/prejuizos-fiscais/03-lista.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- Cada prejuízo tem **Deduzido**, **Por deduzir** e **Estado**: **Por deduzir**, **Totalmente deduzido**, **Caducado** ou **Bloqueado**. **Prazo por confirmar** só aparece no formulário enquanto faltar uma das datas.
+- Registar e deduzir prejuízos não gera lançamentos contabilísticos: é um dado da declaração.
+- No Modelo 22, o campo 777 e a matéria coletável (campo 346) refletem as deduções. O **Lucro tributável** do Modelo 22 não muda: a dedução é uma linha à parte. <span className="fd-pending">Pendente de validação por contabilista certificado: os números dos campos do Modelo 22 citados neste artigo (777 e 346).</span>
+
+## Notas importantes
+
+- **O limite é do Modelo 22, não de cada prejuízo.** Com dois prejuízos, a soma das deduções não pode passar o limite (65 % do lucro tributável no exemplo). O que sobra fica para os períodos seguintes.
+- **O mesmo prejuízo só aparece uma vez em cada Modelo 22.** Para alterar o valor deduzido, edite a linha existente.
+- **O seletor oferece todos os prejuízos, mesmo os caducados** («Prejuízo fiscal de 2017: 1.000,00 €»): a recusa só aparece ao guardar.
+- **Prazo.** O campo **Prazo** explica o caso assim que as duas datas estão preenchidas. Os prejuízos de 2023 e 2024 do exemplo mostram «Sem prazo: prejuízo de um período iniciado em 2023 ou depois…». Os anteriores a 2023 só ficam sem prazo se o prazo antigo ainda estava a correr em 01/01/2023 (Lei n.º 24-D/2022, art. 228.º, n.º 1): um de 2014 ou de 2019 mostra «Sem prazo: o prazo original de … terminaria…, ainda em curso a 1 de janeiro de 2023…»; um de 2010 ou de 2017 mostra **Caducado**. Marcando **Prazo mais longo (PME)** no de 2017, passa a «Sem prazo: o prazo original de 12 períodos (PME)…». <span className="fd-pending">Pendente de validação por contabilista certificado: o enquadramento PME, a exceção do REAID (art. 228.º, n.º 2) e o limite de 75 % dos prejuízos de 2020 e 2021 (Lei n.º 27-A/2020), que o ecrã não aplica: usa sempre 65 %.</span>
+- **Métodos indiretos.** Num período em que o lucro foi determinado por métodos indiretos (opção **Métodos indiretos** do separador), o **Limite legal da dedução** passa a 0,00 €. Marque a opção **antes** de deduzir: se o Modelo 22 já tiver deduções, o ecrã aceita a marca, as linhas ficam e a matéria coletável continua reduzida. Nesse caso, carregue em **Sugerir prejuízos a deduzir**: as linhas saem e a matéria coletável volta ao lucro tributável.
+- **O ecrã não lê os prejuízos do Modelo 22 anterior sozinho:** é preciso registá-los na lista (ou ligá-los ao Modelo 22 que os apurou).
+
+## Problemas frequentes
+
+### «As deduções de prejuízos fiscais neste Modelo 22 (27.000,00 €) excedem o limite legal de 20.867,70 €»
+
+- **Causa:** pôs à mão uma linha por cada prejuízo, 15.000,00 € e 12.000,00 €, e a soma passa o limite.
+- **O que fazer:** reduza os valores ou carregue em **Sugerir prejuízos a deduzir**. A mensagem diz: «a parte não deduzida fica para períodos seguintes.»
+   ![Janela de erro de validação com o limite legal excedido](/images/accounting-pt/prejuizos-fiscais/05-erro-limite.png)
+
+### «O prejuízo do período que termina em 31/12/2024 está bloqueado»
+
+- **Causa:** o prejuízo tem **Alteração de mais de 50 % da titularidade** marcada. A mensagem continua: «a titularidade mudou em mais de 50 % (CIRC art. 52.º, n.º 8). Só desmarque o bloqueio se se aplicarem as exceções do n.º 9.» O estado passa a **Bloqueado**.
+- **O que fazer:** só desmarque se se aplicar uma exceção legal. <span className="fd-pending">Pendente de validação por contabilista certificado: as exceções do n.º 9.</span>
+   ![Janela de erro de validação com o prejuízo bloqueado por mudança de titularidade](/images/accounting-pt/prejuizos-fiscais/06-erro-bloqueado.png)
+
+### «O prejuízo do período que termina em 31/12/2017 caducou…»
+
+- **Causa:** o prazo antigo (5 períodos; 12 para PME) já tinha terminado antes de 01/01/2023, o prejuízo está **Caducado** e o Modelo 22 recusa a dedução: «…só podia ser deduzido até ao período que termina em 31/12/2022 (CIRC art. 52.º, n.º 1). O Modelo 22 é do período que termina em 31/12/2025.»
+- **O que fazer:** se a empresa é PME nos termos da lei, marque **Prazo mais longo (PME)**. Caso contrário, o prejuízo já não se deduz.
+
+### «O prejuízo fiscal do período que termina em 31/12/2022 tem de ser um valor positivo…»
+
+- **Causa:** escreveu o prejuízo com sinal de menos.
+- **O que fazer:** escreva-o sem sinal. Um período com lucro tributável não tem prejuízo para registar.
+
+### «Esse prejuízo fiscal já está deduzido neste Modelo 22. Altere o valor da linha existente.»
+
+- **Causa:** acrescentou uma segunda linha para o mesmo prejuízo.
+- **O que fazer:** edite o valor da linha que já existe.
+
+### O Auditor não consegue alterar nada
+
+- **Sintoma:** «O seu perfil (Auditor) é só de leitura: consulta tudo e nunca cria, altera ou elimina nada.» O Auditor / ROC não tem o menu **Declarar** (só a aplicação **Auditoria**): só chega a esta lista por uma ligação direta.
+- **O que fazer:** nada. Quem regista é o **Contabilista**.
+
+### «Another model is using the record you are trying to delete…»
+
+- **Causa:** tentou apagar um prejuízo já usado num Modelo 22. A mensagem aparece em inglês. Um prejuízo sem deduções apaga-se.
+- **O que fazer:** se a dedução estiver errada, retire primeiro a linha do separador **Prejuízos fiscais** do Modelo 22. Se estiver certa, o prejuízo fica na lista.
+
+{/* Nota interna (DOCS-046, lote v6-P1, DOC-0161, risco alto): tudo refeito a 03/11/2026 em docs_demo_v6p1_test (8166), master 8f78854ec, com demo.contabilista, por clique: registo de 2024 e 2023; prazos de 2010, 2014, 2017, 2019 e 2023 nos formulários; 2017 com PME; valor negativo; escrever o início antes do fim já não dá erro (NV3J-P1 corrigido); Sugerir duas vezes; limite excedido, linha repetida, caducado, bloqueado; o Auditor lê e não altera. Base: a dedução de 20.867,70 € FICA no Modelo 22 de 2025; o prejuízo de teste de 2017 foi apagado. NV3J-01/02 aplicadas. Sem lançamentos a conferir: a dedução não toca no razão. Defeito em reports/LOTE_V6P1.md: Métodos indiretos aceita-se com deduções em curso. */}

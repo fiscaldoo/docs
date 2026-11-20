@@ -1,0 +1,79 @@
+---
+id: saft-de-contabilidade
+slug: /accounting-pt/saft-de-contabilidade
+title: Como gerar o SAF-T de contabilidade
+sidebar_label: Gerar o SAF-T de contabilidade
+sidebar_position: 1
+description: Gerar o ficheiro SAF-T de contabilidade do exercício (modo C), conferir que tem todos os lançamentos e os totais certos, e descarregá-lo para a IES.
+keywords: [saf-t de contabilidade, saft de contabilidade, saf-t contabilidade, saft contabilidade, saf-t para a ies, saf-t de contabilidade para a ies, modo C, ficheiro de contabilidade, SAFT-PT, exercício fiscal, exercicio fiscal, TotalDebit, TotalCredit, taxonomias, descarregar saf-t]
+doc_id: DOC-0165
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/at-e-saft/gerar-o-saft, fiscal-core/at-e-saft/corrigir-erros-do-saft]
+---
+
+## Para que serve?
+
+O SAF-T de contabilidade é o ficheiro com todos os lançamentos publicados de um exercício, o plano de contas com as taxonomias e os totais a débito e a crédito. É a base da Informação Empresarial Simplificada (IES) desse exercício. O Odoo gera-o, confere-o antes de o gravar e guarda cada geração, para a poder descarregar e entregar. <span className="fd-pending">Pendente de validação por contabilista certificado: obrigação e prazo de entrega do SAF-T de contabilidade com a IES.</span>
+
+## Quando utilizar?
+
+- Fechou o exercício e vai preparar a IES.
+- A AT ou o revisor pediu o ficheiro de contabilidade de um período.
+- Corrigiu lançamentos de um exercício e precisa de um ficheiro novo: cada geração fica guardada à parte.
+- Não é o ficheiro mensal da faturação: esse gera-se com o modo **F — Faturação**, em [Como gerar o ficheiro SAF-T de faturação](/fiscal-core/gerar-o-saft).
+
+## Onde encontrar?
+
+**Contabilidade › Declarar › Ficheiro SAF-T › Gerar SAF-T**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**. Chega a todos os passos: tem a app **Contabilidade** com o menu **Declarar › Ficheiro SAF-T › Gerar SAF-T**, gera o ficheiro e descarrega-o (testado com um utilizador só com este perfil).
+- O botão **Descarregar ficheiro** aparece aos perfis **Contabilista certificado**, **Gerência**, **Auditor / ROC** e **Contabilista**, e ao administrador. O **Contabilista** gera e descarrega o ficheiro, mas não tem **Registar submissão**.
+- Todos os lançamentos do exercício estão publicados e o exercício está fechado, ou pelo menos conferido: o ficheiro é uma fotografia do momento em que se gera.
+- Cada conta com movimentos tem a taxonomia: sem ela, o Odoo não gera o ficheiro.
+- A identificação do programa certificado está preenchida (bloco **Certificação PT** das definições da Contabilidade), como no ficheiro de faturação: ver [Como gerar o ficheiro SAF-T de faturação](/fiscal-core/gerar-o-saft), «Antes de começar».
+- O exemplo é o exercício de 2025 da Empresa Demonstração, Lda, já fechado (data de bloqueio 31/12/2025).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Declarar › Ficheiro SAF-T › Gerar SAF-T**. Abre-se a janela **Gerar SAF-T** com o **Modo** **F — Faturação** e o **Período** **Mês**. Em **Modo**, escolha **C — Contabilidade**.
+2. Em **Período**, escolha **Exercício fiscal**. As outras opções são **Mês**, **Trimestre** e **Intervalo personalizado**.
+3. Em **Data de referência**, escreva um dia do exercício, por exemplo `15/06/2025`. A **Data de início** e a **Data de fim** passam a `01/01/2025` e `31/12/2025`.
+   ![Janela Gerar SAF-T com o Modo C — Contabilidade, o Período Exercício fiscal, as datas de 01/01/2025 a 31/12/2025 e o botão Gerar com 59 documentos](/images/accounting-pt/saft-de-contabilidade/01-gerar-exercicio-2025.png)
+4. Leia o **PASSO 2 DE 3: VERIFICAÇÕES**. Num exercício fechado não há aviso. Num período aberto aparece «O período ainda está aberto (data de bloqueio: …): os lançamentos até … ainda podem mudar depois de gerado este ficheiro. Bloqueie o período quando for definitivo.» Deixe **Bloquear lançamentos até à data de fim depois de gerar?** por marcar, a não ser que o contabilista certificado já tenha dado o exercício por fechado.
+5. Em **PASSO 3 DE 3: GERAR O FICHEIRO**, confira o número de lançamentos («59 documentos deste período vão entrar no ficheiro.») e carregue em **Gerar com 59 documentos**.
+6. Abre-se o registo **Exportação SAF-T (PT)** no estado **Gerado**. Carregue em **Descarregar ficheiro**.
+   ![Registo Exportação SAF-T (PT) no estado Gerado, com o botão Descarregar ficheiro assinalado, o modo C — Contabilidade, o exercício 2025, o nome SAFT-PT_599999993_2025_FY_C.xml e 0 erros e 0 avisos](/images/accounting-pt/saft-de-contabilidade/02-ficheiro-gerado.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- O registo tem o **Nome do ficheiro gerado** `SAFT-PT_599999993_2025_FY_C.xml` (NIF, ano, «FY» de exercício e o modo), o **SHA-256 do ficheiro**, **N.º de erros** 0, **N.º de avisos** 0 e **Estado da submissão** **Não enviado**. Se o registo tiver erros ou avisos, corrija-os como em [Como corrigir os erros de validação do SAF-T](/fiscal-core/corrigir-erros-do-saft), que trata também o ficheiro de contabilidade, e gere de novo.
+- Em **NOTAS**, as verificações feitas antes de gravar, todas «OK»: no exemplo, «TotalDebit = TotalCredit: 1156500.00 = 1156500.00», «Transactions = lançamentos publicados do período: 59 de 59», todas as contas das linhas no plano, todas as contas de movimento com taxonomia e nenhum lançamento repetido.
+- Com cada geração, o Odoo faz também a validação semântica do ficheiro (regras SVAT-01 a SVAT-07 da Portaria n.º 302/2016) e guarda o resultado num segundo anexo do registo, `saft_svat_N.xlsx` (N é o número da exportação), com as folhas **Regras** (regra, descrição, origem, verificados, achados, resultado) e **Achados**. No SAF-T de contabilidade as regras são das faturas e dão «Não se aplica: o ficheiro não tem a secção SalesInvoices.». Hoje esse anexo não aparece no ecrã a nenhum perfil (o registo não mostra anexos); se o suporte lho enviar, é isto.
+- O ficheiro descarregado confere com o ecrã: 59 lançamentos (`NumberOfEntries`), 1.156.500,00 € a débito e a crédito, `TaxAccountingBasis` C e o exercício 2025, sem documentos de faturação. Vem codificado em Windows-1252, como o SAF-T (PT) pede: abra-o com um programa que respeite essa codificação, ou os acentos aparecem trocados.
+
+## Notas importantes
+
+- **Uma geração por fotografia.** Se mudar um lançamento do exercício depois de gerar, gere de novo; os registos antigos ficam como histórico e não se apagam.
+- **Bloquear o período** depois de gerar impede novos lançamentos e alterações até à **Data de fim**. Só se marca quando o exercício está fechado e conferido pelo contabilista certificado.
+- **Registar submissão** e **Submeter (canal simulado)** são da entrega do ficheiro, que este artigo não trata.
+- **O que o ficheiro não leva.** Só entram lançamentos **publicados** com data no período (a verificação compara com os «lançamentos publicados do período»): os rascunhos ficam de fora. Confira antes, em **Contabilidade › Lançar › Lançamentos › Lançamentos contabilísticos**, que não há rascunhos do exercício.
+
+## Problemas frequentes
+
+### O número de documentos é menor do que esperava
+
+- **Causa:** há lançamentos do período em rascunho, ou a **Data de início** e a **Data de fim** não são as do exercício.
+- **O que fazer:** confira as datas do passo 1 e publique ou elimine os rascunhos do exercício; depois gere de novo.
+
+{/* Nota interna (DOCS-021, DOC-0165; revisto a 30/10/2026 nas correções da auditoria AS2 do fix-saft2, master 9d1671e9f, base docs_demo_saft3_test): o Contabilista já tem «Descarregar ficheiro» num registo C Gerado (registo 11, C de outubro de 2026), e não tem «Registar submissão»; o defeito B1-24 / PD-B1-1 (SAFT-151) está resolvido e o problema «Não tenho o botão Descarregar ficheiro» saiu. Não revisto em 9d1671e9f: o exemplo do exercício de 2025 (59 lançamentos), os botões dos perfis Gerência, Auditor e Administração fiscal e o anexo SVAT (defeito B1-28). Teste antigo com Responsável fiscal sozinho: utilizador demo.resp_fiscal, exportação 11 da docs_demo_loteb1_test. */}

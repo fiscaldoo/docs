@@ -1,0 +1,155 @@
+---
+id: beneficios-em-especie
+slug: /payroll-pt/beneficios-em-especie
+title: Como processar benefícios em espécie e o uso de viatura
+sidebar_label: Benefícios em espécie
+description: Atribuir uma viatura de uso pessoal ou outro benefício a um trabalhador, registar ocorrências como o abono para falhas e ver o valor que entra no IRS e na Segurança Social.
+keywords: [benefícios em espécie, beneficios em especie, rendimento em espécie, rendimentos em espécie, uso pessoal de viatura, viatura da empresa, 0,75 %, abono para falhas, ajuda de custo no estrangeiro, regras de benefícios, ocorrências]
+doc_id: DOC-0207
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/configurar/rubricas-salariais, payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/processar-e-pagar/premios-e-pagamentos-variaveis]
+---
+
+{/* Nota interna (DOCS-046 #3616, teste 14767, lote v23-Z, 08/11/2026, master cebcb888d, docs_demo_v23z_test): o lote de novembro da cópia já estava validado (DOC-0217), por isso o exemplo passou para outubro. Por clique: regra VIATURA criada com demo.admsalarios (grupo Administrador de Salários; não é valor do campo Perfil); benefício de Ana Margarida Pinto, ocorrência de Diogo Ferreira Lopes e lote de outubro (Criar os recibos do mês, Calcular, Validar) com um utilizador criado só com o perfil Processador de salários; Contabilizar com demo.admsalarios. Por RPC, só na cópia: rubricas VIATURA (versão de 01/01/2026 sem código da Segurança Social, fechada a 30/09/2026, e versão de 01/10/2026 com o código M) e ABONO_FALHAS (origem Rendimento em espécie (registo de ocorrências), tipo Abono para falhas). Recusas por clique: acordo só com espaços, abono sem remuneração fixa, recibo e lote sem código da Segurança Social, versão começada, ocorrência sem rubrica, contabilização sem modelo. Resultados: Ana 180,00 € na viatura, Segurança Social 288,75 €, IRS 171,00 € (base 2.400,00 €), líquido 2.069,40 €; Diogo Segurança Social 133,38 €. Não repetidas neste lote: «A regra de benefício … não tem versão em vigor», «Uma versão legal … precisa da sua referência» (a versão nova pede antes os campos obrigatórios) e «… está «A decidir» em «Entra no subsídio de Natal»». */}
+
+## Para que serve?
+
+Nem tudo o que a empresa dá ao trabalhador vem em dinheiro. Uma viatura para uso pessoal é rendimento em espécie: paga impostos sobre um valor calculado por regra. Neste ecrã atribui-se o benefício, e o recibo mostra o valor e o efeito na Segurança Social e no IRS.
+
+## Quando utilizar?
+
+- A empresa entrega uma viatura ao trabalhador também para uso pessoal, com acordo escrito.
+- A empresa dá habitação, bens ou serviços.
+- Há um valor pontual com limite de isenção: abono para falhas, ajuda de custo no estrangeiro, subsídio de alimentação em dinheiro e em cartão, viatura comprada abaixo do valor de mercado, seguros e opções (**Ocorrências de rendimentos em espécie**).
+
+Não use este ecrã para o teletrabalho: tem **Acordos de teletrabalho**, em **Pessoas › Tempo de trabalho**. Prémios e comissões não se registam aqui: veja [Como pagar prémios, comissões e outros valores variáveis](/payroll-pt/premios-e-pagamentos-variaveis).
+
+## Onde encontrar?
+
+- **Salários › Preparar › Trabalhadores e contratos › Benefícios em espécie**
+- **Salários › Processar › Cessões de salário e rendimentos em espécie › Ocorrências de rendimentos em espécie**
+- **Salários › Configurar › Rubricas › Regras de benefícios** (só o **Administrador de Salários**)
+
+## Antes de começar
+
+- Para atribuir o benefício, registar a ocorrência e calcular o recibo, o seu perfil é **Processador de salários**.
+- A regra e a rubrica têm de existir. A demonstração traz as do seguro de saúde, mas não as da viatura. O **Administrador de Salários** cria-as uma vez:
+  - em **Regras de benefícios**: **Código** `VIATURA`, **Nome**, **Tipo** **Viatura da empresa para uso pessoal**, **Valorização** **Viatura da empresa (art. 24.º/5 e 7 do CIRS; art. 46.º-A/4 do CRC)**, **Válido desde**, **Versão**, **Referência legal**, **IRS**, **Segurança Social**, **Código DMR**, **Código da Segurança Social** e **Integra a retribuição laboral?**;
+  - em **Rubricas salariais**: uma rubrica com **Origem da quantidade** **Benefício em espécie (art. 24.º do CIRS)**, o código da regra em **Regra do benefício** e o **Código da Segurança Social** preenchido desde o início (ver [Como criar e configurar uma rubrica salarial](/payroll-pt/rubricas-salariais)).
+- Tem a referência do acordo escrito, o valor de mercado da viatura a 1 de janeiro e o custo de aquisição.
+
+## Como utilizar
+
+### Atribuir uma viatura
+
+<StepByStep>
+
+1. Abra **Salários › Preparar › Trabalhadores e contratos › Benefícios em espécie** e carregue em **Novo**.
+2. Em **Trabalhador**, escolha o trabalhador, por exemplo Ana Margarida Pinto. Em **Regra do benefício**, escolha a regra: **Tipo** e **Valorização** preenchem-se sozinhos.
+3. Em **De**, escreva `01/10/2026`. Deixe **Até** vazio enquanto a viatura estiver atribuída.
+4. Escreva **Valor de mercado a 1 de janeiro (viatura)**, `24000`, **Custo de aquisição (viatura)**, `30000`, e **Acordo escrito de uso pessoal (viatura)**, `Acordo de viatura 1/2026`. Confirme a opção de **Porque é que a viatura é de uso pessoal?**. Guarde.
+   ![Benefício atribuído a Ana Margarida Pinto: viatura de uso pessoal desde 01/10/2026, valor de mercado de 24.000,00 € e custo de 30.000,00 €](/images/payroll-pt/beneficios-em-especie/01-viatura-atribuida.png)
+5. Abra o recibo do mês em **Salários › Processar › Recibos de vencimento** e carregue em **Calcular**. A linha da rubrica **Viatura de uso pessoal** entra sozinha.
+   ![Linhas do recibo de outubro de Ana Margarida Pinto, com a viatura de uso pessoal de 180,00 € e, em baixo, os rendimentos em espécie e o líquido a receber de 2.069,40 €](/images/payroll-pt/beneficios-em-especie/02-recibo-com-a-viatura.png)
+
+</StepByStep>
+
+### Registar uma ocorrência
+
+A rubrica leva a ocorrência ao recibo. O **Administrador de Salários** cria-a uma vez para cada tipo, em **Salários › Configurar › Rubricas › Rubricas salariais**: em **Origem da quantidade**, escolhe **Rendimento em espécie (registo de ocorrências)** e, em **Tipo de rendimento em espécie**, o mesmo tipo da ocorrência.
+
+<StepByStep>
+
+1. Abra **Salários › Processar › Cessões de salário e rendimentos em espécie › Ocorrências de rendimentos em espécie** e carregue em **Novo**.
+2. Escolha **Trabalhador** e **Data**, por exemplo `15/10/2026`.
+3. Em **Tipo**, escolha uma das opções. Os campos a preencher mudam com o tipo:
+
+   | Tipo | O que preencher |
+   | --- | --- |
+   | **Ajuda de custo no estrangeiro** | **País da deslocação**, **Quantidade** e **Montante pago** |
+   | **Subsídio de alimentação pago em dinheiro e em cartão** | **Quantidade**, **Pago em dinheiro** e **Pago em cartão** |
+   | **Viatura comprada abaixo do valor de mercado** | **Valor de mercado**, **Pago pelo trabalhador** e **Já tributado** |
+   | **Abono para falhas** | **Montante pago** e **Remuneração mensal fixa** |
+   | **Seguro de vida, fundo de pensões, PPR pagos pela empresa** | **Regra do benefício** e **Montante pago** |
+   | **Opções, valores mobiliários e criptoativos** | **Regra do benefício**, **Quantidade**, **Valor de mercado**, **Pago pelo trabalhador** e **Fonte do valor** |
+
+4. Guarde. O programa calcula **Rendimento**, **Isento (IRS)**, **Tributável (IRS)** e **Na base da Segurança Social**, e explica a conta em **Como foi calculado**.
+   ![Ocorrência de abono para falhas: 120,00 € de rendimento, 57,50 € isentos e 62,50 € tributáveis, com a explicação do limite de 5 %](/images/payroll-pt/beneficios-em-especie/03-abono-para-falhas.png)
+5. Abra o recibo do mês e carregue em **Calcular**. A linha da rubrica entra sozinha.
+
+</StepByStep>
+
+**Exemplo da viatura.** Ana ganha 2.400,00 €. No recibo de outubro de 2026:
+
+- **Viatura de uso pessoal** para o IRS: 0,75 % de 24.000,00 € = 180,00 €.
+- **Segurança Social (trabalhador)**: 11 % de 2.625,00 € = 288,75 €. A base é 2.400,00 € mais 0,75 % do custo de aquisição: 0,75 % de 30.000,00 € = 225,00 €.
+- **IRS retido**: 171,00 €, o mesmo de setembro: a viatura não entra na base de IRS, que continua em 2.400,00 €. Ana é casada, único titular, com 2 dependentes: tabela III de 2026 (Despacho n.º 233-A/2026), 2.400,00 € × 22,77 % − 289,47 € − 2 × 42,86 € = 171,29 €, e o recibo retém 171,00 €. Por omissão, não se retém IRS sobre rendimentos em espécie.
+
+**Exemplo do abono para falhas.** Diogo Ferreira Lopes, com 1.150,00 € de remuneração fixa e 120,00 € de abono: limite de 5 % = 57,50 € isentos e 62,50 € tributáveis. A Segurança Social do recibo passa a 11 % de 1.212,50 € = 133,38 €.
+
+Para contabilizar o lote, cada rubrica precisa de um modelo de contabilização: sem ele, **Contabilizar** responde «Contabilização bloqueada: 1 rubrica(s) com valor não têm modelo de contabilização em 31/10/2026: Viatura de uso pessoal. O que aconteceu: o lançamento não pode ser construído sem uma conta para cada linha. Como corrigir: crie um modelo para cada uma (Salários › Configurar › Rubricas › Modelos de contabilização). …» (ver [Como contabilizar o processamento dos salários](/payroll-pt/contabilizar-os-salarios)). Atribuir o benefício ou registar a ocorrência não gera lançamentos.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: qual dos dois valores da viatura serve a Segurança Social, a tributação do abono para falhas, os códigos DMR e da Segurança Social e as contas.</span>
+
+## No Enterprise
+
+No Odoo Enterprise, os benefícios em espécie atribuem-se e calculam-se da mesma maneira: com o perfil **Processador de salários**, **Salários › Preparar › Trabalhadores e contratos › Benefícios em espécie** abre a mesma lista, com **Novo**, e o recibo de **Salários › Processar › Recibos de vencimento** tem os mesmos separadores: **Linhas**, **Segurança Social e IRS**, **Datas e competência** e **Pagamento e obrigações**.
+
+{/* Nota interna (lote EE-07, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee07b_test: cópia da odoo20_ee_test com a aplicação de salários do Enterprise (hr_payroll) instalada e o código de master; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado: Processador de salários em Benefícios em espécie (lista com Novo; colunas Trabalhador, Regra do benefício, De, Até e Valor mensal) e num recibo de setembro de 2026 (Imprimir recibo, Retificar e os quatro separadores). Caminhos do artigo conferidos com o verificador do test_doc_paths na mesma cópia (0 erros). Ver reports/LOTE_EE-07.md. */}
+
+## Resultado esperado
+
+- A lista **Benefícios em espécie** mostra a atribuição, que vale de **De** a **Até**.
+- O recibo mostra a linha com o valor. **Parte isenta** e **Excedente sujeito** são colunas opcionais da lista.
+- A ocorrência mostra **Rendimento**, **Isento (IRS)**, **Tributável (IRS)**, **Na base da Segurança Social** e **Como foi calculado**.
+
+## Notas importantes
+
+- **A viatura não é dinheiro entregue.** O recibo mostra-a em **Rendimentos em espécie (não pagos em dinheiro)** e não a soma ao **Líquido a receber**. No exemplo: 2.709,15 € − 459,75 € − 180,00 € = 2.069,40 €.
+- **Uma regra em uso não se altera.** O registo diz: «Este registo já está em uso, por isso já não se altera. Para o mudar, feche o período (preencha «Válido até») e registe um novo com a data de início.»
+- **Seguros, fundos de pensões, PPR e opções** precisam de uma regra criada pela empresa. O fiscaldoo não presume nada.
+
+## Problemas frequentes
+
+### «O abono para falhas precisa da remuneração mensal fixa do trabalhador»
+
+- **Mensagem:** «O abono para falhas precisa da remuneração mensal fixa do trabalhador. O que aconteceu: o limite isento é uma percentagem dela. Como resolver: preencha «Remuneração mensal fixa».»
+- **Causa:** ao guardar a ocorrência, faltava esse campo.
+- **O que fazer:** preencha **Remuneração mensal fixa** e guarde.
+
+### «Há campos obrigatórios por preencher»
+
+- **Mensagem:** «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** na viatura, o **Acordo escrito de uso pessoal (viatura)** é obrigatório, e escrever só espaços não conta.
+- **O que fazer:** escreva a referência do acordo e guarde.
+
+### «O lote … não pode ser validado: «VIATURA» (…)»
+
+- **Mensagem:** «O lote «Salários de outubro de 2026» não pode ser validado: «VIATURA» (Ana Margarida Pinto). O que aconteceu: uma rubrica sujeita a Segurança Social com valor não tem código de Segurança Social e a declaração ficaria errada. Como corrigir: dê a cada rubrica o seu código (Salários › Configurar › Rubricas › Rubricas salariais) ou marque-a como não sujeita.» Em **Validar** no próprio recibo, a mensagem começa por «O recibo «Ana Margarida Pinto (01/10/2026 — 31/10/2026)» não pode ser fechado: as rubricas «VIATURA» estão sujeitas a Segurança Social, têm valor e não têm código de Segurança Social. …».
+- **O que fazer:** a versão começada da rubrica já não se altera. Ao guardar a rubrica com o código, aparece «A(s) versão(ões) de «VIATURA» já começou(aram) (desde 2026-01-01) e não pode(m) ser editada(s): o histórico nunca é reescrito, porque os recibos e as declarações do período foram calculados com elas. Como resolver: feche a atual com «Válido até» e crie uma nova versão a começar no dia seguinte, com os valores corrigidos (só a validade, as referências e o estado ativo ainda se podem alterar).». Peça ao **Administrador de Salários** que feche a versão com **Válido até** e crie outra com o **Código da Segurança Social**. Depois, carregue em **Calcular** no recibo.
+
+### «A regra de benefício … não tem versão em vigor»
+
+- **Mensagem:** «A regra de benefício «HABITACAO» não tem versão em vigor em 30/11/2026. O que aconteceu: sem ela o benefício não se classifica e nada se presume. Como resolver: registe a versão (Salários › Configurar › Rubricas › Regras de benefícios).»
+- **O que fazer:** peça ao **Administrador de Salários** que crie a regra com o mesmo código da rubrica e com **Válido desde** anterior ao período.
+
+### «O recibo … não pode ser validado: algo registado para o trabalhador ficaria por pagar»
+
+- **Mensagem:** «O recibo «Diogo Ferreira Lopes (01/10/2026 — 31/10/2026)» não pode ser validado: algo registado para o trabalhador ficaria por pagar (rendimento em espécie de 15/10/2026 (Abono para falhas): 120,00 €). O que aconteceu: não há nenhuma rubrica em vigor que o leve. Como resolver: crie a rubrica em Salários › Configurar › Rubricas › Rubricas salariais (…), calcule o recibo outra vez ou corrija a data ou o fim do que foi registado.»
+- **O que fazer:** peça ao **Administrador de Salários** que crie a rubrica em **Salários › Configurar › Rubricas › Rubricas salariais**. Para um benefício com regra, com a mesma regra. Para uma ocorrência, com a origem **Rendimento em espécie (registo de ocorrências)** e, em **Tipo de rendimento em espécie**, o tipo da ocorrência. Depois, carregue de novo em **Calcular**.
+
+### «Uma versão legal ou de instrumento coletivo precisa da sua referência»
+
+- **Mensagem:** «Uma versão legal ou de instrumento coletivo precisa da sua referência. Preencha «Referência legal» (diploma/artigo ou acordo e publicação).»
+- **Causa:** ao guardar a rubrica, **Tipo de fonte** ficou em **Regra legal**, que é a opção que vem preenchida, e **Referência legal** está vazia.
+- **O que fazer:** preencha **Referência legal**. Se a rubrica é uma regra interna, escolha em **Tipo de fonte** a opção **Regra da empresa**.
+
+### «A rubrica … está «A decidir» em «Entra no subsídio de Natal»»
+
+- **Mensagem:** «A rubrica «VIATURA» está «A decidir» em «Entra no subsídio de Natal». O que aconteceu: entrar ou não na base é uma decisão (CT art. 264.º) e nenhuma foi tomada, por isso nada se adivinha. …»
+- **O que fazer:** decida com o contabilista certificado se a rubrica entra e escolha **Sim** ou **Não** nas marcas de inclusão. Se a versão já começou, feche-a com **Válido até** e crie uma nova: a versão começada não se altera.

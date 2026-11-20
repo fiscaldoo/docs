@@ -1,0 +1,102 @@
+---
+id: pre-recibos
+slug: /fiscal-core/pre-recibos
+title: Como emitir um pré-recibo
+sidebar_label: Pré-recibos
+sidebar_position: 7
+description: Emitir um pré-recibo (aviso interno de cobrança, sem valor fiscal) com as faturas que o cliente vai pagar, imprimi-lo, anulá-lo com motivo e convertê-lo no recibo quando o pagamento entra.
+keywords: [pré-recibo, pré-recibos, pre-recibo, pre-recibos, aviso de cobrança, cobrador, converter em recibo, recibo, PREC, não serve de recibo, anular pré-recibo]
+doc_id: DOC-0036
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/recibos-e-cobrancas/emitir-um-recibo, fiscal-core/recibos-e-cobrancas/avisos-de-cobranca]
+---
+
+## Para que serve?
+
+O pré-recibo é um papel que se entrega ao cliente **antes** de o pagamento estar confirmado: lista as faturas que ele vai pagar e quanto paga de cada uma. É comum quando um cobrador vai buscar o pagamento, ou quando o cliente paga por cheque e o cheque ainda não teve boa cobrança.
+
+O pré-recibo **não é um recibo**: não tem série fiscal, ATCUD nem assinatura, não cria lançamentos e não paga a fatura. O número é interno (`PREC/00001`, `PREC/00002`…). Quando o dinheiro entra, converte-o no recibo verdadeiro.
+
+## Quando utilizar?
+
+- Quando o cliente quer um comprovativo do que vai pagar, antes de o pagamento estar feito ou confirmado.
+- Quando um cobrador leva uma lista das faturas a receber de um cliente.
+
+Se o cliente já pagou, não precisa de pré-recibo: emita logo o recibo, como em [Como registar um pagamento recebido e emitir o recibo](/fiscal-core/emitir-um-recibo).
+
+## Onde encontrar?
+
+Na ficha do cliente: **Faturação › Clientes e artigos › Clientes**, abra o cliente, carregue na roda dentada (**Ações**), ao lado do nome, e escolha **Pré-recibos**. Abre a lista dos pré-recibos desse cliente.
+
+A lista de todos os pré-recibos está em **Contabilidade › Lançar › Vendas e cobranças › Pré-recibos**. Abre com o filtro **Emitido**: tire-o para ver também os convertidos e os anulados.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**, **Contabilista certificado** ou **Administrador**. Os passos foram feitos do princípio ao fim com o **Contabilista**. O perfil **Administrativo** não tem acesso aos pré-recibos.
+- Se trabalha com várias empresas, escolha primeiro a empresa das faturas, no canto superior direito. Com outra empresa ativa, a lista de faturas do pré-recibo fica vazia («Sem registos»).
+- O cliente tem faturas emitidas e por pagar.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a ficha do cliente, carregue na roda dentada e escolha **Pré-recibos**, ou abra **Contabilidade › Lançar › Vendas e cobranças › Pré-recibos**. Carregue em **Novo**. Pela roda dentada, o **Cliente** já vem preenchido; pelo menu, escolha-o. A **Data** é a de hoje.
+2. Em **Cobrador**, pode escolher a pessoa que vai buscar o pagamento (é opcional).
+3. No separador **Faturas**, carregue em **Adicionar uma linha** e escolha a fatura. A lista só mostra as faturas emitidas e por pagar deste cliente. O **Montante em dívida** aparece sozinho; o **Montante** vem a 0,00 €: escreva quanto o cliente vai pagar dessa fatura.
+4. Repita para cada fatura e grave. O pré-recibo fica **Emitido**, com o número `PREC/…` e o aviso «NÃO SERVE DE RECIBO: documento interno sem valor fiscal. Não cria nenhum lançamento contabilístico.».
+   ![Pré-recibo PREC/00001 emitido, com os botões Imprimir, Converter em recibo e Anular, o estado Emitido e o aviso NÃO SERVE DE RECIBO](/images/fiscal-core/pre-recibos/01-pre-recibo-emitido.png)
+5. Carregue em **Imprimir**. O navegador descarrega o PDF «Pré-recibo PREC_00001.pdf», para entregar ao cliente.
+6. **Quando o pagamento entrar**, abra o pré-recibo e carregue em **Converter em recibo**. Na janela, escolha o **Diário** do recibo (na demonstração, **Recibos (RG)**, o da série de recibos), confira a **Data do recibo** e carregue em **Emitir o recibo**. O ecrã abre o recibo, já com o número da série (no exemplo, `RG D26/17`); o caminho no topo volta ao pré-recibo.
+   ![Janela Converter em recibo do PREC/00002, de 500,00 €, com o Diário Recibos (RG) e a Data do recibo 02/11/2026](/images/fiscal-core/pre-recibos/03-converter-em-recibo.png)
+
+</StepByStep>
+
+**Um pré-recibo, um recibo.** Um recibo paga **cada fatura por inteiro**, ou **uma só fatura em parte**. Se o pré-recibo tem várias faturas e alguma só é paga em parte, a conversão é recusada (veja «Problemas frequentes»): nesse caso, emita um pré-recibo por fatura.
+
+## No Enterprise
+
+No Odoo Enterprise, os pré-recibos são os mesmos do fiscaldoo. **Contabilidade › Lançar › Vendas e cobranças › Pré-recibos** abre a lista com o filtro **Emitido** e as colunas **Número**, **Data**, **Cliente**, **Cobrador**, **Total** e **Estado**. **Novo** abre o pré-recibo com o aviso «NÃO SERVE DE RECIBO: documento interno sem valor fiscal. Não cria nenhum lançamento contabilístico.» (visto com um utilizador só com o perfil **Contabilista**).
+
+{/* Nota interna (lote EE-12, DOCS-073 #4142, DEC-1794, master 589ecfd27, base Enterprise docs_ee_ee12_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee12_test): DOC-0036. Contabilista: menu Pré-recibos (filtro Emitido, lista vazia na cópia) e Novo com Cliente, Cobrador, Data, Moeda, Total e as linhas Fatura, Montante em dívida e Montante; nada gravado. Igual na cópia Community. Ver reports/LOTE_EE-12.md. */}
+
+## Resultado esperado
+
+- **No pré-recibo emitido:** no exemplo, o `PREC/00001` de Maria João Ferreira (ENI), de 02/11/2026, tinha a `FT D26/27` (135,88 € em dívida, 135,88 € a pagar) e a `FT D26/29` (1.461,72 € em dívida, 500,00 € a pagar), com o total de 635,88 €.
+- **No PDF:** a empresa, «NÃO SERVE DE RECIBO», «Documento interno sem valor fiscal», o número, o cliente com a morada e o NIF, a data, o estado **Emitido**, as faturas com o **Montante em dívida** e o **Montante**, o total e a frase «Este documento não certifica nenhum pagamento e não é válido como recibo. O recibo só é emitido quando o pagamento é registado.».
+- **Depois de converter:** no exemplo, o `PREC/00002` (só a `FT D26/29`, 500,00 €) deu o recibo `RG D26/17`, de 500,00 €, com a data de 02/11/2026. O pré-recibo passa a **Convertido**, com o campo **Recebimento** (`RG D26/17`) e a data em **Convertido em**, e fica só com o botão **Imprimir**. A `FT D26/29` ficou paga em parte, com 961,72 € em dívida. O recibo é igual a um recibo emitido na fatura: veja o que ele lança em [Como registar um pagamento recebido e emitir o recibo](/fiscal-core/emitir-um-recibo).
+- **Anulado:** um pré-recibo anulado fica **Anulado**, com o motivo, e só com o botão **Imprimir**.
+
+## Notas importantes
+
+- **Um pré-recibo emitido não se altera.** Se estiver errado, anule-o e emita outro: carregue em **Anular**, escreva o **Motivo** e carregue em **Anular pré-recibo**. Um pré-recibo convertido ou anulado já não muda.
+- **Converte-se uma vez.** Cada pré-recibo dá um só recibo.
+- **A fatura não muda com o pré-recibo.** Só o recibo (no passo 6) paga a fatura.
+
+{/* Nota interna (DOCS-065, lote v19-DEF, master c643480c2): revisto com demo.contabilista (só Contabilista): menu visível sem modo de programador, roda dentada do cliente, Novo, recusa do montante com formato certo, Emitido, Converter em recibo (RG D26/17 de 50,00 € no ecrã, abre o recibo). Gestor: roda dentada abre a lista. V5FC-01/04/05/06 já não acontecem. Os exemplos PREC/00001 e 00002 de Maria João Ferreira (ENI) e as capturas vêm do lote v5-FC (master 6fb7ee1d4). */}
+
+## Problemas frequentes
+
+### Aparece «O montante de FT D26/30 (99.999,00 €) é superior ao montante em dívida (4.847,43 €). Diminua o montante.»
+
+- **Sintoma:** ao gravar, o pré-recibo é recusado com esta mensagem.
+- **Causa:** o **Montante** de uma linha é maior do que o que falta pagar dessa fatura.
+- **O que fazer:** carregue em **Fechar**, escreva no **Montante** um valor igual ou menor do que o **Montante em dívida** e grave.
+
+### Ao converter aparece «PREC/00001 tem várias faturas e algumas são pagas apenas em parte…»
+
+- **Sintoma:** em **Converter em recibo** › **Emitir o recibo**, abre-se a janela **Operação inválida** com «PREC/00001 tem várias faturas e algumas são pagas apenas em parte (FT D26/29). Um recibo paga cada fatura por inteiro, ou uma única fatura em parte: anule o pré-recibo e emita um por fatura.». Nada é emitido.
+- **Causa:** o pré-recibo junta várias faturas e pelo menos uma não é paga por inteiro.
+- **O que fazer:** anule o pré-recibo, com o motivo, e emita um pré-recibo por fatura. No exemplo, o `PREC/00001` foi anulado e o `PREC/00002`, só com a `FT D26/29`, foi convertido.
+
+### A janela pede o Diário ou o Motivo
+
+- **Sintoma:** «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** em **Converter em recibo** falta o **Diário**; em **Anular** falta o **Motivo**.
+- **O que fazer:** preencha o campo a vermelho e carregue outra vez no botão.
+
+{/* Nota interna (lote v23-AT, DOC-0036, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador): o Administrativo não tem a aplicação Contabilidade */}

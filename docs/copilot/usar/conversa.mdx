@@ -1,0 +1,113 @@
+---
+id: conversa
+slug: /copilot/conversa
+title: Como pedir listas, relatórios e totais ao Copiloto
+sidebar_label: Pedir listas, relatórios e totais
+sidebar_position: 2
+description: "O que é preciso ligar para conversar com o Copiloto sobre os números da empresa, como testar a ligação à IA, o que ele recusa e o que acontece quando a IA não pode ser chamada."
+keywords: [conversa com o copiloto, perguntar aos números, perguntar aos numeros, quanto faturei, abrir uma lista, criar um relatório, testar a ligação, IA desligada, limite mensal de gasto, copiloto recusa]
+doc_id: DOC-0285
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c643480c2)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [copilot/usar/janela-de-ajuda, copilot/configurar/ligar-a-uma-ia, copilot/configurar/privacidade-e-consentimentos, copilot/configurar/registo-do-copiloto]
+---
+
+## Para que serve?
+
+Na janela do Copiloto pode escrever, como diria a um colega, o que quer saber dos números da empresa: «Quanto faturei em setembro?», «Que faturas de fornecedores vencem esta semana?». Com a IA ligada, o Copiloto envia o pedido a um fornecedor de IA e responde com os valores que as consultas devolvem; também pode preparar rascunhos (um cliente, uma fatura). Essa resposta ainda não foi validada no ecrã (veja «Resultado esperado»). Este artigo mostra o que é preciso ligar, como testar a ligação e o que acontece quando a IA não pode ser chamada.
+
+Sem a IA, a mesma janela continua a dar a ajuda passo a passo (veja [Como tirar dúvidas na janela do Copiloto](/copilot/janela-de-ajuda)).
+
+## Quando utilizar?
+
+- Quer um total ou uma lista sem procurar o ecrã certo.
+- Quer saber o que está por receber, por pagar ou em atraso.
+- Quer preparar um rascunho de um documento a partir de uma frase.
+
+## Onde encontrar?
+
+- A conversa: o ícone **Copiloto** na barra de cima, opções **Perguntar aos números**, **Abrir uma lista** e **Criar um relatório**.
+- Uma pergunta só sobre números, numa janela à parte: **Contabilidade › Consultar › Análise › Perguntar aos números**.
+- O que é preciso ligar: **Copiloto › Controlo › Interruptores**, **Copiloto › Ligações às IAs › Ligações** e **Copiloto › Ligações às IAs › Definições da IA**.
+
+## Antes de começar
+
+A conversa só usa a IA quando as quatro condições abaixo estão cumpridas. As três primeiras são do administrador do sistema (ou de quem tem o acesso extra **Administração fiscal**); as perguntas fazem-se com o perfil **Contabilista**.
+
+- **Uma ligação à IA com a chave da empresa.** Veja [Como ligar o Copiloto a um fornecedor de IA](/copilot/ligar-a-uma-ia).
+- **Os interruptores ligados** em **Copiloto › Controlo › Interruptores**: **Copiloto (interruptor geral da empresa)**, **Ligação à IA (chamadas ao fornecedor de IA)** e **IA - Conversa (responde com dados e cria rascunhos)** para a janela do Copiloto, ou **IA - Perguntas sobre os números** para o menu **Perguntar aos números** da Contabilidade. Os da IA são do tipo **Para fora** e vêm desligados. Veja [Como ligar ou desligar o Copiloto e controlar os dados enviados](/copilot/privacidade-e-consentimentos).
+- **Um limite de gasto da empresa.** Em **Definições da IA**, o **Limite mensal de gasto da empresa (EUR)** vem a 0,00, e 0 quer dizer **bloqueado**: enquanto não escrever um valor, a IA nunca é chamada.
+- **Uma base de dados de produção.** Numa base de testes o fiscaldoo não chama a IA (veja «Notas importantes»).
+
+## Como utilizar
+
+### Testar a ligação (administrador)
+
+<StepByStep>
+
+1. Abra **Copiloto › Ligações às IAs › Ligações** e a ligação da empresa. Confirme que **Chave guardada** está marcada.
+2. Carregue em **Testar a ligação**. O fiscaldoo faz a chamada mais pequena possível ao fornecedor (uma palavra, sem dados da empresa).
+   ![Ligação à IA com a chave guardada e o botão Testar a ligação assinalado](/images/copilot/conversa/02-testar-a-ligacao.png)
+3. Leia a mensagem. Com uma chave aceite, numa base de produção, a mensagem diz que a ligação funciona e com que modelo o fornecedor respondeu (não visto: a demonstração é uma base de testes). Com uma chave recusada: «A ligação falhou. O fornecedor recusou a chave (HTTP 401). Nada foi alterado. Escreva uma chave nova na ligação e teste de novo.»
+
+</StepByStep>
+
+### Fazer um pedido (Contabilista)
+
+<StepByStep>
+
+1. Carregue no ícone **Copiloto** da barra de cima.
+   ![Janela do Copiloto com as opções Perguntar aos números, Abrir uma lista e Criar um relatório](/images/copilot/conversa/01-janela.png)
+2. Carregue em **Perguntar aos números** (ou **Abrir uma lista**, ou **Criar um relatório**). O campo **Escreva a sua dúvida…** fica com um exemplo, como «Quanto faturei este mês?».
+3. Mude o texto para o que quer saber, por exemplo «Quanto faturei em setembro?», e carregue em **Perguntar**.
+
+</StepByStep>
+
+Também pode abrir **Contabilidade › Consultar › Análise › Perguntar aos números**, escrever em **A sua pergunta** e carregar em **Perguntar**. Com o interruptor **IA - Perguntas sobre os números** desligado, a janela diz «Este agente está desligado…» e o botão **Perguntar** fica inativo.
+
+## Resultado esperado
+
+<span className="fd-pending">Pendente de validação no ecrã: a resposta de um fornecedor de IA real. A demonstração é uma base de testes e o fiscaldoo não chama a IA a partir dela; o que está abaixo vem do produto (o código e o guia do Copiloto) e não foi visto.</span>
+
+- **Com a IA a funcionar:** o Copiloto responde com o valor e, por baixo, de onde vem e o botão para abrir a lista dos documentos que o formam. Pode pedir faturas (de clientes ou de fornecedores, por período, em atraso ou por pagar), o que há a receber e a pagar, vendas por cliente, faturas de fornecedores a vencer, o balancete ou o extrato de uma conta. Se pedir para criar, aparece um cartão com o rascunho, que abre e confirma no ecrã do documento.
+- **Cada chamada fica registada** em **Copiloto › Controlo › Chamadas à IA**: quem, a ligação, o resultado, os tipos de dados enviados e o custo estimado, sem o conteúdo (veja [Como ver o que o Copiloto fez e o que enviou à IA](/copilot/registo-do-copiloto)).
+- **Quando a IA não pode ser chamada**, a janela diz porquê e responde com a pesquisa na documentação e nos menus: «A conversa não pôde usar a IA, por isso este é o resultado da pesquisa.» seguido do motivo, e no fim «Resposta obtida por pesquisa na documentação e nos menus.». Na demonstração, com tudo ligado, o motivo foi a base de testes:
+  ![Resposta à pergunta Quanto faturei em setembro? numa base de testes: a IA não é chamada e o Copiloto mostra o resultado da pesquisa](/images/copilot/conversa/04-sem-ia-na-base-de-teste.png)
+
+## Notas importantes
+
+- **Numa base de testes a IA não é chamada**, a menos que o administrador do sistema a tenha permitido nessa base. Em **Perguntar aos números** da Contabilidade aparece a janela **Operação inválida** com o mesmo texto. A conversa responde «A IA não é chamada a partir de um ambiente de teste. Nada foi enviado. Use a base de dados de produção, ou peça ao administrador de sistema que permita a IA nesta base de testes.», e **Chamadas à IA** regista a tentativa como bloqueada («Ambiente de teste: a IA nunca é chamada.»).
+- **O Testar a ligação numa base de testes não sai do servidor** (com a mesma exceção). Responde um simulador: «A ligação funciona. Teste simulado: esta é uma base de teste, por isso nada saiu do servidor e nenhum fornecedor real foi chamado. O simulador aceitou a chave.» O simulador só serve para o teste da ligação: não responde a conversas.
+  ![Mensagem A ligação funciona. Teste simulado](/images/copilot/conversa/03-teste-simulado.png)
+- **O Copiloto nunca valida, envia nem paga.** Um pedido desses é recusado antes de chegar à IA, e diz-lhe onde o fazer.
+  ![Pedido Valida a fatura e envia-a ao cliente, recusado pelo Copiloto](/images/copilot/conversa/05-recusa.png)
+- **Dados reservados não saem, por omissão.** Perguntas sobre saúde (baixas por doença), sindicatos ou greves não são enviadas à IA, a menos que o administrador tenha marcado **Autorizar dados pessoais e sensíveis nesta ligação** na ligação à IA: nesse caso, seguem para o fornecedor. Senhas e chaves nunca são enviadas. A recusa diz «Isto fala de saúde, sindicato, greve ou palavras-passe, e isso nunca sai do produto, por isso não o enviei à IA.» ou, quando há artigos da documentação sobre o tema, «Esta pergunta fala de credenciais ou de dados reservados, por isso não a enviei à IA. Estes são os artigos da documentação mais próximos.»
+- **Os números vêm das consultas**, feitas com as suas permissões e só na empresa ativa: o que não pode ver, o Copiloto também não vê. Confira o valor na lista que ele abre. (Vem do código do produto; ainda não foi visto com uma IA real.)
+
+{/* Nota interna (DOCS-046, 3.ª ronda, master 52d1dd3ad): vídeo previsto (video=sim, corrente DOCS-006): só numa base com IA real autorizada; nesta demonstração não há resposta para gravar. Provado no ecrã: Testar a ligação (chave errada 401 e chave «sim-» com o simulador, Administrador), interruptores ligados (Administrador), pedido do Contabilista bloqueado primeiro pelo limite 0,00 («O limite mensal de gasto com IA da empresa … (0,00 EUR) seria ultrapassado…») e depois, com 5 EUR, pela base de testes; recusa de validar/enviar; dados reservados. Chamadas à IA: 2 linhas bloqueadas (blocked_limit e blocked_other), conferidas por RPC. Nenhuma chamada saiu (guarda de rede sem registos). O simulador (ai_service._simulated_provider) só é usado por _check_provider_connection; _exchange bloqueia em base de testes sem o parâmetro COP-044. Também provado: Contabilidade › Consultar › Análise › Perguntar aos números (agente ai_questions), desligado («Este agente está desligado…», Perguntar inativo) e ligado (Operação inválida, base de testes). O limite 0 = bloqueado está na ajuda do campo. Defeito V4PPL-17 (menu sugerido que não aparece na barra). Interruptores ai, ai_chat e ai_questions deixados ligados na base, para o auditor. */}
+
+## Problemas frequentes
+
+### «O limite mensal de gasto com IA da empresa … (0,00 EUR) seria ultrapassado»
+
+- **Sintoma:** a resposta começa por «A conversa não pôde usar a IA…» e diz «O limite mensal de gasto com IA da empresa “…” (0,00 EUR) seria ultrapassado: já foram usados 0,00 EUR este mês. Nada foi enviado.»
+- **Causa:** o limite da empresa está a 0,00 (bloqueado) ou foi atingido este mês.
+- **O que fazer:** peça ao administrador que escreva um limite em **Copiloto › Ligações às IAs › Definições da IA**, **Limite mensal de gasto da empresa (EUR)**, ou espere pelo mês seguinte.
+
+### «O fornecedor recusou a chave (HTTP 401)»
+
+- **Sintoma:** **Testar a ligação** diz «A ligação falhou. O fornecedor recusou a chave (HTTP 401)…».
+- **Causa:** a chave está errada ou foi anulada na conta do fornecedor.
+- **O que fazer:** escreva a chave certa em **Chave de API / token de acesso**, guarde e teste outra vez.
+
+### «Não posso fazer isso, nem vou poder: só preparo rascunhos»
+
+- **Sintoma:** pediu para validar, enviar, pagar ou apagar e o Copiloto responde «Não posso fazer isso, nem vou poder: só preparo rascunhos.» e diz onde o fazer.
+- **Causa:** é a regra do Copiloto, não um erro.
+- **O que fazer:** faça-o no ecrã do documento, por exemplo com o botão **Confirmar**.
+
+{/* Nota interna (v23-T, DOC-0285, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

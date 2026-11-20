@@ -1,0 +1,149 @@
+---
+id: horario-de-trabalho
+slug: /payroll-pt/horario-de-trabalho
+title: Como definir e alterar o horário de trabalho
+sidebar_label: Horário de trabalho
+sidebar_position: 1
+description: Preencher o mapa de horário que a lei manda afixar, imprimi-lo, registar cada alteração com o aviso dado e aplicar um horário novo a um trabalhador sem mexer nos recibos fechados.
+keywords: [horário de trabalho, horario de trabalho, mapa de horário, mapa de horario, afixar o horário, alteração do horário, alteracao do horario, aviso prévio do horário, aviso previo, art. 215, art. 217, período de funcionamento, periodo de funcionamento, dia de encerramento]
+doc_id: DOC-0187
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/tempo-de-trabalho/trabalho-suplementar, payroll-pt/tempo-de-trabalho/verificar-presencas, payroll-pt/processar-e-pagar/alterar-o-salario]
+---
+
+## Para que serve?
+
+O horário de trabalho diz quantas horas cada trabalhador faz por dia. Neste ecrã preenche-se também o **mapa de horário**, o documento que a lei manda afixar no local de trabalho, e regista-se cada alteração do horário, com a data em que foi afixada. O fiscaldoo compara essa data com o aviso exigido e diz se a alteração é conforme.
+
+## Quando utilizar?
+
+- Quando a empresa começa a usar os salários e precisa de afixar o mapa.
+- Quando o horário vai mudar: registe a alteração e o aviso dado aos trabalhadores.
+- Quando um trabalhador passa a ter outro horário a partir de uma data.
+
+Não altere as horas de um horário que já foi usado num recibo fechado: o fiscaldoo recusa (ver «Problemas frequentes»). Duplique-o e aplique a cópia.
+
+## Onde encontrar?
+
+- **Mapa de horário:** **Pessoas › Configurar › Gestão de tempo › Horários de trabalho** › abrir o horário › separador **Mapa de horário (PT)**.
+- **Alterações:** **Salários › Preparar › Tempo de trabalho › Alterações do horário de trabalho**. Na ficha do horário, o separador **Alterações do horário** mostra as mesmas linhas.
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador: faz todos os passos deste artigo.
+- O perfil **Gestor de RH** vê as alterações e tem o botão **Novo**, mas não tem o menu **Horários de trabalho**. O **Processador de salários** só consulta as alterações: não tem o botão **Novo**.
+- Tenha à mão a atividade, a morada do local de trabalho e o período em que a empresa está aberta.
+
+## Como utilizar
+
+### Preencher e imprimir o mapa
+
+<StepByStep>
+
+1. Abra **Pessoas › Configurar › Gestão de tempo › Horários de trabalho** e abra o horário, por exemplo **PT 40.0h/8.0h (demonstração)**, o de sete trabalhadores da demonstração.
+2. Carregue no separador **Mapa de horário (PT)**. Enquanto faltar alguma coisa, aparece «O mapa de horário está incompleto (art. 215.º). Em falta: atividade, sede e local de trabalho, período de funcionamento.»
+3. Escreva a **Atividade exercida**, por exemplo `Contabilidade e consultoria`, e a **Sede e local de trabalho**, por exemplo `Rua de Exemplo, 1, Lisboa`.
+4. Em **Período de funcionamento: início** e **Período de funcionamento: fim**, escreva as horas, por exemplo `8:00` e `19:00`. Em **Dia de encerramento**, escreva `Domingo`.
+5. Preencha, se existirem, o **Regime de adaptabilidade**, o **Número de turnos** e o **Instrumento de regulamentação coletiva (IRCT)**. Em **Consultados em** e **Mapa afixado em**, escreva as datas, por exemplo `15/10/2026` e `20/10/2026`.
+6. Guarde. Se o horário tiver mais do que um trabalhador, aparece o aviso «Este horário de trabalho é usado por 7 trabalhador(es). Tem a certeza de que quer alterá-lo para todos?»: carregue em **Confirmar**. O aviso aparece também quando só preencheu o mapa.
+   ![Separador Mapa de horário (PT) preenchido, com o botão Imprimir o mapa para afixar assinalado](/images/payroll-pt/horario-de-trabalho/01-mapa-de-horario.png)
+7. Carregue em **Imprimir o mapa para afixar** e afixe o PDF.
+
+</StepByStep>
+
+### Registar uma alteração do horário
+
+<StepByStep>
+
+1. Abra **Salários › Preparar › Tempo de trabalho › Alterações do horário de trabalho** e carregue em **Novo**.
+2. Em **Horário de trabalho**, escolha o horário.
+3. Escreva **Aplica-se a partir de** e **Afixada em**. O fiscaldoo calcula a **Antecedência dada (dias)** e mostra o **Aviso prévio exigido (dias)**.
+4. Se consultou os trabalhadores, marque **Trabalhadores consultados** e escreva **Consultado em**.
+5. Marque, se for o caso, **Horário acordado individualmente**, **Alteração de uma semana, no máximo** (escreva depois **Dura (dias)** e marque **Registada no livro**) ou **Aumenta as despesas do trabalhador** (escreva a **Compensação**).
+6. Se o instrumento coletivo fixar outro aviso, escreva **IRCT: antecedência (dias)** e **Cláusula do IRCT**: esse aviso substitui o da lei.
+7. Guarde e leia o **Resultado**.
+   ![Alteração aplicada a 20/11/2026 e afixada a 15/11/2026: aviso exigido de 7 dias, antecedência de 5 e resultado Não conforme: afixado tarde demais](/images/payroll-pt/horario-de-trabalho/02-alteracao-nao-conforme.png)
+
+</StepByStep>
+
+### Aplicar um horário novo a um trabalhador
+
+<StepByStep>
+
+1. Em **Horários de trabalho**, abra o horário, carregue em **Ações › Duplicar** e altere o nome e as **Horas** de cada dia na cópia. Guarde.
+2. Abra **Salários › Preparar › Trabalhadores e contratos › Histórico de retribuição** e abra a linha do trabalhador.
+3. Carregue em **+** e escolha a data de efeito, por exemplo 01/12/2026. Os cuidados com a versão nova estão em [Como alterar o salário](/payroll-pt/alterar-o-salario).
+4. No separador **Folha de Salários**, em **Planear**, escolha a cópia em **Horário de Trabalho**. Guarde.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o mapa de horário e as alterações do horário fazem-se nos mesmos ecrãs, com o acesso extra **Administrador de Salários**: o horário aberto em **Pessoas › Configurar › Gestão de tempo › Horários de trabalho** tem os separadores **Mapa de horário (PT)** e **Alterações do horário**, com os mesmos campos.
+
+No passo 4 de «Aplicar um horário novo a um trabalhador», o bloco **Planear** do separador **Folha de Salários** mostra o **Horário de Trabalho** e **Baseado em presenças**, como no Community. A aplicação **Folha de Salários** do Enterprise, que tem outra entrada **Horários de trabalho**, não aparece numa empresa portuguesa (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
+
+{/* Nota interna (lote EE-07, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee07b_test: cópia da odoo20_ee_test com a aplicação de salários do Enterprise (hr_payroll) instalada e o código de master; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado: Processador de salários com o acesso Administrador de Salários: horário de 40 horas/semana (separadores Mapa de horário (PT) e Alterações do horário, campos do mapa iguais aos do artigo); Histórico de retribuição → ficha → Folha de Salários: Resumo do contrato, Planear com Baseado em presenças e Horário de Trabalho (EEA-071 em master). Nesta largura de ecrã (1440 px), o menu Configurar de Pessoas fica no botão + da barra. Caminhos do artigo conferidos com o verificador do test_doc_paths na mesma cópia (0 erros). Ver reports/LOTE_EE-07.md. */}
+
+## Resultado esperado
+
+- No mapa, a faixa «Em falta» desaparece. O PDF traz a entidade empregadora, a atividade, a sede, o período de funcionamento («08:00-19:00 · Domingo»), o descanso semanal, os períodos normais de cada dia («09:00-13:00 / 14:00-18:00») e **Afixado em: 20/10/2026**.
+- A lista de alterações tem uma linha por alteração, com o **Resultado**:
+
+| Exemplo (na demonstração) | Aviso exigido | Dada | Resultado |
+|---|---|---|---|
+| Consultados, aplica-se a 20/11, afixada a 10/11 | 7 | 10 | **Conforme** |
+| Consultados, aplica-se a 20/11, afixada a 15/11 | 7 | 5 | **Não conforme: afixado tarde demais** |
+| Sem consulta | 7 | 5 | **Não conforme: trabalhadores não consultados** |
+| Horário acordado individualmente | 7 | 8 | **Não conforme: horário acordado individualmente** |
+| Instrumento coletivo com 5 dias, afixada com 8 | 5 | 8 | **Conforme** |
+
+- Uma alteração não conforme mostra por cima «Esta alteração não respeita o art. 217.º do Código do Trabalho: … É contraordenação grave (art. 217.º/6).», mas fica guardada: o fiscaldoo avisa, não impede.
+- Um horário aplicado por versão vale a partir da data da versão. No exemplo, a versão de 01/12/2026 de Diogo Ferreira Lopes fica com o horário novo e a de 01/02/2026 mantém o antigo.
+- Nada disto gera lançamentos contabilísticos. As horas chegam aos recibos pelo contrato de cada trabalhador.
+
+![Lista das alterações do horário de trabalho, com a antecedência, o aviso exigido e o resultado de cada uma](/images/payroll-pt/horario-de-trabalho/03-lista-das-alteracoes.png)
+
+## Notas importantes
+
+- **Aviso prévio.** O aviso por omissão é de 7 dias, 3 numa microempresa. O campo **Microempresa** é marcado sozinho, a partir de **Salários › Configurar › Empresa › Dimensão da empresa**. A alteração de uma semana tem regras próprias e limite anual. <span className="fd-pending">Pendente de validação por contabilista certificado ou jurista do trabalho: avisos, alteração curta e contraordenação do art. 217.º do Código do Trabalho.</span>
+- **O PDF sai mesmo com o mapa incompleto.** **Imprimir o mapa para afixar** não recusa: confirme antes que a faixa «Em falta» desapareceu.
+- **Horário concentrado.** Marca-se na ficha do trabalhador, separador **Trabalho**, em **Regime de horário** › **Horário concentrado (art. 209.º)** (ver [Contrato de trabalho](/people/contrato-de-trabalho)). Aparece **Modo do horário concentrado**, com **No máximo quatro dias úteis (art. 209.º/1-a)** ou **No máximo três dias consecutivos, depois dois de descanso (art. 209.º/1-b)**. Em **Fundamento de um horário mais longo**, que está na ficha com qualquer regime, escreve-se o acordo ou o instrumento coletivo em que o regime assenta. <span className="fd-pending">Pendente de validação por contabilista certificado: as condições do art. 209.º do Código do Trabalho para cada modo.</span>
+  {/* Nota interna (lote v23-AH, DOCS-069 #4052, master 97b34fac3, docs_demo_v23ah_test): regimes, modos e campo Fundamento vistos por clique com o Processador de Salários da demonstração numa ficha de trabalhador, descartados sem gravar. As recusas ao guardar («O horário concentrado de … não tem modo…», «… não tem acordo que o sustente…», «O horário de … tem até … dias úteis seguidos…») não foram provocadas: exigiam gravar o contrato de um trabalhador que já existia. Vinha do guia congelado Salários/horario-concentrado.md. */}
+- **O resultado só compara datas.** O fiscaldoo não vê se o mapa foi mesmo afixado nem se a consulta aconteceu: confia nas datas e nas marcas que escrever.
+
+## Problemas frequentes
+
+### A faixa diz que falta a «hora de início e de fim dos períodos normais»
+
+- **Sintoma:** num horário criado com **Novo**, ou no **40 horas/semana** da demonstração, a faixa «Em falta» acrescenta «hora de início e de fim dos períodos normais». O PDF mostra «8.0 h, sem hora de início nem de fim» e o intervalo «—».
+- **Causa:** o horário só tem as **Horas** de cada dia. O mapa tem de dizer a que horas começa e acaba cada período.
+- **O que fazer:** na lista dos dias, preencha **Trabalho de** e **Trabalho para** em todos os dias e guarde. Com `9:00` e `17:00`, a segunda-feira sai «09:00-17:00» e a faixa deixa de falar das horas. Para ter uma pausa a meio do dia, parta de um horário que já tenha dois períodos, com **Ações › Duplicar**. As **Horas** de um dia alteram só a hora de fim: com `3:30`, a segunda-feira passou a «09:00-12:30 / 14:00-18:00».
+
+### «O horário … não pode ser alterado»
+
+- **Mensagem:** «O horário «PT 40.0h/8.0h (demonstração)» não pode ser alterado. O que aconteceu: é o horário de uma versão de contrato que já tem um recibo validado ou pago, e um recibo fechado guarda as horas que usou. Como resolver: duplique o horário, altere a cópia e aplique-a numa nova versão do contrato com a sua data de início. A tentativa ficou registada no registo de auditoria.»
+- **Causa:** tentou mudar as **Horas** de um horário já usado em recibos fechados. O mapa continua a poder ser preenchido.
+- **O que fazer:** siga «Aplicar um horário novo a um trabalhador». Os recibos fechados ficam como estão. Para corrigir valores de um recibo fechado, ver [Como corrigir um processamento](/payroll-pt/corrigir-um-processamento).
+
+![Janela Operação inválida: o horário não pode ser alterado porque já tem um recibo validado ou pago](/images/payroll-pt/horario-de-trabalho/04-recusa-horario-com-recibo-fechado.png)
+
+### «A versão de … não foi criada»: falta o Local de trabalho habitual
+
+- **Mensagem:** «A versão de 01/12/2026 não foi criada. O que aconteceu: o contrato de Diogo Ferreira Lopes não tem Local de trabalho habitual e a versão nova copia-o. Como resolver: preencha o Local de trabalho habitual no contrato, guarde e só depois acrescente a versão.»
+- **O que fazer:** no separador **Trabalho** da ficha, escolha o local em **Local de trabalho habitual** e guarde. Se o local ainda não existir, escreva o nome e escolha **Criar “…”** na lista. O **Administrador de Salários** também o pode criar.
+
+### Erros ao guardar uma alteração
+
+- «A alteração do horário foi afixada depois de começar. O que aconteceu: «Afixada em» (22/11/2026) é posterior a «Aplica-se a partir de» (20/11/2026). Como resolver: corrija as datas.»
+- «Uma alteração de uma semana, no máximo, não tem duração. Como resolver: preencha «Dura (dias)».»
+- «A antecedência de um IRCT precisa da cláusula e a cláusula precisa da antecedência. O que aconteceu: «IRCT: antecedência (dias)» e «Cláusula do IRCT» têm de ser preenchidos em conjunto. Como resolver: preencha os dois ou limpe os dois.»
+
+Corrija o campo que a mensagem indica e guarde de novo. Numa alteração que **Aumenta as despesas do trabalhador**, escreva também a **Compensação**: sem ela, o fiscaldoo não guarda.
+
+

@@ -1,0 +1,70 @@
+---
+id: importacao-falhou
+slug: /troubleshooting/importacao-falhou
+title: A importação de dados falhou
+sidebar_label: A importação falhou
+sidebar_position: 14
+description: "Os erros mais comuns ao importar ficheiros: falta de permissão, ficheiro sem a linha de cabeçalhos certa, colunas por mapear e ficheiro vazio."
+keywords: [importação falhou, importacao falhou, importar lançamentos, importar extratos, importar ativos, colunas, cabeçalhos, mapeie as colunas, ficheiro vazio, CSV, XLSX, Migração/Importação fiscal]
+doc_id: DOC-0368
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/importacao-feita-nao-se-altera, troubleshooting/acesso-e-dados/sem-permissao]
+---
+
+## Sintoma
+
+Ao carregar um ficheiro CSV ou XLSX num assistente de importação, abre-se uma janela com uma mensagem e nada é importado.
+
+## Mensagem
+
+Copiadas da base de demonstração em português, provocadas pela integração, com o perfil **Administrador** (o assistente é do perfil **Contabilista certificado**):
+
+- Com um perfil sem essa permissão, ao criar o assistente (por exemplo **Importação de lançamentos (CSV/XLSX)**):
+  > «Não tem acesso a «Importação de lançamentos (CSV/XLSX)». Quem faz: «Contabilista certificado (assina, fecha períodos)». Quem atribui o perfil: o administrador do sistema (Definições › Utilizadores e empresas › Utilizadores). […]»
+- Importação de lançamentos, com um ficheiro cujas colunas não correspondem às esperadas:
+  > «Mapeie as colunas: Chave do lançamento, Data, Conta, Débito, Crédito estão ainda sem coluna.»
+
+  A lista das colunas depende do que já está mapeado: cada campo ainda sem coluna aparece na mensagem, por isso pode ser mais curta.
+- Importação de extratos migrados, com um ficheiro sem a linha de cabeçalhos certa:
+  > «A linha de cabeçalhos do ficheiro não tem a(s) coluna(s): Extrato, Diário bancário, Data do extrato, Saldo de abertura, Saldo final, Lançamento (número), Valor. Junte-as à linha de cabeçalhos, como diz a ajuda do assistente.»
+- Importação de ativos, sem ficheiro escolhido:
+  > «Escolha o ficheiro a importar (CSV ou XLSX) antes de validar.»
+
+## Causas verificadas
+
+- **Falta de permissão.** Os assistentes de importação de lançamentos e de extratos migrados são do perfil **Contabilista certificado**, que inclui a migração e a importação fiscal: um **Contabilista** não os pode abrir. A importação de ativos não pede essa permissão: o **Contabilista** consegue criar o assistente.
+- **Cabeçalhos ou colunas que não batem.** O assistente reconhece as colunas pelo nome da primeira linha. Sem as colunas obrigatórias, recusa e lista as que faltam.
+- **Ficheiro em falta ou vazio.** O assistente precisa de um ficheiro com uma linha de cabeçalhos e pelo menos uma linha de dados.
+
+## O que confirmar
+
+1. Nos assistentes de lançamentos e de extratos migrados, que o seu perfil é **Contabilista certificado**.
+2. A primeira linha do ficheiro: nomes escritos como a mensagem os lista.
+3. Que o ficheiro tem dados abaixo da linha de cabeçalhos.
+
+## Como resolver
+
+1. Corrija o ficheiro (nomes das colunas na primeira linha) e carregue-o de novo no mesmo assistente. Em **Importar lançamentos**, mapeie cada coluna a um campo: cada campo recebe uma só coluna.
+2. Se falta a permissão, peça ao administrador que a atribua.
+3. Antes de importar, valide: o assistente mostra o N.º de erros e as linhas recusadas.
+
+**Quem faz:** quem importa; o administrador atribui a permissão.
+
+## Resultado esperado
+
+A validação passa com 0 erros e pode importar. Depois de importado, o registo fica como histórico ([Uma importação já feita não se altera nem se apaga](/troubleshooting/importacao-feita-nao-se-altera)).
+
+## Quando contactar o suporte
+
+- O ficheiro tem os cabeçalhos certos e a mensagem continua a dizer que faltam colunas.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com o assistente, a mensagem e as duas primeiras linhas do ficheiro, sem dados reais.
+
+{/* Nota interna (DOCS-040, corrigido na ronda F-cor, NF5-05/NF5-06): o F5-02 (colunas em inglês no assistente de extratos migrados) foi corrigido no master ba9c8bd7 e a citação foi atualizada; as três mensagens e o assistente de ativos criado pelo Contabilista foram provocados por JSON-RPC (Administrador e Contabilista). Pendente de validação: «Chame às colunas Parceiro, Documento e Montante» (documentos pendentes) e as mensagens do câmbio, que a demonstração não permitiu provocar com dados válidos. */}

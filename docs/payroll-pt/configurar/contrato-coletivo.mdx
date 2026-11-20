@@ -1,0 +1,228 @@
+---
+id: contrato-coletivo
+slug: /payroll-pt/contrato-coletivo
+title: Como aplicar o contrato coletivo (tabelas, mínimos e diuturnidades)
+sidebar_label: Contrato coletivo
+description: Registar o instrumento de regulamentação coletiva e a tabela salarial, ligar o trabalhador, aplicar mínimos e diuturnidades e ver o efeito no recibo e no lançamento.
+keywords: [contrato coletivo, CCT, instrumento de regulamentação coletiva, instrumentos de regulamentacao coletiva, IRCT, tabela salarial, mínimos das categorias, minimos das categorias, diuturnidades, regras de diuturnidades, categoria profissional, revisão retroativa, 60 dias, igualdade]
+doc_id: DOC-0180
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 8f78854ec)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/configurar/salario-minimo, payroll-pt/configurar/contabilizar-os-salarios, payroll-pt/processar-e-pagar/alterar-o-salario]
+---
+
+## Para que serve?
+
+Um contrato coletivo pode dar ao trabalhador mais do que a lei: um mínimo por categoria, diuturnidades ou outras cláusulas de valor. O fiscaldoo guarda cada instrumento com a sua publicação, compara a retribuição do recibo com o mínimo que se aplica e não deixa validar abaixo dele. Este artigo mostra como registar o instrumento, ligar o trabalhador, pagar as diuturnidades e conferir o resultado.
+
+O fiscaldoo **não traz o conteúdo de nenhum contrato coletivo**. Quem o carrega é a empresa, a partir do Boletim do Trabalho e Emprego (BTE). Um valor mal carregado dá um recibo errado.
+
+## Quando utilizar?
+
+- A empresa ou um trabalhador passa a estar abrangido por um instrumento.
+- Sai uma revisão da tabela salarial no BTE.
+- O instrumento prevê diuturnidades que ainda não estão a ser pagas.
+- Recebeu uma notificação para corrigir cláusulas discriminatórias.
+
+Não use estes passos para um aumento individual: esse é o artigo [Como alterar o salário de um trabalhador](/payroll-pt/alterar-o-salario).
+
+## Onde encontrar?
+
+- Instrumentos e tabelas: **Salários › Preparar › Trabalhadores e contratos › Instrumentos de regulamentação coletiva**
+- Ligação do trabalhador: **Salários › Preparar › Trabalhadores e contratos › Contratos** › abrir a linha › separador **Trabalho**, bloco **Contrato**
+- Mínimos: **Salários › Configurar › Legislação › Mínimos das categorias**
+- Diuturnidades: **Salários › Configurar › Rubricas › Regras de diuturnidades**
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador: é quem o tem que regista instrumentos, mínimos e regras, liga o trabalhador e contabiliza o lote. Calcular e validar também o **Processador de salários** faz; contabilizar, não.
+- Tenha à mão a publicação do instrumento: número do BTE, data de publicação e data em que entra em vigor.
+- A ficha do trabalhador tem de ter **Categoria profissional**, porque é ela que escolhe a linha da tabela, e **Local de trabalho habitual**, sem o qual o contrato não se guarda.
+- Saiba qual é o primeiro mês sem recibos validados. A ligação faz-se a partir desse mês (ver o passo 2).
+
+## Como utilizar
+
+### 1. Registar o instrumento e a tabela
+
+<StepByStep>
+
+1. Abra **Instrumentos de regulamentação coletiva** e carregue em **Novo**.
+2. Preencha **Instrumento**, **Código** e **Tipo de instrumento**: **Acordo de empresa**, **Acordo coletivo**, **Contrato coletivo** ou **Portaria de condições de trabalho**.
+3. Preencha **Setor ou âmbito**, **Publicação (BTE)**, **Publicado em** e **Em vigor desde**. Dois instrumentos com o mesmo setor contam como concorrentes (ver «Problemas frequentes»).
+4. No separador **Tabela salarial**, carregue em **Adicionar uma linha**: **Categoria profissional**, **Nível**, **Valor mensal (€)** e **Válido desde**.
+5. Guarde. **Estado atual** passa a **Em vigor**, e **Prazos (alertas)** mostra a data do fim do período em curso.
+   ![Instrumento CCT do comércio (exemplo), em vigor desde 01/04/2026, com duas linhas na tabela salarial: 1.500,00 € e 1.000,00 €](/images/payroll-pt/contrato-coletivo/01-tabela-salarial.png)
+
+</StepByStep>
+
+As cláusulas de valor registam-se no separador **Cláusulas pecuniárias**. Os tipos são **Subsídio de alimentação**, **Subsídio de transporte**, **Subsídio de turno**, **Diuturnidade**, **Dias de compensação por ano**, **Dias de aviso prévio** e **Outra cláusula pecuniária**.
+
+### 2. Ligar o trabalhador ao instrumento
+
+Um contrato com recibos validados ou pagos já não aceita o instrumento, porque esses recibos foram calculados sem ele. Por isso, se o trabalhador já tem recibos, a ligação faz-se numa **versão nova** do contrato, a partir do primeiro mês em aberto.
+
+<StepByStep>
+
+1. Abra **Salários › Preparar › Trabalhadores e contratos › Contratos** e a linha do trabalhador.
+2. Se **Local de trabalho habitual** está assinalado a vermelho, escolha-o e guarde. O botão de guardar fica inativo enquanto esse campo estiver vazio.
+3. Se o trabalhador já tem recibos validados, carregue no botão **+** ao lado das datas, no topo da ficha, e escolha o primeiro dia do mês em aberto, por exemplo **01/01/2027**. A versão nova fica escolhida no topo.
+4. No separador **Trabalho**, bloco **Contrato**, escolha **Instrumento de regulamentação coletiva (registo)** e escreva o **Nível na tabela salarial**, igual ao da linha da tabela. **Instrumento de regulamentação coletiva (IRCT)** preenche-se sozinho.
+5. Guarde (o ícone da nuvem, ao lado do nome).
+   ![Bloco Contrato com o instrumento CCT do comércio (exemplo) assinalado e o nível B](/images/payroll-pt/contrato-coletivo/02-instrumento-no-contrato.png)
+
+</StepByStep>
+
+### 3. Conferir os mínimos
+
+A tabela do instrumento já conta como mínimo da categoria: não a repita em **Mínimos das categorias**. Essa lista serve para um mínimo que não vem do instrumento registado.
+
+<StepByStep>
+
+1. Abra **Mínimos das categorias** e carregue em **Novo**.
+2. Escolha **Categoria de rubrica** e **Fonte**: **Norma legal (parâmetro × multiplicador)**, **Tabela do instrumento coletivo (IRCT)** ou **Contrato**.
+3. Na fonte **Contrato**, escolha o trabalhador. Preencha **Mínimo (€ / mês)**, **Referência legal** e **Válido desde**.
+4. Guarde.
+
+</StepByStep>
+
+Vale o mínimo **mais favorável ao trabalhador**. No teste, com a tabela do instrumento a 1.000,00 € e um mínimo de contrato de 1.100,00 €, o recibo de 1.000,00 € foi recusado: faltavam 100,00 €.
+
+O que acontece abaixo do mínimo do instrumento escolhe-se em **Salários › Configurar › Empresa › Definições de salários › Piso do instrumento coletivo**: **Bloquear a validação** (a omissão) ou só alertar. O salário mínimo nacional bloqueia sempre. Com a opção de alertar, o recibo foi validado **sem nenhuma mensagem no ecrã**. Sem uma conferência própria, a diferença passa despercebida, por isso deixe **Bloquear a validação**.
+
+### 4. Pagar as diuturnidades
+
+A rubrica **Diuturnidades** (código `DIUT`) já vem com a origem **Diuturnidades por antiguidade** (na demonstração, desde 01/11/2026), com o código DMR A e o código de remuneração da Segurança Social P. Falta a regra.
+
+<StepByStep>
+
+1. Abra **Regras de diuturnidades** e carregue em **Novo**. Em **Fixado por**, escolha **Instrumento de regulamentação coletiva (IRCT)**.
+2. Em **Collective agreement (registry)** (o rótulo ainda está em inglês), escolha o instrumento do registo. **Instrumento coletivo ou política** preenche-se sozinho com o nome. A regra serve quem tem esse instrumento no contrato. Sem instrumento, aplica-se a toda a empresa.
+3. Preencha **Anos por diuturnidade**, **Máximo de diuturnidades**, **Valor de cada diuturnidade**, **Valor por diuturnidade**, **Cláusula que a fixa** e **De**. **Categoria profissional** vazia aplica-se a todas.
+4. Guarde.
+   ![Regra de diuturnidades ligada ao instrumento CCT do comércio (exemplo): 3 anos por diuturnidade, 25,00 € cada, no máximo 5](/images/payroll-pt/contrato-coletivo/03-regra-de-diuturnidades.png)
+5. Confirme em **Modelos de contabilização** que a rubrica tem modelo (ver [Como contabilizar os salários](/payroll-pt/contabilizar-os-salarios)). Na demonstração, já tem.
+6. Crie os recibos do mês e carregue em **Calcular**. A linha **Diuturnidades** entra sozinha no recibo de cada trabalhador a quem a regra se aplica; não é preciso acrescentá-la.
+
+</StepByStep>
+
+### 5. Registar revisões e o prazo da igualdade
+
+<StepByStep>
+
+1. Abra o instrumento, separador **Revisões**, e carregue em **Adicionar uma linha**: **Publicação (BTE)**, **Publicado em**, **Produz efeitos em** e **Natureza da alteração** (**Pecuniária (retribuição)** ou **Não pecuniária**).
+2. Uma revisão pecuniária com efeitos antes da publicação fica marcada em **Retroativo**. A linha não altera os recibos fechados: as diferenças dos meses já validados corrigem-se com recibos corretivos (ver [Como corrigir um processamento](/payroll-pt/corrigir-um-processamento)).
+3. Se a empresa for notificada para corrigir cláusulas discriminatórias, abra o separador **Revisão da igualdade** e escreva a data em **Notificado para corrigir em**. **Corrigir até** mostra o fim dos 60 dias: notificação a 01/06/2026, prazo até 31/07/2026.
+   ![Separador Revisão da igualdade, notificado a 01/06/2026, com a data-limite de 31/07/2026](/images/payroll-pt/contrato-coletivo/04-prazo-dos-60-dias.png)
+
+</StepByStep>
+
+Depois de terminado o prazo, a ficha do instrumento mostra no topo o aviso **Verificar este instrumento:**, por exemplo: «CCT do comércio (exemplo): Os 60 dias para corrigir as cláusulas discriminatórias terminaram em 31/07/2026 (art. 479.º/3). O que acontece agora: o serviço competente remete o caso ao Ministério Público em 15 dias (art. 479.º/4). Como resolver: confirme a correção e a declaração de nulidade antes de aplicar essas cláusulas.» O mesmo aviso diz quando falta a revisão da igualdade: «Não está registada nenhuma revisão da igualdade e não discriminação (art. 24.º-25.º).» O fiscaldoo não altera nenhum recibo por causa destes avisos.
+
+{/* Nota interna: Revisto a 04/11/2026 (v8-REV, master 8c5a23228, base docs_demo_v8rev3_test): PAY-081 pôs o aviso na ficha do instrumento; visto só com o prazo já ultrapassado. */}
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o tratamento em IRS e Segurança Social das diuturnidades, o código DMR e o código de remuneração a usar, a classificação das contas e a leitura dos arts. 3.º, 129.º, 262.º, 478.º, 479.º e 482.º do Código do Trabalho.</span>
+
+## Resultado esperado
+
+**Exemplo.** Um trabalhador da categoria **Profissionais qualificados**, nível **B** (mínimo de 1.000,00 €), com antiguidade desde 01/06/2023 (bloco **Datas de antiguidade**, no separador **Trabalho** do contrato). Em novembro de 2026 tem 3 anos completos, logo 1 diuturnidade de 25,00 €. O recibo fica assim:
+
+| Linha do recibo | Valor |
+|---|---:|
+| Retribuição base | 1.000,00 € |
+| Diuturnidades (quantidade 1) | 25,00 € |
+| Subsídio de alimentação (21 dias) | 129,15 € |
+| **Bruto** | **1.154,15 €** |
+| Segurança Social (trabalhador): 11 % de 1.025,00 € | 112,75 € |
+| IRS retido | 23,00 € |
+| **Líquido a pagar** | **1.018,40 €** |
+
+![Separador Linhas do recibo, com Retribuição base, Diuturnidades e Subsídio de alimentação](/images/payroll-pt/contrato-coletivo/05-recibo-com-diuturnidades.png)
+
+Em **Como foi calculado?**, a linha **Diuturnidades** indica a origem («Diuturnidades por antiguidade»), a quantidade, a versão da rubrica e a cláusula.
+
+Ao contabilizar o lote, o lançamento (conferido no razão, modelos de contabilização da demonstração) tem estas linhas:
+
+| Conta | Débito | Crédito |
+|---|---:|---:|
+| 632 Remunerações do pessoal | 1.154,15 | |
+| 231290 Remunerações em processamento | | 1.154,15 |
+| 231290 Remunerações em processamento | 1.154,15 | |
+| 2312 Ao pessoal | | 1.018,40 |
+| 242 Retenção de impostos sobre rendimentos | | 23,00 |
+| 245 Contribuições para a Segurança Social | | 112,75 |
+| 635 Encargos sobre remunerações | 243,44 | |
+| 245 Contribuições para a Segurança Social | | 243,44 |
+
+As diuturnidades entram nos 632 sem linha própria, e os encargos da empresa (243,44 €) são 23,75 % de 1.025,00 €. A 2312 é a conta do líquido nos modelos da demonstração. Confirme com o contabilista certificado a conta a usar nos seus modelos. O lote tem um só lançamento, que soma os recibos de todos os trabalhadores: as linhas acima são a parte deste trabalhador.
+
+## Notas importantes
+
+- **O nível tem de ser igual ao da tabela.** Sem correspondência entre categoria, nível e data, o instrumento não dá mínimo e o recibo não é comparado com ele.
+- **O mínimo compara-se com o que conta para o salário mínimo.** A retribuição base e as diuturnidades contam; o subsídio de alimentação não.
+- **Uma linha sem regra avisa.** Se um recibo tiver a linha **Diuturnidades** e nenhuma regra servir o trabalhador, o recibo e o lote mostram: «Nenhuma regra de diuturnidades serve Eva Cristina Rocha em 30/11/2026, por isso nada se paga (instrumento coletivo do contrato: nenhum; categoria profissional: Profissionais qualificados). …». A mensagem indica **Lei e calendários**, mas as regras estão em **Salários › Configurar › Rubricas › Regras de diuturnidades**.
+- **Vigência.** Mantenha **Denunciado em**, **Sobrevigência até** e **Expirou em** atualizados: decidem o **Estado atual** e se o instrumento continua a contar na data do recibo. Confirme estas datas no BTE.
+- **Quem não está ligado ao instrumento** não recebe a regra desse instrumento nem fica sujeito à sua tabela.
+- **Igualdade.** O fiscaldoo não verifica se as cláusulas são discriminatórias: **Igualdade revista em** só regista que alguém o fez.
+- **Edição Enterprise.** Numa empresa portuguesa, os salários são estes e o menu de salários do Enterprise fica escondido. Numa empresa de outro país é ao contrário: os recibos são os do Enterprise, nenhuma regra portuguesa corre e estes menus só aparecem ao administrador do sistema. <span className="fd-pending">Pendente de validação no ecrã: diferenças na edição Enterprise.</span>
+
+{/* Nota interna (DOCS-046): efeito de Sobrevigência/Expirou em e da falta de correspondência de nível lido das regras (status_on, minimum_at, wage_at), sem recibo próprio: todos os meses de 2026 ficaram ocupados na base. Provado: um recibo de quem não está ligado ao instrumento, com a linha Diuturnidades, deu quantidade 0 e 0,00 €. Os menus Ordem de prevalência das fontes legais e Valores por fonte legal não aparecem ao Administrador de Salários nem ao admin da demonstração: não entram no artigo. */}
+
+## Problemas frequentes
+
+### «Instrumento de regulamentação coletiva (registo)… não se pode definir diretamente»
+
+- **Mensagem:** «Instrumento de regulamentação coletiva (registo), Instrumento de regulamentação coletiva (IRCT) não se pode definir diretamente. O que aconteceu: o registo está fechado (ou o campo deriva de outro registo) e o que foi registado, pago ou aprovado nunca se reescreve; nenhum campo se pode alterar. […]»
+- **Causa:** esta versão do contrato cobre um mês com recibo validado ou pago. A mensagem fala de recibos corretivos e férias, mas aqui não é isso que resolve.
+- **O que fazer:** carregue em **Descartar** e crie uma versão nova a partir do primeiro mês em aberto (passo 2).
+
+### O botão de guardar do contrato não reage
+
+- **Causa:** falta um campo obrigatório. Normalmente é **Local de trabalho habitual**, assinalado a vermelho.
+- **O que fazer:** escolha o local e guarde. O Administrador de Salários escolhe entre os locais que existem; criar um novo cabe aos Recursos Humanos.
+
+### «A versão de 01/01/2027 não foi criada»
+
+- **Mensagem:** «A versão de 01/01/2027 não foi criada. O que aconteceu: o contrato de … não tem Local de trabalho habitual e a versão nova copia-o. […]»
+- **O que fazer:** preencha o local no contrato, guarde e só depois carregue em **+**.
+
+### «…está abrangido pelo instrumento… mas não tem categoria profissional»
+
+- **Causa:** o contrato tem um instrumento em vigor e a categoria está vazia. Acontece também ao apagar a categoria de quem já está ligado.
+- **O que fazer:** preencha **Categoria profissional** na ficha do trabalhador ou retire o instrumento do contrato.
+
+### «Dois instrumentos abrangem o mesmo setor»
+
+- **Mensagem:** «Dois instrumentos abrangem o mesmo setor (…). O que aconteceu: «…» foi escolhido para o trabalhador sem motivo e a lei não deixa o produto escolher (arts. 482.º e 3.º). […]»
+- **O que fazer:** preencha **Porquê este instrumento** (adesão, escolha do trabalhador, nível superior) no contrato. Com a escolha justificada, o contrato guarda-se.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: qual dos instrumentos concorrentes se aplica em cada caso.</span>
+
+### «A retribuição de … está abaixo do salário mínimo que se aplica ao trabalhador»
+
+- **Mensagem:** «A retribuição de … (960.0) está abaixo do salário mínimo que se aplica ao trabalhador (1000.0) em 40.0. […]»
+- **Causa:** a retribuição que conta está abaixo do mínimo da categoria.
+- **O que fazer:** aumente o salário numa versão do contrato ou reveja a categoria e o nível. **Calcular** não vai buscar o salário novo a um recibo que já existe: no lote calculado, use **Apagar lote**, indique o motivo e crie-o de novo.
+
+### «A(s) rubrica(s) DIUT têm valor e não têm código DMR»
+
+- **Causa:** a versão da rubrica não tem **Código DMR**. O lote não valida.
+- **O que fazer:** como a versão já começou, feche-a com **Válido até** e crie outra a começar no dia seguinte, com os códigos.
+
+### «Contabilização bloqueada: 1 rubrica(s) com valor não têm modelo de contabilização»
+
+- **O que fazer:** crie o modelo em **Salários › Configurar › Rubricas › Modelos de contabilização** e contabilize de novo.
+
+### «Já existe uma regra de diuturnidades para este instrumento e categoria nesse período»
+
+- **Causa:** uma alteração do instrumento é uma regra nova a partir da sua data, e não uma segunda regra sobre os mesmos dias.
+- **O que fazer:** termine a regra anterior na véspera, em **Até**, e crie a nova.
+
+### «A revisão … não pode produzir efeitos em…, antes da sua publicação»
+
+- **Mensagem:** «A revisão «BTE n.º 20/2026» não pode produzir efeitos em 01/05/2026, antes da sua publicação em 01/06/2026. […]»
+- **Causa:** só uma alteração pecuniária pode ter efeitos antes da publicação.
+- **O que fazer:** corrija **Produz efeitos em** ou, se a alteração é mesmo de valor, escolha **Pecuniária (retribuição)**.

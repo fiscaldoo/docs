@@ -1,0 +1,103 @@
+---
+id: tesouraria
+slug: /management/tesouraria
+title: Como prever a tesouraria dos próximos meses
+sidebar_label: Tesouraria
+sidebar_position: 4
+description: Ver os recebimentos e pagamentos previstos e calcular uma grelha de tesouraria por semana ou mês, com um cenário «e se» para simular atrasos.
+keywords: [tesouraria, previsão de tesouraria, previsao de tesouraria, grelha de tesouraria, cenário e se, cenario e se, saldo previsto, recebimentos, pagamentos, cash flow, direção, direcao]
+doc_id: DOC-0273
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [management/painel-da-direcao]
+---
+
+## Para que serve?
+
+A **Previsão de tesouraria** lista os recebimentos e os pagamentos que se esperam. A **Grelha de tesouraria** soma-os por semana ou por mês, a partir do saldo dos bancos, e diz com que saldo a empresa chega ao fim do período.
+
+O **Vencido por receber** e o **Vencido por pagar** do resumo são o que já devia ter entrado ou saído: a grelha conta-os no primeiro dia do período.
+
+Um **cenário «e se»** simula, na grelha, um atraso nos recebimentos ou nos pagamentos. Não altera faturas nem movimentos.
+
+## Quando utilizar?
+
+- Antes de uma compra grande, para ver se o banco aguenta.
+- Para ver o que a empresa tem a pagar e a receber nos próximos meses.
+- Para perguntar «e se os clientes pagarem 15 dias mais tarde?».
+- Não use a grelha para saber o que cada cliente deve hoje: para isso, abra **Direção › Clientes e vendas › Quem me deve**.
+
+## Onde encontrar?
+
+**Direção › Dinheiro › Previsão de tesouraria** e **Direção › Dinheiro › Grelha de tesouraria**.
+
+## Antes de começar
+
+- Para **ler** a previsão e as grelhas já calculadas, o perfil é **Gerência**.
+- Para **criar** uma grelha ou um cenário, é preciso um perfil que escreva nelas: no exemplo, o **Administrador do sistema**. O perfil **Gerência** abre a lista da grelha sem o botão **Novo**.
+- Feito a 10 de novembro de 2026, na Empresa Demonstração, Lda, com as grelhas de 01/11/2026 a 30/01/2027.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Direção › Dinheiro › Previsão de tesouraria**. A lista tem uma linha por recebimento ou pagamento previsto, com **Data prevista**, **Descrição**, **Categoria**, **Sentido** (**Recebimento** ou **Pagamento**), **Montante**, **Conta bancária**, **Documento de origem** e **Fase**. Há também a vista **Calendário**. A lista inclui as faturas já vencidas, com datas passadas (no exemplo, desde 20/03/2026), as contribuições e retenções dos salários (linhas `SAL/…` da **Segurança Social** e da **Autoridade Tributária**) e as linhas estimadas de IVA.
+   ![Previsão de tesouraria com as colunas Data prevista, Descrição, Categoria, Sentido e Montante, a começar pelas faturas de fornecedores vencidas desde 20/03/2026 e pelas linhas SAL da Autoridade Tributária e da Segurança Social](/images/management/tesouraria/01-previsao-de-tesouraria.png)
+2. Abra **Direção › Dinheiro › Grelha de tesouraria**. Se ainda não há nenhuma, aparece «Crie a sua primeira grelha de tesouraria».
+3. Carregue em **Novo**. Os campos **De** e **Até** abrem com hoje e os 90 dias seguintes (a 10/11/2026: 10/11/2026 a 08/02/2027). No exemplo, escreva 01/11/2026 em **De** e 30/01/2027 em **Até**.
+4. Escolha a **Granularidade** (a grelha abre por **Semana**) e carregue em **Calcular**. A grelha ganha o número **GRD/00001** e passa a **Calculado**.
+5. Leia o resumo: **Saldo inicial**, **Receitas previstas** (com o **Vencido por receber**), **Pagamentos previstos** (com o **Vencido por pagar**), **Saldo final previsto** e **Saldo final realizado**. Em baixo, a lista **Intervalos** tem uma linha por semana e o separador **Por categoria** divide por categoria.
+   ![Resumo da grelha GRD/00001 calculada: saldo inicial 70.131,59 €, receitas previstas 6.667,05 €, pagamentos previstos 22.469,92 €, saldo final previsto 54.328,72 € e saldo final realizado 33.159,53 €](/images/management/tesouraria/02-grelha-calculada-resumo.png)
+6. Para simular um atraso, crie outra grelha. No campo **Cenário «e se»?**, escreva um nome, por exemplo «Clientes pagam 15 dias depois», e escolha **Criar e editar…**. Na janela **Criar Cenário «e se»**, escreva os dias em **Recebimentos atrasados (dias)?** e carregue em **Guardar**. Carregue em **Calcular**.
+7. A grelha passa a mostrar **Saldo final no cenário** e uma coluna **Saldo no cenário**. **Imprimir** e **Exportar XLSX** guardam o resultado. **Voltar a rascunho** permite refazer o cálculo.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, a previsão e a grelha de tesouraria são as mesmas. Com um utilizador só com o perfil **Gerência**, **Previsão de tesouraria** tem as mesmas colunas e **Grelha de tesouraria** abre com «Crie a sua primeira grelha de tesouraria» e sem o botão **Novo**. Com o administrador, **Novo**, **De** 01/11/2026, **Até** 30/01/2027 e **Calcular** deram a grelha **GRD/00001** em **Calculado**, com o mesmo resumo (**Saldo inicial**, **Receitas previstas** com o **Vencido por receber**, **Pagamentos previstos** com o **Vencido por pagar**, **Saldo final previsto** e **Saldo final realizado**), os separadores **Intervalos** e **Por categoria** e os botões **Imprimir**, **Exportar XLSX** e **Voltar a rascunho**.
+
+{/* Nota interna (lote EE-13, DOCS-073 #4142, req 46633, DEC-1794, master 7f41ce71b, base Enterprise docs_ee_ee13_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee13_test): DOC-0273. Gerência: Previsão de tesouraria (26 linhas na base Enterprise, 25 na Community) e Grelha de tesouraria vazia, sem Novo. Administrador na Empresa Demonstração, Lda: GRD/00001 criada e calculada na cópia Enterprise (Saldo inicial 33.295,41 €, Receitas previstas 6.678,77 €, Pagamentos previstos 22.497,52 €, Saldo final previsto 17.476,66 €, Saldo final realizado 33.295,41 €) e na cópia Community com os números do artigo (70.131,59 €, 6.667,05 €, 22.469,92 €, 54.328,72 €, 33.159,53 €). A diferença vem dos dados: a conta 121 tem 33.295,41 € a 31/10/2026 na base Enterprise e 70.131,59 € na Community. O cenário «e se» não foi repetido no Enterprise. Ver reports/LOTE_EE-13.md. */}
+
+## Resultado esperado
+
+No exemplo, a grelha **GRD/00001** tem **Saldo inicial** 70.131,59 €, **Receitas previstas** 6.667,05 € (todas em **Vencido por receber**), **Pagamentos previstos** 22.469,92 € (dos quais **Vencido por pagar** 22.468,78 €) e **Saldo final previsto** 54.328,72 €. O que está vencido cai no primeiro intervalo (01/11/2026); o único pagamento futuro é o IVA estimado de novembro, 1,14 €, na semana de 25/01/2027. O **Saldo final realizado** é 33.159,53 €: na semana de 02/11/2026, a coluna **Movimento realizado** mostra -36.972,06 € (os salários pagos) e a coluna **Diferença** passa a -21.170,33 €.
+
+Com o cenário de 15 dias (**GRD/00002**), o **Saldo final no cenário** é 54.328,72 €, igual ao **Saldo final previsto**, e a coluna **Saldo no cenário** mostra o atraso pelo caminho: 49.482,43 € no primeiro dia e 54.329,86 € a partir da semana de 02/11/2026. Só a `FT D26/30` (4.847,43 €, vencida a 19/10/2026) passa para essa semana; as outras faturas, mesmo com mais 15 dias, continuam vencidas a 01/11/2026. A janela do cenário diz: «Isto é uma simulação. Só altera os números da grelha de tesouraria que a usa: nenhuma fatura, linha de previsão ou movimento bancário é alterado.»
+
+## Notas importantes
+
+- **O que o «Vencido por receber» soma.** Os 6.667,05 € do exemplo são 6.588,13 € de faturas de clientes vencidas até 31/10/2026 (`FT D26/27` a `FT D26/30`, as mesmas que **Direção › Clientes e vendas › Quem me deve** mostra) mais 78,92 € de uma linha de IVA de 31/08/2026 («Apuramento de IVA 01/08/2026 – 31/08/2026», **Sentido** **Recebimento**). Por isso o total não bate com **Quem me deve** (6.588,13 €): a previsão também tem linhas de IVA.
+- **O que o «Vencido por pagar» soma.** Os 22.468,78 € do exemplo são 3.363,87 € de faturas de fornecedores (`FTF/2026/…`) e 19.104,91 € de contribuições à Segurança Social e de retenções à Autoridade Tributária dos processamentos de salários `SAL/2026/00001` a `SAL/2026/00004`, todas com data prevista até 26/10/2026.
+- **Um atraso nos recebimentos não faz o saldo final subir.** O cenário só adia o que entra: o saldo é menor nas primeiras semanas e igualado ao previsto quando o atraso acaba dentro do período. Use o cenário para ver em que semana o saldo é mais baixo, não como previsão certa.
+- **Se os números não baterem,** carregue em **Atualizar a partir dos documentos**, na **Previsão de tesouraria**, para recalcular a previsão, e volte a carregar em **Calcular** na grelha.
+- **A previsão não é o total das saídas.** No exemplo a **Previsão de tesouraria** tem faturas, IVA estimado e a Segurança Social e as retenções dos salários, mas não tem os salários líquidos a pagar nem o IRC: não some a lista como se fosse tudo o que vai sair.
+- **O saldo inicial** vem das contas bancárias. Há um campo **Saldo inicial escrito à mão** para o corrigir.
+
+## Problemas frequentes
+
+### «O atraso não pode ser negativo…»
+
+- **Mensagem:** «O atraso não pode ser negativo, porque a simulação só empurra as datas para a frente. Indique 0 para nenhum atraso ou um número positivo de dias.»
+- **O que fazer:** em **Recebimentos atrasados (dias)** ou **Pagamentos atrasados (dias)**, escreva 0 ou um número de dias positivo.
+
+### «O montante do movimento … tem de ser maior que zero…»
+
+- **Mensagem:** por exemplo, «O montante do movimento Compra de empilhador tem de ser maior que zero. Indique um montante positivo e use o sentido para o sinal.»
+- **Causa:** na janela do cenário, uma linha da lista de movimentos (colunas **Data prevista**, **Descrição**, **Sentido** e **Montante**) tem o **Montante** a 0 ou negativo.
+- **O que fazer:** escreva o montante sem sinal e escolha o **Sentido**: **Recebimento** ou **Pagamento**.
+
+### Não tenho o botão «Novo» na grelha
+
+- **Causa:** o perfil **Gerência** só lê a grelha.
+- **O que fazer:** peça a um administrador que crie a grelha, ou crie-a com um perfil que escreva nela.
+
+{/* Nota interna (DOCS-040, lote F4, corrigido na ronda F-cor, NF4-03/NF4-04): ecrãs do master ba9c8bd7 (comboio 126, BNK: vencidos na previsão, o atraso nunca faz o saldo subir, o IVA pago ao Estado deixou de ser recebimento); os defeitos F4-04 e F4-05 do lote já não se reproduzem. A linha «OD/2026/00082 Apuramento de IVA 01/08/2026 – 31/08/2026», Recebimento 78,92 €, entra no «Vencido por receber»: BNK-033 (#3615, aberto a 01/11: recibos de salário na previsão, antiguidade até ao fim do período, e SS, retenções e IRC fora da previsão) acompanha as linhas que faltam; confirmar o sentido dessa linha com o contabilista antes de a descrever como crédito de IVA. O cenário de 15 dias foi criado pelo campo «Recebimentos atrasados (dias)». As categorias da previsão não foram abertas. */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AY, 10/11/2026, master fa7915ea8, docs_demo_v23ay_test, porta 8505): GRD/00001 e GRD/00002 (cenário de 15 dias) criadas e calculadas por clique com o administrador na Empresa Demonstração, de 01/11/2026 a 30/01/2027, Semana. A base-mãe mudou desde 01/11: saldo inicial 70.131,59 € (121 antes dos salários de -36.972,06 € da semana de 02/11), salários (SS e AT) na previsão (BNK-033), Clientes 6.588,13 € (FT D26/27 a D26/30). Linhas da previsão conferidas por RPC (leitura). */}
+
+{/* Nota interna (DOCS-005 #3400, lote CAP-01, 10/11/2026, master ce51f2d47, docs_demo_cap01_test, porta 8504): captura 01 por clique com um utilizador criado na cópia só com o perfil Gerência (25 linhas na Previsão; a Grelha sem grelhas diz «Crie a sua primeira grelha de tesouraria» e não tem Novo). Captura 02 com o administrador na Empresa Demonstração: Novo abriu com 10/11/2026 a 08/02/2027; com 01/11/2026 a 30/01/2027 e Semana, Calcular deu GRD/00001 Calculado com os mesmos números do artigo (70.131,59 / 6.667,05 / 22.469,92, vencido 22.468,78 / 54.328,72 / 33.159,53 €). A GRD/00001 ficou na cópia; o cenário GRD/00002 não foi refeito. */}

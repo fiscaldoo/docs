@@ -1,0 +1,105 @@
+---
+id: circularizacao-de-saldos
+slug: /accounting-pt/circularizacao-de-saldos
+title: Como pedir a confirmação de saldos a clientes e fornecedores
+sidebar_label: Confirmação de saldos
+description: Criar o pedido de circularização, imprimir a carta, registar a resposta do cliente ou fornecedor e ver quem discorda ou não respondeu.
+keywords: [circularização de saldos, circularizacao de saldos, confirmação de saldos, confirmacao de saldos, pedir confirmação de saldo, carta de circularização, carta de circularizacao, saldo confirmado, auditoria]
+doc_id: DOC-0170
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c60255305)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/extratos-de-terceiros, accounting-pt/auditoria/conferir-vendas, accounting-pt/auditoria/pacote-do-auditor]
+---
+
+{/* Nota interna (lote v23-Q, #3947, DOC-0170, master 808f8ca1f, docs_demo_v23q_test, porta 8452): pedido CIRC da Padaria Aurora, Lda (saldo em 31/10/2026) criado pela integração com o Contabilista certificado e Marcar como enviado por clique; no ecrã, com utilizadores criados só com cada valor do campo Perfil (DEC-1777): Contabilista certificado com Novo, Imprimir a carta, Registar a resposta e Encerrado sem resposta; Auditor e Gerência só com Imprimir a carta (sem Novo, Registar a resposta nem Encerrado sem resposta). A recusa com nomes de grupos já não se alcança no ecrã. */}
+{/* Nota interna (auditoria v22-E, 06/11/2026, master d83bdf7ae, base docs_demo_v22e_test, porta 8372): só a frase dos perfis, por clique com utilizadores criados só com cada valor do campo Perfil (DEC-1777): o Contabilista certificado tem Novo; o Auditor e a Gerência veem os pedidos sem Novo; o Contabilista não tem Auditoria. Encerrado sem resposta continuava visível ao Auditor e só dava recusa (resolvido: ver a nota do lote v23-Q). */}
+{/* Nota interna (DOCS-046, lote v22-E, 06/11/2026, master d83bdf7ae, base docs_demo_v22e_test, porta 8362): perfis vistos por clique com utilizadores criados só com cada perfil (DEC-1777). Contabilista certificado: CIRC/2026/0001 criado, Marcar como enviado, «Preencha a data da resposta…», Registar a resposta e Confirmado. Auditor: sem Novo; Encerrado sem resposta recusado no CIRC/2026/0002. Contabilista: sem a aplicação Auditoria. A mensagem de recusa nomeia grupos («Contabilista Certificado / Gestor fiscal»), não os perfis do campo Perfil. */}
+{/* Nota interna (auditoria v20-A, master 0289754a8, porta 8328: pedido criado, Marcar como enviado e «Preencha a data da resposta…» por clique com um utilizador só com Contabilista Certificado / Gestor fiscal; o Contabilista não tem a aplicação Auditoria. v13-ACC2, DOC-0170): base docs_demo_v13acc2_test, porta 8262, master f671d6842. 5 pedidos por clique com Gestor de contabilidade (CIRC/2026/0001 a 0005); PDFs lidos (Deve-nos 4.847,43; Devemos-lhe 2.096,87). 2 mensagens por clique. O Contabilista não chega ao ecrã: sem a app Auditoria e, por ligação direta, ecrã em branco; defeito no relatório LOTE_V13ACC2. Mensagem «já foi enviado» não se provoca no ecrã: os campos ficam só de leitura e Eliminar desaparece de Ações. Sobre a ponte Enterprise de cobranças: não vista. */}
+
+## Para que serve?
+
+Pede a um cliente ou fornecedor que confirme o saldo que a sua empresa tem nos livros. Depois, mostra quem confirmou, quem discorda e quem não respondeu. É uma prova muito pedida por auditores. O fiscaldoo prepara a carta: é a sua empresa que a envia, porque o produto não contacta ninguém. Não cria lançamentos e a carta não é um documento fiscal.
+
+## Quando utilizar?
+
+- Quando um auditor ou o contabilista pede a confirmação de saldos no fim do ano.
+- Quando quer esclarecer uma dívida antiga com um cliente ou fornecedor.
+- Para mandar ao cliente a lista das faturas por pagar, use antes os [extratos de terceiros](/accounting-pt/extratos-de-terceiros).
+
+## Onde encontrar?
+
+**Auditoria › Conferências › Circularização de saldos**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**. O **Auditor / ROC** e a **Gerência** veem os pedidos (com o botão **Imprimir a carta**), mas não os criam nem os alteram: não têm **Novo**, **Registar a resposta** nem **Encerrado sem resposta**. O **Contabilista** não tem a aplicação **Auditoria**.
+- Os documentos até à data do saldo estão lançados. O saldo conta apenas lançamentos já publicados.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Circularização de saldos**. A lista abre com o filtro **A aguardar resposta**. Carregue em **Novo**.
+2. Em **Cliente ou fornecedor**, escolha o parceiro.
+3. Em **Saldo em**, escreva a data do saldo. Abre com a data de hoje.
+4. O **Saldo nos livros** aparece logo que escolhe o cliente. Guarde. Se mudar a data depois, carregue em **Atualizar o saldo**.
+   ![Pedido CIRC/2026/0001 por enviar, com os botões Marcar como enviado, Imprimir a carta e Atualizar o saldo](/images/accounting-pt/circularizacao-de-saldos/01-pedido-por-enviar.png)
+5. Carregue em **Imprimir a carta**. Descarrega um PDF com o saldo e um quadro para o cliente responder. Envie-a por si, por correio ou por e-mail.
+6. Carregue em **Marcar como enviado**. O pedido passa a **A aguardar resposta**, e **Enviado em** fica com a data de hoje. A partir daqui, o pedido já não se altera nem se elimina.
+7. Quando chegar a resposta, preencha **Respondido em** e **Saldo confirmado pelo cliente ou fornecedor**. Guarde.
+8. Carregue em **Registar a resposta**.
+9. Se ninguém responder, carregue em **Encerrado sem resposta**.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, a circularização é a do fiscaldoo, no mesmo menu (visto com um utilizador só com o perfil **Contabilista certificado**): a lista abre com o filtro **A aguardar resposta**, o pedido tem os mesmos campos e, depois de gravado, os botões **Marcar como enviado**, **Imprimir a carta** e **Atualizar o saldo**. Com a **Papelaria Central, Lda**, o **Saldo nos livros** foi o do exemplo, 4.847,43 €, e a carta em PDF disse «Deve-nos 4.847,43 €». O **Contabilista** também não tem a aplicação **Auditoria**.
+
+{/* Nota interna (lote EE-05, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee05_test (cópia da odoo20_ee_test com EE_FASE=construir), 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0170. Contabilista certificado: Auditoria › Conferências › Circularização de saldos; pedido CIRC/2026/0001 criado por clique na cópia Enterprise (primeiro com a Quinta do Vale Verde, Lda, saldo 0,00 € nesta base, e depois com a Papelaria Central, Lda, 4.847,43 €), em Por enviar; Imprimir a carta descarregou «Circularização de saldo CIRC_2026_0001.pdf». Não se marcou como enviado. Contabilista: sem a aplicação Auditoria (menus lidos). Ver reports/LOTE_EE-05.md. */}
+
+## Resultado esperado
+
+O estado do pedido fica um destes:
+
+| Estado | O que quer dizer |
+|---|---|
+| **Por enviar** | O pedido foi criado e pode ser alterado |
+| **A aguardar resposta** | A carta seguiu e falta a resposta |
+| **Confirmado** | O valor da resposta é igual ao dos livros |
+| **Respondeu com saldo diferente** | O valor da resposta é diferente, e a **Diferença** mostra quanto |
+| **Sem resposta** | Encerrou o pedido sem resposta |
+
+![Pedido com o estado Respondeu com saldo diferente: saldo nos livros de 4.847,43 €, saldo confirmado de 4.500,00 € e diferença de -347,43 €](/images/accounting-pt/circularizacao-de-saldos/02-resposta-diferente.png)
+
+Na lista, tire o filtro **A aguardar resposta** para ver todos os pedidos.
+
+![Lista de pedidos com os estados A aguardar resposta, Sem resposta, Confirmado e Respondeu com saldo diferente](/images/accounting-pt/circularizacao-de-saldos/03-lista-de-pedidos.png)
+
+## Como ler o saldo
+
+- **Positivo:** o parceiro deve-lhe. No exemplo, a carta diz «Deve-nos 4.847,43 €».
+- **Negativo:** deve ao parceiro. No exemplo de um fornecedor, -2.096,87 € na ficha, e a carta diz «Devemos-lhe 2.096,87 €».
+- **Mesmo parceiro, cliente e fornecedor:** o saldo junta as duas posições. Antes de enviar, confira-o nos [extratos de terceiros](/accounting-pt/extratos-de-terceiros).
+
+## Notas importantes
+
+- Um pedido enviado fica como histórico. Se o valor estiver errado, encerre-o e crie outro.
+- Uma diferença não corrige nada sozinha. Procure a causa com o parceiro (por exemplo, uma fatura que ele ainda não recebeu ou um pagamento em trânsito). Só depois faça os lançamentos que forem precisos.
+- <span className="fd-pending">Pendente de validação por contabilista certificado: a quem enviar, com que antecedência e como tratar quem não responde. O produto não define estas regras: são do auditor.</span>
+
+## Problemas frequentes
+
+**«Preencha a data da resposta do pedido CIRC/2026/0001 antes de a registar.»** Falta **Respondido em**. Preencha a data, guarde e volte a carregar em **Registar a resposta**.
+
+**«A resposta ao pedido CIRC/2026/0001 tem data anterior ao envio (05/11/2026). Corrija a data da resposta.»** A data da resposta é anterior a **Enviado em**. Corrija-a.
+
+**O Saldo nos livros aparece a 0,00 €.** O parceiro não tem saldo nessa data. Confirme a data e carregue em **Atualizar o saldo**. Se continuar a zero, confira os [extratos de terceiros](/accounting-pt/extratos-de-terceiros).
+
+**Quero mudar a data de um pedido já enviado.** Não é possível: os campos ficam bloqueados e **Eliminar** desaparece de **Ações**. Encerre o pedido e crie outro.
+
+**A lista parece vazia.** Tem o filtro **A aguardar resposta** ligado. Tire-o para ver os pedidos noutros estados.

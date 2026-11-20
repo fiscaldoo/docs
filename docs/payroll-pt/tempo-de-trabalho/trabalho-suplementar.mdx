@@ -1,0 +1,115 @@
+---
+id: trabalho-suplementar
+slug: /payroll-pt/trabalho-suplementar
+title: Como registar e pagar trabalho suplementar
+sidebar_label: Registar e pagar trabalho suplementar
+sidebar_position: 1
+description: Registar o dia em que o trabalhador fez horas extra, conferir o contador anual contra o limite legal e deixar o pagamento para o processamento do mês.
+keywords: [trabalho suplementar, horas extra, horas extraordinárias, horas extraordinarias, registar horas extra, limite anual de horas extra, 175 horas, descanso compensatório, descanso compensatorio, dia de descanso trabalhado, feriado trabalhado, registo visado, registar trabalho suplementar sem picagem]
+doc_id: DOC-0189
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 25deacc94)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/configurar/configurar-os-salarios]
+---
+
+## Para que serve?
+
+O trabalho suplementar (as horas extra) regista-se no fiscaldoo como o **dia inteiro** que o trabalhador trabalhou: hora de início, hora de fim e pausa. O fiscaldoo compara esse dia com o horário planeado, conta as horas a mais, soma-as ao contador do ano do trabalhador e avisa quando ele se aproxima do limite legal. O pagamento é feito no recibo do mês, quando os salários são processados.
+
+## Quando utilizar?
+
+- Um trabalhador ficou depois da hora num dia de trabalho.
+- Um trabalhador trabalhou num dia de descanso (obrigatório ou complementar) ou num feriado.
+- Antes de processar o mês, no passo 2 do ecrã **O que há para fazer este mês?** («Lance prémios, ajudas de custo e horas extra antes de processar»).
+
+Não use este registo para um dia de um mês já validado: o fiscaldoo recusa-o (ver Problemas frequentes). Também não serve para horas em falta: para isso há o botão **O trabalhador faltou durante algumas horas**, na mesma janela.
+
+## Onde encontrar?
+
+**Salários › Preparar › Tempo de trabalho › Trabalho suplementar** › **Registar trabalho suplementar**.
+
+O ecrã **O que há para fazer este mês?** tem também, no bloco **Preparar o mês**, o botão **Registar trabalho suplementar**.
+
+## Antes de começar
+
+- O seu perfil é **Processador de salários**, com ou sem o acesso extra **Administrador de Salários**. Com ou sem esse acesso, faz todos os passos.
+- A empresa tem a dimensão registada: sem ela, o contador mostra «Limite desconhecido» e o limite anual não se aplica. O **Administrador de Salários** regista-a em **Salários › Configurar › Empresa › Dimensão da empresa** › **Novo**: confirme a **Empresa**, escreva **Válido desde** `01/01/2026`, deixe **Dimensão** em **Microempresa (menos de 10 trabalhadores)** e guarde. Na demonstração, depois de a registar, os 8 trabalhadores mostraram logo o limite (175 horas, e 87,50 para a Gabriela, que trabalha a tempo parcial). Ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios).
+  ![Dimensão da empresa: Empresa Demonstração, válida desde 01/01/2026, microempresa](/images/payroll-pt/trabalho-suplementar/00-dimensao-da-empresa.png)
+- O trabalhador tem horário no contrato, para o fiscaldoo saber as horas planeadas do dia.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Preparar › Tempo de trabalho › Trabalho suplementar** e carregue em **Registar trabalho suplementar**. Abre-se **Registar trabalho suplementar sem picagem**.
+2. Em **Trabalhador**, escolha o trabalhador.
+3. Em **Dia trabalhado**, escreva o dia, por exemplo `03/11/2026`. Confirme em **O dia** as horas planeadas: «Dia de trabalho: 8 horas planeadas».
+4. Escreva **Começou às**, **Terminou às** e a **Pausa que não conta (horas)** do dia inteiro, não só das horas extra. No exemplo: `9`, `20` e `1` (10 horas trabalhadas).
+   ![Registar trabalho suplementar sem picagem: Bruno Miguel Teixeira, dia 03/11/2026 com 8 horas planeadas, das 9h às 20h com 1 h de pausa, trabalhado no local](/images/payroll-pt/trabalho-suplementar/01-registar-o-dia.png)
+5. Em **Tipo de trabalho**, deixe **Trabalhado no local** ou escolha **Teletrabalho** ou **Feriado trabalhado como dia normal**.
+6. Só se o dia foi de descanso: em **Dia de descanso trabalhado**, escolha **Dia de descanso semanal obrigatório** ou **Dia de descanso complementar**. Só se foi feriado: em **Escolha do empregador (feriado)**, escolha **Descanso compensatório de metade das horas** ou **Acréscimo de 50 % da retribuição** (a omissão vem das definições de salários).
+7. Marque **O trabalhador visou o registo** se ele assinou o registo das horas.
+8. Escreva o **Motivo**, por exemplo `Inventário de fim de mês`. É obrigatório: fica como prova no registo do tempo de trabalho (sem ele, ver «Problemas frequentes»).
+9. Carregue em **Registar o trabalho**. Aparece «Presença registada. A presença de Bruno Miguel Teixeira no dia 03/11/2026 foi registada e validada.»
+10. Volte a **Trabalho suplementar** e abra a linha do trabalhador para conferir o contador do ano.
+    ![Contador de 2026 de Bruno Miguel Teixeira: 2 horas no ano, limite anual de 175 horas por ser microempresa, estado Dentro do limite](/images/payroll-pt/trabalho-suplementar/02-contador-anual.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o trabalho suplementar regista-se e paga-se da mesma maneira: com o perfil **Processador de salários**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
+
+O horário do trabalhador (ver «Antes de começar») confere-se no mesmo sítio: o separador **Folha de Salários** da ficha do trabalhador mostra, no bloco **Planear**, o **Horário de Trabalho** e **Baseado em presenças** ao **Processador de salários**, com ou sem o acesso **Administrador de Salários**, como no Community.
+
+{/* Nota interna (lote EE-06, DOCS-073 #4142, DEC-1794, master ce51f2d47, 10/11/2026): conferido numa cópia Enterprise da demonstração (docs_ee_ee06_test, computador 2) com utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): Processador de salários em Salários › Preparar › Tempo de trabalho › Trabalho suplementar e na ficha do trabalhador (bloco Planear vazio no Enterprise em ce51f2d47 e 25deacc94: EEA-071 #4148, que entrou no comboio 189; em master 7cd24fcc9 a auditoria docs-aud-ee07 viu o Planear com Horário de Trabalho e Baseado em presenças, com o Processador de salários e com o Processador com Administrador de Salários); coluna Horário de Trabalho no Histórico de retribuição. Menus e vistas comparados, perfil a perfil, com uma cópia Community do mesmo master (docs_demo_ee06_test). Ver reports/LOTE_EE-06.md. */}
+
+## Resultado esperado
+
+- O dia fica registado e validado como presença do trabalhador, com as horas da janela a substituir o horário desse dia.
+- Na lista **Trabalho suplementar**, a linha do trabalhador mostra **Suplementar do ano (horas)** 2,0000, **Contado no limite (horas)** 2,0000, **Limite anual (horas)** 175,00 e **Estado** **Dentro do limite**. A **Nota** diz «2 de 175 horas (CT art. 228.º/1-a (Microempresa (menos de 10 trabalhadores))).».
+- O registo não gera lançamentos contabilísticos. As horas são pagas no recibo de novembro, quando [processar os salários do mês](/payroll-pt/processar-o-mes); o valor entra nos custos com o pessoal quando esse recibo for contabilizado.
+
+### O que o recibo de novembro mostra
+
+Depois de processar novembro de 2026, o recibo de Bruno Miguel Teixeira (1.650,00 €) tem uma linha **Trabalho suplementar** de 2,00 horas, 24,99 €. **Como foi calculado?** diz que a primeira hora paga 25 % e a hora seguinte 37,5 % (CT art. 268.º/1-a), sobre a hora normal do trabalhador.
+
+![Janela Como foi calculado? do Trabalho suplementar: 25 % na primeira hora e 37,5 % na seguinte, sujeito a IRS e a Segurança Social](/images/payroll-pt/trabalho-suplementar/03-como-foi-calculado.png)
+
+- **Bruto** 1.804,14 € (1.650,00 + 129,15 de subsídio de alimentação + 24,99).
+- **Segurança Social (trabalhador)** 184,25 €: 11 % de 1.674,99 € (a retribuição mais o suplementar; o subsídio de alimentação fica de fora).
+- **IRS retido** 102,00 €. **Líquido a receber** 1.517,89 €.
+
+Na contabilidade, o lançamento do lote de novembro (SAL/2026/00006, 30/11/2026) tem em 632 **Remunerações do pessoal** um débito de 12.553,62 €, que são os 12.528,63 € do lote de outubro mais os 24,99 € do suplementar, com o crédito correspondente em 231290 **Remunerações em processamento**; a contribuição da empresa (635 / 245) sobe 5,93 € (23,75 % de 24,99 €), de 2.745,52 € para 2.751,45 €. Para contabilizar, o lote precisa de um modelo de contabilização para a rubrica **Trabalho suplementar**: sem ele o lote validado mostra «Conta contabilística de cada rubrica com valor (Bloqueia o fecho)». Na demonstração foi criado como o do subsídio de alimentação, com débito em 632 e crédito em 231290 (ver [Como contabilizar o processamento dos salários](/payroll-pt/contabilizar-os-salarios)). <span className="fd-pending">Pendente de validação por contabilista certificado: conta do gasto com trabalho suplementar (632 na demonstração).</span>
+
+
+## Notas importantes
+
+- **O limite anual depende da dimensão da empresa.** O contador usa a dimensão em vigor: numa microempresa, 175 horas por ano (CT art. 228.º/1-a, como diz a **Nota**). Numa média ou grande empresa aplica-se a alínea b) do mesmo artigo. As horas de **Força maior** contam à parte. <span className="fd-pending">Pendente de validação por contabilista certificado: limites do art. 228.º do Código do Trabalho por dimensão e para tempo parcial.</span>
+- **Quanto se paga.** O pagamento é calculado no processamento do mês, com acréscimos que mudam a partir do **Limiar do segundo escalão (horas)** (100 horas no ano, no contador). <span className="fd-pending">Pendente de validação por contabilista certificado: percentagens do art. 268.º do Código do Trabalho antes e depois das 100 horas, e retenção de IRS do trabalho suplementar.</span>
+- **O registo visado conta.** Com **Pagar 2 horas quando o registo do suplementar não é visado (art. 231.º)** ligado nas definições de salários, um dia sem **O trabalhador visou o registo** paga duas horas de suplementar. Vem desligado. <span className="fd-pending">Pendente de validação por contabilista certificado: a base desta sanção antes de a ligar.</span>
+
+
+## Problemas frequentes
+
+### «Indique porque se fez o trabalho»
+
+- **Sintoma:** «Indique porque se fez o trabalho. O que aconteceu: o registo do tempo de trabalho guarda o motivo como prova. Como resolver: preencha «Motivo».»
+- **Causa:** o campo **Motivo** está vazio.
+- **O que fazer:** feche a janela, escreva o **Motivo** e carregue de novo em **Registar o trabalho**.
+
+### «Não se pode criar uma presença num período fechado»
+
+- **Sintoma:** «Não se pode criar uma presença num período fechado. O que aconteceu: um recibo validado ou pago de Bruno Miguel Teixeira já cobre o dia 28/10/2026. Como resolver: corrija a presença que existe com a ação «Corrigir» (cria uma presença nova que aponta para a original). A tentativa ficou registada na auditoria.»
+- **Causa:** o recibo do mês desse dia já está validado ou pago.
+- **O que fazer:** siga a mensagem: a presença desse dia corrige-se com a ação **Corrigir**, que cria uma presença nova ligada à original. <span className="fd-pending">Pendente de validação no ecrã: a correção não foi feita, porque alterava o mês de outubro já pago que o resto da demonstração usa.</span>
+
+### O contador diz «Limite desconhecido»
+
+- **Sintoma:** **Estado** **Limite desconhecido** e a nota «A dimensão da empresa não está registada (Salários › Configurar › Empresa › Dimensão da empresa), por isso o limite não pode ser aplicado.»
+- **Causa:** a empresa não tem dimensão registada para o ano (ver «Antes de começar»).
+- **O que fazer:** peça ao **Administrador de Salários** que registe a dimensão. Na demonstração, a lista mostrou o limite de todos os trabalhadores logo a seguir.

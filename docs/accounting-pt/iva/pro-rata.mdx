@@ -1,0 +1,112 @@
+---
+id: pro-rata
+slug: /accounting-pt/pro-rata
+title: Como calcular e regularizar o pró-rata de dedução do IVA
+sidebar_label: Pró-rata de dedução do IVA
+description: Ativar o sujeito passivo misto, registar a percentagem provisória do ano, calcular a definitiva e lançar a regularização anual do IVA dedutível.
+keywords: [pró-rata, pro-rata, prorata, percentagem de dedução, percentagem de deducao, sujeito passivo misto, regularização anual do pró-rata, regularizacao anual do pro-rata, IVA dedutível, iva dedutivel, CIVA art. 23, conta 2434, percentagem provisória, percentagem definitiva]
+doc_id: DOC-0088
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ba9c8bd76)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/iva/apuramento-do-iva, accounting-pt/iva/declaracao-periodica-de-iva, accounting-pt/compras/fatura-de-fornecedor, accounting-pt/iva/deducao-do-iva]
+---
+
+## Para que serve?
+
+Uma empresa que faz operações com e sem direito a dedução do IVA (um sujeito passivo misto) só pode deduzir parte do IVA das compras. O fiscaldoo guarda essa percentagem por ano, aplica-a às faturas de fornecedor e, no fim do ano, calcula a diferença entre a percentagem provisória e a definitiva e lança-a como regularização.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: regras do CIVA art. 23.º usadas neste artigo (percentagem provisória com base no ano anterior, percentagem definitiva calculada no fim do ano, regularização só depois de acabar o ano, e arredondamento).</span>
+
+## Quando utilizar?
+
+- A empresa tem operações isentas sem direito a dedução e operações tributadas, e deduz o IVA das compras só em parte.
+- Começou o ano e precisa de registar a percentagem provisória.
+- Fechou o ano e precisa de calcular a percentagem definitiva e regularizar o IVA já deduzido.
+
+Se a empresa deduz todo o IVA, ou se só uma despesa tem dedução limitada (por exemplo combustíveis), não use o pró-rata: a dedução limitada trata-se por regras de dedução próprias (veja [Como o fiscaldoo calcula o IVA dedutível](/accounting-pt/deducao-do-iva)).
+
+## Onde encontrar?
+
+- **Contabilidade › Configurar › Geral › Definições**, no bloco **IVA (PT)** (setting **Sujeito passivo misto**), com o perfil **Administrador**.
+- A ficha do ano abre-se pelo botão **Abrir a percentagem de dedução do IVA (pró-rata)**, nesse mesmo setting.
+- Sem modo programador, o Contabilista certificado chega à ficha também por **Contabilidade › Declarar › IVA › O que há para fazer com o IVA?**, onde está **Pró-rata de dedução do IVA** (visto no painel do Contabilista certificado; o Contabilista não o vê). O item em **Contabilidade › Configurar › IVA e retenções** continua só no modo programador.
+
+![Setting Sujeito passivo misto assinalado, com a ligação Abrir a percentagem de dedução do IVA (pró-rata)](/images/accounting-pt/pro-rata/88-01-definicoes-sujeito-passivo-misto.png)
+
+## Antes de começar
+
+- Perfil **Administrador** para assinalar o **Sujeito passivo misto** (Definições). A ficha do pró-rata e o botão **Regularização anual** são do perfil **Contabilista certificado**.
+- Confirme que está na empresa certa: o setting é por empresa. Com várias empresas, mude de empresa antes (na demonstração, o administrador abre em «Empresa Teste Portugal»).
+- Tenha à mão o volume anual de operações com direito a dedução e o de todas as operações da atividade.
+- Confirme que o exercício em que vai trabalhar não está bloqueado. Um exercício bloqueado impede lançar nele: se a regularização de um ano já bloqueado precisar de um lançamento datado nesse ano, peça ao administrador que reabra o exercício antes de a lançar.
+- O exemplo deste artigo é o da «Empresa Teste Filial», no exercício de 2025, que não tem bloqueio.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Definições**, no bloco **IVA (PT)**, assinale **Sujeito passivo misto** e carregue em **Guardar**, **antes** de gravar a ficha do ano: sem isto, gravar a ficha é recusado (ver «Problemas frequentes»).
+2. Carregue em **Abrir a percentagem de dedução do IVA (pró-rata)** e depois em **Novo**. A ficha abre com o **Exercício** do ano em curso (no exemplo, escreva `2025`) e o **Método** «Percentagem de dedução (CIVA art. 23.º n.º 1 b)». A opção **Afetação real (CIVA art. 23.º n.º 2)** não é descrita neste artigo.
+3. Escreva a **Percentagem provisória (%)**, por exemplo `80`, e grave. A **Estimada (início ou alteração substancial da atividade)** vem assinalada: desassinale-a se a percentagem vem do ano anterior (no exemplo, desassinalada).
+4. A partir daqui, as faturas de fornecedor do ano usam a percentagem do registo para dividir o IVA em dedutível e não dedutível. No exemplo, a fatura de fornecedor de 15/06/2025, de 1.000,00 € mais 230,00 € de IVA (23 %), lançada em `6228 Outros`, fica com 184,00 € de IVA dedutível (80 %) e 46,00 € de IVA não dedutível.
+5. No fim do ano, carregue em **Propor a partir das operações**. Com vendas do ano lançadas, a ficha mostra o **Numerador proposto**, o **Denominador proposto** e a **Percentagem proposta (%)**, e a proposta arredonda o quociente para cima; os botões **Documentos do numerador** e **Documentos do denominador** abrem as linhas que entram em cada valor, para conferir. Na «Empresa Teste Filial» não há vendas lançadas em 2025, por isso o botão recusa («Não há operações de 2025 para calcular a percentagem de dedução»): passe ao passo seguinte e escreva os valores à mão.
+6. Escreva em **Operações com direito a dedução** e **Todas as operações da atividade económica** os valores do ano (a proposta não os copia): no exemplo, `48000` e `50000`. Grave e carregue em **Calcular a percentagem definitiva**. A **Percentagem definitiva (%)** passa a 96,00 (48.000,00 ÷ 50.000,00) e o estado a **Definitivo**. Em **IVA das compras do ano**, a ficha mostra 230,00 € de IVA das compras, 184,00 € de IVA dedutível e 46,00 € de IVA não dedutível.
+   ![Ficha do pró-rata de 2025 da Empresa Teste Filial com 80 por cento provisório, 96 por cento definitivo, operações de 48.000 e 50.000 euros e IVA das compras de 230 euros](/images/accounting-pt/pro-rata/88-02-ficha-percentagem-proposta.png)
+7. **A partir de 01/01 do ano seguinte**, carregue em **Regularização anual** (antes disso o botão recusa, ver «Notas importantes»). A janela mostra a **Percentagem provisória** (80,00), a **Percentagem definitiva** (96,00), a **Regularização** (36,80 €) e o **Diário** («Operações Diversas»). Escolha a **Conta de gasto** que recebe a regularização, por exemplo `6228` (o mesmo gasto das compras), e carregue em **Lançar a regularização**.
+   ![Janela Regularização anual do pró-rata com a conta de gasto 6228 e a regularização de 36,80 euros](/images/accounting-pt/pro-rata/88-03-janela-regularizacao-anual.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+O produto abre o lançamento da regularização, `MISC/2025/00001`, **Publicada**, no diário «Operações Diversas», datado de 31/12/2025 e com o texto «Regularização do pró-rata 2025 (art. 23.º do CIVA): 80.0 % → 96.0 %». Na ficha do pró-rata, o **Lançamento da regularização** aponta para ele e o **Valor da regularização** é 36,80 €:
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| `2434 IVA - Regularizações` | 36,80 € | |
+| `6228 Outros` | | 36,80 € |
+
+![Lançamento MISC/2025/00001 da regularização, a débito da 2434 e a crédito da 6228, 36,80 euros, datado de 31/12/2025](/images/accounting-pt/pro-rata/88-04-regularizacao-lancada.png)
+
+Confirmação com os números do exemplo: a compra `FTF/2025/00001` (1.000,00 € + 230,00 € de IVA) foi lançada a 80 %, com 184,00 € de IVA dedutível. Com a percentagem definitiva de 96 %, o IVA dedutível passa a 220,80 € (230,00 € × 96 %), mais 36,80 €, que a regularização passa do gasto `6228` para o IVA a deduzir. Na ficha, **IVA das compras** 230,00 €, **IVA dedutível** 184,00 € e **IVA não dedutível** 46,00 € são os da percentagem provisória, antes da regularização.
+
+No lançamento da própria fatura, o IVA dedutível (184,00 €) vai para `2432 IVA - Dedutível`, os 46,00 € de IVA não dedutível vão para o gasto `6228 Outros` com o texto «IVA não dedutível (CIVA art. 23.º)», e `2211 Fornecedores gerais` fica a crédito 1.230,00 €.
+
+![Recusa «Ainda não é possível regularizar o pró-rata de 2027», com o motivo e o que fazer](/images/accounting-pt/pro-rata/88-05-recusa-antes-do-fim-do-ano.png)
+
+A captura mostra 2027, um ano que ainda não terminou: para o ano em curso a recusa tem o mesmo texto até ao fim do ano (31/12).
+
+## Notas importantes
+
+### A percentagem definitiva também se aplica às faturas novas
+
+Com a ficha em **Definitivo**, as faturas seguintes do ano usam já a percentagem definitiva. Se escrever `0` em **Percentagem definitiva (%)**, o estado fica **Definitivo** e as faturas novas deduzem 0 % do IVA; a ficha mostra agora o aviso «A percentagem definitiva é 0 %» e o texto «as faturas de compra deste exercício não deduzem IVA: todo o IVA é custo (CIVA art. 23.º)». Confira o valor antes de gravar.
+
+### A regularização é um lançamento publicado
+
+A regularização só se lança depois de acabar o ano (CIVA art. 23.º n.º 6): antes disso o botão recusa com «Ainda não é possível regularizar o pró-rata de 2027» (o ano da captura) e, até lá, as faturas mantêm a percentagem provisória. Depois, o lançamento fica **Publicado** e datado de 31/12 do ano. Quem tem de o desfazer usa o [estorno](/accounting-pt/estornar-um-lancamento). Confirme o valor do IVA dedutível no [apuramento do IVA](/accounting-pt/apuramento-do-iva) do último período.
+
+
+## Problemas frequentes
+
+### Gravar a ficha do ano é recusado: «não está assinalada como sujeito passivo misto»
+
+- **Sintoma:** janela **Erro de Validação** com «A empresa “Empresa Demonstração, Lda” não está assinalada como sujeito passivo misto — a percentagem de dedução (CIVA art. 23.º) só se aplica a quem realiza operações com e sem direito a dedução. Assinale primeiro «Sujeito passivo misto» na empresa.»
+- **Causa:** o setting está desligado na empresa em que está (ou em outra).
+- **O que fazer:** em **Definições**, assinale **Sujeito passivo misto** na empresa certa e grave de novo.
+
+### «Preencha o montante anual de todas as operações»
+
+- **Sintoma:** ao carregar em **Calcular a percentagem definitiva**, «Preencha o montante anual de todas as operações (maior que zero) para calcular a percentagem definitiva.»
+- **Causa:** **Operações com direito a dedução** ou **Todas as operações da atividade económica** estão a 0,00 €.
+- **O que fazer:** escreva os dois valores do ano (o **Propor a partir das operações** mostra o que o razão tem) e calcule de novo.
+
+### «Escolha a conta de gasto»
+
+- **Sintoma:** em **Lançar a regularização**, «Escolha a conta de gasto que recebe a regularização do IVA.»
+- **Causa:** a **Conta de gasto** da janela está vazia.
+- **O que fazer:** escolha a conta e carregue de novo.

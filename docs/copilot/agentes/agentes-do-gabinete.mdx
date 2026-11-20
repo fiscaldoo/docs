@@ -1,0 +1,123 @@
+---
+id: agentes-do-gabinete
+slug: /copilot/agentes-do-gabinete
+title: Como criar e usar agentes do gabinete
+sidebar_label: Agentes do gabinete
+sidebar_position: 1
+description: "Criar um agente com instruções e fontes próprias, ligá-lo, fazer-lhe perguntas e mudar as instruções dos agentes de série."
+keywords: [agentes do gabinete, perguntar a um agente do gabinete, instruções dos agentes, instrucoes dos agentes, fontes, responder só com base nas fontes, o meu texto, repor o original]
+doc_id: DOC-0291
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master 7b476ad71)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [copilot/configurar/escolher-a-ia-por-agente, copilot/agentes/regras-agendadas]
+---
+
+## Para que serve?
+
+Um agente do gabinete é um assistente com instruções e fontes suas, por exemplo para responder a dúvidas de IVA com as notas internas do gabinete. Só sugere e explica, para uma pessoa verificar: não valida, não lança, não assina, não envia nem paga.
+
+## Quando utilizar?
+
+- O gabinete repete as mesmas respostas e quer que partam dos seus textos.
+- Quer mudar a forma como um agente de série responde.
+
+## Onde encontrar?
+
+- **Criar:** **Copiloto › Agentes › Agentes do gabinete**.
+- **Mudar as instruções dos agentes de série:** **Copiloto › Instruções › Instruções dos agentes**.
+- **Perguntar:** painel que abre com a **Contabilidade**, grupo **Listas de apoio**, ligação **Perguntar a um agente do gabinete**, com o **Modo gabinete** ligado em **Definições › Contabilidade › Gabinete de contabilidade**. Também pode escrever `agente do gabinete` na caixa **Pesquisar menu**, na barra de cima; só aparece o que o seu perfil pode abrir. Com o **Modo gabinete** desligado, o **Contabilista** não encontra nada.
+
+## Antes de começar
+
+- **Para criar:** o administrador do sistema (ou quem tem o acesso extra **Administração fiscal**). O **Contabilista** não vê estas entradas.
+- **Para perguntar:** o perfil **Contabilista** e o **Modo gabinete** ligado.
+- **Para funcionar:** os interruptores **Copiloto (interruptor geral da empresa)**, **Ligação à IA (chamadas ao fornecedor de IA)** e **IA - Agentes do gabinete**, em **Copiloto › Controlo › Interruptores**, e uma [ligação à IA](/copilot/ligar-a-uma-ia) pronta.
+- Feito a 5 de novembro de 2026, na Empresa Demonstração, Lda, onde já existe o agente **Assistente do IVA (exemplo)**, desligado.
+
+## Como utilizar
+
+### Criar um agente
+
+<StepByStep>
+
+1. Abra **Copiloto › Agentes › Agentes do gabinete** e carregue em **Novo**.
+2. Escreva o **Nome**. Em **Ligação à IA**, escolha a ligação, ou deixe vazio para usar a **Ligação por omissão**.
+3. Em **Quem o pode usar**, escolha os perfis que o podem usar.
+4. No separador **Instruções**, escreva o que o agente deve fazer.
+5. No separador **Fontes**, carregue em **Adicionar uma linha** e preencha **Fonte** e **Texto**, ou escolha um **Ficheiro**. Com **Responder só com base nas fontes** marcado, o agente só usa o que está aqui.
+6. Marque **Ligado** quando estiver pronto e guarde. Um agente novo nasce desligado.
+   ![Ficha do agente Dúvidas de IVA do gabinete, ligado, com a ligação à IA escolhida](/images/copilot/agentes-do-gabinete/01-agente.png)
+
+</StepByStep>
+
+### Fazer uma pergunta
+
+<StepByStep>
+
+1. Com o perfil **Contabilista**, abra **Perguntar a um agente do gabinete**.
+2. Escolha o **Agente do gabinete** e escreva **A sua pergunta**.
+   ![Janela Perguntar a um agente do gabinete com o agente e a pergunta preenchidos](/images/copilot/agentes-do-gabinete/02-perguntar.png)
+3. Carregue em **Perguntar ao agente**.
+
+</StepByStep>
+
+### Mudar as instruções de um agente de série
+
+<StepByStep>
+
+1. Abra **Copiloto › Instruções › Instruções dos agentes** e escolha o agente.
+2. Em **O meu texto**, escreva a instrução. Por baixo vê o **Texto original** e as **Regras sempre acrescentadas**, que não se mudam.
+3. Guarde. Vazio, **O meu texto** deixa o agente com o texto original.
+4. Para voltar ao texto do programa, carregue em **Repor o original**. A janela **Confirmação** diz «O texto original do programa volta a ser usado. O que está escrito agora fica no histórico. Continuar?»; carregue em **Confirmar** e **O meu texto** fica vazio. Feito com o administrador, no **Redator**.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, os agentes do gabinete criam-se da mesma maneira (visto com o administrador). **Copiloto › Agentes › Agentes do gabinete › Novo** abre a mesma ficha, com o aviso «O agente só sugere e explica, para uma pessoa verificar. …» e os campos **Nome**, **Ligado**, **Ligação à IA**, **Responder só com base nas fontes**, **Ferramentas (só leitura)** e **Quem o pode usar**. **Copiloto › Instruções › Instruções dos agentes** tem os mesmos 11 agentes de série, e o **Modo gabinete** está nas **Definições**, como no Community. Se o administrador instalar o módulo **fiscaldoo · Copiloto — Configuração dentro da app de IA do Enterprise — Enterprise** (não se instala sozinho, nem com a aplicação **IA** do Enterprise), estas entradas passam para **IA › Configurar**, nos grupos **Agentes** e **Instruções** (veja [O que é o Copiloto e o que pode fazer](/copilot/o-que-e-o-copiloto#no-enterprise)), e a **Ajuda passo a passo** cita esse caminho, nos passos e nos **Outros resultados** (por exemplo, **IA › Configurar › Agentes › Agentes do gabinete**). Se o administrador desinstalar o módulo, as entradas voltam à aplicação **Copiloto**.
+
+{/* Nota interna (lote EE-13, DOCS-073 #4142, req 46633, DEC-1794, master 7f41ce71b, base Enterprise docs_ee_ee13_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee13_test): DOC-0291. Administrador: lista vazia com Novo, ficha nova vista e descartada (nada gravado); Instruções dos agentes com 11 linhas; Definições pesquisadas por «gabinete» (Modo gabinete). Iguais na cópia Community. A pergunta ao agente não foi feita (Modo gabinete desligado na cópia e sem IA real), como no Community. Ver reports/LOTE_EE-13.md. */}
+
+{/* Nota interna (lote EE-15, comboio 197, master c689f7580, 12/11/2026; cópia Enterprise docs_ee_ee15_test (portas 8530/8531, cópia da odoo20_ee_test com ee_neutralizar) e cópia Community docs_demo_ee15_test (porta 8532), utilizadores criados nas cópias só com o perfil indicado): DOC-0291, EEA-091 (0dfcc9667): as mensagens leem o caminho do menu real; visto na janela do Copiloto (aviso do topo) com e sem a ponte, com o perfil Contabilista. Os agentes do gabinete não foram abertos de novo. Ver reports/LOTE_EE-15.md. */}
+
+{/* Nota interna (lote EE-16, comboios 198 e 199, master 7b476ad71, 13/11/2026; cópia Enterprise docs_ee_ee16_test (portas 8524/8525, cópia da odoo20_ee_test com ee_neutralizar) e cópia Community docs_demo_ee16_test (porta 8526), utilizadores criados nas cópias só com o perfil indicado): DOC-0291, COP-070 (94ed8e913) e EEA-093 (8c3f7ae57), em master. Utilizador só com o perfil Contabilista, janela do Copiloto por clique, com ai_agentic e a ponte l10n_pt_fiscaldoo_ee_copilot_app instaladas na cópia (pgvector criado só na cópia; ee_neutralizar antes e construir): aviso com IA › Configurar › Ligações às IAs › Ligações; Ajuda passo a passo, «Onde ligo o Copiloto?» e «Interruptores do Copiloto»: os passos dizem «Abra IA › Configurar › Controlo › Interruptores» e Outros resultados IA › Configurar › Controlo › Interruptores e › Lidos pelo Copiloto; o resumo do artigo em «Na documentação» continua «Ligar e desligar: Copiloto › Controlo › Interruptores.» (texto do site). Depois, o administrador desinstalou a ponte por clique (Aplicações, ficha do módulo, Desinstalar, janela «Desinstalar módulo», Desinstalar): o Contabilista voltou a ter a aplicação Copiloto (Agentes: Redator, Sugestões das regras, Correções do leitor; Ligações às IAs: Fornecedores de IA; Controlo: 7 entradas) e IA só com Agentes e Configurar › Skills (menus lidos da sessão do utilizador); o aviso e a Ajuda passo a passo voltaram a Copiloto › … (Abra Copiloto › Controlo › Interruptores). A cópia fica sem a ponte. Ver reports/LOTE_EE-16.md. */}
+
+## Resultado esperado
+
+O agente aparece na lista **Agentes do gabinete** e, ligado, na escolha da janela de perguntas.
+
+<span className="fd-pending">Pendente de validação no ecrã: a resposta do agente. A demonstração é uma base de testes e o fiscaldoo não chama a IA a partir dela.</span>
+
+## Notas importantes
+
+- **Saúde, greve e sindicato:** escrever nas instruções não faz o agente ler estes dados. O que segue para a IA depende de **Autorizar dados pessoais e sensíveis nesta ligação?**, desligado por omissão: só com ele ligado os dados sobre saúde, filiação sindical ou greves seguem tal como estão. As credenciais nunca são enviadas. Veja [Privacidade e consentimentos](/copilot/privacidade-e-consentimentos).
+- **Um agente é de uma empresa.** Num grupo, crie-o em cada empresa.
+
+## Problemas frequentes
+
+### «Escolha primeiro o agente do gabinete. Não foi enviado nada…»
+
+- **Causa:** carregou em **Perguntar ao agente** sem escolher o agente.
+- **O que fazer:** escolha-o. Se a lista estiver vazia, peça ao administrador que crie e ligue um agente.
+
+### «Não há no cofre nenhuma chave de API deste fornecedor para a empresa…»
+
+- **Causa:** a ligação do agente não tem chave.
+- **O que fazer:** peça ao administrador que escreva a chave na ligação, ou que escolha outra ligação para o agente.
+
+### «A instrução de … tem mais de 4000 carateres…»
+
+- **Sintoma:** ao guardar **O meu texto** em **Instruções dos agentes**, janela **Erro de Validação**: «A instrução de «Redator» tem mais de 4000 carateres, por isso a IA só receberia o princípio. Nada foi guardado: retire parte do texto e deixe só o que o agente precisa.»
+- **O que fazer:** encurte o texto e guarde de novo.
+
+### «Há campos obrigatórios por preencher…»
+
+- **Causa:** guardou o agente sem **Nome**.
+- **O que fazer:** preencha os campos assinalados a vermelho.
+
+{/* Nota interna (v18-A, master 00c68a6d8, UX-110): pesquisa por clique com Contabilista, com o Modo gabinete ligado e desligado (parâmetro mudado por RPC na cópia e reposto), e com admin. */}
+{/* Nota interna (v13-COP): criar com admin por clique; perguntar com o Contabilista pelo painel (auditoria sobre a829e964b, COP-056): com o Modo gabinete desligado, a ligação desaparece; ligado, volta. «Instruções dos agentes» vista com admin (11 linhas); a gravação de «O meu texto» e «Repor o original» não foram feitas. Enterprise: a ponte l10n_pt_fiscaldoo_ee_copilot_app não foi vista (base Community). Sem IA real. */}

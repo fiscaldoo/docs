@@ -1,0 +1,93 @@
+---
+id: rotatividade-excessiva
+slug: /payroll-pt/rotatividade-excessiva
+title: Como se calcula a contribuição adicional por rotatividade excessiva
+sidebar_label: Rotatividade excessiva
+sidebar_position: 31
+description: "Comparar o peso dos contratos a termo com o indicador do setor e obter uma estimativa da contribuição adicional, sem lançamentos."
+keywords: [rotatividade, excessiva, rotatividade excessiva, contribuição adicional, contribuicao, contratos a termo, indicador do setor]
+doc_id: DOC-0232
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/declarar/declaracao-a-seguranca-social, payroll-pt/declarar/prestacao-compensatoria]
+---
+
+## Para que serve?
+
+Compara, ano a ano, o peso dos contratos a termo nos salários com o indicador do setor. Se o peso for maior, a Segurança Social pode cobrar uma contribuição adicional, e o ecrã dá uma estimativa.
+
+**É só informação:** a estimativa «não é contabilizada» e não muda nenhum recibo. Quem fixa a contribuição é a Segurança Social.
+
+## Quando utilizar?
+
+- Depois de fechar os recibos do ano, ou durante o ano para antecipar o risco.
+- Não use como valor a pagar.
+
+## Onde encontrar?
+
+**Salários › Fechar e consultar › Mapas de recursos humanos › Rotatividade excessiva**.
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador. O perfil Contabilista não tem a aplicação **Salários**.
+- Tem o indicador do setor, a taxa e o limite da fonte oficial. O produto não traz estes números.
+- Há recibos fechados no ano. Os rascunhos ficam de fora.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Carregue em **Novo**. Em **Ano**, escreva o ano a verificar: o ecrã traz o ano anterior.
+2. Preencha **Indicador do setor (%)**, **Taxa adicional (%)**, **Limite da taxa adicional (%)** e **Fonte do indicador e da escala**.
+3. Guarde e carregue em **Calcular**.
+4. Leia **Base da Segurança Social do ano**, **Dos quais contratos a termo**, **Peso dos contratos a termo (%)**, **Resultado** e **Estimativa da contribuição adicional**.
+   ![Verificação de 2026 acima do indicador, com peso de 20,34 % e estimativa de 138,25 €](/images/payroll-pt/rotatividade-excessiva/01-verificacao-acima-do-indicador.png)
+5. Para ver quem entrou na conta, carregue em **Recibos a termo**.
+
+</StepByStep>
+
+**Exemplo.** Quatro meses de recibos pagos em 2026 (junho a setembro), com 8 trabalhadores, 2 deles a termo:
+
+| Valor | Resultado |
+| --- | --- |
+| **Base da Segurança Social do ano** | 45.314,67 € |
+| **Dos quais contratos a termo** | 9.216,67 € |
+| Peso | 9.216,67 ÷ 45.314,67 = 20,34 % |
+| Com indicador 15 %, taxa 1,5 %, limite 2 % | «Acima do indicador», **138,25 €** (1,5 % de 9.216,67 €) |
+| Com indicador 15 %, taxa 3 %, limite 2 % | **184,33 €**: aplica-se o limite, 2 % |
+| Com indicador 25 % ou 60 % | «Dentro do indicador», sem estimativa |
+
+Estes indicadores e taxas são apenas ilustrativos.
+
+## No Enterprise
+
+No Odoo Enterprise, a verificação faz-se da mesma maneira, com o acesso extra **Administrador de Salários** e o mesmo menu. Para 2026, com o indicador de 15 %, a taxa de 1,5 % e o limite de 2 %, **Calcular** mostra a **Base da Segurança Social do ano** de 45.314,67 €, 9.216,67 € de contratos a termo, 8 trabalhadores, 2 deles a termo, o **Resultado** **Acima do indicador** e a estimativa de 138,25 € (184,33 € com a taxa de 3 %). Uma segunda verificação do mesmo ano é recusada.
+
+{/* Nota interna (lote EE-09, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 12/11/2026): conferido numa cópia local da base Enterprise (docs_ee_ee09_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Administrador de Salários, por clique: Novo, Ano 2026, 15 / 1,5 / 2, fonte, Guardar e Calcular: 45.314,67, 9.216,67, 20,3393 %, 8 e 2, Acima do indicador, 138,25 € (esta verificação de 2026 ficou guardada na cópia Enterprise). A taxa de 3 % e a segunda verificação do mesmo ano com os direitos do Administrador de Salários numa transação desfeita. Menus e vistas destes ecrãs comparados, perfil a perfil, com uma cópia da demonstração Community (docs_demo_ee09_test, 2c8d358c0, porta 8524): iguais. Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-09.md. */}
+
+## Resultado esperado
+
+- Uma verificação por ano, com o peso e o resultado. Para atualizar, abra a mesma e carregue em **Calcular**.
+- Acima do indicador, o ecrã explica: «Como reduzir o risco: reveja os contratos a termo que podem passar a sem termo.»
+- Nada é lançado na contabilidade.
+
+## Notas importantes
+
+### Base legal
+
+Código dos Regimes Contributivos, art. 55.º-A, aditado pela Lei n.º 93/2019. A taxa é progressiva, até ao máximo de 2 %, e a aplicação depende de regulamentação e de uma portaria com os indicadores do setor.
+
+**Pendente de validação por contabilista certificado:** o indicador e a taxa aplicáveis, e se a regulamentação já está publicada, antes de decidir com base na estimativa. As notas sobre a lei falam das remunerações base dos contratos a termo, e o ecrã calcula sobre a base da Segurança Social dos recibos. O texto consolidado do artigo não foi relido.
+
+## Problemas frequentes
+
+| O ecrã diz | O que fazer |
+| --- | --- |
+| «O indicador do setor não está configurado: preencha o indicador e a fonte onde o leu. O peso é mostrado mas não se estima nenhuma contribuição.» | Preencha os dois e calcule de novo. Um indicador sem fonte também dá esta mensagem. |
+| «Não há recibos fechados com base da Segurança Social em 2025. Nada foi calculado.» | Confirme o ano, ou feche os recibos. |
+| «Uma percentagem tem de estar entre 0 e 100.» | Corrija o valor. |
+| «Já existe uma verificação para esta empresa e ano.» | Abra essa e calcule-a de novo. |

@@ -1,0 +1,68 @@
+---
+id: utilizador-do-agente-sem-acesso
+slug: /troubleshooting/utilizador-do-agente-sem-acesso
+title: A IA ou um relatório agendado não pode correr como a pessoa escolhida
+sidebar_label: IA ou relatório agendado sem acesso
+sidebar_position: 10
+description: A pessoa com que o agente do Copiloto ou o relatório agendado corre não tem acesso à empresa ou não tem a permissão «Contabilista».
+keywords: [relatório agendado, relatorio agendado, agendado, executa como, corre como, agente do copiloto, regra do copiloto, não tem a permissão contabilista, não tem acesso à empresa, copiloto]
+doc_id: DOC-0421
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master b8b799c8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-permissao, troubleshooting/acesso-e-dados/so-a-administracao-fiscal-pode]
+---
+
+## Sintoma
+
+Uma regra do Copiloto não se guarda, ou um relatório agendado não é enviado, porque a pessoa escolhida para o executar não tem o acesso que a tarefa pede.
+
+## Mensagem
+
+Copiadas da base de demonstração em português, provocadas pela integração:
+
+- Com o administrador, no ecrã, ao guardar uma regra nova em **Copiloto › Agentes › Regras agendadas com IA** («Classificar movimentos bancários novos») com **Corre como** um utilizador com o perfil **Administrativo** (janela **Erro de Validação**):
+  > «“*nome da pessoa*” não tem a permissão «Contabilista», por isso a regra não pode correr como esta pessoa. Nada foi guardado. Escolha um contabilista.»
+- Com o administrador, ao enviar já («Enviar agora») um relatório agendado cujo utilizador perdeu o acesso à empresa:
+  > «*Nome da pessoa* não tem acesso a Empresa Demonstração, Lda, por isso o relatório não pode ser calculado para essa empresa. Escolha outro utilizador para o executar.»
+
+## Causas verificadas
+
+O agente do Copiloto e o relatório agendado trabalham **em nome de uma pessoa**: só leem o que essa pessoa pode ler. Duas coisas impedem isso:
+
+- a pessoa tem de trabalhar na empresa em causa;
+- para as regras do Copiloto, a pessoa tem de ter a permissão **Contabilista** (ou acima).
+
+O acesso pode perder-se depois de a regra ou a agenda estarem criadas, por exemplo se se retira uma empresa à ficha da pessoa.
+
+## O que confirmar
+
+1. A pessoa escolhida em **Corre como** (regra do Copiloto) ou em **Executa como** (relatório agendado).
+2. As empresas dessa pessoa e o seu perfil, na ficha dela.
+
+## Como resolver
+
+1. Abra a regra ou a agenda e escolha outra pessoa em **Corre como** ou **Executa como**: um **Contabilista** com acesso a essa empresa.
+2. Guarde e, no caso da agenda, carregue em **Enviar agora** para confirmar.
+3. Se a pessoa devia continuar a ser a mesma, o administrador devolve-lhe o acesso à empresa ([Como dar a cada utilizador o perfil certo](/administration/perfis-e-permissoes)).
+
+**Quem faz:** quem gere a regra ou a agenda; o administrador dá o acesso.
+
+## Resultado esperado
+
+A regra guarda-se, ou o relatório calcula-se e o e-mail fica na fila de envio.
+
+## Quando contactar o suporte
+
+- A pessoa tem o perfil e a empresa e a mesma mensagem aparece.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com a regra ou agenda, a pessoa escolhida e a mensagem.
+
+{/* Nota interna (DOCS-040): só foram provocadas as duas mensagens acima; «a pessoa não pode trabalhar na empresa (a IA não pode ler os seus dados)» não se provocou, porque exige a IA ligada. Pendente de validação. A agenda de teste criada é fictícia. */}
+
+{/* Nota interna (lote v23-AB, master 97b34fac3, docs_demo_v23ab_test, porta 8480, utilizadores criados só com cada valor do campo Perfil): regra com Corre como «Perfil Administrativo» guardada pelo administrador: Erro de Validação igual ao citado; o Contabilista certificado não tem o menu Regras agendadas com IA (só Redator, Sugestões das regras e Correções do leitor). */}

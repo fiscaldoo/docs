@@ -1,0 +1,117 @@
+---
+id: regime-simplificado
+slug: /accounting-pt/regime-simplificado
+title: Como calcular o rendimento tributável no regime simplificado
+sidebar_label: Regime simplificado
+sidebar_position: 8
+description: Aplicar os coeficientes do regime simplificado de IRS (categoria B) às vendas e prestações registadas num período, ver o rendimento tributável por grupo e registar os ajustamentos do art. 31.º do CIRS.
+keywords: [regime simplificado, rendimento tributável, rendimento tributavel, categoria B, coeficientes, art. 31 CIRS, artigo 31.º, IRS, trabalhador independente, empresário em nome individual, despesas mínimas, regime simplificado de IRS]
+doc_id: DOC-0163
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master acd623385)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/declaracoes/pagamentos-por-conta, migration-toolkit/historico/passar-a-contabilidade-organizada]
+---
+
+{/* Nota interna (DOCS-046, lote v6-P1, DOC-0163, risco alto): feito em docs_demo_v6p1_test (8166), master 8f78854ec, com demo.contabilista. O caminho existe desde o ACC-217 (painel das declarações anuais; não aparece em Consultar, ao contrário do que diz o mapa). A Empresa Demonstração é uma Lda: o exemplo usa as vendas dela só para mostrar o cálculo. Criei por RPC um lançamento em 7888 de 380,00 € para provocar «sem grupo»; grupo escolhido com o Responsável fiscal. Datas trocadas, motivo em falta e 2025 sem rendimentos provocados. Sem lançamentos: é um cálculo. Defeitos em reports/LOTE_V6P1.md: sem botão Calcular na página do resultado, relatórios sem lista, aviso «Coeficiente legal por configurar» quando falta o grupo, estado «Not applicable» em inglês na mensagem. */}
+
+## Para que serve?
+
+No regime simplificado de IRS (categoria B), o rendimento tributável é o rendimento bruto multiplicado por um coeficiente legal, que depende do tipo de rendimento. Este ecrã soma as vendas e prestações registadas num período, por grupo do art. 31.º do CIRS, e aplica o coeficiente em vigor na data de cada lançamento.
+
+O resultado é um mapa de apoio: não gera lançamentos nem entrega nada à Autoridade Tributária e Aduaneira (AT). <span className="fd-pending">Pendente de validação por contabilista certificado: os coeficientes e os grupos do art. 31.º do CIRS, tal como o ecrã os aplica, e os limites de acesso ao regime.</span>
+
+## Quando utilizar?
+
+- O cliente é um trabalhador independente ou um empresário em nome individual no regime simplificado e quer o valor antes de preencher a declaração de IRS.
+- Vai decidir com o cliente se passa para a contabilidade organizada ([Como passar para a contabilidade organizada](/migration-toolkit/passar-a-contabilidade-organizada)).
+- Não serve para sociedades: tributam em IRC, com o [Modelo 22](/accounting-pt/modelo-22). O ecrã não recusa uma sociedade: o exemplo abaixo usa as vendas de uma empresa de demonstração só para mostrar o cálculo.
+
+## Onde encontrar?
+
+**Contabilidade › Declarar › Declarações anuais › O que há para fazer com as declarações anuais?**, na zona **Mapas e ficheiros**, botão **Regime simplificado: rendimento tributável**. Este ecrã não está no menu **Consultar**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** ou **Contabilista certificado**.
+- As vendas e prestações do período estão emitidas: só contam lançamentos publicados, em contas de rendimentos. O ano ainda não tem o apuramento de resultados (ver «Notas importantes»).
+- Para escolher o grupo de uma conta (passo 5), é preciso o perfil **Contabilista certificado**: com o perfil **Contabilista**, o campo aparece só para leitura.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra o painel e, em **Mapas e ficheiros**, carregue em **Regime simplificado: rendimento tributável**.
+   ![Painel das declarações anuais com o botão Regime simplificado: rendimento tributável na zona Mapas e ficheiros](/images/accounting-pt/regime-simplificado/01-painel-declaracoes-anuais.png)
+2. Confirme **Início do período** e **Fim do período**. Vêm preenchidos com o ano anterior. No exemplo, escreva 01/01/2026 e 31/12/2026.
+3. Em **Ajustamentos do art. 31.º (decisão do contabilista)**, escolha para cada um **Pendente de validação**, **Aplicável** ou **Não aplicável**, antes de calcular: a página do resultado já não tem o botão **Calcular**.
+   - **N.º 2 — contribuições obrigatórias**
+   - **N.º 10 — redução nos dois primeiros anos**
+   - **N.º 12 — profissões de desgaste rápido**
+   - **N.º 13 — despesas mínimas**
+
+   Se escolher **Aplicável** ou **Não aplicável**, escreva o motivo no campo que aparece: fica guardado com o relatório. O ecrã não calcula estes ajustamentos: só regista a decisão.
+4. Carregue em **Calcular**. A página mostra uma linha por grupo, com **Rendimento bruto**, **Coeficiente** e **Rendimento tributável**.
+5. Se houver valores em **Rendimento por apurar (sem grupo ou sem coeficiente)**, leia a coluna **Porque ficou de fora**. Quando diz «A conta não tem grupo: escolha-o na conta (campo «Regime simplificado de IRS»)», quem tem o perfil **Contabilista certificado** abre a conta em **Contabilidade › Configurar › Geral › Plano de contas** e escolhe o grupo em **Regime simplificado de IRS (art. 31.º do CIRS)**. As contas 71, 72 e 75 recebem uma sugestão a partir do código; as outras ficam sem grupo. Depois, volte ao passo 1 e calcule de novo.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o botão **Regime simplificado: rendimento tributável** do painel **O que há para fazer com as declarações anuais?** abre a lista dos cálculos no ecrã inteiro, com **Novo**, como no Community, e o cálculo faz-se da mesma maneira (passos 2 a 5). Numa empresa sem cálculos, a lista diz «Ainda não há nenhum cálculo Carregue em Novo, escolha o período e carregue em Calcular. Cada cálculo fica guardado aqui.». Foi visto assim com um utilizador só com o perfil **Contabilista certificado**: o cálculo de 01/01/2026 a 31/12/2026 mostrou uma linha por grupo, com **Rendimento bruto**, **Coeficiente** e **Rendimento tributável**.
+
+{/* Nota interna (lote EE-14, EEA-079 5199048cc em master acd623385; cópia docs_ee_ee14_test, porta 8524, 12/11/2026): por clique com um utilizador criado na cópia só com o perfil Contabilista certificado: Contabilidade › Declarar › O que há para fazer com as declarações anuais? › Regime simplificado: rendimento tributável abriu a lista no ecrã inteiro (caminho «O que há para fazer com as declarações anuais? › Regime simplificado: rendimento tributável»), com Novo e a frase citada; Novo veio com 01/01/2025 a 31/12/2025 e os quatro ajustamentos em Pendente de validação; com 01/01/2026 a 31/12/2026, Calcular deu «Vendas de mercadorias e artigos, restauração e hotelaria (art. 31.º n.º 1 a)» 30.670,50 € × 0,1500 = 4.600,58 € e «Outras prestações de serviços (art. 31.º n.º 1 c)» 7.522,50 € × 0,3500 = 2.632,88 €. Os números são da base Enterprise, que não é a base de demonstração do Community (a tabela de «Resultado esperado» é a do Community); por isso não se citam no corpo. O cálculo ficou guardado na cópia. */}
+
+{/* Nota interna (lote EE-04, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee04_test, cópia da odoo20_ee_test com EE_FASE=construir, 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0163. No Enterprise o menu do relatório (l10n_pt_fiscaldoo_reports.menu_l10n_pt_irs_simplified_report, debaixo de account.menu_finance_reports) não fica visível a nenhum dos perfis lidos, e a ligação do painel abre a ação numa janela de escolha, sem Novo e com a ajuda genérica «Cada cálculo fica guardado aqui. Quem tem permissão para criar pode acrescentar registos aqui.». Na cópia Community docs_demo_ee04_test (master 7cd24fcc9), com o Contabilista da demonstração, o mesmo botão abre a lista em ecrã inteiro com Novo e «Carregue em Novo, escolha o período e carregue em Calcular.». Defeito descrito em reports/LOTE_EE-04.md. Ver reports/LOTE_EE-04.md. */}
+
+## Resultado esperado
+
+O exemplo é de 01/01/2026 a 31/12/2026, com a conta 7888 no grupo **f**:
+
+| Grupo | Rendimento bruto | Coeficiente | Rendimento tributável |
+|---|---|---|---|
+| Vendas de mercadorias e artigos, restauração e hotelaria (art. 31.º n.º 1 a) | 30.690,50 € | 0,1500 | 4.603,58 € |
+| Outras prestações de serviços (art. 31.º n.º 1 c) | 7.722,50 € | 0,3500 | 2.702,88 € |
+| Subsídios à exploração e restantes rendimentos da categoria B (art. 31.º n.º 1 f) | 380,00 € | 0,1000 | 38,00 € |
+| **Total** | **38.793,00 €** | | **7.344,46 €** |
+
+![Página do resultado do regime simplificado de 2026, com os ajustamentos, os totais e as linhas por grupo](/images/accounting-pt/regime-simplificado/02-resultado.png)
+
+- **Rendimento tributável (antes dos n.os 2, 10 e 13 do art. 31.º)** é a soma das linhas, antes destes ajustamentos.
+- **Provisório** fica marcado enquanto um ajustamento estiver pendente ou houver rendimento por apurar. O mapa não aplica os ajustamentos: o contabilista aplica-os depois.
+- Cada coeficiente vem da regra em vigor na data do lançamento: um período com uma mudança de lei pode ter dois coeficientes no mesmo grupo.
+- O cálculo não gera lançamentos contabilísticos.
+
+## Notas importantes
+
+- **O que o mapa não vê.** Só soma o que está lançado em contas de rendimentos. Rendimentos fora da contabilidade não entram, e o mapa não confirma se o sujeito passivo pode estar neste regime.
+- **Não há lista dos relatórios.** Cada **Calcular** cria um relatório novo, que só se vê nessa altura. Para o guardar, faça a captura ou anote os valores. Para o rever, calcule de novo.
+- **Não use o mapa num ano com o resultado já apurado.** Hoje, o mapa soma também o lançamento do apuramento de resultados, que anula os rendimentos, e dá 0,00 € sem aviso. No exemplo, 2025 tem 279.000,00 € de vendas e o mapa mostra **Rendimento bruto** 0,00 €; 2026, depois de fechado, também. Calcule antes de apurar.
+- **Sem rendimentos no período,** por exemplo numa empresa sem lançamentos, o resultado é igual: 0,00 € e nenhuma mensagem.
+
+## Problemas frequentes
+
+### «O início do período (01/01/2027) é posterior ao seu fim (31/12/2026)…»
+
+- **Causa:** as datas estão trocadas.
+- **O que fazer:** corrija-as e carregue de novo em **Calcular**.
+
+### «Preencha o motivo pelo qual o art. 31.º n.º 2 está «Not applicable»…»
+
+- **Causa:** escolheu **Aplicável** ou **Não aplicável** sem escrever o motivo. O nome do estado aparece em inglês na mensagem.
+- **O que fazer:** escreva o motivo no campo ao lado.
+
+### «Coeficiente legal por configurar — rendimento tributável não apurado em 380,00 € do rendimento bruto.»
+
+- **Causa:** apesar do texto, no exemplo o coeficiente não falta: a conta 7888 não tem grupo. A coluna **Porque ficou de fora** diz qual é a conta e o motivo.
+- **O que fazer:** escolha o grupo na conta (passo 5) e calcule de novo.
+
+### «Não tem permissão para alterar «Conta».»
+
+- **Causa:** o perfil **Contabilista** não altera o plano de contas.
+- **O que fazer:** peça a quem tem o perfil **Contabilista certificado** que escolha o grupo.
+
+{/* Nota interna (v23-T, DOC-0163, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

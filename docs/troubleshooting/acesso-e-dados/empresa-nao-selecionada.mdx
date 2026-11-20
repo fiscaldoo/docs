@@ -1,0 +1,75 @@
+---
+id: empresa-nao-selecionada
+slug: /troubleshooting/empresa-nao-selecionada
+title: Aparece «…uma empresa em que não trabalha» ou «Pode pertencer a outra empresa»
+sidebar_label: A empresa não está escolhida
+sidebar_position: 9
+description: Tem acesso à empresa mas não a escolheu no seletor de empresas, no canto superior direito; marque-a e repita a operação, e confirme a empresa do topo antes de criar documentos.
+keywords: [empresa em que não trabalha, empresa em que nao trabalha, seletor de empresas, mudar de empresa, empresas ativas, várias empresas, varias empresas, pode pertencer a outra empresa, sem registos, ligação de outra empresa, ligacao de outra empresa, escolher a empresa, confirme a empresa escolhida]
+doc_id: DOC-0419
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 54a9f5f03)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-acesso-a-empresa, troubleshooting/acesso-e-dados/sem-permissao]
+---
+
+## Sintoma
+
+Tem acesso a mais de uma empresa. Uma operação numa delas é recusada com uma mensagem que diz «Marque essa empresa aí e tente outra vez.», que fala de «uma empresa em que não trabalha», ou que diz «Pode pertencer a outra empresa». Num campo **Empresa**, a outra empresa nem aparece: a lista responde «Sem registos».
+
+## Mensagem
+
+Exemplos copiados da base de demonstração em português, com utilizadores que têm acesso às duas empresas e só a «Empresa Demonstração, Lda» escolhida no seletor:
+
+- No ecrã, com o perfil **Processador de salários**, em **Salários › Declarar › Declaração mensal à Segurança Social (DRI)**: no campo **Empresa**, escrever «Empresa Teste Portugal» dá «Sem registos».
+- Pela integração, com o mesmo perfil, ao preparar a declaração mensal da «Empresa Teste Portugal», a integração recebe:
+  > «Não tem permissão para criar este registo de «*Criar as declarações à Segurança Social de um mês*». O seu perfil chega para esta área, mas o registo é de uma empresa a que tem acesso e que não marcou no seletor de empresas, no topo do ecrã. Marque essa empresa aí e tente outra vez.»
+- Pela integração, com o perfil **Contabilista certificado**, ao pedir uma série para a «Empresa Teste Portugal»:
+  > «Não pode criar uma série para uma empresa em que não trabalha. Mude para essa empresa no seletor de empresas (ou peça acesso a um administrador) e repita a operação.»
+
+{/* Nota interna (lote v23-M, master dbbb5ac5c, docs_demo_v23m_test): a 1.ª citação provocada pela integração com um utilizador criado só com o perfil Processador de salários, com as duas empresas e só a Empresa Demonstração marcada (texto novo do UX-126, «Marque essa empresa»). No ecrã, o campo Empresa não oferece a outra empresa e a ligação acrescenta a empresa sozinha (Administrativo com as duas empresas), por isso esta frase não se provoca por clique. A 2.ª citação (série) não foi provocada de novo: não nomeia grupos. */}
+
+Nada foi criado nem enviado. A primeira mensagem diz que o perfil chega e que a empresa é sua, mas não está marcada no seletor: a causa é a empresa, não o perfil. A mesma frase aparece com o perfil **Administrativo**, pela integração, ao abrir uma fatura da «Empresa Teste Portugal» com as duas empresas no utilizador e só a «Empresa Demonstração, Lda» marcada. Quem não tem a empresa recebe outra frase («…o registo é de uma empresa em que não pode trabalhar. Peça ao administrador…»): esse caso está em [Aparece «Não tem acesso a uma das empresas pedidas.» ou «Sem acesso» num documento de outra empresa](/troubleshooting/sem-acesso-a-empresa).
+
+## Abrir uma ligação de outra empresa
+
+Ao abrir por uma ligação um documento de outra empresa a que tem acesso, o documento abre e essa empresa passa a estar **também** marcada no seletor. O nome no canto superior direito **não muda**: continua a ser a primeira empresa.
+
+Os documentos novos são criados na empresa do canto superior direito. Na demonstração, com o perfil **Administrativo** e só a «Empresa Demonstração, Lda» escolhida, a ligação a uma fatura da «Empresa Teste Portugal» abriu a fatura e deixou as duas empresas marcadas. Pela integração, com as mesmas duas empresas marcadas, uma fatura nova começava na «Empresa Demonstração, Lda».
+
+{/* Nota interna (DOCS-037, PD-E2-C na AUDITORIA_V2_E2, cartão UX-084): a ligação acrescenta a empresa sem sinal no topo. Rever este bloco quando o cartão entrar em master. */}
+
+## Causas verificadas
+
+O seletor de empresas, no canto superior direito, mostra as empresas a que tem acesso. Cada operação trabalha só nas empresas marcadas, e os campos **Empresa** só oferecem essas. Se a empresa do registo não está marcada, o fiscaldoo recusa e nada é criado nem enviado.
+
+## O que confirmar
+
+1. Abra o seletor, no canto superior direito, e veja que empresas estão marcadas. O nome mostrado no topo é a empresa onde nascem os documentos novos.
+2. Confirme se a empresa do registo aparece na lista. Se não aparece, não tem acesso a ela: [Aparece «Não tem acesso a uma das empresas pedidas.» ou «Sem acesso» num documento de outra empresa](/troubleshooting/sem-acesso-a-empresa).
+
+## Como resolver
+
+1. Carregue no nome da empresa, no canto superior direito.
+2. Marque a caixa da empresa do registo e carregue em **Confirmar** (aparece com **Descartar** quando muda uma caixa). Para trabalhar só nessa empresa, carregue no nome dela em vez da caixa: o fiscaldoo muda logo para ela.
+   ![Seletor de empresas aberto, com a Empresa Teste Portugal por marcar e a Empresa Demonstração, Lda marcada](/images/troubleshooting/empresa-nao-selecionada/01-seletor-de-empresas.png)
+3. Repita a operação.
+
+**Quem faz:** o próprio utilizador.
+
+Antes de criar, emitir ou comunicar um documento, confirme o nome no canto superior direito. Um documento certificado emitido na empresa errada já não se altera: [Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado).
+
+## Resultado esperado
+
+A empresa fica marcada no seletor e a operação passa.
+
+## Quando contactar o suporte
+
+- A empresa está marcada no seletor e a mensagem continua.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com as empresas marcadas no seletor, a empresa do registo e a mensagem completa.

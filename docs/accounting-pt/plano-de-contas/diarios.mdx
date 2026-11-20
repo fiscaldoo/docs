@@ -1,0 +1,113 @@
+---
+id: diarios
+slug: /accounting-pt/diarios
+title: Como criar um diário
+sidebar_label: Criar um diário
+description: Criar um diário novo (compras, vendas, banco, caixa, cartão de crédito ou operações diversas) com o assistente de três passos, e saber o que o fiscaldoo preenche sozinho.
+keywords: [criar um diário, criar um diario, diário de compras, diario de compras, diário de banco, diario de banco, diário de caixa, código do diário, codigo do diario, prefixo da sequência, prefixo da sequencia, tipo de transação SAF-T, tipo de transacao SAF-T, já existe um diário com o código, ja existe um diario com o codigo]
+doc_id: DOC-0082
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/dia-a-dia/lancamentos-contabilisticos, accounting-pt/compras/fatura-de-fornecedor]
+---
+
+## Para que serve?
+
+Um diário agrupa os lançamentos do mesmo tipo (compras, vendas, banco, caixa, operações diversas) e dá-lhes a numeração própria, com o prefixo que escolher. O assistente **Criar um diário** cria-o em três passos e deixa já preenchido o que depende do tipo.
+
+Criar um diário não gera lançamentos: o razão só se mexe quando se lança um documento nesse diário.
+
+## Quando utilizar?
+
+- Quer separar um tipo de compras ou vendas dos outros, por exemplo as compras de serviços.
+- Abriu uma conta bancária, uma caixa ou um cartão de crédito novos e precisa do diário correspondente.
+- Quer um diário de operações diversas à parte, por exemplo para os acréscimos e diferimentos do fecho.
+
+Para o diário de uma série de faturas certificadas, não use este assistente: as séries têm o seu próprio artigo ([Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais)).
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Geral › Criar um diário**.
+
+![Menu Configurar da Contabilidade, grupo Geral, com a opção Criar um diário assinalada](/images/accounting-pt/diarios/82-01-menu-criar-um-diario.png)
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**, ou entra como administrador. Com o perfil **Contabilista** o item **Criar um diário** não aparece em **Configurar**: peça a um destes perfis.
+- Escolha o código curto antes de começar: não pode repetir o de um diário da empresa (ver «Problemas frequentes»).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › Geral › Criar um diário**. A janela abre no **Passo 1 de 3: para que serve o diário?**.
+2. Escolha uma das seis opções: **Vendas (faturas a clientes)**, **Compras (faturas de fornecedores)**, **Banco**, **Caixa**, **Cartão de crédito** ou **Operações diversas** («Tudo o resto: depreciações, acréscimos, lançamentos de salários, ajustamentos»). Carregue em **Seguinte**.
+   ![Passo 1 de 3 do assistente, com a opção Compras (faturas de fornecedores) escolhida](/images/accounting-pt/diarios/82-02-passo1-tipo.png)
+3. No **Passo 2 de 3: nome e código**, escreva o **Nome do diário**, por exemplo «Compras de serviços». O **Código curto** vem sugerido pelo tipo («BILL1» nas compras, «INV1» nas vendas, «BNK2», «CSH1», «CCD1» e «MISC1» nos outros): troque-o por um código seu, por exemplo `CSV`. O campo aceita no máximo 5 caracteres. A **Moeda** só se preenche para um diário em moeda estrangeira. Carregue em **Seguinte**.
+   ![Passo 2 de 3 com o nome «Compras de serviços» e o código curto CSV](/images/accounting-pt/diarios/82-03-passo2-nome-e-codigo.png)
+4. No **Passo 3 de 3: contas**, a janela mostra as contas do tipo escolhido. Nos bancos e na caixa diz «Deixe a conta principal vazia e ela é criada por si no plano de contas»; nas vendas e nas compras mostra um aviso (ver abaixo). Todas se podem deixar vazias; o que o fiscaldoo preenche então está na secção «O que o fiscaldoo preenche sozinho nos bancos e na caixa»:
+
+   | Tipo | Contas pedidas |
+   |---|---|
+   | Vendas, Compras, Operações diversas | **Conta principal** |
+   | Banco, Cartão de crédito | **Conta principal** e **Conta de pendentes** |
+   | Caixa | **Conta principal**, **Conta de pendentes**, **Conta de ganhos por diferenças de caixa** e **Conta de perdas por diferenças de caixa** |
+
+   Nas compras, deixar a **Conta principal** vazia dá ao diário a conta de despesas predefinida (no exemplo `6228 Outros`), e o assistente avisa: «Não escolheu a conta principal: o diário vai usar a conta por omissão da empresa, 311 Mercadorias. Escolha aqui outra se os lançamentos deste diário pertencem a uma conta diferente.» Nas vendas dá a conta de rendimentos predefinida (no exemplo `721 Serviço A`), com o mesmo aviso. A conta que o aviso nomeia (`311 Mercadorias`, `711 Mercadorias`) não é a que o diário recebe: confirme sempre a **Conta de Despesas Predefinida** na ficha do diário e, se não for a que quer, escolha a conta aqui, no passo 3.
+   ![Passo 3 de 3 com o campo Conta principal vazio e o botão Criar diário assinalado](/images/accounting-pt/diarios/82-04-passo3-conta-principal.png)
+5. Carregue em **Criar diário**. Abre-se a ficha do diário novo.
+
+</StepByStep>
+
+## Resultado esperado
+
+Abre-se a ficha do diário **Compras de serviços**, com **Tipo** «Compras», **Prefixo da sequência** `CSV` e **Tipo de transação SAF-T por omissão** «N — Normal». No separador **Lançamentos contabilísticos**, a **Conta de Despesas Predefinida** é `6228 Outros` e **Sequência de Notas de Crédito Dedicada** vem assinalada: as notas de crédito de fornecedor têm numeração própria. O diário já aparece ao lançar uma [fatura de fornecedor](/accounting-pt/fatura-de-fornecedor).
+
+![Ficha do diário Compras de serviços, com o tipo Compras, o prefixo CSV e a conta de despesas predefinida 6228 Outros](/images/accounting-pt/diarios/82-05-diario-criado.png)
+
+{/* Nota interna (docs-v3acor, NV3A-08 e NV3A-09): provado a 01/11 na base docs_demo_v3acor_test com o Responsável fiscal. Banco «Banco Poupança» (BPO) e caixa «Caixa da loja» (CXL) criados sem escolher contas; resultado conferido por leitura da ficha e do plano de contas. O campo do código tem maxlength 5 no ecrã. ACC-211 (#3619): rever a conta de pendentes `120001 Conta Transitória` e as contas de diferenças de caixa se a tesouraria mudar. */}
+{/* Nota interna (docs-cor6, V3A2-01 resolvido pelo VAT-074; defeito novo V3A2-18): o aviso do passo 3 nomeia a conta da empresa (311 / 711, "expense_account_id" / "income_account_id") mas o diário criado fica com 6228 (compras) e 721 (vendas); provado a 01/11 com os diários CSY e VSY. Rever quando houver cartão. */}
+
+## Notas importantes
+
+### O que o fiscaldoo preenche sozinho nos bancos e na caixa
+
+Se deixar as contas vazias no passo 3, o fiscaldoo preenche-as com efeito contabilístico:
+
+| Diário | Conta principal | Conta de pendentes | Ganhos / perdas por diferenças |
+|---|---|---|---|
+| **Banco** (exemplo «Banco Poupança», código `BPO`) | cria `122 Banco Poupança`, com o nome do diário | `120001 Conta Transitória` | `7888 Outros não especificados` (ganhos) e `6888 Outros não especificados` (perdas) |
+| **Caixa** (exemplo «Caixa da loja», código `CXL`) | cria `112 Caixa da loja` | `120001 Conta Transitória` | as mesmas `7888` e `6888` |
+
+![Ficha do diário Banco Poupança, com a conta bancária 122, a conta provisória 120001 e as contas de lucros e de perdas 7888 e 6888 assinaladas](/images/accounting-pt/diarios/82-06-diario-de-banco.png)
+
+Quem não escolhe contas fica, portanto, com uma conta nova no plano (uma por diário) e com contas de «Outros não especificados» para as diferenças de caixa e de banco. Antes de começar a lançar, confirme com o contabilista certificado se essas contas servem à empresa; as contas estão no separador **Lançamentos contabilísticos** da ficha do diário. <span className="fd-pending">Pendente de validação por contabilista certificado: contas de pendentes e de diferenças adequadas aos diários de banco e de caixa.</span>
+
+### O código é a numeração do diário
+
+O **Prefixo da sequência** da ficha é o código curto que escolheu. Escolha-o a pensar na leitura dos lançamentos e do SAF-T: o **Tipo de transação SAF-T por omissão** («N — Normal») vem do assistente e pode ser mudado na ficha. <span className="fd-pending">Pendente de validação por contabilista certificado: tipo de transação SAF-T adequado a cada diário.</span>
+
+## Problemas frequentes
+
+### «Há campos obrigatórios por preencher»
+
+- **Sintoma:** no Passo 2, ao carregar em **Seguinte** com o nome vazio, aparece «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** o **Nome do diário** é obrigatório.
+- **O que fazer:** escreva o nome e carregue em **Seguinte**.
+
+### «Já existe um diário com o código»
+
+- **Sintoma:** janela **Operação inválida** com «Já existe um diário com o código «CSV» em Empresa Demonstração, Lda. Os códigos de diário não se repetem: escolha outro.» A mensagem aparece logo no Passo 2, ao carregar em **Seguinte**.
+- **Causa:** o código é único em cada empresa.
+- **O que fazer:** carregue em **Fechar**, troque o código no Passo 2 e carregue de novo em **Seguinte**.
+
+### O código só aceita 5 caracteres
+
+- **Sintoma:** no Passo 2, o campo **Código curto** pára de aceitar letras ao chegar ao quinto caracter.
+- **O que fazer:** escolha um código com no máximo 5 caracteres (por exemplo `BPO` ou `CSV`).
+
+{/* Nota interna (v23-T, DOC-0082, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

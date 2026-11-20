@@ -1,0 +1,126 @@
+---
+id: penhoras
+slug: /payroll-pt/penhoras
+title: Como aplicar uma penhora de salário
+sidebar_label: Penhoras de salário
+sidebar_position: 1
+description: Registar a notificação de penhora do agente de execução ou da AT, ativá-la e confirmar no recibo quanto se retém e quanto fica ao trabalhador.
+keywords: [penhora, penhora de salário, penhora de salario, penhora de vencimento, penhora de ordenado, agente de execução, agente de execucao, execução fiscal, execucao fiscal, impenhorável, impenhoravel, art. 738, notificação de penhora, notificacao de penhora]
+doc_id: DOC-0218
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/processar-e-pagar/recibo-de-vencimento]
+---
+
+## Para que serve?
+
+Quando a empresa recebe uma notificação de penhora do salário de um trabalhador, tem de reter todos os meses a parte penhorável e entregá-la a quem a notificação indica. O fiscaldoo guarda a penhora, calcula em cada recibo a parte que se pode reter (deixando ao trabalhador o mínimo que a lei protege) e acompanha quanto falta reter até ao montante do crédito.
+
+## Quando utilizar?
+
+- Chegou uma notificação de penhora de um agente de execução (execução cível).
+- Chegou uma notificação de penhora da AT ou da Segurança Social (execução fiscal).
+- A penhora é por pensão de alimentos, que tem regras próprias.
+
+## Onde encontrar?
+
+**Salários › Preparar › Descontos e empréstimos › Penhoras** › **Novo**
+
+## Antes de começar
+
+- O **Processador de salários** regista a notificação (estado **Recebida**). **Validar** e **Ativar** são do **Administrador de Salários**: com o Processador, o fiscaldoo recusa (ver «Problemas frequentes»).
+- Tenha à mão a notificação: número do processo, exequente, agente de execução, data da notificação, montante do crédito e para onde depositar.
+- O contacto de quem recebe o dinheiro existe em **Contactos**. Se não existir, peça a quem tem o perfil **Contabilista** para o criar em **Contactos**, com **Novo**.
+- A rubrica **Penhora de retribuição** tem modelo de contabilização. Se não tiver, crie-o como explica [Como contabilizar o processamento](/payroll-pt/contabilizar-os-salarios), com **Conta a débito** 231290, **Conta a crédito** 2781 e **Parceiro** **Outro terceiro**.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Preparar › Descontos e empréstimos › Penhoras**. Sem penhoras, a lista diz: «Aqui aparecem as penhoras de vencimento dos trabalhadores; cria-se uma com «Novo», escolhendo o trabalhador.» Carregue em **Novo**.
+2. Em **Trabalhador**, escolha o trabalhador, por exemplo **Fábio Nuno Carvalho**.
+3. Escreva o **Número do processo** como vem na notificação, por exemplo `1234/26.0T8LSB`.
+4. Em **Tipo de crédito**, escolha **Dívida comum (art. 738.º/1 a 3)** ou **Alimentos (art. 738.º/4)**.
+5. Em **Território do trabalhador**, escolha **Continente**, **Açores** ou **Madeira**. Em **Execução**, escolha **Execução cível (CPC art. 779.º)** ou **Execução fiscal (CPPT art. 227.º)**.
+6. Escreva o **Exequente** (o credor) e o **Agente de execução**, e confirme a **Data da notificação**. Preencha **Dias para depositar** se a notificação o indicar. **Ordem fixada pelo agente** fica só de leitura na ficha: regista-se com **Alterar**, depois de **Validar**.
+7. Escreva o **Montante do crédito**, por exemplo `2000`. Se a notificação fixar um valor mensal, escreva-o em **Máximo por mês**. **Sem outro rendimento** vem marcado: desmarque-o se o trabalhador tiver outros rendimentos. Marque **Coeficiente 0,75 (rendimentos do art. 151.º do CIRS)** só se a notificação ou o trabalhador o comprovarem.
+8. Guarde. A penhora fica **Recebida** e **Ainda por reter** mostra o montante do crédito (2.000,00 €).
+   ![Penhora no estado Recebida, com o processo 1234/26.0T8LSB, dívida comum, execução cível e montante do crédito de 2.000,00 €](/images/payroll-pt/penhoras/01-penhora-recebida.png)
+9. Com o acesso **Administrador de Salários**, abra a penhora e preencha, em **Para onde vai o valor retido**, o **Contacto do beneficiário (contabilidade)** e a **Conta do depósito**. Se o contacto não existir, o campo responde **Sem registos**: peça a quem tem o perfil **Contabilista** para o criar em **Contactos**, com **Novo**.
+10. Carregue em **Validar** (passa a **Validado**) e depois em **Ativar**. A penhora fica **Ativo**, com os botões **Suspender**, **Alterar**, **Levantar** e **Extinguir**. Os botões mudam com o estado: em **Recebida**, só **Validar**; em **Validado**, **Ativar**, **Alterar** e **Levantar**. Em **Validado** o ecrã diz: «A penhora está validada mas ainda não está ativa, por isso os seus dados não se editam. Ative-a para começar a reter, altere-a com uma nova notificação do agente de execução, ou levante-a.» Em **Ativo** o ecrã diz: «A penhora está «Ativo», por isso os seus dados não se editam. Uma nova notificação do agente de execução regista-se com «Alterar» (montantes e data).»
+    ![Barra da penhora no estado Ativo, com os botões Suspender, Alterar, Levantar e Extinguir](/images/payroll-pt/penhoras/02-penhora-ativa.png)
+
+</StepByStep>
+
+**Exemplo.** Fábio Nuno Carvalho ganha 1.450,00 €. No recibo de novembro, a linha **Penhora de retribuição** reteve 349,50 € e **Como foi calculado?** mostra a conta:
+
+- Parte líquida: 1.450,00 € − IRS 21,00 € − Segurança Social 159,50 € = 1.269,50 €.
+- Dois terços da parte líquida (846,33 €) ficariam abaixo de um salário mínimo, por isso fica impenhorável o salário mínimo: 920,00 €.
+- Penhorável: 1.269,50 € − 920,00 € = 349,50 €. Como o crédito é de 2.000,00 €, retém-se tudo o que é penhorável.
+- O subsídio de alimentação (129,15 €) não entrou na parte líquida: o trabalhador recebeu 1.049,15 €, ou seja 920,00 € mais o subsídio.
+
+![Janela Como foi calculado? da penhora: parte líquida 1.269,50, impenhorável 920,00, penhorável e retido 349,50](/images/payroll-pt/penhoras/03-como-foi-calculada.png)
+
+**Exemplo com o subsídio de Natal no mesmo mês.** Quando o trabalhador tem dois recibos no mesmo mês (o do mês e o do lote de Natal), a penhora calcula-se sobre o total do mês: o mínimo impenhorável protege-se uma só vez e o segundo recibo desconta o que o primeiro já reteve. No exemplo, Fábio Nuno Carvalho tem o recibo de novembro (o de cima, com 349,50 € retidos) e o recibo do lote **Natal de novembro de 2026**, com 1.450,00 € de subsídio. Calculado depois do de novembro, o recibo de Natal reteve 496,83 € e **Como foi calculado?** mostra:
+- Parte líquida do mês: 2.900,00 € − IRS 42,00 € − Segurança Social 319,00 € = 2.539,00 €.
+- Impenhorável: dois terços da parte líquida, 1.692,67 € (fica entre um e três salários mínimos).
+- Penhorável no mês: 846,33 €. O recibo de novembro já reteve 349,50 €, por isso o de Natal retém 496,83 €. No mês, retêm-se 846,33 €.
+- O recibo de Natal fica com 772,67 € líquidos (1.450,00 € − 21,00 € − 159,50 € − 496,83 €).
+
+![Janela Como foi calculado? da penhora no recibo de Natal: parte líquida do mês 2.539,00, impenhorável 1.692,67, penhorável 846,33 e retido 496,83](/images/payroll-pt/penhoras/05-penhora-com-subsidio-de-natal.png)
+
+Um recibo de outro lote do mesmo mês só conta depois de calculado: calcule primeiro o lote do mês e depois o de Natal (ou volte a calcular o segundo). Um recibo já validado não se recalcula. Com um só recibo no mês, a conta é a do primeiro exemplo.
+
+{/* Nota interna (lote v23-BG, PAY-094 #3827, master 7cd24fcc9, docs_demo_v23bg_test, porta 8506, 11/11/2026): por RPC com o admin, só na cópia: contacto «Gabinete de Execuções do Norte, Lda», penhora 1234/26.0T8LSB de 2.000,00 € de Fábio Nuno Carvalho (Trabalhador F) validada e ativada, lotes «Salários de novembro de 2026» e «Natal de novembro de 2026» criados e calculados por esta ordem (nada validado). Recibo de novembro: Penhora de retribuição 349,50 €, líquido 1.049,15 €; recibo de Natal: 496,83 €, líquido 772,67 €. Como foi calculado? aberto por clique com um utilizador só com o perfil Processador de salários (captura 05). */}
+
+<span className="fd-pending">Pendente de validação por contabilista certificado ou jurista: limites do CPC art. 738.º (dois terços, mínimo de um salário mínimo e máximo de três), exclusão do subsídio de alimentação da parte líquida, regras da pensão de alimentos (n.º 4) e da execução fiscal (CPPT art. 227.º), e o cálculo sobre o total do mês quando há subsídio de Natal ou de férias no mesmo mês.</span>
+
+## No Enterprise
+
+No Odoo Enterprise, este artigo faz-se da mesma maneira: com o perfil **Processador de salários** e, para **Validar** e **Ativar**, o acesso extra **Administrador de Salários**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
+
+{/* Nota interna (lote EE-06, DOCS-073 #4142, DEC-1794, master ce51f2d47, 10/11/2026): conferido numa cópia Enterprise da demonstração (docs_ee_ee06_test, computador 2) com utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): Processador de salários em Salários › Preparar › Descontos e empréstimos › Penhoras; Acerto com credores só com o Administrador de Salários, nas duas edições. Menus e vistas comparados, perfil a perfil, com uma cópia Community do mesmo master (docs_demo_ee06_test). Ver reports/LOTE_EE-06.md. */}
+
+## Resultado esperado
+
+- A penhora está **Ativo** em **Salários › Preparar › Descontos e empréstimos › Penhoras**.
+- No recibo do mês seguinte, calculado no lote (ver [Como processar os salários do mês](/payroll-pt/processar-o-mes)), aparece a linha **Penhora de retribuição** na coluna **Descontos**, somada em **Outros descontos**.
+- **Ainda por reter** mostra o que falta reter do crédito (2.000,00 € enquanto nenhum recibo com a penhora está validado). Depois de **Validar** o recibo do exemplo, **Retido até agora** mostra 349,50 €, **Ainda por reter** 1.650,50 € e o separador **Montantes retidos** tem a linha, **Por depositar**.
+- Em **Contabilizar**, o lançamento credita 349,50 € na conta 2781, com o contacto do beneficiário. Pague em **Salários › Pagar › Acerto com credores**: a linha **Entrega a um terceiro** mostra esse contacto em **Pagar a**. <span className="fd-pending">Pendente de validação por contabilista certificado: a conta 2781 no modelo.</span> Pagar em **Acerto com credores** não muda o separador **Montantes retidos**: a linha continua **Por depositar** e abre só para leitura. Por agora, o **Administrador de Salários** não encontra no menu onde registar o depósito.
+
+## Notas importantes
+
+- **A penhora tem de estar Ativo para reter.** Uma penhora **Recebida** ou **Validado** ainda não mexe no recibo.
+- **Confirme Sem outro rendimento.** Com ele marcado, fica impenhorável pelo menos um salário mínimo, como no exemplo. Desmarcado, num trabalhador com 1.264,50 € de parte líquida, ficaram impenhoráveis só os dois terços (843,00 €) e retiveram-se 421,50 €.
+- **Prazos de depósito.** O valor retido entrega-se no prazo que a notificação fixa (**Dias para depositar**). <span className="fd-pending">Pendente de validação por contabilista certificado ou jurista: prazo legal de depósito quando a notificação não o fixa.</span>
+- **Várias penhoras.** A ordem entre penhoras do mesmo trabalhador segue a **Ordem fixada pelo agente**; a escolha da empresa para a ordem e o conflito está nas **Definições de salários** e está por validar pelo contabilista.
+
+{/* Nota interna (auditoria v18-B, master c643480c2, porta 8318): os defeitos P-11 e D26 já não se veem. Por clique, com utilizadores só de cada perfil: contacto criado pelo Contabilista, Sem registos com o Administrador de Salários, recusa ao Processador, Validar, Ativar, recibo, Contabilizar e Acerto com credores. Modelo de contabilização criado por RPC na cópia. Auditoria v20-JUN (master 0289754a8, porta 8326): as quatro junções do lote 41 vistas no ecrã, com utilizadores só de cada perfil. O depósito só se regista na lista «Valores retidos de penhoras» (botão «Registar o depósito»), que não está no menu do Administrador de Salários: defeito D2 de AUDITORIA_V20JUN. */}
+
+## Problemas frequentes
+
+### Ao guardar aparece «Há campos obrigatórios por preencher»
+
+- **Causa:** falta o **Trabalhador**, o **Número do processo** ou o **Exequente** (os campos ficam a vermelho).
+- **O que fazer:** preencha-os com os dados da notificação e guarde.
+
+### Ao validar aparece «Não pode alterar uma penhora»
+
+- **Mensagem:** «Operação inválida Não pode alterar uma penhora. O que aconteceu: este passo pertence a quem tem o acesso extra «Administrador de Salários», porque muda o que é retido a um trabalhador. Como resolver: peça ao administrador o acesso extra «Administrador de Salários», ou peça a um utilizador que o tenha.»
+  ![Recusa de Validar ao Processador de salários](/images/payroll-pt/penhoras/04-validar-recusado.png)
+- **Causa:** o perfil é **Processador de salários**, sem o acesso extra **Administrador de Salários**.
+- **O que fazer:** peça a quem tem o acesso extra **Administrador de Salários** que valide e ative a penhora, ou peça esse acesso ao administrador, que o dá nos **Ajustes avançados** do utilizador.
+
+{/* Nota interna (lote v23-AO, DOCS-069 #4052, master a67618a71, docs_demo_v23ao_test, 09/11/2026): UX-147. Recusa de Validar provocada por clique com um utilizador só com o perfil Processador de salários, numa penhora criada na cópia só para isso (processo 1234/26.0T8LSB, Fábio Nuno Carvalho, criada por RPC com esse utilizador); captura 04 refeita. */}
+
+### Carreguei em Ativar e a penhora ficou Validado
+
+- **Mensagem:** «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** falta o **Contacto do beneficiário (contabilidade)**, em **Para onde vai o valor retido**.
+- **O que fazer:** escolha o contacto e carregue de novo em **Ativar**. Se o campo responder **Sem registos**, peça a quem tem o perfil **Contabilista** para o criar. Em **Validado**, a **Conta do depósito** já não se edita: preencha-a antes de **Validar** (passo 9).
+
+{/* Nota interna (lote v23-AK, DOCS-069 #4052, master 7a3b55244, docs_demo_v23ak_test): «Administrador de Salários» escrito como acesso extra (Ajustes avançados › SALÁRIOS PT, valor do campo «Salários PT — Processar e administrar salários»; o campo Perfil tem 8 valores e não o inclui). Recusa de Validar provocada a 08/11/2026 por clique com um utilizador só com o perfil Processador de salários, numa penhora criada para isso (processo 1234/26.0T8LSB): a mensagem mudou («peça ao administrador o acesso…»); captura 04 refeita. */}

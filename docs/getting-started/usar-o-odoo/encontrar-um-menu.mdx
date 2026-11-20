@@ -1,0 +1,80 @@
+---
+id: encontrar-um-menu
+slug: /getting-started/encontrar-um-menu
+title: Como encontrar um menu pela pesquisa
+sidebar_label: Encontrar um menu pela pesquisa
+sidebar_position: 2
+description: Escreva uma palavra na caixa Pesquisar menu, na barra de cima, e abra qualquer ecrã do Odoo sem saber em que aplicação ou menu está.
+keywords: [encontrar um menu pela pesquisa, encontrar, menu, pela, pesquisa, pesquisar menu, procurar menu, onde está, onde esta, atalho, tecla barra, barra, não encontro o menu, nao encontro o menu]
+doc_id: DOC-0010
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 0289754a8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [getting-started/usar-o-odoo/ecra-inicial-por-perfil, troubleshooting/acesso-e-dados/nao-vejo-um-menu]
+---
+
+## Para que serve?
+
+A caixa **Pesquisar menu**, na barra de cima, leva a qualquer ecrã do Odoo a partir de uma palavra. Não precisa de saber em que aplicação nem em que menu ele está: o resultado mostra a aplicação e o caminho de cada menu encontrado.
+
+## Quando utilizar?
+
+- Sabe o nome do ecrã, mas não sabe em que aplicação está.
+- Uma entrada mudou de lugar dentro do seu menu.
+- Quer abrir um ecrã sem tirar as mãos do teclado.
+
+## Onde encontrar?
+
+Na barra de cima, à direita, a caixa **Pesquisar menu…**, com uma lupa. Está em todos os ecrãs e em todos os perfis.
+
+## Antes de começar
+
+A pesquisa também encontra as declarações e as listas que só se abrem a partir de um painel (por exemplo, a declaração do IVA das vendas à distância, escrevendo OSS ou balcão único), desde que o seu perfil as possa abrir.
+
+- Qualquer perfil tem a caixa. Os passos foram feitos com o perfil **Administrativo**.
+- A pesquisa só mostra os menus que o seu perfil pode abrir. O exemplo do artigo dá resultados diferentes noutro perfil.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Carregue na tecla **/** (barra), fora de um campo de texto, ou carregue na caixa **Pesquisar menu…**. O cursor passa para a caixa.
+2. Escreva uma ou mais palavras do nome do menu ou do caminho, por exemplo `clientes`. Não precisa de acentos nem de maiúsculas: `faturacao` e `Faturação` dão o mesmo resultado. Mas um erro de escrita não se corrige: `fatrua` dá «Nenhum menu encontrado.».
+3. Leia a lista que se abre por baixo. Tem um grupo por aplicação, com o ícone e o nome da aplicação, e cada menu aparece com o caminho a partir da aplicação, por exemplo **Faturar › Faturas de clientes**. O primeiro resultado vem marcado com um visto (✓).
+   ![Caixa Pesquisar menu com a palavra clientes e a lista de resultados: Ponto de venda com Ordens › Clientes, e Faturação com Clientes e artigos › Clientes, Faturar › Faturas de clientes e outros menus](/images/getting-started/encontrar-um-menu/01-resultados-da-pesquisa.png)
+4. Com as setas **↓** e **↑**, passe o visto para o menu que quer. As setas passam de um grupo para o seguinte.
+5. Carregue em **Enter** para abrir o menu marcado. Também pode carregar no menu com o rato.
+
+</StepByStep>
+
+## Resultado esperado
+
+O ecrã do menu abre, a lista fecha e a caixa fica vazia, pronta para a pesquisa seguinte. No exemplo, `clientes`, duas vezes **↓** e **Enter** abriram **Faturar › Faturas de clientes**, na aplicação **Faturação**.
+
+Alguns ecrãs têm um título diferente do nome do menu: **Receber › Por cobrar** abre o ecrã **Antiguidade de Saldos a Receber**.
+
+{/* Nota interna (DOCS-040, lote F2): artigo com video=sim. Lugar do vídeo VID-0010 (corrente própria DOCS-006): a secção «Vídeo demonstrativo» entra aqui quando o vídeo existir (guia editorial §3.1). */}
+
+## Notas importantes
+
+- **A pesquisa procura menus, não documentos.** Não encontra uma fatura nem um cliente pelo nome: para isso, abra a lista e use a pesquisa da própria lista.
+- **O nome da aplicação também conta.** `fatura` mostra a aplicação **Faturação** e todos os menus dela, porque todos têm «Faturação» no caminho. Para ir mais direto, escreva mais uma palavra.
+- **Cada grupo mostra no máximo 12 menus.** Quando há mais, a última linha diz, por exemplo, «+ 80 menus: escreva mais para afinar». Foi o que aconteceu com `contabilidade` no perfil **Contabilista**.
+- **Ctrl + K abre outra janela.** É a janela **Pesquisar comandos…** do Odoo, para comandos e atalhos, e não esta caixa. Para os menus, use a tecla **/**.
+
+## Problemas frequentes
+
+### Aparece «Nenhum menu encontrado.»
+
+- **Causa:** nenhum menu que o seu perfil pode abrir tem essas palavras no nome ou no caminho. Com o perfil **Administrativo**, `mapas` dá esta mensagem: os mapas da contabilidade não são deste perfil.
+- **O que fazer:** confirme que a palavra está bem escrita (`fatrua` não encontra nada; `fatura` sim) ou experimente outra palavra, mais curta ou sem plural, por exemplo `recibo` em vez de `recibos emitidos`. Se tem a certeza de que o menu existe, o seu perfil não o pode abrir: veja [Não vejo um menu ou um botão](/troubleshooting/nao-vejo-um-menu).
+
+### Carrego em / e aparece uma barra no campo onde estava
+
+- **Causa:** o cursor estava num campo de texto, por exemplo na pesquisa de uma lista. Aí, **/** escreve-se no campo.
+- **O que fazer:** apague a barra e carregue na caixa **Pesquisar menu…** com o rato, ou carregue primeiro num sítio vazio da página e depois em **/**.
+
+{/* Nota interna (DOCS-040, lote F2): a janela de Ctrl + K mostra «DICA — search for /menus e @conversas», meio em inglês (defeito LOT-F2-06). O guia antigo dizia que Ctrl + K levava à caixa Pesquisar menu: no ecrã de hoje não leva. Correção aud-v2f2 (NF2a-05): com o Administrativo a 30/10 na 8111, faturacao e Faturação dão os mesmos 10 menus da Faturação; fatrua dá «Nenhum menu encontrado.». */}

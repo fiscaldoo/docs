@@ -1,0 +1,95 @@
+---
+id: preparar-a-faturacao-certificada
+slug: /fiscal-core/preparar-a-faturacao-certificada
+title: Como preparar a empresa para emitir documentos certificados
+sidebar_label: Preparar a faturação certificada
+sidebar_position: 0
+description: O que tem de estar pronto antes da primeira fatura certificada — pacote ligado, dados da empresa, certificado do programa, ligação à AT, séries e perfis — e onde se confirma cada ponto.
+keywords: [preparar faturação certificada, preparar faturacao certificada, primeira fatura, começar a faturar, comecar a faturar, certificação, certificacao, certificado de software, certificado do programa, chave de assinatura de teste, prontidão, prontidao, comunicações com a AT, comunicacoes com a at, configurar a certificação, configurar a certificacao]
+doc_id: DOC-0011
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 0289754a8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [getting-started/primeira-configuracao/ativar-as-aplicacoes, fiscal-core/certificacao/series-documentais, administration/empresa/dados-da-empresa]
+---
+
+## Para que serve?
+
+Antes do primeiro documento certificado (fatura, nota de crédito, recibo, guia), a empresa tem de ter duas coisas prontas, que não são a mesma:
+
+- **Para emitir:** os dados fiscais da empresa, o certificado do programa e uma série ativa, com código de validação da AT, para cada tipo de documento e ano. Sem série, o fiscaldoo recusa confirmar o documento.
+- **Para comunicar à Autoridade Tributária e Aduaneira (AT):** os dados de acesso do subutilizador da AT, com os perfis de cada serviço. Sem eles, os documentos emitem-se na mesma, mas nada segue para a AT. Na demonstração, sem dados de acesso, as faturas da série `FT D26` e os recibos confirmaram-se normalmente.
+
+Este artigo é a lista dessas peças, pela ordem em que se preparam, com o sítio onde se confirma cada uma. Cada peça tem o seu artigo, para onde a lista o leva.
+
+## Quando utilizar?
+
+- Antes de emitir o primeiro documento certificado de uma empresa.
+- Quando junta uma empresa nova à base de dados. Uma empresa nova prepara-se primeiro com o assistente: [Como configurar uma empresa nova com o assistente](/getting-started/configurar-uma-empresa-nova).
+- Quando uma fatura não confirma (falta uma peça para emitir) ou não segue para a AT (falta uma peça para comunicar) e quer ver o que falta.
+
+## Onde encontrar?
+
+**Definições › fiscaldoo · Certificação**, na parte de baixo da página, nos grupos **Configurar a certificação: séries e chaves**, **Configurar a certificação: comunicação com a AT** e **Configurar a certificação: SAF-T**. Cada linha tem um botão **Abrir** que leva ao ecrã certo.
+
+## Antes de começar
+
+- Precisa de acesso às **Definições**, que só o administrador técnico vê. Sem elas, o perfil **Contabilista certificado** consulta o certificado do programa em **Contabilidade › Configurar › Faturação certificada › Séries fiscais**, no botão **Certificados de software**, e quem tem o acesso extra **Administração fiscal** abre as **Credenciais da AT** no mesmo grupo e os **Certificados de software** em **Contabilidade › Lançar › Início › O que há para fazer?**, grupo **Certificação do programa**. Veja «Problemas frequentes».
+- O pacote **Faturação certificada, IVA e SAF-T** está ligado: [Como ativar a faturação e as aplicações do fiscaldoo](/getting-started/ativar-as-aplicacoes).
+- Está a trabalhar na empresa certa: o nome aparece no canto superior direito. Se tem várias empresas, escolha-a aí antes de abrir as listas.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Confirme os dados fiscais da empresa (para emitir): nome, NIF, morada, país Portugal e regime de IVA. Saem em todos os documentos e no SAF-T. Veja [Como preencher os dados fiscais da empresa](/administration/dados-da-empresa).
+2. Abra **Definições › fiscaldoo · Certificação** e desça até **Configurar a certificação: séries e chaves**.
+   ![Grupo Configurar a certificação: séries e chaves com Séries fiscais, Certificados de software, Chave de assinatura e certificado de software de TESTE, Tipos de documento SAF-T (PT) e Verificar integridade](/images/fiscal-core/preparar-a-faturacao-certificada/01-atalhos-series-e-chaves.png)
+3. Em **Certificados de software**, carregue em **Abrir** e confirme que a lista tem o certificado do programa, com **Número do certificado** e **Válido desde** preenchidos. É esse número que sai impresso em cada documento («Processado por programa certificado n.º …/AT»). Uma empresa portuguesa nova herda o certificado já registado na instalação: não o registe outra vez. <span className="fd-pending">Pendente de validação no ecrã: a base de demonstração só tem um certificado fictício (n.º 9876); não se viu uma instalação real.</span>
+4. Não precisa de carregar nenhuma chave de assinatura. A chave pertence ao produtor do programa, fica instalada no servidor e nunca é guardada na base de dados nem entregue ao cliente. Numa empresa nova da demonstração, **Confirmar** e a verificação final do assistente diziam «Não há chave de assinatura para a empresa «Empresa Nova Exemplo, Lda».» e «Não há certificado de software da AT em vigor para «Empresa Nova Exemplo, Lda» em 29/10/2026.», porque a chave e o certificado de teste da demonstração foram criados só para a Empresa Demonstração. Se vir estas mensagens numa base de produção, fale com o suporte. <span className="fd-pending">Pendente de validação no ecrã: numa base de produção, com a chave e o certificado do produtor para todas as empresas, uma empresa nova não foi vista.</span>
+5. Para comunicar, volte a **Definições › fiscaldoo · Certificação** e, em **Configurar a certificação: comunicação com a AT**, abra **Prontidão das comunicações com a AT**. A lista mostra, por **Ambiente** (**Teste** e **Produção**) e por **Serviço** (**Séries**, **Faturas**, **Guias de transporte**), o **Estado**, **O que falta** e a **Ligação à AT**. Abra os grupos para ver as linhas.
+6. Resolva o que a coluna **O que falta** indicar. Sem dados de acesso, cada linha diz «Não há dados de acesso para o ambiente de produção da Autoridade Tributária. Sem eles não se pode enviar nada.» e a **Ligação à AT** fica «Desligada: nada é enviado à Autoridade Tributária». Os dados de acesso registam-se em **Credenciais da AT**, no mesmo grupo.
+7. Para emitir, crie e comunique à AT uma série para cada tipo de documento que vai emitir (fatura, fatura simplificada, fatura-recibo, nota de crédito, recibo, guia de transporte): [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais).
+8. Dê a cada pessoa o perfil com que vai trabalhar (por exemplo **Administrativo** para quem emite, **Contabilista certificado** para quem comunica séries). O perfil escolhe-se na ficha de cada utilizador, em **Definições › Utilizadores e empresas › Utilizadores**.
+
+</StepByStep>
+
+## Resultado esperado
+
+Para emitir:
+
+- **Certificados de software** tem o certificado do programa.
+- Em **Séries fiscais**, cada tipo de documento que a empresa emite tem uma série do ano com a coluna **Estado da série** em **Ativa** e a coluna **Código de validação** preenchida. Dentro da série, o mesmo código está no campo **Código de validação** e a barra de estado do formulário mostra **Ativa**.
+- A primeira fatura confirma com número, ATCUD (código único do documento) e código QR: [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada).
+
+Para comunicar:
+
+- Em **Prontidão das comunicações com a AT**, as linhas do ambiente que vai usar já não têm nada em **O que falta**. Na demonstração, com as credenciais de **Teste** guardadas, as três linhas de **Teste** estão em **Pronto** e as três de **Produção** continuam em **Falta alguma coisa**.
+
+## Notas importantes
+
+<HelpCallout type="atencao" title="A chave de teste não serve para documentos reais">
+Numa base de dados de teste aparece **Chave de assinatura e certificado de software de TESTE**, com o botão **Gerar**. O próprio ecrã avisa: «Só numa base de dados de teste: cria uma chave de assinatura e um certificado de software fictícios para se poder confirmar e imprimir a primeira fatura. Nunca vale para um documento real.» Nunca use uma base de testes para faturar a clientes.
+</HelpCallout>
+
+- O subutilizador da AT tem de ter, no Portal das Finanças, o perfil de cada serviço que vai usar: **WSE** para as séries, **WFA** para as faturas e **WDT** para as guias de transporte. O fiscaldoo não o consegue verificar, e a coluna **O que falta** lembra-o em cada linha.
+- **Ambiente** **Teste** e **Produção** preparam-se em separado. Os documentos reais comunicam-se no ambiente de produção.
+- A comunicação das faturas à AT tem prazo próprio, que não é o da emissão. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo legal de comunicação das faturas à AT.</span>
+- Cada empresa da base de dados prepara-se à parte: os dados, as séries e os dados de acesso são de cada uma. Numa empresa acabada de criar, **Confirmar** diz «O diário «Vendas» não serve para emitir documentos de venda.»: ainda não há diário certificado. O passo **4. Faturação certificada** do assistente cria os diários e as séries em rascunho; até a série estar ativa, **Confirmar** diz que a série «ainda não está ativa». Numa empresa preparada mas sem série para o ano da fatura, a mensagem traz o botão **Criar a série em falta**. As três mensagens estão em [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada).
+
+{/* Nota interna (DOCS-052 req. 45745, lote v18-C, master 0289754a8, docs_demo_v18c_test): por clique. Responsável fiscal: botão Certificados de software em Séries fiscais, lista com o n.º 9876 (sem modo programador). Utilizador só com Administração fiscal, criado por RPC na cópia: tem Credenciais da AT e Ver a prontidão; não tem Séries fiscais; Certificados de software só com modo programador, por isso saiu do artigo (defeito no relatório do lote). CERT-139: empresa nova criada por RPC, com o n.º 9876 logo na empresa. Só estes pontos foram revistos nesta ronda. Lote v22-C (master d83bdf7ae, docs_demo_v22c_test), por clique com utilizadores de um só perfil: Responsável fiscal, Configurar › Séries fiscais › Certificados de software abre a lista com o 9876 (desde 01/01/2026), sem Novo; Administração fiscal tem em Faturação certificada só Credenciais da AT. Nada muda no texto: o UX-119 continua fora de master. */}
+
+## Problemas frequentes
+
+### A Prontidão das comunicações com a AT diz «Falta alguma coisa»
+
+- **Causa:** falta um dos dados que a coluna **O que falta** descreve; o caso mais comum é não haver dados de acesso para esse ambiente.
+- **O que fazer:** carregue em **Resolver** na linha, ou registe os dados de acesso em **Credenciais da AT**: [Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). Depois abra de novo a lista.
+
+### Não encontro Certificados de software nem Credenciais da AT
+
+- **Causa:** estes atalhos estão nas **Definições**, que só o administrador técnico vê. Com outro perfil, **Definições** mostra «Não tem acesso a «Definições de configuração». Esta área é reservada ao administrador técnico do sistema. Não faz parte do trabalho do seu perfil: não tem nada a pedir.».
+- **O que fazer:** o perfil **Contabilista certificado** consulta o certificado em **Contabilidade › Configurar › Faturação certificada › Séries fiscais**, no botão **Certificados de software**. Quem tem o acesso extra **Administração fiscal** abre **Credenciais da AT**, no mesmo grupo; a prontidão abre-se no botão **Ver a prontidão** de cada credencial. Quem tem só esse acesso abre **Certificados de software** na primeira página da **Contabilidade**, **O que há para fazer?**, no grupo **Certificação do programa**: a lista mostra o certificado do programa (na demonstração, o n.º 9876, desde 01/01/2026), com o botão **Novo**. Não tem **Séries fiscais**. {/* Nota interna (DOCS-052 req. 46423, lote v23-I, master 5228a94bd, docs_demo_v23i_test): por clique com um utilizador criado só com Administração fiscal: Contabilidade abre O que há para fazer?, grupo Certificação do programa, ligação Certificados de software → lista com 9876, 01/01/2026, botão Novo (não carregado); Configurar sem Séries fiscais. UX-119 em master. */} Com outro perfil, peça ao administrador técnico que confirme os pontos 3 a 6. As séries (ponto 7) faz o **Contabilista certificado** em **Contabilidade › Configurar › Faturação certificada › Séries fiscais**.

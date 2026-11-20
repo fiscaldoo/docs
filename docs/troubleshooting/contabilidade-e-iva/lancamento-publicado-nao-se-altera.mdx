@@ -1,0 +1,100 @@
+---
+id: lancamento-publicado-nao-se-altera
+slug: /troubleshooting/lancamento-publicado-nao-se-altera
+title: Não consigo alterar ou apagar um lançamento já publicado
+sidebar_label: Lançamento publicado não se altera
+description: Porque um lançamento publicado não se edita nem se elimina, quando o fiscaldoo deixa voltar a rascunho, o que fica no histórico e quando a correção se faz com um estorno ou uma nota de crédito.
+keywords: [lançamento publicado, lancamento publicado, histórico do lançamento, historico, alterar lançamento, alterar lancamento, apagar lançamento, apagar lancamento, eliminar lançamento, eliminar lancamento, não se pode eliminar, tem de ser conservado, conservados durante 10 anos, voltar a rascunho, corrigir lançamento, corrigir lancamento, estornar, linhas bloqueadas, lançamento só de leitura, CIRC art. 123.º, MISC]
+doc_id: DOC-0376
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master d88933a51)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/dia-a-dia/estornar-um-lancamento, troubleshooting/faturacao-e-at/nao-consigo-alterar-um-documento-certificado, troubleshooting/contabilidade-e-iva/periodo-bloqueado]
+---
+
+## Sintoma
+
+- Abre um lançamento no estado **Publicada** e os campos e as linhas não deixam escrever; ou
+- tenta eliminá-lo e o fiscaldoo recusa.
+
+## Mensagem
+
+Ao eliminar um lançamento publicado a partir da lista **Lançamentos contabilísticos** (**Ações › Eliminar**, perfil **Contabilista**):
+
+> «O documento “*MISC/2026/00104 (Exemplo DOCS-036 encargos a pagar)*” tem de ser conservado até *31/12/2036*: os documentos fiscais são conservados durante 10 anos, salvo prazo superior (CIVA art. 52.º, CIRC art. 123.º) e não podem ser eliminados antes dessa data, nem por administradores. Se foi lançado por engano, estorne-o (ação «Estornar lançamento»): o estorno conserva os dois lançamentos.»
+
+![Janela Erro de Acesso: o lançamento OD/2026/00040 tem de ser conservado até 31/12/2036, não se pode eliminar e, se foi lançado por engano, estorna-se](/images/troubleshooting/lancamento-publicado-nao-se-altera/01-eliminar-publicado.png)
+
+A mensagem foi provocada na base de demonstração. A última frase manda estornar o lançamento: o estorno explica-se abaixo. <span className="fd-pending">Pendente de validação por contabilista certificado: o prazo de conservação que a mensagem cita (10 anos).</span>
+
+{/* Nota interna (DOCS-036, P-E1-07; auditoria v23-G, master 5228a94bd): a recusa de eliminar um lançamento geral já aconselha o estorno; vista no ecrã com o perfil Contabilista (OD/2026/00040, captura 01 refeita). */}
+
+No formulário de um lançamento publicado não há mensagem: as linhas não abrem para edição.
+
+## Causas verificadas
+
+- **Um lançamento publicado não se elimina.** O fiscaldoo recusa sempre, para todos os perfis. A contabilidade tem de ficar sem emendas nem apagamentos (CIRC, art. 123.º).
+- **Um lançamento publicado não se edita no formulário.** Para mudar uma linha, ou se volta o lançamento a rascunho (num lançamento que não seja um documento emitido pela empresa, num período aberto) ou se faz um estorno. Voltam a rascunho, por exemplo, um lançamento geral e uma fatura de fornecedor.
+- **Faturas, notas de crédito e recibos emitidos são documentos certificados**: não voltam a rascunho. Têm o seu artigo: [Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado).
+
+## O que confirmar
+
+1. O tipo de lançamento: um lançamento geral (diário de operações diversas, `MISC/…`) ou um documento de venda, compra ou pagamento.
+2. A data: se está num período fechado, nada se altera sem exceção ([Não consigo lançar num período bloqueado](/troubleshooting/periodo-bloqueado)).
+3. Se o lançamento já entrou numa declaração (DP IVA, SAF-T, retenções). Se entrou, a correção deve ficar à vista, com estorno.
+
+## Como resolver
+
+### Corrigir com um estorno (recomendado)
+
+O estorno cria um lançamento novo, com as linhas trocadas e o motivo, e deixa o erro e a correção à vista. Depois lança-se o lançamento certo. Veja [Como estornar um lançamento](/accounting-pt/estornar-um-lancamento).
+
+**Quem faz:** Contabilista.
+
+### Voltar a rascunho (em período aberto, nunca num documento emitido pela empresa)
+
+Numa fatura de fornecedor publicada, o botão **Mudar para Rascunho** está no topo do formulário. Na demonstração, com o perfil **Contabilista**, a fatura de fornecedor `FTF/2026/00040` (por pagar) passou a **Rascunho** sem pedir motivo, e **Confirmar** voltou a publicá-la com o mesmo número e as mesmas linhas.
+
+Num lançamento geral, o menu **Ações** do lançamento tem **Estornar lançamento** e **Voltar a rascunho**. Na demonstração, com o perfil **Contabilista**:
+
+1. O lançamento `MISC/2026/00104` («Exemplo DOCS-036 encargos a pagar», 29/10/2026) estava publicado com as linhas 6241 Eletricidade a débito 10,00 € e 2722 Credores por acréscimos de gastos a crédito 10,00 €.
+2. **Ações › Voltar a rascunho** pô-lo em **Rascunho** sem pedir motivo.
+3. As duas linhas passaram a 12,00 €: 6241 Eletricidade a débito 12,00 € e 2722 Credores por acréscimos de gastos a crédito 12,00 €.
+4. **Publicar** voltou a publicá-lo com o mesmo número, `MISC/2026/00104`, com as linhas de 12,00 € (conferidas no lançamento publicado).
+
+O histórico do lançamento, por baixo do formulário, guarda o rasto da alteração: «Publicada → Rascunho», uma entrada por cada linha alterada, com o **Saldo** antigo e o novo («10,00 € → 12,00 €» e «-10,00 € → -12,00 €»), e «Rascunho → Publicada», cada uma com o utilizador e a hora. Não guarda o motivo da alteração, e as entradas das linhas não dizem a conta.
+
+![Histórico do lançamento MISC/2026/00104: Publicada → Rascunho, duas linhas atualizadas de 10,00 € para 12,00 € e de -10,00 € para -12,00 € no Saldo, e Rascunho → Publicada, com o utilizador e a hora](/images/troubleshooting/lancamento-publicado-nao-se-altera/02-historico-voltar-a-rascunho.png)
+
+<HelpCallout type="atencao" title="Prefira o estorno">
+Voltar a rascunho e alterar muda o lançamento sem motivo: o histórico mostra os valores antigos, mas não porque mudaram. O estorno deixa à vista o erro, a correção e o motivo. Use voltar a rascunho só para um erro detetado logo, num lançamento que ainda não entrou em nenhuma declaração nem relatório entregue. Em caso de dúvida, estorne. <span className="fd-pending">Pendente de validação por contabilista certificado: quando é aceitável voltar a rascunho um lançamento publicado em vez de o estornar, e se o rasto do histórico (valores antigos, sem motivo) chega para o CIRC, art. 123.º, n.º 2, alínea b).</span>
+</HelpCallout>
+
+Num lançamento de um exercício fechado, **Voltar a rascunho** é recusado (perfil **Contabilista**):
+
+> «O exercício *2025* (*01/01/2025* a *31/12/2025*) está fechado: não pode alterar o lançamento *MISC/2025/00060 (Exemplo DOCS-036 eletricidade de dezembro de 2025)* datado de *15/12/2025*. Porquê: um exercício fechado fica bloqueado para as contas já aprovadas não mudarem. Como resolver: lance-o num exercício aberto ou, se for mesmo necessário, peça ao administrador uma exceção com motivo (Contabilidade › Fechar › Fecho do exercício › Datas de bloqueio e exceções, com o modo programador ativo).»
+
+{/* Nota interna (lote v23-Q, #3947, master 808f8ca1f, docs_demo_v23q_test, porta 8452): «peça ao administrador uma exceção» (antes «peça à Administração fiscal uma exceção») provocado no ecrã com um utilizador criado só com o perfil Contabilista (DEC-1777): lançamento de 15/12/2025, Publicar → Operação inválida; a variante «não pode alterar o lançamento» provocada pela integração (Voltar a rascunho do OD/2025/00049; no ecrã, o Contabilista tem Voltar a rascunho no menu Ações do lançamento e recebe a mesma recusa (auditoria docs-aud-v23q)). O resto da mensagem não mudou. */}
+
+{/* Nota interna (lote v23-G, DOCS-066, master 5228a94bd, docs_demo_v23g_test): provocadas de novo pela integração (RPC): Contabilista em Voltar a rascunho de um lançamento de 2025 (exercício fechado: muda só o fim do caminho, «com o modo programador ativo») e Administrativo ao eliminar a FT D26/30 (a frase da conservação mudou). */}
+
+O lançamento fica como estava. O que fazer está em [Não consigo lançar num período bloqueado ou num exercício fechado](/troubleshooting/periodo-bloqueado).
+
+## Resultado esperado
+
+- Com o estorno: o lançamento original fica como estava, e o estorno e o lançamento certo aparecem no razão.
+- Com voltar a rascunho: o lançamento volta a **Publicada**, com o mesmo número e as linhas corrigidas, e o histórico mostra os valores antigos.
+
+## Quando contactar o suporte
+
+- Um lançamento publicado por engano não se consegue estornar nem voltar a rascunho e não está num período fechado.
+- O lançamento foi criado por outra aplicação (depreciações, salários, apuramento do IVA) e não sabe se pode estorná-lo sem estragar essa aplicação.
+
+## Informação a enviar
+
+- O número do lançamento (por exemplo `MISC/2026/00104`) e a empresa.
+- O texto completo da mensagem, copiado do ecrã.
+- O que queria corrigir e o perfil com que entrou.

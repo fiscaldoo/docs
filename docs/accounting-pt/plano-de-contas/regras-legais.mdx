@@ -1,0 +1,128 @@
+---
+id: regras-legais
+slug: /accounting-pt/regras-legais
+title: Como o fiscaldoo aplica as regras legais em vigor em cada data
+sidebar_label: Regras legais com data
+sidebar_position: 8
+description: Taxas, limites e prazos da lei estão guardados no fiscaldoo como regras com data de início e de fim. O programa usa a que está em vigor na data de cada operação. Saiba ler essas regras e o que uma empresa pode ou não alterar.
+keywords: [regras legais, parâmetros legais, vigência, vigente desde, vigente até, taxa de IVA, Madeira, Açores, versão da empresa, norma imperativa, limite legal, versões da empresa face à lei, histórico das regras legais, modo de programador]
+doc_id: DOC-0083
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/plano-de-contas/diarios, accounting-pt/iva/taxas-e-isencoes-de-iva]
+---
+
+<HelpCallout type="nota" title="Fora do Administrador, estes ecrãs só aparecem com o modo de programador ativo">
+As regras legais chegam com o fiscaldoo e mudam com as atualizações: no dia a dia ninguém as abre. Por isso, o fiscaldoo esconde estes menus da barra aos outros perfis, para que os menus do dia a dia fiquem curtos. O Administrador vê-os sem mais nada; nos outros perfis, carregue em Ctrl+K, escreva `debug` e escolha **Ativar o modo de depuração (debug)**. Mesmo assim, os três menus só aparecem ao Administrador e ao **Contabilista certificado**; o **Auditor / ROC** vê **Regras legais** e **Histórico das regras legais**, e o Contabilista não vê nenhum. O modo de programador só mostra menus: não muda quem pode criar ou fechar regras (veja «Antes de começar»). Este artigo é para quem configura o fiscaldoo (Administrador ou consultor de implementação) e para quem confere que valor da lei o programa usa numa data.
+</HelpCallout>
+
+## Para que serve?
+
+A lei muda com o tempo: as taxas de IVA, os limites, os prazos e as tabelas têm uma data a partir da qual valem. O fiscaldoo não guarda esses valores dentro do programa. Guarda cada um como uma **regra legal**, com o valor, a data de início (**Vigente desde**), a data de fim (**Vigente até**, vazia se ainda não terminou) e a **Referência legal** de onde vem.
+
+Quando o programa precisa de um valor da lei, usa a regra **em vigor na data da operação**, e não a de hoje. Um documento de 2024 continua a ser calculado com a lei de 2024, mesmo que seja corrigido ou consultado hoje.
+
+Exemplo, lido na lista da demonstração: a taxa reduzida de IVA da Madeira tem duas regras.
+
+| Território | Valor | Vigente desde | Vigente até | Referência legal |
+|---|---|---|---|---|
+| Madeira | 5 % | 01/04/2012 | 30/09/2024 | Lei n.º 14-A/2012, de 30 de março |
+| Madeira | 4 % | 01/10/2024 | (sem fim) | DLR n.º 6/2024/M, de 29 de julho, art. 21.º |
+
+Uma operação na Madeira de 30/09/2024 usa 5 %; uma de 01/10/2024 usa 4 %. Para a mesma taxa, o Continente tem 6 % e os Açores 4 %, cada um na sua regra (campo **Território**).
+
+![Regra legal da taxa reduzida de IVA da Madeira: Âmbito IVA, Território Madeira, Unidade %, Vigente desde 01/04/2012, Vigente até 30/09/2024, Referência legal Lei n.º 14-A/2012, de 30 de março, Valor (número) 5](/images/accounting-pt/regras-legais/01-regra-legal-com-vigencia.png)
+
+## Quando utilizar?
+
+- Para **conferir** que valor da lei o fiscaldoo usa numa data (por exemplo, numa dúvida sobre uma taxa ou um prazo).
+- Para criar a **versão de uma empresa** quando a lei deixa a empresa melhorar um limite (ver «Versões de uma empresa»).
+- **Não** use estes ecrãs para mudar um valor nacional da lei: os valores nacionais chegam com as atualizações do fiscaldoo, carregados por quem mantém os dados legais nacionais.
+
+## Onde encontrar?
+
+Fora do Administrador, todos só com o modo programador ativo:
+- **Contabilidade › Configurar › Plano e regras legais › Regras legais e referencial › Regras legais**: abre com o filtro **Em vigor**, que mostra só as regras que valem hoje. Para ver as que já terminaram (por exemplo, a taxa reduzida de 5 % da Madeira) ou as que ainda vão começar, tire o filtro. Para saber que valor vale numa data, compare-a com **Vigente desde** e **Vigente até**. Na demonstração, a lista abre com 763 regras.
+- **Contabilidade › Configurar › Plano e regras legais › Regras legais e referencial › Histórico das regras legais**: todas as regras, incluindo as arquivadas.
+- **Contabilidade › Configurar › Plano e regras legais › Regras legais e referencial › Versões da empresa face à lei**: as versões de empresa que hoje contrariam a lei.
+
+## Antes de começar
+
+- **Consultar:** o Administrador abre os três ecrãs sem o modo de programador; com ele ativo, o **Contabilista certificado** também, e o **Auditor / ROC** abre **Regras legais** e **Histórico das regras legais**. O Contabilista e o Administrativo não veem estes menus (veja a caixa no início).
+- **Criar uma versão de empresa ou fechar uma regra:** Contabilista certificado ou Administrador. O Contabilista é recusado (ver «Problemas frequentes»).
+
+## Como funciona
+
+### O que se lê numa regra
+
+- **Âmbito**: a área (por exemplo **IVA**, **Salários**, **SAF-T**, **IES**, **Ativos**).
+- **Chave**: o nome interno do valor (por exemplo `RATE_RED`, a taxa reduzida de IVA). As chaves estão em inglês porque são lidas pelo programa.
+- **Empresa**: vazia numa regra nacional; preenchida numa versão de uma empresa.
+- **Território**: Continente, Açores ou Madeira, quando a lei é diferente em cada um.
+- **Vigente desde** / **Vigente até**, **Referência legal** e **URL da fonte**.
+- **Valor (texto)**, **Valor (número)** ou **Valor (JSON)**: o valor da regra. No **Valor (JSON)** de uma regra nacional pode aparecer a sua natureza: `ABSOLUTE` quer dizer obrigatória; `RELATIVE_FAVOURABLE` quer dizer um limite que a empresa pode melhorar.
+
+### Uma regra em vigor não se reescreve
+
+- Para a mesma chave, empresa, território e data **nunca** há duas regras em vigor.
+- Numa regra cuja data de início já passou, só se pode mudar o **Vigente até** e arquivá-la. Para um valor novo, feche a regra antiga em **Vigente até** e crie uma regra nova com a nova data de início. É assim que o histórico fica certo para as operações antigas.
+- Uma regra ativa não se elimina: arquiva-se primeiro. A recusa diz: «… está(ão) ativa(s) — arquive primeiro (desative o registo) antes de eliminar. …»
+
+### Versões de uma empresa
+
+Uma regra com a **Empresa** preenchida vale só para essa empresa e, nas datas em que vigora, toma o lugar da regra nacional. O que a empresa pode fazer depende da natureza da regra nacional:
+
+| Natureza | O que a empresa pode fazer | Exemplo da demonstração |
+|---|---|---|
+| Obrigatória | Nada: não há versões de empresa | Taxas de IVA (`RATE_NOR`, `RATE_RED`, `RATE_INT`) |
+| Limite máximo ou mínimo | Só melhorar o limite, nunca ultrapassá-lo | Prazo de emissão da fatura (`INVOICE_ISSUANCE_DEADLINE_BUSINESS_DAYS`): máximo legal de 5 dias úteis (CIVA art. 36.º n.º 1 alínea a)); a empresa pode usar 3, não 10 |
+| Livre | Escolher o seu valor | As regras sem natureza declarada |
+
+A verificação é feita ao gravar. Se a lei mudar depois e uma versão de empresa passar a contrariá-la, essa versão aparece em **Versões da empresa face à lei**. Enquanto a contrariar, o programa ignora essa versão e usa o valor legal. Na demonstração a lista está vazia: «Nenhuma versão de empresa contraria a lei.»
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a natureza (obrigatória, limite ou livre) atribuída a cada regra nacional e os valores carregados para cada território.</span>
+
+## Notas importantes
+
+- **A data que conta é a da operação.** Corrigir hoje um documento antigo não o passa para a lei de hoje.
+- **O modo de programador não muda permissões.** Um perfil que não pode criar regras continua sem poder, mesmo a ver o menu.
+
+## Problemas frequentes
+
+### «… já está(ão) em vigor (vigência iniciada em …). Não é possível alterar o âmbito, a chave, a empresa ou o valor de uma regra já vigente…»
+
+- **Causa:** tentou mudar o valor (ou o âmbito, a chave, a empresa, o território ou o início) de uma regra que já começou. A mensagem completa: «… numa regra já em vigor só a data de fim e o arquivamento podem ser alterados.»
+- **O que fazer:** se a regra é uma versão da sua empresa (**Empresa** preenchida), preencha **Vigente até** na regra atual e crie uma regra nova com a nova data de início. Se é uma regra nacional (**Empresa** vazia), não a feche nem crie outra: os valores nacionais chegam com as atualizações do fiscaldoo. O Contabilista certificado consegue fechar uma regra nacional, e isso afeta todas as empresas da base de dados.
+
+### «Já existe uma regra vigente para «IVA / …» nesse período…»
+
+- **Sintoma:** «Já existe uma regra vigente para «IVA / CASH_VAT_MAX_MONTHS_UNPAID» nesse período (de 01/10/2013 a sem termo, refª DL 71/2013, anexo, art. 2.º n.º 3 a)). Nunca pode haver duas regras vigentes para a mesma chave, empresa, território e data — ajuste as datas ou arquive a regra anterior.»
+- **O que fazer:** feche a regra anterior em **Vigente até** antes de criar a nova, ou corrija as datas.
+
+### «… é uma norma imperativa da lei que nenhuma empresa pode alterar…»
+
+- **Sintoma:** ao criar uma versão de empresa da taxa normal de IVA: ««RATE_NOR» é uma norma imperativa da lei que nenhuma empresa pode alterar (não é um limite que se possa melhorar). …»
+- **O que fazer:** não crie a versão. Se o valor nacional estiver desatualizado, peça a atualização dos dados legais nacionais.
+
+### «O valor da empresa … é pior do que o máximo legal…»
+
+- **Sintoma:** com 10 dias no prazo de emissão da fatura: «O valor da empresa 10 de «INVOICE_ISSUANCE_DEADLINE_BUSINESS_DAYS» é pior do que o máximo legal 5 (CIVA art. 36.º n.º 1 alínea a), desde 16/02/2019). O que aconteceu: a lei só permite à empresa melhorar este valor, nunca ultrapassar o limite. Como resolver: indique um valor igual ou inferior ao legal, ou não crie a versão da empresa.»
+- **O que fazer:** escreva um valor igual ou abaixo do máximo legal (no exemplo, 5 ou menos), ou não crie a versão.
+
+### «A data de fim de vigência não pode ser anterior à data de início.»
+
+- **Causa:** o **Vigente até** da regra é anterior ao **Vigente desde**.
+- **O que fazer:** corrija uma das duas datas. Para fechar uma regra, o **Vigente até** é o dia anterior à entrada em vigor da regra nova.
+
+{/* Nota interna (lote v23-AH, DOCS-069 #4052, master 97b34fac3, docs_demo_v23ah_test): mensagem provocada por RPC com o administrador (regra nova Limiar de exemplo, 01/01/2027 a 31/12/2026; nada gravado). Vinha do guia congelado Operação/parametros-legais-versionados.md. */}
+
+### «Não tem permissão para criar «Regra legal (Localização PT)»…»
+
+- **Causa:** o perfil (por exemplo, Contabilista) só pode consultar. A mensagem indica quem pode alterar.
+- **O que fazer:** peça a alteração a um desses perfis ou ao Administrador.
+
+{/* Nota interna (DOCS-046 v5-ACC 2.ª ronda, DOC-0083, master 6fb7ee1d4, base docs_demo_v5acc_test): menus com e sem modo de programador lidos no ecrã com o admin (sem modo: não aparecem); lista Regras legais (filtro Em vigor, 855), pesquisa RATE_RED sem o filtro e ficha da regra 701 no ecrã; Versões da empresa face à lei vazia (título «Versões de empresa contra a lei», V5ACC-04) e Histórico no ecrã. Recusas por RPC, sem gravar nada: alterar o valor da regra 690 (admin e Gestor de contabilidade), regra sobreposta (admin), versão de empresa de RATE_NOR (admin e Gestor de contabilidade, empresa 4), prazo 10 contra máximo 5 (admin), criar como Contabilista, eliminar a regra 690 ativa (admin). Números sem formato e «inferior a o legal» na recusa do limite: V5ACC-05. */}

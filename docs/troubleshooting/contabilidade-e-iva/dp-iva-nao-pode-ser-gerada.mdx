@@ -1,0 +1,107 @@
+---
+id: dp-iva-nao-pode-ser-gerada
+slug: /troubleshooting/dp-iva-nao-pode-ser-gerada
+title: A declaração periódica de IVA não pode ser gerada ou submetida
+sidebar_label: DP IVA não pode ser gerada
+description: As recusas da declaração periódica de IVA agrupadas pela causa (estado, verificações bloqueantes, dados em falta, valores do sistema) e o que fazer em cada uma.
+keywords: [DP IVA, declaração periódica de IVA, declaracao periodica de IVA, DP IVA não gera, DP IVA nao gera, DP IVA recusada, não pode avançar, nao pode avancar, verificações bloqueantes, verificacoes bloqueantes, só uma declaração em rascunho pode ser apagada, não tem IVA a pagar, nao tem IVA a pagar, substituir declaração, motivo da substituição, campo 93, campo 61, retroceder a rascunho, apagar declaração de IVA, apagar declaracao de IVA]
+doc_id: DOC-0349
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 25a465133)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/iva/declaracao-periodica-de-iva, accounting-pt/iva/apuramento-do-iva, troubleshooting/contabilidade-e-iva/periodo-bloqueado]
+---
+
+## Sintoma
+
+Um botão da declaração de IVA (**Calcular**, **Validar**, **Registar submissão**, **Registar pagamento**, **Substituir**, **Eliminar**) abre **Operação inválida** ou não faz o que se esperava. A declaração fica no estado em que estava.
+
+O caminho normal está em [Como preparar e entregar a declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva). Os exemplos são as declarações de 2026 da Empresa Demonstração, Lda, abertas em **Contabilidade › Declarar › IVA › O que há para fazer com o IVA?** › **Listas de apoio** › **Registo das declarações de IVA**, com um utilizador com o perfil **Contabilista certificado**.
+
+## Mensagem
+
+{/* Exceção CC campos 93, 61 e 95: texto copiado do ecrã, dentro da mensagem do produto; a regra fiscal tem a marca em «Como resolver». */}
+
+**Eliminar uma declaração que não está em rascunho** (outubro de 2026; na demonstração vem em **Rascunho**: carregue primeiro em **Calcular** e espere que a barra do topo mostre **Calculada**; só depois **Ações › Eliminar** e, na confirmação, **Eliminar**. Em **Rascunho**, o **Eliminar** apaga mesmo a declaração):
+
+> «Só uma declaração de IVA em rascunho pode ser apagada. O que aconteceu: já foi calculada ou está mais adiantada e fica no registo. Como resolver: retroceda-a primeiro a rascunho (administrador).»
+
+{/* Nota interna (lote v23-G, DOCS-066, master 5228a94bd, docs_demo_v23g_test): provocada de novo pela integração (RPC) com um utilizador só com o perfil Contabilista (apagar a declaração validada de 2026/9): o texto não mudou. */}
+
+![Janela Operação inválida: só uma declaração de IVA em rascunho pode ser apagada](/images/troubleshooting/dp-iva-nao-pode-ser-gerada/01-so-rascunho-se-apaga.png)
+
+**Eliminar uma declaração já entregue** (janeiro de 2026, **Submetida**, **Ações › Eliminar**):
+
+> «A declaração de IVA «Empresa Demonstração, Lda — 2026/1 (v1)» foi entregue à Autoridade Tributária e não pode ser eliminada. O que aconteceu: uma declaração submetida, aceite ou paga é o que foi declarado e fica no registo. Como resolver: corrija-a com uma declaração de substituição (botão «Substituir»); a original fica.»
+
+![Janela Operação inválida: a declaração de janeiro de 2026 foi entregue à Autoridade Tributária e não pode ser eliminada](/images/troubleshooting/dp-iva-nao-pode-ser-gerada/04-entregue-nao-se-apaga.png)
+
+A mesma recusa aparece com o administrador. Na demonstração estão **Submetida** as declarações de janeiro a maio e a de agosto de 2026, e **Paga** as de junho e julho; a de setembro de 2026 vem **Validada**. As de outubro, novembro e dezembro de 2026 não vêm na base: o produto cria-as sozinho, em **Rascunho**, pouco depois de arrancar (todos os dias garante uma declaração por cada período do ano). Se a de outubro ainda não estiver no **Registo das declarações de IVA**, espere um ou dois minutos e abra a lista outra vez.
+
+**Substituir sem motivo** (numa declaração **Submetida**, por exemplo a de agosto de 2026, **Substituir**; a de setembro de 2026 vem **Validada** e ainda não tem este botão): a janela **Substituir a declaração de IVA** diz «A declaração entregue fica como estava. É criada uma nova versão do mesmo período, em rascunho.» e **Criar substituição** com o **Motivo da substituição** vazio dá «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+
+**Exportar o ficheiro de uma declaração que não passaria na validação** (outubro de 2026, com dois lançamentos do período por publicar; na demonstração vem em **Rascunho**: carregue em **Calcular** e, já **Calculada**, em **Exportar ficheiro da DP IVA**, com um utilizador só com o perfil **Contabilista certificado**):
+
+> «O ficheiro não foi criado: a declaração «Empresa Demonstração, Lda — 2026/10 (v1)» não passaria na validação (1 ponto(s) a bloquear). O que aconteceu: um ficheiro levado ao Portal não pode ter o que a validação recusa. - O período tem 2 lançamento(s) por publicar, por exemplo Rascunho de lançamento (Reconhecimento de FTF/2026/00045 (2026-10)), Rascunho de lançamento (Diferimento de FTF/2026/00045). O que aconteceu: quando forem publicados alteram a declaração, por isso a submissão fica bloqueada enquanto existirem. Como resolver: publique-os ou cancele-os e calcule outra vez.»
+
+Cada ponto a bloquear traz o seu «Como resolver». Veja também «Verificações bloqueantes», em «Como resolver».
+
+## Causas verificadas
+
+As recusas agrupam-se em cinco causas. Os botões que aparecem dependem do estado: **Validada** mostra **Exportar ficheiro da DP IVA** e **Registar submissão** (e **Retroceder a rascunho**, só ao administrador); **Submetida** mostra **Substituir**, **Exportar ficheiro da DP IVA**, **Registar a entrega à AT**, **Registar aceitação** e **Fechar período de IVA**, e **Registar pagamento** só quando há IVA a pagar (na de agosto de 2026, **Submetida** e sem IVA a pagar, não aparece; a de setembro de 2026, com 440,68 € em **Imposto a entregar ao Estado**, vem **Validada** na demonstração e por isso mostra só **Exportar ficheiro da DP IVA** e **Registar submissão**); **Paga** mostra **Estornar pagamento** em vez de **Registar aceitação** e **Registar pagamento**.
+
+1. **A declaração não está no estado certo para o passo.** Só se apaga em rascunho; só se valida depois de **Calcular**; só se submete depois de **Validar**; não se calcula de novo depois de validada; o pagamento regista-se depois da entrega e só se há IVA a pagar: sem IVA a pagar, o botão **Registar pagamento** não aparece.
+2. **A declaração já foi validada ou entregue.** Uma declaração entregue não se apaga nem volta a rascunho. O que a alimenta (a classificação intracomunitária de um documento, as linhas dos anexos 40 e 41, uma prova de exportação) deixa de se alterar. Corrige-se com uma declaração de substituição.
+{/* Exceção CC campo 95: «Editar o campo 95» é o nome do botão no ecrã, não uma regra fiscal. */}
+
+3. **Os valores são do sistema.** Os campos, as verificações e o registo de edições não se escrevem à mão; usam-se os botões (**Calcular**, **Correr verificações**, **Editar o campo 95**).
+4. **Falta um motivo, uma data ou um dado obrigatório**: o motivo da substituição ou do retrocesso, a data do pagamento, o contabilista certificado, o NIF da empresa.
+5. **Há verificações bloqueantes**: lançamentos do período por publicar, dados que mudaram depois de calcular, o contabilista certificado em falta. Enquanto houver uma, também **Exportar ficheiro da DP IVA** recusa, mesmo numa declaração só calculada: a mensagem lista cada bloqueio e diz como resolver. Se a contabilidade mudou depois de calcular, calcule outra vez. Declarações já entregues e ficheiros já gerados não mudam; a declaração de substituição segue a mesma regra. Estas três estão em [Declaração periódica de IVA, Problemas frequentes](/accounting-pt/declaracao-periodica-de-iva), com a mensagem de cada uma.
+
+<span className="fd-pending">Pendente de validação no ecrã: a falta da data do pagamento, as alterações a documentos e anexos de uma declaração validada e as recusas de mapeamento dos campos não foram provocadas (as outras recusas desta lista estão na secção «Mensagem», em «Como resolver» e em «Problemas frequentes» do artigo da declaração).</span>
+
+## O que confirmar
+
+1. O estado da declaração (na barra do topo) e a versão (**v1**, **v2**…) no nome.
+2. Em **Quadro 06 — campos**, se o campo 93 (IVA a pagar) tem valor antes de registar um pagamento. <span className="fd-pending">Pendente de validação por contabilista certificado: correspondência do campo 93 com o IVA a pagar do período.</span>
+3. O separador **Verificações**: cada linha **Bloqueio** impede validar e submeter.
+
+## Como resolver
+
+- **Apagar uma declaração calculada ou validada, ainda não entregue:** só o administrador (ou quem tem o acesso extra **Administração fiscal**) a pode retroceder a rascunho. Com o perfil **Contabilista certificado**, o botão **Retroceder a rascunho** não aparece. Na demonstração, com o administrador, numa declaração **Validada** (a de setembro de 2026, versão 1):
+  1. Carregue em **Retroceder a rascunho**. Abre-se a janela **Retroceder a rascunho**, com a **Declaração** e o **Motivo**.
+  2. Escreva o motivo e carregue em **Retroceder a rascunho**. Sem motivo, a janela dá «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+     ![Janela Retroceder a rascunho da declaração de setembro de 2026, com o Motivo preenchido e o botão Retroceder a rascunho assinalado](/images/troubleshooting/dp-iva-nao-pode-ser-gerada/03-retroceder-a-rascunho.png)
+  3. A declaração fica **Rascunho**, com **Calcular**. Para a apagar, use **Ações › Eliminar**.
+- **Uma declaração entregue não se apaga nem retrocede: substitui-se.** Numa declaração **Submetida**, **Retroceder a rascunho** já não aparece (nem ao administrador) e **Eliminar** é recusado (mensagem acima). Use **Substituir**.
+- **Registar o pagamento:** o botão só aparece quando a declaração tem IVA a pagar. Numa declaração com crédito ou equilibrada, não há nada a registar: o crédito passa para o período seguinte ou para o pedido de reembolso. <span className="fd-pending">Pendente de validação por contabilista certificado: reporte do crédito no campo 61 do período seguinte ou pedido de reembolso (campo 95) e condições do reembolso (CIVA, art. 22.º).</span>
+- **Substituir:** escreva o **Motivo da substituição** e carregue em **Criar substituição**. A declaração entregue fica como estava e a nova versão abre em rascunho; siga-a desde **Calcular**, como em [Substituir uma declaração entregue](/accounting-pt/declaracao-periodica-de-iva).
+- **Verificações bloqueantes:** corrija o ponto indicado, carregue de novo em **Calcular** e depois em **Correr verificações**.
+
+## Resultado esperado
+
+- A declaração avança para o estado seguinte (por exemplo, de **Calculada** para **Validada**).
+- Na lista **Declarações de IVA (DP IVA)**, cada período tem a sua última versão com o estado certo.
+
+## Quando contactar o suporte
+
+- A declaração está no estado que a mensagem pede e o botão continua a recusar.
+- A declaração tem IVA a pagar no **Quadro 06 — campos** e o botão **Registar pagamento** não aparece, depois de **Registar submissão**.
+
+## Informação a enviar
+
+- A empresa, o período e a versão da declaração.
+- O texto completo da mensagem, copiado do ecrã.
+- Uma captura do separador **Verificações**.
+- O perfil com que entrou.
+
+{/* Nota interna (DOCS-063 #3853, lote v23-N, master dbbb5ac5c, docs_demo_v23n_test, porta 8442): DPIVA-107 provocado por clique com um utilizador só com o grupo Responsável fiscal (não é valor do campo Perfil): outubro de 2026, Calcular, Exportar ficheiro da DP IVA. A mensagem diz «(administrador)» onde o bilhete dizia «Administração fiscal»: vale o ecrã. */}
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): as duas mensagens provocadas por clique com um utilizador só com o perfil Contabilista certificado: outubro de 2026 (Rascunho na base) Calcular, Exportar ficheiro da DP IVA e Ações › Eliminar. A recusa de apagar diz hoje «(administrador)». A do ficheiro acaba em «…o que a validação recusa.», sem o «Como resolver» que o grupo Responsável fiscal sozinho recebia (reportado). Outubro de 2026 ficou Calculada na cópia */}
+
+{/* Nota interna (lote v23-AU, depois do comboio 181 com o UX-149 (4), master 09afad64d, docs_demo_v23au_test, porta 8504): por clique, com um utilizador criado por RPC só com o perfil Contabilista certificado: outubro de 2026 (Rascunho na base) Calcular (a 1.ª vez «A preparar os valores dos períodos anteriores…», a 2.ª, um minuto depois, Calculada) e Exportar ficheiro da DP IVA: a recusa citada, que acaba no «Como resolver» do ponto. Nenhum botão destrutivo clicado. Outubro de 2026 ficou Calculada na cópia. */}
+
+{/* Nota interna (lote v23-AV, master 25a465133, docs_demo_v23av_test, porta 8504, 09/11/2026): na base-mãe, setembro de 2026 vem Validada (440,68 € em Imposto a entregar ao Estado; botões Exportar ficheiro da DP IVA e Registar submissão), agosto Submetida sem Registar pagamento, junho e julho Paga, janeiro a maio Submetida; outubro, novembro e dezembro de 2026 aparecem em Rascunho (criadas pelo OdooBot pouco depois de a instância arrancar). Por clique, com um utilizador só com o perfil Contabilista certificado: outubro Calcular → Calculada à primeira (nenhum botão destrutivo nela). As três recusas foram provocadas por clique numa declaração criada na cópia só para isso (Novo, Ano 2025, Período 12, Guardar, Calcular): Calculada › Ações › Eliminar deu a recusa de rascunho (captura 01 refeita: diz hoje «(administrador)»); depois Validar e Registar submissão (não comunica com a AT): Eliminar deu a recusa de entregue (com «2025/12 (v1)» no nome; a captura 04, de janeiro, fica por leitura, porque não se clica em Eliminar numa declaração da base) e Substituir com o Motivo vazio deu «Há campos obrigatórios por preencher…». Com o administrador, na mesma declaração Submetida: sem Retroceder a rascunho e o Eliminar recusado com a mesma mensagem. */}

@@ -1,0 +1,101 @@
+---
+id: funcoes-afins-e-categoria-superior
+slug: /payroll-pt/funcoes-afins-e-categoria-superior
+title: Como pagar funções afins ou de categoria superior
+sidebar_label: Funções afins e categoria superior
+sidebar_position: 12
+description: Registar o exercício temporário de outra função e pagar no recibo a diferença para a retribuição da categoria superior.
+keywords: [pagar, funções, funcoes, afins, categoria, superior, funções afins e categoria superior, funcoes afins e categoria superior, diferencial de categoria superior, substituição, substituicao, art. 118, art. 267]
+doc_id: DOC-0216
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/configurar/contrato-coletivo, payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/processar-e-pagar/corrigir-um-processamento]
+---
+
+## Para que serve?
+
+Guarda o período em que um trabalhador exerce outra função. Se a função tem uma retribuição mais alta, o fiscaldoo paga a diferença no recibo, na proporção dos dias.
+
+## Quando utilizar?
+
+- Quando um trabalhador faz, durante um período, funções ligadas às suas ou de uma categoria com retribuição mais alta.
+- Não use para uma promoção definitiva: nesse caso, altere o salário como explica [Como alterar o salário](/payroll-pt/alterar-o-salario).
+
+## Onde encontrar?
+
+No painel **Salários › Preparar › O que há para fazer este mês?**, **Listas de apoio**, **Funções afins e categoria superior**. Na ficha do trabalhador, em **⋮**, com o mesmo nome.
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador.
+- Sabe as datas, quem decidiu e, para a categoria superior, a retribuição mensal dessa categoria.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Funções afins e categoria superior** e carregue em **Novo**. Escolha o **Trabalhador**.
+2. Em **Tipo**, escolha:
+   - **Funções afins (art. 118.º/2): sem alteração da retribuição**: fica só o registo do período;
+   - **Categoria superior durante um período (art. 267.º)**: aparece **Retribuição mensal da categoria superior**, e o recibo paga a diferença.
+3. Em **Motivo ou decisão**, escreva quem decidiu e porquê. Indique também a categoria profissional exercida: hoje, a lista **Categoria exercida** mostra categorias de rubrica, por exemplo **Vencimento**, e não categorias profissionais.
+4. Preencha **De** e **Até**. Sem **Até**, o registo continua nos meses seguintes. Na categoria superior, preencha também **Categoria exercida** e **Retribuição mensal da categoria superior**. Carregue em **Guardar**.
+   ![Categoria superior de 01/11/2026 a 15/11/2026, com 1.500,00 € de retribuição mensal](/images/payroll-pt/funcoes-afins-e-categoria-superior/01-categoria-superior.png)
+5. No recibo do mês, carregue em **Calcular**. A linha **Diferencial de categoria superior** entra sozinha.
+   ![Linhas do recibo de novembro: Retribuição base de 1.150,00 €, Diferencial de categoria superior de 175,00 € e Subsídio de alimentação](/images/payroll-pt/funcoes-afins-e-categoria-superior/02-recibo-com-a-diferenca.png)
+
+</StepByStep>
+
+**Exemplo.** Um trabalhador com 1.150,00 € de retribuição base substitui, de 01/11/2026 a 15/11/2026, numa categoria com 1.500,00 €.
+
+(1.500,00 € − 1.150,00 €) × 15 dias ÷ 30 dias do mês = **175,00 €**
+
+**Como foi calculado?** explica: «Categoria superior exercida no mês (Vencimento, retribuição mensal 1.500,00): (retribuição superior - retribuição do contrato) x dias do exercício / dias do mês = 175,00 […] IRS: sujeito. Segurança Social: sujeito.»
+
+## No Enterprise
+
+No Odoo Enterprise, faz-se da mesma maneira, com o acesso extra **Administrador de Salários**: o painel tem **Funções afins e categoria superior** em **Listas de apoio**, com os mesmos campos. O exemplo dá a mesma linha **Diferencial de categoria superior** de 175,00 € no recibo de novembro de 2026, com a mesma explicação, e a recusa da categoria superior sem categoria e sem retribuição é a mesma.
+
+{/* Nota interna (lote EE-09, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 12/11/2026): conferido numa cópia local da base Enterprise (docs_ee_ee09_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Administrador de Salários: painel › Funções afins e categoria superior (lista vazia com a mesma frase, Novo descartado). Categoria superior de Diogo Ferreira Lopes (1.150,00 €) de 01/11 a 15/11/2026 com 1.500,00 € e recibo de novembro com os direitos do Administrador de Salários numa transação desfeita: CAT_DIFF 175,00 €. Menus e vistas destes ecrãs comparados, perfil a perfil, com uma cópia da demonstração Community (docs_demo_ee09_test, 2c8d358c0, porta 8524): iguais. Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-09.md. */}
+
+## Resultado esperado
+
+- O registo fica na lista, com **Tipo**, **Categoria exercida**, datas e retribuição.
+- Com a categoria superior, o recibo de cada mês do período tem a linha, sujeita a IRS e a Segurança Social.
+- Com funções afins, o recibo não muda.
+
+## Notas importantes
+
+- **Funções afins com retribuição mais alta.** Quem exerce funções afins, mesmo a título acessório, tem direito à retribuição mais elevada que lhes corresponda, enquanto isso durar (Código do Trabalho, art. 267.º, n.º 1). Hoje, a opção **Funções afins** não paga nada: se houver retribuição mais alta, escolha **Categoria superior**.
+- **O que são funções afins.** As que estão no mesmo grupo ou carreira profissional, salvo o que o instrumento coletivo disser, desde que o trabalhador tenha qualificação e não haja desvalorização profissional (art. 118.º, n.os 2 e 3). Se pedirem especial qualificação, o trabalhador tem direito a pelo menos dez horas de formação por ano (art. 118.º, n.º 4). Fonte: texto lido na PGDL a 04/11/2026.
+- **Meses já pagos.** Se o período apanhar um mês já pago, o fiscaldoo cria, ao guardar e hoje sem mensagem, um recibo corretivo por validar. Procure-o em **Salários › Processar › Recibos de vencimento** e confira-o. Veja [Como corrigir um processamento](/payroll-pt/corrigir-um-processamento).
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a proporção em dias de calendário; e o tratamento de funções afins sem retribuição própria definida no instrumento coletivo.</span>
+
+## Problemas frequentes
+
+### Ao guardar: «precisa da categoria e da sua retribuição mensal»
+
+- **Mensagem:** «Uma categoria superior precisa da categoria e da sua retribuição mensal (CT art. 267.º/1). O que aconteceu: sem elas o produto não consegue pagar a diferença. Como resolver: preencha «Categoria exercida» e «Retribuição mensal da categoria superior».»
+- **O que fazer:** preencha os dois campos.
+
+### Ao guardar: «já exerce uma categoria superior nesse período»
+
+- **Mensagem:** «… já exerce uma categoria superior nesse período (desde 01/11/2026). Como resolver: feche esse exercício com «Até» ou altere as datas.»
+- **O que fazer:** preencha **Até** no registo anterior, ou corrija as datas do novo.
+
+### Ao guardar: as datas são recusadas
+
+- **Mensagem:** «A operação não pode ser concluída: O fim do exercício não pode ser anterior ao seu início.»
+- **O que fazer:** corrija **De** ou **Até**.
+
+### A linha fica abaixo do que esperava
+
+- **Causa:** o cálculo usa os dias de calendário do mês, e só os dias do exercício.
+- **O que fazer:** confira as datas e **Como foi calculado?** na linha.
+
+{/* Nota interna (DOCS-046, lote v13-PAY2, master cf8052b9e): por clique com Administrador de Salários: funções afins, categoria superior, 3 recusas, recibo e corretivo de um mês pago. Defeitos no relatório: Categoria exercida com categorias de rubrica; texto da opção Funções afins perante o art. 267.º/1; corretivo em silêncio; nome técnico no caminho de navegação. */}

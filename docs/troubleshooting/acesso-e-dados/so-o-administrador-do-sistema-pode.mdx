@@ -1,0 +1,66 @@
+---
+id: so-o-administrador-do-sistema-pode
+slug: /troubleshooting/so-o-administrador-do-sistema-pode
+title: Aparece «Só o administrador do sistema pode…»
+sidebar_label: "«Só o administrador do sistema…»"
+sidebar_position: 9
+description: As ferramentas do revendedor, o Raio-X de permissões, as exceções de taxonomia e os grupos fechados são do administrador do sistema (o Raio-X também de quem tem o acesso extra Administração fiscal).
+keywords: [só o administrador do sistema, administrador do sistema, administrador do odoo, raio-x de permissões, taxonomia confirmada, exceção de taxonomia, ferramentas do revendedor, ver como, administração fiscal, sem permissão]
+doc_id: DOC-0418
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master b8b799c8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-permissao, troubleshooting/acesso-e-dados/so-a-administracao-fiscal-pode]
+---
+
+## Sintoma
+
+Uma operação de configuração é recusada com uma mensagem que nomeia o **administrador do sistema** (o utilizador técnico do Odoo), e não um perfil de trabalho.
+
+## Mensagem
+
+Copiadas da base de demonstração em português, provocadas pela integração:
+
+- Com o perfil **Contabilista certificado**, ao gravar «Taxonomia confirmada» numa conta por uma integração (no ecrã, a ficha da conta não lhe mostra esta caixa):
+  > «Só o administrador do sistema pode confirmar uma exceção de taxonomia («Taxonomia confirmada»).»
+- Com o perfil **Contabilista**, ao gerar o Raio-X de permissões:
+  > «O Raio-X de permissões mostra o que cada perfil pode ver e editar, por isso só o administrador o gera. Nada foi mostrado: peça o relatório ao administrador.»
+- Com o perfil **Contabilista**, ao abrir a ferramenta «Ver como um utilizador (só leitura)»:
+  > «Não tem permissão para criar «Ver como um utilizador (só leitura)». Esta área é reservada ao administrador técnico do sistema. Não faz parte do trabalho do seu perfil: não tem nada a pedir.»
+
+## Causas verificadas
+
+- A **Taxonomia confirmada** é uma exceção verificada contra a fonte oficial; só o administrador do sistema a escreve, e a tentativa recusada fica registada no registo de auditoria. A classificação da conta faz-se pelos Contabilistas ([Taxonomias](/accounting-pt/taxonomias)).
+- O **Raio-X de permissões** é do administrador e de quem tem o acesso extra **Administração fiscal** (dado nos **Ajustes avançados**; nenhum valor do campo **Perfil** o dá): mostra o que cada perfil vê e edita.
+- As **ferramentas do revendedor** (perfis, lista de entrada em produção, «Ver como…») são só do administrador técnico.
+
+## O que confirmar
+
+1. Se a tarefa é mesmo de configuração: uma conta com a taxonomia errada corrige-se escolhendo a classificação certa, não a exceção.
+2. Quem é o administrador do Odoo na sua empresa.
+
+## Como resolver
+
+- **Peça ao administrador do sistema** (ou, no caso do Raio-X, a quem tem o acesso extra **Administração fiscal**) que faça a operação.
+- Se o Raio-X é uma necessidade permanente, quem tem o acesso extra **Administração fiscal** gera-o: [Aparece «Só o administrador pode reabrir um exercício fiscal» ou «Peça ao administrador para ligar a IA»](/troubleshooting/so-a-administracao-fiscal-pode).
+
+**Quem faz:** o administrador do sistema.
+
+## Resultado esperado
+
+A operação passa quando feita pelo administrador, e fica registada em nome dele.
+
+## Quando contactar o suporte
+
+- A mensagem aparece a quem é administrador do sistema.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com a operação e a mensagem completa.
+
+{/* Nota interna (DOCS-040): não foram provocadas, por falta de dados na demonstração, «Só os consultores podem alterar as datas de bloqueio» e as recusas de atribuir grupos fechados. Pendente de validação. */}
+
+{/* Nota interna (v23-T, DOC-0418, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

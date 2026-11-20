@@ -1,0 +1,82 @@
+---
+id: regras-agendadas
+slug: /copilot/regras-agendadas
+title: Como agendar regras com IA e rever as sugestões
+sidebar_label: Regras agendadas
+sidebar_position: 2
+description: "Criar uma regra que classifica os movimentos bancários novos com a IA, definir com quem corre e os limites, e rever as sugestões."
+keywords: [regras agendadas com ia, regras agendadas, sugestões das regras, sugestoes das regras, classificar movimentos bancários, corre como, limites da regra]
+doc_id: DOC-0292
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master a829e964b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [copilot/agentes/agentes-do-gabinete, copilot/agentes/revisores]
+---
+
+## Para que serve?
+
+Uma regra agendada pede à IA, de tempos a tempos, que classifique os movimentos bancários novos. Só faz sugestões, para uma pessoa aceitar ou recusar: nunca reconcilia, lança nem valida nada.
+
+## Quando utilizar?
+
+- Há muitos movimentos bancários e quer encontrá-los já com uma proposta.
+- Quer limitar quanto a IA pode gastar nesta tarefa.
+
+## Onde encontrar?
+
+- **A regra:** **Copiloto › Agentes › Regras agendadas com IA**.
+- **As sugestões:** **Copiloto › Agentes › Sugestões das regras**.
+
+## Antes de começar
+
+- **Para criar a regra:** o administrador do sistema (ou quem tem o acesso extra **Administração fiscal**).
+- **Para rever as sugestões:** o perfil **Contabilista**, que vê **Sugestões das regras** mas não as regras.
+- **Para funcionar:** em **Copiloto › Controlo › Interruptores**, **Copiloto (interruptor geral da empresa)**, **Ligação à IA (chamadas ao fornecedor de IA)**, **IA - Regras agendadas (só sugestões)** e **IA - Classificador**. Também é preciso uma [ligação à IA](/copilot/ligar-a-uma-ia) pronta e um **Limite mensal de gasto da empresa (EUR)** acima de 0,00.
+- Feito a 5 de novembro de 2026, na Empresa Demonstração, Lda.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Copiloto › Agentes › Regras agendadas com IA** e carregue em **Novo**.
+2. Escreva o **Nome**. **O que faz** propõe **Classificar movimentos bancários novos**. Em **Só este diário de banco**, escolha um diário, ou deixe vazio para todos.
+3. Em **Corre como**, escolha o contabilista com quem a regra corre.
+4. Confira os **Limites**. A regra propõe **De (dias) em (dias)** 1, **Movimentos por execução** 5, **Execuções por mês** 31 e **Gasto por mês (EUR)** 1,0000.
+5. Marque **Ligado** e guarde. Uma regra nova nasce desligada.
+   ![Regra Classificar os movimentos do banco, ligada, com os limites e o campo O que aconteceu](/images/copilot/regras-agendadas/01-regra.png)
+
+</StepByStep>
+
+Depois, a regra corre sozinha. O botão **Sugestões para rever**, no topo da regra, abre as sugestões dela.
+
+## Resultado esperado
+
+**O que aconteceu** e **Última execução** dizem como correu a última vez. As sugestões aparecem em **Sugestões das regras**, com a **Confiança** e o **Modelo usado**. Enquanto não houver nenhuma, a lista explica-o:
+
+![Lista Sugestões das regras vazia, com a explicação do que vai aparecer ali](/images/copilot/regras-agendadas/02-sugestoes-vazio.png)
+
+<span className="fd-pending">Pendente de validação no ecrã: uma sugestão a sério, aceitá-la e recusá-la. A demonstração é uma base de testes, onde o fiscaldoo não chama a IA, e as sugestões só podem ser criadas pelo próprio Copiloto.</span>
+
+## Notas importantes
+
+- **A regra usa a ligação do Classificador.** Para a mudar, veja [Como escolher que ligação de IA cada agente usa](/copilot/escolher-a-ia-por-agente).
+- **A regra lê como a pessoa de Corre como.** Essa pessoa tem de poder trabalhar na empresa da regra.
+- **O limite de gasto da regra soma-se aos outros:** a IA para quando qualquer um é atingido.
+- **Quando uma execução é recusada,** **Última execução** fica vazia e as **Execuções neste mês** não sobem; o motivo fica em **O que aconteceu**.
+
+## Problemas frequentes
+
+### «Escolha o contabilista com quem a regra corre antes de a ligar. Nada foi alterado.»
+
+- **Causa:** marcou **Ligado** sem preencher **Corre como**.
+- **O que fazer:** escolha a pessoa em **Corre como** e guarde outra vez.
+
+### Em «O que aconteceu», a regra diz que o Copiloto está desligado
+
+- **Causa:** falta um interruptor. Além dos gerais e do da regra, é preciso **IA - Classificador**.
+- **O que fazer:** peça ao administrador que o ligue em **Copiloto › Controlo › Interruptores**.
+
+{/* Nota interna (v13-COP): regra criada por clique com admin, falha provocada. A execução automática foi lançada uma vez pela tarefa agendada (RPC), porque o ecrã não tem botão: 1.º motivo interruptor do Classificador, 2.º motivo base de testes. Depois do COP-056, o motivo sai em português (visto na auditoria sobre a829e964b). Criar sugestões por RPC é recusado pelo produto. Sem IA real. */}

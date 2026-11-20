@@ -1,0 +1,10 @@
+{"employees": [{"ref": "W1", "name": "Teresa Exemplo Lima", "vat": "399999892", "niss": "12345678901",
+  "department": "Administrativo", "admission_date": "2022-03-01",
+  "versions": [{"effective_date": "2022-03-01", "wage": "1000.00"},
+               {"effective_date": "2024-01-01", "wage": "1100.00"}],
+  "payslips": [
+    {"ref": "2025-11", "period_start": "2025-11-01", "period_end": "2025-11-30", "payment_date": "2025-11-28",
+     "gross": "1100.00", "ss_worker": "121.00", "ss_employer": "261.25", "irs": "90.00", "net": "889.00",
+     "lines": [{"code": "100", "name": "Vencimento", "kind": "earning", "amount": "1100.00"}]},
+    {"ref": "2025-12", "period_start": "2025-12-01", "period_end": "2025-12-31", "payment_date": "2025-12-29",
+     "gross": "1100.00", "ss_worker": "121.00", "ss_employer": "261.25", "irs": "90.00", "net": "889.00"}]}]}

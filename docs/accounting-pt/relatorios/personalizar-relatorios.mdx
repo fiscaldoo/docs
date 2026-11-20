@@ -1,0 +1,89 @@
+---
+id: personalizar-relatorios
+slug: /accounting-pt/personalizar-relatorios
+title: Como personalizar os relatórios (definições, colunas e ajustes)
+sidebar_label: Personalizar os relatórios
+sidebar_position: 10
+description: Quem pode alterar as definições dos relatórios, os grupos de colunas lado a lado e os ajustes manuais, como se criam e o que não mudam.
+keywords: [personalizar relatórios, definições dos relatórios, grupos de colunas lado a lado, ajustes manuais dos relatórios, valores externos, personalizar relatorios, definicoes dos relatorios, ajustes manuais dos relatorios]
+doc_id: DOC-0149
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master d7b8279e9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/exportar-pdf-para-assinar, accounting-pt/relatorios/usar-os-relatorios]
+---
+
+## Para que serve?
+
+Três ecrãs mudam o que um relatório mostra: **Definições dos relatórios** (as linhas, as colunas e os filtros de cada relatório), **Grupos de colunas lado a lado** (colunas só com alguns diários, terceiros ou contas) e **Ajustes manuais dos relatórios** (números que não vêm dos lançamentos).
+
+Servem a quem configura o programa: o administrador ou o consultor que o instala. O contabilista só consulta os ajustes manuais.
+
+## Quando utilizar?
+
+- Para criar um relatório próprio da empresa, nas definições.
+- Para comparar, lado a lado, colunas de partes diferentes da contabilidade.
+- **Não** os use para corrigir um valor da declaração periódica de IVA (DP IVA): corrija o documento de origem.
+
+## Onde encontrar?
+
+- **Definições dos relatórios** e **Grupos de colunas lado a lado**: **Contabilidade › Lançar › Início › O que há para fazer?**, no grupo **Personalizar e agendar relatórios**. É também a página que abre ao entrar em **Contabilidade**. O grupo tem ainda **E-mails de relatórios agendados**, que este artigo não trata.
+- **Ajustes manuais dos relatórios**: **Contabilidade › Configurar › Plano e regras legais › Ajustes manuais dos relatórios**.
+
+## Antes de começar
+
+- Cada perfil vê ecrãs diferentes (testado com o administrador e com um utilizador só com cada perfil):
+  - o administrador do programa vê os três ecrãs, com **Novo** em todos;
+  - o perfil **Contabilista certificado** vê **Grupos de colunas lado a lado** e **Ajustes manuais dos relatórios**, com **Novo**, e não vê **Definições dos relatórios**;
+  - **Contabilista** só vê **Ajustes manuais dos relatórios**, sem **Novo**: só consulta. No grupo **Personalizar e agendar relatórios** fica só com **E-mails de relatórios agendados**. {/* Nota interna (lote v23-AS, depois do comboio 176 com o FIX-M192, master d7b8279e9, docs_demo_v23as_test, 09/11/2026): por clique, com o administrador e com utilizadores só com o perfil Contabilista certificado e só com o perfil Contabilista: Contabilidade › Configurar › Plano e regras legais › Ajustes manuais dos relatórios abre a lista, com Novo para o administrador e o Contabilista certificado e sem Novo para o Contabilista. O grupo Personalizar e agendar relatórios do painel já não tem a ligação dos ajustes: administrador com Definições dos relatórios, E-mails de relatórios agendados e Grupos de colunas lado a lado; Contabilista certificado com os dois últimos; Contabilista só com E-mails de relatórios agendados. */}
+
+## Como utilizar
+
+<StepByStep>
+
+1. **Ver uma definição.** Abra **Definições dos relatórios** e escolha um relatório. A demonstração tem 63. Cada um tem **Nome**, **País**, **Relatório raiz**, **Ativo**, **Sequência**, **Carregar mais limite** e **Barra de busca**, e os separadores **Linhas**, **Colunas** e **Filtros**.
+   ![Definição da Declaração Periódica de IVA com o aviso de que os relatórios do produto são repostos nas atualizações](/images/accounting-pt/personalizar-relatorios/01-definicao.png)
+2. **Criar um grupo de colunas.** Abra **Grupos de colunas lado a lado** e carregue em **Novo**.
+3. Preencha **Nome** e, em **O que o grupo inclui**, **Diários**, **Terceiros** ou **Contas**. Só se usa o que preencher e, se preencher mais do que um, um lançamento tem de cumprir todos. No exemplo, o grupo «Vendas por diário» só tem o diário **Vendas**.
+   ![Grupo Vendas por diário com o diário Vendas](/images/accounting-pt/personalizar-relatorios/02-grupo-colunas.png)
+4. **Criar um ajuste manual.** Abra **Contabilidade › Configurar › Plano e regras legais › Ajustes manuais dos relatórios** e carregue em **Novo**.
+5. Em **Expressão alvo**, escolha a linha: a **Linha alvo** preenche-se sozinha. A lista só oferece as linhas que aceitam ajustes: na declaração periódica de IVA, só o campo 95 (**[95] Pedido de reembolso (total ou parcial do campo 94)**); nas demonstrações financeiras, a coluna **Notas**. Procurar «Taxa normal» dá **Sem registos**. Preencha **Data**, **Nome** e **Valor numérico** ou **Valor em texto**. No exemplo, a expressão é **Ativos fixos tangíveis [notes]**, do balanço, com o valor em texto `N5`.
+   ![Novo ajuste manual em Ativos fixos tangíveis, com a data 31/12/2026 e o valor em texto N5](/images/accounting-pt/personalizar-relatorios/03-ajuste-manual.png)
+6. **Confirme no relatório.** Abra o relatório para um período com a **Data** do ajuste e confirme que a linha mudou. No exemplo, o **Balanço (SNC)** de 01/01/2026 a 31/12/2026 mostra `N5` na coluna **Notas** de **Ativos fixos tangíveis**.
+
+</StepByStep>
+
+{/* Exceção CC campos 94 e 95: nome da linha da declaração tal como a lista «Expressão alvo» o mostra; a regra do reembolso tem a marca do contabilista certificado em «Notas importantes». */}
+
+## Resultado esperado
+
+- O grupo e o ajuste ficam nas respetivas listas.
+- Nas linhas que aceitam ajustes, o valor também se escreve na própria célula do relatório: carregue no botão ao lado do valor, escreva o valor e carregue em **Guardar** (ou em Enter). Fica na lista de ajustes com o nome **Editado no relatório**.
+- O grupo escolhe-se no **Balanço** e na **Demonstração de resultados** (**Contabilidade › Consultar**), em **Mais filtros › Mostrar lado a lado**. Cada grupo escolhido acrescenta uma coluna, e a coluna **Total** fica igual ao relatório sem grupos; a faixa de totais do topo mostra o **Total**. No exemplo, em 2026, na Empresa Demonstração, Lda, a linha **Total do ativo** do **Balanço (SNC)** mostra 45.271,42 € em **Vendas por diário** e 291.153,27 € em **Total**, o mesmo valor da faixa.
+- Quem consulta também usa os grupos: com um utilizador só com o perfil **Contabilista** ou só com **Auditor / ROC**, o filtro aparece no **Balanço** e na **Demonstração de resultados** e lista os grupos criados. Quem os cria é quem tem **Novo** em **Grupos de colunas lado a lado** (ver «Antes de começar»).
+- O mesmo filtro existe nos quatro relatórios por tipo de conta (**Balanço por tipo de conta**, **Ganhos e perdas por tipo de conta**, **Fluxos de caixa por tipo de conta** e **Fluxos de caixa por conta (indireto)**), que o administrador encontra em **Consultar**. Os perfis **Contabilista** e **Auditor / ROC** não os têm no menu. A DP IVA não tem este filtro.
+
+## Notas importantes
+
+- **Atualizações.** O ecrã avisa: «Os relatórios que vêm com o produto são repostos quando o módulo é atualizado, por isso as alterações que lhes fizer aqui podem ser substituídas. Um relatório que criar aqui nunca é tocado por uma atualização.»
+- **Só se ajusta o que o relatório lê de um ajuste.** As linhas que vêm dos lançamentos, como o **[3] Taxa normal** da declaração de IVA, não aparecem na lista; se tentar gravar um ajuste numa delas (por importação, por exemplo), o Odoo recusa e explica porquê. Para mudar essas linhas, corrija os lançamentos. Os ajustes antigos numa dessas linhas continuam na lista e podem apagar-se; não mudam nenhum relatório.
+- **O reembolso pedido (campo 95) não pode ser superior ao crédito a recuperar (campo 94).** Na célula do relatório ou em **Ajustes manuais dos relatórios**, o Odoo recusa e o valor não fica gravado (veja «Problemas frequentes»).
+- <span className="fd-pending">Pendente de validação por contabilista certificado: alterar a definição de um relatório legal ou acrescentar-lhe valores externos pode afastá-lo do modelo oficial.</span>
+
+## Problemas frequentes
+
+- **«Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»** Aparece ao gravar um grupo ou um ajuste sem os campos assinalados. Num ajuste, a **Data** também é obrigatória.
+- **Não vejo o botão Novo.** O seu perfil só consulta. Peça a alteração a quem administra o programa.
+- **«O reembolso pedido (campo 95: *150,00*) não pode ser superior ao crédito a recuperar no período (campo 94: *0,00*).»** Aparece ao guardar no campo 95 um valor acima do 94: a vermelho por baixo da célula, no relatório, ou na janela **Erro de Validação**, em **Ajustes manuais dos relatórios**. O valor não fica gravado: a lista de ajustes continua sem ele. Escreva um valor até ao crédito a recuperar ou carregue em **Cancelar**.
+
+{/* Exceção CC campos 94 e 95: texto exato da mensagem do sistema, citado entre aspas, e o sítio onde aparece; a regra do reembolso tem a marca do contabilista certificado em «Notas importantes». */}
+
+{/* Nota interna (DOCS-063 #3853 req. 46122, lote v23-AP, 09/11/2026, master a67618a71, docs_demo_v23ap_test, porta 8512): artigo percorrido de novo no ecrã. Grupo Personalizar e agendar relatórios com o administrador e com utilizadores criados só com o Perfil Contabilista certificado e só com Contabilista: ligações e Novo como em «Antes de começar»; 63 definições; aviso da Declaração Periódica de IVA igual. Com o Contabilista certificado na Empresa Demonstração, Lda, por clique: gravar o grupo vazio dá «Há campos obrigatórios…»; grupo «Vendas por diário» com o diário Vendas (captura 02 refeita); Expressão alvo «Taxa normal» Sem registos e [95] só com «[95] Pedido de reembolso (total ou parcial do campo 94) [balance]»; ajuste «Ativos fixos tangíveis [notes]» 31/12/2026 N5 gravado (a captura 03 de main mostra o mesmo e ficou); Balanço (SNC) 2026 com N5 na coluna Notas; Mostrar lado a lado com «Vendas por diário»: 45.305,33 € e 291.187,18 € na cópia (faixa igual), 33,91 € acima da base-mãe por causa da FT D26/31 e da NC D26/2 deste lote (divergencias-de-rececao). Auditoria docs-aud-v23ap, numa cópia limpa da base-mãe (docs_demo_v23apmae_test, a67618a71), administrador na Empresa Demonstração, Lda: 45.271,42 € e 291.153,27 €, faixa igual; o artigo fica com os números da base-mãe. Não repetidos neste lote: célula [95] e recusa do campo 95, filtro com o Contabilista e o Auditor / ROC, relatórios por tipo de conta (vistos no v23-N, master dbbb5ac5c). O Balanço abre hoje com «Comparar com período anterior» marcado; com um grupo escolhido, a coluna de 2025 sai. Com o administrador na Empresa Teste Portugal (empresa ativa dele), o Balanço não abre: falta o referencial contabilístico (mensagem do ecrã), por isso o exemplo é na Empresa Demonstração, Lda. */}
+{/* Nota interna (DOCS-063, lote v18-B, master 00c68a6d8, docs_demo_v18b_test, porta 8310): Administração fiscal provado com um utilizador só com esse perfil, criado por RPC na cópia. Filtro Mostrar lado a lado visto com o administrador, abrindo o relatório pela ação 1430. Sem menu: defeito no relatório LOTE_V18-B. */}
+
+{/* Nota interna (DOCS-063 #3853, lote v23-N, master dbbb5ac5c, docs_demo_v23n_test, porta 8442): REP-132 e REP-133 vistos por clique. Expressão alvo só com [notes] e [95]; «Taxa normal» Sem registos. Célula [95] de outubro de 2026 com 150: mensagem e nenhum ajuste gravado (lista vazia). Grupo «Vendas por diário» criado por clique pelo admin; Mostrar lado a lado no Balanço e na Demonstração de resultados com utilizadores criados só com o Perfil Contabilista e só com Auditor / ROC. A recusa do ficheiro com o 95 acima do 94 não se provoca no ecrã: o 95 já não se grava acima do 94. O botão da célula [95] diz «Nota do anexo» (defeito no relatório do lote). */}
+
+{/* Nota interna (lote v23-AB, master 97b34fac3, docs_demo_v23ab_test, porta 8480, utilizadores criados só com cada valor do campo Perfil): grupo Personalizar e agendar relatórios visto com o administrador (três ecrãs, Novo em todos), um utilizador só Contabilista certificado (Grupos de colunas e Ajustes manuais, com Novo; sem Definições) e um só Contabilista (só Ajustes manuais, sem Novo). */}

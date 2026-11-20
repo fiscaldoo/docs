@@ -1,0 +1,114 @@
+---
+id: importar-extrato-bancario
+slug: /accounting-pt/importar-extrato-bancario
+title: Como importar o extrato bancário
+sidebar_label: Importar o extrato bancário
+sidebar_position: 1
+description: Importar o ficheiro do extrato que descarregou do banco (CAMT.053, MT940, Norma 43, CSV ou Excel), conferir os saldos e os movimentos antes de criar e ver o que entrou.
+keywords: [importar extrato, importar extrato bancário, importar extrato bancario, extrato bancário, extrato bancario, extratos bancários, camt, camt.053, mt940, norma 43, csv, excel, banco, modelos de importação de extratos, modelos de importacao de extratos, registo de importações, registo de importacoes, movimentos do banco]
+doc_id: DOC-0109
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/reconciliar-movimentos-bancarios]
+---
+
+## Para que serve?
+
+O extrato bancário é a lista do que entrou e saiu de uma conta bancária num período. Importá-lo traz esses movimentos para o Odoo, um por linha, para depois os reconciliar com as faturas, os pagamentos e os lançamentos a que correspondem. O Odoo lê o ficheiro, mostra-lhe os saldos e os movimentos e só cria alguma coisa depois de confirmar.
+
+## Quando utilizar?
+
+- Sempre que descarrega o extrato do site do banco (por exemplo, todas as semanas ou no fim do mês).
+- Antes de reconciliar: sem os movimentos do banco no Odoo, não há nada para reconciliar ([Como reconciliar os movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios)).
+- Não serve para os movimentos de caixa (dinheiro): esses lançam-se no diário de caixa.
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Lançamentos › Importar** e, na página **Importar**, **Importar extrato**.
+
+Enquanto não houver nenhum extrato, **Contabilidade › Reconciliar › Bancos e caixa › Extratos bancários** mostra também a ligação **Importar um extrato**. Depois do primeiro extrato, essa lista deixa de ter o botão: use o caminho de cima.
+
+![Página Importar com as opções Importar extrato, Importar recibos verdes, Importar ficheiro do e-Fatura, Contas por omissão do e-Fatura e Importar ativos, com Importar extrato assinalado](/images/accounting-pt/importar-extrato-bancario/01-importar.png)
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. Com ele faz todos os passos, até à lista das linhas importadas (testado com esse perfil). Um utilizador só com um acesso extra de **Tesouraria** (em **Ajustes avançados**) também vê **Importar extrato** na página **Importar**.
+- O diário do banco tem a conta bancária (IBAN) certa: o Odoo só importa o extrato dessa conta. No exemplo, o diário **Banco** da Empresa Demonstração, Lda tem o IBAN `PT50 9999 0000 1234 5678 9012 2`.
+- Tem o ficheiro do extrato descarregado do site do banco. Formatos aceites: CAMT.053 (ISO 20022), MT940, Norma 43, CSV e Excel. O formato é reconhecido sozinho. Para CSV e Excel, o Odoo precisa de saber como são as colunas do seu banco: veja «O ficheiro é CSV ou Excel» em Notas importantes.
+- O exemplo é o extrato `extrato_banco_2026-10-29.xml` (CAMT.053) de 29/10/2026, com um movimento: `IMPOSTO DO SELO S/ COMISSAO`, -0,50 €. Abre com o saldo com que fechou o extrato anterior, 31.103,09 €.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Lançar › Lançamentos › Importar** e carregue em **Importar extrato**. Abre-se **Importar extrato bancário**.
+2. Em **Diário bancário**, escolha o diário do banco do extrato (no exemplo, **Banco**). O campo começa vazio: as opções são os diários de banco da empresa ativa (na demonstração, **Banco** e **Recibos (RG)**).
+3. Em **Ficheiro**, carregue o ficheiro do banco. Deixe **Modelo de importação** vazio para CAMT.053, MT940 e Norma 43. Deixe **Ignorar linhas com erro** por marcar: assim, uma linha com erro faz parar a importação, em vez de entrar só parte do extrato.
+4. Carregue em **Rever o ficheiro**. Ainda não se cria nada. Para um CAMT.053 abre-se **Importação de extrato CAMT.053** com o **Formato do ficheiro**, a **Conta no ficheiro** e, em **SALDOS E CONTAGENS**, o **Saldo de abertura**, o **Saldo de fecho**, as **Entradas no ficheiro** e as **Linhas a importar**. No separador **Entradas**, uma linha por movimento, com a **Data**, a **Data-valor**, o **Montante** (negativo quando o dinheiro sai) e a **Descrição**.
+   ![Importação de extrato CAMT.053 com o diário Banco, a conta PT50999900001234567890122, saldo de abertura 31.103,09 € e de fecho 31.102,59 € a 29/10/2026, 1 entrada no ficheiro e 1 linha a importar, e a entrada de -0,50 € IMPOSTO DO SELO](/images/accounting-pt/importar-extrato-bancario/02-rever.png)
+5. Confira o ecrã com o extrato em papel ou em PDF do banco: a conta, os dois saldos e o número de movimentos. No exemplo: abertura 31.103,09 €, fecho 31.102,59 € (31.103,09 − 0,50), 1 entrada e 1 linha a importar.
+6. Carregue em **Importar**. Na janela **Confirmação** («Criar o(s) extrato(s) e as linhas mostradas na pré-visualização?»), carregue em **Confirmar**.
+7. Abre-se **Linhas importadas**, com o extrato (no exemplo, `BNK1 Extrato 2026-10-29`, 1 registo, -0,50 €; num extrato importado hoje, o nome leva a data no formato `02/11/2026`) e a coluna **Estado da reconciliação**. As linhas ficam por reconciliar: siga para [Como reconciliar os movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios).
+   ![Lista Linhas importadas com o extrato BNK1 Extrato 2026-10-29, 1 registo de -0,50 €](/images/accounting-pt/importar-extrato-bancario/03-linhas-importadas.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o caminho e o assistente são os mesmos (visto com um utilizador só com o perfil **Contabilista**): a página **Importar** tem as mesmas cinco opções e **Importar extrato** abre o assistente com **Diário bancário**, **Modelo de importação**, **Ficheiro**, **Ignorar linhas com erro** e o botão **Rever o ficheiro**.
+
+O ecrã de reconciliação do Enterprise, em **Contabilidade › Reconciliar › Bancos e caixa › Reconciliação bancária**, tem também o botão **Enviar**, que abre a escolha de ficheiros do computador. Use o caminho deste artigo, que mostra o ficheiro para rever antes de criar o extrato.
+
+{/* Nota interna (lote EE-01, DOCS-073 #4142, DEC-1794, master ce51f2d47, base Enterprise docs_ee_ee01_test, 10/11/2026): o Enviar do ecrã Correspondência bancária abre a escolha de ficheiros (vários); não se carregou nenhum ficheiro por aí. */}
+
+## Resultado esperado
+
+- Em **Contabilidade › Reconciliar › Bancos e caixa › Extratos bancários** aparece o extrato com a **Data**, o **Diário**, o **Saldo inicial**, o **Saldo final**, os **Movimentos**, os **Por reconciliar** e o **Estado** **Por reconciliar**. No exemplo da demonstração, os dois extratos de outubro: `BNK1 Extrato 2026-10-28` (30.131,59 € → 31.103,09 €, 3 movimentos: recebimento da Construções Marão, 1.107,00 €; comissão de manutenção, -12,50 €; transferência para a Papelaria Central, -123,00 €) e `BNK1 Extrato 2026-10-29` (-0,50 €).
+- **Cada movimento importado gera logo um lançamento no diário do banco**, publicado, entre a conta do banco e uma conta de passagem. No exemplo, o `BNK1/2026/00076`: `120001 Conta Transitória` D 0,50 / `121 Depósitos à ordem` C 0,50. Um recebimento faz o contrário (no `BNK1/2026/00073`, 1.107,00 €: `121` D / `120001` C). A conta de passagem só fica a zero quando reconcilia a linha; até lá, o saldo da `121` já confere com o banco, mas o gasto ou o cliente ainda não estão lançados.
+- **O que fica registado:** em **Contabilidade › Reconciliar › Bancos e caixa › O que há para fazer com os bancos?**, **Listas de apoio › Registo de importações**, uma linha por ficheiro com a **Data**, o **Diário bancário**, o **Formato**, o **Nome do ficheiro**, **Importado por**, as **Linhas lidas**, **Linhas importadas**, **Já importadas (ignoradas)** e **Linhas rejeitadas**, e o extrato criado.
+
+{/* Nota interna (DOCS-021, DOC-0109): video=sim na arquitetura; quando a DOCS-006 gravar este episódio, «## Vídeo demonstrativo» fica neste ponto. Exemplos na base docs_demo_loteb1_test: extratos BNK1 Extrato 2026-10-28 (3 linhas, ficheiro extrato_banco_2026-10.xml, importado pela ligação de Extratos bancários) e BNK1 Extrato 2026-10-29 (1 linha, pelo caminho do artigo); ficheiros em scratchpad/fix5/files/. */}
+
+## Notas importantes
+
+- **Importar não é reconciliar.** Depois de importar, as linhas ficam por reconciliar e o gasto, o cliente ou o fornecedor ainda não foram tocados. O saldo do banco no Odoo já confere com o do banco.
+- **O saldo de abertura confere-se.** Se o saldo de abertura do ficheiro não for igual ao saldo final do último extrato do Odoo, a revisão avisa que pode faltar um extrato pelo meio. O aviso não impede a importação: confira com o banco antes de confirmar.
+- **O mesmo ficheiro não entra duas vezes.** O Odoo reconhece um ficheiro ou um extrato já importado e ignora-o (veja Problemas frequentes).
+- **Períodos bloqueados.** Um movimento com data num período bloqueado faz recusar o ficheiro inteiro: nada é importado.
+- **O ficheiro é CSV ou Excel.** Cada banco põe as colunas de outra maneira. Em **Contabilidade › Reconciliar › Bancos e caixa › O que há para fazer com os bancos?**, **Listas de apoio › Modelos de importação de extratos**, crie o modelo do seu banco com **Novo**, ou carregue em **Carregar modelos por omissão**. Depois escolha-o em **Modelo de importação** no passo 3. Na demonstração não há modelos («Ainda não há modelos de importação»). <span className="fd-pending">Pendente de validação no ecrã: a importação de um CSV com modelo não foi feita neste artigo; o exemplo é um CAMT.053.</span>
+- **Os modelos por omissão.** **Carregar modelos por omissão** cria oito modelos e diz «8 modelos por omissão criados, 0 já existiam. Cada um mostra a fonte e se foi verificado; ajuste o modelo com a pré-visualização antes de o usar.»: Genérico PT - CSV e Genérico PT - Excel XLSX (os dois com deteção automática), ISO 20022 camt.053, SWIFT MT940, Norma 43, Santander (Portugal) - MT940 do Netbanco Empresas, Millennium bcp - MT940 e Millennium bcp - Excel «Consulta de movimentos». Para experimentar sem importar, abra o modelo, carregue o ficheiro em **Ficheiro de exemplo** e carregue em **Pré-visualizar**: aparece cada linha com a **Data**, o **Montante**, a **Descrição** e o **Saldo corrente**. Uma linha que não se lê fica com o **Erro**: por exemplo, uma linha de totais no fim do CSV dá «'Total' não é uma data válida; use o formato DD/MM/AAAA (por exemplo 31/12/2026)».
+- **O que esta lista não vê.** O extrato só traz o que o banco já movimentou. Um cheque emitido e ainda não descontado, ou uma transferência agendada, não aparecem até o banco os movimentar.
+
+## Problemas frequentes
+
+### «O ficheiro não contém nenhum extrato da conta do diário Banco …»
+
+- **Sintoma:** depois de **Rever o ficheiro** (ou **Pré-visualizar**): «O ficheiro não contém nenhum extrato da conta do diário Banco (PT50999900001234567890122). Contas no ficheiro: PT50000201231234567890154. Escolha o diário de uma dessas contas.»
+- **Causa:** o ficheiro é de outra conta bancária, ou escolheu o diário errado.
+- **O que fazer:** escolha em **Diário bancário** o diário cujo IBAN é o da conta no ficheiro. Se essa conta ainda não tem diário, peça a quem configura a contabilidade que o crie com o IBAN.
+
+### «O ficheiro não pode ser importado: o movimento de … está num período bloqueado»
+
+- **Sintoma:** «O ficheiro não pode ser importado: o movimento de 15/12/2025 está num período bloqueado (Data de bloqueio geral (31/12/2025)). Nada foi importado; peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» para rever as datas de bloqueio ou retire o movimento do ficheiro.» (visto no ecrã com o perfil **Contabilista**, na janela **Operação inválida**, depois de **Rever o ficheiro**)
+- **Causa:** o extrato tem movimentos de um exercício ou período já fechado.
+- **O que fazer:** descarregue do banco um extrato só com o período aberto. Abrir um período fechado é decisão do contabilista certificado da empresa: é a ele que a mensagem manda pedir que reveja as datas de bloqueio.
+
+### O ficheiro já foi importado
+
+- **Sintoma:** na revisão, «Este ficheiro já foi importado neste diário em … por … : importá-lo outra vez é recusado, a menos que marque “Importar mesmo assim” e escreva a justificação.» e «O extrato … já foi importado (…): é ignorado.»; **Linhas a importar** 0 e, em cada entrada, a **Nota** «Extrato já importado».
+- **Causa:** este extrato já está no Odoo (no exemplo, `BNK1 Extrato 2026-10-28`).
+- **O que fazer:** nada; feche a janela. Não marque **Importar mesmo assim**: duplicava os movimentos e o saldo do banco no Odoo deixava de conferir.
+  ![Avisos de ficheiro já importado a 29/10/2026 e de extrato DEMO-EXT-2026-10 já importado, que é ignorado](/images/accounting-pt/importar-extrato-bancario/04-ja-importado.png)
+
+### «Há campos obrigatórios por preencher»
+
+- **Causa:** o **Diário bancário** ficou vazio (começa sempre vazio).
+- **O que fazer:** escolha o diário no passo 2 e carregue de novo em **Rever o ficheiro**.
+
+{/* Nota interna (DOCS-021, DOC-0109, defeitos novos F5-01 e F5-02 em reports/CORRECOES_AUDITORIA5.md): «Extratos no ficheiro» mostra os saldos com ponto decimal (31103.09 → 31102.59) e o nome do extrato tem a data ISO (BNK1 Extrato 2026-10-29); a lista Extratos bancários não tem botão de importar depois do primeiro extrato. Contas da demonstração com nome inglês em en_US (Bank, Bank Suspense Account). */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): página Importar com um utilizador só com Tesouraria: Utilizador, sem perfil: tem Importar extrato. */}

@@ -1,0 +1,89 @@
+---
+id: livros-de-atas
+slug: /administration/livros-de-atas
+title: Como registar os livros de atas
+sidebar_label: Livros de atas
+sidebar_position: 3
+description: Guardar no fiscaldoo cada ata assinada, com o livro, a data e o ficheiro; ao confirmar, a ata recebe o número seguinte do livro e a impressão digital do ficheiro, e deixa de se poder alterar ou eliminar.
+keywords: [livros de atas, livro de atas, atas, ata, assembleia geral, gerência, gerencia, arquivo, numeração das atas, numeracao das atas, SHA-256]
+doc_id: DOC-0311
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master d83bdf7ae)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/empresa/dados-da-empresa, administration/empresa/contabilista-certificado]
+---
+
+## Para que serve?
+
+As atas das reuniões da empresa (assembleia geral, gerência) ficam num livro. O fiscaldoo guarda uma cópia de cada ata assinada, em PDF ou digitalizada, por livro e com um número seguido. Ao confirmar, o número e a impressão digital do ficheiro (**SHA-256 do anexo**) ficam fixos: a ata já não se altera nem se elimina, por isso o arquivo serve de registo de confiança.
+
+## Quando utilizar?
+
+- Depois de cada reunião da assembleia geral ou da gerência, quando a ata já está assinada.
+- Ao começar a usar o fiscaldoo, para guardar as atas que a empresa já tem: registe-as da mais antiga para a mais recente, porque o número é dado pela ordem em que as confirma.
+- Quando precisa de encontrar uma ata já guardada, pelo título ou pelo livro, por exemplo a ata que aprovou as contas de um ano.
+
+## Onde encontrar?
+
+**Contabilidade › Fechar › Fecho do exercício › Painel do fecho do exercício**, em **Listas de apoio**, **Livros de atas**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**. O perfil **Contabilista** não tem o menu **Painel do fecho do exercício**: abre a mesma lista em **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**, em **Listas de apoio**, **Livros de atas**, mas sem o botão **Novo** (a lista vazia diz «Quem tem permissão para criar pode acrescentar registos aqui.»). O **Auditor / ROC** também tem a ligação **Livros de atas** no painel; a **Gerência** vê o painel, mas sem essa ligação.
+- Tem a ata já assinada, num ficheiro (PDF ou digitalização). Sem o ficheiro, a ata não se confirma.
+- Está na empresa certa (canto superior direito): cada ata é da empresa em uso.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Fechar › Fecho do exercício › Painel do fecho do exercício** e carregue em **Livros de atas**. Sem atas, a lista diz «Ainda não há atas» e «As atas das reuniões da empresa ficam guardadas aqui. Carregue em Novo para registar a primeira.»
+2. Carregue em **Novo**.
+3. Em **Título**, escreva o assunto da ata, por exemplo `Aprovação das contas de 2025`.
+4. Em **Livro**, escreva o nome do livro, por exemplo `Atas da Assembleia Geral`. Use sempre o mesmo nome para o mesmo livro: a numeração conta-se por livro.
+5. Em **Data**, escolha a data da reunião (vem preenchida com o dia de hoje).
+6. Em **Anexo**, carregue em **Escolher ficheiro** e escolha o ficheiro da ata assinada.
+   ![Ata em Rascunho, sem número, com o Título Aprovação das contas de 2025, o Livro Atas da Assembleia Geral, a Data, a Empresa e o ficheiro escolhido em Anexo](/images/administration/livros-de-atas/01-ata-em-rascunho.png)
+7. Carregue em **Confirmar**. Abre-se a pergunta «Depois de confirmada, a entrada recebe o seu número e já não pode ser alterada nem eliminada. Continuar?». Carregue em **Confirmar** (ou em **Descartar** para voltar atrás).
+
+</StepByStep>
+
+## Resultado esperado
+
+- A ata passa a **Confirmada** e recebe o **Número** seguinte do livro: 1 para a primeira ata do livro, 2 para a seguinte, sem buracos.
+- **SHA-256 do anexo** mostra a impressão digital do ficheiro: um código que muda se o ficheiro mudar, e que serve para provar mais tarde que o ficheiro é o mesmo.
+- Os campos deixam de se poder alterar.
+
+![Ata confirmada com o Número 1, o anexo ata_ag_2026_01.pdf e a impressão SHA-256 do anexo](/images/administration/livros-de-atas/02-ata-confirmada.png)
+
+A lista mostra **Livro**, **Número**, **Título**, **Data**, **Estado** e **Empresa**.
+
+## Notas importantes
+
+- **Uma ata em Rascunho não tem número.** O campo **Número** só aparece depois de confirmar, e na lista a coluna **Número** fica vazia para os rascunhos. Uma ata em rascunho pode ser alterada ou eliminada.
+- **Uma ata confirmada não se corrige.** Se houver um erro, registe uma nova ata que o corrija.
+- O fiscaldoo guarda uma cópia: não substitui o livro de atas nem regista o termo de abertura do livro. <span className="fd-pending">Pendente de validação por contabilista certificado: que livros de atas a lei exige a cada tipo de sociedade, e se o arquivo digital dispensa o livro em papel.</span>
+
+## Problemas frequentes
+
+### «A entrada … não tem anexo…»
+
+- **Sintoma:** ao confirmar, depois da pergunta: «A entrada «Aprovação das contas de 2025» não tem anexo. Anexe a ata assinada (PDF ou digitalização) antes de confirmar: depois de confirmada já não pode ser alterada.»
+- **O que fazer:** em **Anexo**, escolha o ficheiro e confirme de novo.
+
+### «Uma ata confirmada nunca pode ser eliminada…»
+
+- **Sintoma:** numa ata confirmada, no menu da roda dentada (ao lado do título), **Eliminar** e, na pergunta, **Eliminar**: «Uma ata confirmada nunca pode ser eliminada (a numeração do livro não pode ter buracos). Crie, em vez disso, uma nova entrada que explique a situação.»
+- **O que fazer:** registe uma nova ata que explique a situação.
+
+### Não encontro os Livros de atas
+
+- **Causa:** o **Contabilista** não tem o painel do fecho do exercício: abre a lista em **Fechar o mês**, em **Listas de apoio**, **Livros de atas**, mas não regista atas. Com a **Gerência**, o painel do fecho do exercício não tem a ligação **Livros de atas**.
+- **O que fazer:** peça a quem tem o perfil **Contabilista certificado**.
+
+{/* Nota interna (lote v23-AC, #4059, master 97b34fac3, docs_demo_v23ac_test, porta 8482): frase do Contabilista reposta (perdeu-se na junção do lote 58). Visto no ecrã com um utilizador criado só com o Perfil Contabilista: Contabilidade › Fechar › Contabilidade do mês › Fechar o mês, Listas de apoio, Livros de atas abre a lista, sem Novo e com «Quem tem permissão para criar pode acrescentar registos aqui.»; com um utilizador só com o Perfil Contabilista certificado, a mesma ligação tem Novo. */}
+
+{/* Nota interna (DOCS-046, lote v22-B, 06/11/2026, master d83bdf7ae, base docs_demo_v22b_test, porta 8350): o caminho deixou de pedir o modo de programador (UX-106: ligação no Painel do fecho do exercício). Percorrido por clique com um utilizador só com Contabilista Certificado / Gestor fiscal: lista vazia, Novo, recusa sem anexo, ata n.º 1 confirmada, recusa de eliminar. Utilizadores só com Contabilista e só com Auditor: sem o painel e sem o menu na pesquisa (o menu existe para eles mas é da classe R «archive», só em modo programador). A frase antiga «o Contabilista vê a lista, mas sem Novo» saiu: não se prova sem o modo de programador. */}

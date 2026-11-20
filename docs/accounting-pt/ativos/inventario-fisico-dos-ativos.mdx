@@ -1,0 +1,119 @@
+---
+id: inventario-fisico-dos-ativos
+slug: /accounting-pt/inventario-fisico-dos-ativos
+title: Como fazer o inventário físico dos ativos
+sidebar_label: Inventário físico dos ativos
+description: Imprimir as etiquetas dos ativos, contar o que existe, ver o que não foi encontrado ou está noutro sítio e fechar a contagem.
+keywords: [inventário físico dos ativos, inventario fisico dos ativos, contar ativos, contagem de ativos, etiquetas de ativos, ativos para o inventário físico, ativos para o inventario fisico, divergências, divergencias, código de barras, codigo de barras, campanha de inventário, campanha de inventario]
+doc_id: DOC-0127
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c60255305)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/ativos/revalorizar-ativos, accounting-pt/ativos/abater-ou-vender-um-ativo, accounting-pt/ativos/registar-um-ativo]
+---
+
+{/* Nota interna (v13-ACC, DOC-0127): base docs_demo_v13acc_test, porta 8254, master 56504fe86. Percorrido por clique com o perfil Contabilista, e conferido pelo auditor em master 2d5e95c9d com as folhas CSV e XLSX, 3 importações certas e 4 recusadas: etiquetas em PDF, 2 campanhas, 6 ativos esperados, 4 leituras (encontrado, já contado, sem ficha, outra localização), fecho, divergências em PDF e atualização de localizações. A primeira campanha foi iniciada sem localizações porque os ativos da demonstração não têm localização. Os códigos AF/ são os da demonstração. Revisto em v15-REV, base docs_demo_v15rev_test, master 00c68a6d8: campanha completa por clique com Contabilista (iniciar, folha CSV, 2 importações recusadas e 1 certa, Registar contagens, fechar); etiquetas em PDF descarregadas; capturas 01 e 02 refeitas. Não refeitos: outra localização, Atualizar localizações, XLSX e o PDF das divergências. */}
+
+## Para que serve?
+
+Confirma que os bens que estão na contabilidade existem mesmo e onde estão. Imprime as etiquetas, regista o que encontrou e o produto mostra o que falta, o que está noutro sítio e o que não tem ficha.
+
+## Quando utilizar?
+
+- No fim do ano, antes de fechar as contas.
+- Quando muda de instalações ou troca de responsável pelos bens.
+- Quando o contabilista ou um auditor pede a prova de que os bens existem.
+- Não use para stock de mercadorias: esse conta-se no **Inventário**. Para tirar um bem da contabilidade, veja [como abater ou vender um ativo](/accounting-pt/abater-ou-vender-um-ativo).
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Terceiros e ativos › O que há para fazer com os ativos?** › **Listas de apoio**:
+
+- **Etiquetas de ativos**: imprime as etiquetas.
+- **Inventário físico dos ativos**: as campanhas de contagem.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**.
+- Os ativos a contar estão **em uso**. Um ativo em preparação ou já abatido não entra na contagem.
+- Tem um leitor de códigos de barras, a câmara do telemóvel, ou escreve os códigos à mão.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Etiquetas de ativos**, carregue em **Imprimir etiquetas (PDF)** e cole cada etiqueta no bem. Se os bens já têm etiqueta, passe ao passo seguinte.
+2. Em **Inventário físico dos ativos**, carregue em **Novo**. Em **Localizações**, escolha onde vai contar. Deixe vazio para contar a empresa toda.
+3. Carregue em **Iniciar campanha**. O estado passa a **Em curso** e a lista **Contagens** mostra cada ativo esperado como **Não encontrado**. **Esperados** diz quantos são.
+4. Carregue em **Registar contagens**. Se está numa localização, escolha-a em **Localização encontrada**.
+5. Em **Código lido**, leia ou escreva o código, por exemplo `AF/00001`, e carregue em **Registar**. **Último resultado** diz o que aconteceu. Repita para cada bem.
+   ![Janela Registar contagens, com o código lido e o último resultado: código desconhecido, registado sem ficha](/images/accounting-pt/inventario-fisico-dos-ativos/01-registar-contagens.png)
+6. No fim, carregue em **Concluído**. Pode voltar a **Registar contagens** enquanto a campanha estiver em curso.
+7. Confira a lista e carregue em **Fechar campanha**. Na janela «Depois de fechada, as contagens não podem ser alteradas. Continuar?», carregue em **Confirmar**.
+8. Carregue em **Imprimir divergências** para ter a lista em PDF.
+
+</StepByStep>
+
+<HelpCallout type="atencao" title="Fechar não se desfaz">
+
+Depois de fechar, as contagens já não se alteram. Para corrigir, faça outra campanha.
+
+</HelpCallout>
+
+## No Enterprise
+
+No Odoo Enterprise, as etiquetas e o inventário físico são os do fiscaldoo (visto com um utilizador só com o perfil **Contabilista**). **Etiquetas de ativos** abre a mesma janela, com **Imprimir etiquetas (PDF)**, **XLSX**, **Detalhe** e **Fechar**. **Inventário físico dos ativos** abre a lista das campanhas, e **Novo** abre a campanha em **Rascunho**, com **Localizações**, **Esperados**, **Encontrados**, a lista **Contagens** e o botão **Iniciar campanha**.
+
+{/* Nota interna (lote EE-05, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee05_test (cópia da odoo20_ee_test com EE_FASE=construir), 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0127. Contabilista: Listas de apoio de O que há para fazer com os ativos? iguais às do Community (Etiquetas de ativos, Inventário físico dos ativos, Localizações dos ativos…). Etiquetas: Ativos, Localização, Adquiridos desde/até, Âmbito, Etiquetas 7, disposição (Nome da empresa, Descrição, Código de barras Code128, Código QR, Etiquetas por linha). Inventário: lista vazia «Ainda não há inventários físicos…»; Novo com Iniciar campanha; a campanha não se iniciou nem se gravou na base Enterprise. Ver reports/LOTE_EE-05.md. */}
+
+## Resultado esperado
+
+O estado passa a **Fechado**. Cada linha tem o resultado e **Encontrados** diz quantos ativos com ficha foram contados, também os lidos fora da campanha («Encontrado fora da campanha»). No topo, **Não encontrados**, **Outra localização** e **Sem ficha** mostram quantos há de cada.
+
+![Campanha fechada, com 6 esperados e 2 encontrados, e as linhas Encontrado, Encontrado sem ficha e Não encontrado](/images/accounting-pt/inventario-fisico-dos-ativos/02-campanha-fechada.png)
+
+| Resultado | O que quer dizer | O que fazer |
+|---|---|---|
+| **Encontrado** | O bem está onde devia | Nada |
+| **Não encontrado** | O bem não foi lido | Procure-o. Se não existe, fale com o contabilista certificado sobre o [abate](/accounting-pt/abater-ou-vender-um-ativo) |
+| **Encontrado noutra localização** | O bem foi lido noutro sítio | Veja a secção seguinte |
+| **Encontrado sem ficha** | O código não é de nenhum ativo | Procure a ficha ou [registe o ativo](/accounting-pt/registar-um-ativo) |
+
+Fazer o inventário não gera lançamentos. Um bem que falta só sai da contabilidade quando for abatido.
+
+## Corrigir as localizações
+
+Quando há bens noutra localização, a campanha fechada mostra **Atualizar localizações**. Carregue no botão e, na janela «Os ativos encontrados noutra localização são movidos para onde foram encontrados. Continuar?», carregue em **Confirmar**. A ficha de cada ativo passa a ter a localização encontrada.
+
+## Contar sem ligação ao ecrã
+
+Com a campanha em curso, **Folha de contagem (XLSX)** e **Folha de contagem (CSV)** descarregam a lista para contar em papel ou noutro programa.
+
+1. Na folha, escreva `Sim` na coluna **Contado (Sim)** de cada bem encontrado. Se estava noutro sítio, escreva a localização na coluna **Localização encontrada**, como aparece no produto, por exemplo `DEM/Stock`.
+2. Na campanha, carregue em **Importar contagens**. Em **Folha (XLSX ou CSV)**, escolha o ficheiro e carregue em **Importar**.
+3. Leia o **Resultado**, por exemplo «Contagens importadas. Encontrados: 2. Já contados antes: 0. Encontrados fora da campanha: 0.», e carregue em **Concluído**.
+
+A folha é verificada toda antes de registar: uma linha errada impede a importação da folha inteira. O **Resultado** começa então por «Nada foi importado. Corrija a folha e importe-a de novo:» e diz qual é a linha.
+
+**«Linha *2*: o local «*Armazém Norte*» não existe. Use o nome de um local como aparece na coluna «Localização esperada», ou deixe vazio.»** Corrija a localização na folha e importe-a de novo.
+
+**«Linha *2*: nenhum ativo tem a etiqueta *EQ-777*. Confira a etiqueta; para guardar um código sem ficha use «Registar contagens» na campanha.»** Um código sem ficha não entra pela folha. Tire a linha da folha e registe o código em **Registar contagens**.
+
+## Notas importantes
+
+- A lista só vê os ativos em uso, na empresa ativa e nas localizações escolhidas. Um bem que nunca foi registado só aparece se o código for lido.
+- **Encontrados** não conta os bens sem ficha. No exemplo, há 3 linhas lidas e 2 encontrados.
+- O código da etiqueta é, por omissão, o código do ativo.
+
+## Problemas frequentes
+
+**«Não há ativos em uso nas localizações escolhidas: escolha outras localizações (ou nenhuma, para a empresa toda) antes de iniciar a campanha.»** Carregue em **Fechar** e mude as **Localizações**. Deixe o campo vazio para contar tudo.
+
+**«Leia ou escreva o código da etiqueta antes de registar a contagem.»** Carregou em **Registar** sem código: a mensagem abre na janela **Operação inválida**. Carregue em **Fechar**, escreva o código em **Código lido** e carregue de novo.
+
+**Último resultado: «Já contado: *Viatura ligeira de mercadorias*».** O bem já foi lido nesta campanha. Não conta duas vezes: siga para o seguinte.
+
+**Último resultado: «Código desconhecido, registado sem ficha: *EQ-999*».** Confirme se o código foi bem lido. Se o bem existe e não tem ficha, a linha fica como **Encontrado sem ficha**.

@@ -1,0 +1,106 @@
+---
+id: lote-ou-recibo-no-passo-errado
+slug: /troubleshooting/lote-ou-recibo-no-passo-errado
+title: O lote ou o recibo não está no estado certo para este passo
+sidebar_label: Lote ou recibo no passo errado
+description: O lote de salários segue Rascunho, Calculado, Validado, Pago e Fechado. Cada botão só aparece ou só funciona no estado certo, e o lote só fecha sem problemas por resolver.
+keywords: [estado do lote, lote de salários, lote de salarios, só um lote em rascunho pode ser apagado, so um lote em rascunho, apagar lote, eliminar lote, fechar o lote, não pode ser fechado, nao pode ser fechado, controlos de pré-fecho, rascunho, calculado, validado, pago, fechado, botão não aparece, botao nao aparece, repor em rascunho, reabrir o lote, motivo]
+doc_id: DOC-0395
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado, payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/processar-e-pagar/pagar-os-salarios]
+---
+
+## Sintoma
+
+Um botão do lote de salários não aparece, ou aparece e abre **Operação inválida**. Os casos mais comuns: apagar um lote já calculado e fechar um lote que ainda tem problemas.
+
+## Mensagem
+
+Visto no lote **Salários de outubro de 2026** da Empresa Demonstração, Lda, com o perfil **Processador de salários**.
+
+Em **Ações › Eliminar**, com o lote **Calculado** (e outra vez com o lote **Pago**):
+
+> «Só um lote em rascunho pode ser apagado. O que aconteceu: um lote processado faz parte do registo dos salários. Como corrigir: mantenha-o (feche-o) ou crie um novo.»
+
+![Janela Operação inválida: só um lote em rascunho pode ser apagado](/images/troubleshooting/lote-ou-recibo-no-passo-errado/01-eliminar-lote-processado.png)
+
+Em **Fechar**, com o lote **Pago** e o aviso «*8* trabalhador(es): Conta contabilística de cada rubrica com valor (Bloqueia o fecho)» por cima:
+
+> «O lote «*Salários de outubro de 2026*» não pode ser fechado: *Ana Margarida Pinto — Conta contabilística de cada rubrica com valor: não pode ser contabilizado: Contabilização bloqueada: 1 rubrica(s) com valor não têm modelo de contabilização em 31/10/2026: Subsídio de alimentação. …*»
+
+A mensagem repete o problema para cada trabalhador do lote (oito, no exemplo).
+
+![Janela Operação inválida: o lote de outubro não pode ser fechado, com o problema repetido por trabalhador](/images/troubleshooting/lote-ou-recibo-no-passo-errado/02-fechar-lote-recusado.png)
+
+## Causas verificadas
+
+O lote segue sempre a mesma ordem, e os botões da barra mudam com o estado. Foi isto que o ecrã mostrou com o perfil **Processador de salários**:
+
+| Estado do lote | Botões na barra |
+|---|---|
+| **Rascunho** | **Criar os recibos do mês**, **Calcular**, **Tirar do lote** |
+| **Calculado** | **Calcular**, **Validar**, **Tirar do lote**, **Repor em rascunho**, **Apagar lote** |
+| **Validado** | **Gerar pagamentos**, **Ficheiro de transferências**, **Banco executou**, **Marcar como pago** |
+| **Pago** | **Gerar pagamentos**, **Ficheiro de transferências**, **Fechar** |
+
+Quem tem o acesso extra **Administrador de Salários** vê também **Contabilizar** (lote **Validado** ou **Pago**) e **Repor para Validado** (lote **Pago**). **Marcar como pago** abre uma janela de confirmação, com **Motivo** quando os recibos não têm pagamento gerado ([Não consigo pagar os salários ou gerar o ficheiro de transferências](/troubleshooting/pagamento-dos-salarios-recusado)).
+
+- **Um lote calculado ainda se desfaz.** Enquanto nenhum recibo estiver validado, **Repor em rascunho** e **Apagar lote** desfazem um lote **Calculado**, com um motivo. A partir de **Validado**, o lote faz parte do registo dos salários.
+- **Fechar corre os controlos de pré-fecho.** Cada aviso marcado «(Bloqueia o fecho)» por cima do lote impede o fecho. No exemplo, a rubrica **Subsídio de alimentação** não tinha modelo de contabilização, e por isso nenhum recibo podia ser contabilizado.
+- **Alguns botões são de um acesso extra.** **Contabilizar** e **Repor para Validado** só aparecem a quem tem o acesso extra **Administrador de Salários**. O Processador de salários não os vê; **Repor em rascunho** e **Apagar lote** aparecem-lhe.
+- **Um lote calculado sem recibos não avança.** **Calcular** num lote sem recibos é recusado; esse caso está em [Como processar os salários do mês](/payroll-pt/processar-o-mes).
+
+## O que confirmar
+
+1. O estado do lote, no topo à direita.
+2. Os avisos por cima do lote. **Ver quem é preciso corrigir** abre a lista dos trabalhadores com o problema de cada um.
+3. O seu perfil, se o botão que procura não aparece.
+
+## Como resolver
+
+### Quer apagar um lote processado
+
+Um lote **Calculado** sem recibos validados volta a rascunho ou apaga-se: o perfil **Processador de salários** e quem tem o acesso extra **Administrador de Salários** veem **Repor em rascunho** e **Apagar lote**, só com o lote **Calculado**. Se o lote já foi validado, não volta a rascunho: os recibos corrigem-se com recibos corretivos ([O recibo já está validado e não se altera](/troubleshooting/recibo-validado-nao-se-altera)).
+
+Feito com o perfil **Processador de salários**, num lote **Calculado** criado para isto:
+
+1. No lote **Calculado**, carregue em **Repor em rascunho**. Abre-se a janela **Repor em rascunho**, que avisa que o lote volta a «Rascunho» e mantém os seus recibos em rascunho, com o campo **Motivo**.
+2. Escreva o motivo e carregue em **Repor em rascunho**. **Anular** fecha a janela sem mudar o lote.
+   ![Janela Repor em rascunho com o aviso, o Motivo preenchido e os botões Repor em rascunho e Anular](/images/troubleshooting/lote-ou-recibo-no-passo-errado/03-repor-em-rascunho.png)
+3. O lote volta a **Rascunho**, com os 8 recibos (também em **Rascunho**) e os botões **Criar os recibos do mês**, **Calcular** e **Tirar do lote**. Se só queria corrigir um dado, corrija-o na origem e carregue em **Calcular**.
+4. Para apagar o lote, carregue em **Apagar lote** no lote **Calculado**, escreva o motivo e confirme com **Apagar lote** na janela: o lote e os seus recibos em rascunho são apagados.
+
+Para o refazer, crie-o de novo em **Salários › Processar › Processar o mês** › **Novo**.
+
+{/* Nota interna (DOCS-066 #3947, auditoria docs-aud-v23ba, master ce51f2d47, 10/11/2026): por clique com um utilizador criado só com o perfil Processador de salários, num lote de novembro de 2026 criado para isto (Novo, Criar os recibos do mês, Calcular): no Calculado, a barra tem Calcular, Validar, Tirar do lote, Repor em rascunho e Apagar lote; Repor em rascunho com motivo voltou a Rascunho com os 8 recibos; Apagar lote com motivo apagou o lote. O P-AUD-07 já não se aplica: o botão da janela chama-se «Repor em rascunho». Captura 03 refeita. */}
+
+### Fechar é recusado
+
+1. Carregue em **Fechar** na mensagem.
+2. Resolva cada problema da lista. No exemplo, peça ao **Administrador de Salários** o modelo de contabilização da rubrica e a contabilização do lote: os passos estão em [O recibo não é contabilizado](/troubleshooting/recibo-nao-e-contabilizado).
+3. Confirme que o aviso «(Bloqueia o fecho)» desapareceu de cima do lote e carregue de novo em **Fechar**.
+
+Na demonstração, depois de criado o modelo do **Subsídio de alimentação** e de o lote ter sido contabilizado, o aviso «Bloqueia o fecho» saiu de cima do lote e **Fechar** fechou-o.
+
+## Resultado esperado
+
+- O botão que procura aparece no estado certo do lote.
+- Sem avisos «(Bloqueia o fecho)», **Fechar** põe o lote em **Fechado**, com o aviso «Lote fechado: já não se altera. Um utilizador com o acesso extra «Administrador de Salários» pode reabri-lo, com um motivo.» {/* Nota interna (lote v23-AO, DOCS-069 #4052, master a67618a71, docs_demo_v23ao_test, 09/11/2026): UX-147. Aviso do lote Fechado visto por clique com um utilizador só com o perfil Processador de salários (lote de outubro de 2026 da cópia, fechado por ele). O resto do artigo não se refez. */}
+
+## Quando contactar o suporte
+
+- O lote está **Rascunho** e **Eliminar** é recusado.
+- Não há avisos por cima do lote e **Fechar** continua a ser recusado.
+- Um botão da tabela acima não aparece no estado indicado, com o perfil certo.
+
+## Informação a enviar
+
+- O nome do lote, a empresa e o estado.
+- O texto completo da mensagem, copiado do ecrã.
+- Os avisos que aparecem por cima do lote.
+- O perfil com que entrou.

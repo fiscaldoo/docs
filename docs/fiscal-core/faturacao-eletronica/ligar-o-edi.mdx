@@ -1,0 +1,105 @@
+---
+id: ligar-o-edi
+slug: /fiscal-core/ligar-o-edi
+title: Como ligar o EDI e a Saphety
+sidebar_label: Ligar o EDI e a Saphety
+sidebar_position: 1
+description: Preparar a empresa para trocar encomendas, avisos de expedição e faturas com um retalhista por EDI, através da Saphety - credenciais no cofre, GLN, cliente, artigos e o primeiro teste de receção.
+keywords: [EDI, Saphety, ligar EDI, operador EDI, GLN, EAN/GLN, GTIN, código de barras, retalhista, cofre de credenciais, ORDRSP, DESADV, RECADV, receber mensagens, comunicações externas, troca eletrónica de documentos]
+doc_id: DOC-0056
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 3a28c9b91)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao-eletronica/encomendas-edi, fiscal-core/faturacao/clientes]
+---
+
+## Para que serve?
+
+O EDI é a troca de documentos entre computadores, sem papel nem e-mail. Muitos retalhistas pedem aos fornecedores que recebam as encomendas e enviem os avisos de expedição e as faturas por EDI, através de um operador. No fiscaldoo, o operador é a **Saphety**. Este artigo prepara a empresa e o cliente para essa troca. O EDI só transmite os documentos: a fatura, a guia e a encomenda continuam a ser emitidas pelo fiscaldoo, como sempre.
+
+<HelpCallout type="risco" title="Nesta versão, só a conta de testes da Saphety">
+Nesta versão, o fiscaldoo só liga ao ambiente de testes da Saphety: a ligação ao ambiente real (produção) é recusada pelo programa. As encomendas, as respostas, os avisos de expedição e as faturas trocados por EDI não chegam ao retalhista, mesmo quando o ecrã mostra «Aceite». Use este artigo para preparar e testar a ligação com a conta de testes que a Saphety lhe der. Enquanto a ligação real não estiver disponível, receba as encomendas e envie ao retalhista as faturas e os documentos pela via habitual.
+</HelpCallout>
+
+## Quando utilizar?
+
+- Um retalhista pediu-lhe que passe a trabalhar por EDI.
+- Vai acrescentar um novo cliente EDI a uma empresa que já troca EDI com outros.
+
+## Onde encontrar?
+
+- **Credenciais da Saphety:** **Contabilidade › Configurar › Cofre de credenciais › Credenciais**.
+- **GLN da empresa:** **Definições › Utilizadores e empresas › Empresas**, campo **EAN/GLN**.
+- **Cliente:** **Faturação › Clientes e artigos › Clientes**, separador **Faturação eletrónica (EDI)** e campo **EAN/GLN**.
+- **Artigos:** **Faturação › Clientes e artigos › Artigos**, campo **Código de Barras**.
+- **Teste:** aplicação **EDI › Receber mensagens** e **EDI › Comunicações externas**.
+
+## Antes de começar
+
+- O seu perfil é **Administrador**. Os passos foram feitos do princípio ao fim com este perfil. O **Contabilista certificado**, o **Contabilista** e o **Administrativo** veem o separador do cliente e a aplicação **EDI**, mas não gravam credenciais: com o **Contabilista certificado**, **Novo** no cofre abre «Erro de Acesso — Não tem permissão para ver estas credenciais. Peça que lhe deem a permissão «Ver» para esta empresa e portal no cofre de credenciais. Peça ao administrador que a dê, em Contabilidade › Configurar › Cofre de credenciais › Permissões. Se ninguém tem ainda «Editar» nesta empresa, o primeiro passo é Contabilidade › Configurar › Cofre de credenciais › Iniciar o cofre.».
+- A empresa tem contrato com a Saphety e uma conta de testes, com o utilizador e a palavra-passe que a Saphety lhe dá. O fiscaldoo não contrata em nome do cliente. Nesta versão, só a conta de testes funciona (veja o aviso em «Para que serve?»).
+- A empresa e o retalhista têm **GLN**, o número de 13 algarismos da GS1 que identifica a empresa, as lojas e os armazéns. O GLN da empresa pede-se à GS1 Portugal; os do retalhista e das lojas, e o código de fornecedor, dá-os o retalhista.
+- Os artigos que vende ao retalhista têm código de barras (GTIN).
+
+## Como utilizar
+
+<StepByStep>
+
+1. **Credenciais.** Abra **Contabilidade › Configurar › Cofre de credenciais › Credenciais** e carregue em **Novo**. Preencha **Descrição**, **Empresa**, **Portal** (escolha «Saphety - EDI e faturação eletrónica (conta de testes)», o único tipo da Saphety: use as credenciais da conta de testes), **Nome de utilizador** e **Palavra-passe / segredo**, e grave. A palavra-passe fica cifrada e não volta a ser mostrada.
+2. **GLN da empresa.** Em **Definições › Utilizadores e empresas › Empresas**, abra a empresa e escreva o GLN em **EAN/GLN**. Grave.
+3. **GLN do cliente e das lojas.** Em **Faturação › Clientes e artigos › Clientes**, abra o retalhista e escreva o GLN em **EAN/GLN**. Faça o mesmo em cada morada de entrega (loja ou armazém) do separador **Contactos**.
+4. **Ativar o EDI no cliente.** Ainda na ficha do retalhista, abra o separador **Faturação eletrónica (EDI)** e, no bloco **ESTE CLIENTE TROCA EDI COM ESTA EMPRESA**:
+   - marque **EDI ativo**;
+   - em **Operador EDI**, escolha **Saphety**;
+   - em **O nosso código de fornecedor no cliente**, escreva o código que o retalhista lhe deu.
+5. No bloco **MENSAGENS PEDIDAS PELO CLIENTE (ENCOMENDAS E FATURAS SEMPRE)**, marque as mensagens que o retalhista pede: **Resposta à encomenda (ORDRSP)**, **Aviso de expedição (DESADV)** e **Aviso de receção (RECADV)**. Com o aviso de expedição, escolha também se é enviado sozinho (**Enviar o aviso de expedição automaticamente**) e se o cliente pede o código das paletes (**O cliente pede o SSCC das paletes**). Grave.
+   ![Separador Faturação eletrónica (EDI) do Retalhista Exemplo (EDI): EDI ativo, Operador EDI Saphety, código de fornecedor FORN-0001 e as mensagens ORDRSP, DESADV e RECADV marcadas](/images/fiscal-core/ligar-o-edi/01-separador-edi.png)
+6. **Artigos.** Em **Faturação › Clientes e artigos › Artigos**, confirme que cada artigo vendido ao retalhista tem o **Código de Barras** (GTIN). É por ele que as encomendas do retalhista encontram o artigo.
+7. **Testar.** Abra **EDI › Receber mensagens**. Aparece a mensagem «Mensagens recebidas. 0 mensagem(ns) nova(s).» (ou o número de mensagens novas) e abre-se a lista **Mensagens**. Em **EDI › Comunicações externas**, cada receção fica numa linha com o **Serviço** «Troca EDI (receção)», o **Estado** e o **Ambiente**.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, a ligação ao EDI prepara-se da mesma maneira (visto com o perfil **Administrador**). **Contabilidade › Configurar › Cofre de credenciais › Credenciais** tem **Novo**, com os mesmos campos. A empresa tem o campo **EAN/GLN** e o cliente tem o separador **Faturação eletrónica (EDI)**, com o bloco **ESTE CLIENTE TROCA EDI COM ESTA EMPRESA** e, depois de marcar **EDI ativo**, o bloco **MENSAGENS PEDIDAS PELO CLIENTE (ENCOMENDAS E FATURAS SEMPRE)**. A aplicação chama-se **EDI**: **EDI › Receber mensagens** mostrou «Mensagens recebidas. 0 mensagem(ns) nova(s).» e, em **EDI › Comunicações externas**, a receção ficou com o **Serviço** «Troca EDI (receção)», o **Transporte** «Simulado» e o **Ambiente** «Teste».
+
+{/* Nota interna (lote EE-12, DOCS-073 #4142, DEC-1794, master 589ecfd27, base Enterprise docs_ee_ee12_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee12_test): DOC-0056. Administrador: cofre (Novo com Descrição, Empresa, Portal, Nome de utilizador, Palavra-passe / segredo e os avisos «Este é um ambiente de teste…» e «O segredo é guardado cifrado…»; nada gravado); Definições › Utilizadores e empresas › Empresas, Empresa Demonstração, Lda com EAN/GLN; Retalhista Exemplo (EDI) com o separador EDI; Receber mensagens e Comunicações externas (Estado «Aceite (simulado)»). A primeira receção, feita com o administrador ainda na Empresa Teste Portugal, deu «5 mensagem(ns) nova(s)» nessa empresa. A arquitetura marca este artigo «com diferenças»: no ecrã não se viu nenhuma. Igual na cópia Community. Ver reports/LOTE_EE-12.md. */}
+
+## Resultado esperado
+
+- O retalhista fica com o separador **Faturação eletrónica (EDI)** preenchido e, a partir daí, as encomendas dele entram em **Vendas › Ordens › Encomendas recebidas**: veja [Como receber e responder a encomendas EDI](/fiscal-core/encomendas-edi).
+- Na demonstração, o **Retalhista Exemplo (EDI)** tem o GLN `5609999000012`, a loja **Loja Exemplo - Lisboa** o `5609999000036` e a empresa o `5609999000029`; os artigos `[EDI001] Bolachas de água e sal 200 g (EDI)` e `[EDI002] Sumo de laranja 1 L (EDI)` têm os códigos de barras `5609999110018` e `5609999110025`. São números de exemplo, sem validade real.
+- Em **EDI › Comunicações externas**, a receção de teste ficou com o **Estado** «Aceite (simulado)», o **Transporte** «Simulado» e o **Ambiente** «Teste».
+
+## Notas importantes
+
+- **Cada empresa tem o seu contrato e as suas credenciais.** Os campos do separador EDI também são por empresa: o mesmo retalhista pode trocar EDI com uma empresa e não com outra.
+- **Na demonstração não há Saphety.** As mensagens vêm de um simulador e o cofre de credenciais da demonstração está vazio («Ainda não há credenciais no cofre.»). Nesta documentação nunca se fez uma ligação à Saphety real, por isso os passos 1 e 7 com a Saphety verdadeira não foram vistos. O formato das mensagens de cada retalhista e o modo de ligação confirmam-se com a Saphety. Nesta versão, em **EDI › Comunicações externas**, o **Ambiente** é sempre «Teste».
+- **Custos.** A Saphety cobra por documento e por outros serviços. O preço pede-se à Saphety e é pago pela empresa.
+- <span className="fd-pending">Pendente de validação por contabilista certificado: o acordo de tratamento de dados (RGPD) com a Saphety, como subcontratante.</span>
+
+{/* Nota interna (DOCS-046, lote v5-FC, 2.ª ronda, master 6fb7ee1d4): perfis vistos no load_menus (admin, Gestor de contabilidade, Contabilista, Faturação: menu EDI e Encomendas EDI, que desde o comboio 193 são Troca de documentos e Vendas › Ordens › Encomendas recebidas). Cofre: admin abre Novo (Descrição, Empresa, Portal, Nome de utilizador, Palavra-passe / segredo); Gestor de contabilidade → Erro de Acesso. Não se gravaram credenciais (simulador). Erro do GLN provocado na Padaria Aurora (admin e Gestor), sem gravar. V5FC-08 saiu com o FAT-132 (visto com o admin, DOCS-065, master c643480c2). Guia de origem: Documentação Cliente/EDI e Peppol/ligar-o-edi-e-a-saphety.md. */}
+
+## Problemas frequentes
+
+### «Não é possível ativar o EDI: falta o GLN do cliente …»
+
+- **Sintoma:** ao gravar o cliente com **EDI ativo**, abre-se **Erro de Validação**: «Não é possível ativar o EDI: falta o GLN do cliente Padaria Aurora, Lda. O que aconteceu: cada mensagem EDI identifica o comprador e o fornecedor pelo respetivo GLN. Como resolver: preencha o GLN (campo «EAN/GLN») e tente de novo.». Nada é gravado.
+- **Causa:** o cliente (ou a empresa) não tem GLN.
+- **O que fazer:** carregue em **Fechar**, escreva o GLN no campo **EAN/GLN** do cliente (ou da empresa, no passo 2) e grave outra vez.
+
+### «Erro de Acesso» ao carregar em Novo no cofre
+
+- **Sintoma:** **Erro de Acesso** — «Não tem permissão para ver estas credenciais. Peça que lhe deem a permissão «Ver» para esta empresa e portal no cofre de credenciais. Peça ao administrador que a dê, em Contabilidade › Configurar › Cofre de credenciais › Permissões. Se ninguém tem ainda «Editar» nesta empresa, o primeiro passo é Contabilidade › Configurar › Cofre de credenciais › Iniciar o cofre.»
+- **Causa:** o seu perfil não grava credenciais.
+- **O que fazer:** peça ao **Administrador** que faça o passo 1.
+
+### Não vejo o separador «Faturação eletrónica (EDI)» nem a aplicação EDI
+
+- **Causa:** o seu perfil não tem a troca de EDI. Os perfis que a têm são o **Administrativo**, o **Contabilista** e o **Contabilista certificado** (e o administrador). A **Gerência** e o **Auditor / ROC** têm a aplicação **EDI**, mas sem o separador do cliente nem **EDI › Receber mensagens**.
+- **O que fazer:** peça ao **Administrador** que lhe dê o perfil certo.
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-03, master c2bf63c34, docs_demo_v23at_test, porta 8504): mensagem do cofre provocada por clique com um utilizador só com o perfil Contabilista certificado: Contabilidade › Configurar › Cofre de credenciais › Credenciais › Novo; é o texto de hoje, igual ao de «Antes de começar» */}

@@ -1,0 +1,87 @@
+---
+id: vendas-e-clientes
+slug: /management/vendas-e-clientes
+title: Como acompanhar as vendas e a rentabilidade por cliente
+sidebar_label: Vendas e clientes
+sidebar_position: 3
+description: Onde ver o que a empresa vendeu em cada mês, quanto vendeu a cada cliente e o que cada cliente rende face às horas gastas com ele.
+keywords: [vendas, clientes, rentabilidade, margem, evolução anual das vendas, evolucao anual das vendas, faturas de clientes, vendas por cliente, honorários, honorarios, horas, direção, direcao]
+doc_id: DOC-0272
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c689f7580)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [management/painel-da-direcao]
+---
+
+## Para que serve?
+
+A aplicação **Direção** tem três ecrãs para acompanhar as vendas: a **Evolução anual das vendas** (o total de cada mês), as **Faturas de clientes** (o que se vendeu a cada cliente) e a **Rentabilidade por cliente** (quanto cada cliente rende, face às horas gastas com ele).
+
+Todos mostram valores sem IVA.
+
+## Quando utilizar?
+
+- No fim do mês, para ver quanto se vendeu e comparar com o mês anterior.
+- Para saber quais são os clientes que mais compram.
+- Para saber se um cliente de serviços paga o que custam as horas que lhe dedicam.
+- Não use estes ecrãs para o IVA a entregar: para isso, veja [O que mostra o painel da Direção](/management/painel-da-direcao).
+
+## Onde encontrar?
+
+**Direção › Clientes e vendas** e, aí, **Evolução anual das vendas**, **Faturas de clientes** ou **Rentabilidade por cliente**.
+
+## Antes de começar
+
+O seu perfil é **Gerência**, que tem a aplicação **Direção**. Os passos foram feitos com este perfil, na Empresa Demonstração, Lda, a 1 de novembro de 2026; os totais de vendas foram revistos a 10 de novembro de 2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Direção › Clientes e vendas › Evolução anual das vendas**. Abre no ano atual, com uma linha por ano.
+2. Carregue na seta da linha **2026** para ver os meses. Em cada mês vê os **Documentos**, a **Quantidade** e as **Vendas líquidas**.
+   ![Evolução anual de vendas de 2026, com uma linha por mês (sem as colunas de variação, vazias em 2026) e o total de 38 documentos e 38.073,00 €](/images/management/vendas-e-clientes/01-evolucao-anual-das-vendas.png)
+3. Para comparar anos, use **Mês**, **Trimestre** e **Ano**, a lista de anos e **Comparar com período anterior**. **Exportar PDF** e **Exportar** guardam o que está no ecrã.
+4. Abra **Direção › Clientes e vendas › Faturas de clientes**. A lista abre com o filtro **Este mês e rascunhos sem data**: tire-o, carregando no **×**, para ver todas.
+5. Carregue em **Tabela dinâmica**, nos botões de vistas, e agrupe por **Cliente** (**Filtros** › **Agrupar por** › **Cliente**). Cada linha é um cliente, com o **Valor sem Impostos**.
+6. Abra **Direção › Clientes e vendas › Rentabilidade por cliente**. Cada cliente tem as **Horas**, o **Custo das horas**, os **Honorários faturados** e a **Margem**, mês a mês, e um **Total**.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, os três ecrãs são os mesmos (visto com um utilizador só com o perfil **Gerência**). **Evolução anual das vendas** abre o mesmo quadro, com **Documentos**, **Quantidade** e **Vendas líquidas**. **Faturas de clientes** abre com os filtros **Este mês e rascunhos sem data** e **Faturas ou Recibos** e tem a vista **Tabela dinâmica**. **Rentabilidade por cliente** tem as mesmas medidas: **Horas**, **Custo das horas**, **Honorários faturados** e **Margem**.
+
+A lista **Faturas de clientes** tem mais uma coluna, **Último lembrete**, com a data do último lembrete de faturas do Enterprise (veja a secção «No Enterprise» de [Como enviar avisos de cobrança aos clientes em atraso](/fiscal-core/avisos-de-cobranca)). Não muda os valores.
+
+{/* Nota interna (lote EE-13, DOCS-073 #4142, req 46633, DEC-1794, master 7f41ce71b, base Enterprise docs_ee_ee13_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee13_test): DOC-0272. Gerência: Evolução anual das vendas (visualizador do fiscaldoo; na base Enterprise 2026 tem 39 documentos e 38.193,00 €, contra 38 e 38.073,00 € na cópia Community: a base Enterprise tem mais uma fatura), Faturas de clientes (filtros e vistas Lista, Kanban, Tabela dinâmica, Gráfico e Atividade, iguais nas duas cópias; a coluna «Last Reminder» só no Enterprise, em inglês: EEA-072) e Rentabilidade por cliente (tabela dinâmica com as mesmas medidas). A seta da linha 2026 não se abriu pelo guião nas duas cópias: não conferida. Ver reports/LOTE_EE-13.md. */}
+
+{/* Nota interna (lote EE-15, comboio 197, master c689f7580, 12/11/2026; cópia Enterprise docs_ee_ee15_test (portas 8530/8531, cópia da odoo20_ee_test com ee_neutralizar) e cópia Community docs_demo_ee15_test (porta 8532), utilizadores criados nas cópias só com o perfil indicado): DOC-0272, I18N-045 (94e21f451). Gerência, Direção › Clientes e vendas › Faturas de clientes: colunas Número, Data, Cliente, Vencimento, Último lembrete, Sem impostos (moeda da empresa), Total, Em dívida, Estado. Ver reports/LOTE_EE-15.md. */}
+
+## Resultado esperado
+
+No exemplo:
+
+- **Evolução anual:** 2026 tem 38 documentos e 38.073,00 € de vendas líquidas, com 19,00 € em novembro.
+- **Faturas de clientes** por cliente: o total é 38.673,00 €. A diferença para os 38.073,00 € da evolução são 600,00 € de uma nota de crédito: a evolução desconta-as e a lista de faturas, com o filtro **Faturas ou Recibos**, não as conta.
+- **Rentabilidade por cliente:** a Padaria Aurora, Lda tem 11,50 horas, 322,00 € de custo, 383,60 € de honorários e 61,60 € de margem. Em junho a margem é negativa (−168,00 €): houve 6 horas e nenhuma fatura nesse mês.
+
+## Notas importantes
+
+- **A rentabilidade é de horas contra honorários**, não é a margem dos artigos vendidos. O custo vem das folhas de horas dos projetos e os honorários são as faturas menos as notas de crédito, sem IVA.
+- **Só aparecem clientes com horas ou honorários nesse mês.** No exemplo, só a Padaria Aurora tem linha própria, embora outros clientes tenham faturas. As horas sem cliente ficam na linha **Nenhum(a)**.
+- **Os números mudam com a data.** Um mês só conta os documentos já emitidos.
+
+## Problemas frequentes
+
+### As Faturas de clientes dizem «Ainda não emitiu faturas»
+
+- **Causa:** o filtro **Este mês e rascunhos sem data** está ativo e o mês ainda não tem faturas (em meses sem faturas, a lista abre vazia).
+- **O que fazer:** tire o filtro **Este mês e rascunhos sem data**. A mensagem «Sem faturas não há IVA para apurar nem nada a receber» refere-se só ao que a lista mostra.
+
+{/* Nota interna (DOCS-040, lote F4): defeito F4-03 (Direção › Faturas de clientes abre com «Este mês» e, vazia, diz «Ainda não emitiu faturas»). No perfil Gerência a Rentabilidade por cliente e a Evolução anual abriram com os dados de 2026. A coluna Cliente da Rentabilidade só tem a Padaria Aurora e «Nenhum(a)»; não se confirmou a regra de junção por projeto (o código diz «um projeto por cliente»). Com Enterprise não foi visto: «confirmar diferenças no ecrã (DOCS-004)». */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AY, 10/11/2026, master fa7915ea8, docs_demo_v23ay_test, porta 8505): Evolução anual de 2026 (38, 214,00, 38.073,00 €; novembro 19,00 €, FS POS26/1) e Faturas de clientes sem o filtro (Total 38.673,00 € na tabela dinâmica) lidos por clique com um utilizador só com o perfil Gerência; o filtro chama-se hoje «Este mês e rascunhos sem data». Captura 01 refeita. A Rentabilidade por cliente não foi revista. */}

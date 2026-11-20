@@ -1,0 +1,108 @@
+---
+id: preparar-os-ativos-para-o-fecho
+slug: /accounting-pt/preparar-os-ativos-para-o-fecho
+title: Como preparar os ativos para o fecho do exercício
+sidebar_label: Preparar os ativos para o fecho
+sidebar_position: 6
+description: Correr os avisos de fecho dos ativos fixos tangíveis (ativos em preparação há muito tempo, depreciação por processar, quota abaixo do mínimo fiscal, vida fiscal mais curta que a contabilística) e saber o que fazer com cada um.
+keywords: [avisos de fecho dos ativos, alertas de fecho, fecho do exercício, ativos em preparação, depreciação por processar, quota abaixo do mínimo fiscal, depreciação perdida, vida fiscal, regularizações de iva dos ativos, ativos fixos tangíveis, usa ou perde]
+doc_id: DOC-0129
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/ativos/processar-depreciacoes, accounting-pt/ativos/mapas-fiscais-dos-ativos, accounting-pt/ativos/abater-ou-vender-um-ativo]
+---
+
+## Para que serve?
+
+Antes de fechar o exercício, os ativos fixos tangíveis têm de estar com as depreciações lançadas. A janela **Avisos de fecho dos ativos** lê os ativos e diz, um a um, o que está por fazer: ativos ainda **Em preparação**, depreciações planeadas mas **por processar** (incluindo as de um ativo **Parado**), quotas contabilísticas **abaixo do mínimo fiscal** e ativos cuja **vida fiscal termina antes da contabilística**. Só lê: não altera nenhum ativo nem lança nada.
+
+## Quando utilizar?
+
+- Antes de fechar o exercício, e outra vez depois de processar as depreciações, para confirmar que não sobra nada.
+- Depois de alterar a vida útil de um ativo, para ver se a vida fiscal ficou mais curta que a contabilística.
+- **Não** o use como lista de lançamentos em falta de todo o fecho: só cobre os ativos fixos. O fecho completo está no painel do fecho do exercício.
+
+## Onde encontrar?
+
+**Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**, em **Listas de apoio**, **Avisos de fecho dos ativos**. O **Contabilista** e o **Contabilista certificado** têm-na. A **Gerência** e o **Auditor / ROC** também a abrem.
+
+O **Contabilista certificado** vê também um resumo em **Contabilidade › Fechar › Fecho do exercício › Painel do fecho do exercício** (ver abaixo). As **Regularizações de IVA dos ativos** estão nas mesmas listas de apoio.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado** (testado com ele até ao último passo) ou **Contabilista**, que também tem a janela.
+- Há ativos fixos registados e as depreciações do ano estão (ou deviam estar) processadas ([processar as depreciações do mês](/accounting-pt/processar-depreciacoes)).
+- O exemplo é o exercício de 2026 da Empresa Demonstração, Lda, a 07/11/2026: a quota de novembro da Impressora multifunções e dos Telemóveis da equipa comercial ainda não foi lançada.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês** e, em **Listas de apoio**, **Avisos de fecho dos ativos**. A janela mostra o **Ano de** (01/01/2026), o **Ano até** (31/12/2026) e **Em preparação: alertar após (meses)** (6, o valor de partida da empresa).
+   ![Janela Avisos de fecho dos ativos antes de verificar, com o ano de 2026 e o prazo de 6 meses](/images/accounting-pt/preparar-os-ativos-para-o-fecho/00-antes-de-verificar.png)
+2. Carregue em **Verificar**. A lista **Alerta**, **Ativo** e **O que fazer** mostra uma linha por facto. No exemplo são 6 linhas, porque cada ativo em uso tem períodos do ano por processar:
+   - **Depreciação por processar**: «2 período(s) de depreciação do ano estão planeados mas por processar (o primeiro: 30/11/2026). Processe-os antes de fechar.» (Impressora multifunções e Telemóveis da equipa comercial). Os restantes ativos têm 1 período (31/12/2026), que só passa a processar-se em dezembro.
+   ![Avisos de fecho de 2026: as seis linhas de depreciação por processar](/images/accounting-pt/preparar-os-ativos-para-o-fecho/01-alertas-de-fecho.png)
+3. **Em preparação há demasiado tempo.** O Servidor de cópias de segurança está **Em preparação** desde a aquisição em 01/11/2026. Com o prazo de 6 meses o ano de 2026 não o aponta (só passaram 2 meses). Se baixar **Em preparação: alertar após (meses)** para 1 e voltar a **Verificar**, aparece: «Em preparação desde a aquisição em 01/11/2026 (mais de 1 mês no fim do ano): não depreciou. Ponha-o em uso, ou cancele-o se a compra não avançou.» Num ativo em preparação não há depreciação: [registe e ponha-o em uso](/accounting-pt/registar-um-ativo) ou cancele-o.
+   ![Alerta de ativo em preparação com o prazo de 1 mês](/images/accounting-pt/preparar-os-ativos-para-o-fecho/02-ativo-em-preparacao.png)
+4. Resolva os **Depreciação por processar**: processe as depreciações até ao fim do ano em [Depreciações do mês](/accounting-pt/processar-depreciacoes) e carregue de novo em **Verificar**. O período de dezembro só se processa em dezembro; o aviso mantém-se até lá.
+5. **Quota abaixo do mínimo fiscal.** Para o exemplo, a vida útil contabilística do Mobiliário de escritório foi alterada para 40 anos ([alterar a vida útil](/accounting-pt/alterar-a-vida-util)), e depois do recálculo do quadro aparece: «A quota contabilística está abaixo da quota mínima fiscal: perdem-se 256,41 € de depreciação para efeitos fiscais no ano (DR 25/2009, art. 18.º). Reveja a quota ou aceite a perda.» O valor é a **Depreciação perdida** do ano: a parte da depreciação que, pela regra «usa ou perde», não volta a ser aceite como gasto. Reveja a vida útil, ou aceite a perda sabendo que é definitiva. (A vida útil foi reposta em 8 anos depois do exemplo.)
+   ![Aviso de quota abaixo do mínimo fiscal do Mobiliário de escritório, com a perda de 256,41 euros](/images/accounting-pt/preparar-os-ativos-para-o-fecho/05-quota-abaixo-do-minimo.png)
+6. **Vida fiscal mais curta que a contabilística.** O mesmo caminho avisa quando a depreciação fiscal termina antes do quadro contabilístico. Com a vida útil da Impressora multifunções em 6 anos e a depreciação fiscal a terminar mais cedo, e o ano de 2028 no **Ano de**/**Ano até**: «A depreciação fiscal termina em 31/01/2029 mas o quadro contabilístico corre até 31/01/2032: ficam por lançar 1.165,74 € de depreciação contabilística depois da vida fiscal, sem contrapartida fiscal. Reveja a vida útil (simule primeiro uma alteração no ativo) ou aceite a diferença.» O aviso entra quando o fim da vida fiscal cai dentro de 12 meses a contar do fim do ano (o prazo é uma definição da empresa): no exemplo, 2028 é o primeiro ano que o mostra, e o aviso repete-se nos anos seguintes enquanto o quadro contabilístico continuar (visto em 2029, 2030 e 2031). Os anos de 2026 e 2027 não o mostram.
+7. **Ativo parado.** Um ativo **Parado** com quotas do ano por processar também aparece, com outra frase: «Ativo parado: confirme se a depreciação deve ser suspensa. Há 2 período(s) de depreciação do ano planeados e por processar (o primeiro: 30/11/2026). Se deve continuar, retome o ativo e processe-os antes de fechar.» ([parar, retomar ou alterar a vida útil](/accounting-pt/alterar-a-vida-util)). O lote mensal, por omissão, deixa-o de fora.
+   ![Aviso do ativo parado: a Impressora multifunções com dois períodos por processar](/images/accounting-pt/preparar-os-ativos-para-o-fecho/04-ativo-parado.png)
+8. Quando terminar, **Exportar para folha de cálculo** grava o ficheiro `alertas_fecho_2026-12-31.xlsx` e **Imprimir** gera o PDF `Alertas de fecho dos ativos.pdf`, com a empresa, o NIF, o período e a data de emissão, e a tabela **Alerta**, **Ativo**, **O que fazer**. Use-os para guardar o estado do fecho.
+
+</StepByStep>
+
+### Contabilista certificado: o painel do fecho
+
+No **Painel do fecho do exercício**, depois de **Iniciar o fecho** e de confirmar o passo **Confirmar que já não há lançamentos por fazer**, o Contabilista certificado carrega em **Ver detalhe**, no passo **Regularizações de fim de exercício**, e vê os mesmos avisos de depreciação por processar (por exemplo, «Amortizações: Impressora multifunções - 2 período(s) de depreciação do ano estão planeados mas por processar…»), com os de diferimentos e de inventário. A verificação **Os ativos fixos estão prontos para o fim do ano** fica a amarelo até as depreciações estarem processadas. Antes de iniciar o fecho, o passo **Regularizações de fim de exercício** só tem **Ir fazê-lo**, que abre o processamento das depreciações, e os avisos de depreciação estão no **Ver detalhe** desta verificação.
+![Painel do fecho do exercício: o início do passo de regularizações de fim de exercício, com as primeiras depreciações por processar](/images/accounting-pt/preparar-os-ativos-para-o-fecho/03-painel-do-fecho.png)
+
+### Regularizações de IVA dos ativos
+
+A lista **Regularizações de IVA dos ativos** (**Fechar o mês**, em **Listas de apoio**) mostra, por ativo vendido ou abatido dentro do período de regularização, o **IVA deduzido**, o **A entregar ao Estado** e o **A deduzir (a favor do sujeito passivo)**, e o lançamento proposto em rascunho. Só existem linhas depois de **Alienar / Abater** um ativo ([abater ou vender um ativo](/accounting-pt/abater-ou-vender-um-ativo)); na demonstração a lista está vazia, e diz: «Aqui aparecem as regularizações de IVA dos ativos, uma por cada ativo vendido ou abatido dentro do período de regularização; são criadas pelo abate do ativo.» <span className="fd-pending">Pendente de validação por contabilista certificado: o período de regularização e o cálculo do IVA a entregar ou a deduzir (CIVA, art. 24.º).</span>
+
+## No Enterprise
+
+No Odoo Enterprise, **Avisos de fecho dos ativos** abre a mesma janela, e **Verificar** dá a mesma lista **Alerta**, **Ativo** e **O que fazer** (visto com um utilizador só com o perfil **Contabilista certificado**). No exemplo de 10/11/2026 são as mesmas 6 linhas **Depreciação por processar**, duas delas com o primeiro período a 30/11/2026.
+
+{/* Nota interna (lote EE-03, DOCS-073 #4142, DEC-1794, master e4dd4ae90, base Enterprise docs_ee_ee03_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0129. Contabilista certificado: Fechar o mês › Listas de apoio › Avisos de fecho dos ativos › Verificar: Edifício da loja (Porto), Licença do programa de gestão, Mobiliário de escritório e Viatura ligeira de mercadorias com 1 período (31/12/2026); Impressora multifunções e Telemóveis da equipa comercial com 2 (30/11/2026). Painel do fecho do exercício no menu do perfil. Exportar e Imprimir não carregados. Ver reports/LOTE_EE-03.md. */}
+
+## Resultado esperado
+
+- Antes de fechar, **Verificar** devolve só avisos que aceitou de forma consciente (por exemplo, uma perda fiscal conhecida) ou nenhum.
+- A janela e as exportações **não geram lançamentos**: só leem.
+- O Contabilista certificado vê o passo de fecho dos ativos sem avisos de depreciação por processar.
+
+## Notas importantes
+
+- **Só cobre os ativos fixos.** Não vê ativos sem quadro de depreciação nem o que está fora do ano escolhido: mude o **Ano de** e o **Ano até** para outro exercício.
+- **A janela só avisa.** Não grava nem impede nada; a decisão de fechar com um aviso é sua. No painel do fecho, a verificação dos ativos fica a amarelo (aviso), não a vermelho.
+- **A perda fiscal é definitiva.** Uma quota abaixo do mínimo fiscal perde-se; não se recupera nos anos seguintes. <span className="fd-pending">Pendente de validação por contabilista certificado: a regra do mínimo de depreciação e a sua definitividade (DR 25/2009, art. 18.º).</span>
+
+## Problemas frequentes
+
+### Não vejo «Avisos de fecho dos ativos» no menu Fechar
+
+- **Causa:** não é uma entrada do menu **Fechar**: está nas **Listas de apoio** de **Fechar o mês**.
+- **O que fazer:** abra **Fechar o mês** e procure em **Listas de apoio**, ou peça ao Contabilista.
+
+### O aviso de depreciação por processar não desaparece
+
+- **Causa:** o período seguinte (31/12/2026) ainda não pode ser processado, porque só se lança no fim do mês.
+- **O que fazer:** processe as depreciações em atraso e aguarde pelo mês de dezembro; o aviso do último período mantém-se até lá.
+
+### «Nada a rever: os ativos estão prontos para o fecho.»
+
+- **Causa:** o ano escolhido não tem ativos com períodos por processar, ativos em preparação há muito tempo, quotas abaixo do mínimo nem vida fiscal curta (no exemplo, 2025).
+- **O que fazer:** nada. Confirme que o **Ano de** e o **Ano até** são os do exercício que vai fechar.
+
+{/* Nota interna (DOCS-046, DOC-0129): visto em docs_demo_v6a4_test (master 8f78854ec) com o Contabilista, sem modo de programador; hub conferido com Responsável fiscal, Auditor e Gerência (ACC-216: V3A4-12 e V3A4-13 resolvidos, NV3G-01 resolvida). Tudo no ecrã: 6 linhas de 2026, parado (mesma contagem, frase própria), retomado, prazo 1 mês, 2025 vazio com a frase, 2028 com vida fiscal (Impressora a 6 anos), Mobiliário a 40 anos e reposto a 8; XLSX e PDF descarregados, PDF lido (identificação da empresa, período e data). Painel do fecho visto com o Responsável fiscal: mantém o passo e a verificação dos ativos. Lista de regularizações vazia: o ativo abatido da demonstração não gerou regularização. */}
+
+{/* Nota interna (DOCS-046, lote v23-K, 07/11/2026, master a3603e0f2, base docs_demo_v23k_test na 8434): artigo percorrido por clique com utilizadores criados só com cada valor do campo Perfil (DEC-1777). Contabilista certificado: passos 1 a 8 (capturas 00, 01, 02, 04 e 05 refeitas; 2025 com «Nada a rever…»; XLSX alertas_fecho_2026-12-31.xlsx e PDF «Alertas de fecho dos ativos.pdf» descarregados). Passo 6: o aviso só aparece depois de a vida da Impressora passar a 6 anos (DOC-0124, feito antes nesta cópia): na base-mãe v2 ela está em 5 anos, por isso 2028 e 2029 não davam aviso. Passo 5: Mobiliário a 40 anos e reposto a 8 pelo assistente. Passo 7: Impressora parada e retomada pelo assistente. Listas de apoio: Contabilista e Contabilista certificado têm «Avisos de fecho dos ativos»; Gerência e Auditor só «Regularizações de IVA dos ativos» (vazia, com a frase citada). Painel do fecho: o Contabilista não o tem; com o Contabilista certificado, antes de iniciar o fecho, «Regularizações de fim de exercício» só tem «Ir fazê-lo» e há a verificação «Os ativos fixos estão prontos para o fim do ano»; NÃO foi refeito o resto da secção (iniciar o fecho, «Ver detalhe» e a captura 03), que ainda diz «3 período(s)». */}

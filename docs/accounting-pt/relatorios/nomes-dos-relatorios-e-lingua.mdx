@@ -1,0 +1,88 @@
+---
+id: nomes-dos-relatorios-e-lingua
+slug: /accounting-pt/nomes-dos-relatorios-e-lingua
+title: Como ver o fiscaldoo em português e como se chamam os relatórios
+sidebar_label: Língua e nomes dos relatórios
+sidebar_position: 20
+description: Confirmar que o seu utilizador está em português, saber como se chama cada relatório no menu Consultar e o que fazer quando aparece um texto em inglês.
+keywords: [língua, lingua, idioma, português, portugues, inglês, ingles, preferências, preferencias, nomes dos relatórios, balancete, razão, extratos de terceiros, antiguidade de saldos, tradução, traducao]
+doc_id: DOC-0440
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c689f7580)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/usar-os-relatorios, accounting-pt/relatorios/balancete, troubleshooting/geral/como-pedir-suporte]
+---
+
+## Para que serve?
+
+O fiscaldoo mostra os menus, os relatórios, os botões e as mensagens na língua do seu utilizador. Este artigo diz onde se escolhe a língua e como se chama cada relatório do menu **Consultar**, para o encontrar pelo nome que usa na contabilidade.
+
+Como abrir e filtrar um relatório está em [Como filtrar, comparar períodos e exportar um relatório](/accounting-pt/usar-os-relatorios).
+
+## Quando utilizar?
+
+- Um menu, um relatório ou uma mensagem aparece em inglês.
+- Procura um relatório e não sabe em que grupo do menu está.
+
+## Onde encontrar?
+
+- A língua: no canto superior direito, carregue na sua inicial e em **As minhas preferências**, campo **Idioma**.
+- Os relatórios: **Contabilidade › Consultar**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**: muda as suas preferências e vê o menu **Consultar** com os nomes abaixo. Provado com um utilizador criado só com esse perfil.
+- A lista **Idioma** só tem as línguas instaladas na base. Instalar outra é tarefa de quem administra o sistema.
+- Visto a 8 de novembro de 2026 na `Empresa Demonstração, Lda`.
+
+## Como utilizar
+
+<StepByStep>
+
+1. No canto superior direito, carregue na sua inicial e escolha **As minhas preferências**. Abre-se a janela **Alterar as minhas preferências**.
+2. No separador **Preferências**, em **Idioma**, escolha **Portuguese / Português**. Na demonstração é a única opção.
+   ![Janela Alterar as minhas preferências, separador Preferências, com Idioma em Portuguese / Português, Notificação Por e-mail e os botões Atualizar preferências e Descartar](/images/accounting-pt/nomes-dos-relatorios-e-lingua/01-idioma.png)
+3. Carregue em **Atualizar preferências**. O ecrã volta a abrir na língua escolhida.
+4. Abra **Contabilidade › Consultar** e procure o relatório pelo nome, na tabela abaixo.
+
+</StepByStep>
+
+### Os relatórios do menu Consultar
+
+| Grupo | Relatórios |
+|---|---|
+| **Livros e balancetes** | Balancete, Razão, Diário, Pesquisa de lançamentos, Balancete analítico, Razão analítico, Movimentos analíticos, Análise analítica |
+| **Terceiros** | Extratos de terceiros, Antiguidade de saldos, Enviar extratos por e-mail, Histórico de cobranças |
+| **Demonstrações financeiras** | Balanço, Demonstração de resultados, Fluxos de caixa, Alterações no capital próprio, Rácios financeiros |
+| **Impostos e tesouraria** | Resumo dos impostos, Suporte à declaração periódica do IVA, Pendentes de reconciliação, Previsão de tesouraria, Relatório de pagamentos a fornecedores e colaboradores, Recebimentos por método de pagamento, Diferenças cambiais não realizadas, Gastos e rendimentos diferidos |
+| **Análise** | Perguntar aos números, Análise de faturas, Análise de fluxos de caixa, Vendas por cliente, Compras por fornecedor, Orçamentos, Relatório de orçamento versus realizado |
+
+Alguns nomes que convém conhecer: **Terceiros** é o conjunto de clientes, fornecedores e outros devedores e credores; **Linhas de lançamento** (em **Lançar**) são as linhas de débito e crédito de cada lançamento.
+
+## Resultado esperado
+
+- Os menus, os nomes dos relatórios, as colunas e os botões aparecem em português.
+
+## Notas importantes
+
+- **O que a língua do utilizador não muda:** os nomes que escreveu (terceiros, contas, artigos, rubricas) ficam como os escreveu.
+- **Ainda pode encontrar textos em inglês.** São traduções em falta no produto, não um erro da sua língua: diga-o ao suporte (ver «Problemas frequentes»).
+
+## Problemas frequentes
+
+### Um relatório ou uma mensagem aparece em inglês
+
+- **Causa:** o seu **Idioma** não é o português, ou falta a tradução desse texto no produto.
+- **O que fazer:** confirme o **Idioma** em **As minhas preferências**. Se está em português e o texto continua em inglês, anote o ecrã, o texto e o que estava a fazer, e siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte).
+
+### Não encontro um relatório que o guia antigo citava
+
+- **Causa:** alguns relatórios mudaram de nome ou só aparecem com o modo de programador (por exemplo, as versões genéricas dos fluxos de caixa).
+- **O que fazer:** procure-o pelo nome na tabela acima, ou escreva parte do nome na caixa **Pesquisar menu…** da barra de cima.
+
+{/* Nota interna (lote v23-AA, #4052 DOCS-069, tema que só a pasta congelada tinha: Relatórios/nomes-dos-relatorios-e-lingua.md; master 97b34fac3, docs_demo_v23aa_test, porta 8478). Percorrido por clique com um utilizador só com o Perfil Contabilista (aa.contab): menu do utilizador (Porque não vejo…?, Atalhos, Ligado, As minhas preferências, Terminar sessão), janela Mudar as Minhas Preferências com Idioma (só Portuguese / Português instalado; não se mudou de língua), lista do menu Consultar copiada do ecrã. O guia antigo chamava «Língua» ao campo (hoje Idioma), «Português (PT) / Português» à opção e citava o Mapa de Retenções na Fonte em Consultar (não está nesse menu). «In Odoo» e «monthly auto-posting enabled» em inglês: defeitos no LOTE_V23-AA. Os menus «Fluxos de caixa por tipo de conta» e «Fluxos de caixa por conta (indireto)» são da classe R «alt» do UX-055 (só em modo programador). */}
+
+{/* Nota interna (lote EE-15, comboio 197, master c689f7580, 12/11/2026, cópia Community docs_demo_ee15_test, porta 8532, utilizador criado na cópia só com o perfil Contabilista): I18N-049 (143b65382, em master): menu do utilizador › As minhas preferências abre «Alterar as minhas preferências» (antes «Mudar as Minhas Preferências»), separadores Preferências, Calendário e Segurança; Notificação com «No Odoo» (antes «In Odoo»). Captura 01 refeita no ecrã de hoje (duas colunas), com o nome do utilizador da cópia mudado para «Perfil Contabilista» por RPC. Ver reports/LOTE_EE-15.md. */}

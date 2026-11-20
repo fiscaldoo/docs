@@ -1,0 +1,85 @@
+---
+id: consolidacao
+slug: /accounting-pt/consolidacao
+title: Como preparar as contas consolidadas de um grupo de empresas
+sidebar_label: Contas consolidadas de um grupo
+description: O fiscaldoo não consolida. Como tirar os números de cada empresa para o consolidador, com o mesmo período, e eliminar as operações entre elas numa folha de cálculo.
+keywords: [contas consolidadas, consolidação, consolidacao, grupo de empresas, eliminar operações intragrupo, eliminar operacoes intragrupo, interesses minoritários, interesses minoritarios, balancete por empresa]
+doc_id: DOC-0156
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 255d77e63)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/dia-a-dia/faturas-entre-empresas-do-grupo, accounting-pt/relatorios/balancete, accounting-pt/relatorios/balanco]
+---
+
+{/* Nota interna (v13-ACC2, DOC-0156): base docs_demo_v13acc2_test, porta 8262, master f671d6842. XLSX do balancete por clique com Contabilista; soma de 2 empresas vista com administrador (só ele tem 3 empresas na demonstração): Mais filtros mostra «Empresas: 2 selecionado(s)» e o total muda de 32.238,60 para 396.655,38. As capturas não mostram o seletor: os nomes das empresas de exemplo trazem «Teste». A edição Enterprise tem app de consolidação própria, fora do âmbito e não vista. Sem elementos próprios na interface: sem mensagens próprias. */}
+
+## Para que serve?
+
+Explica como obter os números para as contas consolidadas de um grupo, ou seja, as contas do grupo como se fosse uma só empresa.
+
+**O fiscaldoo não consolida.** Não elimina saldos nem operações entre as empresas do grupo, não calcula interesses minoritários e não emite demonstrações consolidadas. Cada empresa fecha as suas contas no fiscaldoo, e a consolidação faz-se fora, numa folha de cálculo ou na ferramenta do consolidador.
+
+## Quando utilizar?
+
+- Quando o grupo tem de apresentar contas consolidadas, ou o consolidador pede os balancetes.
+- Quando quer ter uma ideia das contas do grupo, sem efeito legal.
+- A empresa-mãe de um pequeno grupo está dispensada de consolidar (Decreto-Lei n.º 158/2009, arts. 6.º, 7.º e 9.º-B; Código das Sociedades Comerciais, art. 508.º-A). Nos períodos iniciados a partir de 1 de janeiro de 2026, é pequeno o grupo que, em base consolidada, não ultrapassa dois destes três limites: total do balanço de 7.500.000,00 €, volume de negócios líquido de 15.000.000,00 € e média de 50 empregados (Decreto-Lei n.º 126-B/2025). <span className="fd-pending">Pendente de validação por contabilista certificado: as outras dispensas e exclusões e a aplicação a cada grupo. Limites conferidos nas publicações da Ordem dos Contabilistas Certificados, não em Diário da República.</span>
+
+## Onde encontrar?
+
+**Contabilidade › Consultar › Livros e balancetes › Balancete**. O mesmo se aplica ao [balanço](/accounting-pt/balanco) e à [demonstração de resultados](/accounting-pt/demonstracao-de-resultados). A empresa escolhe-se no canto superior direito.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**, **Contabilista certificado** ou **Auditor / ROC**, e tem acesso a todas as empresas do grupo. Se falta uma, peça ao administrador.
+- Cada empresa tem o período fechado e, de preferência, o mesmo **período** e a mesma moeda.
+- As faturas entre as empresas estão lançadas nas duas. Veja [como tratar as faturas entre empresas do grupo](/accounting-pt/faturas-entre-empresas-do-grupo).
+
+## Como utilizar
+
+<StepByStep>
+
+1. No canto superior direito, escolha **só uma** empresa do grupo.
+2. Abra **Balancete**. Escolha o período.
+3. Carregue em **Exportar** › **Exportar XLSX**. O nome do ficheiro traz a empresa e as datas.
+   ![Balancete com o menu Exportar aberto, com as opções Exportar XLSX, CSV e Imprimir](/images/accounting-pt/consolidacao/01-exportar-balancete.png)
+4. Repita para cada empresa do grupo, com o mesmo período.
+5. Na folha de cálculo, junte os ficheiros e elimine as operações entre as empresas (vendas e compras entre elas, dívidas e créditos entre elas, dividendos).
+6. Some o resto. A partir daqui, o consolidador prepara as contas do grupo.
+
+</StepByStep>
+
+## Exemplo da eliminação
+
+Exemplo ilustrativo: em outubro de 2026, a empresa A faturou 10.000,00 € à empresa B, sem IVA.
+
+| Conta | Empresa A | Empresa B | A eliminar | Grupo |
+|---|---|---|---|---|
+| Vendas | 10.000,00 € | | -10.000,00 € | 0,00 € |
+| Compras e gastos | | 10.000,00 € | -10.000,00 € | 0,00 € |
+| Clientes | 10.000,00 € | | -10.000,00 € | 0,00 € |
+| Fornecedores | | 10.000,00 € | -10.000,00 € | 0,00 € |
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o tratamento do IVA, do resultado por realizar em stocks e dos interesses minoritários. Estes acertos ficam fora do produto.</span>
+
+## Resultado esperado
+
+Tem um balancete por empresa, em XLSX e com o mesmo período, e uma folha onde as operações do grupo estão eliminadas. No fiscaldoo não muda nada: nenhuma destas operações cria lançamentos.
+
+## Notas importantes
+
+- **Duas empresas escolhidas somam, mas não consolidam.** Se escolher mais do que uma no canto superior direito, o balancete passa a mostrar a soma, e **Mais filtros** diz **Empresas: 2 selecionado(s)**. As operações entre as empresas continuam lá. Por isso, não use esse total como consolidado.
+- O fiscaldoo mostra o que está lançado em cada empresa. Não confere se a venda de A está registada como compra em B.
+- Se as empresas tiverem moedas diferentes, a conversão faz-se fora do fiscaldoo, na folha de cálculo.
+
+## Problemas frequentes
+
+**Não consigo escolher uma das empresas.** Não tem acesso a ela. Peça ao administrador.
+
+**Os valores vêm a mais.** Tem mais do que uma empresa escolhida. Confirme o canto superior direito: tem de mostrar só uma.
+
+**A venda de A não bate com a compra de B.** Pode haver um documento numa só empresa, ou com datas de períodos diferentes. Confirme os dois lados antes de eliminar.

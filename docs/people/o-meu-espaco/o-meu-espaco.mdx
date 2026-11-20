@@ -1,0 +1,48 @@
+---
+id: o-meu-espaco
+slug: /people/o-meu-espaco
+title: O que posso fazer no O meu espaço
+sidebar_label: O que posso fazer no O meu espaço
+sidebar_position: 1
+description: "O meu espaço é a aplicação do trabalhador: o recibo, as ausências, as presenças, as despesas e deslocações, as formações, o diretório, os dados pessoais e os documentos para confirmar."
+keywords: [o meu espaço, o meu espaco, trabalhador, meu recibo, minhas ausências, minhas presenças, pedir férias, minhas despesas, minhas deslocações, diretório, os meus dados, documentos por confirmar, minhas formações, horas de formação, portal do trabalhador]
+doc_id: DOC-0263
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/ausencias-e-presencas/registar-uma-ausencia, people/ausencias-e-presencas/saldos-de-ferias, troubleshooting/acesso-e-dados/so-os-seus-proprios-registos]
+---
+
+O meu espaço é a aplicação onde cada trabalhador vê e pede o que é seu, sem aceder aos dados dos colegas nem aos da empresa. Abre-se pelo perfil **Trabalhador**, que não vê mais nenhuma aplicação.
+
+![Barra do O meu espaço com os menus Recibos e documentos, Ausências e presenças, Formação, Deslocações e despesas, Diretório e o botão +, e a lista O meu recibo](/images/people/o-meu-espaco/01-menus-do-meu-espaco.png)
+
+## O que tem
+
+| Menu | O que mostra ou permite |
+|---|---|
+| **Recibos e documentos** | **O meu recibo** (a lista dos recibos de vencimento), **Os meus recibos anteriores** (os recibos trazidos do software usado antes, só de leitura; sem nenhum, diz «Sem recibos de um software anterior»), **Os meus comprovativos de rendimentos** e **Documentos por confirmar**. |
+| **Ausências e presenças** | **Pedir férias** (o calendário do ano, com o saldo de **Férias anuais** e o cartão **Novo Pedido**), **As minhas ausências** (a lista, com **Novo**) e **As minhas presenças** (um calendário semanal, também em lista, quadro e gráfico). |
+| **Formação** | **As minhas formações** e **As minhas horas de formação**. |
+| **Deslocações e despesas** | **As minhas despesas** (que também aceita um recibo carregado ou arrastado para o ecrã), **As minhas deslocações**, **Nova deslocação**, **Mês de deslocações**, **Os meus mapas mensais de deslocações**, **Deslocações da minha equipa** e **Requisitar uma viatura**. |
+| **Diretório** | Um cartão por colega, com o nome, a função e o e-mail de trabalho. |
+| **Os meus dados** | Pedidos para mudar o **IBAN**, a morada ou o contacto de emergência. |
+| **As minhas assinaturas** | A lista **Por assinar**, com os documentos que lhe pediram para assinar. Sem nenhum, diz «Nada à espera da sua assinatura». |
+
+Num ecrã de 1500 px de largura, a barra de menus já esconde **Os meus dados** e **As minhas assinaturas** atrás do botão «+»: carregue nele para os ver.
+
+## Como funciona
+
+- **Só vê o que é seu.** Cada lista mostra os seus registos. O que é de outra pessoa não abre: [Aparece «Só pode … os seus próprios…»](/troubleshooting/so-os-seus-proprios-registos).
+- **Os seus dados não mudam sozinhos.** Em **Os meus dados**, o pedido de mudar o **IBAN** é decidido pelos **Salários**, e o de mudar a morada ou o contacto de emergência pelos **Recursos Humanos**; só depois de aprovado é que a sua ficha muda. Enquanto não houver pedidos, a lista diz: «Peça para alterar o seu IBAN, a morada ou o contacto de emergência. Os Salários aprovam uma mudança de IBAN e o RH aprova uma mudança de morada ou de contacto de emergência, antes de qualquer alteração à sua ficha.»
+- **Estados vazios.** Sem nada para fazer, as listas dizem-no: **Documentos por confirmar** mostra «Nada à espera da sua confirmação», **As minhas formações** mostra «Ainda não tem formações» e **Os meus comprovativos de rendimentos** mostra «Os seus mapas de rendimentos aparecem aqui depois de emitidos.»
+- **Os pedidos de ausência ficam à espera de decisão.** Um pedido novo aparece em **Para Aprovar**; quem decide é descrito em [Como aprovar pedidos de férias e de ausência](/people/aprovar-ausencias).
+
+## Descarregar o recibo em PDF
+
+O recibo lê-se no ecrã e descarrega-se em PDF com o botão **Descarregar PDF**, na linha da lista **O meu recibo** ou no topo do recibo. Os passos estão em [Como ver e descarregar o meu recibo de vencimento](/people/ver-o-meu-recibo).
+
+{/* Nota interna (DOCS-040, F5-05, corrigido pelo PAY-063): o aviso «Sem acesso» ao descarregar o PDF foi retirado; o descarregamento do Trabalhador passou a funcionar. O DOC-0264 (cor4) descreve o passo no ecrã com o Trabalhador. «Deslocações e despesas» e «Os meus comprovativos» só se abriram até à lista; **Pedir férias** só até ao calendário. Pendente de validação. */}

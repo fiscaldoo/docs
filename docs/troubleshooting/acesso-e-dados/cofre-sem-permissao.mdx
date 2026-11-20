@@ -1,0 +1,92 @@
+---
+id: cofre-sem-permissao
+slug: /troubleshooting/cofre-sem-permissao
+title: Não tenho permissão para ver, usar ou alterar uma credencial do cofre
+sidebar_label: "Cofre: sem permissão"
+sidebar_position: 12
+description: O cofre de credenciais dá a cada pessoa o nível Nenhum, Ver ou Editar por empresa e portal. Numa empresa nova, o administrador inicia o cofre e dá as permissões; ninguém muda o seu próprio acesso e ninguém lê uma senha guardada.
+keywords: [cofre, cofre de credenciais, credenciais, palavra-passe do portal, senha, permissão Ver, permissão Editar, iniciar o cofre, administrador, peça ao administrador, não tem permissão para ver estas credenciais, só quem tem editar, não pode dar a si próprio, já está iniciado, nao tenho permissao, cofre sem permissao]
+doc_id: DOC-0426
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/seguranca-e-arquivo/cofre-de-credenciais, fiscal-core/at-e-saft/ligar-a-at, troubleshooting/acesso-e-dados/sem-permissao, troubleshooting/acesso-e-dados/cofre-sem-chave-de-cifra]
+---
+
+## Sintoma
+
+Ao abrir ou guardar uma credencial do cofre (a palavra-passe de um portal, de um banco ou de um fornecedor de IA), ao dar uma permissão ou ao iniciar o cofre, abre-se uma janela **Erro de Acesso** ou **Operação inválida** e nada é mostrado nem guardado.
+
+## Mensagem
+
+Copiadas do ecrã em **Contabilidade › Configurar › Cofre de credenciais**, na `Empresa Demonstração, Lda`: as duas primeiras com o perfil **Contabilista certificado**, as outras com o administrador.
+
+- Em **Credenciais › Novo**, sem a permissão **Ver**:
+  > «Não tem permissão para ver estas credenciais. Peça que lhe deem a permissão «Ver» para esta empresa e portal no cofre de credenciais. Peça ao administrador que a dê, em Contabilidade › Configurar › Cofre de credenciais › Permissões. Se ninguém tem ainda «Editar» nesta empresa, o primeiro passo é Contabilidade › Configurar › Cofre de credenciais › Iniciar o cofre.»
+
+  ![Janela Erro de Acesso: não tem permissão para ver estas credenciais, peça ao administrador que a dê em Permissões](/images/troubleshooting/cofre-sem-permissao/01-sem-permissao-para-ver.png)
+
+- Ao guardar uma credencial com **Ver** mas sem **Editar**:
+  > «Não tem permissão para criar, alterar ou apagar estas credenciais. Peça que lhe deem a permissão «Editar» para esta empresa e portal no cofre de credenciais. Peça ao administrador que a dê, em Contabilidade › Configurar › Cofre de credenciais › Permissões. Se ninguém tem ainda «Editar» nesta empresa, o primeiro passo é Contabilidade › Configurar › Cofre de credenciais › Iniciar o cofre.»
+
+- Em **Permissões**, ao mudar a linha com o seu próprio nome:
+  > «Não pode dar a si próprio, alterar nem retirar o seu acesso ao cofre de credenciais. Peça a outro administrador, ou a quem já tenha «Editar» no cofre desta empresa, que o faça.»
+
+  ![Janela Erro de Acesso: não pode dar a si próprio, alterar nem retirar o seu acesso ao cofre de credenciais](/images/troubleshooting/cofre-sem-permissao/02-nao-pode-dar-a-si-proprio.png)
+
+- Em **Iniciar o cofre**, quando alguém da empresa já tem **Editar**, a janela já o diz: «O cofre de credenciais desta empresa já está iniciado: Administrador (demonstração) pode(m) dar permissões, por isso não há nada a iniciar. As permissões dão-se em Contabilidade › Configurar › Cofre de credenciais › Permissões.»
+  Se carregar mesmo assim em **Confirmar** (janela **Operação inválida**):
+  > «O cofre da empresa Empresa Demonstração, Lda já está iniciado: Administrador (demonstração) pode(m) dar permissões. Dê as permissões em Contabilidade › Configurar › Cofre de credenciais › Permissões.»
+
+- Quem tem o acesso extra **Administração fiscal** (dado nos **Ajustes avançados**) também vê **Permissões** e **Iniciar o cofre**. Sem **Editar** na empresa, ao guardar uma permissão recebe: «Só quem tem «Editar» no cofre de credenciais da empresa Empresa Demonstração, Lda pode dar, alterar ou retirar permissões. Peça ao administrador que a dê, em Contabilidade › Configurar › Cofre de credenciais › Permissões. …»
+
+Cada uma destas recusas fica em **Auditoria › Registos › Registo de acessos** como **Cofre: acesso recusado**, com quem, quando, a empresa e o ecrã tocado, sem o segredo (visto com o administrador, depois de abrir uma credencial sem **Ver**, de mudar a própria linha e de confirmar **Iniciar o cofre** com o cofre já iniciado).
+
+## Causas verificadas
+
+- **O cofre de cada empresa começa sem acessos.** O ecrã **Permissões** diz-o quando está vazio: «Ainda ninguém tem acesso ao cofre de credenciais.» Sem uma linha para si, um utilizador não vê as credenciais.
+- **Numa empresa nova, o administrador inicia o cofre**, uma vez por empresa, e recebe **Editar** em todos os portais. O administrador dá as permissões aos outros. O perfil **Contabilista certificado** vê só **Credenciais**; o **Contabilista** não tem o menu **Cofre de credenciais**, mesmo com a permissão **Ver**.
+- **Três níveis.** **Nenhum** não vê as credenciais; **Ver** vê a descrição, o portal e o nome de utilizador; **Editar** também cria, altera e apaga credenciais. Em **Ver** e em **Editar**, a coluna **Aviso** diz «Não pode ler uma palavra-passe guardada. Fica registado no registo de auditoria.».
+- **Cada linha é por empresa e portal.** **Portal** vazio vale para todos os portais; escolher um portal limita a linha a esse portal.
+- **Ninguém muda o seu próprio acesso**, nem o administrador.
+- **Ninguém lê uma senha guardada**, com nenhum nível: não é uma falta de permissão. Veja [Como guardar senhas de portais no cofre de credenciais](/administration/cofre-de-credenciais).
+
+## O que confirmar
+
+1. A empresa escolhida no canto superior direito é a da credencial.
+2. Se existe uma linha para si em **Permissões**, com a empresa e o portal certos e o nível que a tarefa pede: **Ver** para abrir, **Editar** para guardar.
+3. Se o cofre da empresa já foi iniciado. A mensagem «já está iniciado» diz quem pode dar permissões.
+
+## Como resolver
+
+1. **O cofre da empresa ainda não foi iniciado:** o administrador abre **Contabilidade › Configurar › Cofre de credenciais › Iniciar o cofre** e carrega em **Confirmar** (veja [Como guardar senhas de portais no cofre de credenciais](/administration/cofre-de-credenciais), passos 1 e 2).
+2. **Precisa de Ver ou de Editar:** o administrador abre **Permissões**, carrega em **Novo**, escolhe o **Utilizador**, a **Empresa**, o **Portal** (vazio para todos) e o **Nível**, e carrega em **Guardar**.
+3. Volte a abrir o ecrã onde tinha o erro.
+
+Dê **Editar** só a quem põe ou troca credenciais. Para tirar um acesso, o administrador elimina a linha em **Permissões**.
+
+**Quem faz:** o administrador.
+
+## Resultado esperado
+
+A linha aparece em **Permissões**, a janela de erro deixa de aparecer nessa empresa e portal, e a mudança fica em **Auditoria › Registos › Registo de acessos** como **Cofre: permissão alterada**.
+
+## Quando contactar o suporte
+
+- Tem uma linha com o nível, a empresa e o portal certos, e a mensagem continua.
+- O administrador não consegue dar a permissão na empresa.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com a empresa, o portal, o seu perfil e a mensagem completa. Nunca envie a palavra-passe da credencial.
+
+{/* Nota interna (DOCS-052, ATWS-046 no master 461788688): todas as mensagens vistas no ecrã na base docs_demo_prod052_test (porta 8160), com utilizadores fictícios: sem Ver (Administração fiscal sem linha), Ver a gravar uma credencial, Ver a dar uma permissão, linha própria, segundo Iniciar o cofre. Contabilista com Ver: sem o menu do cofre. Desde o ATWS-047 (master 5086447e8), as mensagens dizem «Contabilidade › Configurar › Cofre de credenciais»: citações revistas no ecrã a 03/11 (docs-aud-052). */}
+
+{/* Nota interna (lote v23-G, #3947, master 5228a94bd, docs_demo_v23g_test, DOC-0426): menus vistos por load_menus e no ecrã com utilizadores criados só com cada valor do campo Perfil (DEC-1777): Contabilista certificado só Credenciais (Novo dá a janela «Não tem permissão para ver estas credenciais…», igual à citada); Administrativo, Contabilista, Processador de salários, Gestor de RH, Gerência, Trabalhador e Auditor sem o menu do cofre; admin com Credenciais, Tipos de portal, Domínios permitidos e Rodar a chave de cifra, sem Permissões nem Iniciar o cofre. Um utilizador com o perfil Contabilista certificado e o acesso Administração fiscal (Ajustes avançados, dado por RPC na cópia) vê Permissões e Iniciar o cofre; a janela Iniciar o cofre e a lista vazia de Permissões dizem o texto citado. Defeito: a mensagem do Contabilista certificado manda-o a menus que nenhum valor do campo Perfil mostra. */}
+
+{/* Nota interna (lote v23-Q, #3740 req. 46455 e #3947, master 808f8ca1f, docs_demo_v23q_test, porta 8452): mensagens de hoje (SEC-113/SEC-115, UX-124). No ecrã: Contabilista certificado (utilizador criado só com esse valor do campo Perfil, DEC-1777) em Credenciais › Novo sem Ver e a guardar com Ver; administrador na própria linha de Permissões e em Iniciar o cofre já iniciado. Pela integração: «Só quem tem «Editar»…» com um utilizador Contabilista certificado com o acesso extra Administração fiscal e sem Editar (o administrador já não a recebe: deu uma permissão numa empresa em que ninguém tinha Editar). A captura 03 (só quem tem Editar) saiu: a mensagem só se provocou pela integração. «Peça a outro administrador fiscal» e «Dá-a em» ficam letra a letra (defeitos no relatório do lote). */}
+
+{/* Nota interna (lote v23-AB, master 97b34fac3, docs_demo_v23ab_test, porta 8480, utilizadores criados só com cada valor do campo Perfil): mensagens de hoje (SEC-116) com o administrador e um utilizador só Contabilista certificado; captura 02 refeita. */}

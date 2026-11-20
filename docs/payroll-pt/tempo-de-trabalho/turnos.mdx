@@ -1,0 +1,140 @@
+---
+id: turnos
+slug: /payroll-pt/turnos
+title: Como organizar escalas de turnos e pagar o subsídio de turno
+sidebar_label: Escalas de turnos
+sidebar_position: 8
+description: Criar uma escala de turnos, colocar trabalhadores, registar quem trabalha em cada turno, imprimir o mapa de turnos e pôr o subsídio de turno no recibo.
+keywords: [organizar, escalas, turnos, pagar, subsídio, subsidio, turno, escalas de turnos, trabalhadores numa escala de turnos, registo dos turnos, mapa de turnos, subsídios de turno, subsidios de turno, rotação, rotacao, laboração contínua, laboracao continua, menores]
+doc_id: DOC-0193
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/tempo-de-trabalho/verificar-presencas, payroll-pt/configurar/rubricas-salariais, payroll-pt/processar-e-pagar/processar-o-mes]
+---
+
+## Para que serve?
+
+Define quem trabalha em que turno e guarda o registo que a lei pede, com um mapa para imprimir. O fiscaldoo recusa as escalas e os registos que passam os limites do Código do Trabalho: turnos longos de mais, mudanças de turno sem descanso, semanas sem descanso e menores de noite.
+
+A escala e o registo não mudam o recibo. O subsídio de turno entra no recibo por outro caminho: um registo do subsídio e uma rubrica que o pague (veja **Pôr o subsídio de turno no recibo**).
+
+## Quando utilizar?
+
+- Quando a empresa trabalha por turnos, por exemplo uma semana de manhã e outra de tarde.
+- Quando um trabalhador entra numa escala ou muda de escala.
+- Todos os dias ou semanas, para registar quem trabalhou em cada turno e ter o mapa pronto para uma inspeção.
+- Não use a escala para definir o horário do contrato: o recibo continua a ler o horário do contrato.
+
+## Onde encontrar?
+
+- Escalas: **Pessoas › Tempo de trabalho › Escalas de turnos**.
+- Horas de cada turno: **Pessoas › Configurar › Gestão de tempo › Horários de trabalho**.
+- Colocação, registo e subsídio: **Salários › Preparar › O que há para fazer este mês?**, nas ligações **Trabalhadores numa escala de turnos**, **Registo dos turnos** e **Subsídios de turno**, no fundo do ecrã.
+- Rubrica do subsídio: **Salários › Configurar › Rubricas › Rubricas salariais**.
+
+## Antes de começar
+
+- O seu perfil é **Gestor de RH**, ou tem o acesso extra **Administrador de Salários**. Os dois criam escalas e registos. O **Processador de salários** vê a escala e o registo, mas não os altera.
+- O trabalhador tem o **Aniversário** preenchido no separador **Pessoal** da ficha, se puder ser menor: é com esta data que o fiscaldoo calcula a idade. Preencha-a antes de escrever as linhas do trabalhador: as linhas já escritas não voltam a ser conferidas. A data não aparece no registo nem no mapa.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Pessoas › Tempo de trabalho › Escalas de turnos** e carregue em **Novo**. Sem escalas, a lista diz «As escalas de turnos aparecem aqui; crie uma em «Novo».»
+2. Em **Escala**, escreva o nome, por exemplo `Manhã e Tarde`. Marque **Laboração contínua** se a empresa trabalha sem interrupção. Preencha **Instrumento de regulamentação coletiva (IRCT)**, se existir.
+3. Carregue em **Adicionar uma linha**. Preencha **Semana do ciclo** (`1` na primeira) e **Turno** (`Manhã`).
+4. Em **Horário do turno**, escolha o horário com as horas desse turno. Se ainda não existir, escreva o nome e carregue em **Criar e editar…**: em cada dia, preencha **Trabalho de** e **Trabalho para** (no exemplo, das 07:00 às 15:00). Na última linha, não saia com a tecla Tab: abre uma linha vazia e **Guardar** dá o erro «The attendance should have a duration between 0 and 24 hours» (o Odoo mostra esta mensagem em inglês, sem tradução para português). **Criar** sem editar guarda um horário com 8 horas por dia, sem as horas do turno.
+5. Repita para a semana 2, `Tarde`, com o horário das 14:00 às 22:00. O fiscaldoo preenche **Dias úteis por semana** e **Turno da noite**.
+6. Guarde. Se o turno passar um limite da lei, aparece a mensagem correspondente (veja **Problemas frequentes**).
+   ![Escala Manhã e Tarde com dois turnos no ciclo de duas semanas, com cinco dias úteis por semana](/images/payroll-pt/turnos/01-escala-manha-e-tarde.png)
+7. Abra **Salários › Preparar › O que há para fazer este mês?** e carregue em **Trabalhadores numa escala de turnos**, no fundo do ecrã.
+8. Carregue em **Novo**. Na linha nova, preencha **Trabalhador**, **Escala**, **De**, **Até** (vazio se não tem fim) e **Posição no ciclo no início** (a semana do ciclo em que o trabalhador começa). Carregue em **Guardar**.
+   ![Trabalhador na escala Manhã e Tarde desde 02/11/2026, na posição 1 do ciclo](/images/payroll-pt/turnos/02-trabalhador-na-escala.png)
+9. Volte ao ecrã do mês e carregue em **Registo dos turnos**. A lista abre agrupada por **Turno**: retire esse agrupamento na barra de pesquisa e carregue em **Novo**. Preencha **Dia**, **Trabalhador** e **Turno**, por esta ordem, uma linha por trabalhador e por dia: a lista **Turno** vem vazia enquanto não houver trabalhador. Carregue em **Guardar**. A lista mostra **Turno da noite**, **Menor** e **Origem** («Escrito pelos RH»).
+   ![Registo dos turnos de um trabalhador no turno Manhã, com um dia por linha e a origem Escrito pelos RH](/images/payroll-pt/turnos/03-registo-dos-turnos.png)
+10. Para imprimir, marque as linhas do período, carregue em **Imprimir** e escolha **Mapa de turnos**. Descarrega «Mapa de turnos.pdf».
+
+</StepByStep>
+
+**Exemplo.** A escala **Manhã e Tarde** tem a semana 1 das 07:00 às 15:00 e a semana 2 das 14:00 às 22:00, de segunda a sexta. Cada turno tem 8 horas por dia e 40 por semana. Um horário das 15:00 às 23:00 fica com **Turno da noite** assinalado, por ter horas depois das 22:00.
+
+O mapa de 02/11/2026 a 07/11/2026 tem as colunas **Dia**, **Turno**, **Trabalhadores** e **Menores** e o texto «Registo dos trabalhadores de cada turno (Código do Trabalho, artigo 221.º, n.º 6).» Um trabalhador menor aparece pelo nome nas duas colunas, sem a data de nascimento.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: os limites legais aplicados pelo fiscaldoo a cada turno e a todas as escalas, mesmo fora da laboração contínua (Código do Trabalho, arts. 76.º e 221.º).</span>
+
+## Pôr o subsídio de turno no recibo
+
+1. Em **Salários › Preparar › O que há para fazer este mês?**, carregue em **Subsídios de turno**, no fundo do ecrã, e em **Novo**. Preencha **Trabalhador**, **Valor fixado por**, **Cláusula do IRCT ou decisão**, **Como é calculado** (**Valor mensal**, **Percentagem da retribuição base** ou **Valor por dia trabalhado**), **Valor** e **De**. Guarde.
+2. Em **Salários › Configurar › Rubricas › Rubricas salariais**, carregue em **Novo**, preencha **Nome** e **Código** e guarde. Só depois carregue em **Adicionar uma linha**. Na janela, preencha **Válido desde**, **Tipo de fonte**, **Categoria** e, em **Origem da quantidade**, escolha **Subsídio de turno (IRCT ou empresa)**. Carregue em **Guardar & Fechar** e guarde a rubrica.
+3. No recibo, carregue em **Calcular**. A linha da rubrica entra sozinha, com o valor do registo.
+
+**Exemplo.** Com 50,00 € por mês registados a partir de 01/12/2026 e a rubrica `TURNO`, de **Tipo de fonte** **Regra da empresa** e **Categoria** **Subsídios / Subsídio de turno**, o recibo de dezembro de 2026 ficou com a linha **Subsídio de turno**, de 50,00 €, ao lado da **Retribuição base** de 1.000,00 €.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a categoria da rubrica, o código de Segurança Social que ela leva e se o subsídio entra na retribuição de férias e nos subsídios de férias e de Natal.</span>
+
+## No Enterprise
+
+No Odoo Enterprise, as escalas, o registo dos turnos e o subsídio de turno fazem-se nos mesmos ecrãs: com o perfil **Gestor de RH**, **Pessoas › Tempo de trabalho › Escalas de turnos** abre a mesma lista, com o botão **Novo** e as colunas **Escala**, **Semanas do ciclo** e **Laboração contínua**.
+
+A aplicação **Planeamento** do Enterprise não está instalada na demonstração. Os turnos que contam para o recibo e para o **Mapa de turnos** são os que se registam como neste artigo.
+
+{/* Nota interna (lote EE-07, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee07b_test: cópia da odoo20_ee_test com a aplicação de salários do Enterprise (hr_payroll) instalada e o código de master; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado: Gestor de RH em Pessoas › Tempo de trabalho › Escalas de turnos (lista com Novo); aplicação Planeamento (planning) por instalar na cópia. Caminhos do artigo conferidos com o verificador do test_doc_paths na mesma cópia (0 erros). Ver reports/LOTE_EE-07.md. */}
+
+## Resultado esperado
+
+- A escala aparece em **Escalas de turnos**, com **Semanas do ciclo** a contar as linhas.
+- O trabalhador aparece em **Trabalhadores numa escala de turnos**, com a escala, a data e a posição.
+- O **Registo dos turnos** tem uma linha por dia e o **Mapa de turnos** imprime-se sem erros.
+- O recibo do trabalhador com subsídio registado tem a linha da rubrica, com o valor do registo.
+
+## Notas importantes
+
+- **O valor do subsídio não vem da lei.** O Código do Trabalho não fixa o valor: vem do IRCT, do contrato ou de uma decisão da empresa.
+- **As linhas do registo escrevem-se à mão.** Não há botão para as gerar a partir da rotação da escala.
+
+## Problemas frequentes
+
+### O turno é recusado ao guardar a escala
+
+- **Sintoma:** «O turno «Longo» tem 10.0 horas num dia e a lei permite até 8.0. O que aconteceu: o art. 221.º/3 diz que a duração de cada turno não pode passar o período normal máximo. Como resolver: encurte as horas do horário do turno.»
+- **Causa:** o horário do turno passa o limite diário.
+- **O que fazer:** encurte as horas do horário.
+
+### A colocação na escala é recusada
+
+- **Sintoma:** uma destas mensagens:
+  - «A posição 3 não é uma semana do ciclo da escala «Manhã e Tarde» (tem 2). Como resolver: escolha uma posição entre 1 e 2.»
+  - «Novo Colaborador já está numa escala de turnos nesse período. O que aconteceu: um trabalhador está numa rotação de cada vez. Como resolver: termine a outra escala antes do início desta.»
+  - «A escala de Novo Colaborador termina antes de começar. Como resolver: corrija as datas.»
+- **Causa:** a posição não existe no ciclo, o trabalhador já tem uma escala em aberto nessas datas, ou **Até** é anterior a **De**.
+- **O que fazer:** escolha uma posição do ciclo, termine a escala anterior antes do início da nova, ou corrija as datas.
+
+### A linha do registo é recusada
+
+- **Sintoma:** uma destas mensagens:
+  - «A operação não pode ser concluída: O trabalhador já tem um turno nesse dia.»
+  - «Novo Colaborador passa do turno «Manhã» para «Tarde» em 07/11/2026 sem dia de descanso pelo meio. O que aconteceu: o art. 221.º/4 só permite mudar de turno depois do dia de descanso semanal. Como resolver: deixe um dia de descanso antes da mudança de turno.»
+  - «Novo Colaborador 2 trabalharia 7 dias nos sete dias a partir de 02/11/2026. O que aconteceu: o art. 221.º/5 exige pelo menos 1 dia de descanso em cada sete. Como resolver: deixe um dia sem turno.»
+- **Causa:** só há um turno por dia, a mudança de turno exige um dia de descanso antes e tem de haver pelo menos um dia de descanso em cada sete. A mudança é conferida nos dois sentidos: escrever um dia anterior depois do seguinte dá a mesma recusa.
+- **O que fazer:** corrija a linha repetida ou deixe o dia de descanso.
+
+### Um menor é recusado num turno
+
+- **Sintoma:** «Novo Colaborador 3 é menor e não pode ser colocado no turno «Tarde até às 23» em 05/11/2026. O que aconteceu: o art. 76.º proíbe o trabalho de menores de 16 anos entre as 20:00 e as 07:00, e de menores de 16 ou mais anos entre as 22:00 e as 07:00 (salvo atividade de um IRCT, nunca entre as 0 e as 5 horas). …»
+- **Causa:** o trabalhador é menor e o turno tem horas que a lei proíbe para a idade dele.
+- **O que fazer:** escolha um turno diurno. Para um menor de 16 ou mais anos, se um IRCT o permitir, mostre a coluna opcional **Exceção do art. 76.º/3 (IRCT)** e preencha-a com a referência do IRCT (a linha é aceite, se o turno não tiver horas entre as 0 e as 5). Para um menor de 16 anos, a referência não muda a recusa. <span className="fd-pending">Pendente de validação por contabilista certificado: a aplicação da exceção do art. 76.º, n.º 3.</span>
+
+### O recibo com subsídio de turno não se valida
+
+- **Sintoma:** uma destas mensagens, em **Validar**:
+  - «O recibo «Novo Colaborador (01/12/2026 — 31/12/2026)» não pode ser validado: há um subsídio de turno registado para o trabalhador e ficaria por pagar. O que aconteceu: não existe nenhuma rubrica em vigor que o pague. Como resolver: crie a rubrica em Salários › Configurar › Rubricas › Rubricas salariais com a origem «Subsídio de turno (IRCT ou empresa)» e calcule o recibo de novo.»
+  - «O recibo «Novo Colaborador (01/12/2026 — 31/12/2026)» não pode ser fechado: as rubricas «TURNO» estão sujeitas a Segurança Social, têm valor e não têm código de Segurança Social. O que aconteceu: a declaração da Segurança Social ficaria errada. …»
+- **Causa:** o subsídio está registado, mas falta a rubrica, ou a rubrica não tem o código de Segurança Social.
+- **O que fazer:** crie a rubrica como em **Pôr o subsídio de turno no recibo**, peça ao contabilista o código de Segurança Social, ou se a rubrica é não sujeita (a outra saída que a mensagem dá), e carregue em **Calcular** de novo.
+
+{/* Nota interna (DOCS-046, lote v12-PAY, master a060fe441): repetidos por clique com Administrador de Salários e os nomes novos: lista vazia, turno longo, posição, colocação repetida, datas trocadas, mesmo dia, mudança de turno, 7 dias (5 linhas anteriores por API), menor de 16 anos recusado (Aniversário por API), subsídio pela ligação do ecrã do mês, recibo sem rubrica, rubrica sem código de SS. Ronda v9-E, master 52dd90689: lista vazia, turno longo, posição, colocação repetida, datas trocadas, mesmo dia, mudança de turno, 7 dias (6 linhas anteriores por API), menor de 17 anos recusado e aceite com a referência do IRCT num turno das 15:00 às 23:00, Aniversário escolhido no calendário do separador Pessoal. Horários e trabalhadores de exemplo por API. Perfis por clique: RH tem Novo nas quatro listas, Processador de Salários vê-as sem Novo; auditoria V9E: o RH guardou escala, colocação e linha do registo, e provocou seis recusas. Da ronda v9-A, auditoria: Criar e editar, Imprimir › Mapa de turnos, recusa do menor de 16 anos com referência, rubrica sem código de SS. Auditoria V9E: subsídio sem rubrica por clique. Não repetido: validar até ao fim com o código de SS (é decisão do contabilista). */}

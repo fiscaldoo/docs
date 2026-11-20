@@ -1,0 +1,128 @@
+---
+id: ativo-com-periodos-processados
+slug: /troubleshooting/ativo-com-periodos-processados
+title: Não consigo alterar um ativo com depreciações processadas ou já abatido
+sidebar_label: Ativo com depreciações processadas
+description: Porque a data de início, o abate e o histórico de um ativo não se alteram, e o que fazer em cada caso.
+keywords: [alterar ativo, ativo fixo, depreciações processadas, data de entrada em funcionamento, data de início de utilização, anular processamento, ativo abatido, ativo alienado, reverter baixa, eliminar ativo, operação inválida, lote de depreciações]
+doc_id: DOC-0381
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 8c5a23228)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/ativos/processar-depreciacoes, accounting-pt/ativos/abater-ou-vender-um-ativo]
+---
+
+## Sintoma
+
+Quer corrigir um ativo que já tem depreciações processadas, ou que já foi abatido ou vendido, e ao gravar aparece a janela **Operação inválida**. As mensagens estão abaixo, caso a caso.
+
+## Mensagem
+
+Ao mudar a **Data de início de utilização** de um ativo com períodos processados:
+
+> «A data de entrada em funcionamento não pode ser alterada depois de haver períodos processados: as linhas processadas estão confirmadas e as datas a partir das quais foram calculadas têm de se manter. Corrija criando um novo ativo.»
+
+![Janela Operação inválida com a recusa de alterar a data de entrada em funcionamento](/images/troubleshooting/ativo-com-periodos-processados/01-data-recusada.png)
+
+Ao eliminar um ativo que tem lançamentos (menu **⋮** ao lado do nome, **Eliminar**):
+
+> «O ativo “*Telemóveis da equipa comercial*” tem lançamentos contabilísticos e não pode ser eliminado: o seu histórico tem de ser mantido. Anule o processamento, ou aliene ou abata o ativo, em alternativa.»
+
+Ao alterar um ativo abatido ou alienado:
+
+> «O ativo “*Computadores portáteis e servidor*” foi alienado ou abatido e não pode ser alterado (*name*): só se editam as notas e os anexos. Se o abate estava errado, o contabilista certificado reverte-o no registo do abate, com um motivo.»
+
+A palavra entre parênteses é o nome interno do campo: *name* é o **Nome**.
+
+Ao carregar em **Anular lote** num lote de depreciações com um lote posterior confirmado (o **Motivo do cancelamento** tem de estar escrito; sem ele, a recusa é «Escreva o motivo do cancelamento do lote “*Mês 31/10/2026*” antes de o cancelar.»):
+
+> «O lote “*Mês 31/10/2026*” não pode ser anulado enquanto o lote posterior “*Mês 30/11/2026*” estiver confirmado para alguns dos seus ativos: anule primeiro o posterior.»
+
+Ao alienar um ativo que tem componentes em uso:
+
+> «O ativo “*Mobiliário de escritório*” tem componentes em uso (*Licença do programa de gestão*): aliene-os ou abata-os primeiro, para que cada um saia da contabilidade com o seu valor, e depois aliene o ativo principal.»
+
+## Causas verificadas
+
+- **Os períodos processados são histórico.** Já têm lançamento. O fiscaldoo não os muda: reverte-os com lançamentos novos.
+- **Um abate ou uma venda fecham o ativo.** Só as notas e os anexos continuam editáveis, até a baixa ser revertida.
+- **Os lançamentos ficam para sempre.** Depois de anular o processamento, o ativo continua a não se poder eliminar: os lançamentos e as reversões ficam na contabilidade.
+
+## O que confirmar
+
+1. O estado do ativo, no canto superior direito da ficha: **Em uso**, **Parado** ou **Abatido**.
+2. O que está errado: a **data de início**, o **custo** ou a **vida útil**, ou o ativo inteiro.
+3. Se também há períodos fiscais processados: no separador **Plano de depreciação**, linhas com o **Tipo** **Fiscal** e o **Estado** **Processado**. **Anular processamento** não os reverte.
+
+## Como resolver
+
+### A data de início está errada
+
+**Quem faz:** Contabilista.
+
+1. Abra a ficha, carregue em **Ações** e em **Anular processamento**.
+2. Na janela «Os períodos confirmados são revertidos com novos lançamentos (nada é eliminado). Continuar?», carregue em **Confirmar**.
+3. Confirme que **Já depreciado**, no topo da ficha, ficou sem valor: mostra um traço (**—**). No exemplo, nos **Telemóveis da equipa comercial**, os movimentos passaram de 9 para 18: os 9 originais e as 9 reversões.
+4. Altere a **Data de início de utilização** e grave.
+5. Processe outra vez os períodos: [Como processar as depreciações](/accounting-pt/processar-depreciacoes).
+
+**Limite de hoje:** **Anular processamento** também aceita um período de um exercício já fechado, sem avisar. No **Edifício da loja (Porto)**, com o período de 31/12/2025 e o exercício de 2025 fechado, o lote seguinte não se confirmou: «O exercício 2025 (01/01/2025 a 31/12/2025) está fechado: não pode criar o lançamento (novo, por gravar) datado de 31/12/2025. …» Antes de anular, veja no separador **Plano de depreciação** as datas dos períodos processados.
+
+Se a recusa continuar, o ativo tem um período fiscal processado. Aconteceu no **Edifício da loja (Porto)**: com o período fiscal de 31/12/2025 processado, depois de anular, a data continuou recusada. Nesse caso siga o que a mensagem pede e crie um ativo novo. <span className="fd-pending">Pendente de validação por contabilista certificado: como tratar o ativo antigo quando se cria um novo só para corrigir a data.</span>
+
+### O custo ou a vida útil estão errados
+
+**Limite de hoje:** no separador **Quadro contabilístico** da ficha, os campos **Valor de aquisição** e **Vida útil contabilística (anos)** ainda aceitam a alteração, sem aviso, com o ativo em uso. Não é a regra: está previsto passar a ser recusado. Enquanto for possível:
+
+1. Altere o valor e grave.
+2. Em **Ações**, carregue em **Calcular quadro contabilístico**.
+
+Os períodos processados não mudam e os que faltam são recalculados. Na **Impressora multifunções** (2.400,00 €, 5 anos, 8 meses processados a 40,00 €), passar para 2.600,00 € e 6 anos deixou os 8 meses iguais. O valor por depreciar (2.280,00 €) ficou repartido pelos 64 meses que faltam: 35,63 € no mês seguinte.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: quando uma alteração destas é um erro a corrigir e quando é uma alteração de estimativa, e que consequências tem para os limites fiscais do Decreto Regulamentar 25/2009.</span>
+
+{/* Nota interna (DOCS-046, v8-TS5, master 8c5a23228): o ACC-245 vai recusar alterar o custo e a vida útil de um ativo em uso. Quando entrar em master, refazer esta secção no ecrã, com a mensagem nova; a vida útil continua em «Parar / alterar vida útil» (DOC-0124). */}
+
+Para alterar só a vida útil há também um caminho próprio, que fica no histórico: [Como alterar a vida útil](/accounting-pt/alterar-a-vida-util).
+
+### O abate ou a venda estavam errados
+
+**Quem faz:** Contabilista certificado. Com o perfil **Contabilista**, o botão não aparece.
+
+1. Na ficha do ativo, carregue em **1 alienação** e abra o registo.
+2. Escreva o **Motivo da reversão**.
+3. Carregue em **Reverter baixa** e em **Confirmar**. Sem motivo, a recusa é «Escreva o motivo da reversão antes de reverter a baixa de “*Computadores portáteis e servidor*”.».
+
+No exemplo, o ativo voltou a **Em uso** e os movimentos passaram de 3 para 4: os lançamentos da baixa são revertidos, não apagados.
+
+### O lote ou o componente
+
+- **Lote:** comece pelo lote mais recente: escreva o **Motivo do cancelamento** e carregue em **Anular lote** e em **Confirmar**. Depois faça o mesmo no anterior. O resto está em [Como processar as depreciações](/accounting-pt/processar-depreciacoes).
+- **Componente:** aliene ou abata primeiro cada componente e só depois o ativo principal: [Como abater ou vender um ativo](/accounting-pt/abater-ou-vender-um-ativo).
+
+## Se tentar por outro caminho
+
+Estas recusas não aparecem nos botões da ficha, porque os campos estão bloqueados. Surgem numa importação ou numa integração, e foram copiadas tentando por integração:
+
+- **Voltar a «Em preparação»:** «O ativo “*Impressora multifunções*” tem períodos processados ou lançamentos: não pode voltar a “Em preparação”. Anule primeiro o processamento (os lançamentos são revertidos).»
+- **Alterar o código:** «O código de um ativo não pode ser alterado depois de atribuído: identifica o ativo no inventário, nas linhas de depreciação e nos mapas fiscais. Se estava errado, crie um novo ativo.»
+- **Alterar um período processado:** «Um período fiscal processado não pode ser alterado: está confirmado. Altere os parâmetros do ativo para afetar apenas os períodos ainda planeados.»
+- **Reabrir um período processado:** «Um período processado não pode ser reaberto à mão: o seu lançamento está publicado. Use «Anular processamento» (o lançamento é revertido, nunca eliminado) e processe-o de novo.»
+- **Alterar, eliminar ou criar um evento do histórico:** «Um evento do ativo não pode ser alterado: o histórico é imutável. Corrija um erro com um novo evento.», «Um evento do ativo não pode ser eliminado: o histórico é imutável. Corrija um erro com um novo evento.» e «Os eventos do ativo são escritos só pelo sistema; não podem ser criados à mão.»
+
+## Resultado esperado
+
+- Depois de **Anular processamento**, **Já depreciado** fica sem valor e a **Data de início de utilização** pode ser alterada.
+- Depois de **Reverter baixa**, o ativo volta a **Em uso**: os lançamentos da baixa são revertidos, não apagados.
+
+## Quando contactar o suporte
+
+Veja [A operação não é possível no estado em que o ativo está](/troubleshooting/estado-do-ativo-nao-permite). Se não for esse o caso, [peça suporte](/troubleshooting/como-pedir-suporte).
+
+## Informação a enviar
+
+- O código do ativo.
+- O texto da mensagem.

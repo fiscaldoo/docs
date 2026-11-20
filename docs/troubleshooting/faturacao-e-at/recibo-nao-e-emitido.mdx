@@ -1,0 +1,114 @@
+---
+id: recibo-nao-e-emitido
+slug: /troubleshooting/recibo-nao-e-emitido
+title: "Não consigo emitir o recibo: a data é anterior ao último recibo da série, ou é posterior a hoje"
+sidebar_label: Não consigo emitir o recibo
+description: O que fazer quando a janela Emitir recibo recusa a Data de Pagamento, por ser anterior ao último recibo da série ou posterior a hoje, ou quando a fatura não tem o botão Emitir recibo.
+keywords: [não consigo emitir o recibo, nao consigo emitir o recibo, recibo recusado, Emitir recibo, Criar Pagamento, anterior ao último documento já numerado na série, anterior ao ultimo documento ja numerado na serie, foi emitido com a data futura, data futura, é posterior a hoje, posterior a hoje, recibo com data de amanhã, Nada foi registado, a série só aceita documentos com data posterior, a serie so aceita documentos com data posterior, Despacho 8632/2014, série RG, serie RG, recibo, data do recibo, Data de Pagamento, fatura-recibo, FR, botão Emitir recibo não aparece, botao emitir recibo nao aparece, Operação inválida]
+doc_id: DOC-0344
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master d88933a51; revisto em ab9649f2e)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/recibos-e-cobrancas/emitir-um-recibo, troubleshooting/faturacao-e-at/data-anterior-ao-ultimo-documento, fiscal-core/certificacao/series-documentais]
+---
+
+## Sintoma
+
+Acontece uma de duas coisas:
+
+- na fatura, carregou em **Emitir recibo** e depois em **Criar Pagamento**, e abriu-se a janela **Operação inválida**: o recibo não é emitido e a janela **Emitir recibo** continua aberta;
+- a fatura não tem o botão **Emitir recibo**.
+
+Os passos normais para emitir um recibo estão em [Como emitir um recibo](/fiscal-core/emitir-um-recibo). Este artigo trata só do que impede a emissão.
+
+## Mensagem
+
+Quando a **Data de Pagamento** é anterior à do último recibo da série:
+
+> «O documento “(ainda sem número)” tem a data *30/10/2026*, anterior ao último documento já numerado na série “*RG D26*” (*RG D26/17*, datado de *31/10/2026*). Uma série certificada numera documentos por ordem cronológica; corrija a data ou use uma data igual ou posterior a *31/10/2026*.»
+
+![Janela Operação inválida ao emitir um recibo com a data 30/10/2026, anterior ao último recibo da série RG D26, o RG D26/17, de 31/10/2026](/images/troubleshooting/recibo-nao-e-emitido/01-data-anterior-ao-ultimo-recibo.png)
+
+Quando a **Data de Pagamento** é posterior a hoje:
+
+> «A data do recibo (*01/11/2026*) é posterior a hoje (*31/10/2026*). Um recibo regista um pagamento já recebido: use a data de hoje ou uma anterior. Depois de emitido, a série fica fechada a recibos datados até *01/11/2026*, e anular o recibo não a reabre (o número e a data de um documento anulado ficam na série). Nada foi registado.»
+
+![Janela Operação inválida: a data do recibo, 01/11/2026, é posterior a hoje, 31/10/2026, e nada foi registado](/images/troubleshooting/recibo-nao-e-emitido/03-data-de-pagamento-futura.png)
+
+As duas mensagens foram provocadas na base de demonstração a 31/10/2026, com o perfil **Administrativo**. A segunda primeiro, na `FT D26/31` (123,00 €), com a data de amanhã. Depois de emitidos os recibos de hoje (`RG D26/16` e `RG D26/17`), o recibo da `FT D26/29` com a data de ontem deu a primeira. As partes em itálico mudam com o documento. A primeira mensagem nomeia o último recibo da série e a data dele: é essa data que conta, e não a da fatura.
+
+## Causas verificadas
+
+- **A Data de Pagamento é anterior à do último recibo da série.** Os recibos de uma série seguem a ordem das datas. A explicação completa, igual nas faturas e nos recibos, está em [A fatura não pode ter data anterior à do último documento da série](/troubleshooting/data-anterior-ao-ultimo-documento).
+- **A Data de Pagamento é posterior a hoje.** Um recibo regista um pagamento que já foi recebido. A janela **Emitir recibo** aceita que escreva a data, mas **Criar Pagamento** recusa-a e não regista nada: depois de **Fechar**, a janela continua aberta com a data que escreveu.
+- **A série de recibos já tem um recibo com data posterior a hoje.** Hoje a janela **Emitir recibo** não deixa emitir um recibo assim, mas uma série pode ter um de antes (por exemplo, emitido numa versão anterior do fiscaldoo). Nesse caso, a série só aceita recibos com data posterior à desse recibo, mesmo depois de ele ser anulado (veja «Como resolver»).
+- **Não há botão Emitir recibo porque a fatura já está paga.** Acontece numa fatura **Pago** e numa fatura-recibo (`FR`): a fatura-recibo regista o pagamento quando é confirmada e não precisa de recibo à parte. Na demonstração, a `FR D26/6` (12,30 €), confirmada pelo perfil **Administrativo** no diário **Faturas-recibo (FR)**, ficou logo **Pago**, com o pagamento `PCX/2026/00026` (diário **Caixa**, **Reconciliado**), e mostra **Enviar**, **Imprimir**, **Nota de Crédito** e **Ações**, sem **Emitir recibo**.
+
+  ![Fatura-recibo FR D26/6 com o botão Pagamentos assinalado, a etiqueta Pago, a barra Rascunho / Publicada e os botões Enviar, Imprimir, Nota de Crédito e Ações, sem Emitir recibo](/images/troubleshooting/recibo-nao-e-emitido/02-fatura-recibo-paga.png)
+
+  Os lançamentos da `FR D26/6` (conferidos no razão): na fatura, 2111 Clientes gerais D 12,30 € / 711 Mercadorias C 10,00 € / 2433 IVA - Liquidado C 2,30 €; no pagamento, 120002 Recebimentos Pendentes D 12,30 € / 2111 Clientes gerais C 12,30 €.
+
+{/* Nota interna (correções finais antes da junção, 31/10/2026, master ab9649f2e, base docs_demo_corfin_test, cópia da base-mãe): o P-E1-01 está resolvido em master. Por clique, com a Faturação: FT D26/31 com a Data de Pagamento 01/11/2026, Criar Pagamento, «Operação inválida» com a mensagem citada; Fechar deixa a janela Emitir recibo aberta com a data; nada registado. A mesma fatura com a data de hoje: RG D26/16 (31/10/2026, Reconciliado). FT D26/30 com 30/10/2026: a mensagem da data anterior, que já não nomeia a fatura («(ainda sem número)») e nomeia o RG D26/16 (é a do DOC-0331, que a cita). Depois do RG D26/17, a FT D26/29 com 30/10/2026 deu a mesma mensagem com o RG D26/17, citada aqui (captura 01). Com o Contabilista: o recibo da FT D26/32 com a data de hoje foi emitido (RG D26/17, abre-se o recibo) e o da FT D26/29 com 30/10/2026 recebeu a mesma recusa, com o RG D26/17. Capturas 01 e 03 refeitas a 2× (a 03 antiga, da série com recibo de data futura, saiu: o caso já não se provoca pela janela). A recusa da data igual à futura (P-E1-20, DEC-1361) continua a valer para uma série que já tenha um recibo com data futura; a pergunta 2 da aud-v2e está com o CC. */}
+
+## O que confirmar
+
+1. O estado da fatura. No topo, a barra mostra **Rascunho** ou **Publicada**: o botão **Emitir recibo** só aparece numa fatura **Publicada** que ainda não está paga. Ao lado do número da fatura aparece se está por pagar (a `FT D26/31`, a 31/10/2026: «Em atraso há 1 dia»); uma fatura paga tem a etiqueta **Pago** no topo. Se está **Rascunho**, confirme-a primeiro; se já está paga, veja «A fatura não tem o botão Emitir recibo», mais abaixo.
+2. A **Data de Pagamento** que escreveu: não pode ser posterior a hoje.
+3. O último recibo da série e a sua data. Abra **Faturação › Receber › Recibos e pagamentos recebidos**: a lista mostra o **Número**, a **Data**, o **Diário**, o **Cliente**, o **Valor** e o **Estado**. Na demonstração, depois dos recibos de hoje, a primeira linha era `RG D26/17`, de 31/10/2026, **Reconciliado**.
+4. Se a data desse último recibo é posterior a hoje. Se é, a série só aceita recibos com data posterior a ela.
+
+Os perfis **Administrativo**, **Contabilista** e **Contabilista certificado** têm todos o botão **Emitir recibo**. Na demonstração, o **Administrativo** e o **Contabilista** receberam a mesma recusa na `FT D26/29`, com a data de 30/10/2026, depois do `RG D26/17` de hoje: trocar de perfil não resolve.
+
+## Como resolver
+
+### A Data de Pagamento é anterior à do último recibo
+
+Carregue em **Fechar** e veja o último recibo da série (pontos 3 e 4 de «O que confirmar»):
+
+- **No caso normal, o último recibo tem a data do dia em que foi emitido.** Mude a **Data de Pagamento** para a data que a mensagem indica, ou para uma posterior até hoje, e carregue em **Criar Pagamento**. A data que a mensagem indica serve mesmo que seja a de hoje. Na demonstração, a 31/10/2026, depois do `RG D26/16`, emitido nesse dia, o recibo da `FT D26/32` com a data de 31/10/2026 foi emitido (`RG D26/17`).
+- **Se o último recibo tem uma data posterior a hoje**, a data que a mensagem indica também é recusada: veja «A série de recibos tem um recibo com data futura», mais abaixo.
+
+{/* Nota interna (2.ª ronda da aud-v2e, NE1b2-01): P-E1-20. A recusa da data igual só existe quando o último documento da série tem data posterior ao dia em que foi registado (account_move_sequence.py, saf-07: last_date > dia de l10n_pt_system_entry_date e document_date <= last_date); no caso normal só se recusa a data anterior (document_date < last_date), na mesma função para todas as séries. Provado pelo auditor na 8102 (FT D26/52 aceite com a data de hoje, rascunho de 29/10 recusado). DEC-1361: mantém-se a recusa da data igual à futura; a pergunta está com o CC. */}
+
+**Quem faz:** quem emite o recibo.
+
+### A Data de Pagamento é posterior a hoje
+
+1. Carregue em **Fechar**. A janela **Emitir recibo** continua aberta: nada foi registado.
+2. Se o cliente já pagou, mude a **Data de Pagamento** para o dia em que o dinheiro entrou (hoje ou antes, mas não antes do último recibo da série) e carregue em **Criar Pagamento**.
+3. Se o cliente ainda não pagou, carregue em **Descartar**. Emita o recibo no dia em que receber: a fatura continua **Por pagar** até lá.
+
+**Quem faz:** quem emite o recibo.
+
+### A série de recibos tem um recibo com data futura
+
+A mensagem diz «… Depois de um documento com data futura, a série só aceita documentos com data posterior (Despacho 8632/2014, 3.4.2). …». Não emita outro recibo com a data futura para a série andar e não anule o recibo de data futura: anulado, continua a contar. As razões e o que fazer, iguais nas faturas e nos recibos, estão em [A fatura não pode ter data anterior à do último documento da série](/troubleshooting/data-anterior-ao-ultimo-documento), no caso «A série tem um documento com data futura». Usar outra série de recibos é uma decisão de quem tem o perfil **Contabilista certificado**, com o contabilista certificado da empresa: a série nova é criada e comunicada à AT como as outras ([Séries documentais](/fiscal-core/series-documentais)). <span className="fd-pending">Pendente de validação no ecrã: na demonstração de hoje, a janela Emitir recibo não deixa emitir um recibo com data futura, por isso este caso não se provocou num recibo; a mensagem foi vista a 30/10/2026, numa versão anterior. Pendente de validação por contabilista certificado: recibos de pagamentos recebidos enquanto a série está parada (esperar, outra série), já pedido no lote E1.</span>
+
+**Quem faz:** quem emite o recibo; o perfil **Contabilista certificado** com o contabilista certificado da empresa, para outra série.
+
+### A fatura não tem o botão Emitir recibo
+
+Numa fatura **Pago**, o recibo já existe: veja «Não vejo o botão Emitir recibo» em [Como emitir um recibo](/fiscal-core/emitir-um-recibo). Uma fatura-recibo (`FR`) também não tem recibo à parte: o pagamento ficou registado ao confirmá-la e abre-se pelo botão **Pagamentos**. Se a fatura-recibo foi emitida para uma venda que afinal não foi paga, fale com o contabilista certificado antes de fazer outra coisa: uma fatura-recibo emitida não se altera.
+
+**Quem faz:** quem emite faturas, com o contabilista certificado no último caso.
+
+## Resultado esperado
+
+- O recibo é emitido com o número seguinte da série de recibos e o ATCUD, e a fatura passa a **Pago** (ou **Pago em parte**). O recibo e os seus lançamentos estão em [Como emitir um recibo](/fiscal-core/emitir-um-recibo).
+- Nenhum recibo novo fica com data futura.
+
+## Quando contactar o suporte
+
+- A mensagem de data futura continua depois do dia seguinte à data que ela indica.
+- A série de recibos ficou parada e a empresa precisa de outra série de recibos e não sabe criá-la.
+- Uma fatura **Por pagar** não mostra **Emitir recibo**.
+
+## Informação a enviar
+
+- A mensagem completa, copiada da janela.
+- O número da fatura, a **Data de Pagamento** que escolheu e a data de hoje.
+- O número, a data e o estado do último recibo da série, copiados da lista **Recibos e pagamentos recebidos**.
+- O perfil com que entrou.

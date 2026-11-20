@@ -1,0 +1,160 @@
+---
+id: premios-e-pagamentos-variaveis
+slug: /payroll-pt/premios-e-pagamentos-variaveis
+title: Como pagar prémios, comissões e outros valores variáveis
+sidebar_label: Prémios e pagamentos variáveis
+description: Registar uma gratificação, uma comissão ou uma participação nos lucros, pô-la no recibo do mês e decidir se conta como regular para férias e subsídios.
+keywords: [prémios, premios, comissões, comissoes, gratificação, gratificacao, participação nos lucros, participacao nos lucros, pagamentos variáveis, pagamentos variaveis, natureza, não é retribuição, nao e retribuicao, regularidade, critérios de regularidade, criterios de regularidade, condições de prémios, condicoes de premios]
+doc_id: DOC-0206
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/processar-e-pagar/recibo-de-vencimento, payroll-pt/processar-e-pagar/subsidios-de-ferias-e-natal, payroll-pt/configurar/rubricas-salariais]
+---
+
+## Para que serve?
+
+Regista um valor que não se repete todos os meses, como uma gratificação, uma comissão ou uma participação nos lucros. O recibo do mês da data do pagamento apanha-o sozinho, numa linha própria.
+
+A **Natureza** diz se o valor é retribuição. Enche-se sozinha a partir do que indica, e muda a base da Segurança Social.
+
+## Quando utilizar?
+
+- Quando a gerência decide pagar uma gratificação ou uma participação nos lucros.
+- Quando há uma comissão sobre vendas ou resultados.
+- Não use para um valor em espécie, como o uso de uma viatura: esse é um benefício em espécie. Não use para um valor fixo de todos os meses: esse fica na rubrica salarial.
+
+## Onde encontrar?
+
+- **Salários › Preparar › Pagamentos variáveis**
+- **Salários › Configurar › Regulamentação coletiva › Critérios de regularidade**
+- **Salários › Preparar › O que há para fazer este mês?**, grupo **Situações e deveres com um trabalhador**, para **Decisões sobre a regularidade**
+- **Salários › Configurar › Rubricas › Condições de prémios**
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador.
+- Tem à mão a decisão que concede o valor (a ata, por exemplo) ou, numa comissão, a base e a percentagem.
+- O recibo do mês ainda não foi validado.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Preparar › Pagamentos variáveis** e carregue em **Novo**. Sem registos, a lista diz «Os pagamentos variáveis (prémios, comissões e semelhantes) atribuídos aos trabalhadores aparecem aqui. Crie um para que conte no recibo do mês.»
+2. Preencha **Trabalhador** e escolha o **Tipo**: **Participação nos lucros**, **Gratificação por bons resultados** ou **Comissão**. Os campos seguintes mudam com o tipo.
+3. Em **Data do pagamento**, escolha um dia do mês do recibo que paga o valor.
+4. Preencha os campos do tipo:
+
+   | Tipo | Campos |
+   |---|---|
+   | **Gratificação por bons resultados** | **Valor**, **Decisão**, **Data da decisão**, **Fundamento** e, se for caso disso, **Devida por contrato ou regular** |
+   | **Participação nos lucros** | **Valor**, **Decisão**, **Data da decisão**, **Retribuição de base adequada assegurada pelo contrato** e, se for caso disso, **Devida por contrato ou regular** |
+   | **Comissão** | **Vendas ou resultado**, **Percentagem**, **Referência desde** e **Referência até**. **Regra de comissão** é opcional. O **Valor** calcula-se sozinho |
+
+5. Confira a **Natureza** e guarde.
+   ![Lista dos pagamentos variáveis, com o tipo, a data, o valor, a natureza e a decisão](/images/payroll-pt/premios-e-pagamentos-variaveis/01-lista-de-pagamentos-variaveis.png)
+6. No recibo do mês, carregue em **Calcular**. Aparece a linha **Gratificação por bons resultados**, **Comissões** ou **Participação nos lucros**. Carregue em **Validar** e em **Contabilizar**, como em qualquer recibo.
+   ![Linhas do recibo: retribuição base, subsídio de alimentação e a gratificação de 500,00 €](/images/payroll-pt/premios-e-pagamentos-variaveis/02-recibo-com-a-gratificacao.png)
+
+</StepByStep>
+
+## O que muda a Natureza
+
+| Caso | **Natureza** |
+|---|---|
+| **Comissão** | **Retribuição** |
+| **Gratificação por bons resultados** | **Não é retribuição**. Com **Devida por contrato ou regular** assinalado, passa a **Retribuição** |
+| **Participação nos lucros** | **Retribuição**. Com **Retribuição de base adequada assegurada pelo contrato** assinalado, passa a **Não é retribuição** |
+
+**Exemplo.** Novembro de 2026, com recibos feitos um a um:
+
+| | Gratificação de 500,00 € | Comissão de 2 % sobre 10.000,00 € |
+|---|---|---|
+| **Natureza** | **Não é retribuição** | **Retribuição** |
+| Retribuição base | 1.650,00 € | 1.900,00 € |
+| Subsídio de alimentação | 129,15 € | 129,15 € |
+| Valor variável | 500,00 € | 200,00 € |
+| Segurança Social do trabalhador | 181,50 € (11 % de 1.650,00 €) | 231,00 € (11 % de 2.100,00 €) |
+| IRS retido | 174,00 € | 155,00 € |
+| Líquido | 1.923,65 € | 1.843,15 € |
+
+A gratificação fica fora da base da Segurança Social. A comissão fica dentro.
+
+O lançamento da gratificação, ao carregar em **Contabilizar**, com a data 30/11/2026:
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| 632 Remunerações do pessoal | 2.279,15 € | |
+| 635 Encargos sobre remunerações | 391,88 € | |
+| 2312 Ao pessoal (líquido a receber) | | 1.923,65 € |
+| 242 Retenção de impostos sobre rendimentos | | 174,00 € |
+| 245 Contribuições para a Segurança Social | | 573,38 € |
+
+O mesmo lançamento mostra também a conta 231290 Remunerações em processamento, com 2.279,15 € a débito e a crédito, que se anulam. Na conta 245 estão os 181,50 € do trabalhador e os 391,88 € da empresa.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a natureza atribuída a cada tipo, a base de IRS e de Segurança Social de cada caso e as contas do lançamento (Código do Trabalho, art. 260.º).</span>
+
+## Regularidade para férias e subsídios
+
+Um valor regular pode contar para a retribuição de férias e para os subsídios. Estes dois ecrãs registam o critério da empresa e a decisão sobre um trabalhador:
+
+- **Critérios de regularidade**, em **Salários › Configurar › Regulamentação coletiva**: uma linha por rubrica, com **Fixado por** (**Instrumento de regulamentação coletiva (IRCT)** ou **Regra da empresa**), **Meses com a prestação**, **Meses considerados**, **Cláusula** e **De**. No exemplo: **Gratificação por bons resultados**, **Regra da empresa**, 11 meses em 12, desde 01/11/2026.
+- **Decisões sobre a regularidade**: uma linha por trabalhador e rubrica, com **Decisão** (**Normal** ou **Não regular**), **De** e **Motivo**. Abra **Salários › Preparar › O que há para fazer este mês?** e, no grupo **Situações e deveres com um trabalhador**, carregue em **Decisões sobre a regularidade**.
+
+<span className="fd-pending">Pendente de validação no ecrã: o efeito de «Não regular» e do critério na retribuição de férias e nos subsídios. Só se vê com 11 meses de pagamentos, que o exemplo não tem.</span>
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: quando um valor variável é regular e os meses a considerar (Código do Trabalho, arts. 261.º e 262.º).</span>
+
+## Condições de prémios
+
+Em **Salários › Configurar › Rubricas › Condições de prémios**, regista-se o que permite isentar os prémios de um ano: **Ano dos prémios**, **Apurado em**, **Prova**, os aumentos em percentagem, **Condição cumprida** e **Mencionado na declaração de rendimentos**. **Apurado em** e **Prova** são obrigatórios.
+
+<span className="fd-pending">Pendente de validação no ecrã: o efeito de um registo, ou da falta dele, nos prémios do ano. O exemplo não tem nenhum registo guardado.</span>
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: as condições da isenção e os aumentos mínimos que a lei pede em cada ano.</span>
+
+## No Enterprise
+
+No Odoo Enterprise, os prémios, as comissões e os outros valores variáveis registam-se nos mesmos ecrãs, com o acesso extra **Administrador de Salários**: **Salários › Preparar › Pagamentos variáveis** abre a mesma lista, com **Novo** e as colunas **Trabalhador**, **Tipo**, **Data do pagamento**, **Valor**, **Natureza** e **Decisão**. **Condições de prémios** e **Critérios de regularidade** estão nos mesmos menus de **Salários › Configurar**.
+
+{/* Nota interna (lote EE-07, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee07b_test: cópia da odoo20_ee_test com a aplicação de salários do Enterprise (hr_payroll) instalada e o código de master; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado: Processador de salários com o acesso Administrador de Salários em Pagamentos variáveis (lista com Novo e as seis colunas). Caminhos do artigo conferidos com o verificador do test_doc_paths na mesma cópia (0 erros). Ver reports/LOTE_EE-07.md. */}
+
+## Resultado esperado
+
+- O pagamento aparece em **Pagamentos variáveis**, com a **Natureza** preenchida.
+- O recibo do mês da **Data do pagamento** tem a linha com o valor.
+- A Segurança Social do recibo só conta o valor se a **Natureza** for **Retribuição**.
+
+## Notas importantes
+
+- **A data manda.** O valor entra no recibo cujo período inclui a **Data do pagamento**.
+- **Comissão de um período anterior.** O período de **Referência desde** e **Referência até** diz se a comissão é retroativa.
+- **Leia a Natureza antes de guardar.** Um visto muda o tratamento: confirme-o com o contabilista certificado.
+
+## Problemas frequentes
+
+### Falta a decisão
+
+- **Mensagem:** «Uma participação nos lucros ou uma gratificação precisa da decisão que a concede (referência e data). O que aconteceu: sem deliberação o pagamento não tem fundamento e a sua natureza legal não se sustenta (CT art. 260.º/1-b) e d)). Como resolver: preencha «Decisão» e «Data da decisão».»
+- **O que fazer:** preencha os dois campos. Só a referência não chega.
+
+### Falta o fundamento da gratificação
+
+- **Mensagem:** «Uma gratificação precisa do seu fundamento (os bons resultados que premeia). Como resolver: preencha «Fundamento».»
+- **O que fazer:** escreva os resultados que a gratificação premeia.
+
+### Falta um dado da comissão
+
+- **Mensagem:** «Uma comissão precisa das vendas ou do resultado, da percentagem e do período de referência. O que aconteceu: o valor é a base × percentagem e o período diz se é retroativa. Como resolver: preencha os quatro campos.»
+- **O que fazer:** preencha **Vendas ou resultado**, **Percentagem**, **Referência desde** e **Referência até**.
+
+### O valor tem de ser positivo
+
+- **Mensagem:** «O valor tem de ser positivo e a percentagem entre 0 e 100. O que aconteceu: uma reversão faz-se num recibo corretivo, não com um valor negativo. Como resolver: escreva o valor positivo (comissão: vendas e percentagem).»
+- **O que fazer:** numa comissão, preencha **Vendas ou resultado** e **Percentagem**. No exemplo, a mensagem apareceu ao guardar uma comissão sem nenhum destes dois valores.
+
+{/* Nota interna (DOCS-046, lote v12-PAY, master a060fe441): tudo por clique com Administrador de Salários, incluindo as 3 mensagens. Efeito de Não regular e do critério nos subsídios não medido: precisa de 11 meses de pagamentos. Participação nos lucros: linha de 800,00 € no recibo de novembro, calculado na auditoria, sem validar. */}

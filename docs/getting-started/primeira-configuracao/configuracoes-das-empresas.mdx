@@ -1,0 +1,86 @@
+---
+id: configuracoes-das-empresas
+slug: /getting-started/configuracoes-das-empresas
+title: Como rever e alterar a configuração de uma empresa
+sidebar_label: Rever a configuração de uma empresa
+sidebar_position: 3
+description: Voltar ao assistente de configuração de uma empresa que já existe, com o Ponto de partida Rever a configuração atual, e saber o que acontece quando aplica o resumo.
+keywords: [rever configuração, alterar configuração, configurar a empresa, configurações das empresas, assistente, ponto de partida, rever a configuração atual, NIF em falta, enquadramento contabilístico, empresa existente]
+doc_id: DOC-0008
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 25deacc94)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [getting-started/primeira-configuracao/configurar-uma-empresa-nova, administration/empresa/dados-da-empresa, administration/sistema/estado-da-localizacao]
+---
+
+## Para que serve?
+
+O assistente que configurou uma empresa nova fica guardado. Volta-se a ele quando é preciso rever o enquadramento, o IVA, as séries ou os bancos de uma empresa que já existe. Este artigo mostra como o reabrir e o que acontece ao aplicar; os passos do próprio assistente estão em [Como configurar uma empresa nova com o assistente](/getting-started/configurar-uma-empresa-nova).
+
+## Quando utilizar?
+
+- A empresa já existe na base de dados mas nunca percorreu o assistente.
+- Mudou o enquadramento contabilístico ou a periodicidade do IVA e quer ver o que o assistente propõe agora.
+- Uma configuração ficou a meio («Em curso») e quer saber em que passo está.
+- Para só ver o estado da empresa, sem alterar nada, use o [Estado da localização](/administration/estado-da-localizacao).
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Geral › Configurar a empresa**. O ecrã abre com o título «Configurar a empresa:» e o nome da empresa ativa.
+
+## Antes de começar
+
+O perfil é **Contabilista certificado**; o administrador também tem o menu e o **Contabilista** não. Feito a 3 de novembro de 2026, na empresa de demonstração; os ecrãs dos passos 1 a 7 conferidos a 10 de novembro. A empresa ativa, no canto superior direito, é a que vai rever.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › Geral › Configurar a empresa**. O assistente abre no passo em que ficou e o **Estado** diz **Em curso**. Numa empresa já aplicada, abre em **15. Verificação final**, com o **Estado** **Aplicado**: carregue em **Rever outra vez**, que não pede confirmação. O **Estado** volta a **Em curso**, o assistente regressa a **1. Identificação** e o **Ponto de partida** reaparece.
+2. Em **Ponto de partida**, escolha **Rever a configuração atual**. As outras duas opções são **Empresa nova** e **Vem de outro programa (importação de SAF-T)**.
+   ![Ponto de partida com Rever a configuração atual escolhido e o Estado Em curso](/images/getting-started/configuracoes-das-empresas/01-ponto-de-partida-rever.png)
+3. Em **1. Identificação**, confirme o que já vem preenchido da empresa: **Número de contribuinte (NIF)**, **Nome da empresa**, **Morada**, **Código postal**, **Localidade**, **CAE**. Corrija o que estiver errado.
+4. Carregue em **Seguinte** para **2. Enquadramento contabilístico** e confirme o **Enquadramento contabilístico**: **SNC (regime geral)**, **SNC-PE (pequenas entidades)**, **SNC-ME (microentidades)**, **SNC-ESNL (entidades do setor não lucrativo)**, **IFRS / IAS** ou **Outro**.
+5. Siga com **Seguinte** pelos passos seguintes (numerados até 15), ou carregue em **Ir para o resumo** em qualquer passo. O assistente confere as respostas antes de abrir o resumo. Na empresa de demonstração, para no banco da conta: veja «O banco do IBAN… não está na tabela do produto», mais abaixo.
+6. Leia a tabela **O que vai ser criado e alterado**, com **O quê**, **Tipo**, **Agora** e **Depois**. Na empresa de demonstração, as primeiras linhas criam a série A2026 do diário FRA e a série NCFRA2026 das notas de crédito, em rascunho.
+   ![Tabela O que vai ser criado e alterado, com as colunas O quê, Tipo, Agora e Depois e as séries A2026 e NCFRA2026 a criar em rascunho](/images/getting-started/configuracoes-das-empresas/02-resumo-o-que-vai-ser-criado.png)
+7. Só se concordar, carregue em **Aplicar o que o resumo mostra** e confirme a janela «Aplicar as alterações do resumo? Nada é validado, numerado nem enviado à AT.».
+
+</StepByStep>
+
+## Resultado esperado
+
+- O **Estado** passa a **Aplicado**, **Última aplicação em** fica com a data e a hora, e o assistente abre **15. Verificação final**, com a tabela **O que foi feito** e os botões **Verificar tudo agora** e **Preparar uma fatura e um recibo de vencimento de teste**.
+- O assistente não valida, não numera nem comunica nada à Autoridade Tributária e Aduaneira (AT): o próprio ecrã o diz no cabeçalho.
+
+## Notas importantes
+
+- **Rever não é só ler.** Ao aplicar, o assistente grava o que o resumo mostra. Na empresa de demonstração, que já emitia, criou diários e 7 séries novas em rascunho, além das 11 séries ativas, que continuaram iguais. Leia a linha **Criar** de cada série antes de aplicar: o que não quiser fica em rascunho, porque a ativação é sua, com o código de validação da AT.
+- **O enquadramento e a periodicidade do IVA são propostas.** A tabela «Porque é que o assistente propõe isto» mostra a regra legal e a data em que entrou em vigor; a decisão é sua e do contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: as propostas de enquadramento e de isenção do art. 53.º do CIVA com os valores da empresa.</span>
+
+## Problemas frequentes
+
+### «Escolha o enquadramento contabilístico…» ao carregar em Seguinte
+
+- **Sintoma:** no passo 2, ou em **Ir para o resumo**, uma janela diz: «Escolha o enquadramento contabilístico (ou responda aos valores acima para receber uma sugestão). O SAF-T e as demonstrações dependem dele.»
+- **Causa:** o **Enquadramento contabilístico** está vazio. Visto com **Empresa Teste Portugal**, que nunca tinha percorrido o assistente.
+- **O que fazer:** escolha o enquadramento ou responda aos valores do passo 2 para receber uma sugestão, e carregue outra vez em **Seguinte**.
+
+### «Falta o NIF ou não é válido» ao carregar em Seguinte
+
+- **Sintoma:** no passo 1, a janela **Operação inválida**: «Falta o NIF ou não é válido. Ainda nada foi guardado na empresa. Preencha os 9 algarismos do NIF e tente outra vez.»
+- **Causa:** o **Número de contribuinte (NIF)** está vazio ou incompleto.
+- **O que fazer:** escreva os 9 algarismos, sem `PT`, e carregue outra vez em **Seguinte**.
+
+### «O banco do IBAN… não está na tabela do produto»
+
+- **Sintoma:** **Ir para o resumo** abre **Operação inválida**: «O banco do IBAN PT50 … não está na tabela do produto. Escreva o nome do banco (e o BIC) nessa linha: o assistente não adivinha.»
+- **Causa:** a empresa tem uma conta cujo banco o produto não reconhece pelo IBAN.
+- **O que fazer:** carregue em **Seguinte** até **5. Bancos**, escreva o nome do banco e o BIC nessa linha e volte a **Ir para o resumo**. Na empresa de demonstração, o BIC já vem preenchido e falta só a coluna **Banco**.
+  ![Janela Operação inválida: o banco do IBAN não está na tabela do produto, escreva o nome do banco e o BIC nessa linha](/images/getting-started/configuracoes-das-empresas/03-banco-do-iban-nao-esta-na-tabela.png)
+
+{/* Nota interna (DOCS-046, lote v7-ADM): visto no master 584213fd9 com o Gestor de contabilidade, na Empresa Demonstração, Lda. O defeito V3PPL-06 (NIF vazio) já não existe: o passo 1 vem preenchido. Resumo aplicado na base do lote (docs_demo_v7adm_test): Estado Aplicado; a repetição do assistente abre no passo 15, até carregar em Rever outra vez, que devolve o Ponto de partida. Sem captura. Auditoria de 03/11: «Escolha o enquadramento…» provocada em Empresa Teste Portugal; «Escolha onde fica a sede…» não apareceu nesta empresa nem em Empresa Teste Portugal, porque o passo 3 seguiu sem ela, e ficou de fora. Mapeamento FC-COPILOTS-002 corrigido para Geral › Configurar a empresa. */}
+{/* Nota interna (DOCS-005 #3400, lote CAP-01, 10/11/2026, master ce51f2d47, docs_demo_cap01_test, porta 8504): por clique com um utilizador criado na cópia só com o perfil Contabilista certificado. O assistente da base-mãe está Em curso, no passo 1, com Empresa nova; escolhido Rever a configuração atual (captura 01). Ir para o resumo parou em «O banco do IBAN PT50 9999… não está na tabela do produto» (captura 03); escrita a coluna Banco no passo 5, o resumo abriu com 16 linhas (captura 02, sete séries a criar em rascunho). A janela «Aplicar as alterações do resumo? Nada é validado, numerado nem enviado à AT.» foi aberta e fechada com Descartar: nada foi aplicado. O passo 1 tem hoje também Concelho da sede, Conservatória, Número de matrícula, Capital social e o botão Ler os dados atuais da empresa. */}

@@ -1,0 +1,99 @@
+---
+id: credenciais-da-at-recusadas
+slug: /troubleshooting/credenciais-da-at-recusadas
+title: A AT recusa as credenciais (utilizador ou senha)
+sidebar_label: Credenciais da AT recusadas
+description: Porque uma comunicação à AT é recusada por credenciais incompletas ou rejeitada pela AT, onde se vê a rejeição na série, o que confirmar no fiscaldoo e no Portal das Finanças (subutilizador, senha, certificado, permissões) e o que ainda não se consegue testar.
+keywords: [credenciais da AT, credenciais AT recusadas, AT recusa credenciais, utilizador do webservice, palavra-passe do webservice, senha errada, subutilizador, Portal das Finanças, Portal das Financas, certificado da AT, chave pública da AT, chave publica da AT, credenciais incompletas, não foi enviado nada, nao foi enviado nada, comunicar à AT, comunicação com a AT rejeitada, comunicacao rejeitada, simulated rejection, código 99]
+doc_id: DOC-0338
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 808f8ca1f)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/at-e-saft/ligar-a-at, troubleshooting/faturacao-e-at/comunicacao-a-at-falhou, troubleshooting/faturacao-e-at/serie-sem-codigo-de-validacao]
+---
+
+## Sintoma
+
+Uma comunicação à Autoridade Tributária (AT), por exemplo **Comunicar à AT** numa série, abre **Operação inválida** a dizer que as credenciais não estão completas e que **não foi enviado nada**. Ou a AT responde que o utilizador ou a senha estão errados.
+
+Como se criam as credenciais está em [Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). Este artigo trata do que corre mal depois.
+
+## Mensagem
+
+Vista com o perfil **Contabilista certificado**, na Empresa Demonstração, Lda, que na demonstração não tem credenciais da AT. Numa série nova em **Rascunho** (`FT C27`, **[FT] Fatura**, diário **Vendas**, exercício 2027), **Comunicar à AT**:
+
+> «A empresa Empresa Demonstração, Lda não tem credenciais da AT completas para o ambiente teste (utilizador, palavra-passe, certificado e chave privada), por isso não foi enviado nada. O administrador pode introduzi-las em Contabilidade › Configurar › Faturação certificada › Credenciais da AT.»
+
+![Janela Operação inválida: a empresa não tem credenciais da AT completas, por isso não foi enviado nada](/images/troubleshooting/credenciais-da-at-recusadas/01-credenciais-incompletas.png)
+
+Na mensagem, «teste» é o **Ambiente** escolhido nas credenciais: o ambiente de testes da AT.
+
+**A AT recusa o utilizador ou a senha.** Com credenciais completas, mas sintéticas (o aviso de credenciais incompletas desapareceu e **Usado para envio** ficou marcado), e o simulador da AT no cenário de autenticação recusada, numa série nova `FT C27` (exercício 2027, em **Rascunho**): **Comunicar à AT** abre a janela **Comunicar a série à Autoridade Tributária**, com o que vai ser enviado. Depois de marcar «Confirmo que estes dados estão corretos e podem ser comunicados» e carregar em **Comunicar**, a série:
+
+- continua **Rascunho**;
+- mostra por cima a resposta da AT, com o código: «[99] Simulated rejection»;
+- fica com **Comunicação com a AT** em **Rejeitada**.
+
+![Série FT C27 em Rascunho com a resposta [99] Simulated rejection por cima](/images/troubleshooting/credenciais-da-at-recusadas/02-rejeitada-pelo-simulador.png)
+
+O texto «Simulated rejection» é do simulador da AT da base de testes. A AT verdadeira devolve o seu próprio texto. <span className="fd-pending">Pendente de validação no ecrã: o código e o texto que a AT verdadeira devolve para um utilizador ou uma senha errados não foram vistos (a AT verdadeira não se usa nos testes).</span>
+
+Em **Credenciais da AT** › **Novo**, só com o **Utilizador do webservice** preenchido, o formulário avisa por cima:
+
+> «Estas credenciais estão incompletas: falta(m) palavra-passe, certificado de cliente, chave privada. Enquanto não forem preenchidas, esta empresa não pode comunicar com a Autoridade Tributária.»
+
+## Causas verificadas
+
+- **A empresa não tem credenciais da AT, ou estão incompletas.** O fiscaldoo só comunica com o utilizador do webservice, a palavra-passe, o certificado de cliente e a chave privada todos preenchidos, e a chave pública da AT do ambiente escolhido. Numa base de testes, o simulador da AT pede o mesmo que a AT verdadeira: sem credenciais completas, recusa antes de enviar.
+- **A série tem outro problema antes das credenciais.** Na mesma série com o exercício 2026, **Comunicar à AT** foi recusado antes, porque a série `FT D26` já estava ativa para **[FT] Fatura** em 2026. Esse caso está em [Não há uma série ativa para este documento, ou há mais do que uma](/troubleshooting/serie-ativa-em-falta-ou-repetida).
+- **O servidor não tem a chave de cifra do cofre.** **Guardar** as credenciais dá «Este servidor não tem chave de cifra para o cofre de credenciais, por isso nada foi guardado e nenhuma credencial guardada pode ser usada…». A solução é do administrador de sistema e está em [O cofre de credenciais não tem chave de cifra no servidor](/troubleshooting/cofre-sem-chave-de-cifra).
+- **A AT recusa o utilizador ou a senha.** O fiscaldoo envia, a AT recusa e a resposta fica na série: **Comunicação com a AT** em **Rejeitada** e o código e o texto da AT por cima da série. A série não é ativada. Na base de testes, o simulador dá «[99] Simulated rejection».
+
+## O que confirmar
+
+1. Em **Contabilidade › Configurar › Faturação certificada › Credenciais da AT**, se há uma linha da empresa para o **Ambiente** em uso (testes ou produção) e se **Usado para envio** está marcado nela.
+2. No formulário, o aviso «Estas credenciais estão incompletas: falta(m) …» e o que ele lista.
+3. **Válido até** (do certificado) e **Chave pública da AT válida até**.
+4. Na linha das credenciais, **Testar a ligação (simulador)**. Numa base de testes, com o simulador da AT no cenário de autenticação recusada, aparece no canto do ecrã «O teste falhou: a Autoridade Tributária simulada não aceitou a ligação (resposta: rejeitada, código 99). Verifique o cenário escolhido nas definições e as credenciais. Nada foi enviado à Autoridade Tributária real.»; no cenário normal, «Teste passou: as credenciais estão completas e válidas e a Autoridade Tributária simulada respondeu (aceite). Nada foi enviado à Autoridade Tributária verdadeira.». Se as credenciais foram gravadas com outra chave de cifra do servidor, aparece «O teste falhou: as credenciais foram gravadas com outra chave que não a deste servidor. Volte a gravá-las (escreva outra vez a palavra-passe e a chave privada).»: grave-as de novo. O teste só fala com o simulador: não confirma a senha na AT verdadeira.
+5. No Portal das Finanças, que o **Utilizador do webservice** é um subutilizador da empresa, escrito como `NIF/número` (por exemplo `599999993/1`), com a senha atual e as permissões dos serviços que vai usar (séries, faturas, guias de transporte). <span className="fd-pending">Pendente de validação no ecrã: a criação do subutilizador e a escolha das permissões no Portal das Finanças não foram vistas.</span>
+
+## Como resolver
+
+Feito com o administrador da demonstração, que guarda as **Credenciais da AT** em qualquer empresa. Quem tem o acesso extra **Administração fiscal** (que nenhum valor do campo **Perfil** dá) também abre este ecrã, mas só guarda com a permissão **Editar** no cofre da empresa: sem ela, **Guardar** abre «Não tem permissão para criar, alterar ou apagar as credenciais da AT. … Peça ao administrador que a dê, em Contabilidade › Configurar › Cofre de credenciais › Permissões. …» (ver [Ligar à AT](/fiscal-core/ligar-a-at), «Antes de começar» e «Problemas frequentes»).
+
+1. Abra **Contabilidade › Configurar › Faturação certificada › Credenciais da AT** e a linha da empresa e do ambiente (ou **Novo**, se não houver).
+2. Preencha o que o aviso lista em falta: **Utilizador do webservice**, **Palavra-passe do webservice**, o **Ficheiro do certificado (.pfx)** com a **Palavra-passe do .pfx** (o certificado e a chave privada são extraídos ao gravar) e a **Chave pública da AT (PEM)**.
+3. Guarde e confirme que o aviso de credenciais incompletas desaparece.
+4. Volte ao documento ou à série e carregue de novo em **Comunicar à AT**.
+
+Se a série ficar com **Comunicação com a AT** em **Rejeitada** e a resposta da AT disser que o utilizador ou a senha estão errados: entre no Portal das Finanças com o NIF da empresa, confirme o subutilizador e a senha (e as permissões), corrija a **Palavra-passe do webservice** no fiscaldoo e comunique de novo. Uma senha mudada no Portal tem de ser mudada também no fiscaldoo.
+
+<HelpCallout type="risco" title="Uma comunicação recusada não foi feita">
+Quando a mensagem diz «não foi enviado nada», a AT não recebeu a série nem o documento. Não use a série nem dê o documento como comunicado até a comunicação ficar aceite.
+</HelpCallout>
+
+{/* Nota interna (DOCS-036): a rejeição «[99] Simulated rejection» foi provocada na ronda das correções, com o cenário auth_error do simulador (parâmetro l10n_pt_arxi_at_ws.mock_scenario), credenciais sintéticas e uma chave de cofre de teste, e o cenário foi reposto em accept. Não foi repetida na 2.ª ronda. */}
+
+{/* Nota interna (lote v23-R, #3740, master 808f8ca1f, docs_demo_v23r_test, ambiente Teste, só o simulador, chave do cofre só na memória da instância): credenciais fictícias guardadas no ecrã pelo administrador na Empresa Nova Exemplo, Lda (.pfx gerado em memória); «Testar a ligação (simulador)» deu «Teste passou…» no cenário accept e «O teste falhou… (resposta: rejeitada, código 99)…» no cenário auth_error (parâmetro do simulador mudado por RPC e reposto em accept). A recusa do cofre ao gravar foi vista com um utilizador com o perfil Contabilista certificado e o acesso Administração fiscal, sem permissão no cofre. A série não foi comunicada de novo nesta ronda: as mensagens da série e as capturas 01 e 02 são da ronda anterior. */}
+
+## Resultado esperado
+
+- **Comunicar à AT** deixa de dar a recusa de credenciais e a série deixa de ficar **Rejeitada**. A série segue para o código de validação ([Série sem código de validação](/troubleshooting/serie-sem-codigo-de-validacao)).
+- O formulário das credenciais deixa de mostrar o aviso «Estas credenciais estão incompletas…».
+
+## Quando contactar o suporte
+
+- As credenciais estão completas, sem aviso, e a recusa «não tem credenciais da AT completas» continua.
+- O Portal das Finanças aceita o subutilizador e a senha e a AT continua a recusar a comunicação do fiscaldoo.
+
+## Informação a enviar
+
+- A empresa e o ambiente (testes ou produção).
+- O texto completo da mensagem, copiado do ecrã. Nunca envie a senha nem o certificado.
+- O que foi comunicado (série ou documento) e quando.
+- O perfil com que entrou.
+
+{/* Nota interna (lote v23-AB, master 97b34fac3, docs_demo_v23ab_test, porta 8480, utilizadores criados só com cada valor do campo Perfil): mensagem sem chave vista ao guardar as Credenciais da AT com a instância sem chave de cifra (SEC-116: «nem revelado» saiu); «gravadas com outra chave» visto com credenciais fictícias guardadas com uma chave e testadas depois de arrancar com outra (chaves só na memória da instância, ambiente Teste, só o simulador). */}

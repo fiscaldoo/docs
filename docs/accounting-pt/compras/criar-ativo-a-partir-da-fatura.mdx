@@ -1,0 +1,143 @@
+---
+id: criar-ativo-a-partir-da-fatura
+slug: /accounting-pt/criar-ativo-a-partir-da-fatura
+title: Como criar o ativo a partir da fatura de fornecedor
+sidebar_label: Criar o ativo a partir da fatura
+description: Ao publicar uma fatura de fornecedor com uma linha numa conta de ativos fixos (43, 44 ou 45), o fiscaldoo cria a ficha do ativo em rascunho; ver como a abrir, completar e pôr em uso.
+keywords: [ativo a partir da fatura, criar ativo fixo, ficha do ativo, ativos fixos, fatura de fornecedor, imobilizado, um ativo por unidade, categoria de ativo fixo, conta 43, conta 44, conta 45, ativo em rascunho, botão Ativos fixos]
+doc_id: DOC-0076
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 0289754a8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/ativos/registar-um-ativo, accounting-pt/compras/fatura-de-fornecedor, accounting-pt/ativos/processar-depreciacoes]
+---
+
+## Para que serve?
+
+Quando lança uma fatura de um bem que vai durar mais de um ano (um computador, uma viatura, um programa), o fiscaldoo prepara sozinho a ficha do ativo fixo: traz o valor, o fornecedor, a data da fatura e a categoria. Poupa-lhe escrever tudo outra vez e evita esquecer um bem comprado. A ficha nasce **Em preparação**: o fiscaldoo nunca a põe em uso sozinho, porque a data de início de utilização e a vida útil são decisões suas.
+
+## Quando utilizar?
+
+- Lançou (ou vai lançar) uma fatura de fornecedor com uma linha numa conta de ativos fixos e quer a ficha do bem já criada.
+- Quer saber porque aparece o botão **Ativos Fixos** numa fatura, ou porque não apareceu.
+
+Se o bem não vem de uma fatura publicada (por exemplo, já estava na empresa), crie a ficha à mão: [Como registar um ativo fixo](/accounting-pt/registar-um-ativo). Para a depreciação mensal depois de pôr em uso, veja [Como processar as depreciações do mês](/accounting-pt/processar-depreciacoes).
+
+## Onde encontrar?
+
+- Na própria fatura: **Contabilidade › Lançar › Compras › Faturas de fornecedores**. Depois de **Confirmar**, aparece no topo o botão **Ativos Fixos** com o número de fichas, e uma mensagem no histórico.
+- As fichas ficam também em **Contabilidade › Lançar › Terceiros e ativos › Ativos fixos**.
+- A opção **Um ativo por unidade** está em **Contabilidade › Configurar › Bancos e ativos › Categorias de ativos**.
+
+![Fatura publicada com o botão Ativos Fixos, com o número 1, assinalado](/images/accounting-pt/criar-ativo-a-partir-da-fatura/76-01-fatura-botao-ativos-fixos.png)
+
+## Antes de começar
+
+- Perfil **Contabilista**. Na demonstração, **Categorias de ativos** abre para o Contabilista mas a opção **Um ativo por unidade** está bloqueada: quem a liga é o perfil **Contabilista certificado** (ou o administrador).
+- Só a fatura de fornecedor **Publicada** cria fichas: em rascunho não nasce nenhuma.
+- A linha do bem está numa conta de **ativos fixos tangíveis (43)**, **ativos intangíveis (44)** ou **em curso (45)**, e tem valor maior do que zero. No exemplo é a conta `435 Equipamento administrativo`.
+- A **descrição** da linha diz o que é o bem (`Impressora laser`): é ela que dá o nome à ficha (ver «Problemas frequentes»).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Faturas de fornecedores**, crie a fatura (ver [Como lançar uma fatura de fornecedor](/accounting-pt/fatura-de-fornecedor)). Na linha do bem, escreva a descrição, escolha a conta `435 Equipamento administrativo`, o preço (`380,00`) e o imposto `23%`.
+2. Carregue em **Confirmar**. A fatura passa a **Publicada**, aparece o botão **Ativos Fixos 1** e o histórico diz «Fichas de ativo fixo em rascunho criadas a partir desta fatura (reveja-as e ponha-as em uso): Impressora laser.». Se aparecer a janela **Confirmar entradas** por um valor fora do habitual para o fornecedor, carregue em **Confirmar**.
+   ![Fatura publicada com o botão Ativos Fixos assinalado no topo](/images/accounting-pt/criar-ativo-a-partir-da-fatura/76-01-fatura-botao-ativos-fixos.png)
+3. Carregue em **Ativos Fixos**. A lista mostra uma ficha por linha de investimento, com o **Código** (`AF/00017`), o **Nome**, a **Categoria**, a data da fatura em **Adquirido em**, o **Custo** (380,00 €) e o estado **Em preparação**. Se a fatura tem 3 unidades e a categoria tem **Um ativo por unidade** ligado, nascem 3 fichas, `Cadeira ergonómica (1/3)`, `(2/3)` e `(3/3)`, cada uma com 150,00 €; sem essa opção nasce uma ficha só, com o valor total da linha.
+   ![Lista com as três fichas Cadeira ergonómica (1/3), (2/3) e (3/3), de 150,00 € cada, Em preparação](/images/accounting-pt/criar-ativo-a-partir-da-fatura/76-02-fichas-em-preparacao.png)
+4. Abra a ficha. Confira o **Nome**, a **Categoria**, o **Fornecedor** e a **Fatura de origem**. Se aparecer a faixa «Sugestão a partir da descrição: · [II-2240] Computadores», é o código da taxa do DR 25/2009 que o fiscaldoo propõe pelo nome: carregue em **Usar a sugestão** só se o código é o do bem.
+   ![Ficha AF/00017 Em preparação, com a faixa de sugestão da taxa DR 25/2009 e a Fatura de origem](/images/accounting-pt/criar-ativo-a-partir-da-fatura/76-03-ficha-em-preparacao.png)
+5. Escreva a **Data de início de utilização** (em **Geral**) e, em **Quadro contabilístico**, a **Vida útil contabilística (anos)**. Depois carregue em **Pôr em uso**. O resto da ficha (quotas, taxa fiscal, plano) é igual ao de qualquer ativo: veja [Como registar um ativo fixo](/accounting-pt/registar-um-ativo).
+
+</StepByStep>
+
+## Resultado esperado
+
+- Uma ficha **Em preparação** por linha de investimento (ou por unidade), ligada à fatura e à linha, com o valor da linha sem IVA. Ao criar a ficha, o fiscaldoo copia o IVA que deduziu na fatura para o **Quadro fiscal** (no exemplo do computador de 1.450,00 €, **IVA deduzido na aquisição** 333,50 €, «Da fatura de compra»).
+- A fatura em si lança-se como qualquer fatura de compra: no exemplo, `FTF/2026/00052` (1.450,00 € + 333,50 € de IVA):
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| `435 Equipamento administrativo` | 1.450,00 € | |
+| `2432 IVA - Dedutível` | 333,50 € | |
+| `2211 Fornecedores gerais` | | 1.783,50 € |
+
+- Criar a ficha **não lança depreciações**. As quotas só entram na contabilidade depois de a ficha estar **Em uso** e de o mês ser processado.
+- Depois de **Pôr em uso** (ficha do computador, início 23/10/2026, vida útil de 3 anos), o plano tem quotas anuais: a de 2026 é de 120,83 € (3 meses), as de 2027 e 2028 de 483,33 € e 483,34 €, e a de 2029 de 362,50 €. O ativo passa a **Em uso** com **Valor líquido** 1.450,00 €.
+
+### Que categoria escolhe o fiscaldoo
+
+1. A **Categoria de ativo fixo** que estiver na ficha da **conta** (em **Plano de contas**, separador **Contabilidade**; o menu **Plano de contas** é do perfil **Contabilista certificado**). Na demonstração, com a conta `437 Outros ativos fixos tangíveis` ligada a **Equipamento de transporte**, a ficha do `Empilhador elétrico` nasceu com essa categoria.
+2. Se a conta não a tem, a categoria cuja conta de ativo seja essa conta, desde que seja uma só: a conta `435` dá **Equipamento administrativo** e a `443` dá **Programas de computador**.
+3. Senão, a ficha nasce **sem categoria** e a categoria escolhe-se na própria ficha: foi o que aconteceu com uma linha na conta `453 Ativos fixos tangíveis em curso`.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: tratamento contabilístico de uma fatura em contas de ativos em curso (45) e quando a ficha deve ser posta em uso; e o IVA não dedutível no custo do ativo (ver o artigo de registo do ativo).</span>
+
+## Notas importantes
+
+### Quando não nasce ficha
+
+Testado no ecrã, a fatura fica publicada normalmente e **não** aparece o botão **Ativos Fixos** nem mensagem no histórico quando:
+
+- a linha está numa conta de gastos (exemplo: `6228 Outros`);
+- a linha está numa conta de depreciações acumuladas, 438, 439, 448 e 449, salvo se lhes ligou uma categoria (exemplo: `4385 Equipamento administrativo`);
+- o valor da linha é zero (exemplo: equipamento oferecido, a 0,00 €).
+
+Nestes casos, se o bem existe, crie a ficha à mão em **Ativos fixos**. A criação das fichas nunca impede a confirmação da fatura.
+
+Uma linha negativa (por exemplo um desconto) não reduz a ficha da linha do bem: acerte o custo na ficha.
+
+### Repor a rascunho e voltar a confirmar
+
+Em rascunho, a fatura continua a mostrar o botão **Ativos Fixos**, com as fichas que já tem. Ao carregar em **Mudar para Rascunho** numa fatura que tem fichas, as fichas **ficam como estão** e o histórico avisa: «Esta fatura foi reposta em rascunho mas tem fichas de ativo fixo: reveja-as (nada foi alterado automaticamente): …». Ao confirmar de novo, as fichas **não se duplicam** (testado: continuam 3).
+
+![Mensagem do histórico: Esta fatura foi reposta em rascunho mas tem fichas de ativo fixo](/images/accounting-pt/criar-ativo-a-partir-da-fatura/76-05-mensagem-fatura-reposta-a-rascunho.png)
+
+### Fatura cancelada e país fiscal
+
+Só as empresas de país fiscal PT geram fichas. Ao **Cancelar** a fatura, o histórico também deixa uma mensagem: «Esta fatura foi cancelada mas tem fichas de ativo fixo: reveja-as…».
+
+### Nota de crédito e devoluções
+
+Uma nota de crédito numa conta de ativos **não cria nem altera** nenhuma ficha. O histórico da nota diz: «Nota de crédito numa conta de ativo fixo: nenhuma ficha de ativo é criada ou alterada automaticamente. Reveja os ativos relacionados.» Se o bem foi devolvido, trate a ficha: uma ficha **Em preparação** pode ser eliminada (menu **Ações › Eliminar**, testado); uma ficha já **Em uso** tem de ser abatida, ver [Como abater ou vender um ativo](/accounting-pt/abater-ou-vender-um-ativo).
+
+![Mensagem do histórico da nota de crédito numa conta de ativo fixo](/images/accounting-pt/criar-ativo-a-partir-da-fatura/76-06-mensagem-nota-de-credito-em-conta-de-ativo.png)
+
+### Um ativo por unidade
+
+A opção está em cada **Categoria de ativos**. Ligada, uma linha com quantidade 3 cria 3 fichas de igual valor, com o nome `(1/3)`, `(2/3)` e `(3/3)`; desligada, cria uma. A divisão só acontece com quantidades inteiras de 2 ou mais; com 2,5 nasce uma ficha só. Convém ligá-la quando cada unidade tem de ser inventariada, abatida ou vendida à parte.
+
+![Categoria Equipamento administrativo com a opção Um ativo por unidade assinalada](/images/accounting-pt/criar-ativo-a-partir-da-fatura/76-04-categoria-um-ativo-por-unidade.png)
+
+{/* Nota interna (DOCS-046, V3A2-17; auditoria v20-A, master 0289754a8, porta 8328, Contabilista por clique): desde o FAT-130 a linha sem descrição dá à ficha o nome «<referência>, linha 1», e a sugestão do DR 25/2009 sai desse nome («[I-1245] Equipamentos de centrais: Linhas de AT e suportes», pela palavra «linha»): defeito no relatório AUDITORIA_V20-A. Em rascunho, o botão Ativos Fixos continua visível. */}
+
+## Problemas frequentes
+
+### A ficha tem o nome «…, linha 1» e a sugestão de taxa está errada
+
+- **Sintoma:** a ficha chama-se com a **Referência da fatura** seguida de «, linha 1», e a faixa sugere uma taxa que não tem nada a ver com o bem (no teste, «[I-1245] Equipamentos de centrais: Linhas de AT e suportes»).
+- **Causa:** a linha da fatura não tinha descrição. O fiscaldoo dá à ficha a referência da fatura e o número da linha, e a sugestão procura-se nesse nome.
+- **O que fazer:** escreva o nome do bem na ficha, antes de carregar em **Usar a sugestão**, ou escolha o código certo em **Quadro fiscal › Taxa DR 25/2009**. Da próxima vez, descreva a linha da fatura.
+
+### «O ativo “…” não pode ser posto em uso: falta(m) data de início de utilização, vida útil contabilística maior que zero»
+
+- **Sintoma:** ao carregar em **Pôr em uso** numa ficha acabada de criar, janela **Erro de Validação**: «O ativo “Cadeira ergonómica (1/3)” não pode ser posto em uso: falta(m) data de início de utilização, vida útil contabilística maior que zero. A depreciação começa com a entrada em funcionamento e reparte-se pela vida útil, por isso são necessárias. Preencha-os e tente novamente.»
+- **Causa:** a ficha criada pela fatura traz o valor mas não a data de início nem a vida útil.
+- **O que fazer:** preencha a **Data de início de utilização** e a **Vida útil contabilística (anos)** (passo 5) e carregue de novo.
+
+### A fatura publicada não tem o botão «Ativos Fixos»
+
+- **Causa:** a conta da linha não é de ativos fixos (43, 44 ou 45), a linha vale zero, a conta é de depreciações acumuladas (438, 439, 448 e 449, salvo se lhes ligou uma categoria), a fatura ainda está em rascunho, ou é uma nota de crédito (ver «Notas importantes»).
+- **O que fazer:** confira a conta da linha. Se é um bem, corrija a conta (repondo a rascunho) ou crie a ficha em **Ativos fixos**.
+
+### Não consigo ligar «Um ativo por unidade»
+
+- **Causa:** o perfil **Contabilista** vê a categoria mas a opção está bloqueada.
+- **O que fazer:** peça a quem tem o perfil **Contabilista certificado** (ou ao administrador) que a ligue. Só se aplica às faturas confirmadas depois de ligada: as fichas já criadas não se refazem.
+
+{/* Nota interna (v23-T, DOC-0076, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

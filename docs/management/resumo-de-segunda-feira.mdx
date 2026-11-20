@@ -1,0 +1,95 @@
+---
+id: resumo-de-segunda-feira
+slug: /management/resumo-de-segunda-feira
+title: Como receber o resumo semanal da Direção por e-mail
+sidebar_label: Resumo de segunda-feira
+sidebar_position: 10
+description: Ligar o e-mail que, todas as segundas-feiras, leva à Gerência os números principais do painel da Direção e o que vence na semana; quem o recebe, o que traz e como o desligar.
+keywords: [resumo de segunda-feira, resumo semanal, e-mail semanal, email semanal, gerência, gerencia, direção, direcao, painel da direção, resumo para a gerência]
+doc_id: DOC-0278
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [management/painel-da-direcao, administration/sistema/processos-automaticos]
+---
+
+## Para que serve?
+
+Quem gere a empresa nem sempre abre o fiscaldoo. Com o **Resumo de segunda-feira** ligado, as pessoas com o perfil **Gerência** recebem todas as segundas-feiras um e-mail com os números principais do [painel da Direção](/management/painel-da-direcao) e o que vence nessa semana. Vem desligado.
+
+## Quando utilizar?
+
+- Quando a Gerência quer acompanhar as vendas, o dinheiro nos bancos e o que está vencido sem abrir o fiscaldoo.
+- Ao preparar uma empresa nova, se a Gerência pediu o e-mail semanal: o resumo vem desligado.
+- Quando a Gerência deixa de o querer receber: veja «Desligar o resumo».
+
+## Onde encontrar?
+
+**Definições › Utilizadores e empresas › Empresas**, ficha da empresa, separador **Resumo de segunda-feira**.
+
+## Antes de começar
+
+- Quem liga o resumo é o administrador do sistema: os passos foram feitos com ele. A **Gerência** não o consegue ligar: não tem a aplicação **Definições**, e em **Direção › Pessoas › Pressupostos de pessoas** vê a ficha da empresa só com os pressupostos de gestão e o interruptor **Resumo semanal de pessoas**, que é outro e-mail (veja «Problemas frequentes»).
+- Cada pessoa que vai receber o e-mail tem o perfil **Gerência**, um endereço de e-mail na ficha do utilizador e acesso à empresa.
+- A base de dados envia e-mails (tem o correio de saída configurado). Na base de demonstração não há correio de saída configurado: os e-mails ficam na fila, com erro.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Definições › Utilizadores e empresas › Empresas** e escolha a empresa, por exemplo **Empresa Demonstração, Lda**.
+2. Abra o separador **Resumo de segunda-feira**.
+3. No grupo **RESUMO PARA A GERÊNCIA**, ligue **Resumo de segunda-feira por e-mail**.
+   ![Separador Resumo de segunda-feira da ficha da empresa, com a opção Resumo de segunda-feira por e-mail ligada e o texto que explica o envio](/images/management/resumo-de-segunda-feira/01-ligar-o-resumo.png)
+4. Carregue em **Guardar** (ícone da nuvem).
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o resumo liga-se no mesmo sítio (visto com o administrador): na ficha da empresa, em **Definições › Utilizadores e empresas › Empresas**, o separador **Resumo de segunda-feira** tem o grupo **RESUMO PARA A GERÊNCIA** e a opção **Resumo de segunda-feira por e-mail?**, com o mesmo texto: «Todas as segundas-feiras as pessoas com o perfil Gerência recebem um e-mail com os seis números do Painel da Direção e o que vence na semana. Está desligado até o ligar; nenhum salário individual é enviado.» Com um utilizador só com o perfil **Gerência**, **Direção › Pessoas › Pressupostos de pessoas** mostra a mesma ficha, com o interruptor **Resumo semanal de pessoas**.
+
+{/* Nota interna (lote EE-13, DOCS-073 #4142, req 46633, DEC-1794, master 7f41ce71b, base Enterprise docs_ee_ee13_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee13_test): DOC-0278. A arquitetura marca o artigo «Só Community»; o separador e o texto existem no Enterprise, iguais na cópia Community. A opção não foi ligada nem gravada na cópia Enterprise (nenhum e-mail). Ver reports/LOTE_EE-13.md. */}
+
+## Resultado esperado
+
+- A tarefa automática **Resumo de segunda-feira para a Gerência** fica ativa, uma vez por semana. No exemplo, ligada a 6 de novembro de 2026, a próxima execução ficou para segunda-feira, 9 de novembro, às 07:00.
+- Cada pessoa da Gerência recebe um e-mail com o assunto «Empresa Demonstração, Lda: o seu resumo de segunda-feira (data)». O e-mail traz os seis números do painel da Direção, com uma linha de explicação cada:
+  - **Vendas do mês** (sem IVA; faturas menos notas de crédito);
+  - **Margem** (depois dos custos diretos);
+  - **Dinheiro nos bancos** (soma das contas bancárias, em euros);
+  - **Vencido a receber** (faturas de clientes vencidas);
+  - **Próximos pagamentos ao Estado** (impostos que a previsão de tesouraria conta pagar nos 30 dias seguintes, incluindo os atrasados);
+  - **Custo total com pessoal** (só totais).
+- Por baixo, em **Vence esta semana**, o e-mail lista as obrigações do [Calendário fiscal](/accounting-pt/calendario-fiscal) que vencem até ao domingo dessa semana, ou diz «Nada vence esta semana.».
+- O e-mail termina com «Só totais: nenhum salário individual aparece neste e-mail.»
+
+**Exemplo.** Na demonstração, com a tarefa corrida à mão pelo administrador a 6 de novembro de 2026, o e-mail «Empresa Demonstração, Lda: o seu resumo de segunda-feira (06/11/2026)» era para a semana que termina em 08/11/2026 e dizia: vendas do mês 120,00 €, margem 120,00 € (100 % das vendas), dinheiro nos bancos 34.900,23 € (2 contas), vencido a receber 5.241,03 € (4 faturas), próximos pagamentos ao Estado 19.771,91 € («Em atraso desde 20/03/2026.»), custo total com pessoal 0,00 € e «Nada vence esta semana.». Só saiu um e-mail: a outra pessoa com o perfil **Gerência** não tinha endereço de e-mail. O e-mail ficou na fila com erro, porque a base de demonstração não envia correio.
+
+## Desligar o resumo
+
+Desligue **Resumo de segunda-feira por e-mail** na mesma ficha e guarde. O resumo é por empresa: desligado, ninguém da Gerência dessa empresa o recebe. Quando nenhuma empresa o pede, a tarefa automática fica inativa.
+
+## Notas importantes
+
+- Os números são os do mês em curso no dia do envio: no início do mês, as **Vendas do mês** contam só os primeiros dias.
+- **Próximos pagamentos ao Estado** diz o que está em atraso. Se algum pagamento já passou da data, a linha diz «Em atraso desde …», com a data do mais antigo, e, se houver outro nos 30 dias seguintes, «O próximo vence a …». Sem atrasos, diz «O mais próximo a …»; sem nada a pagar nos 30 dias seguintes, diz «Nada a pagar nos próximos 30 dias.». As datas são as da previsão de tesouraria: confirme os prazos legais no [Calendário fiscal](/accounting-pt/calendario-fiscal).
+- Não há uma opção por pessoa. O próprio e-mail diz: «Para deixar de o receber, peça ao administrador que desligue o resumo de segunda-feira na empresa.» Desligado, deixa de chegar a toda a Gerência dessa empresa.
+
+## Problemas frequentes
+
+### A Gerência não encontra o separador Resumo de segunda-feira
+
+- **Sintoma:** com o perfil **Gerência**, **Direção › Pessoas › Pressupostos de pessoas** abre a ficha da empresa sem separadores; o único interruptor é **Resumo semanal de pessoas**.
+- **Causa:** o resumo de segunda-feira liga-se na ficha completa da empresa, em **Definições**, que é do administrador do sistema. O **Resumo semanal de pessoas** é outro e-mail e não liga este.
+- **O que fazer:** peça ao administrador do sistema que ligue o resumo.
+
+### O e-mail não chega
+
+- Confirme que a pessoa tem o perfil **Gerência** e um e-mail na ficha do utilizador.
+- Peça ao administrador que confirme que a base envia e-mails e que a tarefa está ativa: veja [Que processos automáticos o fiscaldoo corre](/administration/processos-automaticos).
+
+{/* Nota interna (DOCS-046, lote v22-A, 06/11/2026, master d83bdf7ae, base docs_demo_v22a_test): ligado no ecrã com o administrador (captura refeita). Gerência provada com um utilizador criado só com esse perfil (DEC-1777): sem Definições; Pressupostos de pessoas sem separadores, com o interruptor «Resumo semanal de pessoas» (outro módulo). A mensagem antiga «Só pode alterar os pressupostos de pessoas…» vinha por RPC e já não se alcança por clique: saiu. Tarefa ativa, semanal, próxima 09/11/2026 07:00 (RPC). Tarefa corrida uma vez por RPC (method_direct_trigger): 1 e-mail na fila, estado exceção (sem servidor de correio; guarda de rede ligada). Variantes «O próximo vence a …» e «O mais próximo a …» lidas do código em lotes anteriores. O resumo ficou LIGADO na base, para o auditor. */}

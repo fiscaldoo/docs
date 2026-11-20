@@ -1,0 +1,96 @@
+---
+id: centros-de-custo
+slug: /accounting-pt/centros-de-custo
+title: Como usar centros de custo (contabilidade analítica)
+sidebar_label: Centros de custo
+description: Perceber como os centros de custo existem no fiscaldoo (planos e contas analíticas), onde se criam e como ver o que cada centro gastou no balancete analítico e nos movimentos analíticos.
+keywords: [centros de custo, centro de custo, contabilidade analítica, contabilidade analitica, plano analítico, contas analíticas, balancete por centro de custo, razão analítico, movimentos analíticos, distribuição analítica, modelos de distribuição analítica, custos por departamento]
+doc_id: DOC-0072
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/plano-de-contas/plano-de-contas-snc, accounting-pt/compras/fatura-de-fornecedor, accounting-pt/relatorios/balancete]
+---
+
+## Para que serve?
+
+Um centro de custo serve para saber quanto cada parte da empresa (administração, comercial, operações) gastou. No fiscaldoo, um centro de custo é uma **conta analítica** dentro do **plano analítico** «Centro de Custo»: o gasto fica na contabilidade geral, na conta do plano de contas, e a mesma linha fica também repartida pelos centros. Os valores analíticos não mudam o razão geral nem os lançamentos.
+
+## Quando utilizar?
+
+- Quer ver os gastos por departamento ou por tipo de atividade (renda, eletricidade, comunicações) sem criar contas novas no plano de contas.
+- Quer comparar o total analítico com a contabilidade geral.
+
+Para dividir o plano de contas em subcontas, veja [Como criar uma conta](/accounting-pt/criar-e-alterar-contas). Os centros de custo não substituem as contas do SNC.
+
+## Onde encontrar?
+
+- **Definições › Contabilidade › Contabilidade analítica: contas, planos e modelos de distribuição**, com três ligações **Abrir**: **Contas analíticas**, **Planos analíticos** e **Modelos de distribuição analítica**. Este bloco é do perfil **Administrador**.
+- **Contabilidade › Consultar › Livros e balancetes › Movimentos analíticos**, **Balancete analítico** e **Razão analítico** (no menu, sob «Análise analítica»). Também os vê o perfil **Contabilista**.
+
+{/* Nota interna (DOCS-046): as listas de contas e de planos analíticos não têm item de menu para o perfil Contabilista Certificado / Gestor fiscal (abrem-se por ligação); a coluna Analítica da fatura é dele desde o master 5228a94bd (lote v23-G). */}
+
+## Antes de começar
+
+- Perfil **Administrador** para criar planos, centros e modelos de distribuição.
+- Para consultar o balancete e os movimentos: perfil **Contabilista certificado** ou **Contabilista**.
+- Para repartir uma fatura de fornecedor por centros (passo 3): perfil **Contabilista** ou **Contabilista certificado**. Os dois veem a coluna **Analítica** nas linhas da fatura e abrem a janela **Analítico**. O perfil **Administrativo** não vê a coluna.
+- Na demonstração já existem os planos **Plano de projeto**, **Departamentos**, **Viaturas**, **Centro de Custo**, **Projeto financiado**, **Rubrica** e **Formação**, todos com **Aplicabilidade por omissão** «Opcional», e os centros **Administração**, **Comercial** e **Operações**.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Definições**, no bloco da contabilidade analítica, carregue em **Abrir** de **Planos analíticos**. A lista mostra o **Nome**, a **Aplicabilidade por omissão** e a **Cor** de cada plano; o centro de custo é o plano **Centro de Custo**.
+   ![Lista de planos analíticos com o plano Centro de Custo assinalado](/images/accounting-pt/centros-de-custo/72-01-planos-analiticos.png)
+2. Abra **Contas analíticas**. A lista mostra, por conta, o **Nome**, a **Referência**, o **Cliente**, o **Plano**, o **Débito**, o **Crédito** e o **Saldo**. Para criar um centro, carregue em **Novo**, escreva o **Conta Analítica** (o nome) e escolha o **Plano** «Centro de Custo».
+   ![Lista de contas analíticas com os três centros de custo e os seus totais](/images/accounting-pt/centros-de-custo/72-02-contas-analiticas.png)
+3. Para repartir um gasto, abra uma fatura de fornecedor (**Contabilidade › Lançar › Compras › Faturas de fornecedores**, **Novo**), escolha o fornecedor, a data e uma linha com a conta de gastos (aqui `6241 Eletricidade`, 100,00 €, com IVA a 23 %). Na coluna **Analítica** da linha abre-se a janela **Analítico**, com uma coluna por plano: no plano **Centro de Custo** escolha **Comercial**; **Percentagem** 100 e **Subtotal** 100,00 €. Carregue em **Confirmar**. Sem taxa de IVA na linha, a fatura é recusada (ver «Problemas frequentes»).
+   ![Janela Analítico na linha da fatura, com o plano Centro de Custo a 100 % em Comercial e subtotal de 100,00 €](/images/accounting-pt/centros-de-custo/72-05-distribuicao-analitica.png)
+   Para não repetir a escolha, **Novo modelo** (na janela **Analítico**) abre **Criar Modelo de distribuição analítica**, que vem preenchido com o fornecedor, o prefixo da conta (`624`) e a empresa da fatura; ao **Guardar**, passa a ser um modelo que se pode abrir em **Definições › Contabilidade analítica › Modelos de distribuição analítica**. O modelo guarda as **Condições a cumprir** (parceiro, prefixo de contas, artigo, empresa…) e a **Distribuição a ser aplicada**.
+4. Em **Consultar › Livros e balancetes › Movimentos analíticos**, veja cada linha repartida: **Data**, **Descrição**, a coluna de cada plano (aqui **Centro de Custo**) e o **Valor**. No exemplo, a fatura do passo 3 deu uma linha «Eletricidade de novembro», de 01/11/2026, em **Comercial** com -100,00 €; e «Eletricidade e água», de 09/09/2026, aparece em **Operações** com -210,00 € (lançamento `FTF/2026/00028`, conta `6241 Eletricidade`). O Contabilista certificado e o Contabilista veem as linhas.
+   ![Lista de movimentos analíticos com os valores por centro de custo](/images/accounting-pt/centros-de-custo/72-04-movimentos-analiticos.png)
+   ![Primeira linha dos movimentos analíticos: Eletricidade de novembro, 01/11/2026, Comercial, -100,00 €](/images/accounting-pt/centros-de-custo/72-06-movimento-da-fatura.png)
+5. Em **Consultar › Livros e balancetes › Balancete analítico**, escolha o período (aqui 01/01/2026 – 31/12/2026) e leia o total por centro. Antes da fatura do passo 3: **Administração** 11.250,00 €, **Comercial** 855,00 € e **Operações** 12.390,00 €, **Total geral** 24.495,00 € (é o que mostra a captura). Com a fatura confirmada, **Comercial** passou a 955,00 € e o **Total geral** a 24.595,00 €.
+   ![Balancete analítico de 2026 com o total por centro de custo](/images/accounting-pt/centros-de-custo/72-03-balancete-analitico.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+Os totais do balancete analítico conferem com os das contas analíticas: 11.250,00 + 855,00 + 12.390,00 = 24.495,00 € antes da fatura do passo 3, e +100,00 € em **Comercial** depois dela. Criar um centro ou um plano não gera lançamentos nem mexe no razão. A repartição analítica de um documento nasce quando o documento é confirmado com a distribuição analítica nas linhas (ou por um modelo de distribuição). Se a fatura for anulada, a linha analítica desaparece com ela.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o que a empresa deve repartir por centros e a conformidade com o SNC.</span>
+
+## Notas importantes
+
+### O saldo muda de sinal entre a lista e o balancete
+
+Na lista **Contas analíticas**, o **Saldo** dos centros aparece negativo (por exemplo -11.250,00 € em **Administração**, com 11.250,00 € de débito), e no **Balancete analítico** o mesmo valor aparece positivo (11.250,00 €). Não use o sinal do **Saldo** da lista para comparar com o balancete: compare o **Débito** e o **Crédito**.
+
+{/* Nota interna (DOCS-046, V3A2-06): sinal do Saldo da lista de contas analíticas (crédito - débito, nativo) contra o Balancete analítico (débito - crédito). Rever quando o Gestor abrir o cartão. */}
+
+### Só vê o que foi repartido
+
+O balancete analítico mostra apenas as linhas que têm distribuição analítica: um gasto lançado sem centro não aparece nele, mesmo que esteja no razão geral. Para saber o que ficou sem centro, compare o total do balancete analítico com o razão geral das contas de gastos.
+
+## Problemas frequentes
+
+### Não encontro o bloco da contabilidade analítica nas Definições
+
+- **Causa:** as **Definições** são do perfil **Administrador**; os perfis **Contabilista certificado** e **Contabilista** não as abrem.
+- **O que fazer:** peça ao administrador, ou consulte os centros pelo menu **Consultar**.
+
+### «A linha … não tem taxa de IVA»
+
+- **Sintoma:** ao carregar em **Confirmar** a fatura do passo 3 sem imposto na linha, «Operação inválida — A linha “Eletricidade de novembro” da fatura a Papelaria Central, Lda não tem taxa de IVA. Escolha uma taxa de IVA (ou uma taxa de IVA a 0% com motivo de isenção, ou uma taxa «não sujeito»).»
+- **O que fazer:** carregue em **Fechar**, escolha o imposto na coluna **Impostos** e confirme de novo. A distribuição analítica da linha mantém-se.
+
+### Não vejo a coluna «Analítica» na fatura
+
+- **Causa:** a coluna é dos perfis **Contabilista** e **Contabilista certificado**; o perfil **Administrativo** não a vê.
+- **O que fazer:** peça a um utilizador com o perfil **Contabilista** ou **Contabilista certificado** para repartir o gasto.
+{/* Nota interna (lote v23-G, master 5228a94bd, docs_demo_v23g_test): por clique com utilizadores criados só com cada valor do campo Perfil (DEC-1777). Contabilista e Contabilista certificado: coluna Analítica na FTF/2026/00045 e, numa fatura nova (Gabinete Contas Certas, 6241, 100,00), a janela Analítico abre na linha (rascunho não gravado). Administrativo: sem a coluna. Menus de Movimentos, Balancete e Razão analítico vistos nos dois perfis de contabilidade. */}

@@ -1,0 +1,106 @@
+---
+id: provas-de-exportacao
+slug: /accounting-pt/provas-de-exportacao
+title: Como guardar as provas de exportação
+sidebar_label: Provas de exportação
+description: Juntar a uma fatura isenta por exportação o DAU, o DAE ou outro documento da alfândega, ver as exportações sem prova e decidir se a prova bloqueia o fecho do período.
+keywords: [provas de exportação, provas de exportacao, prova de exportação, prova de exportacao, DAU, DAE, MRN, isenção exportação, isencao exportacao, M05, art. 14 CIVA, exportações sem prova, exportacoes sem prova, alfândega, alfandega]
+doc_id: DOC-0100
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7a3b55244)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/iva/taxas-e-isencoes-de-iva, accounting-pt/iva/declaracao-periodica-de-iva, fiscal-core/faturacao/emitir-uma-fatura-certificada]
+---
+
+{/* Nota interna (lote v23-AK, DOCS-069 #4052, master 7a3b55244 com o UX-141, docs_demo_v23ak_test, 08/11/2026): FT D26/31 (9,50 €) e FT D26/32 (19,00 €) para Harbor Tech Inc., azeite DEMO003 com 0% EX, criadas e emitidas por RPC com um utilizador só com o perfil Contabilista (a base-mãe não tem nenhuma exportação de bens na Empresa Demonstração: a FT D26/17 é um serviço). Por clique, com utilizadores criados só com cada valor do campo Perfil: o Contabilista registou a prova da FT D26/31 e o Contabilista certificado a da FT D26/32 (Ações › Provas de exportação › Novo, anexo PDF); Auditor / ROC e Gerência têm a entrada no menu Ações, a lista sem Novo e a prova só de leitura; o botão Exportações sem prova só aparece ao Contabilista certificado. Aviso novo e captura 01 refeitos (FT D26/32, antes da prova). Capturas 02 e 03 sem texto que mude com o UX-141. */}
+
+{/* Nota interna (v23-T2, DOC-0100, master cebcb888d, docs_demo_v23t2_test): FT D26/31 (Harbor Tech Inc., DEMO003 9,50 €, 0% EX) criada e emitida por RPC com um utilizador só com o perfil Contabilista certificado; aviso e captura 01 lidos com o CC; o C e o CC não têm «Adicionar uma linha» no separador (fatura emitida); «Provas de exportação» no menu Ações: CC sim, C não. O aviso diz que o Contabilista regista na lista abaixo: defeito no relatório do lote v23-T2. Notas anteriores (v13-ACC): base docs_demo_v13acc_test, porta 8254, master 56504fe86. Duas faturas de exportação emitidas por clique para Harbor Tech Inc. com o perfil Contabilista (28,00 €) e o perfil Gestor de contabilidade (9,50 €). Os números saídos nesta cópia (FT D26/34 e FT D26/35) já designam outros documentos noutros artigos: o artigo não os cita e a captura 02 foi recortada acima da linha Fatura. Falhas por clique: anexo em falta, data anterior à fatura, eliminar. A opção da empresa foi ligada na cópia; a recusa de validação não se viu porque a declaração 2026/11 é recusada antes por outras verificações do período. O separador convida a acrescentar a prova, mas o Contabilista não tem a ação: defeito no relatório LOTE_V13ACC. Revisto em v15-REV, base docs_demo_v15rev_test, master 00c68a6d8: fatura de exportação criada e emitida por RPC; aviso, Ações com os dois perfis, prova, falhas e eliminar por clique com Gestor de contabilidade; capturas 01 a 03 refeitas. A secção da declaração e a opção da empresa não foram refeitas. */}
+
+## Para que serve?
+
+Uma exportação de bens não leva IVA, mas a empresa tem de conseguir provar que os bens saíram da União Europeia. A prova chega normalmente depois de a fatura estar emitida. Este procedimento junta à fatura o documento da alfândega, sem alterar a fatura.
+
+A isenção das exportações está no CIVA, art. 14.º. <span className="fd-pending">Pendente de validação por contabilista certificado: que documentos aceitar como prova e o prazo para os juntar.</span>
+
+## Quando utilizar?
+
+- Quando recebe o DAU, o DAE ou outro documento da alfândega de uma venda para fora da União Europeia.
+- Quando quer saber que exportações ainda não têm prova, antes de entregar a declaração de IVA.
+- Não use para vendas a empresas de outro país da União Europeia nem para serviços prestados para o estrangeiro: essas vendas têm outra isenção e a fatura não mostra este separador. Veja as [taxas e isenções de IVA](/accounting-pt/taxas-e-isencoes-de-iva).
+
+## Onde encontrar?
+
+- **Contabilidade › Lançar › Vendas e cobranças › Faturas de clientes**: abra a fatura. O separador **Prova de exportação** mostra o que falta e o menu **Ações** tem **Provas de exportação**.
+- **Contabilidade › Declarar › IVA › O que há para fazer com o IVA?** › **Listas de apoio** › **Registo das declarações de IVA**: abra a declaração do período. O grupo **Exportações sem prova** tem o botão **Ver os documentos**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** ou **Contabilista certificado**: os dois registam a prova. O **Auditor / ROC** e a **Gerência** só consultam: veem o separador e abrem **Provas de exportação** no menu **Ações**, mas a lista não tem **Novo** e a prova abre só para leitura.
+- A fatura está emitida e o imposto da linha é **0% EX**, que tem o motivo de isenção de exportação (M05). O imposto vem sozinho do cliente fora da União Europeia, para um artigo que é um bem. Com **0% EX S**, o imposto dos serviços, o separador não aparece.
+- Tem o documento da alfândega em ficheiro, por exemplo em PDF.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a fatura e carregue no separador **Prova de exportação**. Sem prova, aparece o aviso «Exportação isenta sem prova de exportação (DAU/DAE). Quando chegar, um utilizador com o perfil «Contabilista (opera)» ou «Contabilista certificado (assina, fecha períodos)» regista-a: abra o menu Ações (⋮) ao lado do número da fatura, escolha «Provas de exportação» e carregue em Novo. A fatura em si não é alterada.». A lista do separador só mostra as provas: numa fatura emitida, não tem **Adicionar uma linha**. Registe a prova pelo passo 2.
+   ![Separador Prova de exportação da fatura, com o aviso de exportação isenta sem prova e a lista vazia](/images/accounting-pt/provas-de-exportacao/01-separador-sem-prova.png)
+2. Carregue em **Ações** › **Provas de exportação** e depois em **Novo**. A **Fatura** vem preenchida.
+3. Em **Tipo de prova**, escolha **DAU — Documento Administrativo Único**, **DAE — Documento Administrativo Eletrónico**, **Documento de transporte com confirmação de saída da alfândega** ou **Outra prova aduaneira**.
+4. Em **Data da prova**, escolha a data do documento. Não pode ser anterior à data da fatura.
+5. Em **Referência (n.º do DAU/DAE)**, escreva o número do documento, por exemplo `26PT0000000012345`.
+6. Se o documento tiver, escreva o **MRN (referência do movimento aduaneiro)**. É opcional.
+7. Em **Alfândega de exportação em Portugal**, escolha **Sim** ou **Não**. É opcional. Veja a secção [Alfândega de exportação](#alfândega-de-exportação).
+8. Em **Anexo**, carregue o ficheiro e guarde.
+   ![Prova de exportação preenchida: tipo DAU, data, referência, MRN, alfândega em Portugal e o ficheiro em anexo](/images/accounting-pt/provas-de-exportacao/02-prova-registada.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+Na fatura, o aviso desaparece e o separador mostra a prova. O histórico da fatura regista que foi anexada, com o tipo, a referência e a data.
+
+![Separador Prova de exportação com a linha do DAU, a data e a referência, e sem o aviso](/images/accounting-pt/provas-de-exportacao/03-separador-com-prova.png)
+
+Este procedimento não gera lançamentos: não muda a fatura, nem o IVA, nem nenhum saldo.
+
+## Ver as exportações sem prova
+
+Na declaração periódica de IVA do período, depois de carregar em **Calcular**, o grupo **Exportações sem prova** mostra quantas faturas faltam. Carregue em **Ver os documentos** para abrir a lista. Sem exportações por provar, o grupo não aparece.
+
+Na lista **Provas de exportação**, o botão **Exportações sem prova** abre a lista das faturas que faltam. Hoje, esse botão só aparece com o perfil **Contabilista certificado**: com o perfil **Contabilista**, a lista só tem **Novo**. {/* Nota interna (auditoria docs-aud-v23ak, 08/11/2026): defeito do produto, já no LOTE_V23-AK — o UX-141 deu ao Contabilista o menu das exportações sem prova, mas o botão da lista continua só do Contabilista certificado e do administrador (ux_reach_views.xml). Quando for corrigido, retirar a frase «Hoje…». */}
+
+A lista da declaração só vê as vendas com o imposto **0% EX** já emitidas nesse período. Não diz se a prova é suficiente: isso é o contabilista certificado que confere.
+
+## Bloquear o fecho do período sem prova
+
+Por omissão, uma exportação sem prova não impede nada. A empresa pode tornar a prova obrigatória: um administrador abre **Definições › Utilizadores e empresas › Empresas**, abre a empresa e, no separador **Localização PT**, marca **Prova de exportação obrigatória para fechar o período**.
+
+Com a opção marcada, a declaração periódica de IVA recusa a validação enquanto houver exportações do período sem prova. <span className="fd-pending">Pendente de validação no ecrã: na demonstração, a declaração é recusada antes por outras verificações do período.</span>
+
+## Alfândega de exportação
+
+{/* Exceção CC campos 153 e 155: os campos vêm da ajuda do ecrã; a afirmação leva a marca do contabilista certificado nesta secção. */}
+
+A resposta decide o campo da declaração periódica de IVA a partir de 01/07/2027. **Sim** quando os bens saíram por uma alfândega em Portugal (campo 153). **Não** nos outros casos (campo 155). Sem resposta, a exportação fica no campo 153. <span className="fd-pending">Pendente de validação por contabilista certificado.</span>
+
+## Notas importantes
+
+- Uma prova nunca se apaga. Se estiver errada, corrija-a ou anexe o ficheiro certo.
+- Depois de a declaração do período estar validada, a prova deixa de se poder alterar.
+- Cada prova pertence a uma só fatura. Para outra fatura, acrescente outra prova.
+
+## Problemas frequentes
+
+**«A prova de exportação (*01/10/2026*) não pode ser anterior à fatura (*05/11/2026*).»** Confirme a data do documento e a data da fatura. Corrija a **Data da prova**. Carregue em **Fechar** e guarde de novo.
+
+**«Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»** Falta o **Anexo**, ou outro campo assinalado. A prova não se guarda sem o ficheiro.
+
+**«Uma prova de exportação nunca é apagada. O que aconteceu: sustenta uma isenção já declarada. Como resolver: corrija os dados ou anexe o ficheiro certo.»** Carregue em **Fechar**. Abra a prova e corrija os dados ou o **Anexo**.
+
+**A fatura não tem o separador Prova de exportação.** O imposto da linha não é **0% EX**. Confirme o cliente, o país e o tipo de artigo na fatura. Se a venda é um serviço, o imposto é **0% EX S** e esta prova não se aplica. Se o imposto estiver errado numa fatura já emitida, a correção faz-se com uma nota de crédito.
+
+**A lista Provas de exportação não tem Novo.** O seu perfil só consulta as provas: é o caso do **Auditor / ROC** e da **Gerência**. Peça ao **Contabilista** ou ao **Contabilista certificado**.

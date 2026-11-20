@@ -1,0 +1,10 @@
+{
+  "label": "Migração",
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "slug": "/migration-toolkit",
+    "title": "Migração",
+    "description": "Preparar, importar e validar a migração de outro programa ou de outra edição."
+  }
+}

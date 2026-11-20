@@ -1,0 +1,107 @@
+---
+id: recibo-validado-nao-se-altera
+slug: /troubleshooting/recibo-validado-nao-se-altera
+title: O recibo já está validado e não se altera
+sidebar_label: Recibo validado não se altera
+description: Um recibo de vencimento validado ou pago não se recalcula, não se apaga e não se anula. Corrige-se com um recibo corretivo, a partir do botão Retificar.
+keywords: [recibo validado, recibo pago, recibo de vencimento, alterar recibo, apagar recibo, eliminar recibo, anular recibo, cancelar recibo, recibo corretivo, retificar, corrigir salário, corrigir salario, não pode ser eliminado, nao pode ser eliminado, já não se altera, ja nao se altera, corrigir o IRS retido, não pode ser cancelado sozinho, lote agregado]
+doc_id: DOC-0391
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master a67618a71)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado, payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/declarar/dmr]
+---
+
+## Sintoma
+
+Abre um recibo de vencimento já validado ou pago e quer mudar um valor, apagá-lo ou anulá-lo. As linhas não se editam, não há botão **Calcular** e o topo do recibo diz:
+
+> «Recibo de vencimento já validado: já não se altera. Para corrigir, crie um recibo corretivo.»
+
+## Mensagem
+
+Visto com o perfil **Processador de salários** em recibos de outubro de 2026 da Empresa Demonstração, Lda, criados para este exemplo: o lote **Salários de outubro de 2026**, com 8 recibos, contabilizado num só lançamento (`SAL/2026/00005`) e com os recibos já pagos. A demonstração só traz recibos até setembro, e esses não se mexem; o leitor repete o exemplo processando outubro em **Salários › Processar › Processar o mês** (criar os recibos, calcular, validar, contabilizar e registar o pagamento do lote: ver [Como processar o mês](/payroll-pt/processar-o-mes)). Aberto o recibo de Carla Sofia Mendes (01/10/2026 — 31/10/2026), o aviso do topo é o citado acima e o menu **Ações** (a engrenagem ao lado do título) tem **Recibo**, **Duplicar**, **Eliminar** e **Anular recibo**; na barra há **Imprimir recibo**, **Retificar** e **Ações** (o botão **Corrigir o IRS retido** só aparece com o acesso extra **Administrador de Salários** e ao administrador).
+
+Em **Ações › Eliminar** o ecrã pergunta primeiro «Adeus, registo! Quer mesmo fazer desaparecer este registo?»; depois de **Eliminar**, o fiscaldoo recusa com uma janela **Operação inválida**:
+
+> «O recibo «*Carla Sofia Mendes (01/10/2026 — 31/10/2026)*» não pode ser eliminado: está «Pago» (ou foi validado). O que aconteceu: um recibo processado é um documento legal que fica para registo. Como corrigir: corrija-o com um recibo corretivo (ação «Retificar»); só se eliminam rascunhos.»
+
+![Janela Operação inválida com a recusa de eliminar um recibo pago](/images/troubleshooting/recibo-validado-nao-se-altera/01-eliminar-recusado.png)
+
+Em **Ações › Anular recibo**, com um **Motivo** escrito e **Confirmar anulação**, num recibo **Pago** de um lote contabilizado num só lançamento (o caso normal no fim do mês):
+
+> «O recibo «*Carla Sofia Mendes (01/10/2026 — 31/10/2026)*» não pode ser anulado: está pago e o seu lançamento *SAL/2026/00005* (*Salários de outubro de 2026*) contabiliza também outros recibos (lote agregado). O que aconteceu: um recibo pago nunca passa a anulado, e estornar o lançamento levaria os outros consigo. Como resolver: peça a um utilizador com o acesso extra «Administrador de Salários» que use «Repor para Validado» no lote (só enquanto nenhum pagamento estiver contabilizado ou reconciliado) e depois anule em conjunto todos os recibos do lote; ou corrija este com «Retificar», que cria um recibo corretivo.»
+
+![Janela Operação inválida com a recusa de anular um recibo pago de um lote agregado](/images/troubleshooting/recibo-validado-nao-se-altera/04-anular-recusado.png)
+
+O recibo, o período e o lançamento da mensagem mudam com o recibo que se tenta eliminar ou anular; o resto do texto é o mesmo. Um recibo **Validado** que ainda não foi pago, nem declarado à AT ou à Segurança Social, anula-se com um motivo (ficou **Anulado**, num recibo de outubro criado para o provar). Com a declaração já submetida, o ecrã recusa: «… não pode ser cancelado: a DMR ou a declaração à Segurança Social já foi submetida» (texto do produto, que não se provocou: a demonstração não entrega declarações).
+
+{/* Nota interna (lote 101, master f7a265901, docs_demo_101_test, porta 9920, 19/11/2026): as recusas de Eliminar e Anular recibo foram provocadas no ecrã (admin) sobre recibos de outubro criados na cópia para este fim (lote 6, SAL/2026/00005); os recibos de setembro da base-mãe não se tocaram. As capturas 01, 04 e 05 são dessa corrida. Um recibo Validado e por pagar anulou-se por RPC (action_cancel, a mesma ação do botão). */}
+
+Com os pagamentos do lote já contabilizados na Contabilidade, **Repor para Validado** é recusado ([Não consigo pagar os salários ou gerar o ficheiro de transferências](/troubleshooting/pagamento-dos-salarios-recusado)). Nesse caso o caminho é o recibo corretivo.
+
+## Causas verificadas
+
+- **O recibo validado é um documento legal.** A partir de **Validado**, o recibo já foi (ou vai ser) entregue ao trabalhador, pago e declarado. O fiscaldoo não deixa recalcular, apagar nem mudar o trabalhador, o período ou o tipo. Só um recibo em **Rascunho** se apaga.
+- **Um recibo pago é o fim do ciclo.** O recibo segue **Rascunho** › **Validado** › **Pago**. Do estado **Pago** não sai, nem para **Anulado**; o que se repõe, com **Repor para Validado** e um motivo, é o lote inteiro, enquanto os pagamentos não estiverem contabilizados.
+- **O lançamento é do lote todo.** Quando o lote é contabilizado num só lançamento, um recibo não se anula sozinho, porque estornar o lançamento levaria os outros recibos. A mensagem fala em «Repor para Validado» no lote; só funciona enquanto nenhum pagamento estiver contabilizado ou reconciliado.
+- **O mesmo vale para o que o recibo já usou:** a cessação com recibo final validado, um pagamento já feito, um mapa de deslocação que suporta um recibo validado e as penhoras, quotas sindicais ou cessões já entregues. Cada um recusa a alteração com uma mensagem própria que manda corrigir com um recibo corretivo. <span className="fd-pending">Pendente de validação no ecrã: estas mensagens não foram provocadas nesta ronda (a demonstração não tem cessações nem penhoras de setembro).</span>
+
+## O que confirmar
+
+1. O estado do recibo, no topo à direita: **Validado** ou **Pago**. Em **Rascunho**, o recibo ainda se corrige: corrija o dado de origem (contrato, ausência, pagamento variável) e carregue em **Calcular**.
+2. Se a declaração mensal de remunerações (DMR) ou a declaração à Segurança Social desse mês já foram entregues. O corretivo de um mês já declarado obriga a substituir a declaração (veja «Como resolver»).
+3. O que mudou de facto: o contrato, o horário ou as presenças do mês, ou um valor que não vem de lado nenhum (por exemplo um prémio esquecido).
+
+## Como resolver
+
+### Corrigir com o botão Retificar (perfil Processador de salários)
+
+1. Abra o recibo em **Salários › Processar › Recibos de vencimento**.
+2. Carregue em **Retificar**. Abre-se a janela com o campo **Motivo da correção**.
+   ![Janela do recibo corretivo com o campo Motivo da correção e o botão Preparar o corretivo assinalado](/images/troubleshooting/recibo-validado-nao-se-altera/03-retificar-motivo.png)
+3. Escreva o motivo e carregue em **Preparar o corretivo**. O fiscaldoo compara o recibo com o contrato, o horário e as presenças de hoje e prepara o corretivo com a diferença.
+
+Se nada mudou nesses dados, a janela **Operação inválida** responde: «Nada mudou desde que este recibo foi fechado. O que aconteceu: o contrato, o horário, as presenças e os incentivos da Segurança Social do período estão como estavam. Como resolver: não é preciso fazer nada; para pagar outra coisa crie um recibo corretivo à mão.» Visto no recibo pago de Carla Sofia Mendes de outubro de 2026, com o motivo «Conferir o recibo com o contrato»; não ficou nenhum recibo novo.
+
+![Janela Operação inválida com a resposta Nada mudou desde que este recibo foi fechado](/images/troubleshooting/recibo-validado-nao-se-altera/05-nada-mudou.png)
+
+Se já existe um corretivo em rascunho desse recibo, a recusa é outra: «… já tem um recibo corretivo em rascunho … Como resolver: abra o que está em rascunho na lista de recibos (menu Salários) ou anule-o (com um motivo) antes de criar outro.»
+
+Para um valor que não vem do contrato nem das presenças (um prémio ou uma ajuda esquecidos), o corretivo faz-se à mão. Abra o recibo validado, carregue em **Ações** e depois em **Criar corretivo**: abre-se um recibo do tipo **Corretivo** do mesmo mês, em **Rascunho** e sem linhas. Em **Linhas**, carregue em **Adicionar uma linha**, escolha a **Rubrica** e a **Quantidade** do valor em falta, guarde, carregue em **Calcular** e depois em **Validar**. Visto no ecrã numa cópia de teste, com o Processador de salários, sobre o recibo validado de outubro de um trabalhador de 2.000,00 € por mês: uma linha de **Retribuição base** de 150,00 € deu **Bruto** 150,00 €, **Descontos** 64,50 € (Segurança Social 16,50 € e IRS 48,00 €) e **Líquido a pagar** 85,50 €, com «Já retido nesse mês: 301,00 €», e o recibo validou-se; o original ficou como estava. Neste caminho o campo **Motivo da correção** fica vazio (só a janela **Retificar** o preenche).
+
+### Antes de validar o corretivo de um mês já declarado
+
+Se a DMR ou a declaração à Segurança Social do mês original já foram entregues, prepare a declaração de substituição antes de validar o corretivo ([DMR](/payroll-pt/dmr)). <span className="fd-pending">Pendente de validação por contabilista certificado: em que mês se declara a diferença do corretivo (mês do pagamento ou mês original) e quando é obrigatória a declaração de substituição.</span>
+
+### Corrigir só o IRS retido
+
+Se o único erro do recibo pago é o IRS retido, use o botão **Corrigir o IRS retido**, na barra do recibo, em vez de **Retificar**. A janela diz: «O recibo não é editado. A diferença é levada pelos recibos seguintes do ano: acrescentada se foi retido a menos, devolvida se foi retido a mais (nunca mais do que o recibo retém). Não pode passar do último período de retenção do ano.» Pede o **IRS que era devido** (o **IRS retido** vem preenchido; no recibo de setembro de Eva Cristina Rocha o IRS do recibo é 17,00 €) e o **Motivo**, e regista com **Registar a correção**.
+
+A diferença entra no IRS retido dos recibos seguintes do mesmo ano e, por isso, na DMR do mês em que esses recibos forem pagos. A DMR do mês do recibo original não muda. <span className="fd-pending">Pendente de validação por contabilista certificado: se a correção do IRS retido nos recibos seguintes do ano dispensa a DMR de substituição do mês original, e o que fazer quando o erro é descoberto depois do último recibo do ano.</span>
+
+<HelpCallout type="atencao" title="Não tente anular um recibo pago para o refazer">
+A anulação de um recibo pago é recusada (a mensagem acima). O caminho é o corretivo, que guarda o original e acrescenta a diferença.
+</HelpCallout>
+
+## Resultado esperado
+
+- O recibo original fica como estava, **Validado** ou **Pago**, com o aviso «já não se altera».
+- O corretivo aparece em **Recibos de vencimento** com o mesmo trabalhador e período, em **Rascunho**, até ser calculado e validado como os outros.
+- Quando nada mudou, não é criado nenhum recibo e a janela diz porquê.
+
+## Quando contactar o suporte
+
+- O recibo está em **Rascunho** e mesmo assim recusa **Calcular** ou **Eliminar**.
+- **Retificar** responde «Nada mudou…» depois de alterar o contrato ou as presenças desse mês.
+- O recibo mostra **Pago** sem que tenha havido pagamento.
+
+## Informação a enviar
+
+- O trabalhador, o período do recibo e o estado.
+- O texto completo da mensagem, copiado do ecrã.
+- O que quer corrigir e se a DMR e a declaração à Segurança Social do mês já foram entregues.
+- O perfil com que entrou.

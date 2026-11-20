@@ -1,0 +1,156 @@
+---
+id: campos-da-declaracao-de-iva
+slug: /accounting-pt/campos-da-declaracao-de-iva
+title: De onde vem cada campo da DP IVA
+sidebar_label: Campos da declaração de IVA
+description: Cada campo do Quadro 06 da declaração periódica de IVA sai da taxa de IVA das linhas publicadas do período, pela data do IVA; veja onde se confere, documento a documento.
+keywords: [campos da declaração de IVA, campos da declaracao de iva, de onde vem o campo, Quadro 06, quadro 06, campo 1, campo 3, campo 7, campo 24, campo 90, campo 93, Mapa de IVA, mapa de iva, Suporte à declaração periódica do IVA, suporte a declaracao periodica do iva, Campo DP, Ver os lançamentos, ver os lancamentos, data do IVA, Não calculado, nao calculado, conferir a DP IVA, conferir a declaração, DP IVA]
+doc_id: DOC-0092
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/iva/declaracao-periodica-de-iva, accounting-pt/iva/apuramento-do-iva, accounting-pt/iva/taxas-e-isencoes-de-iva, accounting-pt/iva/declaracao-recapitulativa]
+---
+
+{/* Nota interna (DOCS-043, revisão no master fe8c5365c, base docs_demo_b2cnova_test, Contabilista): dados de outubro refeitos pelo ecrã (FT D26/33 a 35, FTF/2026/00046 da Papelaria Central lançada a 29/10 com a fatura de 27/10); a base nova tem duas faturas de 100,00 € + 23 % (FT D26/31 e FT D26/32, da prova da base), por isso os campos 3/4 e os totais 90, 92 e 93 mudaram. Declaração 2026/10 (v1) criada com Novo (período 10) e calculada: 40 linhas no Quadro 06 — campos, nenhuma «Não calculado»; Verificações corridas (1 bloqueio: 2 lançamentos por publicar; 3 avisos). Setembro igual (22 = 138,00; 24 = 835,16; 61 = 78,92; 91 = 1.052,08; 92 = 1.492,76; 93 = 440,68). Mapa de IVA com diferença 0 em todos os campos de 1 a 29. Capturas 01 a 03 refeitas. */}
+
+{/* Nota interna (DOCS-035, lote B2c2): validado no ecrã na base docs_demo_loteb2c2_test (8117), perfil Contabilista, outubro e setembro de 2026 da Empresa Demonstração, Lda; empresa vazia (Empresa Teste Filial, Lda) vista com o administrador. O Mapa de campos da declaração e o Sincronizar (FC-VAT-005/006) só existem em modo de programador (DEC-1086): o artigo não os usa. */}
+
+Cada campo do Quadro 06 da declaração periódica de IVA (DP IVA) é calculado pelo fiscaldoo a partir das linhas **publicadas** do período. Quem decide o campo é a **taxa de IVA** escolhida em cada linha da fatura: a taxa normal vai para os campos 3 e 4, a **0% EU** para o campo 7, e assim por diante. Nas vendas isentas, o campo vem do motivo de isenção que acompanha a taxa. Os totais somam outros campos. Para conferir, há três ecrãs que mostram, para cada campo, os documentos que o compõem. <span className="fd-pending">Pendente de validação por contabilista certificado: ligação de cada taxa aos campos 3, 4 e 7.</span>
+
+Este artigo explica de onde vem cada valor. Preparar, validar e entregar a declaração está em [Como preparar e entregar a declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva).
+
+## Onde se vê de onde vem um campo
+
+O perfil **Contabilista** chega aos três ecrãs. Todos têm no topo **Mês**, **Trimestre** e **Ano** e a lista do período: confirme-os antes de conferir, porque o **Mapa de IVA** e o **Suporte à declaração periódica do IVA** abrem no ano inteiro.
+
+- **Contabilidade › Declarar › IVA › Declaração periódica de IVA (DP IVA)**: a declaração campo a campo. Carregue no valor de um campo (a dica diz «Ver os lançamentos») e abre a lista **Linhas de lançamento** com as linhas que o somam. Os campos a zero estão escondidos: marque **Mostrar campos a zero** para os ver todos.
+
+  <Screenshot src="/images/accounting-pt/campos-da-declaracao-de-iva/01-relatorio-dp-iva-campo-7.png" alt="Relatório Declaração Periódica de IVA (PT) de outubro de 2026: campo 1 com 119,00 €, campo 3 com 200,00 €, campo 7 com 200,00 € assinalado e campo 90 com 519,00 €" align="end" />
+
+- **Contabilidade › Declarar › IVA › O que há para fazer com o IVA?** › **Listas de apoio** › **Mapa de IVA**: uma linha por taxa, com a coluna **Campo DP**, que diz para que campo vai cada taxa. Por baixo, **Reconciliação com a DP IVA (Quadro 06)** compara o mapa com a declaração, campo a campo: a coluna **Valor da DP IVA** traz o valor da declaração e a coluna **Diferença** o que falta ou sobra. As duas colunas só têm valores neste bloco, não nas linhas das taxas. Esta comparação tem os campos 1 a 17, 20 a 24 e 27 a 29. Não tem os campos 18 e 19 (importações com o imposto liquidado na declaração), nem as regularizações, o excesso e os totais: esses conferem-se nos outros dois ecrãs.
+  {/* Nota interna (lote v23-AH, DOCS-069 #4052, master 97b34fac3, docs_demo_v23ah_test): colunas Valor da DP IVA e Diferença vistas por clique com o Contabilista (Mapa de IVA de 2026 da Empresa Demonstração, Lda). Vinham do guia congelado Relatórios/mapas-fiscais.md. A frase do guia «Sem movimentos de IVA neste período.» não aparece: em 2023, sem movimentos, o mapa mostra as linhas a 0,00 €. */}
+
+  ![Mapa de IVA de outubro de 2026 com a coluna Campo DP assinalada: 23% Continente vai para 3/4, 6% Continente para 1/2 e 0% EU para 7](/images/accounting-pt/campos-da-declaracao-de-iva/02-mapa-de-iva-campo-dp.png)
+
+- **Contabilidade › Consultar › Impostos e tesouraria › Suporte à declaração periódica do IVA**: para cada campo, os documentos, com o **Parceiro**, a **Data do IVA**, a **Base tributável** e o **Imposto**. Os totais e os campos sem documentos aparecem no fim, em **Campos sem documentos (totais e campos manuais)**. Este ecrã abre no ano inteiro: carregue em **Mês** e escolha o mês.
+
+  ![Suporte à DP IVA de outubro de 2026: o campo 7, com 200,00 €, tem a FT D26/34 da Software Berlin GmbH e a FT D26/35 da Bodega Sol Ibérica SL, de 100,00 € cada, com data do IVA 30/10/2026](/images/accounting-pt/campos-da-declaracao-de-iva/03-suporte-campo-7.png)
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: comparação do Mapa de IVA com os campos 1 a 17, 20 a 24 e 27 a 29.</span>
+
+## A data que conta é a data do IVA
+
+Uma linha entra no período da sua **Data do IVA**, que nem sempre é a data do lançamento. Na demonstração, a fatura do fornecedor **Papelaria Central, Lda** (`FTF/2026/00046`, referência `FT A2026/318`) foi lançada a 29/10/2026 com a data da fatura de 27/10/2026: o **Suporte à declaração periódica do IVA** mostra-a com **Data do IVA** 27/10/2026, e a lista **Linhas de lançamento** do relatório mostra a data do lançamento, 29/10/2026. Se as duas datas caírem em meses diferentes, procure a linha pelo mês da **Data do IVA**. <span className="fd-pending">Pendente de validação por contabilista certificado: período em que conta cada linha (exigibilidade, Código do IVA, art. 7.º e art. 8.º; direito à dedução, art. 22.º).</span>
+
+## Campo a campo
+
+Os nomes são os da coluna **Descrição** do separador **Quadro 06 — campos** da declaração. O exemplo é outubro de 2026 na Empresa Demonstração, Lda (sede no Continente).
+
+### Vendas e prestações de serviços (campos 1 a 9)
+
+| Campo | O que é | De onde vem |
+|---|---|---|
+| 1 e 2 | Taxa reduzida: base e imposto | Faturas, faturas simplificadas e notas de crédito com a taxa reduzida da região da sede (no Continente, **6%**). Em outubro: `FS POS26/1` (19,00 €) e uma fatura de 100,00 € a 6 %, base 119,00 € e imposto 7,14 €. |
+| 3 e 4 | Taxa normal: base e imposto | O mesmo, com a taxa normal (**23%** no Continente). Em outubro: `FT D26/31` e `FT D26/32`, de 100,00 € cada, base 200,00 € e imposto 46,00 €. |
+| 5 e 6 | Taxa intermédia: base e imposto | O mesmo, com a taxa intermédia (**13%** no Continente). |
+| 7 | Isentas: transmissões intracomunitárias de bens e serviços das declarações recapitulativas | Linhas com **0% EU** (bens) ou **0% EU S** (serviços). Em outubro: `FT D26/34` e `FT D26/35`, 200,00 €. É o mesmo valor que a [declaração recapitulativa](/accounting-pt/declaracao-recapitulativa) compara no seu campo 19. |
+| 8 | Isentas com direito à dedução | Linhas com uma taxa isenta cujo motivo dá direito à dedução, por exemplo **0% EX S** (no Mapa de IVA de 2026, «Exportações (extra-UE)»). |
+| 9 | Isentas sem direito à dedução | Linhas com a taxa **0%** de uma isenção sem direito à dedução (Código do IVA, art. 9.º). |
+
+As vendas com taxas de outra região (Açores ou Madeira, numa empresa com sede no Continente) não entram nos campos 1 a 6: vão para o Anexo R (campos 65 a 68). <span className="fd-pending">Pendente de validação por contabilista certificado: origem dos campos 1 a 9 e passagem das taxas de outra região para os campos 65 a 68.</span>
+
+### Aquisições intracomunitárias, serviços de outros Estados-Membros e importações (campos 10 a 19)
+
+| Campo | O que é | De onde vem |
+|---|---|---|
+| 10 e 11 | Totais das aquisições intracomunitárias de bens | Somas: o 10 é 12 + 14 + 15; o 11 é igual ao 13. |
+| 12 e 13 | Aquisições intracomunitárias de bens, com o imposto liquidado pela empresa | Faturas de fornecedores de outros Estados-Membros com a taxa de autoliquidação de bens. |
+| 14 | Aquisições intracomunitárias isentas (art. 15.º do Código do IVA ou do RITI) | Faturas com a taxa isenta própria destas aquisições. |
+| 15 | Aquisições abrangidas pelos n.ºs 3, 4 e 5 do art. 22.º do RITI | Só as linhas com a taxa **0% AIC ISV/IEC (IVA pago às entidades de cobrança, RITI art. 22.º n.os 3-5)**. |
+| 16 e 17 | Serviços de sujeitos passivos de outros Estados-Membros, com o imposto liquidado pela empresa | Linhas com **23% EU S**. O mesmo imposto é dedutível no campo 24 (no Mapa de IVA, **23% EU S** vai para «16/17/24»). |
+| 18 e 19 | Importações com o imposto liquidado na declaração (n.º 8 do art. 27.º do Código do IVA) | Só as taxas próprias desta opção, que se liga na configuração do IVA da empresa ([Como configurar o IVA da empresa](/accounting-pt/configurar-o-iva)). Sem a opção, ficam a zero. |
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: origem dos campos 10 a 19 e dedução do imposto dos campos 13 e 17 no campo 24.</span>
+
+### IVA dedutível (campos 20 a 24)
+
+O campo do IVA dedutível depende da **conta** da linha da compra e da taxa. Só entra a parte dedutível da linha (coluna **Dedutível** da fatura de fornecedor; ver [Como lançar uma fatura de fornecedor](/accounting-pt/fatura-de-fornecedor)).
+
+| Campo | O que é | De onde vem (exemplo de setembro de 2026) |
+|---|---|---|
+| 20 | Ativos não correntes (imobilizado) | Compras lançadas em contas de ativos não correntes. |
+| 21, 22 e 23 | Inventários à taxa reduzida, normal e intermédia | Compras lançadas em contas de inventários: no campo 22, 138,00 € das `FTF/2026/00037` e `FTF/2026/00038`, na conta `311 Mercadorias`. |
+| 24 | Outros bens e serviços | As restantes compras: no campo 24, 835,16 €, por exemplo a renda (`6261 Rendas e alugueres`) e a eletricidade (`6241 Eletricidade`). |
+
+A partir de 01/07/2027 o campo 24 é substituído pelos campos 27, 28 e 29, um por taxa: o relatório já os mostra com «(a partir de 01/07/2027, substitui o 24)». <span className="fd-pending">Pendente de validação por contabilista certificado: origem dos campos 20 a 24 e dos campos 27 a 29.</span>
+
+### Regularizações, excesso e Anexo R (campos 40, 41, 61 e 65 a 68)
+
+- **40 e 41:** notas de crédito e de débito com motivo de regularização de IVA, e as linhas dos anexos destes campos. Estão explicados na secção «Regularizações: campos 40 e 41» de [Como preparar e entregar a declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva).
+- **61:** o excesso a reportar do período anterior, que é o campo 96 da declaração anterior. No relatório, ao lado do valor, **Origem** abre essa declaração (em setembro de 2026, 78,92 €, da declaração `2026/8 (v1)`).
+- **65 a 68:** o imposto das operações com taxas de outra região (Anexo R, Quadro 03): 65 e 66 de uma região, 67 e 68 da outra. O relatório mostra o detalhe do Anexo R por região, em linhas começadas por **[R-AC]** (Açores), **[R-MA]** (Madeira) e **[R-PT]** (Continente), com a base e o IVA de cada taxa.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: origem dos campos 40, 41, 61 e 65 a 68.</span>
+
+{/* Nota interna (DOCS-035, defeito B2c2-01): na declaração, os campos 65 e 67 (e 66 e 68) têm a mesma descrição «Anexo - (ver Quadro 03)», sem dizer qual é a região; o relatório também. Quando o cartão entrar, pôr aqui o nome de cada região. */}
+
+### Totais (campos 90 a 96)
+
+| Campo | Cálculo |
+|---|---|
+| 90 | Total da base tributável: 1 + 3 + 5 + 7 + 8 + 9 + 10 + 16 + 18. Em outubro, 119,00 + 200,00 + 200,00 = 519,00 €. |
+| 91 | Total do imposto a favor do sujeito passivo: 20 + 21 + 22 + 23 + 24 + 40 + 61 + 65 + 67 (e 27 a 29, a partir de 01/07/2027). Em outubro, 23,00 €. |
+| 92 | Total do imposto a favor do Estado: 2 + 4 + 6 + 11 + 17 + 19 + 41 + 66 + 68. Em outubro, 7,14 + 46,00 = 53,14 €. |
+| 93 | Imposto a entregar ao Estado: 92 − 91, quando é positivo. Em outubro, 53,14 − 23,00 = 30,14 €. |
+| 94 | Crédito a recuperar: 91 − 92, quando é positivo. |
+| 95 | Pedido de reembolso: é o único campo do Quadro 06 que se escreve, na declaração (**Editar o campo 95**). |
+| 96 | Excesso a reportar para o período seguinte: 94 − 95. |
+
+Na declaração, o separador **Verificações** confere estas somas na linha «Totais e fórmulas oficiais» («Os campos 10, 11 e 90 a 94 seguem as fórmulas oficiais.»). <span className="fd-pending">Pendente de validação por contabilista certificado: fórmulas dos campos 90 a 96.</span>
+
+### Quadro 06-A (campos 97 a 107)
+
+Detalham as compras em que a empresa liquidou o IVA como adquirente: 97 e 98 (a fornecedores da União Europeia e de países terceiros) e 99 a 107 (inversão do sujeito passivo: ouro, imóveis, sucatas, construção civil, gases com efeito de estufa, cortiça e outras alíneas). O valor vem da taxa de autoliquidação escolhida na linha da compra, por exemplo **23% AUT construção**, que o Mapa de IVA liga aos campos «3/4/24». O campo 106 é a soma do Quadro 06-A. Os campos 108 e 109 aparecem no relatório, mas não na declaração de outubro de 2026. O relatório mostra também os campos dos novos quadros 06-A (parte E), 06-B, 06-C e 06-D, todos com «(a partir de 01/07/2027)» no nome: até lá ficam a zero. <span className="fd-pending">Pendente de validação por contabilista certificado: origem dos campos 97 a 109 e liquidação do imposto da autoliquidação nos campos 3 e 4.</span>
+
+## O que o cálculo não vê
+
+- **Rascunhos.** Só contam linhas publicadas. Na declaração, o separador **Verificações** avisa: «O período tem 2 lançamento(s) por publicar…» e bloqueia a submissão até estarem publicados ou cancelados.
+- **O NIF do cliente.** O cálculo segue a taxa da linha e não confere o VIES. Na demonstração, a `FT D26/34` (Software Berlin GmbH, NIF por validar, emitida pelo Contabilista certificado com o motivo registado) entra no campo 7 como a `FT D26/35` (Bodega Sol Ibérica SL, NIF válido).
+- **Uma taxa errada.** Se a linha tiver a taxa errada, o valor vai para o campo errado: o cálculo não sabe que operação foi.
+- **Campos que o produto ainda não calcula.** No separador **Quadro 06 — campos**, a coluna **Não calculado** marca-os: um campo marcado a zero não quer dizer «sem operações». Em outubro de 2026 nenhum campo está marcado.
+
+<HelpCallout type="risco" title="0% EU com o NIF por validar entra no campo 7">
+O campo 7 soma todas as linhas com **0% EU** ou **0% EU S**, com ou sem o NIF do cliente validado no VIES. O fiscaldoo recusa emitir estas faturas com o NIF por validar, mas o perfil **Contabilista certificado** pode emiti-las com um motivo registado (ver [Como escolher a taxa de IVA certa](/accounting-pt/taxas-e-isencoes-de-iva)), e as faturas antigas podem ter sido emitidas antes da recusa. Antes de entregar a declaração, confira no **Suporte à declaração periódica do IVA** os clientes do campo 7 e, se algum tiver o NIF por validar, decida com o contabilista certificado como corrigir a fatura. <span className="fd-pending">Pendente de validação por contabilista certificado: correção de uma fatura emitida com 0% EU sem NIF válido no VIES e efeito no campo 7.</span>
+</HelpCallout>
+
+{/* Nota interna (DOCS-043, VAT-066 #3525 em master): a FT D26/34 foi emitida pelo Responsável fiscal com o motivo (a recusa é a regra por omissão). As declarações continuam sem aviso para estas faturas (B2c2-10). */}
+
+## No Enterprise
+
+No Odoo Enterprise, os três ecrãs são os mesmos e estão nos mesmos caminhos (visto com um utilizador só com o perfil **Contabilista**): a **Declaração periódica de IVA (DP IVA)** tem os mesmos botões, **Mês**, **Trimestre** e **Ano** e **Mostrar campos a zero**.
+
+O Enterprise acrescenta o seu **Relatório de impostos**, em **Contabilidade › Consultar › Impostos e tesouraria › Relatório de impostos** (no Community, uma entrada com este nome só aparece em modo programador), com o relatório «Declaração Periódica de IVA (PT)». Abre no ecrã **Declaração de imposto**, no mês corrente, com os campos da DP IVA numerados como no impresso (por exemplo **[1] Taxa reduzida**, **[90] TOTAL DA BASE TRIBUTÁVEL**); com o perfil **Contabilista**, o único botão é **Imprimir**. Os campos que este artigo explica, com a origem de cada valor, as verificações e o **Suporte à declaração periódica do IVA**, estão na **Declaração periódica de IVA (DP IVA)**.
+
+{/* Nota interna (lote EE-01, DOCS-073 #4142, DEC-1794, master ce51f2d47, base Enterprise docs_ee_ee01_test, 10/11/2026): a DP IVA abre no mesmo visualizador do fiscaldoo (Apurar IVA, Exportar PDF, Exportar, Mês/Trimestre/Ano, Mostrar campos a zero); caminhos do Mapa de IVA e do Suporte à DP IVA conferidos no menu da cópia. Relatório de impostos do Enterprise: «O método 'dpiva_q06_2027_140' deve começar com o prefixo '_report_engine_'.»; defeito no relatório do lote. Lote EE-02 (master 7a46de91a, comboio 188, com o EEA-070): o relatório abre, como «Declaração de imposto», com valores, para o Contabilista; aviso provisório retirado. */}
+
+## Problemas frequentes
+
+### Um campo está a zero, mas houve operações
+
+- **Causa:** o documento está em rascunho, a linha tem outra taxa, ou a **Data do IVA** é de outro mês.
+- **O que fazer:** no **Mapa de IVA**, procure a taxa que esperava; no **Suporte à declaração periódica do IVA**, escolha o mês da **Data do IVA**. Se o documento estiver em rascunho, publique-o e carregue de novo em **Calcular** na declaração.
+
+### As verificações dizem «um período anterior com lançamentos mas sem declaração entregue»
+
+- **Sintoma:** em **Verificações**, a linha **Notas do cálculo** diz: «O cálculo registou 1 nota(s): um período anterior com lançamentos mas sem declaração entregue. O que aconteceu: algumas operações não estão nos campos (outro território, campos ainda não calculados, …). Como resolver: abra os problemas do cálculo e confirme cada um.»
+- **Causa:** há um período anterior com movimentos sem declaração registada como entregue, e o excesso do campo 61 pode não estar certo.
+- **O que fazer:** em **Registo das declarações de IVA**, confira as declarações dos meses anteriores e registe a entrega das que já entregou no Portal das Finanças (ver [Como preparar e entregar a declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva)). <span className="fd-pending">Pendente de validação por contabilista certificado: efeito de um período sem declaração entregue no campo 61.</span>
+
+### Numa empresa nova, o relatório abre no ano inteiro
+
+- **Causa:** a empresa ainda não tem **Periodicidade do IVA**. Na demonstração, a Empresa Teste Filial, sem periodicidade e sem lançamentos, abre o relatório em **Ano** (01/01/2026 – 31/12/2026), com todos os valores a 0,00 €.
+- **O que fazer:** peça ao Contabilista certificado que defina a periodicidade ([Como configurar o IVA da empresa](/accounting-pt/configurar-o-iva)) e escolha **Mês** ou **Trimestre** no topo do relatório.

@@ -1,0 +1,123 @@
+---
+id: incentivos-seguranca-social
+slug: /payroll-pt/incentivos-seguranca-social
+title: Como aplicar incentivos e isenções à Segurança Social
+sidebar_label: Incentivos à Segurança Social
+sidebar_position: 13
+description: Registar no contrato um incentivo concedido pela Segurança Social e ver a taxa reduzida da empresa no recibo.
+keywords: [aplicar, incentivos, isenções, isencoes, segurança, seguranca, social, incentivos à segurança social, incentivos a seguranca social, primeiro emprego, desempregados de longa duração, desempregados de longa duracao, reclusos, taxa do empregador, redução, reducao]
+doc_id: DOC-0215
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master acd623385)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/configurar/configurar-seguranca-social, payroll-pt/declarar/declaracao-a-seguranca-social]
+---
+
+## Para que serve?
+
+Quando a Segurança Social concede à empresa uma redução ou isenção da contribuição de um trabalhador, regista-a aqui. O fiscaldoo aplica a taxa reduzida nos recibos do período, se a situação contributiva estiver confirmada. Só a taxa da empresa muda: a do trabalhador fica igual.
+
+## Quando utilizar?
+
+- Depois de receber a decisão da Segurança Social que concede o incentivo.
+- Quando confirma que a situação contributiva está regularizada.
+- Não use para um apoio à contratação pago por outra entidade: aqui fica só a redução da taxa concedida pela Segurança Social.
+
+## Onde encontrar?
+
+**Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores** › abrir a ficha › separador **Trabalho** › secção **Incentivos da Segurança Social**.
+
+Para consultar ou acrescentar: na ficha, **⋮** › **Incentivos à Segurança Social**. Em **Novo**, o **Trabalhador** vem da ficha e **Versão de contrato** propõe a versão dele.
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador.
+- Tem a decisão da Segurança Social, com a medida, o período e a referência.
+- O **Local de trabalho habitual** da ficha está preenchido. Sem ele, **Guardar** fica desligado.
+
+## Como utilizar
+
+<StepByStep>
+
+1. No separador **Trabalho**, em **Incentivos da Segurança Social**, carregue em **Adicionar uma linha**.
+2. Em **Medida**, escolha **1.º emprego (jovens à procura do primeiro emprego)**, **Desempregados de longa duração**, **Desempregados de muito longa duração** ou **Reclusos em regime aberto**. **Redução da taxa do empregador (%)** preenche-se sozinha.
+3. Preencha **Começa em**, **Termina em** e **Referência da concessão**, e carregue em **Guardar**. O incentivo fica registado, mas ainda não se aplica.
+4. Quando confirmar que a situação contributiva está regularizada, clique na linha, marque **Situação contributiva confirmada** e preencha **Confirmada em**. Guarde.
+   ![Dois incentivos no contrato: 1.º emprego e Desempregados de longa duração, ambos com a situação confirmada e 50 % de redução](/images/payroll-pt/incentivos-seguranca-social/01-incentivo-no-contrato.png)
+5. No recibo do mês, carregue em **Calcular**. Abra o separador **Segurança Social e IRS** e confira **Contribuição da entidade empregadora**, **Incentivo da Segurança Social aplicado** e **Como foi calculado?**.
+   ![Separador Segurança Social e IRS do recibo: contribuição de 285,12 € e a explicação da taxa de 11,88 %](/images/payroll-pt/incentivos-seguranca-social/02-taxa-reduzida-no-recibo.png)
+
+</StepByStep>
+
+**Exemplo.** Um trabalhador com base de Segurança Social de 2.400,00 €, com o incentivo de 1.º emprego desde 01/11/2026:
+
+| | Taxa da empresa | Contribuição da empresa | Quotização do trabalhador |
+| --- | --- | --- | --- |
+| Sem incentivo, ou sem confirmação | 23,75 % | 570,00 € | 264,00 € |
+| Com incentivo confirmado | 11,88 % | 285,12 € | 264,00 € |
+
+## No Enterprise
+
+No Odoo Enterprise, o incentivo regista-se da mesma maneira, com o acesso extra **Administrador de Salários**: a secção **Incentivos da Segurança Social** está no separador **Trabalho** da ficha, e o **⋮** tem **Incentivos à Segurança Social**. Pode procurar o trabalhador pelo nome na lista **Fichas dos trabalhadores**. Ao escolher a **Medida**, a **Redução da taxa do empregador (%)** preenche-se logo, como no Community (50,00 no 1.º emprego).
+
+Com o incentivo de 1.º emprego desde 01/11/2026, o recibo de novembro de 2026 de uma trabalhadora com 2.400,00 € fica com 570,00 € de contribuição da empresa enquanto a situação contributiva não está confirmada, e com 285,12 € depois de confirmada. A quotização da trabalhadora fica nos 264,00 €. A recusa dos 5 anos é a mesma.
+
+{/* Nota interna (lote EE-14, EEA-084 d4aaabab0 e EEA-083 ed9a8f6c3 em master acd623385, cópia Enterprise docs_ee_ee14_test, porta 8524, 12/11/2026): por clique com utilizadores criados na cópia só com o perfil Gestor de RH e só com o perfil Processador de salários mais o acesso extra Administrador de Salários: em Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores, «Bruno» + Enter deixou 1 cartão, sem «Erro de Acesso», e a ficha abriu pelo cartão. O ⋮ da ficha já não tem «Salary Increase» para nenhum dos dois; o Gestor de RH tem «Fim da colaboração». A ficha do administrador chama-se «Administrador (demonstração)» (DEMO-003). PAY-142 (e59ceaf30): com o Administrador de Salários, na ficha de Ana Margarida Pinto, separador Trabalho, Adicionar uma linha e Medida «1.º emprego (jovens à procura do primeiro emprego)»: Redução da taxa do empregador (%) 50,00 logo a seguir, antes da data de início; descartado sem guardar. */}
+
+{/* Nota interna (lote EE-09, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 12/11/2026): conferido numa cópia local da base Enterprise (docs_ee_ee09_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Administrador de Salários: ficha de Ana Margarida Pinto aberta pelo cartão, separador Trabalho com a secção Incentivos da Segurança Social e o Local de trabalho habitual. Incentivo de 1.º emprego de 01/11/2026 a 31/10/2031, recibo de novembro antes e depois da confirmação e a recusa dos 6 anos, com os direitos do Administrador de Salários numa transação desfeita: 570,00/264,00 e 285,12/264,00 (redução 50 %). O corretivo de um mês fechado não foi refeito no Enterprise. No Enterprise, procurar o trabalhador pelo nome na barra de pesquisa da lista Fichas dos trabalhadores abre «Erro de Acesso» (campo reservado ao grupo «Folha de Salários / Assistant») e a lista não filtra, com os três perfis de salários; no Community filtra: defeito no relatório do lote. O ⋮ da ficha tem as mesmas entradas do Community e «Salary Increase» (EEA-083). Menus e vistas destes ecrãs comparados, perfil a perfil, com uma cópia da demonstração Community (docs_demo_ee09_test, 2c8d358c0, porta 8524): iguais. Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-09.md. */}
+
+## Resultado esperado
+
+- A linha do incentivo fica no contrato, com a redução.
+- Enquanto não estiver confirmada, **Como foi calculado?** diz: «O incentivo … não foi aplicado: a situação contributiva não foi confirmada (art. 59.º).»
+- Confirmada, o recibo mostra a taxa reduzida e a concessão usada.
+
+## Notas importantes
+
+| Medida | Redução da taxa da empresa | Duração máxima |
+| --- | --- | --- |
+| 1.º emprego | 50 % | 5 anos |
+| Desempregados de longa duração | 50 % | 3 anos |
+| Desempregados de muito longa duração | Isenção | 3 anos |
+| Reclusos em regime aberto, contrato sem termo | Isenção | 3 anos |
+| Reclusos em regime aberto, contrato a termo | 50 % | Sem máximo registado |
+
+Fonte: parâmetros legais do fiscaldoo, com data de início a 01/01/2026, que citam o Guia Prático do Instituto da Segurança Social de 2026 e o Código dos Regimes Contributivos, arts. 56.º a 59.º. Estão em **Salários › Configurar › Legislação › Parâmetros legais**. O texto destes documentos não foi relido neste artigo.
+
+- **Não se acumulam.** Com dois incentivos em vigor, aplica-se o mais favorável. O outro aparece em **Como foi calculado?**: «… não foi aplicado: os incentivos não se acumulam: aplica-se o mais favorável (art. 58.º).»
+- **Arredondamento.** Metade de 23,75 % é 11,875 %, e o fiscaldoo usa 11,88 %.
+- **Pedido.** O fiscaldoo não envia o pedido à Segurança Social: regista o que ela concedeu.
+- **Incentivo que começa num mês já fechado.** A decisão da Segurança Social pode chegar com o mês já fechado, e a data de início pode ficar para trás, na linha da ficha e em **Incentivos à Segurança Social** › **Novo**. Os recibos fechados não mudam, e o incentivo avisa, com os meses: «O incentivo começa num mês que já está fechado: os recibos de *setembro 2026, outubro 2026* não se alteram. O que falta: o recibo corretivo desses meses, que aplica o incentivo. Como resolver: abra cada recibo fechado e use «Recalcular o que mudou»: o recibo corretivo fica preparado com o acerto da contribuição do mês.» No recibo, use **Ações** › **Recalcular o que mudou** ou **Retificar** › **Preparar o corretivo** (esta pede o **Motivo da correção**).
+- **O corretivo acerta o mês sozinho.** Quando um incentivo da Segurança Social começa num mês já fechado, o recibo corretivo desse mês propõe sozinho o acerto da contribuição da entidade patronal: a taxa reduzida aplica-se a toda a base já paga nesse mês, menos o que já foi pago, e o recibo fechado nunca é alterado. No exemplo, um recibo pago de setembro com 1.650,00 € de base e 391,88 € de contribuição da empresa: com o incentivo de 1.º emprego desde 01/09/2026, **Retificar** › **Preparar o corretivo** abre o corretivo em **Rascunho** com **Contribuição da empresa para a Segurança Social** -195,86 € (1.650,00 € × 11,88 % = 196,02 €, menos os 391,88 € já pagos). O recibo de setembro continua com 391,88 €. <span className="fd-pending">Pendente de validação por contabilista certificado: como declarar à Segurança Social a correção da contribuição dos meses já fechados.</span>
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: as percentagens e durações do quadro; o arredondamento da taxa; a regra do incentivo que acaba a meio de um mês; e a medida de reclusos com contrato a termo, sem duração máxima registada.</span>
+
+## Problemas frequentes
+
+### Ao guardar: «não pode durar mais de 5 anos»
+
+- **Mensagem:** «O incentivo «1.º emprego (jovens à procura do primeiro emprego)» de … não pode durar mais de 5 anos (Guia Prático ISS 2026, «Iniciativas para estimular o emprego» e «Iniciativas para reintegrar presos» (CRC arts. 57.º a 59.º)). O que aconteceu: a medida tem um período máximo legal. Como resolver: termine-o até 31/10/2031.»
+- **O que fazer:** corrija **Termina em** com a data da decisão, dentro do máximo.
+
+### Ao guardar: «já começou e a sua medida, início e referência da concessão não podem ser alterados»
+
+- **Mensagem:** «O incentivo de *Bruno Miguel Teixeira* (de *01/09/2026*) já começou e a sua medida, início e referência da concessão não podem ser alterados. O que aconteceu: um incentivo que se aplicou a um período nunca se reescreve. Como resolver: para corrigir a referência ou outro dado, termine-o (mude «Termina em» para hoje ou mais tarde) e registe um novo a começar no dia seguinte, com os dados certos; os recibos já calculados ficam como foram calculados.»
+- **Causa:** mudou um destes campos num incentivo cujo início já passou, também quando acabou de o registar com uma data para trás. Confira-os antes de guardar.
+- **O que fazer:** carregue em **Fechar** e descarte a alteração. **Termina em** e a confirmação da situação contributiva continuam a poder mudar-se.
+
+### Ao guardar: «Há campos obrigatórios por preencher»
+
+- **Causa:** falta **Termina em**, **Referência da concessão** ou, com a situação confirmada, **Confirmada em**. Os campos ficam a vermelho.
+- **O que fazer:** preencha o que falta.
+
+### O recibo continua com a taxa normal
+
+- **Causa:** a situação contributiva não está confirmada, ou o incentivo ainda não estava em vigor no primeiro dia do mês do recibo.
+- **O que fazer:** leia **Como foi calculado?**, corrija o que indicar e carregue de novo em **Calcular**.
+
+{/* Nota interna (DOCS-063 #3853, lote v23-S, master cebcb888d, docs_demo_v23s_test, porta 8458): PAY-121 visto no ecrã com um utilizador só com o grupo Administrador de Salários (Empresa Demonstração). Incentivo de 1.º emprego desde 01/09/2026, já confirmado, criado por RPC só na cópia para Bruno Miguel Teixeira (recibo de setembro pago, 1.650,00 €, 391,88 €); aviso lido na ficha › ⋮ › Incentivos à Segurança Social (outubro aparece porque a cópia tem o lote de outubro validado); Retificar › Preparar o corretivo com motivo abriu o corretivo com -195,86 €; mudar a Referência deu a recusa citada. Substitui a nota «Por agora, o corretivo…» (auditoria v18-A). */}
+{/* Nota interna (v18-A, master 00c68a6d8, PAY-107 v3): por clique com Administrador de Salários: incentivo em Novo e na linha da ficha com início em 01/08/2026, aceites sem versão nova; Criar corretivo, Calcular e uma linha; Recalcular o que mudou. Saem as secções «Esta versão do contrato» e «A versão nova não é criada» e o passo do botão +, que deixaram de ser precisos. */}
+{/* Nota interna (DOCS-046, lote v13-PAY2, master cf8052b9e): por clique com Administrador de Salários: local de trabalho Sede, versão de 01/11/2026, 3 recusas, 2 incentivos, confirmação, recibo em 3 estados. Quadro de percentagens e prazos lido dos parâmetros por RPC; não relido na fonte. Isenção e reclusos não percorridos no ecrã; só 1.º emprego e longa duração. Auditoria 05/11, master 255d77e63 (PAY-104): Novo pela lista, campos obrigatórios e 5 anos por clique. */}

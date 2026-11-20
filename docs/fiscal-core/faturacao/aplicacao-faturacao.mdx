@@ -1,0 +1,99 @@
+---
+id: aplicacao-faturacao
+slug: /fiscal-core/aplicacao-faturacao
+title: Como se organiza a aplicação Faturação e o que há para fazer
+sidebar_label: A aplicação Faturação
+sidebar_position: 0
+description: Os quatro menus da aplicação Faturação (Início, Faturar, Receber, Clientes e artigos) e, para o contabilista, o ecrã O que há para fazer com a faturação?, com o que falta comunicar à AT.
+keywords: [organiza, aplicação, aplicacao, faturação, faturacao, fazer, o que há para fazer com a faturação, o que ha para fazer com a faturacao, menus da faturação, menus da faturacao, faturar, receber, clientes e artigos, documentos por comunicar, séries por comunicar, series por comunicar]
+doc_id: DOC-0021
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/balcao, fiscal-core/faturacao/emitir-uma-fatura-certificada, fiscal-core/at-e-saft/comunicar-faturas-a-at]
+---
+
+## Para que serve?
+
+A aplicação **Faturação** é o sítio de trabalho de quem emite faturas e recebe dos clientes. Os menus estão arrumados por tarefa: começar o dia, faturar, receber e manter os clientes e os artigos. Este artigo diz o que está em cada menu e onde está explicado.
+
+Os perfis com a aplicação **Contabilidade** têm ainda o ecrã **O que há para fazer com a faturação?**: num só sítio, as séries e os documentos que falta comunicar à Autoridade Tributária e Aduaneira (AT), o que se faturou no mês e o que está pendente.
+
+## Quando utilizar?
+
+- No primeiro dia com a aplicação **Faturação**, para saber onde está cada coisa.
+- Para encontrar o menu de uma tarefa (uma nota de crédito, um recibo, um extrato de cliente).
+- No início do dia ou do mês, para o contabilista ver o que falta fazer na faturação, e sobretudo o que falta comunicar à AT.
+
+## Onde encontrar?
+
+- **Faturação**, no menu das aplicações (o ícone dos quadrados, no canto superior esquerdo).
+- **Contabilidade › Lançar › Vendas e cobranças › O que há para fazer com a faturação?**
+
+## Antes de começar
+
+- Para a aplicação **Faturação**, o seu perfil é **Administrativo**, **Contabilista**, **Contabilista certificado**, **Gerência** ou **Auditor / ROC**. Os menus foram vistos com estes perfis e são os mesmos; só a ordem do **Receber** muda com o uso.
+- Para **O que há para fazer com a faturação?**, o perfil é **Contabilista**, **Contabilista certificado**, **Gerência** ou **Auditor / ROC**. O **Administrativo** não tem a aplicação **Contabilidade**. Os passos 3 a 6 foram feitos com o **Contabilista**.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a aplicação **Faturação**. Abre no **Balcão**, com os botões do dia a dia, os cartões **Por cobrar** e **Em atraso** e a lista **O que está pendente**. O Balcão está explicado em [Como vender ao balcão](/fiscal-core/balcao).
+2. Use os menus de cima para as outras tarefas:
+
+   | Menu | Entrada | Para quê |
+   | --- | --- | --- |
+   | **Início** | **Balcão** | A página de entrada. |
+   | **Faturar** | **Faturas de clientes** | Emitir faturas: veja [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada). |
+   | | **Notas de crédito de clientes** | Corrigir uma fatura emitida: veja [Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito). |
+   | | **Guias de transporte** | Acompanhar mercadorias em viagem: veja [Como emitir uma guia de transporte](/fiscal-core/emitir-uma-guia-de-transporte). |
+   | **Receber** | **Recibos e pagamentos recebidos** | Registar o que o cliente pagou: veja [Como registar um pagamento e emitir o recibo](/fiscal-core/emitir-um-recibo). |
+   | | **Por cobrar** | O que cada cliente deve, por antiguidade. Abre o ecrã **Antiguidade de Saldos a Receber**. |
+   | | **Avisos de cobrança** | Avisar quem está em atraso: veja [Como enviar avisos de cobrança](/fiscal-core/avisos-de-cobranca). |
+   | | **Extratos de clientes** | Mostrar ao cliente o que deve: veja [Como consultar e enviar o extrato de um cliente](/accounting-pt/extratos-de-terceiros). |
+   | **Clientes e artigos** | **Clientes** | Criar e corrigir clientes: veja [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes). |
+   | | **Artigos** | Criar o que vende: veja [Como criar um artigo com o IVA e o tipo certos](/fiscal-core/artigos). |
+
+3. Para ver o que falta fazer na faturação, abra **Contabilidade › Lançar › Vendas e cobranças › O que há para fazer com a faturação?**.
+4. Confirme a empresa (a etiqueta por baixo do título) e o mês, na lista do canto superior direito. Abre no mês atual; pode escolher um mês anterior.
+5. Leia os seis cartões: **Séries por comunicar à AT**, **Faturas emitidas este mês**, **Documentos por comunicar à AT**, **Guias de transporte por comunicar**, **Documentos emitidos em modo de formação** e **Notas de crédito do mês**. Cada um tem o número e uma frase por baixo. Carregue num cartão para abrir a lista dos documentos que ele conta.
+   ![Ecrã O que há para fazer com a faturação? de outubro de 2026, com os botões Nova fatura e Nova guia de transporte e os cartões Séries por comunicar à AT 2, Faturas emitidas este mês 2, Documentos por comunicar à AT 5 assinalado e Guias de transporte por comunicar 0](/images/fiscal-core/aplicacao-faturacao/01-o-que-ha-para-fazer-com-a-faturacao.png)
+6. Desça até à lista **O que está pendente**, com as colunas **O quê**, **Detalhe** e **Prazo**. Carregue numa linha para abrir o documento ou a série.
+
+</StepByStep>
+
+Por cima dos cartões, **Nova fatura** e **Nova guia de transporte** abrem um documento novo, como os menus da tabela. Por baixo, dois gráficos: **Faturação por mês** (faturas e notas de crédito dos últimos 12 meses) e **Documentos emitidos este mês, por série**.
+
+## Resultado esperado
+
+Sabe o que falta fazer e chega à lista de cada coisa num clique. No exemplo, em outubro de 2026, na Empresa Demonstração, Lda:
+
+- **Séries por comunicar à AT** 2, «Séries à espera do código de validação da AT: 2». A lista tem as séries `B27` (nota de crédito, 2027) e `REG2026` (fatura, 2026), as duas em **Rascunho**.
+- **Faturas emitidas este mês** 2, «Total do mês: 143,14 €». A lista tem 2 documentos, e o gráfico por série mostra um na série `FT D26` e outro na `FS POS26`.
+- **Documentos por comunicar à AT** 5, a vermelho, com «O prazo era 6 de outubro de 2026: comunique-os agora.». A lista tem os 5 documentos. Comunique-os como em [Como comunicar as faturas à AT e ver o histórico](/fiscal-core/comunicar-faturas-a-at).
+- **Guias de transporte por comunicar** 0 («Nada por fazer»), **Documentos emitidos em modo de formação** 0 («Ainda nenhum») e **Notas de crédito do mês** 0 («Nenhuma este mês»).
+
+## Notas importantes
+
+- **A lista «O que está pendente» não mostra tudo.** No exemplo tinha 6 linhas e só 4 dos 5 documentos por comunicar. Para a lista completa de uma coisa, carregue no cartão.
+- **Num cartão com 0, a lista abre sem documentos da empresa.** Em **Guias de transporte por comunicar**, o Odoo mostra por trás linhas esbatidas de exemplo (nomes como John Miller), que não existem na empresa.
+- **Os números são só da empresa da etiqueta.** Para outra empresa, troque-a no canto superior direito.
+- **Emitir não é comunicar.** Uma fatura emitida conta em **Faturas emitidas este mês** e continua em **Documentos por comunicar à AT** até ser comunicada.
+
+## Problemas frequentes
+
+### Não vejo o menu Contabilidade
+
+- **Causa:** o seu perfil é **Administrativo**, que não tem a aplicação **Contabilidade**.
+- **O que fazer:** use a aplicação **Faturação**. Se precisa de **O que há para fazer com a faturação?**, peça ao contabilista ou ao administrador da base de dados. Veja também [Não vejo um menu ou um botão](/troubleshooting/nao-vejo-um-menu).
+
+### O cartão «Documentos por comunicar à AT» está a vermelho
+
+- **Causa:** há documentos emitidos que ainda não foram comunicados à AT e o prazo da comunicação já passou.
+- **O que fazer:** carregue no cartão para ver quais são e comunique-os: [Como comunicar as faturas à AT e ver o histórico](/fiscal-core/comunicar-faturas-a-at).
+
+{/* Nota interna (DOCS-040, lote F2): defeitos LOT-F2-03 (linhas de exemplo do Odoo na lista vazia de Guias de transporte por comunicar, sem mensagem) e LOT-F2-04 (O que está pendente do ecrã Empresas clientes: a coluna O quê repete o nome da empresa) no reports/LOTE_F2.md. Um documento do ponto de venda aparece na lista como «FS POS26/1 (Customer invoice from Loja de demonstração - [...])», texto em inglês dos dados de demonstração. Correção aud-v2f2 (NF2a-06): a 30/10 na 8111 a Gerência tem a Faturação com os 4 menus e as mesmas entradas da tabela, e a Gerência e o Auditor abrem Contabilidade › Lançar › Vendas e cobranças › O que há para fazer com a faturação?. */}

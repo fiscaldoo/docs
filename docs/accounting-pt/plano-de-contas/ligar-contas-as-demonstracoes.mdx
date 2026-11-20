@@ -1,0 +1,135 @@
+---
+id: ligar-contas-as-demonstracoes
+slug: /accounting-pt/ligar-contas-as-demonstracoes
+title: Como ligar as contas às linhas das demonstrações financeiras
+sidebar_label: Ligar contas às demonstrações
+sidebar_position: 9
+description: Gerar de novo as linhas do balanço e da demonstração de resultados a partir das taxonomias das contas, ler o registo de cada geração e procurar anomalias no plano de contas.
+keywords: [demonstrações financeiras, balanço, demonstração de resultados, gerar linhas das demonstrações, regenerar, Portaria 220/2015, taxonomia, registo de geração de linhas, procurar anomalias nas contas, verificar plano, ligação das contas às demonstrações, modo de programador]
+doc_id: DOC-0084
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c60255305)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/plano-de-contas/taxonomias, accounting-pt/plano-de-contas/referencial-contabilistico]
+---
+
+<HelpCallout type="nota" title="Quem tem estes menus">
+Os menus deste artigo são de configuração e raramente se usam. **Procurar anomalias nas contas**, **Gerar linhas das demonstrações** e **Ligação das contas às demonstrações** aparecem ao **Contabilista certificado** e ao administrador do sistema. O **Auditor / ROC** só tem a **Ligação das contas às demonstrações**, para consultar. O **Registo de geração de linhas** só aparece ao administrador. O **Contabilista** não tem nenhum destes menus.
+</HelpCallout>
+
+## Para que serve?
+
+O balanço e a demonstração de resultados têm as linhas (rubricas) da Portaria 220/2015. Cada linha soma as contas cujas **taxonomias** a tabela oficial põe nessa rubrica. O fiscaldoo gera essas somas sozinho: da primeira vez que a demonstração é aberta, e de novo quando muda o referencial da empresa.
+
+Este artigo serve para três coisas que o dia a dia não pede:
+
+- **Gerar de novo** as linhas de uma demonstração, depois de mudar taxonomias ou o plano de contas;
+- **Ler o registo** de cada geração (quando, por quem, quantas linhas e quantas contas);
+- **Procurar anomalias** no plano de contas que impedem as demonstrações ou o SAF-T de ficarem certos.
+
+Dar a taxonomia a uma conta faz-se noutro sítio: veja [Como atribuir taxonomias às contas](/accounting-pt/taxonomias). Gerar as linhas não cria lançamentos: só muda as contas que cada rubrica soma.
+
+## Quando utilizar?
+
+- Depois de dar ou mudar a taxonomia de várias contas, se quer ver já o efeito no balanço.
+- Quando o balanço ou a demonstração de resultados mostram um valor que não espera e quer confirmar que contas entram em cada rubrica.
+- Antes de pôr uma empresa a trabalhar, para limpar as anomalias do plano.
+
+## Onde encontrar?
+
+Em **Contabilidade › Configurar › Plano e regras legais**:
+
+- **Gerar linhas das demonstrações**: abre a janela **Gerar linhas das demonstrações**.
+- **Registo de geração de linhas**: a lista de todas as gerações da empresa ativa (o título do ecrã é **Registo de geração de rubricas**). Só o administrador a tem na barra; o Contabilista certificado vê o registo de cada geração que faz, porque abre sozinho no fim (ver «Resultado esperado»).
+- **Procurar anomalias nas contas**: abre a janela **Verificar plano**.
+- **Ligação das contas às demonstrações**: a tabela oficial, com 2792 ligações com o filtro **Taxonomia S** (título **Mapeamento taxonomia → demonstração**). Para cada taxonomia mostra o **Modelo de demonstração**, o **Lado do saldo** (débito ou crédito), a **Demonstração**, o **Nome da rubrica (AT)**, a **Versão da tabela** e o **Válido desde**. É para consultar: vem com o fiscaldoo, e o Contabilista certificado e o Auditor / ROC não têm o botão **Novo**.
+
+## Antes de começar
+
+- **Perfil:** **Contabilista certificado** (ou o administrador do sistema). Os passos foram feitos do princípio ao fim com um utilizador só com este perfil, sem o modo de programador.
+- **Escolha a empresa no topo do ecrã** antes de abrir as janelas. Quem trabalha em várias empresas vê nas janelas o campo **Empresa**, que só aceita uma empresa assinalada no seletor de empresas do topo; o mais seguro é usar a empresa ativa. Quem trabalha numa só empresa não vê esse campo: as janelas usam a empresa ativa.
+- No exemplo: Empresa Demonstração, Lda (SNC).
+
+## Como utilizar
+
+### Procurar anomalias no plano
+
+<StepByStep>
+
+1. Abra **Procurar anomalias nas contas**. A janela abre com a lista vazia e **Anomalia** a 0.
+2. Carregue em **Verificar plano**. Abre a **Verificação do plano de contas**, com o número de anomalias em **Anomalia** e uma linha por conta e anomalia, com a **Ação sugerida** e o botão **Abrir conta**.
+3. Para cada linha, carregue em **Abrir conta** e corrija a conta como a **Ação sugerida** indica. Para levar a lista, carregue em **Exportar XLSX**.
+
+</StepByStep>
+
+A verificação procura seis anomalias: **Conta sem conta-mãe**, **Conta agregadora sem contas-filhas**, **Conta de movimento sem taxonomia SAF-T**, **O prefixo de 2 dígitos não existe no plano de contas**, **Subconta cujo código não começa pelo código da conta-mãe** e **Conta de 1.º grau (código de 2 dígitos) com lançamentos**. As ações sugeridas lidas na demonstração:
+
+| Anomalia | Ação sugerida |
+|---|---|
+| Conta sem conta-mãe | Defina a conta-mãe (a conta cujo código é o prefixo desta) ou crie-a. |
+| O prefixo de 2 dígitos não existe no plano de contas | Crie a conta-mãe de 2 dígitos ou corrija o código. |
+| Subconta cujo código não começa pelo código da conta-mãe | Mude a conta-mãe para aquela cujo código é o prefixo, ou corrija o código. |
+
+<HelpCallout type="atencao" title="A verificação na Empresa Demonstração">
+Na Empresa Demonstração, com o plano de hoje (códigos do SNC sem zeros de enchimento, como `11 Caixa`, `111 Caixa` e `51 Capital subscrito`), a verificação não encontra anomalias. Se a lista da sua empresa apontar contas que vêm com o plano, e não contas que criou, não mude os códigos nem as contas-mãe dessas contas sem falar com o seu contabilista certificado.
+
+{/* Nota interna (DOCS-050, auditoria de 03/11): recontado no master 21f7dc02f (base docs_demo_audfix050_test, Empresa Demonstração, sem contas individuais de terceiros): 0 anomalias. Antes do SNC-022 eram 41 (e 43 com as contas individuais, por causa da 12110001). O caso com as contas individuais não foi recontado. */}
+</HelpCallout>
+
+### Gerar de novo as linhas de uma demonstração
+
+<StepByStep>
+
+1. Abra **Gerar linhas das demonstrações**.
+2. Em **Relatório**, escolha a demonstração (no exemplo, **Balanço (SNC) (PT)**). O campo **Linhas do relatório ligadas a uma rubrica da Portaria 220/2015** mostra quantas linhas vão ser tratadas (56 no balanço).
+3. Confirme a **Data de referência** (a data cuja versão da tabela oficial se usa; vem com a data de hoje) e, se a tiver, a **Empresa**.
+4. Deixe **Modelo de demonstração** vazio. Vazio quer dizer automático: o modelo do referencial da empresa (SNC: geral; SNC-PE: pequenas entidades; SNC-ME: microentidades). Escolha outro (**Modelo geral (Anexos 1-2)**, **Pequenas entidades, modelo reduzido (Anexos 7-8)**, **Modelo de microentidades, Taxonomia S (Anexos 18-19)** ou **Modelo das entidades do setor não lucrativo, Taxonomia S (Anexos 11-12)**) só para forçar um modelo diferente.
+   ![Janela Gerar linhas das demonstrações, vista pelo Contabilista certificado, com o Relatório Balanço (SNC) (PT), o Modelo de demonstração vazio, a Data de referência 09/11/2026 e 56 linhas ligadas a uma rubrica da Portaria 220/2015](/images/accounting-pt/ligar-contas-as-demonstracoes/01-gerar-linhas.png)
+5. Carregue em **Regenerar**. Abre o registo desta geração.
+6. Repita para a demonstração de resultados, se mudou contas de gastos ou de rendimentos.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, as entradas de **Contabilidade › Configurar › Plano e regras legais** são as mesmas e as demonstrações continuam a ser as do fiscaldoo: **Contabilidade › Consultar › Demonstrações financeiras › Balanço** abre o **Balanço (SNC)** (visto com um utilizador só com o perfil **Contabilista certificado**). **Procurar anomalias nas contas** com **Verificar plano** deu **Anomalia** 0, e **Ligação das contas às demonstrações** abre com o filtro **Taxonomia S** e 2792 ligações.
+
+Muda a lista **Relatório** de **Gerar linhas das demonstrações**: abre com os relatórios do próprio Enterprise (**Balanço**, **Extrato de Fluxos de Caixa**, **Resumo Executivo**, **Razão** e outros), que não têm linhas ligadas à Portaria 220/2015: com o **Balanço** do Enterprise, as linhas ligadas são 0 e **Regenerar** recusa com «O relatório «Balanço» não tem nenhuma linha ligada a uma rubrica da Portaria 220/2015, pelo que não há nada a regenerar.». Escreva `Balanço (SNC)` no campo e escolha **Balanço (SNC) (PT)**: as **Linhas do relatório ligadas a uma rubrica da Portaria 220/2015** passam a 56. **Regenerar** abriu o **Registo de geração de rubricas** com 43 linhas regeneradas, como no Community.
+
+{/* Nota interna (lote EE-05, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee05_test (cópia da odoo20_ee_test com EE_FASE=construir), 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0084. Contabilista certificado: Plano e regras legais com Ajustes manuais dos relatórios, Comparar o plano com o SNC, Contas do inventário, Gerar linhas das demonstrações, Ligação das contas às demonstrações e Procurar anomalias nas contas (como no Community); Verificação do plano de contas com Anomalia 0; Ligação 1-80 / 2792 com Taxonomia S. Gerar linhas: ao abrir o campo Relatório, as opções foram Balanço, Extrato de Fluxos de Caixa, Resumo Executivo, Relatório de Reconciliação Bancária, Antiguidade de saldos a receber, Antiguidade de saldos a pagar, Razão, EC Sales List e Pesquisar mais…; Balanço (SNC) (PT) com 56 linhas ligadas; Regenerar → Registo de geração de rubricas: Taxonomia S, Modelo geral, AT-SVAT-2021-01, 43 linhas regeneradas, 364 contas usadas (363 na demonstração Community: o plano da base Enterprise tem mais uma conta). O Balanço (Enterprise) só aparece ao administrador. Ver reports/LOTE_EE-05.md. */}
+
+## Resultado esperado
+
+- Abre a ficha **Registo de geração de rubricas** com o **Relatório**, a **Empresa**, a **Taxonomia**, o **Modelo de demonstração**, a **Versão da tabela**, a **Data de referência**, as **Linhas regeneradas**, as **Contas usadas** e o **Utilizador**.
+- No exemplo, o balanço deu **43** linhas regeneradas e **363** contas usadas (versão da tabela `AT-SVAT-2021-01`, modelo geral); a demonstração de resultados por naturezas deu **20** linhas e **291** contas.
+- As linhas regeneradas (43) são menos do que as ligadas à Portaria (56). As outras são as linhas de títulos e de totais, que somam as linhas de detalhe, e o **Resultado líquido do período**, que tem uma fórmula fixa e nunca é regenerado.
+- O **Registo de geração de linhas** passa a ter mais uma linha. Nele aparecem também as gerações automáticas, com o utilizador **OdooBot**. Esta lista só aparece ao administrador.
+- Não é criado nenhum lançamento.
+
+## Notas importantes
+
+- **A geração para quando falta uma taxonomia.** Enquanto houver contas de movimento sem taxonomia, a geração é recusada com a lista das contas. Corrija-as como em [Como atribuir taxonomias às contas](/accounting-pt/taxonomias).
+- **O registo é por empresa.** A lista mostra só as gerações da empresa ativa no topo do ecrã.
+- **Mudar o referencial gera as linhas sozinho.** Veja [Como escolher o referencial contabilístico e a categoria da entidade](/accounting-pt/referencial-contabilistico).
+
+## Problemas frequentes
+
+### «O relatório … não tem nenhuma linha ligada a uma rubrica da Portaria 220/2015…»
+
+- **Sintoma:** com o **Balancete** escolhido: «O relatório «Balancete (PT)» não tem nenhuma linha ligada a uma rubrica da Portaria 220/2015, pelo que não há nada a regenerar.»
+- **O que fazer:** escolha um balanço ou uma demonstração de resultados. O campo das linhas ligadas mostra 0 nos relatórios que não se geram.
+
+
+### «Execute primeiro a verificação: não há anomalias para exportar.»
+
+- **Causa:** carregou em **Exportar XLSX** antes de **Verificar plano**.
+- **O que fazer:** carregue primeiro em **Verificar plano**.
+
+{/* Nota interna (DOCS-046 v5-ACC 2.ª ronda, DOC-0084, master 6fb7ee1d4, base docs_demo_v5acc_test, admin com a Empresa Demonstração no topo, por clique): Procurar anomalias (Exportar XLSX antes: recusa copiada; Verificar plano: 41 anomalias, V5ACC-07), Gerar linhas do Balanço (56 ligadas, Regenerar, registo 43 linhas / 363 contas), Registo (OdooBot 30/10 e 02/11, Administrador), Ligação (2792 com Taxonomia S, botão Novo à vista). Com a Empresa Teste Portugal no topo e a Demonstração na janela: recusa de empresa (V5ACC-06). Por RPC: Balancete (recusa), Contabilista (cria a verificação, recusado a gerar), Gestor de contabilidade gera a DR (20 linhas / 291 contas). As ações sugeridas das outras três anomalias não se leram: a demonstração não as tem. Enterprise (ponte l10n_pt_arxi_ee_reports) não testado: só a base Community. */}
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-02, master c2bf63c34, docs_demo_v23at_test, porta 8504): menus lidos com utilizadores criados por RPC só com um valor do campo Perfil, com e sem modo de programador (load_menus): Gerar linhas das demonstrações, Registo de geração de linhas, Procurar anomalias nas contas e Ligação das contas às demonstrações aparecem ao administrador sem esse modo; ao Contabilista certificado só com ele (reportado como defeito do produto); ao Contabilista (opera) nunca, nem com ele; ao Auditor / ROC só o Registo e a Ligação, com ele. Saiu o problema «Não tem permissões para alterar as definições de relatórios…»: com o ecrã de hoje nenhum perfil chega ao botão que o provoca (o Contabilista não tem o menu, nem com o modo de programador) */}
+
+{/* Nota interna (lote v23-AU, depois do comboio 181 com o UX-149, master 09afad64d, docs_demo_v23au_test, porta 8504): utilizadores criados por RPC só com um valor do campo Perfil; menus pelo load_menus, sem modo de programador: Procurar anomalias, Gerar linhas e Ligação ao Contabilista certificado e ao admin; Ligação ao Auditor / ROC (sem Novo, ficha só de leitura); Registo de geração de linhas só ao admin (CC e Auditor só com o modo de programador); o Contabilista nenhum. Por clique, com o Contabilista certificado: Procurar anomalias › Verificar plano (0 anomalias); Exportar XLSX antes (recusa citada); Gerar linhas do Balanço (SNC) (PT), 56 ligadas, Regenerar: registo com 43 linhas e 363 contas (versão AT-SVAT-2021-01, modelo geral); Balancete (PT) com 0 ligadas e a recusa citada; Ligação com Taxonomia S, 2792, sem Novo. As janelas não mostram o campo Empresa a um utilizador de uma só empresa. Captura 01 refeita com o Contabilista certificado. */}

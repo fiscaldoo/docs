@@ -1,0 +1,80 @@
+---
+id: registar-formacao
+slug: /people/registar-formacao
+title: Como registar uma ação de formação e as presenças
+sidebar_label: Registar uma ação de formação
+sidebar_position: 2
+description: "Registar uma sessão de formação com o Registo rápido: curso, data, participantes, presenças e modo de assinatura."
+keywords: [registar formação, registo rápido, ação de formação, acao de formacao, presenças na formação, folha de presenças, declaração de frequência, horas de formação, participantes]
+doc_id: DOC-0257
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7b476ad71)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/formacao/configurar-a-formacao, people/formacao/horas-de-formacao, people/trabalhadores/enviar-documentos-para-confirmar]
+---
+
+## Para que serve?
+
+Uma ação de formação regista o que foi dado, quando, quantas horas e quem esteve presente. As horas dos presentes entram na conta das 40 horas anuais de cada trabalhador (ver [Como acompanhar as horas de formação obrigatórias do ano](/people/horas-de-formacao)).
+
+## Quando utilizar?
+
+- Deu-se uma formação interna ou externa e é preciso registar quem participou.
+- Alguém veio só a parte da sessão, ou faltou.
+
+## Onde encontrar?
+
+**Pessoas › Formação › Dia a dia › Registo rápido**. As ações registadas veem-se em **Pessoas › Formação › Dia a dia › Ações de formação**.
+
+## Antes de começar
+
+- O seu perfil é **Gestor de RH**.
+- O curso existe em **Pessoas › Formação › Configuração e painéis › Cursos** ([Como configurar a formação obrigatória e os cursos](/people/configurar-a-formacao)).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Pessoas › Formação › Dia a dia › Registo rápido**. O ecrã tem 4 passos.
+2. **Passo 1:** escolha o **Curso** e preencha **Data**, **De**, **Até**, **Formador** e **Local**, por exemplo 20/10/2026, das 09:00 às 17:00. **Seguinte** só se ativa com o curso e os dados escolhidos.
+3. **Passo 2:** marque os participantes (ou os departamentos, ou **Escolher todos os listados**; **Colar uma lista de nomes** aceita uma lista). No exemplo, 3 trabalhadores.
+4. **Passo 3:** todos começam em **Presente**. Mude quem **Faltou** ou veio só em parte (**Parcial**, e escreva as horas). O resumo diz «1 presentes · 1 parciais · 1 faltaram — *11* h no total.»: confira-o com as horas que escreveu.
+5. **Passo 4:** em **Assinaturas**, escolha **Tablet na sala**, **QR na sala**, **Pedido ao trabalhador** ou **Folha em papel**, e carregue em **Registar**. Com **Pedido ao trabalhador**, o pedido da declaração de frequência segue logo para cada participante **Presente** ou **Parcial** (quem **Faltou** não o recebe) e fica em **Pessoas › Trabalhadores › Confirmações dos trabalhadores**, **Aguarda confirmação**. O histórico da ação diz a quem seguiu e quem não tem utilizador (ver «Notas importantes»).
+
+</StepByStep>
+
+![Participantes da ação de formação com a presença, as horas e o botão de pedir ao trabalhador que aceite](/images/people/registar-formacao/01-participantes.png)
+
+## No Enterprise
+
+No Odoo Enterprise, a ação regista-se da mesma maneira, com o perfil **Gestor de RH**: o **Registo rápido** tem os mesmos 4 passos e as mesmas opções em **Assinaturas**, e a ação abre no estado **Concluída**, com a **Validação** **Por validar** e as **Assinaturas em falta**. No exemplo, com um participante **Presente**, um que **Faltou** e um **Parcial** com 3 horas, o resumo do passo 3 deu «1 presentes · 1 parciais · 1 faltaram — 11 h no total.», e **Pedir ao trabalhador que aceite** respondeu com a mesma mensagem que no Community. A diferença: se o administrador ligou **Pedir as confirmações pelo Sign** na empresa, a declaração segue para a aplicação **Assinar** do Enterprise e o trabalhador assina-a pela ligação que recebe por e-mail (ver [Como pedir ao trabalhador que confirme um documento](/people/enviar-documentos-para-confirmar#no-enterprise)).
+
+{/* Nota interna (lote EE-11, DOCS-073 #4142, DEC-1794, master 589ecfd27, 12/11/2026): cópia Enterprise docs_ee_ee11_test no portátil (pg_dump da odoo20_ee_test, já em 589ecfd27; -i de hr_payroll, planning, hr_appraisal e hr_recruitment e -u de fiscaldoo_ux_kit e l10n_pt_fiscaldoo_demo; ee_neutralizar antes e construir), porta 8508, guarda de rede ligada; utilizadores criados por RPC na cópia, cada um só com um valor do campo Perfil: ee11_rh por clique: curso SST-01 e ação FOR-2026-001 (20/10/2026, 09:00–17:00, Bruno Miguel Teixeira Presente, Carla Sofia Mendes Faltou, Hugo Miguel Santos Parcial 3 h, modo Pedido ao trabalhador), documentos meus; Concluída, Por validar, Assinaturas em falta 2; Pedir ao trabalhador que aceite na linha de Bruno: «Confirmação pedida. …», sem passar pelo Sign (interruptor da empresa desligado, como vem). A mesma ação e o mesmo clique na cópia Community deram a mesma mensagem. O caminho pelo Sign com o interruptor ligado é o do lote EE-10 (não repetido). Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee11_test (master 589ecfd27, porta 8518), com os mesmos utilizadores. Ver reports/LOTE_EE-11.md. */}
+
+## Resultado esperado
+
+Abre-se a ação de formação (por exemplo **FOR-2026-001**) no estado **Concluída**, com a **Validação** **Por validar**, **Assinaturas em falta** e a lista de **Participantes** com a presença, as horas e a assinatura (**Por assinar**). O **Faltou** fica com 0,00 horas. O botão **Ausências** mostra as ausências do tipo **Formação** criadas para os presentes, que o trabalhador vê em **O meu espaço**.
+
+## Notas importantes
+
+- **As horas contam logo, mesmo com assinaturas em falta.** O **Painel de formação** soma-as e mostra à parte «*2* Ações por validar» e as «Assinaturas em falta».
+- **Pedir a confirmação ao trabalhador.** Na lista **Participantes** da ação, o botão **Pedir ao trabalhador que aceite** de cada linha envia a declaração de frequência a essa pessoa. O ecrã responde «Confirmação pedida. A declaração de frequência foi enviada a *nome do trabalhador*. Fica à espera em «O meu espaço» do trabalhador e em «Confirmações dos trabalhadores» até ser confirmada.». Se o trabalhador não tem utilizador, o ecrã avisa «Confirmação pedida, mas ninguém lhe pode responder. …»: preencha o **Utilizador** na ficha do trabalhador (separador **Definições**) ou registe a assinatura em papel em **Confirmações dos trabalhadores**. Com **Pedido ao trabalhador** no passo 4, não precisa deste botão: o histórico da ação regista, ao **Registar**, «A declaração de frequência foi enviada a *nome*. …» para quem tem utilizador e «A declaração de frequência foi pedida a *nome*, que não tem utilizador, por isso não aparece em «O meu espaço» e ninguém a pode confirmar aí. Como resolver: …» para quem não tem (uma só nota, com os nomes todos; com mais de um nome, «…, que não têm utilizador, …»). Para acompanhar e registar as confirmações, veja [Como pedir ao trabalhador que confirme um documento](/people/enviar-documentos-para-confirmar).
+
+{/* Nota interna (lote EE-11, master 589ecfd27): o F3-01 já não se reproduz (HR-034): nas duas cópias, com um utilizador só com o perfil Gestor de RH, «Pedir ao trabalhador que aceite» na linha de Bruno Miguel Teixeira deu a mensagem citada. Registar com «Pedido ao trabalhador» não criava nenhuma confirmação (a lista Confirmações dos trabalhadores ficou vazia até ao clique): corrigido pelo RH-048 (1c19bdd5d, em master acd623385). Lote EE-14 (docs_demo_ee14_test, porta 8526, 12/11/2026): por clique com um utilizador só com o perfil Gestor de RH, Registo rápido de FOR-2026-002 (22/10/2026, Ana Margarida Pinto e Bruno Miguel Teixeira Presente, Carla Sofia Mendes Faltou, Hugo Miguel Santos Parcial 3 h; resumo «2 presentes · 1 parciais · 1 faltaram — 19 h no total.»), modo Pedido ao trabalhador: 3 linhas Aguarda confirmação (sem a Carla) e as duas notas citadas no histórico. Antes, FOR-2026-001 foi registada pelo mesmo método por RPC (notas em inglês, só na cópia). */}
+
+{/* Nota interna (lote EE-16, comboios 198 e 199, master 7b476ad71, 13/11/2026; cópia Enterprise docs_ee_ee16_test (portas 8524/8525, cópia da odoo20_ee_test com ee_neutralizar) e cópia Community docs_demo_ee16_test (porta 8526), utilizadores criados nas cópias só com o perfil indicado): FIX-M217 (880ee98be, em master). Com um utilizador só com o perfil Gestor de RH: curso «Segurança e saúde no trabalho» e registo rápido de 10/11/2026 (Ana Margarida Pinto, Bruno Miguel Teixeira e Carla Sofia Mendes, todos Presente, modo Pedido ao trabalhador) criados por RPC com esse utilizador, pelo mesmo método que o ecrã Registo rápido chama (create_from_quick_register); histórico da ação lido por clique: «A declaração de frequência foi pedida a Bruno Miguel Teixeira, Carla Sofia Mendes, que não têm utilizador, por isso não aparece em «O meu espaço» e ninguém a pode confirmar aí. Como resolver: abra a ficha do trabalhador e preencha «Utilizador» no separador «Definições», ou registe a assinatura em papel em «Confirmações dos trabalhadores».» e «A declaração de frequência foi enviada a Ana Margarida Pinto. …». Ver reports/LOTE_EE-16.md. */}
+
+{/* Nota interna (DOCS-040 F3): F3-01 («Pedir ao trabalhador que aceite» recusa com «O módulo que o regista não está instalado» embora fiscaldoo_hr esteja instalado: a ação base do participante sobrepõe-se ao misturador). Hugo «Parcial» sem horas: o resumo contou 12 h em vez de 8; com 3 h, 11 h (não se investigou). */}
+
+## Problemas frequentes
+
+### «Os códigos do Anexo C deste curso estão incompletos.»
+
+É um aviso do passo 3: o registo faz-se na mesma. Complete os códigos no curso para o Relatório Único.
+
+### Só os Recursos Humanos registam formação
+
+Com um perfil sem acesso a **Registo rápido**, a mensagem é «Só os Recursos Humanos registam formação. Como resolver: peça à equipa de RH.».

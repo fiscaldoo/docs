@@ -1,0 +1,152 @@
+---
+id: configurar-o-iva
+slug: /accounting-pt/configurar-o-iva
+title: Como configurar o IVA da empresa
+sidebar_label: Configurar o IVA
+description: Definir a região fiscal, o regime e a periodicidade do IVA e a contabilidade organizada na janela Configuração fiscal, e onde ficam as outras opções do IVA da empresa.
+keywords: [configurar o IVA, configurar o iva, configuração fiscal, configuracao fiscal, Configuração fiscal PT, periodicidade do IVA, periodicidade do iva, IVA mensal, IVA trimestral, mudar periodicidade, regime de IVA, regime de iva, região fiscal, regiao fiscal, território fiscal, territorio fiscal, contabilidade organizada, origem da resposta, bloquear submissões sem contabilista certificado, bloquear submissoes, ciclo da declaração de IVA, ciclo da declaracao, isenção intracomunitária VIES, isencao intracomunitaria, IVA das importações, iva das importacoes, prova de exportação, prova de exportacao, grupos IVA, sujeito passivo misto, posições fiscais regionais, posicoes fiscais regionais, Açores, Madeira, Definições IVA (PT)]
+doc_id: DOC-0085
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7b476ad71)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/empresa/dados-da-empresa, accounting-pt/iva/declaracao-periodica-de-iva, accounting-pt/iva/declaracao-recapitulativa, accounting-pt/iva/taxas-e-isencoes-de-iva, fiscal-core/faturacao/clientes]
+---
+
+## Para que serve?
+
+A janela **Configuração fiscal** junta os dados do IVA que o Contabilista certificado tem de confirmar numa empresa: a região fiscal, o regime e a periodicidade do IVA e se a empresa tem contabilidade organizada. A periodicidade decide os períodos da [declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva), e a contabilidade organizada decide se as declarações exigem um contabilista certificado. A região decide o anexo das regiões da declaração periódica e as taxas que a verba de um artigo sugere. A taxa por omissão da empresa não muda com a região: só muda com a opção **Usar taxas regionais por omissão (região da própria empresa)** (ver «Outras opções do IVA da empresa»).
+
+Guardar a configuração não cria lançamentos contabilísticos: muda só os dados da empresa.
+
+## Quando utilizar?
+
+- Numa empresa nova, antes de preparar a primeira declaração periódica de IVA.
+- Quando a empresa muda de regime de IVA ou de periodicidade, depois de o comunicar à Autoridade Tributária e Aduaneira (AT).
+- Quando o contabilista certificado confirma se a empresa é obrigada a ter contabilidade organizada.
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › IVA e retenções › Configuração fiscal**
+
+![Janela Configuração fiscal da Empresa Demonstração, Lda, com Região fiscal Continente, Regime normal, periodicidade Mensal, a lista Em vigor desde e Periodicidade com 01/01/2000 Mensal e o grupo CONTABILISTA CERTIFICADO (QUADRO 20)](/images/accounting-pt/configurar-o-iva/01-configuracao-fiscal.png)
+
+A janela abre sempre na empresa em que está a trabalhar (o campo **Empresa** não se muda). Para configurar outra empresa, troque de empresa no canto superior direito e abra o menu de novo.
+
+## Antes de começar
+
+- Perfil **Contabilista certificado**. O **Contabilista** não vê o menu (só tem **Modelos de lançamento** e os menus dos bancos e ativos em **Configurar**).
+- Tenha à mão o enquadramento que está registado na AT: regime de IVA, data de início se for um regime de isenção, periodicidade.
+- Confirme com o contabilista certificado se a empresa é obrigada a ter contabilidade organizada.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › IVA e retenções › Configuração fiscal**. Abre-se a janela **Configuração fiscal** da empresa atual.
+2. Em **Região fiscal**, escolha **Continente**, **Açores** ou **Madeira**. A região decide o Anexo R da declaração periódica, mas a taxa por omissão não muda com ela: na demonstração, mudar a **Região fiscal** da Empresa Teste Filial de **Continente** para **Madeira** deixou a taxa por omissão de vendas e de compras em **23%**. Numa empresa nova a região vem sugerida pelo código postal. Numa empresa dos Açores ou da Madeira, veja a opção **Usar taxas regionais por omissão (região da própria empresa)**, em «Outras opções do IVA da empresa»: é ela que troca a taxa por omissão.
+3. Em **Regime de IVA**, escolha **Regime normal**, **Isento (art. 9.º do CIVA)**, **Isento (art. 53.º do CIVA)** ou **Sujeito passivo misto (com e sem direito a dedução)**. Num regime de isenção, preencha **Regime de IVA desde** com a data em que começou: sem ela a janela não guarda (ver «Problemas frequentes»). O que cada regime muda (e o que não muda nas faturas) está em [Como preencher os dados fiscais da empresa](/administration/dados-da-empresa). A opção **Sujeito passivo misto (com e sem direito a dedução)** é a mesma escolha da caixa **Sujeito passivo misto** das **Definições**: na demonstração, guardar aqui o regime misto marcou a caixa, e voltar ao **Regime normal** desmarcou-a. Com o regime misto escolhido, a janela mostra por baixo a ligação **Abrir a percentagem de dedução do IVA (pró-rata)**, que abre a percentagem de dedução da empresa.
+4. Em **Periodicidade do IVA**, escolha **Mensal** ou **Trimestral**. Se a empresa já tem lançamentos publicados este ano e escolhe outra periodicidade, aparece por baixo um aviso: «Art. 41.º do CIVA: a periodicidade mensal ou trimestral depende do volume de negócios do ano anterior e da opção do sujeito passivo. Alterá-la durante o ano pode não ser permitido: confirme com o seu contabilista certificado.» Para guardar, marque **Confirmo a alteração da periodicidade durante o ano**, por baixo do aviso. Por baixo da **Periodicidade do IVA**, a lista com **Em vigor desde** e **Periodicidade** é o histórico da empresa: quando guarda outra periodicidade, a lista ganha uma linha (por exemplo, passar a **Trimestral** em novembro de 2026 acrescenta 01/01/2026, **Trimestral**). Na demonstração tem uma linha: 01/01/2000, **Mensal**. O relatório **Declaração periódica de IVA (DP IVA)** usa esta lista: escolher um ano abre-o com a periodicidade desse ano (veja [Como filtrar, comparar períodos e exportar um relatório](/accounting-pt/usar-os-relatorios)).
+   ![Aviso do art. 41.º do CIVA com a caixa Confirmo a alteração da periodicidade durante o ano, desmarcada, que aparece ao mudar a periodicidade a meio do ano](/images/accounting-pt/configurar-o-iva/02-aviso-periodicidade.png)
+5. Em **Contabilidade organizada**, escolha uma das três opções: **Sim, obrigada a ter contabilidade organizada**, **Não (regime simplificado ou dispensada)** ou **Não definido**. **Não definido** é a de uma empresa nova: não pede a origem e, segundo a ajuda do campo, «só avisa». Com **Sim** ou **Não** aparece **Origem da resposta**, que é obrigatória: escreva de onde vem a resposta, por exemplo `Sociedade por quotas; confirmado com o contabilista certificado`.
+   ![Grupo CONTABILISTA CERTIFICADO (QUADRO 20) com Sim, obrigada a ter contabilidade organizada e o campo Origem da resposta preenchido e assinalado](/images/accounting-pt/configurar-o-iva/03-contabilidade-organizada.png)
+6. Decida **Bloquear submissões sem contabilista certificado**. Desmarcada (por omissão), a declaração periódica de uma empresa com contabilidade organizada e sem contabilista certificado só avisa; marcada, a validação é recusada. Só tem efeito com **Contabilidade organizada** em **Sim**. O contabilista certificado regista-se em [Como indicar o contabilista certificado responsável](/administration/contabilista-certificado).
+7. Carregue em **Guardar**. A janela fecha-se e fica a notificação «Guardado. Periodicidade do IVA: Mensal.» (com a periodicidade que escolheu).
+   ![Notificação Configuração fiscal com a mensagem Guardado. Periodicidade do IVA: Mensal.](/images/accounting-pt/configurar-o-iva/04-guardado.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- A notificação «Guardado. Periodicidade do IVA: …» e, ao abrir de novo a janela, os valores que escolheu.
+- O administrador vê os mesmos valores na ficha da empresa, separador **Localização PT** (o perfil **Contabilista certificado** não tem as **Definições**, onde está essa ficha), com o mesmo nome **Periodicidade do IVA**.
+- A próxima declaração periódica de IVA usa a periodicidade guardada.
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Periodicidade e regime são os da AT">
+O fiscaldoo não decide o regime nem a periodicidade: usa o que guardar aqui. A periodicidade depende do volume de negócios do ano anterior e da opção da empresa (CIVA, art. 41.º). Mude-a só depois de o contabilista certificado confirmar que a mudança foi aceite pela AT e a partir de que período, e mude-a só nesta janela: é o único sítio que pede a confirmação do art. 41.º. A periodicidade também aparece em **Contabilidade › Configurar › Geral › Definições**, secção **IVA (PT)**, bloco **Região, periodicidade e regime de IVA** (**Periodicidade do IVA**), e na ficha da empresa, separador **Localização PT**, com o mesmo nome. Num ano com lançamentos publicados, as **Definições** e a ficha da empresa recusam a mudança: na demonstração, mudar de **Mensal** para **Trimestral** e carregar em **Guardar** abriu **Operação inválida** («A periodicidade do IVA da empresa «Empresa Demonstração, Lda» não se pode mudar aqui. … Como resolver: um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» muda-a em Contabilidade › Configurar › IVA e retenções › Configuração fiscal, que pede a confirmação e deixa a mudança no registo de auditoria.»), e a periodicidade ficou **Mensal**. <span className="fd-pending">Pendente de validação por contabilista certificado: quando se pode mudar de periodicidade e a partir de que período, e obrigação de contabilidade organizada (CIRC, art. 123.º).</span>
+</HelpCallout>
+
+{/* Nota interna (VAT-067 #3526, CB2c-02 provado de novo em fe8c5365c): a ajuda do Território fiscal / Região fiscal diz «Determina as taxas de IVA por omissão», mas mudar a região não muda a taxa por omissão (administrador, Empresa Teste Filial, Definições, Continente → Madeira → 23% nas vendas e nas compras; reposto Continente). Quando o VAT-067 corrigir a ajuda ou o efeito, rever o «Para que serve?» e o passo 2. Ronda AV2 (9d1671e9f, VAT-067 em master): a ajuda das Definições diz agora que a região «NÃO muda as taxas de IVA por omissão» e a janela já não mostra ajuda; o passo 2 deixou de citar a ajuda. */}
+
+- **Empresa nova:** a **Periodicidade do IVA** vem vazia, e a janela não guarda sem ela (veja «Problemas frequentes»), a não ser num regime de isenção. Na demonstração, a **Empresa Teste Filial** com **Isento (art. 53.º do CIVA)**, **Regime de IVA desde** 01/01/2026 e a periodicidade vazia guardou com a notificação «Guardado. A empresa não tem periodicidade do IVA: está isenta e não entrega declaração periódica.» <span className="fd-pending">Pendente de validação por contabilista certificado: dispensa da declaração periódica em cada regime de isenção (CIVA, art. 9.º e art. 53.º).</span>
+- **Registo das alterações:** a ajuda do campo **Regime de IVA** diz que cada alteração fica no registo de auditoria e que o regime nunca é deduzido sozinho do volume de negócios.
+
+## Outras opções do IVA da empresa
+
+As opções seguintes não estão nesta janela. Mudam-se nas **Definições** e na ficha da empresa, que só o administrador abre. As caixas vêm desligadas por omissão, menos a da isenção intracomunitária, que vem ligada; o **Ciclo da declaração de IVA** e o **Método de Arredondamento no Cálculo do Imposto** são escolhas, com o valor por omissão indicado na tabela.
+
+{/* Exceção CC campos 18 e 19: o texto cita a ajuda do ecrã («campos 18 e 19») e leva a marca do contabilista certificado no fim desta secção. */}
+
+| Opção | Onde | O que faz |
+|---|---|---|
+| **A isenção intracomunitária exige verificação VIES válida** | **Contabilidade › Configurar › Geral › Definições**, secção **IVA (PT)** | **Vem ligada, e recomendamos mantê-la assim.** O que faz em cada estado do VIES, ligada e desligada, está em [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes), secção «A opção da empresa». A opção é de cada empresa: confirme a empresa do topo do ecrã antes de **Guardar**. Desligue-a só por decisão do contabilista certificado. |
+| **IVA das importações liquidado na declaração** | **Contabilidade › Configurar › Geral › Definições**, secção **IVA (PT)**, e ficha da empresa | Só para a empresa que optou, junto da AT, por liquidar o IVA das importações na declaração periódica (o ecrã indica os campos 18 e 19) em vez de o pagar na alfândega. O ecrã diz que exige declaração mensal. |
+| **Sujeito passivo misto** | **Contabilidade › Configurar › Geral › Definições**, secção **IVA (PT)**, e ficha da empresa (grupo **DEDUÇÃO DO IVA (CIVA ART. 23.º)**) | Não é outra opção: é a mesma escolha da opção **Sujeito passivo misto (com e sem direito a dedução)** do **Regime de IVA** (passo 3), e mudar uma muda a outra. Liga o cálculo da percentagem de dedução (pró-rata). |
+| **Aplicar posição fiscal regional pela região do parceiro (bens)** | Ficha da empresa, grupo **POSIÇÕES FISCAIS REGIONAIS (AÇORES/MADEIRA)** | Ligada, uma fatura a um cliente com código postal dos Açores ou da Madeira recebe sozinha a posição fiscal da região e as taxas dela (na demonstração, a um cliente do Funchal, **Portugal — Madeira** e **4% MA**). Desligada (por omissão), a fatura vem com a taxa do continente. A ajuda do ecrã pede que confirme com o contabilista certificado antes de a ligar. |
+| **Usar taxas regionais por omissão (região da própria empresa)** | Ficha da empresa, mesmo grupo | Para uma empresa dos Açores ou da Madeira: ligada, a taxa por omissão da empresa passa a ser a taxa normal da região. Desligá-la não repõe a taxa anterior. As duas opções regionais estão explicadas em [Como escolher a taxa de IVA certa e saber que motivo de isenção sai](/accounting-pt/taxas-e-isencoes-de-iva), secção «Clientes e empresas dos Açores e da Madeira». |
+| **Ciclo da declaração de IVA** | Ficha da empresa, separador **Localização PT** | **Rever, entregar e pagar** (por omissão), **Só revisão (a entrega e o pagamento fazem-se fora do sistema)** ou **Só pagamento (sem passo de revisão: as declarações calculadas podem ser entregues e pagas)**. Decide os passos da declaração periódica que se fazem no fiscaldoo. |
+| **Bloquear o período quando a declaração é entregue** | Ficha da empresa, separador **Localização PT** | Ligada, registar a entrega da declaração fecha logo o período de IVA. Desligada, o período fecha-se com **Fechar período de IVA**, na declaração. |
+| **Prova de exportação obrigatória para fechar o período** | Ficha da empresa, grupo **IVA** | Ligada, a declaração do período não se valida enquanto houver exportações sem a prova (o documento aduaneiro) registada. |
+| **Regime Grupos IVA** | Ficha da empresa, grupo **IVA** | Para a empresa que pertence a um grupo IVA. Pede o **NIF da entidade dominante**, e o fiscaldoo só aceita o grupo com o **Regime normal** e a periodicidade **Mensal**: noutro caso, ao guardar, aparece «Erro de Validação» («… só podem sê-lo empresas no regime normal de IVA com periodicidade mensal (Lei 62/2025, art. 1.º, n.º 7, al. c)) …»). |
+| **Método de Arredondamento no Cálculo do Imposto** | Ficha da empresa, separador **Localização PT** | **Arredondar por Linha** (por omissão) ou **Arredondar por imposto**. |
+
+**Arredondar por linha ou por imposto.** O método também está em **Contabilidade › Configurar › Geral › Definições**, secção **Impostos**, **Método de Arredondamento** («Como o total do imposto é calculado em encomendas e faturas»). Numa empresa portuguesa que tenha **Arredondar por imposto**, aparece por baixo um aviso: «O IVA desta empresa é arredondado sobre o total de cada imposto, mas o Contabilista Certificado pede o arredondamento linha a linha. As séries que já existem mantêm o método com que foram criadas. Pode mudá-lo agora (peça ao administrador técnico que escolha «Arredondar por linha» … ou na ficha da empresa, separador Localização PT): só vale para as séries fiscais criadas depois. Com este método, cerca de uma linha de fatura em cada dez aparece no SAF-T com mais ou menos um cêntimo do que a linha impressa na fatura (os totais estão sempre certos). O arredondamento linha a linha nunca tem esta diferença, por isso é o método recomendado.» O mesmo texto aparece na ficha da empresa, separador **Localização PT**, e no painel do IVA. **Arredondar por linha** não tem esta diferença e é o recomendado. <span className="fd-pending">Pendente de validação por contabilista certificado: qual o método a usar em cada empresa (pergunta cer-60 por responder). O aviso viu-se nas Definições e no painel do IVA (**Arredondamento do IVA**), com o administrador, numa empresa com **Arredondar por imposto**; na ficha da empresa não se conferiu. A empresa de demonstração não o mostra, porque não tem este método.</span>
+
+Na ficha da empresa, o **Ciclo da declaração de IVA**, o **Bloquear o período quando a declaração é entregue** e o **Método de Arredondamento no Cálculo do Imposto** estão no grupo **IVA**, a seguir a **Prova de exportação obrigatória para fechar o período**. O mesmo grupo **IVA** mostra a **Periodicidade da declaração recapitulativa**, que não se escolhe: é calculada e a ajuda do campo explica a regra. A declaração em si está em [Como preparar a declaração recapitulativa](/accounting-pt/declaracao-recapitulativa). O IVA de caixa tem botão próprio de adesão, descrito em [Como preencher os dados fiscais da empresa](/administration/dados-da-empresa).
+
+Ficam fora da tabela, porque não mudam o IVA de uma empresa que não os usa e são regimes com artigo próprio: os grupos **BALCÃO ÚNICO (OSS)…**, **BALCÃO ÚNICO DAS IMPORTAÇÕES (IOSS)…** e **REVENDEDORES DE COMBUSTÍVEIS…** da ficha da empresa, só para quem aderiu a esses regimes, e a caixa **Cruzar o IVA deduzido com o e-Fatura** das **Definições**, que segundo a ajuda do ecrã «só informativo: nada é bloqueado». <span className="fd-pending">Pendente de validação por contabilista certificado: opção do IVA das importações na declaração (CIVA, art. 27.º, n.º 8) e os campos da declaração que ela usa; regra dos grupos IVA (Lei 62/2025).</span>
+
+**Aviso da atualização (empresas que já existiam).** A atualização que pôs a recusa por omissão ligou a opção em todas as empresas portuguesas, porque não havia registo de alguém a ter mudado à mão. Nessas empresas, as **Definições** mostram por baixo da opção: «Esta opção foi ligada por uma atualização: a partir de agora uma fatura com a isenção intracomunitária (0 % EU) para um cliente cujo NIF não é válido no VIES é recusada. Não há registo de a opção ter sido mudada à mão, por isso foi ligada em todas as empresas portuguesas; desligue-a aqui se a empresa preferir só o aviso.» Confirme com o contabilista certificado se a empresa a quer ligada e carregue em **Compreendido**: o aviso desaparece e a opção fica como está. Numa empresa criada depois da atualização, a opção já vem ligada e o aviso não aparece.
+
+![Opção A isenção intracomunitária exige verificação VIES válida marcada, com a ajuda do ecrã e o aviso amarelo da atualização destacado, que acaba no botão Compreendido](/images/accounting-pt/configurar-o-iva/05-opcao-vies.png)
+
+{/* Nota interna (DOCS-043, revisão no master fe8c5365c, VAT-066 #3525 em master; ronda do fix-vies2, 30/10/2026, master 9d1671e9f com o VAT-066b, base docs_demo_vies2_test): a opção vem ligada nas três empresas. Ajuda do ecrã nova (PD-AFV-03): «… desligue para só avisar (um serviço VIES indisponível não prova nada, por isso, com a opção ligada, também é recusado). Seja qual for a opção, um cliente de Portugal ou de fora da UE, e um NIF que o VIES indica ser inválido, são sempre recusados.». O aviso da atualização foi mostrado marcando, pelo ORM e como administrador (sem SQL), o campo que a migração marca (l10n_pt_vies_block_notice) na Empresa Demonstração; texto igual; captura 05 refeita; «Compreendido» apagou o aviso e deixou a opção ligada. Ronda AV2: a linha da opção passou a só ligar ao DOC-0026 (AV2-10); opção desligada e religada de novo pelo administrador na Empresa Demonstração (Definições). Recusa com o VIES indisponível provada (cenário unknown do simulador, Software Berlin GmbH: faixa e Operação inválida); com a opção desligada pelo administrador na Empresa Demonstração (empresa do topo trocada antes de Guardar), Serviço indisponível emitido com a faixa de risco e Inválido recusado; opção religada e cenário reposto em accept. */}
+
+{/* Nota interna (ronda única, 31/10/2026, master 27cebe13a, base docs_demo_ronda_test): VAT-067 visto no ecrã: o regime misto mostra a ligação «Abrir a percentagem de dedução do IVA (pró-rata)» na janela (B2c-03 resolvido); os três campos do IVA da ficha estão no grupo IVA (B2c-04 resolvido); a ficha recusa a mudança da periodicidade com a mensagem que manda para a janela (administrador, Mensal → Trimestral; ficou Mensal). */}
+
+## Problemas frequentes
+
+### Ao guardar aparece «Operação inválida» por causa da periodicidade
+
+- **Mensagem:** «Alterar a periodicidade da DP IVA durante o ano exige a sua confirmação. Art. 41.º do CIVA: a periodicidade mensal ou trimestral depende do volume de negócios do ano anterior e da opção do sujeito passivo, pelo que não deve ser alterada a meio do ano sem confirmar com o seu contabilista certificado. Assinale a confirmação para continuar.»
+- **Causa:** escolheu outra periodicidade num ano em que a empresa já tem lançamentos publicados, e a caixa por baixo do aviso amarelo está desmarcada.
+- **O que fica gravado:** nada. Na demonstração, a **Região fiscal**, a **Contabilidade organizada** e a **Origem da resposta** foram mudadas junto com a periodicidade e, ao abrir de novo a janela, todos os campos estavam como antes: **Continente**, **Não definido**, a origem vazia e **Mensal**.
+- **O que fazer:** carregue em **Fechar** na mensagem. Se o contabilista certificado confirmou a mudança de periodicidade, marque **Confirmo a alteração da periodicidade durante o ano** e carregue em **Guardar**. Se não, reponha a periodicidade que estava e carregue em **Guardar**.
+
+### Ao guardar aparece «Operação inválida»: falta a periodicidade do IVA
+
+- **Mensagem:** «Falta a periodicidade do IVA. O que aconteceu: uma empresa portuguesa que liquida IVA entrega a declaração periódica todos os meses ou todos os trimestres (art. 41.º do CIVA) e os períodos e prazos das declarações dependem dela. Nada foi guardado. Como resolver: escolha «Mensal» ou «Trimestral» em «Periodicidade do IVA» e guarde de novo.»
+- **Causa:** a **Periodicidade do IVA** está vazia, como numa empresa nova. Na demonstração, foi assim na **Empresa Teste Filial**, com o **Regime normal**.
+- **O que fazer:** carregue em **Fechar**, escolha **Mensal** ou **Trimestral** com o contabilista certificado (passo 4) e carregue em **Guardar**.
+
+### Ao guardar aparece «Erro de Validação» por faltar a data do regime
+
+- **Mensagem:** «Empresa “Empresa Demonstração, Lda”: o regime de IVA isento precisa da data em que começou (“Regime de IVA desde”), porque o período da DP IVA depende dela. Preencha-a e grave de novo.»
+- **O que fazer:** preencha **Regime de IVA desde** e carregue em **Guardar**.
+
+### Ao guardar aparece «Há campos obrigatórios por preencher»
+
+- **Mensagem:** «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** respondeu **Sim** ou **Não** em **Contabilidade organizada** e deixou vazia a **Origem da resposta**.
+- **O que fazer:** escreva a origem da resposta e carregue em **Guardar**.
+
+### Não vejo o menu Configuração fiscal
+
+- **Causa:** dos valores do campo **Perfil**, o menu só aparece ao **Contabilista certificado** (e ao administrador).
+
+{/* Nota interna (lote v23-M, master dbbb5ac5c, docs_demo_v23m_test): a recusa da periodicidade foi provocada de novo pela integração, com o administrador e com um utilizador criado só com o perfil Contabilista certificado (mesmo texto; o «Como resolver» nomeia agora o perfil). */}
+- **O que fazer:** peça a quem tem esse perfil que faça a configuração, ou ao administrador que lhe dê o perfil. Veja também [Não vejo um menu ou um botão](/troubleshooting/nao-vejo-um-menu).
+
+{/* Nota interna (DOCS-043, revisão no master fe8c5365c, base docs_demo_b2cnova_test): refeitos com o Responsável fiscal a janela (opções iguais), «Há campos obrigatórios por preencher» (Sim sem origem), «Guardado. Periodicidade do IVA: Mensal.», «Operação inválida» (origem mudada + Trimestral sem a caixa; ao reabrir, Mensal e a origem nova gravada; reposta), Trimestral com a caixa e volta a Mensal, «Erro de Validação» do regime isento sem data; com o administrador, Definições: Periodicidade Mensal → Trimestral → Mensal sem aviso (o bloco diz «Só o Responsável fiscal os vê e altera»; o administrador da demonstração também tem o perfil Responsável fiscal, por isso não é defeito: o R43-05 foi retirado na junção, AB2c3-06. O defeito que fica é a falta do aviso do art. 41.º fora da janela, PD-V2H-02, VAT-067). Capturas 01 a 05 novas. A caixa sem rótulo (B2c-01) e os códigos internos nas ajudas (B2c-02) continuam. Ronda AV2 (30/10/2026, master 9d1671e9f com o VAT-067, base docs_demo_vies3_test): a janela diz «Região fiscal» e os campos já não têm a ajuda «?» (captura 01 refeita com o Responsável fiscal, 820 px); as Definições dizem «Região, periodicidade e regime de IVA» e «Região fiscal»; com o administrador, Mensal → Trimestral nas Definições + Guardar deu «Operação inválida» (mensagem copiada) e a periodicidade ficou Mensal. Não revisto: a ficha da empresa e «O que fica gravado» dos Problemas frequentes (PD-V2H-01, que o VAT-067 pode ter corrigido). */}
+
+{/* Nota interna (ronda única, 31/10/2026): a caixa tem o rótulo «Confirmo a alteração da periodicidade durante o ano» (B2c-01 resolvido, captura 02 refeita). Recusa sem a caixa: nada gravado (Região fiscal Madeira, Contabilidade organizada Sim, origem e Trimestral → reaberta como antes; Responsável fiscal). Empresa Teste Filial (administrador com o perfil Responsável fiscal): sem periodicidade → «Falta a periodicidade do IVA…»; Isento (art. 53.º) desde 01/01/2026 sem periodicidade → guardado com a notificação citada. */}
+
+{/* Nota interna (lote v23-AN, depois do comboio 174 com o UX-147, master a67618a71, docs_demo_v23an_test): caminho das Definições conferido por clique com o administrador (Contabilidade › Configurar, grupo Geral, Definições, que abre no separador Faturação) e com o verificador do test_doc_paths; as três opções da tabela e a Periodicidade do IVA estão na secção IVA (PT); a recusa da periodicidade (Mensal para Trimestral, Guardar, na Empresa Demonstração, Lda) foi provocada de novo e o texto é o mesmo; a periodicidade ficou Mensal. */}
+
+{/* Nota interna (lote EE-16, comboios 198 e 199, master 7b476ad71, 13/11/2026; cópia Enterprise docs_ee_ee16_test (portas 8524/8525, cópia da odoo20_ee_test com ee_neutralizar) e cópia Community docs_demo_ee16_test (porta 8526), utilizadores criados nas cópias só com o perfil indicado): Contabilista certificado, Contabilidade › Configurar › IVA e retenções › Configuração fiscal, por clique na Empresa Demonstração, Lda: título da janela «Configuração fiscal»; Guardar sem mudar dá a notificação «Configuração fiscal. Guardado. Periodicidade do IVA: Mensal.» (captura 04 refeita; antes «Configuração fiscal PT»). Depois, na cópia, Periodicidade Trimestral com o aviso do art. 41.º e «Confirmo a alteração…» marcada: «Guardado. Periodicidade do IVA: Trimestral.», e a lista passou a 01/01/2026 Trimestral e 01/01/2000 Mensal. Contabilista, Declaração periódica de IVA (DP IVA), por clique (VAT-079 7198cd442 e VAT-080 ae2fd1e5e, em master): abre em 4.º trimestre 2026; ano 2025 → Mês, Outubro de 2025 (01/10/2025 – 31/10/2025); ano 2026 → Trimestre; em 1.º trimestre 2026, ‹ → Dezembro de 2025 (Mês) e › → 1.º trimestre 2026. Ver reports/LOTE_EE-16.md. */}
+
+{/* Nota interna (lote EE-15, comboio 197, master c689f7580, 12/11/2026, cópia Community docs_demo_ee15_test, porta 8532, utilizador criado na cópia só com o perfil Contabilista certificado): VAT-078 (2d9201442): a janela chama-se hoje «Configuração fiscal» e tem, por baixo da Periodicidade do IVA, a lista Em vigor desde / Periodicidade (01/01/2000 Mensal na Empresa Demonstração, Lda, criada pela migração); aberta e fechada sem guardar. Captura 01 refeita. O título «Em vigor desde» aparece cortado («Em vigor …») na coluna (defeito no relatório). A notificação «Guardado…» (captura 04) não foi refeita. Ver reports/LOTE_EE-15.md. */}

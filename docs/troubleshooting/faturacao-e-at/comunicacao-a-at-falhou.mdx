@@ -1,0 +1,157 @@
+---
+id: comunicacao-a-at-falhou
+slug: /troubleshooting/comunicacao-a-at-falhou
+title: A comunicação à AT falhou ou ficou pendente
+sidebar_label: A comunicação à AT falhou
+description: O que fazer quando uma fatura ou uma série fica «Desconhecida» ou «Rejeitada» depois de comunicada à AT, como confirmar se a AT já a recebeu antes de reenviar e evitar duplicados.
+keywords: [comunicação à AT falhou, comunicacao a at falhou, comunicação pendente, sem resposta, Desconhecida, Rejeitada, Consultar estado, Estado consultado em, Reenviar, e-fatura, Portal das Finanças, reenviar à AT, reenviar a at, duplicado, tempo limite, A Autoridade Tributária não disse se a aceitou, Comunicações à AT (faturas e histórico), tentativas, limite de tentativas, série sem resposta, código de validação, Comunicar à AT]
+doc_id: DOC-0339
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 8f78854ec)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/at-e-saft/comunicar-faturas-a-at, troubleshooting/faturacao-e-at/nao-consigo-anular-um-documento, troubleshooting/faturacao-e-at/serie-sem-codigo-de-validacao]
+---
+
+## Sintoma
+
+Carregou em **Comunicar à AT** numa fatura (ou numa série) e:
+
+- a mensagem no canto do ecrã diz que houve uma comunicação **sem resposta** ou **rejeitada**;
+- o campo **AT** da fatura, no bloco **Documento certificado**, mostra **Desconhecida** ou **Rejeitada** em vez de **Aceite**;
+- ao tentar **Reenviar** ou comunicar de novo, aparece a janela **Operação inválida**.
+
+Este artigo trata das comunicações feitas pelo fiscaldoo, documento a documento. A comunicação mensal da faturação, por ficheiro SAF-T entregue no Portal das Finanças, está em [Como comunicar as faturas à AT e ver o histórico](/fiscal-core/comunicar-faturas-a-at).
+
+## Mensagem
+
+Logo depois de **Comunicar à AT**, no canto superior direito:
+
+> «Comunicação com a Autoridade Tributária. Aceites: *0*, rejeitados: *0*, sem resposta: *1*.»
+
+![Mensagem Comunicação com a Autoridade Tributária. Aceites: 0, rejeitados: 0, sem resposta: 1](/images/troubleshooting/comunicacao-a-at-falhou/01-fatura-sem-resposta.png)
+
+Ao mesmo tempo, o campo **AT** da fatura passa a **Desconhecida**.
+
+Numa rejeição, a mesma mensagem diz «rejeitados: *1*» e o campo **AT** mostra **Rejeitada**.
+
+No registo da comunicação (ver «O que confirmar»), o campo **Mensagem** explica o que aconteceu. Os dois textos vistos na demonstração, sem resposta:
+
+> «A Autoridade Tributária não disse se a aceitou.»
+>
+> «Sem resposta da Autoridade Tributária dentro do tempo limite.»
+
+![Registo de uma comunicação de fatura no estado Desconhecida, com os botões Consultar estado e Reenviar, as Tentativas, o Código de erro e a Mensagem A Autoridade Tributária não disse se a aceitou](/images/troubleshooting/comunicacao-a-at-falhou/02-comunicacao-desconhecida.png)
+
+Ao carregar em **Reenviar** numa comunicação **Desconhecida** antes de consultar o estado:
+
+> «Consulte primeiro o estado junto da Autoridade Tributária antes de reenviar: ela pode já ter recebido esta comunicação e uma segunda poderia duplicá-la.»
+
+![Janela Operação inválida: consulte primeiro o estado junto da Autoridade Tributária antes de reenviar](/images/troubleshooting/comunicacao-a-at-falhou/03-reenviar-sem-consultar.png)
+
+Depois de cinco tentativas na mesma comunicação:
+
+> «Esta comunicação já teve *5* tentativas (limite *5*). Verifique a causa da falha antes de criar uma nova comunicação.»
+
+Ao carregar em **Comunicar à AT** numa série cuja última comunicação ficou sem resposta:
+
+> «A última comunicação da série «*NC U26*» não teve resposta da Autoridade Tributária, que pode já a ter registado. Abra essa comunicação e consulte o seu estado junto da Autoridade Tributária antes de comunicar de novo.»
+
+Todas as mensagens foram provocadas na base de demonstração, onde a AT é substituída por um simulador que pode responder «aceite», «rejeitada», «sem resposta» ou «tempo esgotado». As partes em itálico mudam com o documento.
+
+## Causas verificadas
+
+- **A AT não respondeu, ou a resposta não chegou a tempo.** O fiscaldoo não sabe se a AT recebeu o documento e marca a comunicação **Desconhecida**. A AT pode tê-lo recebido; por isso o fiscaldoo só deixa reenviar depois de uma consulta do estado. Nas faturas e nas guias, essa consulta hoje não chega à AT numa base de produção (ver «Como resolver»).
+- **A AT rejeitou a comunicação.** O estado é **Rejeitada** e o **Código de erro** e a **Mensagem** são os da AT. Na demonstração, o simulador responde só «Simulated rejection», com o código `MOCK-0001` (ou `99`, quando simula uma recusa de autenticação). <span className="fd-pending">Pendente de validação no ecrã: as mensagens de rejeição da AT real, incluindo as de credenciais recusadas, não se provocam na demonstração (só se usa o simulador).</span>
+- **A comunicação chegou ao limite de tentativas.** Cada **Reenviar** conta uma tentativa; à quinta, a mesma comunicação deixa de se reenviar.
+
+{/* Nota interna (DOCS-036, P-E1-13): o transporte simulado aceitou a fatura FT A2026/1 de uma empresa sem credenciais da AT (Empresa Nova Exemplo); numa base de testes, um «Aceite» não prova que as credenciais estão completas nem certas. */}
+
+## O que confirmar
+
+1. O campo **AT** da fatura: **Desconhecida** (sem resposta), **Rejeitada** ou **Aceite**.
+2. O registo da comunicação. Abra **Contabilidade › Declarar › Autoridade Tributária › O que há para fazer com as obrigações?** e, em **Listas de apoio**, **Comunicações à AT (faturas e histórico)**. A lista tem uma linha por comunicação, com o **Documento** (por exemplo `Lançamento FT D26/25`), o **Serviço** (**Fatura**, **Séries**…), o **Estado** e as **Tentativas**.
+3. No registo, o **Código de erro**, a **Mensagem** e as **Tentativas**.
+4. O seu perfil. O **Contabilista** vê a lista e o registo, mas não tem os botões **Consultar estado** e **Reenviar**, nem **Comunicar à AT** na fatura: só o perfil **Contabilista certificado** (e o administrador) comunica e reenvia.
+
+A lista só tem as comunicações feitas pelo fiscaldoo. Não mostra o que foi entregue diretamente no Portal das Finanças sem ser registado no fiscaldoo.
+
+## Como resolver
+
+### A comunicação de uma fatura ou de uma guia está «Desconhecida»
+
+<HelpCallout type="risco" title="Hoje, «Consultar estado» não pergunta nada à AT sobre faturas e guias">
+Numa base de produção, **Consultar estado** numa comunicação de uma fatura ou de uma guia não contacta a AT: o fiscaldoo não tem, para estes documentos, uma consulta de estado na AT. Mesmo assim, regista a consulta como feita: a comunicação continua **Desconhecida**, aparece o campo **Estado consultado em** e **Reenviar** passa a ser permitido. **Estado consultado em** não quer dizer que a AT respondeu nem que não tem o documento. É um defeito do fiscaldoo, com correção a caminho.
+
+Em produção, uma tarefa automática do fiscaldoo faz esta mesma consulta, de tempos a tempos, às comunicações sem resposta. Por isso, **Estado consultado em** pode aparecer sem que ninguém tenha carregado no botão.
+</HelpCallout>
+
+{/* Nota interna (correção do E1, DEC-1322): defeito PD-V2D-01, junto ao cartão ATWS-044 (#3490). O motor real (_real_status em l10n_pt_arxi_at_ws, master 54a9f5f03) só consulta a AT para séries; para faturas e guias devolve no_status_query sem contactar a AT e grava status_checked_at, o que desbloqueia «Reenviar». A tarefa automática é a ATWS-015, desligada nas bases de teste. Rever esta secção quando o ATWS-044 entrar em master. */}
+
+Até a correção chegar, com o perfil **Contabilista certificado**:
+
+1. Antes de reenviar, confirme no Portal das Finanças, no e-Fatura, se a AT já tem a fatura: procure-a pelo número entre as faturas emitidas pela empresa. <span className="fd-pending">Pendente de validação no ecrã: o Portal das Finanças não se abre a partir da base de demonstração (a AT real não se usa nos testes).</span>
+2. **Se a fatura já aparece no e-Fatura**, não reenvie. A comunicação fica **Desconhecida** no fiscaldoo: contacte o suporte com os dados de «Informação a enviar».
+3. **Se a fatura não aparece**, abra o registo da comunicação (ver «O que confirmar», passo 2) e carregue em **Reenviar**. Se aparecer «Consulte primeiro o estado…», feche a janela, carregue em **Consultar estado** (não aparece nenhuma mensagem, mas o campo **Estado consultado em** passa a mostrar a hora) e depois em **Reenviar**. Cada reenvio pede uma consulta nova: depois de um reenvio, o campo **Estado consultado em** continua a mostrar a hora da consulta anterior, mas **Reenviar** volta a ser recusado com a mesma mensagem. Quando a AT aceita, a comunicação passa a **Aceite**, e o campo **AT** da fatura também.
+4. **Se o reenvio ficar outra vez Desconhecida**, não reenvie logo: volte ao passo 1 e confirme de novo no e-Fatura se a AT já tem a fatura. Na demonstração, a comunicação da `FT D26/45` (perfil **Contabilista certificado**, simulador sem resposta) foi recusada no 1.º **Reenviar**, ficou com **Estado consultado em** depois de **Consultar estado**, foi reenviada (**Tentativas** 2, ainda **Desconhecida**) e o **Reenviar** seguinte foi recusado com «Consulte primeiro o estado…», com o campo ainda na hora da consulta anterior.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: como confirmar que a AT recebeu uma fatura comunicada sem resposta, e o que fazer se ela ficar comunicada duas vezes.</span>
+
+{/* Nota interna (DOCS-036, P-E1-11): «Consultar estado» não mostra nenhuma mensagem, em nenhum resultado; quando a consulta fica sem resposta, o ecrã não muda. Rever o passo 3 quando o cartão entrar em master. */}
+
+Na base de demonstração, o simulador da AT responde à consulta como se houvesse uma consulta de faturas: a comunicação de uma fatura passou a **Aceite** sem reenviar; a da `FS D26/6` ficou **Desconhecida** com **Estado consultado em** e passou a **Aceite** depois de **Reenviar** (**Tentativas** 2); com a consulta também sem resposta, nada mudou. Estes resultados só existem no simulador: numa base de produção, uma fatura ou uma guia nunca passa a **Aceite** só com **Consultar estado**.
+
+Enquanto a comunicação de uma fatura estiver **Desconhecida**, a fatura não tem o botão **Comunicar à AT** e não se anula: [Não consigo anular uma fatura ou outro documento certificado](/troubleshooting/nao-consigo-anular-um-documento).
+
+**Quem faz:** o Contabilista certificado.
+
+### A comunicação foi «Rejeitada»
+
+1. Leia o **Código de erro** e a **Mensagem** do registo: dizem o que a AT recusou.
+2. Corrija a causa. Se a AT recusou as credenciais, confira o subutilizador, a palavra-passe e o certificado em [Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). Uma fatura emitida não se altera: se o erro está no documento, a correção é uma nota de crédito ou a anulação, decididas com o contabilista certificado.
+3. Carregue em **Reenviar** no registo, ou em **Comunicar à AT** na fatura. Numa comunicação **Rejeitada**, **Reenviar** não pede consulta prévia. Na demonstração, a comunicação rejeitada da `FT D26/36` foi aceite ao segundo envio.
+
+**Quem faz:** o Contabilista certificado.
+
+### Chegou ao limite de tentativas
+
+Não insista na mesma comunicação: descubra primeiro porque falha (a **Mensagem** de cada tentativa). Corrigida a causa, carregue em **Comunicar à AT** na fatura: o fiscaldoo cria uma comunicação nova, com tentativas a contar do zero. Na demonstração, a comunicação da `FS D26/7` ficou rejeitada com 5 tentativas; depois, **Comunicar à AT** na fatura criou outra comunicação, que foi **Aceite**.
+
+**Quem faz:** o Contabilista certificado.
+
+### A comunicação de uma série ficou sem resposta
+
+1. Na lista **Comunicações à AT (faturas e histórico)**, abra a linha do serviço **Séries** com o estado **Desconhecida** (o **Documento** é a série) e carregue em **Consultar estado**. Nas séries, a consulta pergunta mesmo à AT que séries ela conhece: se a AT tem a série, a comunicação passa a **Aceite**; se não tem, fica **Desconhecida** com **Estado consultado em**, e pode carregar em **Reenviar**.
+2. Se passou a **Aceite**, abra a série e confira o **Código de validação**. Na demonstração, a série `NC U26` ficou **Aceite** depois da consulta, mas sem código na série; o código estava no separador **Resposta** do registo da comunicação (`"validation_code": "AKJVWLK5"`).
+3. Nesse caso, não comunique a série de novo. Na série, carregue em **Registar código de validação (Portal)**, escreva o código que está na **Resposta** e carregue em **Registar**. A série fica com o código e pode ser ativada como em [A série não tem código de validação da AT (ATCUD)](/troubleshooting/serie-sem-codigo-de-validacao).
+
+{/* Nota interna (DOCS-036, P-E1-12): depois de «Consultar estado» com resposta «aceite», a série não recebe o código que vem na resposta e fica em Rascunho sem código; o passo 3 é o contorno de hoje. Rever quando o cartão entrar em master. */}
+
+**Quem faz:** o Contabilista certificado.
+
+Comunicar e consultar não geram lançamentos contabilísticos.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: consequências de uma fatura que fica sem comunicação aceite até ao prazo do mês, e se, nesse caso, a comunicação mensal por ficheiro SAF-T a substitui.</span>
+
+## Resultado esperado
+
+- O registo da comunicação fica **Aceite** e o campo **AT** da fatura também.
+- Numa série, o **Código de validação** fica preenchido.
+- Não há duas comunicações aceites do mesmo documento.
+
+## Quando contactar o suporte
+
+- A fatura já aparece no e-Fatura e a comunicação continua **Desconhecida** no fiscaldoo.
+- A comunicação de uma série continua **Desconhecida** depois de várias consultas, em dias diferentes.
+- Chegou ao limite de tentativas e a comunicação nova falha com a mesma mensagem.
+- O estado mudou para **Aceite** mas o campo **AT** da fatura não mudou.
+
+## Informação a enviar
+
+- O número do documento (por exemplo `FT D26/34`) ou da série, e a empresa.
+- O **Pedido** (o código do registo da comunicação), o **Estado**, as **Tentativas**, o **Código de erro** e a **Mensagem**, copiados do registo.
+- A hora de **Enviada em** e, se houver, de **Estado consultado em**.
+- Se a fatura aparece ou não no e-Fatura.
+- O perfil com que entrou.

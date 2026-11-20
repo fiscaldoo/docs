@@ -1,0 +1,152 @@
+---
+id: nao-consigo-anular-um-documento
+slug: /troubleshooting/nao-consigo-anular-um-documento
+title: Não consigo anular uma fatura ou outro documento certificado
+sidebar_label: Não consigo anular um documento
+description: Porque o botão de anular não aparece ou a janela de anulação mostra bloqueios, e o que fazer em cada caso.
+keywords: [não consigo anular, nao consigo anular, anular fatura, anulação bloqueada, anulacao bloqueada, Bloqueios, Anular documento certificado, botão anular não aparece, botao anular nao aparece, fatura paga, pago parcialmente, pago em parte, segunda nota de crédito, nota de crédito, nota de credito, retificado, referido por documentos ativos, comunicação sem resposta, comunicacao sem resposta, Verificar estado, Consultar estado, anular recibo, período fechado, periodo fechado]
+doc_id: DOC-0330
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/anular-uma-fatura, fiscal-core/faturacao/emitir-uma-nota-de-credito, troubleshooting/faturacao-e-at/comunicacao-a-at-falhou]
+---
+
+## Sintoma
+
+Quer anular uma fatura (ou uma nota de crédito, uma fatura simplificada, um recibo) emitida por erro e:
+
+- o botão **Anular documento certificado** (ou **Anular recibo**) não aparece; ou
+- a janela **Anular documento certificado** abre, mostra **Bloqueios** a vermelho e só tem o botão **Fechar**.
+
+Os passos da anulação, quando nada a impede, estão em [Como anular uma fatura ou outro documento certificado](/fiscal-core/anular-uma-fatura). Este artigo trata só do que a impede.
+
+## Mensagem
+
+As mensagens abaixo aparecem em **Bloqueios**, na janela **Anular documento certificado**. Foram provocadas na base de demonstração com o perfil **Contabilista certificado**, numa só fatura nova, a `FT D26/31` (a primeira depois das da base: Papelaria Central, Lda, 1 Material de escritório (kit) com o preço mudado para 10,00 € + IVA, 12,30 €, emitida como em [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada)), salvo a da comunicação à AT. As partes em itálico mudam com o documento. Quando há mais de uma causa, a janela mostra uma mensagem por causa.
+
+**A comunicação à AT ainda não tem resposta:**
+
+> «O documento “*FT D26/32*” tem uma comunicação com a Autoridade Tributária enviada ou sem resposta. Consulte primeiro o estado junto da AT: abra «Comunicações à AT (faturas e histórico)» (Contabilidade › Declarar › Autoridade Tributária), abra a comunicação deste documento e carregue em «Consultar estado»; só depois o pode anular, porque a anulação também tem de ser comunicada.»
+
+![Janela Anular documento certificado da fatura FT D26/32, bloqueada porque a comunicação à AT foi enviada e ficou sem resposta, com a indicação de consultar primeiro o estado e só o botão Fechar](/images/troubleshooting/nao-consigo-anular-um-documento/01-comunicacao-sem-resposta.png)
+
+Esta foi provocada noutra fatura, a `FT D26/32` (Papelaria Central, Lda, 12,30 €), com o perfil **Contabilista certificado**. A fatura foi comunicada com **Comunicar à AT** e a AT, simulada, não respondeu: a mensagem foi «… sem resposta: 1.» e a fatura ficou com a etiqueta **Desconhecida**. Para a provocar, a empresa precisa de credenciais da AT, e a demonstração não as traz: [Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at).
+
+{/* Nota interna (lote v23-BB, DOCS-064 #3900 req. 46376, master ce51f2d47, docs_demo_v23bb_test, porta 8508): credenciais de Teste fictícias guardadas no ecrã pelo administrador na Empresa Demonstração, Lda (cofre iniciado na cópia, .pfx em memória, chave de cifra só na memória da instância, transporte simulado, nunca Produção). FT D26/32 criada e emitida pela integração só na cópia; cenário «timeout» do simulador posto por RPC e reposto em «accept». Por clique, com um utilizador só Contabilista certificado: Comunicar à AT → «… sem resposta: 1.», Desconhecida; Anular documento certificado → bloqueio citado (captura 01), só Fechar; Consultar estado na comunicação → Aceite; a janela abriu sem bloqueios e foi fechada sem anular (a fatura continua Publicada). Substitui a marca «Pendente» da ronda junta-docs-008 (a base-mãe não tem credenciais). Os exemplos FT D26/43 e NC D26/5 a 6 das outras mensagens eram dessa ronda. Auditoria docs-aud-v23bb (master ce51f2d47, docs_demo_v23bbaud_test, porta 8506): a base-mãe acaba na FT D26/30 e na NC D26/1, por isso os exemplos passaram à FT D26/31 e às NC D26/2 e D26/3, repetidos por clique com utilizadores só Contabilista certificado e só Administrativo (rascunho de NC «Erro de preço» → bloqueio, captura 02 refeita; NC D26/2 de 5,00 € → três bloqueios na fatura e um na nota, captura 03 refeita; 2.ª nota NC D26/3 criada no ecrã pelo Administrativo e emitida por RPC → Creditado). O «abre sem bloqueios depois de eliminado o rascunho» foi visto na FT D26/34 (rascunho eliminado por RPC). As partidas do razão não foram reconferidas. */}
+
+**Há uma nota de crédito em rascunho sobre a fatura:**
+
+> «O documento “*FT D26/31*” é referido por documentos ativos (*Rascunho de nota de crédito (NC de FT D26/31: Erro de preço)*). Elimine o(s) rascunho(s) *Rascunho de nota de crédito (NC de FT D26/31: Erro de preço)* (Ações › Eliminar): um rascunho elimina-se, não se anula. Anule depois este documento.»
+
+![Janela Anular documento certificado da fatura FT D26/31, bloqueada por um rascunho de nota de crédito que a refere, com a indicação de o eliminar em Ações › Eliminar e só o botão Fechar](/images/troubleshooting/nao-consigo-anular-um-documento/02-bloqueio-nota-de-credito-em-rascunho.png)
+
+**A fatura já tem uma nota de crédito emitida** (aqui, uma nota de 6,15 € sobre uma fatura de 12,30 €). A janela mostra três mensagens:
+
+> «O documento “*FT D26/31*” tem o estado de pagamento “*Pago Parcialmente*” — só se anula um documento ainda por pagar; depois de pago, parcialmente pago ou creditado, a correção é uma nota de crédito, nunca uma anulação. Se for preciso corrigir mais, emita um documento novo (uma nota de débito ou uma fatura nova, conforme o caso); se for mesmo preciso anular, fale com o contabilista certificado.»
+>
+> «O documento “*FT D26/31*” já foi retificado por *NC D26/2 (NC de FT D26/31: Erro de preço)*: um documento com nota de crédito ou de débito, mesmo parcial ou ainda não reconciliada, não se anula (Despacho 8632/2014, 3.3.8). A nota de crédito ou de débito já emitida corrige este documento, por isso nem o documento nem a nota se anulam. Se for preciso corrigir mais, emita um documento novo (uma nota de débito ou uma fatura nova, conforme o caso); se for mesmo preciso anular, fale com o contabilista certificado.»
+>
+> «O documento “*FT D26/31*” é referido por documentos ativos (*NC D26/2 (NC de FT D26/31: Erro de preço)*). *NC D26/2 (NC de FT D26/31: Erro de preço)* está reconciliada com este documento e corrige-o: não se anula.»
+
+E, ao tentar anular essa nota de crédito, a janela da nota recusa também:
+
+> «A nota de crédito “*NC D26/2 (NC de FT D26/31: Erro de preço)*” tem o estado de pagamento “*Pago*”: está reconciliada com o documento que retifica e uma nota de crédito emitida não se anula. Se for preciso corrigir mais, emita um documento novo (uma nota de débito ou uma fatura nova, conforme o caso); se for mesmo preciso anular, fale com o contabilista certificado.»
+
+![Janela Anular documento certificado da nota de crédito NC D26/2, bloqueada porque a nota está paga](/images/troubleshooting/nao-consigo-anular-um-documento/03-nota-de-credito-reconciliada.png)
+
+{/* Nota interna (junta-docs-008, 31/10/2026, master f81bbf4da, base docs_demo_junta008_test, cópia da base-mãe): artigo refeito depois do FAT-124 com a FT D26/43 (Papelaria Central, Lda, 1 [KIT-CAN] Kit de canetas, 12,30 €), emitida por clique com o perfil Faturação; as faturas FT D26/33 a 42 e as notas NC D26/2 a 4 foram emitidas antes, na preparação (odoo shell), só para os números seguirem a regra «um número, um documento» (guia editorial, §7). Por clique: rascunho da nota (Faturação, Criar nota de crédito com o motivo «Erro de preço» e o motivo de regularização do art. 78.º, n.º 2) → janela da fatura com o bloqueio do rascunho (captura 02); rascunho eliminado (Ações › Eliminar) → janela sem bloqueios; NC D26/5 com o preço baixado para 5,00 € → três bloqueios na fatura e um na nota (captura 03, perfil Contabilista Certificado / Gestor fiscal + Responsável fiscal); 2.ª nota de 5,00 € aceite como NC D26/6 (o defeito PD-V2D-R01 já não se reproduz). A comunicação sem resposta não se provocou: a base-mãe não tem credenciais da AT de teste, o cofre recusa credenciais criadas por script e o registo de comunicação só nasce «Não enviada»; a captura 01 antiga saiu. A mensagem descrita é a de l10n_pt_arxi_at_ws (_l10n_pt_cancel_blockers, at_in_flight). */}
+
+**A fatura está paga** (todo ou em parte, por recibo): a mensagem é a primeira das três acima, com o estado "*Pago*" ou "*Pago Parcialmente*". O caso está em [Como anular uma fatura ou outro documento certificado](/fiscal-core/anular-uma-fatura), em «A janela não deixa anular».
+
+## Causas verificadas
+
+- **O seu perfil não anula.** Com os perfis **Administrativo** e **Contabilista**, a fatura não tem o botão **Anular documento certificado**; o aviso no topo da fatura diz «… peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que o anule (botão «Anular documento certificado», com o motivo), ou emita uma nota de crédito que lhe faça referência (botão «Nota de Crédito»).». Dos valores do campo **Perfil**, só o **Contabilista certificado** tem esse botão. Num recibo, o **Contabilista** já tem **Anular recibo**; o **Administrativo** não.
+
+{/* Nota interna (lote v23-M, master dbbb5ac5c, docs_demo_v23m_test): aviso e botão vistos no ecrã na FT D26/30 com utilizadores criados só com os perfis Administrativo, Contabilista (aviso, sem botão) e Contabilista certificado (botão Anular documento certificado). */}
+- **A comunicação da fatura à AT ficou sem resposta.** Depois de **Comunicar à AT**, o campo **AT** da fatura ficou **Desconhecida**: o fiscaldoo não sabe se a AT a recebeu. Se a recebeu, a anulação também lhe tem de ser comunicada, por isso a anulação espera pela resposta. Uma comunicação **Rejeitada** não bloqueia (visto no ecrã).
+- **Outro documento refere a fatura.** Uma nota de crédito ou de débito sobre a fatura bloqueia a anulação, mesmo em rascunho. Uma nota anulada deixa de bloquear.
+- **A fatura está paga ou foi creditada.** Uma fatura paga, paga em parte ou com nota de crédito emitida já não se anula: corrige-se com nota de crédito. Ao emitir a nota de crédito pelo botão **Nota de Crédito**, o fiscaldoo liga-a logo à fatura (como se fosse um pagamento): a fatura fica com o estado de pagamento «Pago Parcialmente» (com a fatura toda creditada, a fita **Creditado** no canto) e a nota fica «Pago». É por isso que as duas recusam.
+- **O documento é de um período fechado.** Um documento com data até à data de bloqueio do exercício não se anula: corrige-se com nota de crédito (ou de débito) que o refira. <span className="fd-pending">Pendente de validação no ecrã: a demonstração não tem documentos de venda em 2025, o único exercício fechado, e não é possível emiti-los depois do fecho.</span>
+
+## O que confirmar
+
+1. O perfil com que entrou: só o perfil **Contabilista certificado** e o administrador anulam faturas.
+2. O campo **AT** no bloco **Documento certificado** da fatura: **Desconhecida** quer dizer que a comunicação ainda não tem resposta.
+3. Em **Documentos ligados**, os números de **Pagamentos** e **Nota de crédito**; e, na própria mensagem de bloqueio, o estado de pagamento da fatura (por exemplo «Pago Parcialmente»).
+4. Se a operação aconteceu mesmo. A anulação é para documentos de operações que não existiram e para erros só formais (NIF, morada); se a operação aconteceu e o valor ou o IVA mudam, a correção é uma nota de crédito ou de débito e não precisa de anular nada ([Como corrigir uma fatura](/fiscal-core/corrigir-uma-fatura)).
+
+## Como resolver
+
+### O botão não aparece
+
+Peça a anulação a um utilizador com o perfil **Contabilista certificado**, ou ao administrador, com o número do documento e o motivo. Um recibo pode anulá-lo também o **Contabilista**.
+
+Um documento em **Rascunho** não tem número fiscal e não se anula: altera-se ou elimina-se.
+
+### A comunicação à AT está sem resposta
+
+1. Resolva primeiro a comunicação: em **Contabilidade › Declarar › Autoridade Tributária › Comunicações à AT (faturas e histórico)**, abra a comunicação do documento e siga [A comunicação à AT falhou ou ficou pendente](/troubleshooting/comunicacao-a-at-falhou). Hoje, numa base de produção, **Consultar estado** não pergunta nada à AT e não faz a comunicação passar a **Aceite**: esse artigo diz como confirmar, antes de reenviar, se a AT já recebeu o documento. Numa base de testes, **Consultar estado** pergunta ao simulador da AT: na demonstração, a comunicação da `FT D26/32` deu «Consultar estado. Lançamento contabilístico FT D26/32: a Autoridade Tributária já o tinha recebido e aceitou-o.», e a comunicação e a fatura passaram a **Aceite**.
+2. Quando o campo **AT** passar a **Aceite** (depois de **Consultar estado** ou de **Reenviar**) ou a **Rejeitada**, volte a carregar em **Anular documento certificado**: a janela já não mostra o bloqueio. Na `FT D26/32`, abriu sem **Bloqueios**, com o campo **Motivo** e os botões **Anular documento** e **Fechar**.
+3. Anule e comunique a anulação como em [Como anular uma fatura ou outro documento certificado](/fiscal-core/anular-uma-fatura) (passos 3 a 5).
+
+Se a AT já tem o documento e a comunicação continua **Desconhecida**, o bloqueio mantém-se: contacte o suporte.
+
+**Quem faz:** quem tem o acesso **Responsável fiscal**, que vem com o perfil **Contabilista certificado** (só esse acesso, e o administrador, tem **Consultar estado** e **Reenviar**).
+
+### Há uma nota de crédito em rascunho
+
+1. Abra a nota de crédito (está no bloqueio, e em **Documentos ligados › Nota de crédito** da fatura).
+2. Se a nota não deve ser emitida, abra **Ações** e escolha **Eliminar**; na janela de confirmação, carregue em **Eliminar**. Um rascunho não tem número fiscal: elimina-se, não se anula, como diz a mensagem.
+3. Volte à fatura e carregue em **Anular documento certificado**. Na demonstração, depois de eliminado o rascunho, a janela da fatura abriu sem bloqueios, com o campo **Motivo** e o botão **Anular documento**.
+
+Se a nota deve ser emitida (a operação aconteceu, só o valor estava errado), não anule a fatura: confirme a nota de crédito e a correção fica feita.
+
+**Quem faz:** a nota em rascunho elimina-a qualquer pessoa com o perfil **Administrativo**, **Contabilista** ou **Contabilista certificado**, mesmo que outra pessoa a tenha criado; anular a fatura é do **Contabilista certificado**.
+
+### A fatura já tem uma nota de crédito emitida
+
+A nota de crédito emitida já corrige o documento. Os dois ficam como estão: nenhum se anula, como dizem as mensagens («a correção é uma nota de crédito, nunca uma anulação»). O que ainda estiver errado corrige-se com um documento novo.
+
+- **A operação aconteceu** e a nota corrigiu a parte errada (por exemplo, um preço): não há mais nada a fazer.
+- **A operação não existiu** e a nota só creditou parte do valor: fale com o contabilista certificado antes de emitir mais documentos. O resto do valor pode creditar-se com outra nota de crédito sobre a mesma fatura (ver abaixo).
+- **Acha que os dois têm de ser anulados**: não o faça por tentativa. Fale primeiro com o contabilista certificado, que decide se é possível e como.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: se um documento retificado por uma nota de crédito já emitida pode alguma vez ser anulado, e como (Despacho 8632/2014, ponto 3.3.8, citado pela mensagem), ou se a correção se faz sempre por documentos novos.</span>
+
+Na demonstração, a `FT D26/31` (1 Material de escritório (kit) a 10,00 € + IVA, 12,30 €) tem a `NC D26/2` (motivo «Erro de preço», preço de 10,00 € para 5,00 €, 6,15 €). As duas ficam no razão: o original (2111 Clientes gerais a débito 12,30 €, 711 Mercadorias a crédito 10,00 €, 2433 IVA - Liquidado a crédito 2,30 €) e a nota (711 Mercadorias a débito 5,00 €, 2433 IVA - Liquidado a débito 1,15 €, 2111 Clientes gerais a crédito 6,15 €). O original fica «Pago Parcialmente», com 6,15 € em dívida.
+
+**Uma 2.ª nota de crédito com o resto do valor é aceite.** Na demonstração, com o perfil **Administrativo**, uma 2.ª nota sobre a `FT D26/31`, também com o motivo «Erro de preço» e o preço de 10,00 € para 5,00 € (6,15 €), foi emitida como `NC D26/3`, com as mesmas linhas da `NC D26/2`. A fatura ficou com a fita **Creditado**, sem nada em dívida, e as duas notas ficaram «Pago». Cada nota pede o **Motivo da regularização de IVA**, a **Data de referência da regularização** e a **Prova da regularização**: ver [Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito), que trata também o limite do que já foi faturado.
+
+**Quem decide:** o contabilista certificado. **Quem emite** uma nota de crédito: Administrativo ou Contabilista.
+
+### A fatura está paga
+
+Se o pagamento foi registado por engano, anule primeiro o recibo; se o pagamento aconteceu, corrija com nota de crédito. Os dois casos estão em [Como anular uma fatura ou outro documento certificado](/fiscal-core/anular-uma-fatura), em «A janela não deixa anular».
+
+### O documento é de um período fechado
+
+Não se anula: a correção é uma nota de crédito (ou de débito) que o refira, emitida com a data de hoje: [Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito).
+
+Não tente contornar nenhum destes bloqueios (eliminar o documento, voltar a rascunho, alterar no modo programador): o fiscaldoo recusa e cada tentativa fica no registo de auditoria. Veja [Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado).
+
+## Resultado esperado
+
+- A janela **Anular documento certificado** abre sem **Bloqueios**, com o campo **Motivo** e o botão **Anular documento**.
+- Depois de anulado, o documento fica **Anulada**, mantém o número e o ATCUD e, se a AT o tinha recebido, a anulação fica por comunicar até carregar em **Comunicar à AT**.
+
+## Quando contactar o suporte
+
+- A janela mostra um bloqueio que não corresponde ao documento (por exemplo, uma nota de crédito que não existe ou já está anulada).
+- A comunicação à AT continua **Desconhecida** depois de **Reenviar**, ou a AT já tem o documento e a comunicação continua **Desconhecida**.
+- Precisa de anular um documento de um período fechado.
+
+## Informação a enviar
+
+- O número do documento (por exemplo `FT D26/31`) e a empresa.
+- O texto completo de **Bloqueios**, copiado da janela.
+- O perfil com que entrou e o motivo da anulação.
+- O estado do campo **AT** da fatura e, se houver, o número da nota de crédito.

@@ -1,0 +1,108 @@
+---
+id: consultar-ativos
+slug: /accounting-pt/consultar-ativos
+title: Como consultar as listagens e o histórico dos ativos
+sidebar_label: Listagens e histórico dos ativos
+description: Listar os ativos por categoria, localização ou estado, tirar o balancete dos ativos e ver tudo o que aconteceu a um ativo.
+keywords: [consultar ativos, listagens de ativos, listagem de ativos, histórico dos ativos, historico dos ativos, balancete dos ativos, ativos por categoria, ativos por localização, ativos por localizacao, mapa de abates, o que aconteceu]
+doc_id: DOC-0130
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c60255305)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/ativos/registar-um-ativo, accounting-pt/ativos/preparar-os-ativos-para-o-fecho, accounting-pt/ativos/inventario-fisico-dos-ativos]
+---
+
+{/* Nota interna (v13-ACC2, DOC-0130): base docs_demo_v13acc2_test, porta 8262, master f671d6842. Por clique com Contabilista; Gerência e Auditor chegam a Ativos fixos. PDF do balancete lido: 6 ativos, soma 214.384,16 líquido. A entrada Processamentos (Listagens de ativos, FC-ASSETS-018) só existe em modo de programador, mesmo com o UX-106; o artigo usa o plano de depreciação da ficha. Defeitos no relatório LOTE_V13ACC2. Diferença Enterprise não vista. */}
+
+## Para que serve?
+
+Responde a três perguntas sobre os ativos da empresa: que ativos tenho, quanto valem numa data e o que aconteceu a cada um. Só consulta: nada do que aqui se descreve cria lançamentos.
+
+## Quando utilizar?
+
+- Quando quer ver os ativos por categoria, por localização ou por estado.
+- Quando o contabilista pede a lista dos ativos com o valor numa data.
+- Quando precisa de saber quem alterou um ativo, e quando.
+- Para contar os ativos no local, use o [inventário físico](/accounting-pt/inventario-fisico-dos-ativos).
+
+## Onde encontrar?
+
+- **Contabilidade › Lançar › Terceiros e ativos › Ativos fixos**: a lista dos ativos e a ficha de cada um.
+- **Contabilidade › Lançar › Terceiros e ativos › O que há para fazer com os ativos?** › **Listas de apoio**: **Balancete dos ativos** e **Mapa de abates**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**, **Contabilista certificado**, **Gerência** ou **Auditor / ROC**. O perfil **Administrativo** não tem a aplicação **Contabilidade** nem estas entradas.
+- Os ativos estão registados. Se ainda não estão, veja [como registar um ativo](/accounting-pt/registar-um-ativo).
+
+## Como utilizar
+
+### Listar os ativos
+
+<StepByStep>
+
+1. Abra **Ativos fixos**. A lista abre com o filtro **Em uso**: os ativos abatidos não aparecem.
+2. Para ver outros estados, carregue em **×** no filtro **Em uso**, ou abra as opções de **Procurar** e escolha, por exemplo, **Em preparação**, **Parado**, **Fechado** ou **Com diferença fiscal**.
+3. Em **Agrupar por**, nas mesmas opções, escolha **Categoria**, **Estado**, **Localização**, **Ano de aquisição**, **Fornecedor** ou **Centro de custo**.
+
+</StepByStep>
+
+![Ativos fixos em uso agrupados por categoria, com o número de registos, o custo e o valor líquido de cada grupo](/images/accounting-pt/consultar-ativos/01-lista-por-categoria.png)
+
+No exemplo, com o filtro **Em uso** há 6 ativos em 4 categorias. Sem o filtro há 8: aparecem também um abatido e um em preparação. Ao agrupar, cada grupo mostra o total do **Custo** e do **Valor líquido**.
+
+### Tirar o balancete dos ativos
+
+<StepByStep>
+
+1. Abra **O que há para fazer com os ativos?**. Em **Listas de apoio**, carregue em **Balancete dos ativos**.
+2. Em **Até**, confirme a data. Abre com a data de hoje.
+3. Se quiser, escolha uma **Categoria** ou uma **Localização**.
+4. Carregue em **PDF** ou **XLSX** para descarregar o mapa, ou em **Detalhe** para ver os ativos no ecrã.
+
+</StepByStep>
+
+![Janela Balancete dos ativos, com Até, Ótica, Categoria e Localização, e os botões PDF, XLSX, Detalhe e Fechar](/images/accounting-pt/consultar-ativos/03-balancete-dos-ativos.png)
+
+No topo, o mapa diz o período («Período Até 05/11/2026», no exemplo), e o PDF chama-se «Balancete de ativos fixos - Empresa Demonstração, Lda - 2026-11-05». O PDF mostra, por categoria e com totais: o valor de aquisição, as depreciações acumuladas e o valor líquido, nas colunas contabilísticas e fiscais. No exemplo, o valor líquido contabilístico dos 6 ativos em uso soma 214.384,16 €, igual à soma da coluna **Valor líquido** da lista. Os ativos abatidos não entram no balancete: estão no **Mapa de abates**, que funciona da mesma forma, com as datas **De** e **Até**.
+
+### Ver o que aconteceu a um ativo
+
+<StepByStep>
+
+1. Em **Ativos fixos**, abra o ativo.
+2. Carregue no separador **O que aconteceu**. Mostra as **Imparidades**, as **Revalorizações** e os **Eventos**.
+
+</StepByStep>
+
+![Separador O que aconteceu de uma viatura, com um evento de criação e um de depreciação contabilística](/images/accounting-pt/consultar-ativos/02-o-que-aconteceu.png)
+
+Cada evento tem a data, o tipo, o valor antes e depois, o montante, o período, o lançamento contabilístico e o utilizador. Em **Ações › Histórico dos ativos**, vê os mesmos eventos em lista. Esta lista é só de leitura: o histórico não se altera nem se cria à mão.
+
+Para ver as depreciações previstas e processadas ano a ano, abra o separador **Plano de depreciação** da mesma ficha.
+
+## No Enterprise
+
+No Odoo Enterprise, **Ativos fixos** abre a lista dos ativos do fiscaldoo, com o filtro **Em uso** e as colunas **Código**, **Nome**, **Categoria**, **Adquirido em**, **Custo**, **Valor líquido** e **Estado** (visto com um utilizador só com o perfil **Contabilista**). A ficha tem o separador **O que aconteceu**, com as imparidades, as revalorizações e os eventos, e **Ações › Histórico dos ativos** abre a lista dos eventos. **Balancete dos ativos** e **Mapa de abates** abrem as mesmas janelas, com **PDF**, **XLSX** e **Detalhe**. Os ativos do próprio Enterprise não estão no menu deste perfil, mas a entrada **Ativos** das **Listas de apoio** de **O que há para fazer com os ativos?** abre a lista deles, que é outra: os ativos do fiscaldoo estão em **Ativos fixos**.
+
+{/* Nota interna (lote EE-05, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee05_test (cópia da odoo20_ee_test com EE_FASE=construir), 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0130. Contabilista: Ativos fixos «Em uso» 1-6 / 6 (AF/00001 a AF/00007); ficha Telemóveis da equipa comercial com Duplicar em série, Simular uma alteração, Alienar / Abater, Dossier do bem (PDF) e Ações (Dossier do bem, Duplicar, Eliminar, Alienações e abates, Revalorizações, Histórico dos ativos, Diferenças fiscais dos ativos, Regularizações de IVA dos ativos); Histórico dos ativos 1-19 / 19. Balancete dos ativos (Tipo Balancete de ativos fixos, Até, Ótica, Categoria, Localização) e Mapa de abates (De, Até, Categoria, faixa dos sinistros) com PDF, XLSX, Detalhe e Fechar. Na ficha, mensagens antigas do OdooBot em inglês («Accounting board recalculated…»), da criação da base. Ver reports/LOTE_EE-05.md. */}
+
+## Resultado esperado
+
+Sabe que ativos tem, quanto valem na data escolhida e o que aconteceu a cada um, sem ter alterado nada.
+
+## Notas importantes
+
+- O balancete lista o que está registado. Para saber se bate com a contabilidade, use **Ativos reconciliados com a contabilidade**, nas mesmas **Listas de apoio**; para o fecho, veja [como preparar os ativos para o fecho](/accounting-pt/preparar-os-ativos-para-o-fecho).
+- **Colunas fiscais.** Só somam os períodos fiscais confirmados. Quando um ativo não tem taxa fiscal ou tem períodos por confirmar, o mapa avisa, no fim do PDF e do XLSX. Sem taxa, o aviso diz: «Sem plano de depreciação fiscal (falta a taxa do DR 25/2009 no separador Fiscal), por isso as colunas fiscais estão a 0,00: *nome do ativo*.» No exemplo, as depreciações fiscais somam 10.279,12 €, contra 10.515,84 € nas contabilísticas, e o aviso diz: «Períodos fiscais já terminados e ainda por confirmar, por isso não entram nas colunas fiscais (confirme-os no processamento mensal das depreciações): Telemóveis da equipa comercial, Impressora multifunções.»
+
+## Problemas frequentes
+
+**Falta um ativo na lista.** Está noutro estado: o filtro **Em uso** esconde os ativos em preparação, parados, fechados e abatidos. Tire o filtro.
+
+**Não consigo acrescentar uma linha ao histórico.** É normal: o produto escreve o histórico sozinho sempre que o ativo muda.
+
+{/* Nota interna (lote v23-AT, DOC-0130, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador): o Administrativo não tem a aplicação Contabilidade */}

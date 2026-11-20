@@ -1,0 +1,110 @@
+---
+id: agenda-e-rota-de-cobranca
+slug: /fiscal-core/agenda-e-rota-de-cobranca
+title: "Como planear as cobranças: agenda, cobrador e rota"
+sidebar_label: Agenda e rota de cobrança
+description: "Como escolher o cobrador de cada cliente, registar um contacto de cobrança, seguir as próximas ações na agenda e imprimir a rota de visitas."
+keywords: [planear cobranças, agenda de cobrança, agenda de cobranca, cobrador, atribuir um cobrador a clientes, rota de cobrança, rota de cobranca, histórico de cobranças, promessa de pagamento, registar contacto de cobrança]
+doc_id: DOC-0039
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/recibos-e-cobrancas/avisos-de-cobranca, fiscal-core/recibos-e-cobrancas/indicadores-de-cobranca]
+---
+
+{/* Nota interna (DOCS-046, lote v13-PPL): percorrido com demo.contabilista, com a Papelaria Central, Lda da demonstração. O PDF da rota foi conferido. demo.faturacao não tem a aplicação Contabilidade. Coluna técnica em Histórico de cobranças: ver LOTE_V13PPL. */}
+
+## Para que serve?
+
+Ajuda a organizar quem cobra o quê e quando: cada cliente fica com um cobrador, cada contacto fica registado e a próxima ação aparece numa agenda. Quem cobra em visitas imprime uma folha com os clientes a visitar.
+
+Nada disto é enviado ao cliente nem altera a fatura: só fica registado.
+
+## Quando utilizar?
+
+- Reparte os clientes em atraso por cobrador.
+- Falou com um cliente e ele prometeu pagar numa data.
+- Vai sair para fazer visitas de cobrança.
+
+## Onde encontrar?
+
+- **Contabilidade › Lançar › Cobranças a clientes › Agenda de cobrança** e **A minha rota de cobrança**.
+- **Contabilidade › Lançar › Terceiros e ativos › Clientes**, na ficha do cliente: o campo **Cobrador** e o botão **Registar contacto de cobrança**. O botão também existe numa fatura em atraso.
+- **Contabilidade › Consultar › Terceiros › Histórico de cobranças**.
+
+## Antes de começar
+
+- O perfil é o **Contabilista**. Os passos foram feitos até ao fim com esse perfil.
+- O cliente tem de ter faturas vencidas para entrar na rota.
+
+## Como utilizar
+
+### Escolher o cobrador do cliente
+
+Abra o cliente, vá ao separador **Vendas e Compras**, escolha o **Cobrador** e guarde.
+
+### Registar um contacto
+
+<StepByStep>
+
+1. Na ficha do cliente, carregue em **Registar contacto de cobrança**.
+2. A janela abre com **Telefone** e **Sem resposta**. Escolha o **Canal** (**Telefone**, **E-mail**, **Carta**, **Visita** ou **Outro**) e o **Resultado** (**Sem resposta**, **Promessa de pagamento**, **Disputa**, **Diz que está pago** ou **Outro**).
+3. Se houve promessa, preencha a **Data prometida** e o **Montante prometido**. Em **Próxima ação em**, indique quando volta a contactar.
+   ![Janela Registar contacto de cobrança com o canal Telefone, a promessa de 1.000,00 € para 20/11/2026 e a próxima ação a 21/11/2026](/images/fiscal-core/agenda-e-rota-de-cobranca/01-contacto.png)
+4. Carregue em **Registar**.
+
+</StepByStep>
+
+### Seguir a agenda
+
+Abra **Contabilidade › Lançar › Cobranças a clientes › Agenda de cobrança**. Cada linha tem o **Sumário**, o **Documento**, **Atribuído a** e a **Data de Vencimento**, com os botões **Remarcar** e **Concluído**. No exemplo, o contacto deu duas linhas: **Pagamento prometido** e **Cobrança: contactar**.
+
+![Agenda de cobrança com as linhas Pagamento prometido e Cobrança: contactar, para a Papelaria Central, Lda](/images/fiscal-core/agenda-e-rota-de-cobranca/02-agenda.png)
+
+### Imprimir a rota
+
+<StepByStep>
+
+1. Abra **Contabilidade › Lançar › Cobranças a clientes › A minha rota de cobrança**. Quem pode ver outras rotas escolhe outro **Cobrador**.
+2. Carregue em **Recalcular** para ter os valores de hoje.
+3. Leia **CLIENTES A VISITAR**: **Código postal**, **Localidade**, **Cliente**, **Morada**, **Cobrador**, **Vencido**, **Faturas**, **Vencimento mais antigo** e **Dias de atraso**. Depois da visita, carregue em **Registar a visita** na linha: abre a mesma janela, com o **Canal** **Visita**.
+   ![Rota com 1 cliente e 4.847,43 € vencidos: Papelaria Central, Lda, em Lisboa, uma fatura vencida a 19/10/2026 e 17 dias de atraso](/images/fiscal-core/agenda-e-rota-de-cobranca/03-rota.png)
+4. Carregue em **Imprimir a rota**. Descarrega o PDF **Rota de cobrança**, com uma coluna **Resultado da visita** para escrever à mão.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, a agenda e a rota de cobrança são as mesmas do fiscaldoo: **Contabilidade › Lançar › Cobranças a clientes › Agenda de cobrança**, **Contabilidade › Lançar › Cobranças a clientes › A minha rota de cobrança**, com **Recalcular** e **Imprimir a rota**, e **Contabilidade › Consultar › Terceiros › Histórico de cobranças**. Na ficha do cliente, o campo **Cobrador** está no separador **Vendas e Compras** e o botão **Registar contacto de cobrança** está nos botões do cimo da ficha (visto com um utilizador só com o perfil **Contabilista**).
+
+{/* Nota interna (lote EE-12, DOCS-073 #4142, DEC-1794, master 589ecfd27, base Enterprise docs_ee_ee12_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee12_test): DOC-0039. Contabilista: Agenda de cobrança (vazia, com o texto de ajuda), A minha rota de cobrança («Ninguém para visitar nesta rota.»), Histórico de cobranças (vazio), ficha de Maria João Ferreira (ENI) com Cobrador e Registar contacto de cobrança. Nenhum contacto registado. Igual na cópia Community. Ver reports/LOTE_EE-12.md. */}
+
+## Resultado esperado
+
+- Ao registar, o ecrã mostra «Pagamento prometido para 20/11/2026 : 1.000,00 €». O contacto fica no **Histórico de cobranças**, com a data, o autor e o cliente.
+- A rota dá 1 cliente e 4.847,43 € em **Vencido na rota**, e 17 **Dias de atraso** para um vencimento de 19/10/2026 visto a 05/11/2026.
+- O PDF diz «Documento interno, sem valor fiscal.»
+
+## Notas importantes
+
+- **Uma promessa não é um pagamento.** O valor em dívida não muda: a dívida só baixa com o recibo.
+- **A rota só tem o vencido.** Um cliente com faturas por vencer não entra, mesmo com cobrador escolhido.
+- **O número da rota é o do momento em que recalculou.** Veja a data em **Calculado em**.
+- **Os avisos escritos ao cliente são outra coisa.** Veja [Como enviar avisos de cobrança aos clientes em atraso](/fiscal-core/avisos-de-cobranca).
+
+## Problemas frequentes
+
+### «Ninguém para visitar nesta rota»
+
+- **Sintoma:** a rota mostra «Ninguém para visitar nesta rota. Um cliente entra na rota quando tem faturas em atraso e este cobrador escolhido na sua ficha (campo «Cobrador»). Para encher a rota, escolha o cobrador nos clientes que devem, ou recalcule a rota.»
+- **Causa:** nenhum cliente com faturas em atraso tem este **Cobrador**.
+- **O que fazer:** escolha o cobrador na ficha dos clientes que devem e carregue em **Recalcular**.
+
+### A agenda está vazia
+
+- **Sintoma:** aparece «Nenhuma ação de cobrança agendada».
+- **Causa:** ainda não há contactos registados com próxima ação.
+- **O que fazer:** registe o contacto na ficha do cliente ou numa fatura em atraso.

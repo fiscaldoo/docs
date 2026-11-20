@@ -1,0 +1,278 @@
+/* fiscaldoo — portal de documentação. Carrega core.css primeiro (cópia literal de
+   https://www.fiscaldoo.pt/assets/core.css: tokens, botões, marca, alertas, pills —
+   nunca editar lá; «npm run check-brand» confirma que continua igual à do site).
+   Este ficheiro só tem o que é específico do portal: a ponte entre os tokens do
+   fiscaldoo e as variáveis do Docusaurus (Infima), e os componentes da documentação.
+   Nenhuma cor nova: tudo vem de var(--…) do core.css. */
+
+/* Letra: as mesmas famílias que o site carrega do Google Fonts (SIL OFL 1.1),
+   servidas localmente (sem pedidos a terceiros). O site pede 400–700; 800 cai em 700. */
+@font-face{font-family:"Instrument Sans"; font-style:normal; font-weight:400 700; font-display:swap;
+  src:url(/fonts/instrument-sans-latin.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Instrument Sans"; font-style:normal; font-weight:400 700; font-display:swap;
+  src:url(/fonts/instrument-sans-latin-ext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"JetBrains Mono"; font-style:normal; font-weight:400 700; font-display:swap;
+  src:url(/fonts/jetbrains-mono-latin.woff2) format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"JetBrains Mono"; font-style:normal; font-weight:400 700; font-display:swap;
+  src:url(/fonts/jetbrains-mono-latin-ext.woff2) format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+/* ---------- ponte tokens fiscaldoo → Infima ---------- */
+:root{
+  --ifm-font-family-base:"Instrument Sans",system-ui,sans-serif;
+  --ifm-heading-font-family:"Instrument Sans",system-ui,sans-serif;
+  --ifm-font-family-monospace:"JetBrains Mono",ui-monospace,monospace;
+  --ifm-font-size-base:100%;
+  --ifm-line-height-base:1.55;
+  --ifm-heading-font-weight:700;
+  --ifm-heading-line-height:1.15;
+  --ifm-h1-font-size:2.2rem; --ifm-h2-font-size:1.4rem; --ifm-h3-font-size:1.15rem;
+
+  --ifm-color-primary:var(--blue);
+  --ifm-color-primary-dark:var(--blue-deep); --ifm-color-primary-darker:var(--blue-deep); --ifm-color-primary-darkest:var(--blue-deep);
+  --ifm-color-primary-light:var(--blue); --ifm-color-primary-lighter:var(--blue); --ifm-color-primary-lightest:var(--blue);
+  --ifm-link-color:var(--blue-deep); --ifm-link-hover-color:var(--ink);
+  --ifm-font-color-base:var(--text);
+  --ifm-color-content:var(--text); --ifm-color-content-secondary:var(--text-muted);
+  --ifm-background-color:var(--paper); --ifm-background-surface-color:var(--paper);
+  --ifm-color-emphasis-0:var(--paper); --ifm-color-emphasis-100:var(--surface);
+  --ifm-color-emphasis-200:var(--line); --ifm-color-emphasis-300:var(--line-strong);
+  --ifm-color-emphasis-600:var(--text-muted); --ifm-color-emphasis-700:var(--text-muted);
+  --ifm-color-emphasis-800:var(--text); --ifm-color-emphasis-900:var(--text);
+  --ifm-hr-border-color:var(--line); --ifm-toc-border-color:var(--line);
+  --ifm-table-border-color:var(--line); --ifm-table-head-background:var(--surface); --ifm-table-stripe-background:transparent;
+  --ifm-global-radius:var(--radius); --ifm-code-border-radius:6px; --ifm-pre-border-radius:8px;
+  --ifm-code-background:var(--surface); --ifm-code-font-size:90%;
+  --ifm-global-shadow-lw:none; --ifm-global-shadow-md:none;
+
+  --ifm-navbar-height:4rem; --ifm-navbar-background-color:rgba(255,255,255,.86); --ifm-navbar-shadow:none;
+  --ifm-navbar-link-color:var(--text-muted); --ifm-navbar-link-hover-color:var(--text);
+  --ifm-navbar-item-padding-horizontal:.9rem;
+  /* NC-044: o Infima pinta o «Pesquisar» da barra a emphasis-500 (#BEC3C9, 1,7:1); passa a --text-muted (6,11:1 sobre --surface) */
+  --ifm-navbar-search-input-placeholder-color:var(--text-muted);
+  --ifm-menu-color:var(--text-muted); --ifm-menu-color-active:var(--text);
+  --ifm-menu-color-background-active:transparent; --ifm-menu-color-background-hover:var(--surface);
+  /* DEC-1274: sem cores fora dos tokens nos estados de passagem do rato (o Infima usava rgba(0,0,0,.05)) nem migalhas em pílula de 24 px */
+  --ifm-hover-overlay:var(--surface); --ifm-breadcrumb-border-radius:6px;
+  --ifm-footer-background-color:var(--paper); --ifm-footer-color:var(--text-muted);
+  --ifm-footer-link-color:var(--text-muted); --ifm-footer-title-color:var(--text);
+  --docusaurus-highlighted-code-line-bg:var(--blue-soft);
+  /* NC-039: setas da lateral e separador das migalhas eram SVG a rgba(0,0,0,.5) e preto a 50 %. Os SVG passam a máscaras opacas
+     (a cor vem do token, em baixo); %23 = # */
+  --ifm-menu-link-sublist-icon:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path fill="%235B5F6B" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>');
+  --ifm-breadcrumb-separator:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><polygon fill="%235B5F6B" points="79.093,0 48.907,30.187 146.72,128 48.907,225.813 79.093,256 207.093,128"/></svg>');
+}
+
+/* Foco sempre visível com teclado (azul do fiscaldoo, 5,1:1 sobre branco). */
+:focus-visible{outline:2px solid var(--blue); outline-offset:2px; border-radius:4px}
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .btn, .btn:hover{transition:none; transform:none} }
+
+/* core.css põe margin:0 nos títulos e color:inherit nas ligações (é um site de marketing);
+   num texto longo repomos o ritmo e ligações que se distinguem do texto. */
+.markdown{font-size:1.0625rem}
+.markdown h1,.markdown h2,.markdown h3{margin-bottom:var(--ifm-heading-margin-bottom)}
+.markdown h1{font-size:2.2rem; letter-spacing:-.02em}
+.markdown h2{font-size:1.5rem; margin-top:2.4rem}
+.markdown h3{font-size:1.15rem}
+.markdown a{color:var(--ifm-link-color); text-decoration:underline; text-underline-offset:.18em}
+.markdown a:hover{color:var(--ink)}
+.markdown table th{font-family:"JetBrains Mono",monospace; font-size:.75rem; text-transform:uppercase; letter-spacing:.05em; color:var(--text-muted)}
+.markdown code{border:1px solid var(--line)}
+/* termos da pesquisa realçados: nada de amarelo-néon */
+mark{background:var(--blue-soft); color:var(--text); border-radius:3px; padding:0 .1em}
+
+/* barra superior — a mesma linguagem do nav.top do site */
+.navbar{backdrop-filter:blur(12px); border-bottom:1px solid var(--line); padding-left:1.6rem; padding-right:1.6rem}
+.navbar__link{font-size:.92rem; font-weight:600}
+.navbar__brand{margin-right:1.4rem; color:var(--text)}
+.navbar__brand:hover{color:var(--text)}
+.navbar__logo{height:9px; width:9px; margin-right:.5rem; display:flex}
+.navbar__title{font-weight:700; font-size:1.3rem; letter-spacing:-.02em}
+/* etiqueta «docs» = .brand .tag do core.css */
+.navbar__title::after{content:"docs"; font-family:"JetBrains Mono",monospace; font-size:.7rem; font-weight:600; color:var(--text-muted); border:1px solid var(--line); border-radius:999px; padding:.2rem .6rem; letter-spacing:.03em; margin-left:.6rem; vertical-align:middle}
+.navbar .navbar-cta.btn{height:2.2rem; padding:0 .9rem; font-size:.8rem; color:var(--text); margin-left:.6rem}
+.navbar-cta svg{display:none}
+.navbar__items--right .navbar__link svg, .navbar__item svg[class*="iconExternalLink"]{display:none}
+@media (max-width:996px){ .navbar-cta{display:none} }
+.footer{border-top:1px solid var(--line); font-size:.88rem}
+.footer__title{font-size:.9rem}
+.footer__copyright{color:var(--text-muted); font-size:.85rem}
+
+/* lateral esquerda — como .docnav do site: cinzento, filete azul no ativo */
+.menu{font-size:.94rem; font-weight:600}
+.menu__link{border-radius:0 6px 6px 0; border-left:2px solid transparent}
+.menu__link--active:not(.menu__link--sublist){border-left-color:var(--blue); color:var(--text)}
+.menu__list-item-collapsible:hover{background:var(--surface)}
+.table-of-contents__link--active{color:var(--text); font-weight:700}
+.table-of-contents{font-size:.86rem}
+/* NC-045 (WCAG 2.2, 2.5.8): alvos de 24 px ou mais — entradas da tabela de conteúdos (21 px) e ligações dos títulos (21x23 px) */
+.table-of-contents__link{padding:.125rem 0}
+.hash-link{display:inline-block; min-width:24px; min-height:24px; vertical-align:bottom}
+.breadcrumbs__link{font-size:.85rem}
+code{border-color:var(--line)} /* DEC-1274: o Docusaurus contorna o código em linha a rgba(0,0,0,.1), fora dos tokens */
+/* DEC-1274: a seta de «Voltar ao início» vinha a #000 e o véu do menu do telemóvel a rgba(0,0,0,.6); passam a --text e ao véu da ampliação */
+.clean-btn.theme-back-to-top-button::after{background-color:var(--text)}
+.navbar-sidebar__backdrop{background-color:rgba(10,11,14,.72)}
+.menu__link--sublist-caret::after, .menu__caret::before, button[class*="tocCollapsibleButton"]::after{background:var(--text-muted);
+  -webkit-mask:var(--ifm-menu-link-sublist-icon) 50%/2rem 2rem no-repeat; mask:var(--ifm-menu-link-sublist-icon) 50%/2rem 2rem no-repeat}
+.breadcrumbs__item:not(:last-child)::after{background:var(--text-muted); opacity:1;
+  -webkit-mask:var(--ifm-breadcrumb-separator) center/contain no-repeat; mask:var(--ifm-breadcrumb-separator) center/contain no-repeat}
+/* NC-039: ícone de ligação externa (rodapé) pinta com a cor da ligação, não com o preto por omissão do SVG */
+svg[class*="iconExternalLink"], svg:has(> defs > #theme-svg-external-link){fill:currentColor}
+/* NC-039: ícones só de traço (menu e fechar do telemóvel) sem o fill preto por omissão do SVG */
+.navbar__toggle svg, .navbar-sidebar__close svg{fill:none}
+.breadcrumbs__item--active .breadcrumbs__link{background:none; color:var(--text); font-weight:600}
+.navbar__search-input{border-radius:8px; height:2.4rem; background:var(--surface); border:1.5px solid var(--line); font-size:.92rem}
+.navbar__search-input:focus{border-color:var(--blue)}
+/* core.css levanta e ilumina os botões no hover (site de marketing); num portal de leitura não há movimento nem brilho */
+.btn:hover, .btn.primary:hover, .btn.danger:hover{transform:none; box-shadow:none}
+.btn.primary:hover{background:var(--blue-deep)}
+
+/* core.css estiliza todos os <footer>; o rodapé do artigo é nosso */
+footer.theme-doc-footer{border-top:0; padding:0; font-size:inherit; color:inherit}
+footer.theme-doc-footer .wrap{display:block}
+
+/* ---------- componentes da documentação ---------- */
+.kicker{font-family:"JetBrains Mono",monospace; font-size:.75rem; letter-spacing:.1em; text-transform:uppercase; color:var(--blue-deep); display:block; font-weight:600; margin-bottom:.8rem}
+
+/* VersionBadge e estado do artigo */
+.fd-meta{display:flex; flex-wrap:wrap; gap:.45rem; align-items:center; margin:0 0 1rem}
+.fd-badge{font-family:"JetBrains Mono",monospace; font-size:.75rem; font-weight:600; color:var(--text-muted); border:1px solid var(--line-strong); border-radius:999px; padding:.15rem .6rem; white-space:normal; overflow-wrap:anywhere; max-width:100%}   /* um selo longo quebra linha: com nowrap alargava a página no telemóvel (664 px no DOC-0165) */
+.fd-meta .pill{font-size:.8rem}
+
+/* HelpCallout — o .notice da página Documentação do site, com as cores dos .alert do core.css */
+.fd-callout{border-left:3px solid var(--blue); background:var(--blue-soft); border-radius:8px; padding:1rem 1.2rem; margin:1.4rem 0; font-size:1rem; color:var(--text)}
+.fd-callout > :last-child{margin-bottom:0}
+.fd-callout__title{display:block; font-weight:700; margin-bottom:.3rem}
+.fd-callout--atencao{border-left-color:var(--amber); background:var(--amber-soft)}
+.fd-callout--atencao .fd-callout__title{color:#7A5308}
+.fd-callout--risco{border-left-color:var(--red); background:var(--red-soft)}
+.fd-callout--risco .fd-callout__title{color:#8A2323}
+.fd-callout--dica{border-left-color:var(--green); background:var(--green-soft)}
+.fd-callout--dica .fd-callout__title{color:#0E7A4F}
+
+/* StepByStep — os números do «Como funciona» do site (.step .num) */
+.fd-steps ol{list-style:none; counter-reset:fd-step; padding-left:0; margin:1.2rem 0}
+.fd-steps ol > li{counter-increment:fd-step; position:relative; padding:.25rem 0 .8rem 3rem; margin:0}
+.fd-steps ol > li::before{content:counter(fd-step,decimal-leading-zero); position:absolute; left:0; top:0;
+  font-family:"JetBrains Mono",monospace; font-size:.8rem; font-weight:700; color:#fff; background:var(--ink);
+  width:2.1rem; height:2.1rem; border-radius:7px; display:flex; align-items:center; justify-content:center}
+.fd-steps ol > li > p{margin:0 0 .4rem}
+
+/* página de pesquisa (src/theme/SearchPage): a secção onde o artigo acertou, por baixo do título */
+.fd-search-count{color:var(--text-muted)}
+.fd-search-hit{margin:.5rem 0 0; color:var(--text-muted); font-size:.95rem}
+.fd-search-hit__section{display:block; font-weight:600; color:var(--text)}
+
+/* VideoTutorial */
+.fd-video{margin:1.4rem 0; container-type:inline-size}
+/* NC-032/NC-035/NC-041: faixa própria de 96 px por baixo da imagem para os controlos do leitor e o degradê deles (não tocam na legenda
+   gravada, parado ou a reproduzir). Com 76 px o degradê entrava 30 px na imagem acima de 720 px de largura (medido com limiar de 2 níveis). */
+.fd-video video{display:block; width:100%; height:calc(100cqw * var(--ratio, .5625) + 96px); object-fit:contain; object-position:top;
+  background:var(--ink); border:1px solid var(--line); border-radius:var(--radius)}
+.fd-video figcaption{font-size:.88rem; color:var(--text-muted); margin-top:.5rem}
+.fd-video__rotate{display:none; margin:.5rem 0 0; font-size:.92rem}
+@media (max-width:600px) and (orientation:portrait){.fd-video__rotate{display:block}}
+.fd-video__transcript{margin-top:.4rem; font-size:.92rem}
+.fd-video__transcript summary{cursor:pointer; color:var(--blue-deep); font-weight:600; padding:.125rem 0} /* NC-045: alvo de 24 px ou mais (tinha 22,8) */
+.fd-video__transcript ol{margin:.4rem 0 0; padding-left:1.4rem}
+.fd-video__transcript li[aria-current]{font-weight:600; color:var(--blue-deep)}
+/* Capturas (NC-023): tamanho real a 2×, nunca abaixo de 86 % (texto do Odoo ≥ 12 px); se não couber, desliza na horizontal. */
+.fd-shot{display:block; overflow-x:auto; margin:.7rem 0 .3rem}
+.fd-shot > button{display:block; width:100%; padding:0; border:0; background:none; cursor:zoom-in; text-align:left; font:inherit; color:inherit} /* NC-039: sem Arial/#000 do navegador */
+.fd-shot img{display:block; max-width:none; height:auto; box-sizing:border-box; border:1px solid var(--line); border-radius:var(--radius); background:#fff;
+  width:min(var(--w, 100%), max(100%, calc(var(--w, 100%) * .86)))}
+.fd-shot > button:focus-visible{outline:2px solid var(--blue); outline-offset:-2px}
+.fd-shot-hint{display:block; margin:.1rem 0 .4rem; font-size:.85rem; color:var(--text-muted)}
+.fd-shot-zoom{max-width:96vw; max-height:94vh; padding:0; border:0; border-radius:var(--radius); background:#fff; overflow:auto}
+.fd-shot-zoom::backdrop{background:rgba(10,11,14,.72)}
+.fd-shot-zoom img{display:block; max-width:none}
+.fd-shot-zoom form{position:sticky; top:0; display:flex; justify-content:flex-end; height:0}
+.fd-shot-close{margin:.4rem; width:2.2rem; height:2.2rem; border:1px solid var(--line); border-radius:50%; background:#fff; font-size:1.3rem; line-height:1; cursor:pointer}
+.fd-video--pending{border:1px dashed var(--line-strong); border-radius:var(--radius); padding:1rem 1.2rem; background:var(--surface); color:var(--text-muted)}
+.fd-video--pending strong{color:var(--text)}
+
+/* RelatedArticles — a lista com setas dos planos do site (.plan li) */
+.fd-related{margin:2.4rem 0 0; border-top:1px solid var(--line); padding-top:1.4rem}
+.fd-related h2{font-size:1.1rem; margin:0 0 .6rem}
+.fd-related ul{list-style:none; padding:0; margin:0}
+.fd-related li{padding:.55rem 0; border-top:1px solid var(--line); display:flex; gap:.6rem}
+.fd-related li:first-child{border-top:0}
+.fd-related li::before{content:"→"; color:var(--blue); font-weight:700; flex:none}
+.fd-related a{font-weight:600; color:var(--text); text-decoration:none}
+.fd-related a:hover{text-decoration:underline}
+.fd-related small{display:block; color:var(--text-muted); font-size:.88rem}
+
+/* rodapé do artigo */
+.fd-docinfo{margin-top:2rem; border-top:1px solid var(--line); padding-top:1.2rem; display:grid; gap:.9rem; font-size:.92rem; color:var(--text-muted)}
+.fd-docinfo__row{display:flex; flex-wrap:wrap; gap:.5rem 1.2rem; align-items:center}
+.fd-docinfo strong{color:var(--text)}
+.fd-docinfo__actions{display:flex; gap:.5rem; flex-wrap:wrap}
+.fd-feedback{display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; border-top:1px solid var(--line); padding-top:.8rem}
+.fd-feedback strong{margin-right:.4rem}
+
+/* ---------- página inicial ---------- */
+.fd-home{background:var(--paper)}
+.fd-hero{background:var(--ink); color:var(--text-on-dark); padding:3.6rem 0 3.2rem}
+.fd-hero .kicker{color:var(--text-on-dark-muted)}
+.fd-hero h1{font-size:2.8rem; max-width:20ch; letter-spacing:-.03em}
+.fd-hero p{color:var(--text-on-dark-muted); font-size:1.1rem; max-width:52ch; margin:1rem 0 1.8rem}
+.fd-search{display:flex; gap:.6rem; max-width:640px}
+.fd-search input{flex:1; min-width:0; height:3.3rem; font-size:1.05rem; border-color:transparent}
+.fd-search input:focus{border-color:var(--blue)}
+.fd-search input:focus-visible{outline:2px solid var(--blue); outline-offset:2px}
+.fd-search .btn{height:3.3rem}
+.fd-examples{display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; margin-top:1rem; font-size:.88rem; color:var(--text-on-dark-muted)}
+.fd-examples a{padding:.125rem 0; color:var(--text-on-dark); text-decoration:underline; text-underline-offset:.2em; font-weight:600} /* NC-045: alvo de 24 px ou mais (tinha 22) */
+.fd-examples a:hover{color:#fff}
+
+.fd-section{padding:3.4rem 0 0}
+.fd-section:last-child{padding-bottom:3.4rem}
+.fd-section h2{font-size:1.7rem; margin-bottom:1.4rem}
+.fd-cats{display:grid; grid-template-columns:repeat(3,1fr); column-gap:2.4rem}
+.fd-cat{border-top:1px solid var(--line); padding:1.2rem 0 1.6rem; display:flex; flex-direction:column; gap:.45rem; color:var(--text); text-decoration:none}
+a.fd-cat:hover{color:var(--text); text-decoration:none}
+a.fd-cat:hover .fd-cat__name{color:var(--blue-deep)}
+.fd-cat__name{font-weight:700; font-size:1.1rem}
+.fd-cat p{margin:0; color:var(--text-muted); font-size:.95rem; flex:1}
+.fd-cat__count{font-family:"JetBrains Mono",monospace; font-size:.75rem; color:var(--blue-deep); font-weight:600}
+/* categoria da arquitetura ainda sem artigos publicados: não é ligação e não tem contagem (NC-003/NC-005) */
+.fd-cat--empty .fd-cat__name{color:var(--text-muted)}
+
+.fd-lists{display:grid; grid-template-columns:repeat(3,1fr); gap:2rem}
+.fd-list h2{font-size:1.15rem; margin-bottom:.6rem}
+.fd-list ul{list-style:none; padding:0; margin:0}
+.fd-list li{padding:.6rem 0; border-top:1px solid var(--line); display:flex; gap:.6rem; align-items:baseline}
+.fd-list li::before{content:"→"; color:var(--blue); font-weight:700; flex:none}
+.fd-list a{color:var(--text); font-weight:600; text-decoration:none}
+.fd-list a:hover{color:var(--blue-deep); text-decoration:underline}
+.fd-help{display:flex; flex-wrap:wrap; gap:1rem 2rem; align-items:center; justify-content:space-between; border-top:1px solid var(--line); padding-top:1.6rem}
+.fd-help p{margin:0; color:var(--text-muted)}
+.fd-help strong{color:var(--text); display:block; font-size:1.1rem}
+
+@media (max-width:996px){ .fd-cats{grid-template-columns:1fr 1fr} .fd-lists{grid-template-columns:1fr; gap:1.6rem} }
+@media (max-width:640px){
+  .fd-cats, .fd-lists{grid-template-columns:1fr}
+  .fd-hero{padding:2.4rem 0 2.2rem}
+  .fd-hero h1{font-size:2rem}
+  .fd-search{flex-direction:column}
+  .fd-search input{flex:none; width:100%}
+  .navbar{padding-left:1rem; padding-right:1rem}
+  .wrap{padding:0 1rem}
+  .markdown h1{font-size:1.8rem}
+}
+
+/* imprimir: só o artigo */
+@media print{
+  .navbar, .theme-announcement-bar, .theme-doc-sidebar-container, .theme-doc-toc-desktop, .theme-doc-toc-mobile,
+  .pagination-nav, .footer, .fd-feedback, .fd-docinfo__actions, .theme-doc-breadcrumbs{display:none !important}
+  .markdown a{color:var(--text)}
+}
+
+/* DOCS-010: o core.css pinta <em> de azul (destaque do site); num artigo isso parecia uma ligação. */
+.markdown em{font-style:italic;color:inherit}
+/* Marcas «pendente de validação» (guia editorial §9): cores do .pill/.alert «atenção» do core.css (6,06:1). */
+.fd-pending{font-size:.92em;color:#7A5308;background:var(--amber-soft);padding:.05em .4em;border-radius:4px;box-decoration-break:clone;-webkit-box-decoration-break:clone}

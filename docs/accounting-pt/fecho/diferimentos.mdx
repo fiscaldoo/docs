@@ -1,0 +1,92 @@
+---
+id: diferimentos
+slug: /accounting-pt/diferimentos
+title: Como diferir gastos e rendimentos por vários meses
+sidebar_label: Diferir gastos e rendimentos
+sidebar_position: 5
+description: Marcar numa linha de fatura o período a que o gasto ou o rendimento pertence, deixar o fiscaldoo preparar os lançamentos de diferimento e publicá-los mês a mês.
+keywords: [diferimentos, diferir gastos, diferir rendimentos, gastos a reconhecer, rendimentos a reconhecer, periodização, especialização dos exercícios, seguro anual, renda adiantada, lançamentos de diferimento, diferir desde, diferir até, 281]
+doc_id: DOC-0071
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/fecho/fechar-o-mes, accounting-pt/compras/fatura-de-fornecedor]
+---
+
+{/* Nota interna (v3-A1, DOC-0071, risco alto, contabilidade): validado na base docs_demo_v3a1_test (8175) com o Contabilista. Já existiam os diferimentos do seguro FTF/2026/00045 (1.200,00 €, de 10/2026 a 09/2027, conta 6226), todos em rascunho; publiquei a transferência (OD/2026/00108: D 281 1.200,00 / C 6226 1.200,00) e o reconhecimento de 31/10/2026 (OD/2026/00109: D 6226 101,92 / C 281 101,92). Criei a fatura FTF/2026/00052 (Equipamentos e Mobiliário Lusitano, 600,00 € + IVA = 738,00 €; conta 6261 Rendas e alugueres; diferida de 01/11/2026 a 30/04/2027): 7 rascunhos, transferência de 600,00 € e reconhecimentos mensais 99,45 / 102,76 / 102,76 / 92,82 / 102,76 / 99,45 (soma 600,00), proporcionais aos dias de cada mês. Os lançamentos dos exemplos mantêm-se na base: os rascunhos das duas faturas aparecem no cartão «Mês fechado» e nas verificações do Modelo 10 (V3A1-04: descrições «Deferral of …» e «Recognition of …» em inglês). Não testado: diferimento de rendimentos (fatura de cliente), o relatório «Gastos e rendimentos diferidos» (abriu sem conteúdo no teste), alterar ou apagar um diferimento e a ponte com o Community (arxi_ux_screens_deferral). Correção v3a1cor2 (8233): mensagem de uma só data testada ao gravar uma fatura de fornecedor com só uma das datas (chamada ao método de gravação do ecrã). */}
+
+## Para que serve?
+
+Uma fatura de seguro, de renda ou de uma assinatura anual paga-se de uma vez, mas o gasto pertence a vários meses. O diferimento resolve isso: a fatura lança o gasto todo numa conta de **gastos a reconhecer** e, mês a mês, o fiscaldoo passa a parte desse mês para a conta de gasto. Assim cada mês fica com o gasto que lhe pertence.
+
+## Quando utilizar?
+
+- Faturas de fornecedor que cobrem vários meses (seguros, rendas adiantadas, licenças, assinaturas anuais).
+- Quando precisa de que os resultados mensais tenham só o gasto do mês.
+- Não use o diferimento para uma fatura de um só mês: não leva período. <span className="fd-pending">Pendente de validação por contabilista certificado: a partir de que valor e duração se justifica diferir (materialidade).</span>
+
+## Onde encontrar?
+
+- Marcar o período: na linha da fatura de fornecedor, em **Contabilidade › Lançar › Compras › Faturas de fornecedores**, as colunas **Diferir desde** e **Diferir até** (opcionais: ative-as no ícone de colunas da tabela de linhas).
+- Ver e publicar os lançamentos: **Contabilidade › Fechar › Contabilidade do mês › Diferimentos**.
+
+## Antes de começar
+
+- O perfil é **Contabilista**.
+- A conta de gastos a reconhecer (**281 Gastos a reconhecer**) existe no plano de contas. <span className="fd-pending">Pendente de validação por contabilista certificado: contas de gastos e de rendimentos a reconhecer a usar.</span>
+
+## Como utilizar
+
+<StepByStep>
+
+1. Na fatura de fornecedor, ative as colunas **Diferir desde** e **Diferir até** e, na linha do gasto, escreva o primeiro e o último dia do período. No exemplo, a fatura **FTF/2026/00045** (referência **SEG 2026/118**, de 05/10/2026) é um seguro multirriscos de 1.200,00 € lançado na conta **6226 Conservação e reparação** (a conta vem da demonstração; um seguro lança-se normalmente em 6263 Seguros), diferido de 01/10/2026 a 30/09/2027. Publique a fatura.
+   ![Fatura FTF/2026/00045 com as colunas Diferir desde (01/10/2026) e Diferir até (30/09/2027) na linha do seguro multirriscos](/images/accounting-pt/diferimentos/05-fatura-diferida.png)
+2. Abra **Diferimentos** (na fatura, o botão **Diferimentos** com o número de lançamentos leva à mesma lista, filtrada). Para cada fatura diferida a lista mostra uma linha de **Transferência para a conta de diferimento** (o total da linha, na **Data Contabilística** da fatura) e uma de **Reconhecimento em resultados** por mês (a data é o fim do mês), todas em **Rascunho**. No exemplo, o seguro gera a transferência de 1.200,00 € e doze reconhecimentos: 101,92 €, 98,63 €, 101,92 €, 101,91 €, 92,06 €, 101,92 €, 98,63 €, 101,91 €, 98,63 €, 101,92 €, 101,92 € e 98,63 €, que somam 1.200,00 €, proporcionais aos dias de cada mês (13 lançamentos no total).
+   ![Lista de diferimentos do seguro FTF/2026/00045 com a transferência de 1.200,00 € e os reconhecimentos mensais em rascunho](/images/accounting-pt/diferimentos/01-diferimentos.png)
+3. Abra o lançamento de **Transferência para a conta de diferimento** e carregue em **Publicar**. O lançamento passa o gasto da conta em que foi registado para **281 Gastos a reconhecer**: no exemplo do seguro, **D 281 Gastos a reconhecer 1.200,00 €** e **C 6226 Conservação e reparação 1.200,00 €** (**OD/2026/00112**). <span className="fd-pending">Pendente de validação no ecrã: publicar a transferência e os reconhecimentos de FTF/2026/00045 na base de hoje (os números OD e a captura vêm de uma cópia anterior).</span>
+   ![Lançamento de transferência em rascunho com D 281 e C 6226 de 1.200,00 euros](/images/accounting-pt/diferimentos/02-transferencia-rascunho.png)
+4. (Os reconhecimentos de meses futuros, incluindo os de 2027, também se podem publicar já em novembro de 2026, e a numeração sai fora da ordem das datas: publique cada mês quando ele terminar.) No fim de cada mês, abra o lançamento de **Reconhecimento em resultados** desse mês e carregue em **Publicar**: devolve a parte do mês ao gasto. No exemplo do seguro, o de 31/10/2026 lança **D 6226 Conservação e reparação 101,92 €** e **C 281 Gastos a reconhecer 101,92 €** (**OD/2026/00113**).
+   ![Lançamento de reconhecimento de outubro publicado, com D 6226 e C 281 de 101,92 euros](/images/accounting-pt/diferimentos/04-reconhecimento-publicado.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, os diferimentos são os do próprio Enterprise e não os deste artigo (visto com um utilizador só com o perfil **Contabilista**):
+
+- Na fatura de fornecedor, a coluna opcional chama-se **Data de diferimento**: o primeiro e o último dia escolhem-se no mesmo campo. Não há **Diferir desde** nem **Diferir até**.
+- Com a definição de partida da empresa, ao carregar em **Confirmar** o Enterprise publica logo o lançamento de transferência e cria um reconhecimento por mês, em rascunho, que se publica sozinho na data dele. Não há nada a publicar à mão. No exemplo de uma renda de 600,00 € de 01/11/2026 a 30/04/2027, os seis reconhecimentos ficaram com 100,00 € cada: o valor reparte-se por meses inteiros, e não pelos dias de cada mês.
+- A fatura ganha o botão **Lançamentos de diferimento**. Não há a lista **Diferimentos**: o resumo está em **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**, em **Listas de apoio**, nas ligações **Gastos diferidos** (abre o relatório **Despesa diferida**) e **Rendimentos diferidos**.
+
+As contas são as do SNC, como no Community: a transferência passa o gasto para a **281 Gastos a reconhecer** e cada reconhecimento devolve a parte do mês ao gasto. No exemplo da renda, a transferência é **D 281 Gastos a reconhecer 600,00 €** e **C 6261 Rendas e alugueres 600,00 €**, no diário **Operações Diversas**, e cada reconhecimento é **D 6261 100,00 €** e **C 281 100,00 €**. Nos rendimentos, a conta é a **282 Rendimentos a reconhecer**. O administrador vê estas contas e o diário em **Definições › Financeiro**, em **Lançamentos de despesas diferidas** e **Lançamentos de receita diferida**.
+
+{/* Nota interna (lote EE-03, DOCS-073 #4142, DEC-1794, master e4dd4ae90, base Enterprise docs_ee_ee03_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0071. Contabilista: fatura de fornecedor criada por RPC na cópia (Construções Rápidas, Lda, RENDA-SEM-2026-11, 600,00 € + IVA 23 % na 6261, Data de diferimento 01/11/2026–30/04/2027) e confirmada no ecrã: FTF/2026/00045; transferência OD/2026/00138 publicada (D 1411 600,00, C 6261 600,00) e seis reconhecimentos em rascunho de 100,00 € (D 6261, C 1411) com publicação automática na data, lidos por RPC. Despesa diferida de nov. 2026: Total 600,00, 100,00 do mês, 500,00 a ≤ 12 meses; aviso «Existem Entradas do Diário não lançadas…». Definições (administrador): Lançamentos de despesas diferidas com Diário, Conta, Gerar lançamentos e as opções Periodicity e Computation em inglês. O módulo de diferimentos do fiscaldoo não se instala no Enterprise. Ver reports/LOTE_EE-03.md. Auditoria EE-03 (11/11/2026, master 7cd24fcc9, comboio 192 com o EEA-073 #4157, cópia Enterprise docs_ee_audee03_test da odoo20_ee_test, utilizadores só com o perfil indicado): o Contabilista confirmou no ecrã uma fatura de fornecedor de 600,00 € + IVA na 6261 com Data de diferimento 01/11/2026–30/04/2027: transferência publicada D 281 600,00 / C 6261 600,00 no diário Operações Diversas e seis reconhecimentos de 100,00 € em rascunho com publicação automática na data (D 6261 / C 281). Definições (administrador): Conta 281 Gastos a reconhecer e 282 Rendimentos a reconhecer; «Periodicity», «Computation» e «By Months» continuam em inglês. Ver reports/AUDITORIA_EE-03.md. */}
+
+## Resultado esperado
+
+- O relatório **Consultar › Impostos e tesouraria › Gastos e rendimentos diferidos** mostra, por período, o **Valor da linha**, o **Reconhecido antes do período**, o **Reconhecido no período** e o **Por reconhecer**. No exemplo do seguro, para o ano de 2026: 1.200,00 €, 0,00 €, 302,47 € e 897,53 € (101,92 € + 98,63 € + 101,92 € de outubro a dezembro; conferido no ecrã, com os 13 lançamentos ainda em rascunho).
+  ![Relatório de gastos e rendimentos diferidos do ano de 2026](/images/accounting-pt/diferimentos/05-relatorio-diferidos.png)
+
+- O saldo da conta **281 Gastos a reconhecer** é o gasto ainda por reconhecer, e vai a zero quando o último reconhecimento for publicado.
+- Cada mês só tem o gasto que lhe pertence. Os lançamentos de diferimento ficam no diário **Operações Diversas**, ligados à fatura de origem (**Documento diferido**).
+- Os lançamentos que ficam em **Rascunho** aparecem como pendentes no [fecho do mês](/accounting-pt/fechar-o-mes) (cartão **Mês fechado**: «Todos os lançamentos estão publicados»).
+
+## Notas importantes
+
+- **Os lançamentos nascem em rascunho e não se publicam sozinhos.** Publique os do mês antes de fechar o mês: o cartão **Mês fechado** de [Fechar o mês](/accounting-pt/fechar-o-mes) mostra-os como falha (o ecrã deixa bloquear na mesma, mas o mês fica com lançamentos por publicar).
+- **O reconhecimento é proporcional aos dias de cada mês**, por isso os valores não são iguais todos os meses.
+- **Os lançamentos de diferimento têm o nome em português**: «Diferimento de …» na transferência para a conta 281 e «Reconhecimento de …» em cada mês (por exemplo, «Reconhecimento de FTF/2026/00045 (2027-09)»). {/* Nota interna (v23-B, master 2bfd78d1a, docs_demo_v23b_test): com a base-mãe nova, nenhum lançamento tem «Deferral of» nem «Recognition of»; o defeito V3A1-04 (textos em inglês nos lançamentos antigos) já não se vê. */}
+
+## Problemas frequentes
+
+### Fiz o diferimento e a lista está vazia
+
+- **O que confirmar:** se a fatura ainda está em rascunho, ou se a linha não tem **Diferir desde** e **Diferir até**.
+- **O que fazer:** publique a fatura e preencha as duas datas na linha. Se preencher só uma, ao gravar o ecrã diz «Preencha o início e o fim do período da linha «Seguro anual», ou deixe os dois vazios.» (testado com só **Diferir desde** e com só **Diferir até**).
+
+{/* Nota interna (DOCS-046, lote v23-K, 07/11/2026, master a3603e0f2, base docs_demo_v23k_test na 8434, base-mãe v2): captura 05 refeita (conta 6261 sem zeros de enchimento) com a fatura uma fatura de renda criada na cópia (já não existe na base-mãe) da Equipamentos e Mobiliário Lusitano, Lda (FT EML/2026/72, 600,00 € + IVA, conta 6261, diferida de 01/11/2026 a 30/04/2027), criada por RPC com um utilizador só com o perfil Contabilista; as colunas Diferir desde e Diferir até ligadas por clique. As capturas 01, 02, 04 e o relatório não mudaram. */}
+
+{/* Nota interna (lote 99, master 73d6a5fed, docs_demo_99_test, porta 9784, 19/11/2026, administrador, só leitura): a FTF/2026/00047 citada neste artigo NÃO existe na base-mãe (a série da Empresa Demonstração acaba na FTF/2026/00045). O exemplo passou para o seguro FTF/2026/00045, que existe: diferido 01/10/2026 a 30/09/2027, 13 lançamentos em rascunho (transferência 1.200,00 e 12 reconhecimentos, soma conferida). Capturas 01, 05-fatura e 05-relatório refeitas. O relatório mostra 302,47 reconhecido em 2026 com os 3 reconhecimentos de 2026 ainda em Rascunho: não se provou se conta rascunhos ou o calendário; por isso o artigo só cita o valor. O que exige publicar (transferência e reconhecimentos) fica por confirmar no ecrã: a sessão recusou publicar documentos. */}

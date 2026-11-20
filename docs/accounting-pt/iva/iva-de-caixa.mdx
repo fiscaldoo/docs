@@ -1,0 +1,142 @@
+---
+id: iva-de-caixa
+slug: /accounting-pt/iva-de-caixa
+title: Como funciona o IVA de caixa
+sidebar_label: IVA de caixa
+description: Aderir ao regime de IVA de caixa, emitir uma fatura com IVA suspenso, receber, ver o IVA suspenso no mapa e o que passa à declaração periódica no mês do recebimento.
+keywords: [IVA de caixa, regime de IVA de caixa, IVA suspenso, mapa do IVA suspenso, DL 71/2013, exigibilidade, recebimento, recibo, 24331, 2433, aderir ao regime, exigível por prazo, declaração periódica, DP IVA]
+doc_id: DOC-0089
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/iva/configurar-o-iva, accounting-pt/iva/declaracao-periodica-de-iva, accounting-pt/iva/pro-rata]
+---
+
+## Para que serve?
+
+No regime de IVA de caixa, o IVA das vendas só se torna exigível quando o cliente paga (ou no prazo limite), e não quando a fatura é emitida. O fiscaldoo guarda esse IVA numa conta de **IVA suspenso** enquanto a fatura não é recebida, mostra-o num **mapa por cliente e por documento**, e só o leva à declaração periódica no mês do recebimento.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: condições para aderir ao regime, comunicação à AT, prazo máximo de exigibilidade e deveres de faturação e de recibo (DL 71/2013). O produto não valida estas condições.</span>
+
+## Quando utilizar?
+
+- A empresa aderiu ao regime de IVA de caixa e quer saber quanto IVA está por receber e quando passa a exigível.
+- Vai preparar a declaração periódica e quer confirmar que as vendas por receber não entraram.
+
+Se a empresa não está no regime, não há IVA suspenso para reportar: veja o [apuramento do IVA](/accounting-pt/apuramento-do-iva) e a [declaração periódica](/accounting-pt/declaracao-periodica-de-iva). A configuração geral do IVA está em [Como configurar o IVA](/accounting-pt/configurar-o-iva).
+
+## Onde encontrar?
+
+- A adesão: **Definições › Utilizadores e empresas › Empresas** (ficha da empresa), separador **Localização PT**, bloco **Regime de IVA de caixa (DL 71/2013)**, botão **Aderir ao regime de IVA de caixa**.
+- O mapa: **Contabilidade › Declarar › IVA › O que há para fazer com o IVA?**, no grupo **Listas de apoio**, **IVA de caixa suspenso** (janela **Mapa do IVA suspenso**).
+
+![Bloco Regime de IVA de caixa (DL 71/2013) da ficha da empresa depois da adesão, com as datas e o botão Sair do regime de IVA de caixa](/images/accounting-pt/iva-de-caixa/89-01-ficha-da-empresa-regime-de-iva-de-caixa.png)
+
+## Antes de começar
+
+- A adesão faz-se na ficha da empresa, que se abre em **Definições**: só o **Administrador** tem essa aplicação (nenhum valor do campo **Perfil** a mostra). Na demonstração, a adesão fez-se com um utilizador só com o **Administrador**.
+- O **Mapa do IVA suspenso** abre, com o botão **Gerar**, com os perfis **Contabilista**, **Contabilista certificado**, **Gerência** e **Auditor / ROC**. Com o perfil **Administrativo**, aberto por uma ligação, dá «Sem acesso».
+- A empresa emite faturas numa série certificada e ativa: veja [Séries documentais](/fiscal-core/series-documentais). Na demonstração, a Empresa Demonstração, Lda já tem a série `FT D26` no diário **Vendas** e um diário de recibos (**Recibos (RG)**).
+- O artigo da linha tem **referência interna** (por exemplo o «Serviço genérico», código `SERV`): a AT exige o código do artigo em todas as linhas.
+
+## Como utilizar
+
+O exemplo foi feito na Empresa Demonstração, Lda, a 05/11/2026, com o perfil **Contabilista** sozinho (e o **Administrador** no passo 1).
+
+<StepByStep>
+
+1. Abra a ficha da empresa que adere em **Definições › Utilizadores e empresas › Empresas** e, no separador **Localização PT**, carregue em **Aderir ao regime de IVA de caixa**. A janela mostra no campo **Empresa** a empresa da ficha aberta, mesmo que não seja a empresa ativa no canto superior direito, mas essa empresa tem de estar marcada no seletor de empresas, senão **Confirmar** recusa (veja «Problemas frequentes»). Com a Empresa Teste Portugal ativa e a Empresa Teste Filial também marcada, a ficha da Empresa Teste Filial mostrou «Empresa Teste Filial» e foi ela que ficou no regime. Confira-o e preencha **Comunicado à Autoridade Tributária em** (`15/10/2025`), **O regime começa em** (`01/01/2026`) e **Registada para IVA desde** (`01/03/2020`), que são obrigatórios. Carregue em **Confirmar**. O bloco passa a mostrar **Regime de IVA de caixa** assinalado, **IVA de caixa desde**, **Opção comunicada em** e o botão **Sair do regime de IVA de caixa**. O fiscaldoo cria as taxas de caixa (por exemplo `23% (IVA de caixa)`, `13% (IVA de caixa)` e `6% (IVA de caixa)`, e as dos Açores e da Madeira) e usa a conta `24331 IVA - Liquidado - regime de caixa (por receber)`. Não envia nada à AT: a comunicação é a data que escreveu.
+   ![Janela Aderir ao regime de IVA de caixa com a Empresa Demonstração, Lda e as datas de comunicação, início e registo para IVA](/images/accounting-pt/iva-de-caixa/89-02-janela-aderir.png)
+2. Em **Contabilidade › Lançar › Vendas e cobranças › Faturas de clientes**, carregue em **Novo**. Escolha o cliente (`Papelaria Central, Lda`) e, em **Adicionar uma linha**, o artigo `Serviço genérico`. O imposto vem sozinho como **23% (IVA de caixa)**. Ao escolher o artigo, o preço fica a 0,00 €: escreva depois a descrição (`Manutenção anual (IVA de caixa)`) e o preço (`1.000,00`). O total mostra **Valor sem Impostos** 1.000,00 €, **IVA 23%** 230,00 € e **Total** 1.230,00 €.
+   ![Linha da fatura com o artigo Serviço genérico, a conta 721 Prestações de serviços e o imposto 23% (IVA de caixa)](/images/accounting-pt/iva-de-caixa/89-02-fatura-com-iva-de-caixa.png)
+3. Carregue em **Confirmar**. A fatura fica **Publicada** com o número `FT D26/34`. No exemplo há uma segunda fatura ao mesmo cliente, `FT D26/35` (500,00 € + 115,00 €), que fica por receber.
+4. Abra **IVA de caixa suspenso**. A data **A** vem com o dia de hoje. Carregue em **Gerar**. Com as duas faturas emitidas e nenhuma recebida, o mapa mostra **IVA suspenso** 345,00 € (230,00 € da `FT D26/34` e 115,00 € da `FT D26/35`), **Dos quais exigível por prazo** 0,00 € e uma linha por documento: **Cliente**, **Documento**, **Data**, **Moeda do documento**, **IVA suspenso (moeda do documento)**, **IVA suspenso**, **Exigível em** (30/11/2027) e **Exigível por prazo**.
+5. Quando o cliente paga a `FT D26/34`, abra a fatura e carregue em **Emitir recibo**. A janela traz o **Diário**, a **Conta bancária**, o **Valor** (1.230,00 €), a **Data de Pagamento** (hoje) e o **Memorando**. Carregue em **Criar Pagamento**. A fatura passa a **Paga**, o recibo `RG D26/16` fica emitido e o IVA passa a exigível.
+6. Gere o mapa outra vez: a `FT D26/34` sai da lista e fica só a `FT D26/35`, com 115,00 €.
+   ![Mapa do IVA suspenso a 05/11/2026 depois do recibo: só a FT D26/35, com IVA suspenso de 115,00 € e exigível em 30/11/2027](/images/accounting-pt/iva-de-caixa/89-03-mapa-do-iva-suspenso.png)
+7. Para ver o que vai à declaração, abra a [declaração periódica](/accounting-pt/declaracao-periodica-de-iva) do mês do recebimento (no exemplo, novembro de 2026) e calcule-a. O IVA da `FT D26/34` entra nos campos da taxa normal desse mês. A `FT D26/35`, por receber, não entra.
+   ![Linhas 1 a 4 da declaração de novembro de 2026: campo 3 com 1.120,00 € e campo 4 com 257,60 €](/images/accounting-pt/iva-de-caixa/89-05-dp-de-novembro-campos-3-e-4.png)
+
+</StepByStep>
+
+{/* Exceção CC campos 3 e 4: legenda da captura 89-05, que só descreve o que o ecrã mostra; a leitura dos campos 3 e 4 tem a marca do contabilista certificado em «Resultado esperado». */}
+
+## Resultado esperado
+
+Para a fatura `FT D26/34` (1.000,00 € + 230,00 €, de 05/11/2026), o fiscaldoo lança:
+
+| Momento | Conta | Débito | Crédito |
+|---|---|---|---|
+| Fatura `FT D26/34` (05/11/2026) | `2111 Clientes gerais` | 1.230,00 € | |
+| | `721 Prestações de serviços` | | 1.000,00 € |
+| | `24331 IVA - Liquidado - regime de caixa (por receber)` | | 230,00 € |
+| Recibo `RG D26/16` (05/11/2026), diário **Recibos (RG)** | `120002 Recebimentos Pendentes` | 1.230,00 € | |
+| | `2111 Clientes gerais` | | 1.230,00 € |
+| Exigibilidade, lançamento `CABA/2026/00001` (05/11/2026), diário **Impostos de Fundo de Caixa** | `24331 IVA - Liquidado - regime de caixa (por receber)` | 230,00 € | |
+| | `2433 IVA - Liquidado` | | 230,00 € |
+
+O lançamento da exigibilidade também move a base: 1.000,00 € a débito e a crédito em `721 Prestações de serviços`, a segunda com a marca da declaração.
+
+Na declaração de novembro de 2026 da demonstração, calculada antes do recibo, o campo 3 (base à taxa normal) tinha 120,00 € e o campo 4 (imposto) 27,60 €, das outras vendas do mês: as duas faturas já estavam emitidas e não entraram. Depois do recibo, o campo 3 passou a 1.120,00 € e o campo 4 a 257,60 €: mais 1.000,00 € e 230,00 €, só da `FT D26/34`.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: leitura dos campos 3 e 4 da declaração para o IVA exigível no recebimento, e a regra de que o IVA dedutível das compras segue o pagamento ao fornecedor.</span>
+
+## Notas importantes
+
+### Sem recebimento: exigível ao fim de 12 meses
+
+O IVA de caixa não fica suspenso para sempre. Se a fatura não for recebida, o IVA torna-se exigível o mais tardar no período do 12.º mês posterior ao da emissão (DL 71/2013). Para a `FT D26/35` (05/11/2026) esse período é novembro de 2027, por isso o mapa mostra **Exigível em** 30/11/2027. Gerado com a data **A** igual ou posterior (por exemplo 01/12/2027), o mesmo documento aparece com **Exigível por prazo** assinalado e **Dos quais exigível por prazo** 115,00 €.
+
+![Mapa do IVA suspenso com data de 01/12/2027: IVA suspenso de 115,00 € e exigível por prazo de 115,00 €](/images/accounting-pt/iva-de-caixa/89-04-mapa-com-iva-exigivel-por-prazo.png)
+
+Na demonstração, a declaração de novembro de 2027, calculada com a fatura ainda por receber, mostrou no campo 3 500,00 € e no campo 4 115,00 €: a `FT D26/35` entra nesse mês sem recibo.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o tratamento do IVA exigível por prazo na declaração e o lançamento que o passa de `24331` para `2433` (ao calcular a declaração de novembro de 2027 não se criou nenhum lançamento novo no diário Impostos de Fundo de Caixa).</span>
+
+### Séries com a marca de IVA de caixa
+
+O perfil **Contabilista certificado** pode marcar uma série de vendas como de IVA de caixa: em **Contabilidade › Configurar › Geral › Diários**, abra o diário da série (na demonstração, **Vendas**), assinale **Série em regime de IVA de caixa** e grave. Com o perfil **Contabilista**, esta opção não aparece. Sem a marca, a menção «IVA - regime de caixa» aparece quando alguma linha usa uma taxa de caixa (na demonstração, o PDF da `FT D26/34` tem-na). A marca só se aceita numa empresa que esteja no regime; noutra, ao gravar: «A empresa “Empresa Teste Filial” não está no regime de IVA de caixa, por isso a série “Vendas” não pode ser marcada como IVA de caixa. Peça primeiro ao administrador que adira ao regime nas definições fiscais da empresa.»
+
+<span className="fd-pending">Pendente de validação no ecrã: a menção «IVA - regime de caixa» numa fatura de uma série marcada em que nenhuma linha usa a taxa de caixa.</span>
+
+### Sair do regime
+
+O botão **Sair do regime de IVA de caixa** está na ficha da empresa. Sair do regime não faz parte deste artigo.
+
+### O que o mapa não vê
+
+O mapa lista só faturas a clientes da empresa ativa, uma linha por documento, e não mostra o IVA das compras. As exportações para **XLSX** e **PDF** estão na janela e não foram usadas neste artigo.
+
+## Problemas frequentes
+
+### «A empresa … não está no regime de IVA de caixa: não há IVA suspenso para reportar»
+
+- **Sintoma:** ao carregar em **Gerar**, janela **Operação inválida**: «A empresa “Empresa Teste Filial” não está no regime de IVA de caixa: não há IVA suspenso para reportar. Se for o caso, peça ao administrador que adira ao regime nas definições fiscais da empresa.»
+- **Causa:** a empresa ativa não aderiu ao regime. Quem trabalha em mais de uma empresa vê também o campo **Empresa** na janela do mapa.
+- **O que fazer:** confira a empresa no topo do ecrã. Se é a certa e deve estar no regime, peça ao administrador que adira (passo 1).
+
+### «Não tem permissão para criar este registo» ao aderir
+
+- **Sintoma:** ao carregar em **Confirmar** na janela **Aderir ao regime de IVA de caixa**, aparece a janela **Erro de Acesso**: «Não tem permissão para criar este registo de «Regime de IVA de caixa: adesão / cessação». O seu perfil chega para esta área, mas o registo é de uma empresa a que tem acesso e que não marcou no seletor de empresas, no topo do ecrã. Marque essa empresa aí e tente outra vez.» Nada fica gravado.
+- **Causa:** a ficha aberta é de uma empresa que não está marcada no seletor de empresas.
+- **O que fazer:** marque essa empresa no seletor do canto superior direito (a empresa ativa pode continuar a ser outra) e repita o passo 1.
+
+### «Ainda não é possível confirmar»
+
+- **Sintoma:** ao confirmar a fatura: «Falta uma coisa: A(s) linha(s) 1 não têm um artigo com referência interna. A Autoridade Tributária exige o código do artigo (ProductCode do SAF-T) em todas as linhas de uma fatura; uma linha só com texto livre não pode ser comunicada. Escolha o artigo na coluna «Artigo» («Produto») de cada linha (se a coluna não aparecer, ligue-a no menu de colunas, à direita do cabeçalho). Para o que não está nos seus artigos use o artigo genérico «Serviço genérico» (código SERV) e escreva na «Descrição» da linha o que está a cobrar, ou crie primeiro o artigo.»
+- **Causa:** a linha foi escrita só com texto.
+- **O que fazer:** escolha o artigo em cada linha e confirme outra vez.
+
+### «A data do recibo … é posterior a hoje»
+
+- **Sintoma:** em **Emitir recibo**, com uma **Data de Pagamento** futura, ao carregar em **Criar Pagamento**: «A data do recibo (03/12/2026) é posterior a hoje (05/11/2026). Um recibo regista um pagamento já recebido: use a data de hoje ou uma anterior. Depois de emitido, a série fica fechada a recibos datados até 03/12/2026, e anular o recibo não a reabre (o número e a data de um documento anulado ficam na série). Nada foi registado.»
+- **O que fazer:** emita o recibo no dia em que recebe, com a data desse dia. O IVA passa a exigível nessa data.
+
+{/* Nota interna (DOCS-046, lote v22-B, 05–06/11/2026, master d83bdf7ae, base docs_demo_v22b_test, porta 8350): exemplo refeito na Empresa Demonstração, Lda com utilizadores de um só perfil criados na cópia (p.cont, p.cc, p.af, p.rf, p.adm, p.aud). Por clique: adesão (Administrador), FT D26/34 (Contabilista), mapa 345,00 € → 115,00 €, recibo RG D26/16, mapa a 01/12/2027, recusas «não está no regime», «Falta uma coisa» e «data do recibo posterior a hoje». Por RPC: a FT D26/35 (500,00 €) e as declarações 2026/11 e 2027/11 (criadas e calculadas por chamada). Defeito: a janela Aderir usa a empresa ativa e não a da ficha aberta (a Empresa Teste Portugal ficou no regime nesta cópia). Defeito em cartão: VAT-076 (#3975); quando entrar em master, tirar «nesta versão» do «Antes de começar», do passo 1 e de «Problemas frequentes». Auditoria v22-B (06/11/2026, porta 8364): contas, mapa por perfil, 3 recusas e marca da série conferidos por clique; captura 89-02 refeita com a coluna Impostos inteira. */}
+
+{/* Nota interna (DOCS-063 #3853, lote v23-N, master dbbb5ac5c, docs_demo_v23n_test, porta 8442): VAT-076 visto por clique: utilizador só com o grupo Responsável fiscal sem a aplicação Definições; utilizador Administrador + Responsável fiscal, Empresa Teste Portugal ativa, ficha da Empresa Demonstração, Lda › Localização PT › Aderir: a janela mostrou a Empresa Demonstração, Lda (Cancelar, nada gravado). Saíram os pares «nesta versão» da auditoria v22-B e o problema «Aderi ao regime, mas a ficha continua sem ele». O Responsável fiscal não é valor do campo Perfil (o campo tem Administrativo, Contabilista, Contabilista certificado, Processador de salários, Gestor de RH, Gerência, Trabalhador e Auditor / ROC). */}
+
+{/* Nota interna (v23-T, DOC-0089, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

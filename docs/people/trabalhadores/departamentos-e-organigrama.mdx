@@ -1,0 +1,118 @@
+---
+id: departamentos-e-organigrama
+slug: /people/departamentos-e-organigrama
+title: Como organizar departamentos e ver o organigrama
+sidebar_label: Departamentos e organigrama
+description: "Como criar departamentos e subdepartamentos, indicar a chefia de cada trabalhador, ler o organigrama e criar centros de custo a partir dos departamentos."
+keywords: [organizar departamentos, departamentos, departamento pai, organigrama, gestor, chefia, criar centros de custo a partir de departamentos, centros de custo]
+doc_id: DOC-0243
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/trabalhadores/criar-um-trabalhador, accounting-pt/plano-de-contas/centros-de-custo]
+---
+
+{/* Nota interna (DOCS-046, lote v13-PPL): percorrido com demo.rh, demo.gestor_contabilidade, demo.contabilista e admin. O botão «Fold/Unfold» da hierarquia, por traduzir até ao lote v23-N, aparece em 08/11 (master cebcb888d, lote v23-S, utilizador só com o Perfil Gestor de RH) como «1 Expandir» e «1 Recolher»; captura 01 refeita com o subdepartamento «Armazém e Logística» criado por clique na cópia. Edição Enterprise não vista no ecrã (base Community). */}
+
+## Para que serve?
+
+Mostra como a empresa está organizada: que departamentos tem, quais dependem de quais e quem responde a quem. A partir dos departamentos, a contabilidade pode criar os centros de custo.
+
+## Quando utilizar?
+
+- Vai começar a registar trabalhadores e quer os departamentos prontos.
+- Abriu uma área nova ou mudou a chefia de uma equipa.
+- A contabilidade quer ver os gastos por departamento.
+
+## Onde encontrar?
+
+- **Pessoas › Trabalhadores › Departamentos** e **Pessoas › Trabalhadores › Organigrama**.
+- A chefia de cada trabalhador: **Pessoas › Trabalhadores › Trabalhadores**, na ficha, separador **Trabalho**.
+
+## Antes de começar
+
+- Os departamentos, as fichas e o organigrama são do perfil **Gestor de RH**. Os passos foram feitos até ao fim com esse perfil.
+- Os centros de custo são do perfil **Administrador**, que chega à lista pelo caminho de [Como usar centros de custo](/accounting-pt/centros-de-custo). O **Gestor de RH** não tem menu para esta lista.
+
+## Como utilizar
+
+### Criar um departamento
+
+<StepByStep>
+
+1. Abra **Pessoas › Trabalhadores › Departamentos** e carregue em **Novo**.
+2. Escreva o nome do departamento (aqui, «Armazém e Logística»).
+3. Se ele depender de outro, escolha-o em **Departamento Pai** (aqui, «Comercial»). Em **Gestor**, escolha o trabalhador que chefia o departamento.
+4. Guarde. O título passa a mostrar o caminho completo: «Comercial / Armazém e Logística».
+5. Para ver a estrutura, escolha a vista **Hierarquia**, no canto superior direito, e carregue no botão por baixo do departamento (**1 Expandir**, no exemplo) para ver os que dependem dele. O botão passa a **1 Recolher**.
+   ![Vista Hierarquia com o departamento Comercial aberto, com 1 Trabalhador e o botão 1 Recolher: por baixo aparece Armazém e Logística, com 0 Trabalhadores](/images/people/departamentos-e-organigrama/01-hierarquia.png)
+
+</StepByStep>
+
+### Pôr o trabalhador no departamento e indicar a chefia
+
+<StepByStep>
+
+1. Abra **Pessoas › Trabalhadores › Trabalhadores** e a ficha do trabalhador.
+2. No separador **Trabalho**, escolha o **Departamento**.
+3. Escolha também o **Gestor**. Escolher o departamento não o preenche, mesmo que o departamento tenha **Gestor**.
+4. Guarde.
+
+</StepByStep>
+
+### Ler o organigrama
+
+Abra **Pessoas › Trabalhadores › Organigrama**. Cada coluna é uma chefia, com o número de trabalhadores que respondem a ela. A coluna **Nenhum(a)** junta quem ainda não tem **Gestor**. À esquerda, em **DEPARTAMENTO**, escolha um departamento para ver só essa parte. O número ao lado de um departamento conta também os que dependem dele.
+
+Na ficha do trabalhador, o separador **Trabalho** mostra a mesma ligação: a chefia e, por baixo, o trabalhador.
+
+### Criar centros de custo a partir dos departamentos
+
+<StepByStep>
+
+1. Na lista **Contas Analíticas**, carregue em **A partir de departamentos**.
+2. A janela **Criar centros de custo a partir de departamentos** abre com o **Plano** e com **todos** os departamentos da empresa. Tire os que não quer, no **x** de cada um.
+   ![Janela Criar centros de custo a partir de departamentos, com o Plano Centro de Custo e três departamentos escolhidos](/images/people/departamentos-e-organigrama/02-janela.png)
+3. Carregue em **Criar centros de custo**.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, os departamentos e o organigrama são os mesmos, com o perfil **Gestor de RH**: **Departamentos** tem as vistas **Kanban**, **Lista** e **Hierarquia** e o formulário com **Gestor**, **Departamento Pai** e **Cor**, e o **Organigrama** tem as colunas por chefia, com **Nenhum(a)** e o filtro **DEPARTAMENTO** à esquerda. O campo **Gestor** da ficha do trabalhador escolhe-se da mesma maneira. Na lista **Contas Analíticas**, o administrador tem o mesmo botão **A partir de departamentos**.
+
+{/* Nota interna (lote EE-11, DOCS-073 #4142, DEC-1794, master 589ecfd27, 12/11/2026): cópia Enterprise docs_ee_ee11_test no portátil (pg_dump da odoo20_ee_test, já em 589ecfd27; -i de hr_payroll, planning, hr_appraisal e hr_recruitment e -u de fiscaldoo_ux_kit e l10n_pt_fiscaldoo_demo; ee_neutralizar antes e construir), porta 8508, guarda de rede ligada; utilizadores criados por RPC na cópia, cada um só com um valor do campo Perfil: ee11_rh: Departamentos (Novo: Gestor, Departamento Pai, Cor; vistas Kanban, Lista, Hierarquia) e Organigrama («Gestor», DEPARTAMENTO, Tudo, Comercial (demonstração) 1, Nenhum(a) (9); vistas Kanban e Lista), iguais nas duas cópias; Gestor de Hugo Miguel Santos escolhido por clique (Diogo Ferreira Lopes, ligado ao utilizador de teste da Gerência) e guardado. Administrador: Contas Analíticas com Novo e A partir de departamentos. Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee11_test (master 589ecfd27, porta 8518), com os mesmos utilizadores. Ver reports/LOTE_EE-11.md. */}
+
+## Resultado esperado
+
+- O departamento aparece em **Departamentos**, com o número de trabalhadores e a chefia.
+- O trabalhador sai da coluna **Nenhum(a)** do organigrama e passa para a coluna da sua chefia.
+- Os centros de custo criados aparecem em **Contas Analíticas**, no plano escolhido e com saldo 0,00 €. Para os usar nas faturas, veja [Como usar centros de custo](/accounting-pt/centros-de-custo).
+
+## Notas importantes
+
+- **O organigrama segue o Gestor de cada trabalhador, não o departamento.** Um trabalhador com departamento mas sem **Gestor** continua em **Nenhum(a)**.
+- **Os centros de custo comparam-se pelo nome.** Só é ignorado o departamento cuja conta tem exatamente o mesmo nome no plano. Na demonstração já havia o centro «Comercial», e o departamento «Comercial (demonstração)» criou um centro novo. Confira os nomes antes de confirmar, para não ficar com dois centros para a mesma área.
+
+## Problemas frequentes
+
+### «Há campos obrigatórios por preencher»
+
+- **Sintoma:** ao guardar um departamento aparece «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** falta o nome do departamento.
+- **O que fazer:** escreva o nome e guarde outra vez.
+
+### Não consigo guardar a ficha do trabalhador
+
+- **Sintoma:** o botão de guardar fica inativo depois de escolher o departamento, e **Local de trabalho habitual** fica a vermelho.
+- **Causa:** este campo é obrigatório. Se a empresa ainda não tem locais, a lista vem vazia.
+- **O que fazer:** escreva o nome do local (por exemplo, «Armazém de Lisboa»), carregue em **Criar** na lista e guarde.
+
+### «Todos os departamentos escolhidos já têm um centro de custo…»
+
+- **Sintoma:** a janela **Operação inválida** diz «Todos os departamentos escolhidos já têm um centro de custo no plano «Centro de Custo»: não há nada para criar. Escolha outros departamentos.»
+- **Causa:** já criou estes centros.
+- **O que fazer:** se quer outro plano, escolha-o em **Plano**. Caso contrário, carregue em **Cancelar**: os centros já existem.

@@ -1,0 +1,104 @@
+---
+id: analise-de-compras
+slug: /accounting-pt/analise-de-compras
+title: Como analisar as compras por fornecedor e por artigo
+sidebar_label: Compras por fornecedor e por artigo
+description: Ver quanto comprou a cada fornecedor, de cada artigo e de cada categoria num período, sem IVA, e comparar os anos.
+keywords: [analisar compras, compras por fornecedor, compras por artigo, compras por categoria de artigo, evolução anual das compras, evolucao anual das compras, compras líquidas, compras liquidas, maiores fornecedores]
+doc_id: DOC-0154
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c60255305)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/analise-de-vendas, accounting-pt/relatorios/orcamentos, accounting-pt/relatorios/usar-os-relatorios]
+---
+
+{/* Nota interna (v13-ACC2, DOC-0154): base docs_demo_v13acc2_test, porta 8262, master f671d6842. Por clique com Contabilista. Total 37.227,87 conferido por RPC (45 faturas, sem IVA; 42.999,72 com IVA). Rascunho de 15/01/2027 de 5.000,00 criado por RPC só para provar a variação: o exercício de 2025 está fechado e não recebe documentos. Categorias em inglês na captura 04: dados da demonstração, defeito no relatório LOTE_V13ACC2. */}
+
+## Para que serve?
+
+Mostra quanto comprou num período, a cada fornecedor, de cada artigo e de cada categoria. Responde a perguntas como «a quem compro mais?» ou «quanto gastei em eletricidade este ano?». Estes mapas só consultam: não criam lançamentos e não comunicam nada à AT.
+
+## Quando utilizar?
+
+- Quando quer saber de que fornecedores depende mais, antes de negociar preços.
+- Quando quer ver em que artigos ou categorias se gasta mais.
+- Quando quer comparar as compras de um ano com as do ano anterior.
+- Não use para saber quanto deve aos fornecedores: isso vê-se em [a quem devo](/management/a-quem-devo).
+- Não use para comparar com o previsto: isso vê-se nos [orçamentos](/accounting-pt/orcamentos).
+
+## Onde encontrar?
+
+- **Contabilidade › Consultar › Análise › Compras por fornecedor**.
+- **Contabilidade › Lançar › Início › O que há para fazer?** › **Análises e relatórios**: **Compras por artigo**, **Compras por categoria de artigo** e **Evolução anual das compras**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**, **Contabilista certificado**, **Gerência** ou **Auditor / ROC**. O perfil **Administrativo** não tem a aplicação **Contabilidade** nem estas entradas.
+- As faturas de fornecedor do período estão validadas. Um rascunho só conta se o pedir.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Compras por fornecedor**. O mapa abre no ano atual ou, se já o usou nesta sessão, no último período escolhido. **Repor** volta ao ano atual.
+2. No topo, escolha **Mês**, **Trimestre** ou **Ano** e, ao lado, qual deles.
+3. Para ver as faturas de um fornecedor, carregue na seta da linha.
+4. Para ver os lançamentos, carregue no número da coluna **Documentos**.
+5. Para guardar o mapa, carregue em **Exportar PDF**, ou em **Exportar** › **Exportar XLSX**.
+
+</StepByStep>
+
+Os outros mapas funcionam da mesma forma. As opções comuns estão em [como usar os relatórios](/accounting-pt/usar-os-relatorios).
+
+## No Enterprise
+
+No Odoo Enterprise, os quatro mapas das compras são os do fiscaldoo (visto com um utilizador só com o perfil **Contabilista**): **Contabilidade › Consultar › Análise › Compras por fornecedor** no menu, e **Compras por artigo**, **Compras por categoria de artigo** e **Evolução anual das compras** em **Análises e relatórios** do painel. Abrem no ano atual, com **Mês**, **Trimestre** e **Ano**, **Mais filtros**, **Exportar PDF**, **Exportar**, **Guardar opções**, **Copiar ligação** e **Repor**. O perfil **Administrativo** também não tem a aplicação **Contabilidade**.
+
+{/* Nota interna (lote EE-05, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee05_test (cópia da odoo20_ee_test com EE_FASE=construir), 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0154. Contabilista: Compras por fornecedor, Compras por artigo, Compras por categoria de artigo e Evolução anual das compras abrem os relatórios do fiscaldoo (endereços fiscaldoo-compras-*), com as colunas Documentos, Quantidade e Compras líquidas. Os valores da base Enterprise não entram no artigo. Administrativo: só a aplicação Faturação. Ver reports/LOTE_EE-05.md. */}
+
+## Resultado esperado
+
+Cada linha mostra o número de **Documentos**, a **Quantidade** e as **Compras líquidas**. O maior valor aparece primeiro.
+
+![Compras por fornecedor de 2026, com as colunas Documentos, Quantidade e Compras líquidas](/images/accounting-pt/analise-de-compras/01-compras-por-fornecedor.png)
+
+No exemplo, as compras de 2026 somam 37.227,87 € em 45 faturas, o mesmo total em qualquer dos mapas. Com IVA, as mesmas faturas somam 42.999,72 €.
+
+## O que entra nas compras líquidas
+
+- **Faturas e notas de crédito de fornecedores já validadas.** As notas de crédito descontam.
+- **Sem IVA.** Por isso, estes valores não são o que pagou.
+- **Linhas sem artigo.** Em **Compras por artigo**, aparecem em **Sem produto**. No exemplo, 1 fatura de 1.200,00 €.
+- **Só o que está na contabilidade.** Os mapas leem as faturas lançadas: não veem encomendas a fornecedores nem faturas por lançar.
+
+## Por categoria
+
+**Compras por categoria de artigo** soma os artigos pela sua categoria. Os artigos sem categoria própria e as linhas sem artigo ficam em **Sem categoria**. Se esta linha for grande, o mapa diz pouco: no exemplo, são 12.300,00 € de 37.227,87 €, ao lado dos 24.927,87 € da categoria **Serviços**.
+
+![Compras por categoria de artigo, com as linhas Serviços e Sem categoria e o total de 37.227,87 €](/images/accounting-pt/analise-de-compras/04-por-categoria.png)
+
+## Comparar os anos
+
+**Evolução anual das compras** mostra um ano em cada linha. A seta abre os meses desse ano. Em **Mais filtros**, alargue **De** e **até** para ver vários anos.
+
+![Evolução anual das compras: 2026 sem variação; 2027 com 5.000,00 € e variação de -32.227,87 €](/images/accounting-pt/analise-de-compras/03-evolucao-anual.png)
+
+As colunas **Variação face ao ano anterior** mostram a diferença em euros e em percentagem. No exemplo, 2026 não tem variação, porque 2025 não tem documentos; 2027 mostra -32.227,87 € e -86,6 %. A linha de 2027 é uma fatura em rascunho de 5.000,00 €, visível só porque **Incluir rascunhos** está marcado: compara um início de ano com um ano inteiro, por isso a descida não é um resultado real. Compare anos completos, ou olhe para os meses.
+
+## Notas importantes
+
+- A coluna **Quantidade** soma unidades diferentes (meses, unidades, licenças). Serve apenas como ordem de grandeza.
+- Cada empresa tem os seus valores. Confirme a empresa escolhida no canto superior direito.
+
+## Problemas frequentes
+
+**«A data de início do período não pode ser posterior à data de fim.»** Em **Mais filtros**, **De** tem uma data depois de **até**. Acerte as datas: o mapa volta a aparecer.
+
+**Falta uma fatura de fornecedor.** Está em rascunho ou com a data de lançamento noutro período. Marque **Incluir rascunhos** em **Mais filtros** e confirme a data.
+
+{/* Nota interna (DOCS-063 #3853, lote v23-N, master dbbb5ac5c, docs_demo_v23n_test, porta 8442): captura 04 refeita com um utilizador só com o Perfil Contabilista; os códigos com zeros e os nomes em inglês já não aparecem (ACC-257). */}
+
+{/* Nota interna (lote v23-AT, DOC-0154, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador): o Administrativo não tem a aplicação Contabilidade */}

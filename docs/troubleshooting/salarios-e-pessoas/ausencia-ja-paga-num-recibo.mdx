@@ -1,0 +1,90 @@
+---
+id: ausencia-ja-paga-num-recibo
+slug: /troubleshooting/ausencia-ja-paga-num-recibo
+title: A ausência já foi usada num recibo fechado e não se altera
+sidebar_label: Ausência usada num recibo fechado
+description: Uma ausência paga num recibo fechado não se altera, não se volta atrás e não se apaga. Corrige-se com o botão Corrigir, e o recibo corretivo leva a diferença.
+keywords: [ausência usada num recibo, ausencia usada num recibo, recibo fechado, não pode ser alterada, nao pode ser alterada, não pode ser apagada, nao pode ser apagada, corrigir ausência, corrigir ausencia, correção em curso, correcao em curso, voltar à aprovação, falta num mês já pago]
+doc_id: DOC-0387
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 0ad668575)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/ausencia-recusada, payroll-pt/processar-e-pagar/corrigir-um-processamento, people/ausencias-e-presencas/fecho-das-ausencias]
+---
+
+## Sintoma
+
+Quer mudar uma ausência já aprovada, voltar atrás com ela ou apagá-la, e o fiscaldoo recusa. A ausência entrou num recibo de vencimento validado ou pago, por isso já produziu efeito no salário.
+
+## Mensagem
+
+Vistas nas ausências de 2026 da Empresa Demonstração, Lda, com os recibos desses meses já pagos.
+
+Ao guardar uma alteração (por exemplo em **Prova entregue em**) ou ao carregar em **Voltar à aprovação**, com o perfil **Gestor de RH**:
+
+> «A ausência de «*Gabriela Sousa Reis*» foi usada num recibo fechado e não pode ser alterada. O que aconteceu: o que foi pago corrige-se, nunca se apaga. Como corrigir: registe a ausência correta e deixe o recibo corretivo levar a diferença.»
+
+![Janela Operação inválida: a ausência de Gabriela Sousa Reis foi usada num recibo fechado e não pode ser alterada](/images/troubleshooting/ausencia-ja-paga-num-recibo/01-ausencia-nao-se-altera.png)
+
+Em **Ações › Eliminar**, com o acesso **Administrador de Salários**:
+
+> «A ausência de «*Fábio Nuno Carvalho*» (*17/08/2026 a 28/08/2026*) está classificada ou aprovada e não pode ser apagada. O que aconteceu: uma ausência que produziu efeitos corrige-se, nunca se apaga. Como corrigir: recuse-a primeiro (se nenhum recibo a usou) ou registe a ausência correta.»
+
+Ao carregar outra vez em **Corrigir**, com uma correção já aberta:
+
+> «Esta ausência já tem uma correção em curso. Como corrigir: continue essa ou recuse-a.»
+
+![Janela Operação inválida: esta ausência já tem uma correção em curso](/images/troubleshooting/ausencia-ja-paga-num-recibo/02-correcao-em-curso.png)
+
+O **Administrador de Salários** recebe a mesma mensagem ao mudar **Prova entregue em**. Ao mudar a **Referência da prova**, ou numa ausência já começada sem recibo fechado, recebe outra, porque o passo não é do seu perfil: «Precisa do perfil de gestor para alterar ou validar uma ausência que já começou.» A correção começa no **Gestor de RH**.
+
+## Causas verificadas
+
+- **A ausência entrou num recibo fechado.** Quando um recibo é validado, as ausências que ele usou ficam marcadas em **Bloqueada**. A partir daí, os dados que decidem o salário (o tipo, as datas e a prova, entre outros) não mudam. O **Gestor de RH** continua a poder escrever a **Referência da prova**, porque não muda nenhum valor.
+- **Uma ausência aprovada não se apaga, mesmo sem recibo.** Se nenhum recibo a usou, o **Gestor de RH** carrega em **Voltar à aprovação** e depois em **Recusar**. Numa ausência bloqueada, **Recusar** não aparece e **Voltar à aprovação** dá a primeira mensagem acima.
+- **Só há uma correção aberta de cada vez.** Enquanto a correção não estiver aprovada ou recusada, **Corrigir** recusa criar outra.
+
+<span className="fd-pending">Pendente de validação no ecrã: as férias com o subsídio já pago num recibo fechado, porque a demonstração não tem férias nesse estado.</span>
+
+## O que confirmar
+
+1. Em **Pessoas › Férias e ausências › Pedidos de ausência**, ou em **Salários › Preparar › Ausências e presenças › Ausências**, abra a ausência. No separador **Lei portuguesa: comunicação, prova e efeito**, veja se **Bloqueada** está assinalado.
+2. Veja se existe o botão **Corrigir**. Só aparece numa ausência em **Aprovado** e bloqueada, a quem é **Gestor de RH** ou **Administrador de Salários**. Nesta versão, numa ausência de doença ou de acidente, o **Corrigir** do **Administrador de Salários** pode responder «Este tipo de ausência não pode ter texto livre…», mesmo sem texto escrito: peça a correção ao **Gestor de RH**.
+3. Se a mensagem fala numa correção em curso, procure na lista outra ausência do mesmo trabalhador e das mesmas datas, ainda em **Para Aprovar** ou **Segunda Aprovação**.
+
+## Como resolver
+
+1. **Gestor de RH:** na ausência original, carregue em **Corrigir**. Abre-se uma ausência nova em **Para Aprovar**, com os mesmos dados e o campo **Corrige** a apontar para a original. O aviso «Um trabalhador já tem uma ausência marcada que coincide com este período…» é normal nesta fase: a original só sai quando a correção for validada.
+2. Mude o que está errado (as datas, o tipo ou a prova) e guarde. Se escolher **Autorizada ou aprovada pelo empregador**, preencha também **Decisão ou lei**. Sem isso, **Aprovar** responde «As alíneas k) e l) do art. 249.º/2 são abertas…».
+3. Carregue em **Aprovar**. A correção passa a **Segunda Aprovação**.
+4. **Administrador de Salários:** abra a correção em **Salários › Preparar › Ausências e presenças › Ausências** e carregue em **Validar**.
+5. Se o fiscaldoo avisar que há diferença, abra o recibo corretivo pelo campo **Recibos corretivos** da correção (o **Gestor de RH** não vê este campo), confira o valor e valide-o ([Corrigir um processamento](/payroll-pt/corrigir-um-processamento)).
+
+Para desistir de uma correção em curso, abra-a e carregue em **Recusar**. Depois, o botão **Corrigir** da original volta a poder ser usado.
+
+## Resultado esperado
+
+- A correção fica em **Aprovado** e a ausência original passa a **Recusado**, com a nota «Corrigida pela ausência…» no histórico.
+- Se a correção muda o que foi pago, aparece um aviso e nasce um recibo corretivo em **Rascunho**. No exemplo, a baixa de 15/06/2026 a 26/06/2026 de Diogo Ferreira Lopes foi encurtada até 19/06/2026:
+
+  > «Falta num mês já pago. A falta de «*Diogo Ferreira Lopes*» tem dias num mês já pago (*junho 2026*) e esse recibo está fechado: não é alterado. O que aconteceu: a diferença ficou escrita no recibo corretivo *Diogo Ferreira Lopes (01/06/2026 — 30/06/2026)*, em rascunho. Como resolver: abra-o a partir do campo «Recibos corretivos» da falta, confira o valor e valide-o, para que a diferença seja paga ou descontada.»
+
+  ![Aviso Falta num mês já pago, com o recibo corretivo de junho de 2026 em rascunho](/images/troubleshooting/ausencia-ja-paga-num-recibo/03-aviso-mes-pago.png)
+- Se a correção não muda o que foi pago, não há aviso nem recibo corretivo. Foi o que aconteceu ao corrigir uma ausência mantendo os mesmos dados, e ao passar uma **Falta injustificada** de um dia a **Autorizada ou aprovada pelo empregador** sem decidir a retribuição.
+- O recibo original fica como estava ([O recibo já está validado e não se altera](/troubleshooting/recibo-validado-nao-se-altera)).
+
+## Quando contactar o suporte
+
+- A ausência não tem nenhum recibo fechado nesse período e mesmo assim diz que foi usada num.
+- **Bloqueada** está assinalado, a ausência está em **Aprovado** e não aparece **Corrigir** ao **Gestor de RH**.
+- A correção foi validada, mudou o que devia ser pago e não apareceu aviso nem recibo corretivo.
+
+## Informação a enviar
+
+- O trabalhador, o tipo de tempo, as datas e o estado da ausência.
+- O texto completo da mensagem, copiado do ecrã.
+- O mês do recibo que usou a ausência e o estado desse recibo.
+- O perfil com que entrou.

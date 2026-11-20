@@ -1,0 +1,98 @@
+---
+id: passar-a-contabilidade-organizada
+slug: /migration-toolkit/passar-a-contabilidade-organizada
+title: Como passar do regime simplificado para a contabilidade organizada
+sidebar_label: Passar à contabilidade organizada
+description: Preparar a mudança de regime de uma empresa, montar o balancete de abertura, equilibrá-lo com o capital próprio, verificar os alertas de volume de negócios e criar o lançamento de abertura.
+keywords: [contabilidade organizada, regime simplificado, mudança de regime, balancete de abertura, lançamento de abertura, volume de negócios, migração de regime, Migração para a contabilidade organizada]
+doc_id: DOC-0306
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c643480c2)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [migration-toolkit/importar/importar-saldos-de-abertura, migration-toolkit/planear/validar-a-migracao, migration-toolkit/historico/consultar-historico-migrado]
+---
+
+{/* Nota interna (DOCS-046, #3616): risco alto (regime fiscal e contabilidade). Percurso feito no ecrã como Administrador na «Empresa Migração Regime, Lda» (empresa 7, vazia). Só o Contabilista certificado e o Administrador veem o menu e criam (Contabilista e Auditor só leem, conferido nas permissões). Todas as regras de lei (limites, data de efeito) levam a marca do contabilista certificado. V4MIG-08 saiu com o MIG-077 (DOCS-065, master c643480c2): concluída na Empresa Teste Filial com o admin, a ficha ficou com o regime e a data 01/01/2027. */}
+
+## Para que serve?
+
+Um sujeito passivo no **regime simplificado** (que determina o lucro por coeficientes) passa a **contabilidade organizada** quando opta por ela ou ultrapassa os limites. Isto vale sobretudo para o empresário em nome individual (IRS, categoria B): as sociedades já são obrigadas a ter contabilidade organizada (CIRC, art. 123.º, n.º 1), como diz a ajuda do campo **Contabilidade organizada** da empresa. O assistente **Migração para a contabilidade organizada** guia essa passagem: reúne o balancete de abertura da empresa, ajuda a equilibrá-lo, mostra os alertas de volume de negócios e cria o lançamento de abertura na data de efeito.
+
+## Quando utilizar?
+
+- Quando a empresa deixa o regime simplificado e começa a lançar na contabilidade organizada numa data certa, normalmente 1 de janeiro.
+- **Não use** para trazer os saldos de um programa anterior de uma empresa que já tinha contabilidade organizada: use [Importar saldos de abertura](/migration-toolkit/importar-saldos-de-abertura).
+- **Não use** para decidir o regime: a decisão e os prazos de opção são do contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: condições e prazos da mudança do regime simplificado para a contabilidade organizada e o tratamento fiscal da passagem.</span>
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Migração e importações › Migração para a contabilidade organizada**. Abre a lista das mudanças de regime da empresa; carregue em **Novo**. Numa empresa sem nenhuma, a lista diz «Ainda não há mudanças de regime. Carregue em Novo para preparar, passo a passo, a mudança do regime fiscal de uma empresa.»
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado** ou **Administrador**. O **Contabilista** e o **Auditor / ROC** não veem o menu; o **Administrativo** também não.
+- O plano de contas da empresa tem as contas do balancete de abertura e a conta de **capital próprio** que recebe a diferença. O fiscaldoo propõe `561 Resultados transitados`; a escolha da conta é do contabilista certificado.
+- Sabe a **data de efeito**: a data a partir da qual a empresa lança em contabilidade organizada. O assistente propõe uma, 01/01/2027 na demonstração (**Data de efeito sugerida**). <span className="fd-pending">Pendente de validação por contabilista certificado: como a data de efeito é sugerida e se pode ser outra.</span>
+- Tem o balancete de abertura da empresa: as contas e os saldos à data de efeito. Se a empresa já tem lançamentos, o botão **Gerar linhas** monta as linhas a partir das contas; numa empresa vazia, escreva as linhas.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Migração para a contabilidade organizada**, carregue em **Novo**. A ficha mostra a empresa, o **Sujeito passivo** (**Empresa** ou **Empresário em nome individual (ENI)**), a **Data de efeito**, o **Responsável**, o **Diário de abertura** e a **Conta de capital próprio de equilíbrio**, que já vem com `561 Resultados transitados`. Na demonstração trocou-se por `511 Capital subscrito`, como se toda a diferença fosse capital. Numa sociedade, a conta 51 leva só o capital do contrato de sociedade e o resto fica noutra conta de capital próprio. Em **Balancete de abertura**, carregue em **Adicionar uma linha** e escreva cada conta com o seu saldo: na demonstração, `121 Depósitos à ordem` com 10.000,00 € a débito e `111 Caixa` com 500,00 € a débito. Em vez de escrever, **Gerar linhas** monta as linhas a partir dos saldos que a empresa já tem, agrupadas por **Origem** («Bancos e caixa», «Clientes e fornecedores», …) e, nos clientes e fornecedores, um saldo por terceiro: na «Empresa Demonstração, Lda» deu um balancete com 263.539,84 € a débito e 13.212,71 € a crédito, a equilibrar. Numa empresa vazia não há nada a gerar. As linhas escritas à mão ficam com a origem **Manual**.
+   ![Ficha da migração em rascunho com as duas linhas do balancete, 10.500,00 € a débito e nada a crédito, e o botão Equilibrar com capital próprio assinalado](/images/migration-toolkit/passar-a-contabilidade-organizada/01-rascunho-com-linhas.png)
+2. Carregue em **Verificar balancete**. Com o balancete desequilibrado a janela diz «Operação inválida. O balancete de abertura não está equilibrado. O que aconteceu: o débito 10500.0 e o crédito 0.0 diferem em 10500.0. Como resolver: corrija as linhas ou carregue em «Equilibrar com capital próprio» para pôr a diferença no capital próprio.»
+   ![Janela Operação inválida a dizer que o balancete de abertura não está equilibrado](/images/migration-toolkit/passar-a-contabilidade-organizada/02-balancete-desequilibrado.png)
+3. Carregue em **Equilibrar com capital próprio**. Acrescenta a linha «Capital próprio (equilíbrio)» na conta `511`, a crédito, com a diferença: 10.500,00 €. Confirme com o contabilista certificado que a diferença é mesmo capital próprio (capital, reservas e resultados) e não um saldo que falta lançar. <span className="fd-pending">Pendente de validação por contabilista certificado: pôr a diferença do balancete de abertura em capital próprio.</span>
+4. Carregue outra vez em **Verificar balancete**: o estado passa de **Rascunho** a **Balancete verificado** e aparece o botão **Criar lançamento de abertura**. Carregue em **Verificar alertas de volume de negócios** e leia o quadro **Alertas de volume de negócios**: o **Volume de negócios** deste ano e dos dois anteriores, os rendimentos da categoria B, o **Limite de volume de negócios** (200.000,00 € na demonstração) e o **Alerta da isenção de IVA**. Na demonstração, todos ficaram **Dentro do limite**, porque a empresa não tem movimento. <span className="fd-pending">Pendente de validação por contabilista certificado: os limites usados nos alertas de volume de negócios e de isenção de IVA.</span>
+   ![Migração com o balancete verificado, as três linhas equilibradas em 10.500,00 € e o botão Criar lançamento de abertura assinalado](/images/migration-toolkit/passar-a-contabilidade-organizada/03-balancete-verificado.png)
+5. Carregue em **Criar lançamento de abertura**. A pergunta diz «O lançamento de abertura é criado e lançado e a migração fica definitiva. Continuar?» Carregue em **Confirmar**.
+   ![Pergunta de confirmação a avisar que a migração fica definitiva, com o botão Confirmar assinalado](/images/migration-toolkit/passar-a-contabilidade-organizada/04-confirmar.png)
+6. O estado passa a **Concluída** e deixa de haver botões. A ficha fica como registo.
+   ![Migração no estado Concluída](/images/migration-toolkit/passar-a-contabilidade-organizada/05-concluida.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- Um lançamento no diário **Lançamentos de abertura**, **publicado**, com a data de efeito e a referência «Abertura - migração para a contabilidade organizada 01/01/2027». Na demonstração, `ABR/2027/00001`, com estas linhas:
+
+  | Conta | Débito | Crédito |
+  |---|---|---|
+  | `111` Caixa | 500,00 € | |
+  | `121` Depósitos à ordem | 10.000,00 € | |
+  | `511` Capital subscrito | | 10.500,00 € |
+  | **Total** | **10.500,00 €** | **10.500,00 €** |
+
+- O estado da migração é **Concluída**, e já não se altera. Antes de confirmar, **Voltar a rascunho** e **Cancelar** estão disponíveis na ficha.
+- **O regime fica registado na empresa.** Ao concluir, a ficha da empresa passa a ter **Contabilidade organizada** preenchida e **Contabilidade organizada desde** com a data de efeito (no exemplo, 01/01/2027): veja em **Definições › Utilizadores e empresas › Empresas**, no separador **Localização PT** (ver [Dados fiscais da empresa](/administration/dados-da-empresa)).
+- A data de efeito 01/01/2027 é futura em relação ao dia da demonstração: o lançamento foi aceite na mesma.
+
+## Notas importantes
+
+<HelpCallout type="risco" title="A confirmação é definitiva">
+Depois de **Confirmar**, o lançamento de abertura fica publicado e a migração concluída. Se o balancete estava errado, o lançamento corrige-se como qualquer outro lançamento publicado (estorno ou regularização) e não por esta ficha.
+</HelpCallout>
+
+- **Equilibrar com capital próprio** só aparece enquanto o balancete está desequilibrado.
+- Os botões **Verificar balancete** e **Verificar alertas de volume de negócios** não gravam nada no razão: só mudam o estado e mostram os quadros.
+
+## Problemas frequentes
+
+### «O balancete de abertura não está equilibrado»
+
+- **Sintoma:** ao carregar em **Verificar balancete**, a janela «Operação inválida» diz que o débito e o crédito diferem.
+- **O que fazer:** confira as linhas com o balancete original e corrija o saldo errado; se a diferença é mesmo capital próprio, use **Equilibrar com capital próprio**.
+
+### Falta a conta de capital próprio
+
+- **Sintoma:** com a **Conta de capital próprio de equilíbrio** vazia, **Equilibrar com capital próprio** diz «Escolha a conta de capital próprio. O que aconteceu: não há conta de equilíbrio. Como resolver: preencha «Conta de capital próprio de equilíbrio» (por exemplo 561, resultados transitados).»
+- **O que fazer:** escolha a conta de capital próprio que o contabilista certificado indicar (o fiscaldoo propõe `561`) e carregue outra vez em **Equilibrar com capital próprio**.
+
+### Quero desfazer a migração concluída
+
+- **Sintoma:** depois de **Concluída**, não há botões.
+- **O que fazer:** a ficha não oferece nenhum botão para desfazer. Fale com o contabilista certificado antes de tentar corrigir o lançamento de abertura. <span className="fd-pending">Pendente de validação por contabilista certificado: como corrigir uma migração de regime já concluída.</span>

@@ -1,0 +1,69 @@
+---
+id: mensagens-do-sistema
+slug: /troubleshooting/mensagens-do-sistema
+title: Como ler uma mensagem do sistema e encontrar a solução
+sidebar_label: Ler uma mensagem do sistema
+sidebar_position: 1
+description: Uma mensagem do fiscaldoo diz o que foi recusado, porquê e o que fazer; copie uma frase dela para a pesquisa do portal e encontra o artigo.
+keywords: [mensagem do sistema, mensagem de erro, erro, aviso, o que aconteceu, como resolver, como corrigir, nada foi alterado, sem acesso, operação inválida, operacao invalida, mostrar detalhe técnico, mostrar detalhe tecnico, pesquisar mensagem, copiar mensagem]
+doc_id: DOC-0325
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7a46de91a)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/geral/como-pedir-suporte, troubleshooting/acesso-e-dados/sem-permissao]
+---
+
+Uma mensagem do fiscaldoo diz o que foi recusado, porquê e o que fazer a seguir. Quando aparece numa janela, a operação não foi feita: nada foi gravado nem enviado.
+
+## As partes de uma mensagem
+
+Muitas mensagens do fiscaldoo têm três partes, por esta ordem:
+
+1. **O que foi recusado**, na primeira frase: «Só quem tem o acesso extra «Administrador de Salários» pode alterar a classe contabilística de um trabalhador.»
+2. **O que aconteceu**: o motivo da regra. «O que aconteceu: as contas dos salários dependem da classe.»
+3. **Como resolver** (ou **Como corrigir**): o que fazer, muitas vezes a quem pedir. «Como resolver: peça a um utilizador com o acesso extra «Administrador de Salários» que a registe.»
+
+Outras são mais curtas e juntam tudo numa frase: «O seu perfil não pode emitir notas de pagamento: só a Tesouraria e o contabilista o fazem.» Leia sempre até ao fim: a última frase é a que diz o que fazer.
+
+As partes em itálico nas mensagens citadas deste portal (um número de documento, um nome, uma data) mudam de caso para caso. O resto é igual ao que vê no ecrã.
+
+## Onde aparecem
+
+- **Numa janela**, ao carregar num botão ou ao gravar. Fecha-se com **Fechar**. A janela **Sem acesso** tem ainda a ligação **Mostrar detalhe técnico**, para enviar ao suporte.
+- **No topo de um documento**, como aviso permanente. Por exemplo, numa fatura emitida: «Documento emitido e assinado: já não se altera. Para o corrigir, emita uma nota de crédito.» Não é um erro: diz o estado do documento.
+- **Na própria página**, quando algo está desligado. Por exemplo, no **Copiloto**: «O Copiloto está desligado nesta empresa. Peça ao administrador para ligar a IA.»
+
+{/* Nota interna (lote v23-M, master dbbb5ac5c, docs_demo_v23m_test, DOC-0325): exemplos acertados ao texto de hoje; o aviso do Copiloto visto no ecrã com utilizadores criados só com os perfis Contabilista e Contabilista certificado, e «Só o perfil «Contabilista certificado (assina, fecha períodos)» pode…» provocado pela integração com um só com o perfil Contabilista. */}
+
+{/* Nota interna (lote v23-AO, DOCS-069 #4052, master a67618a71, docs_demo_v23ao_test, 09/11/2026): UX-147. O exemplo das três partes passou a ser a recusa da classe contabilística, provocada por clique com um utilizador só com o perfil Gestor de RH (Classe contabilística «Pessoal» numa ficha nova e Guardar). A recusa de reabrir um lote já não serve de exemplo: o botão Reabrir não aparece ao Processador de salários. */}
+
+## No Enterprise
+
+No Odoo Enterprise, as mensagens do fiscaldoo são as mesmas e aparecem nos mesmos sítios: o aviso no topo de uma fatura emitida e o do **Copiloto** desligado saem como acima (vistos com um utilizador só com o perfil **Contabilista**). As aplicações do próprio Enterprise têm as suas mensagens, que nem sempre têm as três partes. Por exemplo, **Ações › Criar Ativo** numa linha de lançamento de uma conta que não é de ativos responde, numa janela **Operação inválida**: «A conta *12 Depósitos à ordem* não pode ser usada para criar um ativo. A conta tem de ser do tipo «Ativos Tangíveis».» Se a pesquisa do portal não encontrar a frase, siga «Quando a mensagem não ajuda», no fim deste artigo.
+
+{/* Nota interna (lote EE-01, DOCS-073 #4142, DEC-1794, master ce51f2d47, base Enterprise docs_ee_ee01_test, 10/11/2026): a mensagem em inglês veio de Ações › Criar Ativo (ativos do Enterprise) em Linhas de lançamento. A janela «Operação inválida» com Fechar também se viu na recusa da reconciliação do Enterprise (ver reconciliar-movimentos-bancarios). */}
+
+{/* Nota interna (lote v23-BE, depois do comboio 188 com o I18N-041 #4146, master 7a46de91a, base Enterprise docs_ee_v23be_test no computador 2, porta 8505): com um utilizador só Contabilista certificado (Empresa Teste Portugal), na lista Linhas de lançamento da Contabilidade, linha de 12 Depósitos à ordem (BNK1/2026/00009), Criar Ativo no menu Ações → a recusa já sai em português (texto acima). Pagamentos a fornecedores › Novo: no lote, o botão saiu «Connect Bank» porque a base EE não tinha sido atualizada. Na auditoria docs-aud-v23be (base EE nova, atualizada com fiscaldoo_ux_kit e l10n_pt_fiscaldoo_demo pela regra de 10/11), o botão diz «Ligar banco», e a recusa de Criar Ativo (BNK1/2026/00009, 12 Depósitos à ordem, utilizador só Contabilista certificado) repetiu-se por clique com o texto citado. Os outros textos do I18N-041 (Cash In, Upload Bills, Upload Refunds, Manage Models, Delete Transaction, Add & Close) não são citados em nenhum artigo. */}
+
+## Como encontrar a solução no portal
+
+1. Copie uma frase da mensagem, sem as partes que mudam (o número do documento, o nome do cliente). Por exemplo «não pode voltar a rascunho» ou «Só o perfil».
+2. Escreva-a na pesquisa do portal, no topo da página.
+3. Abra o artigo de resolução de problemas que aparecer. Cada um começa pela mesma mensagem, em **Mensagem**, e diz as causas e o que fazer.
+
+Se a mensagem fala de perfis ou de empresas («Só o … pode», «Sem acesso», «não é uma das empresas»), comece por [Não tenho permissão para fazer esta operação](/troubleshooting/sem-permissao).
+
+## O que não fazer
+
+- Não repita a mesma operação várias vezes à espera de outro resultado: a recusa é uma regra, não uma falha momentânea.
+- Não tente contornar a mensagem (outra conta, um colega com mais permissões a fazer por si sem saber o que é): várias recusas ficam registadas, e a regra existe por um motivo legal ou de segurança.
+- Não tire uma fotografia ao ecrã para pedir ajuda: copie o texto. O texto pesquisa-se; a fotografia não.
+
+## Quando a mensagem não ajuda
+
+Se a mensagem não diz o que fazer, se o artigo do portal não resolve, ou se aparece um erro técnico em inglês, peça ajuda: [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte).
+
+{/* Nota interna (DOCS-037): mensagens citadas copiadas da base docs_demo_lotee_test (master 54a9f5f03): lote de salários (Processador, integração), nota de pagamento (Faturação, integração), Copiloto (Contabilista, ecrã), janela Sem acesso (Faturação, ecrã); o aviso da fatura emitida vem do DOC-0329. */}

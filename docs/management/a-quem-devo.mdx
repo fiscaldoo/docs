@@ -1,0 +1,80 @@
+---
+id: a-quem-devo
+slug: /management/a-quem-devo
+title: A quem devo e quanto
+sidebar_label: A quem devo
+sidebar_position: 5
+description: A lista do que a empresa deve a cada fornecedor, dividida pela antiguidade do vencimento contada até hoje, com o total e a exportação em PDF.
+keywords: [a quem devo, dívidas a fornecedores, dividas a fornecedores, saldos a pagar, antiguidade de saldos, antiguidade de saldos a pagar, fornecedores, vencido, em atraso, direção, direcao]
+doc_id: DOC-0274
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [management/tesouraria]
+---
+
+## Para que serve?
+
+Mostra o que a empresa deve a cada fornecedor e há quanto tempo cada valor está vencido, contado até hoje. Cada valor está numa coluna de antiguidade: **Não vencido**, **1 - 30 dias**, **31 - 60 dias**, **61 - 90 dias**, **91 - 120 dias** e **Mais de 120 dias**.
+
+## Quando utilizar?
+
+- Antes de uma ronda de pagamentos, para decidir a quem pagar primeiro.
+- Para ver o que está em atraso.
+- Para entregar ao contabilista a lista do que se deve (**Exportar PDF**).
+
+## Onde encontrar?
+
+**Direção › Dinheiro › A quem devo**. O ecrã chama-se **A quem devo**.
+
+O **Contabilista** abre o mesmo ecrã em **Contabilidade › Consultar › Terceiros › Antiguidade de saldos**: abre com **A receber** (o que os clientes devem) e, ao carregar em **A pagar**, o título passa a **A quem devo**, com os mesmos fornecedores e valores.
+
+## Antes de começar
+
+O seu perfil é **Gerência** (ou **Contabilista**, pelo caminho indicado acima). Os passos foram feitos com cada um destes perfis, na Empresa Demonstração, Lda, a 12 de novembro de 2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Direção › Dinheiro › A quem devo**.
+2. Confirme o período no canto superior (no exemplo, 01/01/2026 – 31/12/2026) e use **Mês**, **Trimestre** ou **Ano** para o mudar. O período escolhe os documentos: entram os que estão por pagar e têm data até ao fim do período. **A antiguidade conta-se sempre até hoje** (ver «Notas importantes»).
+3. Leia a linha **Total** e a de cada fornecedor. Carregue na seta de um fornecedor para ver os documentos em dívida.
+   ![A quem devo com o fornecedor Cloud Services Inc. aberto, as suas duas faturas com o vencimento e o total por coluna de antiguidade](/images/management/a-quem-devo/01-saldos-a-pagar.png)
+4. Carregue em **Exportar PDF** ou em **Exportar** para guardar a lista. **A receber** troca para o que os clientes devem.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, **Direção › Dinheiro › A quem devo** abre o mesmo ecrã do fiscaldoo, e não o relatório de antiguidade do Enterprise (visto com um utilizador só com o perfil **Gerência**). Tem as mesmas colunas de antiguidade, a escolha **A receber** ou **A pagar**, **Mês**, **Trimestre** e **Ano**, **Comparar com período anterior**, **Exportar PDF** e **Exportar**, e os mesmos fornecedores e valores que no Community.
+
+{/* Nota interna (lote EE-13, DOCS-073 #4142, req 46633, DEC-1794, master 7f41ce71b, base Enterprise docs_ee_ee13_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee13_test): DOC-0274. Gerência: visualizador do fiscaldoo com Cloud Services Inc. 2.096,87 € e Rui Matos 600,00 € nas duas cópias, nas mesmas colunas. Nas duas cópias, a 12/11/2026 e com o ano de 2026, a FTF/2026/00040 está em 31 - 60 dias e a FTF/2026/00039 em 61 - 90 dias: a antiguidade conta-se hoje até à data de hoje, e o título do ecrã é «A quem devo». O corpo do artigo (lado Community) está desatualizado: observação no relatório. Ver reports/LOTE_EE-13.md. */}
+
+## Resultado esperado
+
+No exemplo (hoje é 12/11/2026 e o período é o ano de 2026) há dois fornecedores: a Cloud Services Inc., com 2.096,87 €, e o Rui Matos, com 600,00 €. O **Total** é 2.696,87 €: 1.376,15 € em **31 - 60 dias**, 720,72 € em **61 - 90 dias** e 600,00 € em **91 - 120 dias**. Abrindo a seta da Cloud Services Inc., vê-se a `FTF/2026/00039` (vencimento 26/08/2026, 720,72 €, **61 - 90 dias**) e a `FTF/2026/00040` (vencimento 26/09/2026, 1.376,15 €, **31 - 60 dias**); na coluna **Documento** aparece o número da fatura do fornecedor. As duas faturas são em dólares e o ecrã mostra-as em euros. Os 600,00 € do Rui Matos são da `FTF/2026/00044`, vencida a 20/07/2026.
+
+## Notas importantes
+
+- **A antiguidade conta-se até hoje, qualquer que seja o período.** A `FTF/2026/00040` venceu a 26/09/2026: a 12/11/2026 passaram 47 dias, por isso está em **31 - 60 dias**. Com **Mês** (01/11/2026 – 30/11/2026) ou **Trimestre** (01/10/2026 – 31/12/2026), as colunas e os valores são os mesmos do ano. De um dia para o outro, um valor pode passar para a coluna seguinte sem que nada tenha sido lançado.
+- **O período escolhe os documentos.** Entram as faturas por pagar com data até ao fim do período. Com o ano de 2025, a lista fica vazia (só a linha **Total**, a 0,00 €), porque as três faturas são de 2026.
+- **Os valores aparecem em positivo.** O que se deve é mostrado com sinal positivo, como em **Quem me deve**.
+- **Só entra o que está lançado.** Uma fatura de fornecedor em rascunho não entra: com um rascunho do Rui Matos com vencimento a 01/11/2026, criado à parte para o confirmar, o total dele continuou nos 600,00 €. Confirme a fatura para que conte.
+
+## Problemas frequentes
+
+### O total não é o que esperava
+
+- **Causa:** o período termina antes da data de algumas faturas, ou há faturas de fornecedor ainda em rascunho.
+- **O que fazer:** alargue o período (por exemplo, **Ano**), abra a seta do fornecedor e confira os documentos um a um.
+
+### Os valores mudaram de coluna sem eu lançar nada
+
+- **Causa:** a antiguidade conta-se até hoje. Uma fatura vencida há 30 dias passa amanhã para **31 - 60 dias**.
+- **O que fazer:** nada; para decidir a quem pagar primeiro, use a coluna **Vencimento** de cada fatura, que não muda.
+
+{/* Nota interna (DOCS-075, lote v23-BJ, master 7f41ce71b, docs_demo_v23bj_test, 12/11/2026): por clique com utilizadores criados por RPC na cópia só com o perfil Gerência (Direção › Dinheiro › A quem devo, setas, Mês, Trimestre, Ano, 2025) e só com o perfil Contabilista (Contabilidade › Consultar › Terceiros › Antiguidade de saldos, A pagar). O produto passou a contar a antiguidade até hoje e o ecrã chama-se A quem devo (BNK-033 resolvido; visto também pelo lote EE-13 no Enterprise). Rascunho de fatura de fornecedor criado por RPC só na cópia (Rui Matos, ref. RM-2026-11, 77,00 €, vencimento 01/11/2026), fora das capturas e dos totais. */}

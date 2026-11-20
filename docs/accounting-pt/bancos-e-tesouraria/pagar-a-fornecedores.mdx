@@ -1,0 +1,129 @@
+---
+id: pagar-a-fornecedores
+slug: /accounting-pt/pagar-a-fornecedores
+title: Como pagar a fornecedores (notas de pagamento e ficheiro SEPA)
+sidebar_label: Pagar a fornecedores
+sidebar_position: 4
+description: Preparar o pagamento das faturas de fornecedores com uma nota de pagamento que passa por conferência e aprovação, e pagar vários fornecedores de uma vez com um lote e um ficheiro de transferências SEPA entregue no banco.
+keywords: [pagar a fornecedores, notas de pagamento, nota de pagamento, aprovar pagamentos, lote de pagamentos, ficheiro SEPA, transferências SEPA, pain.001, homebanking, pagamentos em lote, conferir pagamento, pronto a pagar, reconciliar o lote com o banco, movimento bancário agregado]
+doc_id: DOC-0117
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/reconciliar-terceiros, accounting-pt/bancos-e-tesouraria/reconciliar-movimentos-bancarios, accounting-pt/bancos-e-tesouraria/importar-extrato-bancario]
+---
+
+{/* Nota interna (v3-A1, DOC-0117, risco alto, video=sim: vídeo é de outra corrente, a secção «Vídeo demonstrativo» entra quando existir). Validado na base docs_demo_v3a1_test (8175). Perfis usados: Contabilista (criar notas, emitir, lote), Responsável fiscal com «Tesouraria: Gestor» (Conferir) e utilizador da Gerência com «Tesouraria: só aprovação de pagamentos» (Aprovar; corrigido na v3a1cor: não era o Auditor): nenhum perfil da demonstração trazia os perfis de Tesouraria, foram atribuídos pelo administrador em Definições › Utilizadores para o teste. Notas NLP/00001 (Papelaria Central, FTF/2026/00050, 123,00 €) e NLP/00002 (Equipamentos e Mobiliário Lusitano, FTF/2026/00049, 369,00 €), emitidas como PBNK1/2026/00054 e 00055 (D 2211 / C 120003 e reconciliadas com a fatura). Lote LOTE/00002: PBNK1/2026/00044 (149,50) e 00045 (79,60), total 229,10 €, ficheiro LOTE_00002.xml (2 transações, CtrlSum 229.10), extrato BNK1/2026/00073 de −229,10 € (criado para o teste, 02/11/2026), reconciliação OD/2026/00106. Defeito V3A1-08: o campo «Pagamento» das linhas do lote só aceita pagamentos no estado «Pago»; os pagamentos emitidos por nota (e os criados pelo botão «Pagar» da fatura) ficam «Reconciliado» e não aparecem (a validação aceita-os, o filtro não); por isso o lote do exemplo usa pagamentos manuais, que ainda não estão ligados a uma fatura. Correção v3a1cor2 (8233): moeda estrangeira no lote testada por chamadas aos mesmos métodos do ecrã (pagamento de 100,00 USD, lote, Validar). */}
+
+## Para que serve?
+
+Há duas formas de pagar a fornecedores no fiscaldoo e este artigo explica as duas. A **nota de pagamento** prepara o pagamento de uma ou mais faturas e obriga a conferir e aprovar antes de pagar: serve para quem separa quem prepara de quem autoriza. O **lote de pagamentos** junta vários pagamentos já registados num único ficheiro de transferências SEPA, que se entrega no homebanking do banco.
+
+O fiscaldoo **não envia nada ao banco**: gera o ficheiro e quem paga é o banco, quando o ficheiro for lá entregue.
+
+## Quando utilizar?
+
+- Tem faturas de fornecedores por pagar e quer que a ordem de pagamento passe por conferência e aprovação (nota de pagamento).
+- Paga vários fornecedores no mesmo dia e prefere um só ficheiro a introduzir cada transferência à mão (lote).
+- Não use o lote para pagamentos a fornecedores sem IBAN, nem para pagamentos em moeda que não seja o euro: o ficheiro SEPA só leva euros e o ecrã recusa o resto. Testado com um pagamento de 100,00 USD ao fornecedor Cloud Services Inc. num lote: ao **Validar**, sem IBAN do fornecedor no pagamento, o ecrã diz «PBNK1/2027/00001 não tem conta bancária do fornecedor (IBAN): indique-a no pagamento.»; com o IBAN indicado, diz «Não é possível gerar o ficheiro SEPA: - PBNK1/2027/00001: as transferências SEPA só são em euros». O lote fica em **Rascunho**; pague essa fatura por uma nota de pagamento ou pelo banco, fora do lote.
+- Não use a nota de pagamento como documento fiscal: é um documento interno, sem série fiscal nem ATCUD.
+
+## Onde encontrar?
+
+- Criar notas de pagamento: em **Contabilidade › Lançar › Compras › Faturas de fornecedores**, marque as faturas e abra **Ações › Criar notas de pagamento**. As notas ficam em **Contabilidade › Reconciliar › Bancos e caixa › Pagamentos a fornecedores**.
+- Lotes: **Contabilidade › Reconciliar › Bancos e caixa › Lotes de pagamentos** (ou o botão **Novo lote de pagamentos** em **O que há para fazer com os bancos?**).
+
+## Antes de começar
+
+- As faturas estão **Publicadas** e cada fornecedor tem **IBAN** registado.
+- Os perfis certos: **Contabilista** cria e emite as notas e prepara os lotes; **Conferir** aparece ao perfil **Contabilista certificado** e a quem tem o acesso extra **Tesouraria: Gestor** ou **Tesouraria: Aprovador**; **Aprovar (pronto a pagar)** aparece ao perfil **Gerência** e a quem tem **Tesouraria: Aprovador**. Os acessos extra **Tesouraria: Utilizador**, **Tesouraria: Gestor** e **Tesouraria: Aprovador** não vêm com nenhum valor do campo **Perfil**. Quem confere não deve ser quem aprova. Os acessos extra atribuem-se em **Definições › Utilizadores e empresas › Utilizadores** (administrador). O pormenor de cada perfil está em [Não consigo emitir a nota de pagamento a fornecedores](/troubleshooting/nota-de-pagamento-nao-e-emitida).
+- Para o lote: o diário **Banco** tem o IBAN da empresa (e o BIC) preenchidos: vão no ficheiro como conta a debitar.
+
+## Como utilizar
+
+### Pagar faturas com uma nota de pagamento
+
+<StepByStep>
+
+1. Em **Faturas de fornecedores**, marque as faturas a pagar (no exemplo, **FTF/2026/00050**, 123,00 € da Papelaria Central, Lda, e **FTF/2026/00049**, 369,00 € da Equipamentos e Mobiliário Lusitano, Lda), carregue em **Ações** e escolha **Criar notas de pagamento**.
+2. Escolha o **Diário de pagamento** (**Banco**) e a **Data**. A janela lista as faturas e avisa: «É criada uma nota de pagamento por fornecedor e moeda. Nada é lançado até emitir a nota.» Carregue em **Criar notas de pagamento**.
+   ![Janela Criar notas de pagamento com as duas faturas e o total de 492,00 euros](/images/accounting-pt/pagar-a-fornecedores/02-criar-notas.png)
+3. Surgem as notas **NLP/00001** e **NLP/00002**, em **Rascunho** e **Em análise**. Ainda não há lançamento.
+4. Quem confere (perfil **Contabilista certificado**, ou o acesso extra **Tesouraria: Gestor** ou **Tesouraria: Aprovador**) abre a nota e carrega em **Conferir**. A nota passa a **Conferido**.
+   ![Nota de pagamento NLP/00001 em rascunho com o botão Conferir assinalado](/images/accounting-pt/pagar-a-fornecedores/05-nota-conferir.png)
+5. Quem aprova (perfil **Gerência**, ou o acesso extra **Tesouraria: Aprovador**) abre a nota conferida e carrega em **Aprovar (pronto a pagar)**. A nota fica **Pronto a pagar**. Com **Recusar / bloquear**, que pede o **Motivo**, a nota fica **Bloqueado**. **Reabrir** aparece a quem confere, com a nota **Conferido** ou **Bloqueado**, e devolve-a a **Em análise**, para conferir outra vez.
+   ![Nota de pagamento conferida com o botão Aprovar (pronto a pagar) assinalado](/images/accounting-pt/pagar-a-fornecedores/06-nota-aprovar.png)
+6. O Contabilista abre a nota pronta e carrega em **Emitir nota de pagamento**. O pagamento é lançado e reconciliado com a fatura: no exemplo, a **PBNK1/2026/00054** e a **PBNK1/2026/00055**, com as faturas **Pagas**.
+   ![Nota de pagamento pronta com o botão Emitir nota de pagamento assinalado](/images/accounting-pt/pagar-a-fornecedores/07-nota-emitir.png)
+
+</StepByStep>
+
+### Pagar vários fornecedores com um lote e um ficheiro SEPA
+
+<StepByStep>
+
+1. Abra **Lotes de pagamentos** e carregue em **Novo**. Escolha o **Diário bancário** (**Banco**) e a **Data de execução** (a data em que o banco deve executar). Em **Pagamentos**, **Adicionar uma linha** e escolha cada pagamento: no exemplo, **PBNK1/2026/00044** (149,50 €) e **PBNK1/2026/00045** (79,60 €), ambos da Papelaria Central, Lda. O **Total** (229,10 €) e o **N.º de pagamentos** (2) calculam-se sozinhos, e o **IBAN do fornecedor** vem do pagamento. O **Formato do ficheiro** abre em **Formato de 2019 (recomendado)**.
+   ![Lote de pagamentos novo com dois pagamentos da Papelaria Central e total de 229,10 euros](/images/accounting-pt/pagar-a-fornecedores/08-lote-novo.png)
+2. Grave. O lote fica **LOTE/00002**, em **Rascunho**, com **Validar e gerar ficheiro** e **Anular**.
+   ![Lote LOTE/00002 em rascunho com o botão Validar e gerar ficheiro assinalado](/images/accounting-pt/pagar-a-fornecedores/08-lote-rascunho.png)
+3. Carregue em **Validar e gerar ficheiro**. O estado passa a **Validado** e aparece «Ficheiro gerado. O ficheiro de transferências LOTE_00002.xml foi gerado e está anexado ao lote. Nada foi enviado ao banco». No separador **Ficheiro** ficam o **Ficheiro SEPA**, o **Código de controlo do ficheiro** e os **Avisos do ficheiro**: no exemplo, o fiscaldoo trocou «Demonstração» por «Demonstracao» no nome da empresa, porque o conjunto de carateres SEPA não tem acentos.
+   ![Separador Ficheiro do lote com o ficheiro, o código de controlo e os avisos](/images/accounting-pt/pagar-a-fornecedores/09-lote-ficheiro.png)
+4. Carregue em **Descarregar o ficheiro SEPA**. No exemplo, o ficheiro `LOTE_00002.xml` tem 2 transações e o total de controlo 229,10, iguais ao lote.
+5. Entregue o ficheiro no homebanking do banco. Depois, no lote, carregue em **Marcar como enviado**: o estado passa a **Enviado**, com **Enviado em** e **Enviado por**. Já não se altera nem se anula.
+   ![Lote enviado, com o botão Procurar movimento bancário](/images/accounting-pt/pagar-a-fornecedores/10-lote-enviado.png)
+6. Quando o banco debitar o lote, importe o extrato ([Como importar um extrato bancário](/accounting-pt/importar-extrato-bancario)) e, no lote, carregue em **Procurar movimento bancário**. O fiscaldoo liga o lote ao **Movimento bancário** de −229,10 € e o botão passa a **Reconciliar**. Carregue em **Reconciliar**: o lote fica **Reconciliado**.
+   ![Lote com o movimento bancário BNK1/2026/00073 encontrado e o botão Reconciliar](/images/accounting-pt/pagar-a-fornecedores/12-movimento-encontrado.png)
+   ![Lote LOTE/00002 reconciliado](/images/accounting-pt/pagar-a-fornecedores/13-lote-reconciliado.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, as notas de pagamento e os lotes são os mesmos, nos mesmos caminhos (vistos do princípio ao fim com utilizadores só com o perfil **Contabilista**, **Contabilista certificado** ou **Gerência**, cada um no seu passo): **Ações › Criar notas de pagamento** nas faturas de fornecedores, e **Lotes de pagamentos** com a mesma ficha (**Diário bancário**, **Data de execução**, **Formato do ficheiro**). O menu **Ações** das faturas tem mais duas entradas do Enterprise, **Inserir em folha de cálculo** e **Enviar faturas para digitalização**. Nenhuma delas cria notas de pagamento nem lotes. Na nota de pagamento aparece também o botão **Ligar banco**, do Enterprise, que não é preciso para estes passos.
+
+{/* Nota interna (lote EE-01, DOCS-073 #4142, DEC-1794, master ce51f2d47, base Enterprise docs_ee_ee01_test, 10/11/2026): Ações das faturas de fornecedores: Exportar, Inserir em folha de cálculo, Duplicar, Eliminar, Estornar lançamento, Criar notas de pagamento, Criar lote SDD, Confirmar entradas, Enviar faturas para digitalização (esta do módulo de leitura de faturas do Enterprise). Auditoria EE-01 (base docs_ee_audee01_test, 10/11/2026): nota NLP/00001 de uma fatura de fornecedor de 600,00 € criada pelo Contabilista; Conferir pelo Contabilista certificado; Aprovar (pronto a pagar) e Recusar / bloquear à Gerência; Emitir nota de pagamento pelo Contabilista (PBNK1/2026/00040); Connect Bank na nota até ser emitida. */}
+
+## Resultado esperado
+
+- **Nota de pagamento emitida:** o lançamento do pagamento é **D 2211 Fornecedores gerais 123,00 €** e **C 120003 Pagamentos Pendentes 123,00 €**, reconciliado com a fatura (que passa a **Pago**). A conta 120003 só sai quando o banco debitar.
+- **Lote reconciliado:** o extrato lança **D 120001 Conta Transitória 229,10 €** e **C 121 Depósitos à ordem 229,10 €**; a reconciliação do lote lança **D 120003 Pagamentos Pendentes 229,10 €** e **C 120001 Conta Transitória 229,10 €** (**OD/2026/00106**, em **Operações Diversas**). Um único movimento do banco paga o lote inteiro.
+- O lote **não liga os pagamentos às faturas**: no exemplo, os pagamentos PBNK1/2026/00044 e 00045 continuam por reconciliar com as faturas; faça-o como em [Como reconciliar faturas e pagamentos](/accounting-pt/reconciliar-terceiros).
+
+## Notas importantes
+
+- **Só entram no lote os pagamentos no estado Pago.** Os pagamentos emitidos por nota de pagamento, e os criados com o botão **Pagar** da fatura, ficam **Reconciliado** com a fatura e não aparecem na lista do lote. Para pagar uma nota por ficheiro SEPA, não a emita por este caminho: use pagamentos manuais, que se ligam à fatura depois. {/* Nota interna (v3-A1, V3A1-08): defeito do produto; ver o comentário no início. */}
+- **Um pagamento só pode estar num lote ativo.** Se estiver noutro, o fiscaldoo não o aceita.
+- **Depois de «Enviado», não há volta.** Até ao envio, **Anular** passa o lote a **Anulado**.
+- **Diferenças de IBAN ou de nome.** O ficheiro vai com o IBAN que está no pagamento: confirme-o com o fornecedor antes de validar.
+
+## Problemas frequentes
+
+### «Há campos obrigatórios por preencher» ao criar as notas
+
+- **Sintoma:** ao carregar em **Criar notas de pagamento** sem **Diário de pagamento**, «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **O que fazer:** escolha o **Diário de pagamento**.
+   ![Janela Criar notas de pagamento com o diário por preencher](/images/accounting-pt/pagar-a-fornecedores/03-criar-notas-sem-diario.png)
+
+### «PBNK1/2026/00044 já está no lote LOTE/00002»
+
+- **Sintoma:** ao gravar um lote com um pagamento que já está noutro lote ativo, «Erro de Validação: PBNK1/2026/00044 já está no lote LOTE/00002.»
+- **O que fazer:** retire o pagamento do segundo lote, ou anule o primeiro se ainda não foi enviado.
+   ![Aviso de erro de validação com o pagamento já incluído noutro lote](/images/accounting-pt/pagar-a-fornecedores/14-lote-ja-existe.png)
+
+### «Foram encontrados 0 movimentos bancários de - 229,10 €»
+
+- **Sintoma:** ao carregar em **Procurar movimento bancário** antes de importar o extrato: «Foram encontrados 0 movimentos bancários de - 229,10 € desde 01/11/2026. Porquê: O lote só se liga sozinho ao banco quando existe exatamente um movimento por reconciliar, do mesmo diário, com o valor total do lote. Como resolver: Se o movimento não existe, importe o extrato do banco; se há vários, escolha o certo no campo «Movimento bancário» do lote.»
+- **O que fazer:** importe o extrato do banco, ou escolha o movimento no campo **Movimento bancário**.
+   ![Aviso de que não há movimentos bancários com o valor do lote](/images/accounting-pt/pagar-a-fornecedores/11-sem-movimento.png)
+
+### Não vejo os botões Conferir ou Aprovar
+
+- **Causa:** cada botão só aparece a quem o pode usar e só no estado certo. **Conferir**, com a nota **Em análise**: perfil **Contabilista certificado**, ou acesso extra **Tesouraria: Gestor** ou **Tesouraria: Aprovador**. **Aprovar (pronto a pagar)**, com a nota **Conferido**: perfil **Gerência**, ou acesso extra **Tesouraria: Aprovador**. O perfil **Contabilista** sozinho não tem nenhum dos dois.
+- **O que fazer:** peça a quem tem um destes perfis, ou peça ao administrador que dê o acesso extra em **Utilizadores**.
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AZ, 10/11/2026, master bfedd3b23, docs_demo_v23az_test, porta 8508, DEF-QA7-c-01): perfis de conferir, aprovar e reabrir alinhados com o nota-de-pagamento-nao-e-emitida. Nota própria da FTF/2026/00044, criada por clique com um utilizador só Contabilista (Ações › Criar notas de pagamento); só Contabilista certificado, sem Tesouraria: Conferir e Recusar / bloquear; depois de Conferir, Reabrir e Recusar / bloquear; Reabrir devolveu a Em análise; só Gerência na Conferido: Aprovar (pronto a pagar), Recusar / bloquear e Imprimir; Gerência bloqueou com motivo; na Bloqueado só o CC viu Reabrir, que devolveu a Em análise; Gerência aprovou; Contabilista viu e usou Emitir nota de pagamento (Reconciliado). Capturas 05 e 06 com os mesmos botões do CC e da Gerência de hoje. Grupos por RPC: Contabilista certificado = Tesouraria: só conferência de pagamentos; Gerência = Tesouraria: só aprovação de pagamentos; nenhum perfil dá Utilizador, Gestor nem Aprovador. */}
+
+{/* Nota interna (lote v23-BF, DOCS-063 #3853, 10/11/2026, master e4dd4ae90): «Connect Bank» passou a «Ligar banco» na secção «No Enterprise», a mesma frase que o lote 79 traz. Conferido só no código de master (I18N-041, e5066f891: fiscaldoo_ux_kit traduz «Connect Bank» por «Ligar banco»), não no ecrã: o computador 2, onde está a base Enterprise, estava em baixo e este lote é só Community. O resto do artigo não foi revisto. */}

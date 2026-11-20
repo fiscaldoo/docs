@@ -1,0 +1,149 @@
+---
+id: avisos-de-cobranca
+slug: /fiscal-core/avisos-de-cobranca
+title: Como enviar avisos de cobrança aos clientes em atraso
+sidebar_label: Avisos de cobrança
+sidebar_position: 2
+description: Criar os níveis de aviso (dias de atraso, canal e texto) e gerar avisos por carta, e-mail ou tarefa, a um cliente ou a todos de uma vez, aos clientes com faturas vencidas.
+keywords: [enviar, avisos, cobrança, cobranca, clientes, atraso, avisos de cobrança, avisos de cobranca, níveis de aviso de cobrança, niveis de aviso de cobranca, cheques / avisos de cobrança, cheques / avisos de cobranca, carta de cobrança, carta de cobranca, lembrete de pagamento, faturas vencidas, gerar aviso, gerar avisos em lote]
+doc_id: DOC-0038
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master acd623385)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/recibos-e-cobrancas/emitir-um-recibo, accounting-pt/relatorios/extratos-de-terceiros, fiscal-core/faturacao/aplicacao-faturacao]
+---
+
+## Para que serve?
+
+Quando um cliente não paga a tempo, o fiscaldoo prepara o aviso: uma carta em PDF, um e-mail ou uma tarefa para alguém da empresa telefonar. O que se faz depende dos dias de atraso da fatura vencida mais antiga do cliente, conforme os níveis de aviso que a empresa definiu (por exemplo, carta aos 15 dias, e-mail aos 30).
+
+Pode gerar o aviso de um cliente, na ficha dele, ou de todos os clientes em atraso de uma vez, num lote que fica registado.
+
+## Quando utilizar?
+
+- Uma vez, para definir os níveis de aviso da empresa.
+- Quando quer avisar um cliente concreto, por exemplo depois de um telefonema.
+- Uma vez por semana ou por mês, para avisar de uma vez todos os clientes em atraso.
+
+Os avisos não mudam as faturas nem a contabilidade: não geram lançamentos. Para cobrar e registar o pagamento, veja [Como registar um pagamento recebido e emitir o recibo](/fiscal-core/emitir-um-recibo).
+
+## Onde encontrar?
+
+- Níveis de aviso: **Contabilidade › Lançar › Início › O que há para fazer?**, grupo **Listas de apoio**, **Níveis de aviso de cobrança**.
+- Aviso a um cliente: **Faturação › Clientes e artigos › Clientes**, abra o cliente, separador **Faturação**, bloco **COBRANÇA**.
+- Avisos em lote: **Faturação › Receber › Avisos de cobrança** (também em **Contabilidade › Lançar › Cobranças a clientes › Avisos de cobrança**).
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** ou **Contabilista certificado**. Os passos foram feitos do princípio ao fim com o **Contabilista**. O **Administrativo** e a **Gerência** veem o menu **Avisos de cobrança** e o botão **Gerar aviso**, mas não podem gerar avisos (veja «Problemas frequentes»).
+- Os clientes a avisar têm faturas emitidas e já vencidas.
+- Para avisar por e-mail, a ficha do cliente tem o e-mail.
+
+## Como utilizar
+
+<StepByStep>
+
+1. **Defina os níveis (uma vez).** Abra **Contabilidade › Lançar › Início › O que há para fazer?**, desça até **Listas de apoio** e carregue em **Níveis de aviso de cobrança**.
+2. Numa empresa sem níveis, carregue em **Criar os níveis habituais**. Ficam três: **1.º aviso** aos 15 dias, por **Carta**; **2.º aviso** aos 30 dias, por **E-mail**; **Aviso final** aos 60 dias, por **Carta**. Para mudar um nível, abra-o; para outro, carregue em **Novo**.
+3. Num nível, confira os campos:
+   - **Atraso (dias)**: a partir de quantos dias de atraso se aplica;
+   - **Canal**: **Carta**, **E-mail** ou **Tarefa para o responsável**;
+   - **Responsável**: quem recebe a tarefa, no canal **Tarefa para o responsável**;
+   - **Categorias de cliente**: vazio, vale para todos os clientes;
+   - o texto do aviso, que pode usar `[PARTNER]` (o cliente), `[DAYS]` (os dias de atraso), `[TOTAL]` (o valor vencido) e `[COMPANY]` (a sua empresa).
+4. **Avise um cliente.** Abra **Faturação › Clientes e artigos › Clientes**, abra o cliente e carregue no separador **Faturação**. O bloco **COBRANÇA** mostra **Atraso (dias)**, **Valor vencido**, **Nível de aviso** e **Próxima ação de cobrança**.
+   ![Bloco Cobrança de Maria João Ferreira (ENI) com 37 dias de atraso, 1.597,60 € vencidos, nível 2.º aviso, a próxima ação e o botão Gerar aviso assinalado](/images/fiscal-core/avisos-de-cobranca/01-bloco-cobranca.png)
+5. Carregue em **Gerar aviso**. Com **Carta**, o navegador descarrega o PDF «Aviso de cobrança *cliente*.pdf». Com **E-mail**, o e-mail fica na fila de saída do Odoo. Com **Tarefa para o responsável**, a tarefa aparece nas atividades do cliente, para o responsável do nível.
+6. **Avise todos de uma vez.** Abra **Faturação › Receber › Avisos de cobrança** e carregue em **Gerar avisos em lote**.
+7. Confira as opções: **Nível mínimo** (vazio, entram todos os níveis), **Saltar notificados nos últimos (dias)** (vem com 7), **Um PDF por cliente** (vem marcado) e **Categorias de cliente**. Carregue em **Pré-visualizar**.
+
+   **Um PDF por cliente**, marcado, guarda também cada carta num PDF próprio, na ficha do cliente, além do PDF do lote com todas as cartas. Desmarcado, as cartas ficam só no PDF do lote. A ajuda do campo aconselha desmarcá-lo em lotes muito grandes, porque gera um PDF por carta.
+8. Leia a lista: uma linha por cliente em atraso, com **Cliente**, **Nível**, **Atraso (dias)**, **Valor vencido**, **Canal** e **Saltado porque**. Para deixar um cliente de fora, ligue o interruptor **Excluir** na linha dele.
+9. Carregue em **Gerar**. Com cartas, o navegador descarrega um PDF com todas as cartas do lote, para imprimir e enviar, e a janela fecha: fica a lista **Lotes de avisos**, com o lote novo em cima. Sem cartas, só com e-mails ou tarefas, abre-se o lote.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, os avisos de cobrança são os **lembretes de faturas** do Enterprise, e não os níveis deste artigo (visto com um utilizador só com o perfil **Contabilista**):
+
+- **Níveis:** as **Listas de apoio** de **O que há para fazer?** não têm **Níveis de aviso de cobrança**. Os níveis estão em **Contabilidade › Lançar › Vendas e cobranças › Lembretes de faturas**, na lista **Lembretes de faturas**, com as colunas **Dias em Atraso**, **Momento do lembrete**, **E-mail**, **SMS** e **Atividade**. Na base de demonstração, a lista da Empresa Demonstração, Lda está vazia.
+- **Cliente:** no separador **Faturação** da ficha, o bloco **LEMBRETES DE FATURAS** diz «Os «lembretes automáticos de faturas» estão desativados. Abrir as definições para os ativar.». O bloco **COBRANÇA** do Community, com o nível de aviso, não aparece.
+- **Enviar o lembrete:** na lista de faturas do cliente (botão **Em atraso** da ficha), marque a fatura vencida e carregue em **Enviar lembrete**. Abre-se a janela **Enviar lembretes**, com a pré-visualização do e-mail («Pré-visualização: o conteúdo é adaptado a cada cliente», com o **Modelo de E-mail** **Lembrete cordial**) e os botões **Enviar** e **Cancelar**.
+- **Lembretes automáticos:** o administrador liga-os em **Definições**, na opção **Lembretes automáticos de faturas** («Enviar lembretes das faturas e do extrato do cliente»).
+
+Os avisos de cobrança do Community não existem no Enterprise: **Faturação › Receber** tem **Lembretes de faturas** em vez de **Avisos de cobrança**, e as **Definições** não têm a opção **Avisos de cobrança automáticos**. Use os lembretes de faturas do Enterprise.
+
+{/* Nota interna (lote EE-14, EEA-087 a107095ed e EEA-085 2d7827720 em master acd623385; cópia docs_ee_ee14_test, porta 8524, 12/11/2026): por clique com um utilizador só com o perfil Contabilista: Faturação › Receber só com Lembretes de faturas (lista vazia; colunas Dias em Atraso, Momento do lembrete, E-mail, SMS, Atividade; o título da lista vazia continua em inglês, «Define reminders and their related actions»: relatório do lote); ficha de Maria João Ferreira (ENI), separador Faturação, blocos GERAL, LEMBRETES DE FATURAS, FATURAS DE CLIENTE, IMPARIDADE, AUTOFATURAÇÃO (CIVA ART. 36.º N.º 11) e DADOS FISCAIS PT, sem COBRANÇA; botão Em atraso › FT D26/29 marcada › Enviar lembrete › janela Enviar lembretes em português (Enviar, Cancelar, Modelo de E-mail Lembrete cordial), fechada com Escape (nada enviado). Administrador, Definições da Empresa Demonstração: Lembretes automáticos de faturas, sem Avisos de cobrança automáticos. */}
+
+{/* Nota interna (lote EE-12, DOCS-073 #4142, DEC-1794, master 589ecfd27, base Enterprise docs_ee_ee12_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee12_test): DOC-0038. Contabilista: Listas de apoio sem Níveis de aviso de cobrança; Contabilidade › Lançar › Cobranças a clientes sem Avisos de cobrança (no Community tem); Lembretes de faturas (lista do Enterprise, 0 linhas na empresa, com a coluna «Reminder Timing» e o texto «Define reminders and their related actions» em inglês); ficha de Maria João Ferreira (ENI): blocos LEMBRETES DE FATURAS e COBRANÇA (28 dias, 1.461,72 €, sem nível nem Gerar aviso); botão Em atraso › lista Faturas, FT D26/29 marcada › Send Reminder › janela Send Reminders com o e-mail «Payment Reminder Dear …» em inglês, fechada com Escape (nada enviado). Faturação › Receber › Avisos de cobrança abre Gerar avisos em lote; Pré-visualizar deu, nos 4 clientes em atraso, «Nenhum nível de aviso se aplica a … Como resolver: Abra Contabilidade › Configurar › Bancos e ativos › Níveis de aviso de cobrança (modo programador)…», menu que a ponte l10n_pt_fiscaldoo_ee_followup desativa (nada gerado). Administrador: Definições com «Automatic Invoice Reminders» (inglês) e a opção Avisos de cobrança automáticos do fiscaldoo, cuja tarefa diária (PT collection: automatic notices) está inativa no Enterprise e ativa no Community. A migração dos níveis do fiscaldoo para os do Enterprise (EEA-020) não foi vista: a base não tem níveis do fiscaldoo. Defeito no relatório. Ver reports/LOTE_EE-12.md. */}
+
+## Resultado esperado
+
+- **No cliente:** a **Próxima ação de cobrança** passa a «Feito em 30/10/2026 - 1.º aviso: Carta, responsável: ninguém em particular» e o histórico regista «Aviso de cobrança gerado: 1.º aviso (21 dias de atraso) por Carta.». No exemplo, o PDF da Padaria Aurora, Lda tem a empresa, o cliente, o título «1.º aviso», o texto com 21 dias e 143,10 €, e a fatura `FT D26/28`, vencida a 09/10/2026, com o total de 143,10 €.
+- **Com Tarefa para o responsável:** no exemplo, o nível «Contacto telefónico» (5 dias) criou para a Papelaria Central, Lda a atividade «Cobrança: Contacto telefónico», com a nota «Papelaria Central, Lda tem 4.847,43 € em atraso há 11 dias: contacte o cliente.».
+- **No lote:** cada lote tem os contadores e uma linha por cliente, com o **Resultado** (**Gerado** ou **Saltado**) e o **Motivo**. O lote `AVB/00001` não tinha cartas e abriu-se logo: **Avisos gerados** 1, **Cartas** 0, **Emails na fila** 1, **Tarefas** 0, **Clientes saltados** 2 e **Valor vencido notificado** 1.597,60 €, o e-mail de 2.º aviso de Maria João Ferreira (ENI). A Padaria Aurora, Lda ficou saltada por já ter tido carta nesse dia.
+- **Num lote com cartas:** no exemplo, com **Saltar notificados nos últimos (dias)** a 0 e **Excluir** ligado nos outros dois clientes, o lote `AVB/00003` ficou com **Avisos gerados** 1, **Cartas** 1, **Clientes saltados** 2 e 143,10 €. O navegador descarregou «Aviso de cobrança Padaria Aurora, Lda.pdf», com a carta, e o ecrã ficou na lista **Lotes de avisos**, com o `AVB/00003` em cima. Para ver o lote, abra-o na lista.
+- **Com Um PDF por cliente:** a carta fica também na ficha do cliente, no clipe (**Anexar ficheiros**) por cima do histórico, com o nome do nível e do cliente, por exemplo «1.º aviso - Padaria Aurora, Lda.pdf».
+
+Os lotes ficam na lista **Lotes de avisos**, com a data e quem os gerou. Se todos os clientes ficarem saltados ou excluídos, não se cria lote: veja «Problemas frequentes».
+
+### Avisos automáticos, uma vez por dia
+
+O administrador técnico pode pôr os avisos a sair sozinhos: **Contabilidade › Configurar › Geral › Definições**, grupo **Avisos de cobrança**, opção **Avisos de cobrança automáticos**. Ao marcá-la aparecem **Automático: nível mínimo** e **Automático: ignorar avisados nos últimos (dias)**. O ecrã diz: «Uma vez por dia os avisos são gerados como na geração em lote feita à mão. As cartas ficam em PDF no cliente; os e-mails só vão para a fila de correio local.» <span className="fd-pending">Pendente de validação no ecrã: a opção foi vista mas não ligada, porque a execução diária não se pode esperar numa sessão de teste.</span>
+
+## Notas importantes
+
+- **O e-mail não sai logo.** Fica na fila de saída do Odoo, para o destinatário da ficha do cliente. <span className="fd-pending">Pendente de validação no ecrã: a demonstração não tem servidor de e-mail, por isso o envio a partir da fila não se pôde ver.</span>
+- **O nível conta pela fatura vencida mais antiga.** O valor vencido é a soma de todas as faturas vencidas do cliente. No exemplo, Maria João Ferreira (ENI) tem 135,88 € vencidos desde 23/09/2026 e 1.461,72 € desde 15/10/2026: 37 dias e 1.597,60 €.
+- **O bloco COBRANÇA só aparece em clientes com faturas vencidas.** Sem nenhum nível que chegue aos dias de atraso, o bloco aparece sem nível e sem o botão **Gerar aviso**.
+- **Não use hoje a caixa «Deixar fora da cobrança» da fatura.** Aparece nas faturas de clientes emitidas, mas está desativada em todos os perfis, incluindo o administrador: não se consegue marcar. Para deixar um cliente de fora de um lote, use **Excluir** no passo 8.
+
+{/* Nota interna (DOCS-040, lote F2): a 4.ª nota descreve o defeito LOT-F2-01 (caixa Deixar fora da cobrança desativada na fatura emitida); rever quando o cartão entrar em master. Os problemas «Não tem permissão…» e «Nenhum nível…» descrevem os defeitos LOT-F2-02 e LOT-F2-05. Correção aud-v2f2 (NF2a-07 a 10), vista a 30/10 na 8111 com o Contabilista: lote AVB/00003 (só a carta da Padaria Aurora, os outros dois com Excluir e Saltar a 0) descarregou o PDF e ficou em Lotes de avisos; anexo «1.º aviso - Padaria Aurora, Lda.pdf» no clipe da ficha; ajuda do campo Um PDF por cliente lida no ecrã; com os 3 clientes «Já notificado…», Gerar dá a Operação inválida citada e a janela fica aberta (sem lote); Gerência recusada em Gerar aviso. */}
+
+## Problemas frequentes
+
+### Aparece «Não tem permissão para gerar avisos de cobrança.»
+
+- **Sintoma:** ao carregar em **Gerar aviso**, abre-se a janela **Operação inválida** com «Não tem permissão para gerar avisos de cobrança.».
+- **Causa:** o seu perfil é **Administrativo** ou **Gerência**. Estes perfis veem o bloco **COBRANÇA** e o menu **Avisos de cobrança**, mas não geram avisos.
+- **O que fazer:** carregue em **Fechar** e peça o aviso ao contabilista.
+
+### O lote diz «Nenhum nível de aviso se aplica a … com 11 dias de atraso»
+
+- **Sintoma:** na pré-visualização, em **Saltado porque**: «Nenhum nível de aviso se aplica a Papelaria Central, Lda com 11 dias de atraso. Porquê: … Como resolver: O primeiro nível começa aos 15 dias de atraso: espere até lá, ou junte um nível que comece mais cedo em Configurar > Bancos e ativos > mais > Níveis de avisos de cobrança.». Nessa linha, **Atraso (dias)** e **Valor vencido** aparecem a 0 e 0,00 €.
+- **Causa:** o atraso do cliente é menor do que o do primeiro nível.
+- **O que fazer:** espere que o atraso chegue ao primeiro nível, ou crie um nível que comece mais cedo. Os níveis estão em **Contabilidade › Lançar › Início › O que há para fazer?**, grupo **Listas de apoio**, e não no caminho que a mensagem indica. Os valores certos veem-se no bloco **COBRANÇA** do cliente.
+
+### O lote diz «Já notificado neste nível em …»
+
+- **Sintoma:** em **Saltado porque**: «Já notificado neste nível em 30/10/2026.».
+- **Causa:** o cliente já recebeu um aviso deste nível dentro dos dias de **Saltar notificados nos últimos (dias)**.
+- **O que fazer:** nada, se o aviso anterior chega. Para o repetir já, diminua esse número antes de **Pré-visualizar**, ou gere o aviso na ficha do cliente (passo 5), que não salta.
+
+### Aparece «Não há nenhum cliente a notificar…»
+
+- **Sintoma:** ao carregar em **Gerar**, abre-se a janela **Operação inválida** com «Não há nenhum cliente a notificar: ou ninguém tem faturas vencidas com estes filtros, ou todos os clientes foram saltados (abaixo do nível mínimo, já notificados, sem email ou excluídos). Altere os filtros ou a pré-visualização e tente de novo.». Por baixo, a janela **Gerar avisos de cobrança** continua aberta e não se cria lote.
+- **Causa:** todas as linhas da pré-visualização têm um motivo em **Saltado porque** ou o **Excluir** ligado, ou nenhum cliente tem faturas vencidas com estes filtros.
+- **O que fazer:** carregue em **Fechar**. Se quer mesmo avisar, mude o **Nível mínimo** ou as **Categorias de cliente**, baixe **Saltar notificados nos últimos (dias)** ou desligue **Excluir** nas linhas, e carregue outra vez em **Pré-visualizar**. Se não há ninguém a avisar, carregue em **Descartar**.
+
+### Aparece «… não tem endereço de email: use uma carta ou preencha o email.»
+
+- **Sintoma:** ao carregar em **Gerar aviso** na ficha do cliente, abre-se a janela **Operação inválida** com, por exemplo, «Maria João Ferreira (ENI) não tem endereço de email: use uma carta ou preencha o email.».
+- **Causa:** o nível do cliente é por **E-mail** (no exemplo, o **2.º aviso**, aos 46 dias de atraso) e a ficha do cliente não tem e-mail.
+- **O que fazer:** preencha o e-mail na ficha do cliente e carregue outra vez em **Gerar aviso**, ou mude o **Canal** do nível para **Carta**.
+
+### Ao guardar um nível aparece «Os dias de atraso do nível … têm de ser superiores a zero…»
+
+- **Sintoma:** ao guardar um nível com **Atraso (dias)** a 0, aparece «Os dias de atraso do nível Aviso prévio têm de ser superiores a zero: um nível começa depois da data de vencimento.».
+- **O que fazer:** escreva um número de dias maior do que zero.
+
+### Ao guardar um nível aparece «Já existe um nível com … dias para os mesmos clientes…»
+
+- **Sintoma:** ao guardar um nível com os mesmos dias de outro, aparece, por exemplo, «Já existe um nível com 15 dias para os mesmos clientes (1.º aviso): altere os dias ou as categorias.».
+- **O que fazer:** mude o **Atraso (dias)**, ou escolha **Categorias de cliente** diferentes nos dois níveis.
+
+{/* Nota interna (lote v23-AN, depois do comboio 174 com o UX-147, master a67618a71, docs_demo_v23an_test): caminho das Definições conferido por clique com o administrador (Contabilidade › Configurar, grupo Geral, Definições, que abre no separador Faturação) e com o verificador do test_doc_paths; opção Avisos de cobrança automáticos no grupo Avisos de cobrança. O resto do artigo não se refez. */}

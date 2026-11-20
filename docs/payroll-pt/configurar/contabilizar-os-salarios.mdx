@@ -1,0 +1,132 @@
+---
+id: contabilizar-os-salarios
+slug: /payroll-pt/contabilizar-os-salarios
+title: Como contabilizar o processamento dos salários
+sidebar_label: Contabilizar os salários
+sidebar_position: 4
+description: Ligar cada rubrica do recibo às contas da empresa com os modelos de contabilização e gerar o lançamento dos salários do mês, por trabalhador ou agregado por lote.
+keywords: [contabilizar, processamento, salários, salarios, modelos de contabilização, modelos de contabilizacao, lançamento dos salários, lancamento dos salarios, lançar os salários, lancar os salarios, agregado por lote, por trabalhador, diário de salários, diario de salarios, remunerações a pagar, remuneracoes a pagar, contabilização bloqueada, contabilizacao bloqueada]
+doc_id: DOC-0179
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master a67618a71)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/processar-e-pagar/pagar-os-salarios, payroll-pt/configurar/configurar-os-salarios]
+---
+
+## Para que serve?
+
+Depois de validar o lote do mês, os salários têm de entrar na contabilidade: o gasto com o pessoal, o IRS retido e as contribuições a entregar ao Estado e o líquido a pagar aos trabalhadores. O fiscaldoo faz esse lançamento sozinho a partir dos recibos, no diário de salários, desde que cada rubrica com valor tenha um **modelo de contabilização**: a regra que diz a que conta vai o débito e a que conta vai o crédito.
+
+Os modelos configuram-se uma vez e servem todos os meses. O lançamento de cada mês faz-se no lote, com **Contabilizar**, e é obrigatório antes do ficheiro de transferências: o pagamento dos salários liquida esse lançamento.
+
+## Quando utilizar?
+
+- Antes do primeiro processamento, para criar os modelos de todas as rubricas que a empresa usa.
+- Quando aparece uma rubrica nova no recibo (um subsídio, um prémio) e o lote validado avisa «Conta contabilística de cada rubrica com valor (Bloqueia o fecho)».
+- Todos os meses, logo a seguir a [processar e validar os salários](/payroll-pt/processar-o-mes) e antes de [pagar os salários](/payroll-pt/pagar-os-salarios).
+
+## Onde encontrar?
+
+- Modelos: **Salários › Configurar › Rubricas › Modelos de contabilização**.
+- Forma do lançamento: **Salários › Configurar › Empresa › Definições de salários** › linha da empresa › secção **Contabilidade** › **Lançar os salários**.
+- Lançamento do mês: **Salários › Processar › Processar o mês** › abrir o lote validado › **Contabilizar**.
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador: só quem o tem vê o menu **Configurar** e o botão **Contabilizar**. O perfil **Processador de salários**, sem este acesso, não os vê.
+- Escolha a empresa no seletor do canto superior direito: noutra empresa, como a **Empresa Teste Portugal** da demonstração, a lista **Modelos de contabilização** aparece vazia e não existe o lote de salários. Escolha **Empresa Demonstração, Lda**.
+- Com o acesso **Administrador de Salários**, também escolhe as contas e o diário de um modelo, mesmo sem o perfil **Contabilista**. {/* Nota interna (auditoria docs-aud-v23ak, 08/11/2026): visto no ecrã com um utilizador sem valor no campo Perfil e só com o acesso Administrador de Salários: Conta a débito, Conta a crédito e Diário de salários editáveis, com a lista de contas. O produto liga estes campos ao acesso de leitura aos diários, que o Contabilista e o Administrador de Salários têm. */}
+- As contas de cada rubrica foram decididas com o contabilista certificado. O fiscaldoo não escolhe contas por si.
+- O lote do mês está **Validado**.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Configurar › Empresa › Definições de salários**, abra a linha da empresa e confira, na secção **Contabilidade**, o campo **Lançar os salários**: **Agregado por lote** (o valor das empresas novas: uma linha por conta e por lote, sem o nome dos trabalhadores) ou **Por trabalhador** (o líquido, o IRS e as contribuições de cada trabalhador na conta de terceiro dele). Na mesma secção ficam o **Segurança Social (parceiro)** e o **Autoridade Tributária (parceiro)** que o lançamento usa.
+   ![Secção Contabilidade das definições de salários, com Lançar os salários em Agregado por lote assinalado](/images/payroll-pt/contabilizar-os-salarios/01-lancar-os-salarios.png)
+2. Abra **Salários › Configurar › Rubricas › Modelos de contabilização**. Na **Empresa Demonstração, Lda**, a lista mostra um modelo por rubrica, com **Classe do trabalhador**, **Conta a débito**, **Conta a crédito**, **Parceiro**, **Diário de salários** e **Válido desde**.
+   Numa empresa sem modelos, carregue antes em **Propor modelos**. A janela **Propor modelos de contabilização** mostra, para cada rubrica ainda sem modelo, a **Rubrica**, o **Débito**, o **Crédito** e o **Terceiro**, com as contas do plano da empresa, e só cria as linhas assinaladas quando carregar em **Criar os modelos** (**Anular** fecha a janela sem criar nada). Cada modelo criado fica marcado «a confirmar pelo contabilista». As rubricas que já têm modelo não aparecem e nunca são alteradas. A janela cobre só o pessoal (os órgãos sociais têm modelos próprios, criados à mão) e deixa de fora as rubricas cuja contabilização depende de uma decisão do contabilista: na demonstração, «Indemnização do aviso em falta devida pelo trabalhador (cessação), Indemnização devida ao empregador por resolução ilícita (cessação), Subsídio de desemprego entregue à Segurança Social (cessação)». Para essas, e para o que quiser diferente, continue no passo seguinte.
+3. Carregue em **Novo** e preencha:
+   - **Empresa**: vem preenchida com a empresa escolhida no seletor;
+   - **Rubrica salarial**, por exemplo **Subsídio de alimentação**;
+   - **Classe do trabalhador**: **Pessoal** ou **Órgãos sociais** (cada classe tem os seus modelos);
+   - **Válido desde**: o primeiro dia em que o modelo vale (por exemplo 01/10/2026); deixe **Válido até** vazio enquanto não mudar;
+   - **Conta a débito** e **Conta a crédito**;
+   - **Parceiro**: a quem pertence o lado de terceiro da linha (**Trabalhador**, **Segurança Social**, **Autoridade Tributária (AT)**, **Sindicato** ou **Outro terceiro**);
+   - **Diário de salários** (**Salários** na demonstração) e, se quiser, **Política analítica** (**Sem distribuição analítica**, **Distribuição analítica opcional** ou **Distribuição analítica obrigatória**).
+4. Guarde o modelo. O título do registo mostra a rubrica, a classe e a data de início, por exemplo «Subsídio de alimentação Pessoal (01/10/2026)».
+   ![Modelo de contabilização do Subsídio de alimentação: Pessoal, válido desde 01/10/2026, débito 632, crédito 231290, parceiro Trabalhador, diário Salários](/images/payroll-pt/contabilizar-os-salarios/02-modelo-subsidio-de-alimentacao.png)
+5. Abra o lote validado do mês e carregue em **Contabilizar**. Não aparece mensagem: o aviso «Conta contabilística de cada rubrica com valor (Bloqueia o fecho)» desaparece do lote e o botão **Contabilizar** deixa de aparecer.
+   ![Lote de outubro de 2026 Validado depois de contabilizado: já não há o botão Contabilizar nem o aviso de rubricas sem conta; ficam Gerar pagamentos, Ficheiro de transferências, Banco executou e Marcar como pago](/images/payroll-pt/contabilizar-os-salarios/03-lote-contabilizado.png)
+6. Confira o lançamento em **Contabilidade**, no diário **Salários** (em outubro de 2026, SAL/2026/00005, com a data 31/10/2026 e a referência «Salários de outubro de 2026»): o estado **Equilibrado** e os totais de débito e de crédito iguais.
+
+</StepByStep>
+
+**Exemplo.** Na demonstração, as rubricas com valor no lote de outubro já têm modelo, válido desde 01/01/2026, incluindo o do **Subsídio de alimentação** (os dados dos passos 3 e 4), com débito em 632 **Remunerações do pessoal** e crédito em 231290 **Remunerações em processamento**. O lote de outubro de 2026 (8 recibos, **Agregado por lote**) gerou um só lançamento, SAL/2026/00005, publicado:
+
+| Conta | Parceiro | Débito | Crédito |
+|---|---|---|---|
+| 632 Remunerações do pessoal (retribuição base 11.560,00 + subsídio de alimentação 968,63) | | 12.528,63 € | |
+| 231290 Remunerações em processamento | | | 12.528,63 € |
+| 231290 Remunerações em processamento | | 12.528,63 € | |
+| 2312 Ao pessoal (líquido a pagar) | | | 10.382,03 € |
+| 242 Retenção de impostos sobre rendimentos (IRS retido) | Autoridade Tributária | | 875,00 € |
+| 245 Contribuições para a Segurança Social (11 % dos trabalhadores) | Segurança Social | | 1.271,60 € |
+| 635 Encargos sobre remunerações (contribuição da empresa) | | 2.745,52 € | |
+| 245 Contribuições para a Segurança Social (contribuição da empresa) | Segurança Social | | 2.745,52 € |
+| **Total** | | **27.802,78 €** | **27.802,78 €** |
+
+A conta 231290 fica a zero: os rendimentos (12.528,63 €) são iguais ao IRS, à Segurança Social dos trabalhadores e ao líquido (875,00 + 1.271,60 + 10.382,03). Quando o banco paga, o [pagamento dos salários](/payroll-pt/pagar-os-salarios) debita 2312 **Ao pessoal** pelos mesmos 10.382,03 €. <span className="fd-pending">Pendente de validação por contabilista certificado: contas do plano da demonstração (o líquido em 2312 «Ao pessoal»; o subsídio de alimentação em 632).</span>
+
+## Resultado esperado
+
+- O lote validado deixa de mostrar «Conta contabilística de cada rubrica com valor (Bloqueia o fecho)».
+- Há um lançamento publicado no diário **Salários**: um por lote em **Agregado por lote**; em **Por trabalhador**, com as linhas de cada trabalhador na conta de terceiro dele.
+- O recibo mostra o lançamento em **Pagamento e obrigações** › **Lançamento contabilístico**, e o lote já aceita o **Ficheiro de transferências**.
+
+![Lançamento SAL/2026/00005 no diário Salários, equilibrado, com as linhas do lote de outubro de 2026](/images/payroll-pt/contabilizar-os-salarios/04-lancamento-do-lote.png)
+
+## Notas importantes
+
+- **O modo muda o detalhe, não os totais.** Em **Agregado por lote**, quem só vê a contabilidade não vê quanto recebeu cada trabalhador: esse detalhe fica nos Salários. Em **Por trabalhador**, as linhas do líquido, do IRS e das contribuições levam o trabalhador. Os totais por conta são os mesmos. Mudar a opção vale para os lotes ainda por contabilizar.
+- **Um modelo vale por datas.** O fiscaldoo procura o modelo vigente no último dia do mês do lote. Para mudar de conta a meio do ano, preencha **Válido até** no modelo antigo e crie um novo com **Válido desde** no dia seguinte, em vez de alterar o antigo.
+- **Contabilizar é obrigatório antes de pagar.** O ficheiro de transferências é recusado enquanto o lote não estiver contabilizado. Ver [Como pagar os salários](/payroll-pt/pagar-os-salarios).
+- Este artigo não trata a ligação aos salários do Odoo Enterprise (ponte própria). <span className="fd-pending">Pendente de validação no ecrã: diferenças na edição Enterprise.</span>
+
+## Problemas frequentes
+
+### Contabilizar responde «Contabilização bloqueada»
+
+- **Sintoma:** a janela **Aviso** diz «Contabilização bloqueada: 1 rubrica(s) com valor não têm modelo de contabilização em 31/10/2026: Subsídio de alimentação. O que aconteceu: o lançamento não pode ser construído sem uma conta para cada linha. Como corrigir: crie um modelo para cada uma (Salários › Configurar › Rubricas › Modelos de contabilização). «Propor modelos» mostra os modelos que o produto sugere para estas rubricas; não se cria nada até confirmar.», com os botões **Propor modelos** e **Fechar**.
+- **Causa:** uma rubrica com valor nos recibos do lote não tem modelo vigente no último dia do mês, para a classe do trabalhador.
+- **O que fazer:** carregue em **Propor modelos**: abre-se a janela **Propor modelos de contabilização** só com as rubricas em falta (no exemplo, **Subsídio de alimentação**, com débito em **Remunerações do pessoal** e crédito em **Remunerações em processamento**). Confira e confirme, ou carregue em **Fechar** e crie o modelo à mão (passos 2 a 4). Depois carregue de novo em **Contabilizar**. **Ver quem é preciso corrigir**, no aviso do lote, mostra a mesma explicação por trabalhador.
+
+### «O plano da empresa não tem a conta 231290»
+
+- **Sintoma:** na janela **Propor modelos de contabilização** aparece «O plano da empresa não tem a conta 231290 (a conta de passagem do bruto). Os modelos que precisam dela ainda não podem ser criados. Peça ao contabilista que a crie no plano de contas e abra esta janela outra vez.», e a coluna **Crédito** diz «231290 (não existe no plano da empresa)». Visto na **Empresa Teste Portugal**.
+- **Causa:** o plano de contas da empresa não tem a conta 231290 Remunerações em processamento.
+- **O que fazer:** peça a quem trata do plano de contas que crie a conta e volte a carregar em **Propor modelos**.
+
+### Não consigo guardar o modelo
+
+- **Sintoma:** «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.», com **Rubrica salarial**, **Válido desde**, **Conta a débito**, **Conta a crédito** e **Diário de salários** a vermelho.
+- **Causa:** faltam campos obrigatórios.
+- **O que fazer:** preencha os campos a vermelho. Se as contas e o diário não deixam escrever, peça o perfil **Contabilista** ao administrador ou peça a quem o tem que crie o modelo.
+
+### O Processador de salários não vê Contabilizar
+
+- **Sintoma:** no lote validado, o Processador de salários só vê **Gerar pagamentos**, **Ficheiro de transferências**, **Banco executou** e **Marcar como pago**; o ficheiro de transferências responde «Operação inválida Ainda não é possível fazer o ficheiro de transferências. O que aconteceu: 8 recibos não estão contabilizados, e a transferência bancária é um pagamento da Contabilidade que liquida o lançamento do recibo. … Como resolver: peça a um utilizador com o acesso extra «Administrador de Salários» para usar «Contabilizar» no lote e carregue de novo em «Ficheiro de transferências».», com a lista de todos os recibos.
+- **Causa:** só quem tem o acesso extra **Administrador de Salários** contabiliza. O perfil **Processador de salários** não o tem.
+- **O que fazer:** peça a um utilizador com o acesso extra **Administrador de Salários** que contabilize o lote antes do ficheiro, ou peça esse acesso ao administrador.
+
+{/* Nota interna (lote v23-AO, DOCS-069 #4052, master a67618a71, docs_demo_v23ao_test, 09/11/2026): UX-147. Botões do lote validado e recusa do Ficheiro de transferências vistos por clique com um utilizador só com o perfil Processador de salários (lote de outubro de 2026 criado e validado por RPC na cópia, pagamentos gerados por clique); Contabilizar visto e usado por clique com um utilizador sem valor no campo Perfil e só com o acesso extra Administrador de Salários. */}
+
+{/* Nota interna (DOCS-022, master 7281543f): o modo «Por trabalhador» não foi carregado no ecrã (a demonstração está em «Agregado por lote» e o lote de outubro já ficou contabilizado); o caminho com um Administrador de Salários sem o perfil Contabilista (campos só de leitura) vem da ajuda do produto, não foi visto. */}
+
+{/* Nota interna (DOCS-063 #3853, lote v23-N, master dbbb5ac5c, docs_demo_v23n_test, porta 8442): PAY-114 visto por clique com um utilizador só com o grupo Administrador de Salários (não é valor do campo Perfil), na Empresa Teste Portugal: janela Propor modelos lida e fechada sem Criar. A recusa do Contabilizar com o botão «Propor modelos» não foi provocada: a base-mãe v2 só tem lotes pagos (junho a setembro); o exemplo de outubro deste artigo é da base antiga. */}
+
+{/* Nota interna (DOCS-063 #3853, lote v23-S, master cebcb888d, docs_demo_v23s_test, porta 8458): recusa do Contabilizar provocada por clique com um utilizador só com o grupo Administrador de Salários, na Empresa Demonstração. Lotes criados por RPC só na cópia (outubro normal, validado; novembro de simulação, calculado); o modelo do Subsídio de alimentação foi arquivado pelo ecrã (Ações › Arquivar) e reposto por RPC no fim. A janela chama-se agora «Aviso» (já não «Operação inválida») e traz «Propor modelos», que abre a proposta só com a rubrica em falta e as três da cessação de fora. Auditoria docs-aud-v23s: com o modelo reposto, o lote de outubro da cópia deu SAL/2026/00005 de 31/10/2026 com as linhas e os totais da tabela (27.802,78 €); capturas 03 e 04 refeitas (a 04 antiga tinha códigos com zeros, 632000 e 232290; a 03 antiga mostrava um lote Pago). */}

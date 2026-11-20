@@ -1,0 +1,116 @@
+---
+id: painel-edi
+slug: /fiscal-core/painel-edi
+title: Como acompanhar as mensagens EDI
+sidebar_label: Painel EDI
+description: "Como ver no painel EDI as mensagens que precisam de alguém, perceber o que aconteceu a cada uma, reprocessar e consultar todas as mensagens e comunicações."
+keywords: [mensagens EDI, painel EDI, Troca de documentos, comunicações externas, comunicacoes externas, por rever, reprocessar, por tratar, ORDERS, RECADV, operador EDI]
+doc_id: DOC-0062
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 3a28c9b91)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao-eletronica/encomendas-edi]
+---
+
+{/* Nota interna (DOCS-046, lote v13-PPL): percorrido com demo.faturacao; a demonstração usa o simulador e nenhuma mensagem saiu da máquina. Só as ações que a demonstração permite foram provocadas (Reprocessar, Receber mensagens). «Consultar estado» e «Repetir envio» não aparecem em mensagens recebidas e ficam no texto como descrição. Reprocessar a SIM0005 revisto no DOCS-065 (master c643480c2): Faturação e Gestor recebem o aviso; o Administrador, com o código de barras corrigido, ficou Processada com o orçamento S00005 (EDI-021). */}
+
+## Para que serve?
+
+O EDI troca encomendas, avisos e faturas com os clientes através de um operador, sem papel. O painel mostra num só sítio as mensagens que precisam de alguém, o que aconteceu a cada uma e o que fazer.
+
+## Quando utilizar?
+
+- Quer saber se há mensagens por tratar.
+- Um cliente diz que enviou uma encomenda e ela não aparece.
+- Quer ver o histórico das mensagens trocadas.
+
+## Onde encontrar?
+
+Na aplicação **EDI**:
+
+- **EDI › Painel**: o que precisa de alguém.
+- **EDI › Mensagens**: todas as mensagens.
+- **EDI › Receber mensagens**: vai buscar as mensagens novas ao operador.
+- **EDI › Comunicações externas**: cada troca com o operador, com o resultado.
+
+## Antes de começar
+
+O perfil é o **Administrativo**. Com esse perfil foram percorridos o painel, as mensagens, a receção e o reprocessamento de um aviso de receção. Reprocessar uma encomenda cria um orçamento e pede quem os pode criar: veja «Problemas frequentes».
+
+## Como utilizar
+
+### Ver o que está por tratar
+
+Abra **EDI › Painel**. O ecrã abre com o filtro **Por tratar**. Cada cartão mostra o cliente, o tipo de mensagem, a data e, em palavras simples, o que aconteceu e o que fazer.
+
+Sem nada por tratar, o painel diz «Não há nada à sua espera» e «Cada mensagem que precisa de alguém (por rever, com erro ou com divergência) aparece aqui com o que aconteceu e o que fazer.» (visto com o administrador na Empresa Teste Portugal, que não tem mensagens EDI).
+
+![Painel com três mensagens por tratar: duas encomendas (ORDERS) e um aviso de receção (RECADV), cada uma com o motivo e o botão Reprocessar](/images/fiscal-core/painel-edi/01-painel.png)
+
+### Resolver uma mensagem
+
+<StepByStep>
+
+1. Leia a causa no cartão. Por exemplo: «Linha 2: nenhum artigo tem o código de barras 5609999119998. Preencha o código de barras na ficha do artigo (ou a referência do cliente) e processe a mensagem outra vez.»
+2. Corrija o que está indicado, na ficha do artigo ou do cliente.
+3. Carregue em **Reprocessar**, no cartão ou na mensagem.
+
+</StepByStep>
+
+Se a causa continuar, a mensagem fica em **Por rever**, com a mesma explicação em **ERROS**. Abra o cartão para ver a mensagem completa, com o **Sentido**, o **Tipo**, o **Parceiro**, a **Chave de negócio** e o **Ficheiro original**.
+
+![Mensagem RECADV no estado Por rever, com o sentido Recebida, o cliente, a chave de negócio e o erro explicado](/images/fiscal-core/painel-edi/02-mensagem.png)
+
+### Consultar o histórico e receber mensagens novas
+
+- Em **EDI › Mensagens**, a lista tem **Criado em**, **Sentido**, **Tipo**, **Parceiro**, **Chave de negócio** e **Estado**, incluindo as **Processada**.
+- Em **EDI › Receber mensagens**, a aplicação vai buscar o que há de novo e diz quantas chegaram, por exemplo «Mensagens recebidas. 0 mensagem(ns) nova(s).»
+- Em **EDI › Comunicações externas**, cada linha tem o **Documento**, o **Serviço**, o **Estado**, as **Tentativas**, **Enviada em**, **Respondida em**, o **Transporte** e o **Ambiente**. Numa base de testes, o resultado aparece como **Aceite (simulado)**, com o **Transporte** **Simulado** e o **Ambiente** **Teste**.
+
+## No Enterprise
+
+No Odoo Enterprise, a aplicação **EDI** tem as mesmas entradas: **Painel**, **Mensagens**, **Divergências de receção**, **Receber mensagens** e **Comunicações externas** (visto com um utilizador só com o perfil **Administrativo**). O **Painel** abre com o filtro **Por tratar** e cada cartão diz o que aconteceu e o que fazer, com o botão **Reprocessar**. **Mensagens** tem as colunas **Criado em**, **Sentido**, **Tipo**, **Parceiro**, **Chave de negócio** e **Estado**.
+
+{/* Nota interna (lote EE-12, DOCS-073 #4142, DEC-1794, master 589ecfd27, base Enterprise docs_ee_ee12_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee12_test): DOC-0062. Administrativo: Painel com «Por rever (3)» e os cartões ORDERS e RECADV do Retalhista Exemplo (EDI); Mensagens com 5 linhas. Nenhuma mensagem reprocessada. Na base Enterprise de demonstração, o motivo das 3 mensagens por rever está gravado em inglês («Line 2: no item has the GTIN 5609999119998…», «The sender GLN 5609999000050 matches no customer.», «No despatch advice (DESADV) matches the notice SIMREC0001…»); na cópia Community está em português, e as mensagens recebidas já na cópia Enterprise também. Defeito da demonstração no relatório. Ver reports/LOTE_EE-12.md. */}
+
+## Resultado esperado
+
+- Uma mensagem tratada aparece em **Mensagens** como **Processada** e não aparece no filtro **Por tratar**.
+- Enquanto a causa continuar, a mensagem fica em **Por rever**, com a explicação em **ERROS**.
+
+## Notas importantes
+
+- **Reprocessar não altera documentos já emitidos.** Volta a ler a mensagem recebida.
+- **Mensagens enviadas.** Numa mensagem enviada sem resposta ou rejeitada, os botões são outros: **Consultar estado** e **Repetir envio**. Numa mensagem que pode ou não ter chegado, confirme antes de a repetir, para não a duplicar. Pendente de validação no ecrã: a demonstração só tem mensagens recebidas.
+- **Aviso de receção com diferenças.** Uma diferença entre o enviado e o recebido segue para **EDI › Divergências de receção**. Pendente de validação no ecrã: a demonstração não tem nenhuma divergência.
+- **O código técnico** do operador fica em **DETALHE TÉCNICO**, para o suporte.
+- **O painel não vê o que nunca chegou.** Se o operador não entregou a mensagem, ela não aparece aqui. Use **Receber mensagens** e, se continuar a faltar, fale com o operador.
+
+## Problemas frequentes
+
+### «O seu perfil não pode criar orçamentos…»
+
+- **Sintoma:** ao carregar em **Reprocessar** numa encomenda, abre-se «O seu perfil não pode criar orçamentos e processar uma encomenda cria um. Como resolver: peça a um utilizador de Vendas que carregue em «Reprocessar» (ou ao administrador que lhe dê o acesso de Vendas). A mensagem fica «Por rever».». Aconteceu com os perfis **Administrativo**, **Contabilista** e **Contabilista certificado**.
+- **Causa:** reprocessar uma encomenda cria um orçamento, e estes perfis não têm esse direito.
+- **O que fazer:** carregue em **Fechar** e peça a quem pode criar orçamentos: nenhum valor do campo **Perfil** dá esse acesso; o administrador do sistema pode, ou dá o acesso de **Vendas** em **Ajustes avançados**. Com a causa corrigida, a mensagem passa a **Processada** e o orçamento aparece em **Vendas › Ordens › Encomendas recebidas**.
+
+### «O GLN do remetente … não corresponde a nenhum cliente»
+
+- **Sintoma:** o cartão diz «Chegou uma mensagem que não foi tratada. O GLN do remetente 5609999000050 não corresponde a nenhum cliente.», sem cliente no título.
+- **Causa:** nenhum cliente tem esse código GLN na ficha.
+- **O que fazer:** preencha o GLN na ficha do cliente certo e carregue em **Reprocessar**. Se não conhece o remetente, fale com o operador.
+
+### «Nenhum aviso de expedição (DESADV) corresponde ao aviso…»
+
+- **Sintoma:** um aviso de receção (RECADV) fica em **Por rever** com «Nenhum aviso de expedição (DESADV) corresponde ao aviso SIMREC0001 (referência de expedição SIMDES0001).»
+- **Causa:** o aviso de receção compara-se com o que foi expedido, e não há aviso de expedição com essa referência para este cliente.
+- **O que fazer:** confira o aviso de expedição enviado a este cliente e carregue em **Reprocessar**.
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): perfil e mensagem por clique: Reprocessar na ORDERS SIM-IN-SIM0004 (Por rever) com utilizadores criados só com o Perfil Administrativo, Contabilista e Contabilista certificado; a recusa é igual nos três e a mensagem fica Por rever. Nenhum perfil traz o acesso de Vendas (matriz de grupos da cópia). */}
+
+{/* Nota interna (DOCS-075, lote v23-BJ, master 7f41ce71b, docs_demo_v23bj_test): Troca de documentos › Painel aberto por clique com um utilizador só com o perfil Administrativo; o produto chama-lhe painel da Troca de documentos (UX-163). */}
+
+{/* Nota interna (lote 97, UX-168, master 3a28c9b91, docs_demo_lote97_test, 18/11/2026): a aplicação volta a chamar-se EDI. Visto por clique com um utilizador só com o perfil Administrativo: menu das aplicações com «EDI» e, dentro, Painel, Mensagens, Divergências de receção, Receber mensagens e Comunicações externas. O Enterprise não foi visto de novo: o nome vem da mesma tradução do módulo do EDI. */}

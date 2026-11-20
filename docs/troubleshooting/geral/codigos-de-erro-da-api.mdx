@@ -1,0 +1,94 @@
+---
+id: codigos-de-erro-da-api
+slug: /troubleshooting/codigos-de-erro-da-api
+title: O que significa cada código de erro da API
+sidebar_label: Códigos de erro da API
+sidebar_position: 3
+description: Quando outro programa fala com a faturação do fiscaldoo, a resposta traz um código e uma mensagem em português. O que significa cada código e o que corrigir na integração.
+keywords: [api, códigos de erro, codigos de erro, integração, integracao, ACCESS_DENIED, NOT_FOUND, INVALID_INPUT, BUSINESS_RULE, VALIDATION_ERROR, INTERNAL_ERROR, NOT_POSTED, NOT_PUBLISHABLE, PARTNER_NOT_FOUND, PDF_UNAVAILABLE, VAT_INVALID, PRICE_REQUIRED, ZERO_TOTAL, preço da linha, documento a zero, Integração API]
+doc_id: DOC-0327
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7a46de91a)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/geral/mensagens-do-sistema, troubleshooting/geral/como-pedir-suporte]
+---
+
+A API de faturação deixa outro programa criar faturas e notas de crédito, publicá-las, ler o estado e o PDF, e validar um NIF. Todas as respostas têm a mesma forma, sem erros técnicos do servidor. Este artigo é para quem faz ou mantém essa ligação: quem usa o fiscaldoo no ecrã não vê estes códigos, só as [mensagens do sistema](/troubleshooting/mensagens-do-sistema).
+
+## Como é uma resposta
+
+`{"ok": false, "code": "VAT_INVALID", "message": "O NIF não é válido: tem de ter exatamente 9 dígitos (0-9) e o dígito de controlo correto. Corrija o NIF e envie-o de novo.", "data": {}}`
+
+- **`ok`**: `true` se a operação foi feita. Quando é `false`, nada ficou gravado.
+- **`code`**: `OK` ou um dos códigos abaixo. É este campo que o programa deve testar.
+- **`message`**: a explicação em português, para mostrar a uma pessoa. Pode mudar de texto: não a compare no programa.
+- **`data`**: os dados do documento, quando o há.
+
+## Os códigos
+
+As mensagens abaixo são respostas reais da API, obtidas com chamadas à base de demonstração. As partes em itálico mudam de caso para caso.
+
+| Código | O que significa | Mensagem | O que corrigir |
+| --- | --- | --- | --- |
+| `ACCESS_DENIED` | O utilizador da ligação não tem a permissão. | «O seu utilizador não tem permissão para usar a API de faturação: é preciso a permissão «Integração API». Peça ao administrador que a dê ao utilizador de integração.» | Dê a permissão: veja [abaixo](#a-permissão-da-integração). |
+| `NOT_FOUND` | O documento não existe na empresa em que a chamada corre. Um documento de outra empresa dá a mesma resposta. | «O documento não foi encontrado na empresa atual. Verifique o identificador e a empresa.» | Confirme o identificador e a empresa da chamada. |
+| `INVALID_INPUT` | Um dado enviado não se pode usar. A mensagem diz qual. | «Campos desconhecidos ou não permitidos: *cor*.»; ««quantity» tem de ser um número.»; ««lines» tem de ser uma lista de 1 a 200 linhas.» | Corrija o dado e envie de novo. |
+| `PRICE_REQUIRED` | Uma linha veio sem preço e não há preço de artigo para usar: a linha não tem artigo, ou o artigo não tem preço de venda. Nada fica gravado. | «Linha *1*: não foi enviado preço e não há preço de artigo para usar. Como resolver: envie «price_unit» (0 se a linha for grátis de propósito) ou defina o preço de venda do artigo.» | Envie o preço da linha, ou defina o preço de venda do artigo no fiscaldoo. Veja [abaixo](#linhas-sem-preço). |
+| `VAT_INVALID` | O NIF enviado não é válido. | «O NIF não é válido: tem de ter exatamente 9 dígitos (0-9) e o dígito de controlo correto. Corrija o NIF e envie-o de novo.» | Corrija o NIF. |
+| `PARTNER_NOT_FOUND` | O cliente não existe na empresa da chamada ou o NIF não aponta para um único cliente. | «O cliente não foi encontrado na empresa atual.»; «Não foi encontrado um único cliente com este NIF na empresa atual. Crie primeiro o cliente ou envie «partner_id».» | Confirme a empresa. Crie o cliente ou envie o identificador dele. |
+| `NOT_PUBLISHABLE` | O documento já não está em rascunho. | «Só um documento em rascunho pode ser publicado. O que aconteceu: este já está no estado «*Publicada*». Como resolver: envie um documento que ainda esteja em rascunho.» | Não publique outra vez. Leia o estado do documento. |
+| `ZERO_TOTAL` | Pediu para publicar um documento com o total de 0,00 €. A API não publica documentos a zero, porque não leva o motivo de um documento gratuito. O rascunho fica como estava. | «O documento tem o total de 0,00 e a API não leva o motivo de um documento gratuito, por isso não se publica aqui. Como resolver: dê preço às linhas, ou publique o documento gratuito no ecrã.» | Dê preço às linhas, ou publique o documento gratuito no ecrã do fiscaldoo. |
+| `NOT_POSTED` | Pediu o PDF de um rascunho. | «Só um documento publicado tem PDF; publique primeiro este.» | Publique o documento e peça o PDF depois. |
+| `BUSINESS_RULE` | A operação vai contra uma regra do produto ou da lei. O texto vem da regra que recusou e pode listar várias faltas. | «Faltam *3* coisas para confirmar esta fatura: …», com **Porquê** e **O que fazer** em cada falta. | Leia a lista e corrija cada ponto. Uma série em falta resolve-se no fiscaldoo, não no programa. |
+| `VALIDATION_ERROR` | Um valor não cumpre uma regra de validação. O texto vem da regra. | Sem frase fixa. | Leia a mensagem: diz a regra e o valor. |
+| `PDF_UNAVAILABLE` | O PDF não se conseguiu produzir nesse momento. | Sem frase copiada. | Tente mais tarde. Se continuar, contacte o suporte. |
+| `INTERNAL_ERROR` | Falha inesperada do lado do servidor. Nada foi gravado. | Sem frase copiada: a mensagem traz uma referência. | Tente de novo. Se continuar, dê a referência ao suporte. |
+
+<span className="fd-pending">Pendente de validação no ecrã: `VALIDATION_ERROR`, `PDF_UNAVAILABLE` e `INTERNAL_ERROR` não se provocaram na demonstração. Os valores errados que enviámos foram recusados antes, com `INVALID_INPUT`, e os outros dois exigem uma falha do servidor. Por isso não citamos aqui as suas frases.</span>
+
+## Linhas sem preço
+
+Uma linha enviada sem `price_unit` leva o preço de venda do artigo, como quando se escolhe o artigo no ecrã. Na demonstração, uma fatura com 2 unidades de **Material de escritório (kit)**, sem preço, ficou em rascunho com a linha a 85,00 €, 170,00 € sem IVA e 209,10 € com o IVA a 23 %. Se a linha não tem artigo, ou o artigo não tem preço de venda, a resposta é `PRICE_REQUIRED` e nada fica gravado.
+
+Um preço enviado respeita-se sempre, mesmo `0`: a linha fica grátis e o rascunho é criado. Mas um documento com o total a 0,00 € não se publica pela API (`ZERO_TOTAL`): publique-o no ecrã.
+
+## A permissão da integração
+
+Quem faz: um **Administrador**.
+
+1. Abra **Definições › Utilizadores e empresas › Utilizadores** e abra o utilizador da integração.
+2. No separador **Ajustes avançados**, em **Localização PT — Integração por API (faturas)**, escolha **Integração API**.
+3. Carregue em **Guardar**.
+
+Use um utilizador próprio para a ligação: esta permissão inclui a faturação. Na chamada seguinte, o `ACCESS_DENIED` deixa de aparecer.
+
+## A empresa da chamada
+
+Cada chamada corre numa só empresa, a do utilizador. Um documento ou um cliente de outra empresa responde `NOT_FOUND` ou `PARTNER_NOT_FOUND`, como se não existisse: o programa nunca fica a saber o que há nas outras empresas. Se um identificador que vê no ecrã dá `NOT_FOUND`, confirme primeiro a empresa.
+
+## Nas descargas de ficheiros
+
+Um relatório ou um mapa aberto por um endereço direto responde de outra forma, com uma página de texto simples e o código no fim:
+
+> «Não encontrámos o registo. Pode ter sido apagado ou pertencer a outra empresa. Volte a carregar o ecrã e confirme a empresa escolhida no topo.
+>
+> (NOT_FOUND)»
+
+Tem o mesmo sentido do `NOT_FOUND` da API.
+
+## Quando contactar o suporte
+
+- `INTERNAL_ERROR` repetido, ou `PDF_UNAVAILABLE` que não passa.
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com o código, o método chamado e a referência, se existir. Nunca envie a palavra-passe do utilizador da integração.
+
+{/* Nota interna (DOCS-046, lote v22-B, 06/11/2026, master d83bdf7ae): conferido no ecrã com o Administrador só o caminho da permissão (Definições › Utilizadores e empresas › Utilizadores, separador Ajustes avançados, linha «Localização PT — Integração por API (faturas)»); a opção «Integração API» e as respostas da API não foram repetidas neste lote. Sem frases de perfil por provar. */}
+
+{/* Nota interna (DOCS-063 #3853, lote v23-S, master cebcb888d, porta 8458): UX-109. Resposta de post_invoice pedida por chamada (sem ecrã: é a API) numa fatura publicada da Empresa Demonstração, com utilizador em português: «Só um documento em rascunho pode ser publicado. O que aconteceu: este já está no estado «Publicada». Como resolver: envie um documento que ainda esteja em rascunho.» O nome do estado vem na língua do utilizador da integração; o bilhete dizia «Lançado». */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-BA, master ce51f2d47, docs_demo_v23ba_test, 10/11/2026, DEF-QA8-c-02): ACCESS_DENIED conferido no pt_PT.po de master (l10n_pt_fiscaldoo_cert): «Peça ao administrador que a dê ao utilizador de integração.». */}
+
+{/* Nota interna (lote v23-BE, depois do comboio 188 com o FAT-155 #4147, master 7a46de91a, docs_demo_v23be_test, porta 8504): respostas pedidas por chamada JSON-RPC (sem ecrã: é a API) com um utilizador criado por RPC só na cópia (perfil Administrativo + Integração API, em português), cliente Papelaria Central, Lda: create_invoice com 2 × Material de escritório (kit) sem price_unit → OK, rascunho com a linha a 85,00, 170,00 sem IVA, total 209,10; linha só com nome e sem preço → PRICE_REQUIRED (texto acima, nada gravado); linha com price_unit 0 → OK, rascunho a 0,00; post_invoice desse rascunho → ZERO_TOTAL (texto acima, continua rascunho). Os dois rascunhos foram apagados no fim. O gerador tools/doc_catalogo_erros_gerar.py de master já tem os dois códigos. */}

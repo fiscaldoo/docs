@@ -1,0 +1,70 @@
+---
+id: janela-de-ajuda
+slug: /copilot/janela-de-ajuda
+title: Como tirar dúvidas na janela do Copiloto
+sidebar_label: Janela de ajuda
+sidebar_position: 1
+description: Abrir a janela do Copiloto, perguntar como se faz uma tarefa e seguir os passos que o produto indica, sem precisar de inteligência artificial.
+keywords: [janela do copiloto, ajuda passo a passo, ajudante, dúvidas, duvidas, como faço, perguntar, copiloto]
+doc_id: DOC-0284
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [copilot/configurar/o-que-e-o-copiloto]
+---
+
+## Para que serve?
+
+A janela do Copiloto responde a «como faço…?» com os passos do produto e com a ligação para o menu onde se faz. Funciona sem inteligência artificial: procura nos guias do produto e nos menus que o seu perfil pode abrir.
+
+## Quando utilizar?
+
+- Quando não sabe onde está uma tarefa.
+- Quando quer os passos de uma tarefa sem sair do ecrã onde está.
+- Não use a janela para perguntar valores da empresa: isso precisa da conversa com a IA.
+
+## Onde encontrar?
+
+O ícone **Copiloto**, na barra de cima, em qualquer aplicação.
+
+## Antes de começar
+
+Qualquer perfil com o ícone. Os passos foram feitos com o **Administrativo**, a 1 de novembro de 2026, com a IA desligada, que é o estado de origem.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Carregue no ícone **Copiloto**. A janela abre com um aviso («A conversa com a IA está desligada para si nesta empresa…») e as opções. As que precisam de IA dizem «Precisa da conversa com a IA» (com o perfil Administrativo, algumas, como **Escrever um texto** e **Importar faturas de fornecedor**, dizem antes que o seu perfil não as pode usar).
+2. Carregue em **Ajuda passo a passo**.
+3. Escreva a dúvida em **Escreva a sua dúvida…**, como a diria a um colega, por exemplo «Como emito uma nota de crédito?», e carregue em **Perguntar**. A caixa já vem com «Como faço para »: escreva o resto ou substitua-o pela sua pergunta. Pode também carregar numa das sugestões de **Experimente perguntar:**.
+4. Leia a resposta: os passos, a ligação ao artigo («Artigo «…» do site de documentação») e, em **Outros resultados**, os menus e artigos relacionados. Quando um passo abre um menu, tem por baixo **Levar-me lá**, que abre esse ecrã sem fechar a janela, e **Mostrar no ecrã**, que assinala no ecrã onde carregar. No teste, com o perfil **Contabilista**, «Como estorno um lançamento?» trouxe **Levar-me lá** para **Contabilidade › Lançar › Lançamentos › Lançamentos contabilísticos**.
+   ![Janela do Copiloto com a pergunta Como emito uma nota de crédito? e os passos da resposta](/images/copilot/janela-de-ajuda/01-resposta-passo-a-passo.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+Para «Como emito uma nota de crédito?», a janela dá seis passos (abrir a fatura, **Nota de Crédito**, o **Motivo**, **Criar nota de crédito**, **Confirmar**, **Registar pagamento**) e, por baixo, «Resposta obtida por pesquisa na documentação e nos menus.». Os passos são os do guia [Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito): em caso de diferença, vale o guia.
+
+## Notas importantes
+
+- **Uma pergunta sem resposta** devolve «Não encontrei isto na documentação, nem um menu com essas palavras que possa abrir. Tente outras palavras, por exemplo o nome do ecrã.» (visto com «xyzqw»).
+- **Pode perguntar se a IA está ligada:** «Estás ligado à IA?» responde «Não, a IA está desligada» e diz quem a liga. Quem liga a IA é o administrador, como diz o aviso do topo da janela («Para ligar a IA, peça ao administrador: Copiloto › Controlo › Interruptores.»).
+- **A conversa com a IA** (listas, relatórios e totais) precisa de uma IA ligada.
+
+## Problemas frequentes
+
+### A janela diz que a conversa com a IA está desligada
+
+- **Causa:** a IA está desligada nesta empresa. É o estado de origem.
+- **O que fazer:** use a **Ajuda passo a passo**. Para ligar a IA, peça ao administrador: veja [Como ligar o Copiloto a um fornecedor de IA](/copilot/ligar-a-uma-ia).
+
+{/* Nota interna (DOCS-040, lote F4): visto com demo.faturacao (Administrativo). A janela fala em perfil «Administração fiscal» para ligar a IA; o interruptor está em Copiloto › Controlo › Interruptores, que o Administrativo não tem. O artigo /fiscal-core/emitir-uma-nota-de-credito é o aprovado da amostra. */}
+
+{/* Nota interna (v23-T, DOC-0284, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-BA, master ce51f2d47, docs_demo_v23ba_test, 10/11/2026, regra do check-perfis): por clique com um utilizador criado só com o perfil Contabilista (opera): ícone Copiloto, botão Ajuda passo a passo, pergunta «Estás ligado à IA?». O passo 1 da resposta diz «o administrador fiscal da empresa», que não é valor do campo Perfil, e o aviso do topo diz «peça ao administrador»: defeito do produto no cartão UX-154 (#4136); a frase do artigo já não cita esse passo (auditoria docs-aud-v23ba). */}

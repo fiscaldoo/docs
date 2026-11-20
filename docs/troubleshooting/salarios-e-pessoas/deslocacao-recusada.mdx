@@ -1,0 +1,85 @@
+---
+id: deslocacao-recusada
+slug: /troubleshooting/deslocacao-recusada
+title: A deslocação ou a requisição de viatura não é aceite
+sidebar_label: Deslocação ou viatura recusada
+sidebar_position: 40
+description: O que quer dizer cada mensagem ao registar uma deslocação ou ao requisitar uma viatura da empresa, e o que corrigir antes de tentar de novo.
+keywords: [deslocação, deslocacao, requisição de viatura, requisicao de viatura, ajuda de custo, matrícula, matricula, quilómetros feitos, quilometros feitos, ainda não terminou, mapa de deslocação incompleto, paga-se uma só vez, viatura já está requisitada, regresso depois do levantamento]
+doc_id: DOC-0365
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 00c68a6d8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/o-meu-espaco/registar-uma-deslocacao, troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado]
+---
+
+## Sintoma
+
+Ao carregar em **Registar e submeter** numa deslocação, aparece uma frase a vermelho por cima do formulário e a deslocação não fica registada. Ao requisitar uma viatura, abre-se uma janela de erro.
+
+## Mensagem
+
+Copiadas do ecrã, com o perfil **Trabalhador**. As partes em itálico mudam de caso para caso.
+
+Em **O meu espaço › Deslocações e despesas › Nova deslocação**:
+
+| Mensagem | O que quer dizer |
+| --- | --- |
+| «A deslocação de *nome* ainda não terminou. O que aconteceu: a prestação de contas só se faz depois do regresso. Como resolver: submeta-a depois do regresso.» | A data e a hora de regresso ainda não passaram. Com **Hoje**, o ecrã traz o regresso às 19 horas. |
+| «O mapa de deslocação de *nome* está incompleto. O que aconteceu: sem todos os seus elementos perde-se a isenção da ajuda de custo. Como corrigir: preencha *Destino, Motivo*.» | Falta o que a frase indica. |
+| «Um veículo próprio precisa dos quilómetros feitos. Como resolver: preencha «Quilómetros (ida e volta)».» | Escolheu **Automóvel próprio**, **Motociclo próprio** ou **Bicicleta própria** sem quilómetros. |
+| «Um automóvel ou motociclo próprio precisa da matrícula. Como resolver: preencha «Matrícula» (fica guardada na ficha do trabalhador para as próximas deslocações).» | Falta a matrícula do seu veículo. |
+| «A ajuda de custo de um dia paga-se uma só vez. O que aconteceu: *nome* já tem uma deslocação com ajuda de custo nesses dias (*nome — data — data*). Como resolver: ponha os dias com ajuda de custo a 0 num dos mapas ou cancele um deles.» | Já há outra deslocação nesses dias. |
+| «A viagem de *nome* termina (*10/10/2026*) antes de começar (*20/10/2026*). Como corrigir: corrija o primeiro ou o último dia.» | Com **Mais do que um dia**, a data em **até** é anterior à de início. |
+| «Os dias com ajuda de custo (*3*) não podem ser mais do que os dias da deslocação (*1*). Como resolver: corrija «Dias com ajuda de custo».» | Com **Mais do que um dia**, os dias com ajuda de custo são mais do que os da viagem. |
+
+![Frase a vermelho por cima dos botões Registar e Registar e submeter: Um veículo próprio precisa dos quilómetros feitos. Como resolver: preencha Quilómetros (ida e volta)](/images/troubleshooting/deslocacao-recusada/01-sem-quilometros.png)
+
+Em **O meu espaço › Deslocações e despesas › Requisitar uma viatura**:
+
+| Mensagem | Quando aparece | O que quer dizer |
+| --- | --- | --- |
+| «O regresso tem de ser depois do levantamento. Como resolver: corrija as datas.» | Ao guardar. | As datas estão trocadas. |
+| «A viatura já está requisitada de *data* a *data* (*VR/0002*). Como resolver: escolha outra viatura ou outras datas.» | Ao carregar em **Pedir**. | Outro pedido já ocupa a viatura nessas datas. |
+| «*VR/0002*: é aprovada pelo responsável da viatura (*nome*) ou pelos gestores da frota, e nunca por quem a pede. Como resolver: peça-lhes que a aprovem.» | Ao carregar em **Aprovar** no seu próprio pedido. | Quem pede não aprova. |
+
+## Causas verificadas
+
+- **A viagem ainda não acabou.** A deslocação regista-se depois do regresso, porque é a prestação de contas da viagem.
+- **Faltam elementos.** A ajuda de custo só é isenta com o mapa completo, por isso o fiscaldoo não aceita um mapa sem destino, motivo ou, no veículo próprio, quilómetros e matrícula.
+- **O dia já foi pago.** A ajuda de custo de um dia só se paga uma vez.
+- **A viatura está ocupada, ou é a sua.** O mesmo período não dá para dois pedidos, e a aprovação é de outra pessoa.
+
+## O que confirmar
+
+1. Qual a data e a hora de regresso da deslocação.
+2. Em **As minhas deslocações**, se já há uma deslocação nesses dias.
+3. Em **Requisitar uma viatura**, se a viatura aparece na lista **Viatura**. Uma viatura que não está marcada para deslocações não aparece.
+
+## Como resolver
+
+Quem faz: **o Trabalhador**, salvo indicação em contrário.
+
+1. Corrija o que a frase indica e carregue de novo em **Registar e submeter**. O que já escreveu fica no formulário.
+2. Se a viagem ainda não acabou, volte depois do regresso, ou guarde com **Registar**: fica **Rascunho** em **As minhas deslocações**.
+3. Se o dia já foi pago, a frase manda pôr os dias a 0 ou cancelar um dos mapas. Em **Nova deslocação**, carregue em **Mais do que um dia**: o contador **Dias com ajuda de custo** desce até 0, e a ajuda de custo fica a 0,00 €.
+4. Numa viatura ocupada, escolha outra viatura ou outras datas.
+5. Para aprovar um pedido, fale com o responsável da viatura ou com um gestor da frota: é a pessoa que a própria frase indica.
+
+## Resultado esperado
+
+Aparece «Deslocação registada e submetida para aprovação.» No pedido de viatura, o estado passa a **Por aprovar**.
+
+## Quando contactar o suporte
+
+- A frase fala de uma deslocação que não vê em **As minhas deslocações**.
+- A viatura de que precisa nunca aparece na lista: peça primeiro ao gestor da frota que a marque para deslocações.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com a frase completa e as datas da viagem.
+
+{/* Nota interna (DOCS-046, v13-TS): viaturas AA-11-BB e CC-22-DD criadas por RPC; a segunda (não marcada) não aparece na lista, logo «Esta viatura não pode ser requisitada» não se provoca por clique e não se cita. Restantes 30 mensagens da família (mapas mensais, perfis de RH) não provocadas aqui. */}

@@ -1,0 +1,69 @@
+---
+id: so-o-contabilista-pode
+slug: /troubleshooting/so-o-contabilista-pode
+title: Aparece «Só o contabilista…» ou «Só os perfis «Contabilista (opera)» e…»
+sidebar_label: «Só o contabilista…»
+sidebar_position: 6
+description: Apurar o IVA, reconciliar o banco, lançar ou cancelar o CMVMC e o painel da Contabilidade pedem o perfil Contabilista (opera) ou Contabilista certificado (assina, fecha períodos); o Administrativo, a Gerência e o Auditor / ROC não os têm.
+keywords: [só o contabilista, so o contabilista, só os perfis de contabilidade, so os perfis de contabilidade, perfis de contabilidade, CMVMC, cmvmc, reconciliação automática, reconciliacao automatica, painel da contabilidade, perfil de contabilidade, contabilista, apurar o IVA, apurar o iva, reconciliar o banco, reconciliação bancária, reconciliacao bancaria, aplicação contabilidade, aplicacao contabilidade, faturação, faturacao, perfil, sem permissão, sem permissao]
+doc_id: DOC-0412
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-permissao, administration/utilizadores-e-permissoes/perfis-e-permissoes, troubleshooting/acesso-e-dados/nao-vejo-um-menu]
+---
+
+## Sintoma
+
+Com um perfil sem contabilidade (**Administrativo**, **Gerência**, **Auditor / ROC** ou **Gestor de RH**), uma operação de contabilidade é recusada com uma mensagem que nomeia o contabilista ou os perfis «Contabilista (opera)» e «Contabilista certificado (assina, fecha períodos)».
+
+## Mensagem
+
+Exemplos copiados da base de demonstração em português:
+
+- Com o perfil **Gerência**, ao cancelar uma proposta de CMVMC (pela integração; no ecrã, a proposta mostra-lhe os botões **Calcular**, **Lançar** e **Cancelar**):
+  > «Só os perfis «Contabilista (opera)» e «Contabilista certificado (assina, fecha períodos)» podem cancelar uma proposta de CMVMC.»
+- Pela integração, com a **Gerência** e com o **Auditor / ROC**, ao lançar a mesma proposta:
+  > «Só os perfis «Contabilista (opera)» e «Contabilista certificado (assina, fecha períodos)» podem lançar o CMVMC. Peça a um contabilista que o lance.»
+- Pela integração, com o perfil **Administrativo**, ao correr a reconciliação automática do diário **Banco**:
+  > «Só o contabilista executa a reconciliação automática: peça ao contabilista da sua empresa.»
+- Pela integração, com o perfil **Administrativo**, ao apurar o IVA de outubro de 2026 (também com a **Gerência**):
+  > «Só os perfis «Contabilista (opera)» e «Contabilista certificado (assina, fecha períodos)», ou o administrador, podem apurar o IVA de um período. Como resolver: peça a um deles que o faça.»
+- Pela integração, com o perfil **Gestor de RH**, ao pedir os indicadores do painel da Contabilidade:
+  > «O seu perfil não inclui o painel da Contabilidade, que é para os perfis «Contabilista (opera)» e «Contabilista certificado (assina, fecha períodos)». Pode continuar a trabalhar nas faturas e nos pagamentos em Faturação; para ver o painel, peça ao administrador o perfil «Contabilista (opera)».»
+
+
+A **Gerência** abre a proposta de CMVMC (na demonstração, por uma ligação) e vê os botões **Calcular**, **Lançar** e **Cancelar**: a recusa só chega depois de carregar. A recusa não altera nada: a proposta ficou em rascunho.
+
+O perfil **Administrativo** não tem a aplicação **Contabilidade** ([Não vejo um menu ou um botão](/troubleshooting/nao-vejo-um-menu)). Se abrir por uma ligação um registo de contabilidade, aparece a janela **Sem acesso**, e não estas mensagens: [Não tenho permissão para fazer esta operação](/troubleshooting/sem-permissao).
+
+## Causas verificadas
+
+Lançar, apurar o IVA e reconciliar o banco são do **Contabilista** e dos níveis acima (o perfil **Contabilista certificado** e o administrador). O perfil **Administrativo** emite faturas, notas de crédito e de débito e recibos, sem lançamentos. A **Gerência** e o **Auditor / ROC** consultam, mas não lançam nem cancelam.
+
+## O que confirmar
+
+1. Se a tarefa é mesmo de contabilidade ou se existe em **Faturação** (por exemplo, registar um recebimento de cliente faz-se na fatura: [Como registar um pagamento recebido e emitir o recibo](/fiscal-core/emitir-um-recibo)).
+2. Quem na empresa tem o perfil **Contabilista** ou acima.
+
+## Como resolver
+
+- **Peça a operação ao contabilista.** Por exemplo, o apuramento do IVA: [Como apurar o IVA do período](/accounting-pt/apuramento-do-iva).
+- **Se a contabilidade passa a ser sua:** o administrador escolhe o perfil **Contabilista** no separador **Perfil** da sua ficha: [Como dar a cada utilizador o perfil certo](/administration/perfis-e-permissoes). Esse perfil inclui a faturação.
+
+**Quem faz:** o contabilista; ou o administrador, que dá o perfil.
+
+## Resultado esperado
+
+Com o perfil **Contabilista**, a aplicação **Contabilidade** aparece na próxima entrada e a operação passa.
+
+## Quando contactar o suporte
+
+- A mensagem aparece a um utilizador com **Contabilista** (ou acima) em **Localização PT — Faturação, contabilidade e fiscal**, nos **Ajustes avançados**.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com a operação, o período e a mensagem completa.

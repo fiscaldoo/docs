@@ -1,0 +1,133 @@
+---
+id: adiantamentos-e-descontos
+slug: /payroll-pt/adiantamentos-e-descontos
+title: Como dar um adiantamento ou adiar um desconto
+sidebar_label: Adiantamentos e descontos
+description: Registar um adiantamento de salário ou um empréstimo ao trabalhador, descontar a prestação no recibo e perceber o que acontece quando os descontos passam de um sexto da retribuição.
+keywords: [adiantamento de salário, adiantamento de salario, adiantamentos de salário, descontos adiados, empréstimo ao trabalhador, emprestimo ao trabalhador, empréstimos aos trabalhadores, limite de um sexto, 1/6, art. 279, prestação do adiantamento]
+doc_id: DOC-0217
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/descontos-e-cessoes/penhoras, payroll-pt/processar-e-pagar/corrigir-um-processamento]
+---
+
+{/* Nota interna (DOCS-046 #3616, teste 14767, lote v23-Z, 08/11/2026, master cebcb888d, docs_demo_v23z_test): percurso inteiro por clique com um utilizador criado só com o perfil Processador de salários: adiantamento de Carla Sofia Mendes (800,00 €, 2 meses, 01/11/2026), lote de novembro criado com Criar os recibos do mês, Calcular e Validar; recibo com 316,66 € e líquido 1.379,49 €; adiantamento com Recuperado 316,66 e Saldo 483,34; Descontos adiados vazia. Recusas por clique: valor zero, mês que não é o dia 1, linha à mão no recibo de Bruno Miguel Teixeira, adiantamento de Hugo Miguel Santos (300,00 €) anulado depois de calculado (em Calcular e em Validar), Anular e Eliminar no adiantamento de Carla com prestação descontada. Empréstimo de Diogo Ferreira Lopes (600,00 €, 0 %, 6 prestações, 01/12/2026): 100,00 € por prestação e 0,75 € de rendimento em espécie na primeira. Contabilizar por clique com demo.admsalarios (grupo Administrador de Salários; não é um valor do campo Perfil): SAL/2026/00005 com 2322 crédito 316,66 e 231290 débito 12.528,63 (agregado). Gestor de RH (utilizador só com esse perfil): sem Pagar nem Descontos adiados; Empréstimos só leitura, Anular recusado. */}
+
+## Para que serve?
+
+Um adiantamento é salário pago antes do tempo e devolvido em prestações nos recibos seguintes. O fiscaldoo guarda o plano de prestações e o saldo que falta. No recibo, desconta a prestação até ao limite da lei: em conjunto, estes descontos não passam de um sexto da retribuição.
+
+## Quando utilizar?
+
+- O trabalhador pede parte do salário antes do fim do mês.
+- A empresa empresta dinheiro ao trabalhador, com contrato e prestações mensais: use **Empréstimos aos trabalhadores**.
+- Quer ver o que ficou por descontar de um mês: use **Descontos adiados**.
+
+Não use este ecrã para uma penhora nem para a quota sindical: têm regras próprias (ver [Como tratar uma penhora de salário](/payroll-pt/penhoras)).
+
+## Onde encontrar?
+
+- **Salários › Pagar › Adiantamentos de salário**
+- **Salários › Preparar › Descontos e empréstimos › Empréstimos aos trabalhadores**
+- **Salários › Preparar › Descontos e empréstimos › Descontos adiados**
+
+## Antes de começar
+
+- O seu perfil é **Processador de salários**. O **Gestor de RH** não chega a estes passos (ver «Notas importantes»).
+- Tem o documento que suporta o adiantamento, por exemplo uma declaração do trabalhador.
+- O lote do mês ainda não está validado.
+- Para contabilizar o lote, a rubrica **Adiantamento por conta da retribuição** precisa de um modelo de contabilização (ver [Como contabilizar o processamento dos salários](/payroll-pt/contabilizar-os-salarios)).
+
+## Como utilizar
+
+### Registar o adiantamento
+
+<StepByStep>
+
+1. Abra **Salários › Pagar › Adiantamentos de salário** e carregue em **Novo**.
+2. Em **Trabalhador**, escolha o trabalhador, por exemplo Carla Sofia Mendes.
+3. Em **Documento do adiantamento**, escreva a referência, por exemplo `Declaração AD-2026-01`.
+4. Confira a **Data do adiantamento**, que vem com a data de hoje, e escreva o **Valor adiantado**, por exemplo `800`.
+5. Em **Meses a recuperar**, escreva `2`. Em **Mês da primeira prestação**, escolha o primeiro dia do mês, por exemplo `01/11/2026`.
+6. Carregue em **Ativar**. O estado passa a **Ativo** e o separador **Plano** mostra as prestações.
+   ![Adiantamento de 800,00 € com o plano de duas prestações de 400,00 €, já com 316,66 € recuperados e 483,34 € de saldo](/images/payroll-pt/adiantamentos-e-descontos/01-adiantamento-ativo.png)
+
+</StepByStep>
+
+### Descontar a prestação no recibo
+
+O recibo traz a prestação sozinho: não há linha para acrescentar.
+
+<StepByStep>
+
+1. Abra o recibo do mês em **Salários › Processar › Recibos de vencimento**.
+2. Carregue em **Calcular**. A linha **Adiantamento por conta da retribuição** entra sozinha, com o valor descontado. Se acrescentar a linha à mão, escolha o adiantamento na coluna **Adiantamento**.
+   ![Linhas do recibo de novembro com o desconto de 316,66 € do adiantamento e o líquido a receber de 1.379,49 €](/images/payroll-pt/adiantamentos-e-descontos/02-recibo-com-a-prestacao.png)
+
+</StepByStep>
+
+### Registar um empréstimo
+
+<StepByStep>
+
+1. Abra **Empréstimos aos trabalhadores** e carregue em **Novo**.
+2. Preencha **Trabalhador**, **Contrato do empréstimo**, **Capital emprestado**, **Taxa de juro anual (%)**, **Número de prestações** e **Mês da primeira prestação**.
+3. Carregue em **Ativar** e confira o plano.
+
+</StepByStep>
+
+**Exemplo do adiantamento.** Carla ganha 1.900,00 €. A prestação de novembro é de 400,00 €, mas o limite é de 1.900,00 € ÷ 6: o recibo desconta 316,66 €. A retribuição base conta para este limite; o subsídio de alimentação não.
+
+- **Bruto** 2.029,15 €, **Segurança Social** 209,00 €, **IRS retido** 124,00 €, **Outros descontos** 316,66 €.
+- **Líquido a receber**: 1.379,49 €.
+- Depois de validado o lote, o adiantamento mostra **Recuperado** 316,66 € e **Saldo** 483,34 €. O que faltou continua no saldo e é pedido no mês seguinte, sempre até ao limite.
+
+**Exemplo do empréstimo.** Diogo Ferreira Lopes recebe 600,00 € a 0 %, em 6 prestações a partir de 01/12/2026. O plano tem prestações de 100,00 € e, na primeira, 0,75 € na coluna **Rendimento em espécie**: a diferença entre a taxa do contrato e a taxa de referência de 1,505 %.
+
+**O que chega à contabilidade.** Registar o adiantamento ou o empréstimo não gera lançamentos: o pagamento ao trabalhador regista-se à parte, no banco. O lote validado é contabilizado pelo **Administrador de Salários**, com **Contabilizar** (ver [Como contabilizar o processamento dos salários](/payroll-pt/contabilizar-os-salarios)). No lançamento do lote, o desconto do recibo sai da conta transitória 231290 Remunerações em processamento: crédito de 316,66 € na conta do modelo, a 2322 Ao pessoal, dentro da 232 Adiantamentos. O débito na 231290 vem somado ao líquido, ao IRS e à Segurança Social do lote, porque a demonstração lança **Agregado por lote**.
+
+## No Enterprise
+
+No Odoo Enterprise, os adiantamentos, os empréstimos e os descontos adiados registam-se nos mesmos ecrãs: com o perfil **Processador de salários**, **Salários › Pagar › Adiantamentos de salário** abre a mesma lista, com **Novo** e as colunas **Valor adiantado**, **Meses a recuperar**, **Recuperado** e **Saldo**. Os ajustes ao recibo da aplicação **Folha de Salários** do Enterprise não aparecem na ficha do trabalhador ao **Processador de salários**, nem com o acesso **Administrador de Salários**.
+
+{/* Nota interna (lote EE-07, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee07b_test: cópia da odoo20_ee_test com a aplicação de salários do Enterprise (hr_payroll) instalada e o código de master; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado: Processador de salários em Adiantamentos de salário (lista com Novo); Processador com o acesso Administrador de Salários na ficha do trabalhador (separador Folha de Salários: Resumo do contrato, Planear, Declaração de IRS e Opções e pagamento, sem o bloco dos ajustes ao recibo do Enterprise). Caminhos do artigo conferidos com o verificador do test_doc_paths na mesma cópia (0 erros). Ver reports/LOTE_EE-07.md. */}
+
+## Resultado esperado
+
+- O adiantamento está **Ativo** e fecha sozinho quando o saldo chega a 0,00 €. O estado passa a **Amortizado**.
+- O recibo mostra **Outros descontos** e o líquido já reduzido.
+- A lista **Descontos adiados** mostra o que outros descontos deixaram por fazer num mês. Nesta lista não se cria nada à mão. O adiantamento não passa por ela: na demonstração, ficou vazia e a diferença de 83,34 € ficou no saldo do adiantamento.
+
+## Notas importantes
+
+- **Limite de um sexto.** O limite vem do Código do Trabalho, art. 279.º. <span className="fd-pending">Pendente de validação por contabilista certificado ou jurista do trabalho: a base do limite e o arredondamento para baixo.</span>
+- **Perfis.** O perfil **Gestor de RH** não tem **Adiantamentos de salário** nem **Descontos adiados**. Vê a lista **Empréstimos aos trabalhadores** só para consultar: não tem **Novo** e não altera nem anula empréstimos. Quem o faz é o **Processador de salários**.
+- **Na saída do trabalhador**, o tratamento do saldo faz parte de [Como tratar a saída de um trabalhador](/people/cessacao-do-contrato).
+
+## Problemas frequentes
+
+### «A linha «Adiantamento por conta da retribuição» do recibo … não está escolhido nenhum adiantamento ativo»
+
+- **Mensagem:** «A linha «Adiantamento por conta da retribuição» do recibo de Bruno Miguel Teixeira desconta um adiantamento, mas não está escolhido nenhum adiantamento ativo deste trabalhador. O que aconteceu: não se pode descontar nada sem o plano do adiantamento. Como resolver: nas linhas do recibo, escolha o adiantamento do trabalhador na coluna «Adiantamento» (o adiantamento tem de estar ativado antes, em Salários › Pagar › Adiantamentos de salário), ou retire a linha.»
+- **Causa:** a linha foi acrescentada à mão a quem não tem adiantamento.
+- **O que fazer:** retire a linha ou escolha o adiantamento na coluna **Adiantamento**, e carregue de novo em **Calcular**.
+
+### «A linha «Adiantamento por conta da retribuição» do recibo … desconta um adiantamento que foi anulado»
+
+- **Mensagem:** «A linha «Adiantamento por conta da retribuição» do recibo de Hugo Miguel Santos desconta um adiantamento que foi anulado. O que aconteceu: o recibo foi calculado antes de o adiantamento ser anulado e manteve a linha. Como resolver: retire a linha do recibo (ou escolha outro adiantamento do trabalhador na coluna «Adiantamento») e calcule o recibo de novo. Os recibos validados não são alterados.»
+- **Causa:** o adiantamento foi anulado depois de o recibo o descontar. A mensagem aparece ao carregar em **Calcular** e em **Validar**.
+- **O que fazer:** retire a linha, ou escolha outro adiantamento na coluna **Adiantamento**, e carregue de novo em **Calcular**.
+
+### Não consigo anular nem apagar um adiantamento
+
+- **Mensagens:** «O adiantamento de Carla Sofia Mendes já tem prestações descontadas e não se cancela. Como resolver: fecha quando estiver pago; corrija uma prestação errada com um recibo corretivo.» e «Só se apaga um adiantamento em rascunho: cancele-o.»
+- **O que fazer:** deixe o adiantamento seguir o plano. Num adiantamento **Ativo**, **Anular** pede sempre confirmação: «Anular este adiantamento? Os recibos em rascunho que já o descontam mantêm a linha e não se podem validar até a retirar e os calcular de novo. Os recibos validados não são alterados.» Se ainda não houver nada descontado, **Confirmar** passa-o a **Anulado**. Se já houver, **Confirmar** dá a primeira mensagem e o adiantamento fica **Ativo**. A segunda aparece em **Eliminar**, no menu da engrenagem, depois de confirmar. Para corrigir uma prestação, ver [Como corrigir um processamento](/payroll-pt/corrigir-um-processamento).
+
+### Erros ao preencher
+
+- «O valor adiantado tem de ser superior a zero. Como resolver: corrija «Valor adiantado».»
+- «O mês da primeira prestação é o primeiro dia de um mês. Como corrigir: escolha o dia 1.»

@@ -1,0 +1,91 @@
+---
+id: desconto-no-recibo-recusado
+slug: /troubleshooting/desconto-no-recibo-recusado
+title: Um desconto no recibo não é aceite (penhora, cessão, insolvência, adiantamento ou quota sindical)
+sidebar_label: Desconto no recibo recusado
+description: Porque o Calcular recusa uma linha de penhora, cessão, insolvência, adiantamento ou quota sindical acrescentada à mão, e como corrigir.
+keywords: [desconto no recibo, penhora, cessão, cessao, insolvência, insolvencia, adiantamento, quota sindical, autorização, autorizacao, não há penhora escolhida, nao ha penhora escolhida, operação inválida, operacao invalida]
+doc_id: DOC-0398
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 25deacc94)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado, payroll-pt/descontos-e-cessoes/penhoras]
+---
+
+{/* Nota interna (DOC-0398): a arquitetura pedia empréstimo, mas a demonstração não tem nenhuma rubrica de empréstimo (conferido a 04/11/2026) e a mensagem não foi provocada; saiu do título. Os limites legais do desconto também ficaram por provocar. Ver reports/LOTE_V8TS3B.md. */}
+
+## Sintoma
+
+Acrescentou à mão uma linha de desconto a um recibo em **Salários › Processar › Recibos de vencimento**. O recibo guarda-se, mas ao carregar em **Calcular** abre-se a janela **Operação inválida** e o cálculo não avança.
+
+## Mensagem
+
+Vistas com o perfil **Processador de salários**, na Empresa Demonstração, Lda., num recibo em rascunho de um trabalhador sem nenhum destes descontos. Entre «» vem o nome da rubrica da linha; o nome do trabalhador muda com o seu caso.
+
+Penhora:
+
+> «A linha «Penhora de retribuição» do recibo de *Ana Margarida Pinto* desconta uma penhora, mas não há penhora escolhida. O que aconteceu: o montante vem da penhora em vigor, por isso não há nada a calcular. Como resolver: remova a linha; o motor acrescenta uma linha por cada penhora em vigor.»
+
+![Janela Operação inválida ao calcular: a linha Penhora de retribuição do recibo de Ana Margarida Pinto desconta uma penhora, mas não há penhora escolhida](/images/troubleshooting/desconto-no-recibo-recusado/01-calcular-linha-penhora.png)
+
+Cessão de retribuição:
+
+> «A linha «Cessão de retribuição» do recibo de *Ana Margarida Pinto* desconta uma cessão de retribuição mas nenhuma está escolhida. O que aconteceu: o valor vem da cessão em vigor, por isso não há nada a calcular. Como resolver: retire a linha; o motor acrescenta uma linha por cada cessão em vigor.»
+
+Insolvência:
+
+> «A linha «Insolvência: rendimento cedido ao fiduciário» do recibo de *Ana Margarida Pinto* deduz o rendimento cedido ao fiduciário mas não há insolvência escolhida. O que aconteceu: o valor vem da insolvência em vigor. Como resolver: remova a linha; o motor acrescenta uma linha por cada insolvência em vigor.»
+
+Adiantamento:
+
+> «A linha «Adiantamento por conta da retribuição» do recibo de *Ana Margarida Pinto* desconta um adiantamento, mas não está escolhido nenhum adiantamento ativo deste trabalhador. O que aconteceu: não se pode descontar nada sem o plano do adiantamento. Como resolver: nas linhas do recibo, escolha o adiantamento do trabalhador na coluna «Adiantamento» (o adiantamento tem de estar ativado antes, em Salários › Pagar › Adiantamentos de salário), ou retire a linha.»
+
+O caminho da mensagem é o dos menus: os adiantamentos estão em **Salários › Pagar › Adiantamentos de salário** (visto com o perfil **Processador de salários**).
+
+Quota sindical:
+
+> «A linha «Quotas sindicais» do recibo de *Ana Margarida Pinto* desconta quota sindical mas não tem autorização deste trabalhador. O que aconteceu: a quota só se desconta com a autorização escrita do trabalhador (CT art. 458.º/1-2). Como resolver: nas linhas do recibo, escolha a autorização do trabalhador na coluna «Autorização de quota sindical», ou retire a linha.»
+
+![Janela Operação inválida ao calcular: a linha Quotas sindicais não tem autorização do trabalhador, com a saída pela coluna Autorização de quota sindical](/images/troubleshooting/desconto-no-recibo-recusado/02-calcular-linha-quota-sindical.png)
+
+## Causas verificadas
+
+- **A linha foi escrita à mão, sem o registo que lhe dá o valor.** O valor destes descontos não se escreve no recibo: vem da penhora, da cessão, da insolvência, do adiantamento ou da autorização do trabalhador.
+- **Guardar não avisa.** A linha fica gravada sem recusa, e a mensagem só aparece no **Calcular**.
+
+## O que confirmar
+
+1. Se o trabalhador tem mesmo a penhora, a cessão, a insolvência, o adiantamento ou a autorização de quota.
+2. Se esse registo já existe e está em vigor. Para a penhora, veja [Penhoras](/payroll-pt/penhoras).
+
+## Como resolver
+
+1. Carregue em **Fechar** na mensagem.
+2. Nas linhas do recibo, retire a linha do desconto com o ícone do caixote do lixo e guarde.
+3. Carregue de novo em **Calcular**.
+
+Se o desconto é devido e não aparece no recibo calculado, falta o registo: crie-o primeiro e calcule depois. Na penhora, na cessão e na insolvência, não volte a acrescentar a linha à mão. No adiantamento e na quota sindical, a mensagem dá outra saída: em vez de retirar a linha, escolha nela o adiantamento já ativado ou a autorização do trabalhador.
+
+## Resultado esperado
+
+O **Calcular** termina sem a janela **Operação inválida**. Na demonstração, sem nenhum destes registos, o recibo ficou calculado sem nenhuma linha de desconto destes tipos.
+
+## Casos que este artigo não cobre
+
+O desconto de um empréstimo e o limite legal dos descontos (Código do Trabalho, art. 279.º) têm mensagens próprias, que não foram provocadas no ecrã neste artigo. Se a sua mensagem não está aqui, siga o que ela indica e fale com o contabilista.
+
+## Quando contactar o suporte
+
+- Se a mensagem continua depois de retirar a linha.
+- Se o registo está em vigor e o desconto não aparece no recibo calculado.
+
+## Informação a enviar
+
+- O trabalhador e o período do recibo.
+- O texto completo da mensagem.
+- O registo do desconto (penhora, cessão, insolvência, adiantamento ou autorização) e o seu estado.
+
+{/* Nota interna (DOCS-005 #3400, lote CAP-01, 10/11/2026, master ce51f2d47, docs_demo_cap01_test, porta 8504): por clique com um utilizador criado na cópia só com o perfil Processador de salários, num recibo meu em rascunho (Ana Margarida Pinto, 01/12 a 31/12/2026, criado por clique): Adicionar uma linha com cada rubrica (Penhora de retribuição, Cessão de retribuição, Insolvência: rendimento cedido ao fiduciário, Adiantamento por conta da retribuição, Quotas sindicais), Guardar sem aviso, Calcular → Operação inválida. As mensagens já trazem o nome da rubrica (antes o código, PENHORA…) e a da quota sindical mudou a saída; capturas 01 (penhora) e 02 (quota). Linhas retiradas a seguir; o recibo ficou em rascunho, sem linhas. O Processador de salários já acrescenta a linha: «acesso Administrador de Salários» saiu. */}

@@ -1,0 +1,78 @@
+---
+id: quantidades-diarias
+slug: /payroll-pt/quantidades-diarias
+title: Como são calculadas as quantidades diárias no processamento
+sidebar_label: Quantidades diárias
+sidebar_position: 20
+description: "As horas por dia de cada trabalhador não se escrevem: calculam-se. O que é cada quantidade, como pedir o cálculo e onde registar refeições e quilómetros."
+keywords: [quantidades, diárias, diarias, quantidades diárias, horas planeadas, horas trabalhadas, processamento]
+doc_id: DOC-0195
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/tempo-de-trabalho/trabalho-noturno]
+---
+
+## Para que serve?
+
+**As quantidades diárias não se registam à mão: calculam-se.** Para cada trabalhador e cada dia, o fiscaldoo guarda as horas planeadas, trabalhadas, de ausência, de feriado, suplementares e noturnas. Uma rubrica com **Origem da quantidade** em **Horas das quantidades diárias** vai buscar aqui as horas.
+
+Refeições e quilómetros não passam por este ecrã: o subsídio de refeição usa a elegibilidade, e as deslocações usam **Mapas de deslocação**.
+
+## Quando utilizar?
+
+- Quando quer conferir as horas de um trabalhador num período.
+- Depois de mudar um contrato, uma ausência ou um feriado, para repetir o cálculo.
+- Não use para lançar horas extra: veja [Como processar o mês](/payroll-pt/processar-o-mes).
+
+## Onde encontrar?
+
+**Salários › Preparar › O que há para fazer este mês?**, no grupo **Outros registos e tabelas**: **Quantidades diárias**.
+
+A lista abre vazia até haver um cálculo, e o próprio ecrã explica: «Use «Calcular quantidades» acima: nada se escreve nesta lista.»
+
+## Antes de começar
+
+- O seu perfil é **Processador de salários**, com ou sem o acesso extra **Administrador de Salários**: com ou sem esse acesso, abre a lista e calcula.
+- O trabalhador tem uma versão de contrato em vigor no período.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Quantidades diárias**, carregue em **Calcular quantidades**.
+2. Escolha o **Trabalhador**, preencha **De** e **Até** e confirme o **Território**. Carregue em **Calcular**.
+3. A lista abre com um dia por linha e os totais no fim.
+   ![Dias de dezembro de um trabalhador com horas planeadas, trabalhadas e de feriado](/images/payroll-pt/quantidades-diarias/01-quantidades-de-um-trabalhador.png)
+4. Abra um dia para ver também **Horas suplementares**, **Horas noturnas** e **Tolerância a pagar (horas)**.
+
+</StepByStep>
+
+**Exemplo.** Um trabalhador com 8 horas por dia, de 01/12/2026 a 24/12/2026, no Continente: a lista traz 24 dias, com 144,00 **Horas planeadas**, 128,00 **Horas trabalhadas** e 16,00 **Horas de feriado** (01/12 e 08/12). Um sábado aparece como «Dia de descanso (sem horas planeadas)».
+
+## No Enterprise
+
+No Odoo Enterprise, as quantidades diárias calculam-se da mesma maneira, com o perfil **Processador de salários**: a lista **Quantidades diárias** abre vazia, com a mesma frase, e **Calcular quantidades** pede o **Trabalhador**, **De**, **Até** e **Território**. Com o exemplo (8 horas por dia, de 01/12/2026 a 24/12/2026, no Continente), o cálculo deu os mesmos 24 dias, com 144,00 **Horas planeadas**, 128,00 **Horas trabalhadas** e 16,00 **Horas de feriado**.
+
+{/* Nota interna (lote EE-08, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee08_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8508/8509), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Processador de salários: lista vazia com «Use «Calcular quantidades» acima: nada se escreve nesta lista.» e a janela Calcular quantidades (Trabalhador, De, Até, Território). O cálculo foi feito por RPC com os direitos do Processador de salários, numa transação desfeita no fim, para dois trabalhadores de 8 horas por dia: 24 dias, 144,00 / 128,00 / 16,00 (01/12 e 08/12 feriados; sábados como descanso). Comparado com uma cópia da demonstração Community (docs_demo_ee08_test, 2c8d358c0, porta 8518). Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-08.md. */}
+
+## Resultado esperado
+
+- Um dia por linha, com o **Motivo**. Cada novo cálculo fica como o **Cálculo atual**, e o anterior mantém-se como histórico.
+- As horas suplementares e noturnas são zero num dia sem registo de tempos aprovado: «são zero num dia sem registo aprovado».
+
+## Notas importantes
+
+A lista não tem **Novo**: as linhas nunca se escrevem à mão.
+
+## Problemas frequentes
+
+| O ecrã diz | O que fazer |
+| --- | --- |
+| «O fim do período é anterior ao seu início.» | Corrija as datas. |
+| «Um período de mais de um ano não se calcula de uma vez.» | Divida o período por ano. |
+| «… não tem versão de contrato em vigor entre 01/01/2025 e 31/01/2025.» | Registe o contrato na ficha do trabalhador. Sem horário, nada se assume. |
+| «Há campos obrigatórios por preencher.» | Preencha os campos a vermelho. |

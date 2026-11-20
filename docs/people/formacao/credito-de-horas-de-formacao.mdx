@@ -1,0 +1,78 @@
+---
+id: credito-de-horas-de-formacao
+slug: /people/credito-de-horas-de-formacao
+title: Como gerir o crédito de horas de formação
+sidebar_label: Gerir o crédito de horas de formação
+sidebar_position: 5
+description: "Ver as horas de formação em falta de cada trabalhador, o crédito acumulado e o que passa a crédito, com a conta de cada ano e os lançamentos manuais."
+keywords: [crédito de horas, horas de formação em falta, conta da formação, lançamentos manuais, declarações na saída, 40 horas, formação não dada, planear formação, enviar extratos]
+doc_id: DOC-0259
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/formacao/horas-de-formacao, people/formacao/registar-formacao]
+---
+
+## Para que serve?
+
+Quando um trabalhador não tem as horas de formação do ano, as horas em falta passam a crédito dele, durante um prazo. Este ecrã mostra, por pessoa, o que é devido, o que já foi feito, o que falta e quando passa a crédito.
+
+## Quando utilizar?
+
+- Quer saber quantas horas de formação a empresa ainda deve a cada trabalhador.
+- Quer ver a conta de um trabalhador, ano a ano.
+- Quer planear a formação das pessoas com horas em falta.
+
+## Onde encontrar?
+
+**Pessoas › Formação**, no bloco **Horas e crédito de horas**: **Crédito de horas**, **Conta do crédito de horas**, **Lançamentos manuais** e **Declarações na saída**. O **Gestor de RH** vê os três primeiros; **Declarações na saída** é dos perfis **Processador de salários** e **Gerência** (e do administrador do sistema), e o Gestor de RH não a vê.
+
+## Antes de começar
+
+- O seu perfil é **Gestor de RH** para o **Crédito de horas**, a **Conta do crédito de horas** e os **Lançamentos manuais**. Para **Declarações na saída**, o perfil é **Processador de salários** ou **Gerência**.
+- Para saber como se registam as horas feitas, veja [Registar formação](/people/registar-formacao).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Pessoas › Formação › Horas e crédito de horas › Crédito de horas**. O aviso amarelo diz até quando as horas em falta ainda contam como formação dada pela empresa (na demonstração, «Até 01/01/2029 … 303,3 h para 8 pessoa(s)»). Os três quadros mostram **Horas em falta (empresa)**, **Crédito dos trabalhadores (h)** e as **Horas do ano já dadas** (em percentagem).
+2. Na tabela, cada linha tem **Devido**, **Feita**, **Em falta (ano)**, **Em falta (anteriores)**, **Crédito** e **Seguinte** (a data em que as horas em falta passam a crédito e quantas são, por exemplo «01/01/2029 (40 h)»).
+3. Marque as linhas e carregue em **Planear formação** para criar a ação de formação dessas pessoas, ou em **Enviar extratos** para enviar o extrato a cada uma (os dois botões ficam inativos até marcar uma linha). **Recalcular** refaz as contas.
+4. Para o detalhe, abra **Pessoas › Formação › Horas e crédito de horas › Conta do crédito de horas**: uma linha por trabalhador e ano, com **Devido (h)**, **Feitas no ano (h)**, **Em falta (h)**, **Saldo de crédito (h)**, **Passa a crédito em**, **Crédito válido até** e o **Estado** (**Em falta** ou **Ano futuro (antecipação)**). Ao abrir uma linha vê **A pagar se o contrato cessar hoje (h)** e os movimentos.
+
+</StepByStep>
+
+![Ecrã Crédito de horas com 303,3 horas em falta e a tabela por trabalhador](/images/people/credito-de-horas-de-formacao/01-visao-geral.png)
+
+## Resultado esperado
+
+- Em **Enviar extratos**, o ecrã diz «Statements queued» (em inglês) e os extratos ficam em fila de envio.
+- Em **Planear formação**, abre-se uma ação de formação nova para os marcados.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o prazo de três anos em que as horas em falta passam a crédito, a validade do crédito (até 31/12/2031, no exemplo de 2026) e as horas a pagar à saída; o artigo reproduz o que o ecrã calcula, não confirma a regra.</span>
+
+## Notas importantes
+
+- **Lançamentos manuais e declarações na saída.** Em **Lançamentos manuais** (**Novo**, com o **Gestor de RH**) e em **Declarações na saída** (**Novo**, com o perfil **Processador de salários**; a **Gerência** não tem **Novo**), o campo **Trabalhador** lista os trabalhadores da empresa. O formulário dos lançamentos tem o **Trabalhador**, a **Data**, o **Tipo** (**Horas reconhecidas (art. 131.º/4: trabalhador-estudante, RVCC)**, **Formação externa não registada em ações** ou **Formação assegurada e não frequentada (não imputável ao empregador)**), as **Horas**, o **Ano a que respeita**, o **Motivo** e a **Prova** (o documento anexado). Sem o motivo e a prova, o lançamento não se guarda (ver «Problemas frequentes»).
+- **A lista de lançamentos manuais vem vazia** («Não há lançamentos manuais»): uma correção à mão fica ali registada, com o motivo e quem a fez.
+- **O ecrã Crédito de horas mostra a coluna Departamento vazia** nesta demonstração, porque os trabalhadores não têm departamento.
+
+{/* Nota interna (DOCS-040 F3b): F3-09 (MEDIUM): Lançamentos manuais e Declarações na saída — campo Trabalhador sem opções (provável domínio de empresa num registo novo); reproduzido com Gestor de RH, Salários e Administrador no master ba9c8bd7 (NF3-04: Declarações na saída é de Salários e Gerência; o Gestor de RH não a vê). «Statements queued» sem tradução (F3-10). Declarações na saída (Calcular, Confirmar) não validadas: dependem de F3-09. */}
+
+## Problemas frequentes
+
+### «Um lançamento da conta precisa do motivo e da prova»
+
+- **Mensagem:** «Um lançamento da conta precisa do motivo e da prova. O que aconteceu: Eva Cristina Rocha tem um lançamento sem um deles. Como resolver: escreva o motivo e anexe o documento.»
+- **Causa:** ao guardar um lançamento manual, falta o **Motivo** ou a **Prova**.
+- **O que fazer:** escreva o motivo e, em **Prova**, carregue em **Escolher ficheiro** e anexe o documento (por exemplo, o certificado da formação externa). Para horas dadas numa ação da empresa, não use um lançamento manual: registe a ação ([Registar formação](/people/registar-formacao)).
+
+### O crédito aparece a zero
+
+Normal quando ainda não passou o prazo: o crédito só se constitui na data de **Passa a crédito em**; até lá, as horas em falta contam em **Em falta (ano)**.
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Salários passou a Processador de salários e o Recursos Humanos a Gestor de RH; menus lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador): Declarações na saída (hoje em Pessoas › Formação › Horas e crédito de horas › Declarações na saída, UX-160) aparece ao Processador de salários, à Gerência e ao administrador, não ao Gestor de RH */}

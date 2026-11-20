@@ -1,0 +1,88 @@
+---
+id: demonstracao-de-resultados
+slug: /accounting-pt/demonstracao-de-resultados
+title: Como obter a demonstração de resultados
+sidebar_label: Obter a demonstração de resultados
+sidebar_position: 3
+description: Ver as vendas, os gastos e o resultado da empresa num período, no modelo do SNC por naturezas, comparar com o período anterior, conferir com o balanço e exportar em PDF.
+keywords: [demonstração de resultados, demonstracao de resultados, DR, resultados por naturezas, lucro, prejuízo, prejuizo, resultado líquido, resultado liquido, vendas, margem, gastos, rendimentos, conta de exploração, conta de exploracao, demonstrações financeiras, demonstracoes financeiras]
+doc_id: DOC-0144
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7a46de91a)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/balanco, accounting-pt/relatorios/balancete]
+---
+
+## Para que serve?
+
+A demonstração de resultados diz se a empresa ganhou ou perdeu dinheiro num período e porquê: as vendas, os custos das mercadorias, os fornecimentos e serviços externos, o pessoal, as depreciações e o resultado em cada patamar, até ao **Resultado líquido do período**. Segue o modelo do SNC por naturezas, o mesmo das contas anuais e da IES.
+
+Obter a demonstração não cria nem altera lançamentos.
+
+## Quando utilizar?
+
+- Todos os meses ou trimestres, para a gerência acompanhar o resultado.
+- No fecho do exercício, com o [balanço](/accounting-pt/balanco), para as contas que a gerência aprova e assina.
+- Para explicar uma variação: a comparação com o período anterior vem marcada.
+
+## Onde encontrar?
+
+**Contabilidade › Consultar › Demonstrações financeiras › Demonstração de resultados**. O título do ecrã é **Demonstração de Resultados por Naturezas (SNC)**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. Com ele faz todos os passos deste artigo (testado com o perfil Contabilista). A **Gerência** e o **Auditor / ROC** também têm o menu.
+- A empresa tem o **Referencial contabilístico** escolhido. Sem ele, a demonstração não abre e mostra a mesma mensagem do balanço ([Como obter o balanço](/accounting-pt/balanco)).
+- Os lançamentos do período estão publicados, incluindo os do fecho do mês (depreciações, acréscimos).
+- No exemplo, a Empresa Demonstração, Lda, a 29/10/2026, com o exercício de 2026 comparado com o de 2025.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Consultar › Demonstrações financeiras › Demonstração de resultados**. Abre no exercício corrente (`01/01/2026 – 31/12/2026`) e já comparada com o exercício anterior.
+2. Escolha o período com **Mês**, **Trimestre** ou **Ano** e as setas, como no [balancete](/accounting-pt/balancete). Ao contrário do balanço, que é uma fotografia numa data, a demonstração soma o que aconteceu entre a data de início e a de fim.
+3. Deixe em **Variante** a do referencial da empresa: **Demonstração de Resultados por Naturezas (SNC)** no exemplo. Com outra variante, numa empresa no SNC, o quadro mostra tudo a zero e, ao contrário do [balanço](/accounting-pt/balanco), sem nenhuma faixa de aviso (ver «Problemas frequentes»).
+4. Leia o quadro por cima da tabela: **Vendas**, **Margem** (vendas menos o custo das mercadorias vendidas e das matérias consumidas) e **Lucro** ou **Prejuízo**. No exemplo de 2026: 38.073,00 €, 26.973,00 € e **Prejuízo** 64.911,51 €; em 2025: 279.000,00 €, 137.400,00 € e **Lucro** 31.104,16 €.
+   ![Cabeçalho da Demonstração de Resultados por Naturezas (SNC) com a Variante, Comparar com período anterior marcado, Períodos 1, e o quadro Vendas 38.073,00 €, Margem 26.973,00 € e Prejuízo 64.911,51 €](/images/accounting-pt/demonstracao-de-resultados/01-variante-e-indicadores.png)
+5. Leia as linhas. Os gastos aparecem com sinal menos e a vermelho. Para ver as contas de uma linha, carregue no triângulo à esquerda dela, ou marque **Desdobrar tudo** em **Mais filtros**; as linhas a zero aparecem com **Mostrar linhas a zero**.
+   ![Linhas da demonstração de 2026: Vendas e serviços prestados 38.073,00 €, Custo das mercadorias vendidas -11.100,00 €, Fornecimentos e serviços externos -26.527,87 €, Gastos com o pessoal -56.076,97 €, Outros gastos -6.583,04 €, depreciações -2.696,63 € e Resultado líquido do período -64.911,51 €](/images/accounting-pt/demonstracao-de-resultados/02-linhas-do-exercicio.png)
+6. Exporte com **Exportar PDF**, ou em **Exportar** escolha **Exportar PDF para assinar**, **Exportar XLSX**, **Exportar CSV (formato PT)**, **Exportar CSV (técnico)**, **Exportar com opções…** ou **Imprimir**. No **Exportar PDF para assinar**, o quadro **Assinaturas** (2 × «Gestor (nome e assinatura)» e «Contabilista certificado (n.º OCC) (nome e assinatura)») e o «SHA-256 do conteúdo» ficam na mesma página, num PDF de 1 página (o do balanço tem uma página só para as assinaturas). Este PDF não leva no rodapé a versão da tabela de taxonomias que o **Exportar PDF** leva.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, a demonstração de resultados abre no mesmo ecrã do fiscaldoo, **Demonstração de Resultados por Naturezas (SNC)**, com a **Variante**, o quadro **Vendas**, **Margem** e **Lucro** ou **Prejuízo**, a comparação com o ano anterior e as mesmas exportações (visto com um utilizador só com o perfil **Contabilista**). A demonstração de resultados do próprio Enterprise não está no menu do Contabilista.
+
+{/* Nota interna (lote EE-02, DOCS-073 #4142, DEC-1794, master 7a46de91a, base Enterprise docs_ee_ee02_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): Contabilista: Consultar › Demonstrações financeiras › Demonstração de resultados abriu o visualizador do fiscaldoo com Exportar PDF, Exportar, Guardar opções, Copiar ligação, Repor, Períodos anteriores e Mais filtros; na cópia, Vendas 38.073,00 €, Margem 26.973,00 €, Prejuízo 58.591,84 €, 19 linhas escondidas. Ver reports/LOTE_EE-02.md. */}
+
+## Resultado esperado
+
+- O **Resultado líquido do período** é igual ao do [balanço](/accounting-pt/balanco) da mesma data (no exemplo, -64.911,51 € em 2026 e 31.104,16 € em 2025) e à diferença entre os saldos finais das classes 7 e 6 do [balancete](/accounting-pt/balancete) (38.073,00 € - 102.984,51 € = -64.911,51 €).
+- O PDF tem o título «DEMONSTRAÇÃO INDIVIDUAL DOS RESULTADOS POR NATUREZAS PERÍODO FINDO EM 31 DE DEZEMBRO DE 2026», as colunas do período (N) e do anterior (N-1), todas as rubricas do modelo e, no rodapé, a versão da tabela de taxonomias. No exemplo, os valores do PDF são iguais aos do ecrã.
+- Nenhum lançamento é criado.
+
+## Notas importantes
+
+- **O imposto do exercício só aparece se estiver lançado.** No exemplo, **Imposto sobre o rendimento do período** é 0,00 € em 2025 e em 2026, e o resultado líquido é igual ao resultado antes de impostos, porque a estimativa do IRC não foi lançada. Até ela ser lançada no fecho, o resultado líquido do ecrã está antes de impostos. <span className="fd-pending">Pendente de validação por contabilista certificado: lançamento da estimativa do IRC e da derrama no fecho (conta 812) e o seu efeito no resultado líquido.</span>
+- **Um mês isolado engana.** Gastos anuais lançados num só mês (seguros, rendas pagas adiantadas) aparecem todos nesse mês, a não ser que tenham sido diferidos. Compare trimestres ou o acumulado do exercício.
+- **Rascunhos.** Com **Incluir rascunhos** em **Mais filtros**, as faturas e lançamentos por publicar entram nos valores. Não exporte para terceiros com esta opção.
+
+## Problemas frequentes
+
+### O quadro mostra Lucro 0,00 € e a tabela não tem linhas
+
+- **Sintoma:** **Vendas** 0,00 €, **Margem** 0,00 € e **Lucro** 0,00 €, e por baixo «18 linha(s) sem valores estão escondidas. Marque «Mostrar linhas a zero» em «Mais filtros» para as ver.». Não aparece nenhuma faixa de aviso e o título continua **Demonstração de Resultados por Naturezas (SNC)** (visto com a variante **Demonstração de Resultados por Naturezas (NC-ME)** na empresa do exemplo).
+- **Causa verificada:** a **Variante** escolhida não é a do referencial da empresa (onde o ver: [Como obter o balanço](/accounting-pt/balanco), passo 3).
+- **O que fazer:** volte a **Demonstração de Resultados por Naturezas (SNC)** (ou à variante do referencial da empresa).
+
+### O resultado líquido é diferente do do balanço
+
+- **Mensagem:** no balanço, a faixa «Controlo do resultado líquido em … : o Balanço mostra … como resultado líquido do período, mas a Demonstração de Resultados mostra …».
+- **O que fazer:** confirme que os dois estão no mesmo período, na mesma variante e com a mesma opção **Incluir rascunhos**. Se continuar diferente, fale com o contabilista certificado.
+
+{/* Nota interna (DOCS-035, DOC-0144): defeito B2-05 (variantes) em reports/LOTE_B2.md; P-V2-04 (sem faixa de aviso com a variante errada, AUDITORIA_V2_B2_D NB2-05). A faixa «Controlo do resultado líquido» foi vista no balanço com a variante NC-ME; com a variante certa não houve diferença a provocar. */}

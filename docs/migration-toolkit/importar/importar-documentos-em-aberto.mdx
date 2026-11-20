@@ -1,0 +1,159 @@
+---
+id: importar-documentos-em-aberto
+slug: /migration-toolkit/importar-documentos-em-aberto
+title: Como importar faturas em aberto e saldos de terceiros
+sidebar_label: Documentos em aberto
+description: Carregar as faturas por receber e por pagar do programa anterior, documento a documento, num lançamento de abertura que depois se reconcilia com os pagamentos.
+keywords: [documentos em aberto, faturas em aberto, saldos de terceiros, conta corrente, clientes, fornecedores, abertura, migração, migracao, importar documentos pendentes, Saldos de abertura por terceiro, adiantamento]
+doc_id: DOC-0298
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [migration-toolkit/importar/importar-saldos-de-abertura, migration-toolkit/planear/validar-a-migracao]
+---
+
+## Para que serve?
+
+Carrega as faturas que o programa anterior ainda tinha por receber ou por pagar, **uma linha por documento**, para depois reconciliar cada uma com o pagamento quando chegar. Os documentos passam a ser **um só lançamento** no diário de abertura, equilibrado com uma conta de capital próprio. Não se criam faturas certificadas: o documento antigo fica só como referência na linha.
+
+## Quando utilizar?
+
+- Quando precisa de saber qual a fatura que cada cliente ou fornecedor ainda deve, e não só o saldo da conta.
+- Quando vai reconciliar pagamentos com as faturas do programa anterior.
+- **Não use** em conjunto com os [saldos de abertura](/migration-toolkit/importar-saldos-de-abertura) para as mesmas contas de clientes e fornecedores: o saldo ficaria duplicado. Escolha um dos dois para clientes e fornecedores.
+- Para um cliente ou fornecedor sem documentos por liquidar, sem detalhe, existe o ecrã **Saldos de abertura por terceiro** (ver «Notas importantes»).
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Migração e importações › Importar documentos em aberto**. O que cada perfil vê no menu **Migração e importações** (o perfil é o que se atribui ao utilizador em **Definições › Utilizadores**; os nomes dos ecrãs são os do menu):
+
+| Perfil | Entradas do submenu **Migração e importações** | Importa documentos em aberto |
+|---|---|---|
+| **Administrador** | Todas as que este artigo descreve | Sim |
+| **Contabilista certificado** | **Importar documentos em aberto**, **Saldos de abertura por terceiro**, **Registo de importações de dados**, **Importar ficheiro SAF-T**, **Migração de documentos certificados**, **Migração de séries** e **Migração para a contabilidade organizada** | Sim |
+| **Auditor / ROC** | Só o **Registo de importações de dados** (consulta) | Não |
+| **Contabilista** | Nenhuma | Não |
+| **Administrativo** | Nenhuma | Não |
+| **Gerência** | Nenhuma | Não |
+
+Esta tabela foi conferida carregando o menu com um utilizador de cada perfil. Atribua o perfil e não grupos de acesso soltos: é o perfil **Contabilista certificado** que traz o grupo «Migração / Importação fiscal», necessário para importar.
+
+## Antes de começar
+
+- O seu perfil é **Administrador** ou **Contabilista certificado**: as entradas **Importar documentos em aberto** e **Saldos de abertura por terceiro** exigem a permissão «Migração / Importação fiscal», que só estes dois perfis trazem. Com o perfil **Contabilista**, **Auditor / ROC** ou **Administrativo** o menu não aparece: peça a quem tem um dos dois perfis que faça a importação.
+- Os clientes e fornecedores do ficheiro já existem, com NIF.
+- O ficheiro é CSV ou XLSX, com cabeçalho. Colunas obrigatórias: **Parceiro** (NIF ou nome exato), **Documento** (a referência do documento antigo) e **Valor**. Opcionais: **Conta**, **Data do documento**, **Vencimento** e **Moeda**. Exemplo, com dados inventados (cada linha da tabela é uma linha do ficheiro; grave com ponto e vírgula entre colunas):
+
+  | Parceiro | Documento | Valor | Data do documento | Vencimento |
+  |---|---|---|---|---|
+  | `PT599999985` | `FT 2025/101` | `1230,00` | `15/11/2025` | `15/12/2025` |
+  | `PT599999985` | `FT 2025/118` | `1770,00` | `20/12/2025` | `19/01/2026` |
+  | `PT599999969` | `FF 2025/77` | `2500,00` | `10/12/2025` | `09/01/2026` |
+
+- O valor leva sinal menos quando o cliente está a crédito (por exemplo um adiantamento) ou o fornecedor a débito.
+- A conta de cada documento: se a coluna **Conta** estiver vazia, o produto usa a conta de fornecedores (`2211`) só quando o parceiro é **só fornecedor**; em qualquer outro caso usa a de clientes (`2111`). Um parceiro criado sem ser marcado como fornecedor cai em `2111`: marque-o como fornecedor ou preencha **Conta** com `221`.
+- A coluna **Moeda** é opcional. O valor é convertido para euros à taxa em vigor na **Data de referência** (na demonstração, 110,00 USD com a taxa 1,1 de 01/12/2025 ficaram 100,00 €); se a moeda não tiver nenhuma taxa registada na data de referência ou antes, o produto **não importa** e diz-o na linha do documento (ver «Problemas frequentes»). Registe a taxa antes de importar. <span className="fd-pending">Pendente de validação por contabilista certificado: a taxa a usar na abertura de documentos em moeda estrangeira.</span>
+- O **Vencimento** pode ficar vazio: a linha entra sem data de vencimento.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Importar documentos pendentes**, escolha o ficheiro em **Escolher ficheiro** e escreva a **Data de referência**, por exemplo `01/01/2026`. **Diário de abertura** e **Conta de contrapartida** vêm preenchidos; **Modo** começa em **Criar em rascunho**.
+   ![Janela Importar documentos pendentes com o ficheiro e a data de referência 01/01/2026 escolhidos](/images/migration-toolkit/importar-documentos-em-aberto/01-ficheiro-e-data.png)
+2. Carregue em **Verificar**. Se houver problemas, a janela lista-os com o número da linha do ficheiro (a linha 1 é o cabeçalho) e nada é gravado. Corrija o ficheiro, carregue em **Voltar** e escolha-o outra vez.
+   ![Verificação com dois erros: parceiro PT599999990 que não existe, na linha 3, e o montante «doismil» que não é válido, na linha 4](/images/migration-toolkit/importar-documentos-em-aberto/02-erros-do-ficheiro.png)
+3. Sem erros, a janela diz «3 documentos pendentes, clientes 3000.00, fornecedores 2500.00 EUR (líquido, na moeda da empresa), com data de 01/01/2026. Nada é guardado até carregar em Importar.» Confira **Documentos**, **Clientes (líquido)** e **Fornecedores (líquido)** com a conta corrente do programa anterior e carregue em **Importar**.
+   ![Verificação sem erros: 3 documentos, clientes 3.000,00 e fornecedores 2.500,00, com o botão Importar assinalado](/images/migration-toolkit/importar-documentos-em-aberto/03-verificacao-sem-erros.png)
+4. Em «O lançamento de abertura vai ser criado. Continuar?», carregue em **Confirmar**. A janela diz «Lançamento de abertura criado (Criar em rascunho) com 3 documentos pendentes. Reconcilie-os com pagamentos a partir da conta corrente de cada parceiro.» Carregue em **Ver lançamento**, confira as linhas e carregue em **Publicar**.
+   ![Lançamento de abertura com as três linhas de documentos e a linha de contrapartida em Resultados transitados](/images/migration-toolkit/importar-documentos-em-aberto/04-lancamento-de-abertura.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+Um lançamento no diário de abertura, publicado, com estas linhas (as da demonstração):
+
+| Conta | Parceiro | Descrição | Débito | Crédito |
+|---|---|---|---|---|
+| `2111` Clientes gerais | Cliente Alfa, Lda | FT 2025/101 | 1.230,00 € | |
+| `2111` Clientes gerais | Cliente Alfa, Lda | FT 2025/118 | 1.770,00 € | |
+| `2211` Fornecedores gerais | Fornecedor Beta, SA | FF 2025/77 | | 2.500,00 € |
+| `561` Resultados transitados | | Saldo de abertura | | 500,00 € |
+| **Total** | | | **3.000,00 €** | **3.000,00 €** |
+
+A linha `561` é a **Conta de contrapartida**: recebe a diferença entre os clientes (3.000,00 €) e os fornecedores (2.500,00 €). Cada documento fica numa linha própria, com a referência antiga na descrição, para reconciliar com o pagamento a partir da conta corrente do parceiro.
+
+## Notas importantes
+
+<HelpCallout type="risco" title="A contrapartida é a conta de capital próprio">
+O assistente equilibra o lançamento com a **Conta de contrapartida** (na demonstração, `561` Resultados transitados). Se importou também o balancete de abertura, esta linha duplica o capital. Decida a conta com o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: conta de contrapartida da abertura de terceiros.</span>
+</HelpCallout>
+
+- **Saldos de abertura por terceiro** (**Contabilidade › Configurar › Migração e importações**) é a alternativa sem ficheiro: uma janela com **Data de referência**, **Diário de abertura**, **Conta de contrapartida** e **Modo**, e uma linha por parceiro (**Parceiro**, **Conta corrente**, **Moeda**, **Saldo**, **Invertido**, **Natureza**, **Referência**). A janela avisa «Preencha a data de referência dos lançamentos de abertura.» enquanto a data está vazia. Cada linha vira um lançamento. Não a usámos a gravar.
+  ![Janela Saldos de abertura por terceiro com os campos da data, do diário, da contrapartida e do modo, e a lista de parceiros vazia](/images/migration-toolkit/importar-documentos-em-aberto/05-saldos-por-terceiro.png)
+- O assistente lê o sinal do valor: um sinal menos num cliente é um adiantamento, e num fornecedor é um valor a receber. Uma fatura de fornecedor em dívida entra com valor positivo.
+- A importação fica no [registo de importações](/migration-toolkit/validar-a-migracao): 3 documentos dão **Registos criados** 3 (um por documento, todos no mesmo lançamento de abertura).
+- Se já importou **saldos de abertura** com a mesma data de referência, a verificação avisa e só deixa continuar se marcar **Importar outra vez** (ver «Problemas frequentes»).
+
+## Problemas frequentes
+
+### «A data … está num período bloqueado»
+
+- **Sintoma:** ao carregar em **Verificar**, a janela diz «Foram encontrados 1 problema(s) no ficheiro. Nada foi gravado.» e, em **Onde**, «No ficheiro todo»: «A data 31/12/2025 está num período bloqueado (Data de bloqueio geral (31/12/2025)). Não se pode importar nada aí; altere a data ou peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)».» (visto no ecrã com o perfil **Contabilista certificado**, com a **Data de referência** 31/12/2025)
+  ![Verificação com a data 31/12/2025 num período bloqueado, no ficheiro todo](/images/migration-toolkit/importar-documentos-em-aberto/06-data-em-periodo-bloqueado.png)
+- **Causa:** a **Data de referência** cai antes ou na data de bloqueio da empresa. Em **Onde** aparece «No ficheiro todo» porque o erro é da data e não de uma linha do ficheiro.
+- **O que fazer:** escreva uma data posterior à do bloqueio. Se a abertura tem mesmo de ficar nesse período, a data de bloqueio altera-se em **Contabilidade › Fechar › Fecho do exercício › Painel do fecho do exercício › Datas de bloqueio e exceções**, onde o produto pede um motivo e o regista. <span className="fd-pending">Pendente de validação por contabilista certificado: alterar uma data de bloqueio para importar uma abertura.</span>
+
+### «O vencimento … é anterior à data do documento»
+
+- **Sintoma:** «O vencimento 19/12/2025 é anterior à data do documento 20/12/2025. Confirme as duas colunas.» (linha 3 do ficheiro de exemplo, em que o documento é de 20/12/2025 e o vencimento de 19/12/2025).
+- **O que fazer:** confirme as duas datas e corrija a que estiver trocada. Um vencimento vazio não dá erro.
+
+### «O campo data do documento … não é uma data válida»
+
+- **Sintoma:** «O campo data do documento «31/02/2025» não é uma data válida. Use 2024-12-31 ou 31/12/2024.» A mensagem dá apenas um exemplo de formato; use `dd/mm/aaaa` ou `aaaa-mm-dd` com uma data que exista.
+- **O que fazer:** corrija a data na linha indicada.
+
+### «A moeda … não existe»
+
+- **Sintoma:** «A moeda «XYZ» não existe. Use o código ISO (EUR, USD...).»
+- **O que fazer:** use o código ISO de uma moeda que exista, ou deixe a coluna vazia para euros.
+
+### «A moeda … não tem nenhuma taxa de câmbio registada»
+
+- **Sintoma:** na verificação, linha 2: «A moeda USD não tem nenhuma taxa de câmbio registada na data 01/01/2026 ou antes, pelo que os montantes seriam convertidos 1 para 1 em EUR. Registe a taxa em Contabilidade › Configurar › Geral › Câmbios e arredondamentos › Moedas e taxas de câmbio (em modo programador) e leia o ficheiro outra vez.» Nada é gravado.
+- **O que fazer:** registe a taxa da moeda com data igual ou anterior à **Data de referência** e carregue em **Voltar** para ler o ficheiro outra vez.
+
+### «Já foi importado um lançamento de saldos de abertura (ou de documentos em aberto) nesta data»
+
+- **Sintoma:** ao verificar os saldos de abertura depois de ter importado os documentos em aberto com a mesma data (ou o inverso), a janela avisa: «Já foi importado um lançamento de documentos em aberto (…) nesta data. Estes saldos de abertura de clientes e fornecedores podem incluir os mesmos valores: importar os dois duplicaria os valores. Marque “Importar outra vez” só se os dois ficheiros não se sobrepuserem.» Ao verificar os documentos em aberto depois dos saldos, lê-se: «Já foi importado um lançamento de saldos de abertura (…) nesta data. Os saldos de clientes e fornecedores podem já incluir estes documentos em aberto: importar os dois duplicaria os valores. Marque “Importar outra vez” só se os dois ficheiros não se sobrepuserem.»
+- **Causa:** as contas de clientes e de fornecedores entrariam duas vezes, uma no balancete de abertura e outra nos documentos.
+- **O que fazer:** se os dois ficheiros se sobrepõem, não importe o segundo. Se não se sobrepõem (por exemplo, o balancete não traz clientes nem fornecedores), marque **Importar outra vez**. No exemplo, o balancete tinha as contas `2111` e `2211`, por isso não se deve importar o segundo.
+
+### «O documento … já aparece na linha …»
+
+- **Sintoma:** «O documento «FT 2025/101» de Cliente Alfa, Lda já aparece na linha 2. Uma linha por documento pendente.» (a mesma referência, para o mesmo parceiro e moeda, em duas linhas).
+  ![Verificação com quatro erros: vencimento anterior, data inválida, moeda inexistente e documento repetido](/images/migration-toolkit/importar-documentos-em-aberto/07-erros-de-datas-moeda-e-repetidos.png)
+- **O que fazer:** se são dois documentos diferentes, dê-lhes referências diferentes; se é o mesmo, apague a linha repetida. Não some os valores.
+
+### «Não foi encontrado nenhum parceiro»
+
+- **Sintoma:** «Não foi encontrado nenhum parceiro para «PT599999990» (NIF ou nome exato). Crie primeiro o parceiro; um parceiro sem NIF encontra-se pelo nome exato.»
+- **O que fazer:** crie o cliente ou fornecedor com o NIF do ficheiro, ou corrija o NIF.
+
+### «O montante … não é válido»
+
+- **Sintoma:** «O montante «doismil» não é válido. Use um número (1234.56 ou 1.234,56), com sinal menos para um cliente a crédito ou um fornecedor a débito; não se aceita texto nem fórmulas.»
+- **O que fazer:** escreva o valor só com algarismos, vírgula ou ponto decimais e, se for o caso, o sinal menos.
+
+### Os totais não batem com o programa anterior
+
+- **Sintoma:** **Clientes (líquido)** ou **Fornecedores (líquido)** diferem do saldo da conta corrente antiga.
+- **Causa:** o valor mostrado é líquido (soma dos documentos com sinal), na moeda da empresa. Um adiantamento com sinal menos reduz o total do cliente.
+- **O que fazer:** confira linha a linha com o extrato do parceiro no programa anterior antes de carregar em **Importar**.
+
+{/* Nota interna (DOCS-046 v4 MIG, correção NV3B2-01, #3616, master 52d1dd3a, base docs_demo_v4mig_test): perfis conferidos com utilizadores descartáveis criados pelo perfil (contabilista, contabilista_certificado, auditor, administrativo) e o menu carregado por cada um; MIG-072 deu o grupo «Migração / Importação fiscal» ao perfil Contabilista certificado. Verificação com USD sem taxa e aviso de mesma data vistos no ecrã com o Administrador na «Empresa Migração Capturas, Lda»; a importação com o Contabilista certificado não foi feita no ecrã (só o menu e o grupo). As capturas 01 a 07 são do lote v3 (master ba9c8bd76); os passos que mostram não mudaram. */}

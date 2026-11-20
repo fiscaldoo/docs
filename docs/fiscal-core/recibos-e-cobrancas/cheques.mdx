@@ -1,0 +1,170 @@
+---
+id: cheques
+slug: /fiscal-core/cheques
+title: Como registar, apresentar de novo ou sustar um cheque
+sidebar_label: Cheques
+sidebar_position: 4
+description: Registar um cheque recebido e ligá-lo ao recibo, depositá-lo e dá-lo como cobrado ou devolvido, apresentá-lo de novo, e sustar o pagamento de um cheque emitido, com os lançamentos contabilísticos de cada passo.
+keywords: [cheque, cheques, depositar cheque, cheque devolvido, falta de provisão, apresentar de novo, sustar pagamento, cheque sustado, cheque cobrado, cheque pré-datado, cheque emitido, recebimentos pendentes, despesas de devolução]
+doc_id: DOC-0037
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/recibos-e-cobrancas/emitir-um-recibo]
+---
+
+## Para que serve?
+
+O registo de cheques acompanha cada cheque desde que chega à empresa até ao banco: **Em carteira**, **No banco**, **Cobrado** ou **Devolvido**. Num cheque recebido, cada ida ao banco cria o lançamento contabilístico correspondente e, se o banco o devolver, a fatura do cliente volta a ficar em aberto. Serve também para sustar um cheque que a empresa emitiu.
+
+## Quando utilizar?
+
+- Quando um cliente paga com um cheque que ainda não foi ao banco.
+- Quando o banco devolve um cheque (por exemplo, por falta de provisão) e quer voltar a apresentá-lo.
+- Quando um cheque emitido pela empresa se perdeu ou foi roubado e é preciso sustar o pagamento.
+- Não o use para pagamentos por transferência ou por Multibanco: esses não precisam de cheque.
+
+## Onde encontrar?
+
+**Contabilidade › Reconciliar › Bancos e caixa › O que há para fazer com os bancos?**, no grupo **Listas de apoio**, ligação **Cheques**.
+
+![Grupo Listas de apoio do painel dos bancos, com a ligação Cheques](/images/fiscal-core/cheques/00-painel-bancos-cheques.png)
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. Também tem acesso quem tem o acesso extra **Tesouraria: Gestor**, dado nos **Ajustes avançados** do utilizador, no campo **Tesouraria**. O perfil **Administrativo** não tem acesso: não vê o painel e, se abrir uma ligação para a lista, recebe «Não tem acesso a «Cheque». Quem faz: «Contabilista (opera)» ou «Auditor / ROC». Quem atribui o perfil: o administrador do sistema (Definições › Utilizadores e empresas › Utilizadores). Peça-lhe o perfil de que precisa, ou peça a um utilizador com esse perfil que o faça.»
+- O **Administrador** definiu as contas e o diário dos cheques em **Definições**, separador **Faturação**, grupo **Cheques**, secção **Contabilidade dos cheques**: **Conta de cheques em carteira**, **Conta de cheques no banco** e **Diário de cheques**. Sem isto, **Depositar** recusa (ver «Problemas frequentes»).
+   ![Secção Contabilidade dos cheques das Definições, com as contas de cheques em carteira e no banco e o diário de cheques](/images/fiscal-core/cheques/04-definicoes-cheques.png)
+- O **Administrador** preencheu a conta de recebimentos pendentes do banco onde deposita: **Contabilidade › Configurar › Geral › Diários**, diário **Banco**, separador **Pagamentos recebidos**, coluna **Contas de Recebimentos Pendentes**, linha **Pagamento manual**. Sem ela, **Cobrado** recusa (ver «Problemas frequentes»).
+   ![Separador Pagamentos recebidos do diário Banco, com a conta de recebimentos pendentes na linha Pagamento manual](/images/fiscal-core/cheques/05-conta-pendentes-do-diario.png)
+- Para que o cheque baixe a dívida do cliente, tem de [emitir o recibo](/fiscal-core/emitir-um-recibo) da fatura primeiro e ligá-lo ao cheque (passo 2). <span className="fd-pending">Pendente de validação por contabilista certificado: que contas usar para a carteira e para o banco. A demonstração usou 120002 Recebimentos Pendentes para a carteira, a mesma conta a que o recibo vai debitar, e 120001 Conta Transitória para o banco.</span>
+
+## Como utilizar
+
+O exemplo é um cheque de 147,60 € da Clínica Dentária Sorriso, SA, que paga a fatura `FT D26/33`. O recibo `RG D26/16` já foi emitido nessa fatura, que está paga.
+
+<StepByStep>
+
+1. Abra **Cheques**. Numa empresa sem cheques, a lista diz «Registe o seu primeiro cheque. Cheques recebidos e emitidos com o seu estado: em carteira, no banco, cobrados ou devolvidos.» Carregue em **Novo**.
+   ![Lista Cheques vazia com a mensagem Registe o seu primeiro cheque](/images/fiscal-core/cheques/01-lista-vazia.png)
+2. Em **Tipo**, deixe **Recebido**. Escreva o **Número do cheque** (`0001234`) e o **Banco** (`Banco Exemplo`). Escolha o cliente em **Sacador / beneficiário**, o recibo em **Pagamento** (`RG D26/16`) e o **Diário bancário** (**Banco**), e escreva o **Montante** (`147,60`). A **Data de emissão** vem com a data de hoje. **Pré-datado para** só se preenche num cheque com data futura (ver «Notas importantes»).
+3. Carregue em **Guardar**. O cheque recebe a referência `CHQ/…` (aqui `CHQ/00001`), fica **Em carteira** e a **Linha do tempo** regista «Ciclo 1: registado em carteira». Não há lançamento contabilístico: o cheque ainda está na empresa.
+4. Quando o cheque for ao banco, carregue em **Depositar**. O cheque passa a **No banco** e a ficha mostra o **Lançamento do depósito**.
+5. Quando o banco o pagar, carregue em **Cobrado**. O cheque passa a **Cobrado**, com **Cobrado em** e o **Lançamento da cobrança**.
+   ![Cheque CHQ/00001 cobrado, ligado ao recibo RG D26/16, com os lançamentos do depósito e da cobrança e a linha do tempo](/images/fiscal-core/cheques/06-cheque-cobrado.png)
+
+</StepByStep>
+
+### Lançamentos de cada passo
+
+Lançamentos gerados na demonstração, conferidos nas linhas de cada um (os do cheque ficam no diário **Operações Diversas**).
+
+| Passo | Débito | Crédito |
+|---|---|---|
+| Recibo (`RG D26/16`) | 120002 Recebimentos Pendentes, 147,60 € | 2111 Clientes gerais, 147,60 € |
+| Depositar (`OD/2026/00104`) | 120001 Conta Transitória, 147,60 € | 120002 Recebimentos Pendentes, 147,60 € |
+| Cobrado (`OD/2026/00105`) | 120002 Recebimentos Pendentes, 147,60 € | 120001 Conta Transitória, 147,60 € |
+
+No fim, a dívida do cliente está paga, a 120001 fica a zero e a 120002 fica com 147,60 € a débito, à espera da linha do extrato: esse saldo sai na [reconciliação bancária](/accounting-pt/reconciliar-movimentos-bancarios). <span className="fd-pending">Pendente de validação por contabilista certificado: tratamento contabilístico do cheque em carteira.</span>
+
+Um cheque **sem recibo ligado** não mexe na dívida do cliente: o depósito e a cobrança anulam-se um ao outro e, se for devolvido, não há reversão de recebimento. Use-o assim só para acompanhar o cheque.
+
+### Devolver e apresentar de novo
+
+O exemplo é um cheque de 143,10 € da Padaria Aurora, Lda, ligado ao recibo `RG D26/17` da fatura `FT D26/28`.
+
+1. Com o cheque **No banco**, carregue em **Devolvido**. Na janela **Devolver cheque**, escolha o **Motivo** (**Falta de provisão**, **Pagamento suspenso pelo sacador**, **Assinatura irregular ou em falta**, **Cheque caducado**, **Conta encerrada** ou **Outro motivo**) e escreva a **Nota**, que **Outro motivo** exige.
+2. Se o banco cobrou despesas a passar ao cliente, marque **Emitir nota de débito das despesas de devolução** (vem desmarcada) e escreva o valor em **Despesas de devolução**, sem IVA. Carregue em **Devolver cheque**.
+   ![Janela Devolver cheque com Motivo, Nota, a caixa Emitir nota de débito e as Despesas de devolução](/images/fiscal-core/cheques/07-devolver-cheque.png)
+3. O cheque fica **Devolvido**, com o **Motivo da devolução** e os lançamentos abaixo. A fatura `FT D26/28` volta a ficar por pagar, com 143,10 € em aberto.
+
+   | Lançamento | Débito | Crédito |
+   |---|---|---|
+   | Depósito (`OD/2026/00106`) | 120001 Conta Transitória, 143,10 € | 120002 Recebimentos Pendentes, 143,10 € |
+   | Devolução (`OD/2026/00107`) | 120002 Recebimentos Pendentes, 143,10 € | 120001 Conta Transitória, 143,10 € |
+   | Reversão do recebimento (`OD/2026/00108`) | 2111 Clientes gerais, 143,10 € | 120002 Recebimentos Pendentes, 143,10 € |
+
+   ![Cheque CHQ/00002 devolvido por falta de provisão, com os lançamentos do depósito, da devolução e da reversão do recebimento](/images/fiscal-core/cheques/08-cheque-devolvido.png)
+4. Com despesas, a ficha mostra a **Nota de débito das despesas de devolução**. Fica em **rascunho**, sem número nem efeito na contabilidade, até a abrir e emitir. No exemplo, despesas de 15,00 € deram um total de 18,45 €: 2111 Clientes gerais a débito 18,45 €, 721 a crédito 15,00 € e 2433 a crédito 3,45 € de IVA. <span className="fd-pending">Pendente de validação por contabilista certificado: se as despesas do banco debitadas ao cliente levam IVA e se devem ir para a conta 721.</span>
+5. Se o motivo é **Falta de provisão** ou **Outro motivo**, aparece **Apresentar de novo**; nos outros motivos, o cheque fica só como histórico. Carregue nele: abre-se um cheque novo, **Em carteira** (aqui `CHQ/00003`, com os mesmos dados e o **Ciclo** 2), e o devolvido fica como histórico.
+6. O cheque novo volta a baixar a dívida: `OD/2026/00109` debita 120002 Recebimentos Pendentes e credita 2111 Clientes gerais, 143,10 €, e a fatura `FT D26/28` volta a **paga**. Continue no passo 4 de «Como utilizar»: **Depositar** e **Cobrado** (`OD/2026/00110` e `OD/2026/00111`).
+
+### Sustar o pagamento de um cheque emitido
+
+O exemplo é um cheque de 600,00 € a Rui Matos, ligado ao pagamento `PBNK1/2026/00040` da fatura de fornecedor `FTF/2026/00044`.
+
+1. Registe o cheque com **Tipo** **Emitido** (número, banco, **Sacador / beneficiário** o fornecedor, **Pagamento**, montante) e guarde.
+2. Com o cheque **Em carteira** ou **No banco**, carregue em **Sustar pagamento**. A janela diz: «O pagamento do cheque é estornado e a fatura do fornecedor volta a ficar em aberto. Um cheque já compensado não pode ser sustado.»
+3. Escolha o **Motivo** (**Extraviado**, **Roubado**, **Litígio com o beneficiário** ou **Outro motivo**; é obrigatório) e carregue em **Sustar pagamento**.
+   ![Janela Sustar pagamento com Motivo, Nota e o aviso de que o pagamento é estornado](/images/fiscal-core/cheques/10-sustar-pagamento.png)
+4. O cheque passa a **Pagamento sustado**, com o motivo e a data. O estorno `BNK1/2026/00073` debita 120003 Pagamentos Pendentes e credita 2211, 600,00 €, e a fatura `FTF/2026/00044` volta a por pagar, com 600,00 € em aberto.
+   ![Cheque CHQ/00011 emitido, com o pagamento sustado por extravio](/images/fiscal-core/cheques/11-cheque-sustado.png)
+
+Sem pagamento ligado, sustar não gera estorno. Um cheque emitido que seguiu o caminho normal usa **Apresentado no banco** e **Cobrado**. Estes dois botões não criam lançamento, porque o movimento contabilístico é o do pagamento.
+
+## No Enterprise
+
+No Odoo Enterprise, os cheques são os mesmos do fiscaldoo. Em **Contabilidade › Reconciliar › Bancos e caixa › O que há para fazer com os bancos?**, grupo **Listas de apoio**, a ligação **Cheques** abre a mesma lista, com **Novo** e as colunas **Referência**, **Tipo**, **Número do cheque**, **Banco**, **Montante**, **Estado** e **Motivo da devolução**, entre outras. A ficha nova tem os mesmos campos: **Tipo**, **Número do cheque**, **Banco**, **Sacador / beneficiário**, **Montante**, **Data de emissão**, **Pré-datado para** e **Data prevista de depósito** (visto com um utilizador só com o perfil **Contabilista**). Nas **Definições**, o administrador tem o mesmo bloco **Cheques devolvidos**.
+
+{/* Nota interna (lote EE-12, DOCS-073 #4142, DEC-1794, master 589ecfd27, base Enterprise docs_ee_ee12_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee12_test): DOC-0037. Contabilista: painel dos bancos, Listas de apoio › Cheques (lista com 11 colunas, vazia na cópia), Novo sem gravar. Administrador: Contabilidade › Configurar › Definições com o bloco Cheques devolvidos (Produto de despesas de devolução, Montante das despesas de devolução, Alerta de pré-datado). Nenhum cheque registado nem movimentado. Igual na cópia Community. Ver reports/LOTE_EE-12.md. */}
+
+## Resultado esperado
+
+- O cheque mostra o estado certo (**Em carteira**, **No banco**, **Cobrado**, **Devolvido**, **Pagamento sustado** ou **Anulado**) e, em **Lançamentos contabilísticos**, a ligação para cada lançamento criado.
+- Com recibo ligado, a fatura do cliente acompanha o cheque: paga enquanto ele corre, por pagar se for devolvido.
+- Nada é comunicado à AT nem ao banco: o registo é interno.
+
+## Notas importantes
+
+<HelpCallout type="atencao" title="Cobrado e Devolvido não se corrigem na ficha">
+Depois de **Cobrado** ou **Devolvido** não há botão para desfazer, e um cheque que saiu da carteira já não se altera. Confirme o estado com o extrato do banco antes de carregar em **Cobrado**.
+</HelpCallout>
+
+- **Anular depósito**, num cheque **No banco**, devolve-o a **Em carteira** e cria a reversão do depósito (no teste, `OD/2026/00113`: 120002 a débito e 120001 a crédito).
+- **Anular**, num cheque **Em carteira**, passa-o a **Anulado**, sem lançamento. Um cheque nunca se elimina.
+- **Pré-datado:** com **Pré-datado para** preenchido, a ficha avisa, por exemplo, «Cheque pré-datado: pode ser depositado a partir de 13/11/2026 (daqui a 10 dias).» e **Depositar** recusa até essa data.
+  ![Cheque pré-datado em carteira, com o aviso da data a partir da qual pode ser depositado](/images/fiscal-core/cheques/03-cheque-pre-datado.png)
+- **Alerta:** em **Definições**, secção **Cheques devolvidos**, **Alerta de pré-datado (dias)** diz com quantos dias de antecedência o fiscaldoo avisa do vencimento (na demonstração, 3). Uma tarefa diária deixa na ficha do cheque uma nota com o número e a data, uma só vez por cheque, e cria uma atividade para os utilizadores com o acesso extra **Tesouraria: Gestor**. Se ninguém tiver esse acesso, como na demonstração, fica só a nota na ficha.
+
+## Problemas frequentes
+
+### «Defina as contas e o diário dos cheques da empresa»
+
+- **Sintoma:** ao carregar em **Depositar**: «Defina as contas e o diário dos cheques da empresa Empresa Demonstração, Lda (peça ao administrador que o faça em Definições › Contabilidade › Cheques) antes de movimentar um cheque recebido.»
+- **O que fazer:** peça ao Administrador que preencha a secção **Contabilidade dos cheques**. No ecrã, ela está no separador **Faturação** das **Definições** (ver «Antes de começar»).
+
+### «O diário Banco não tem conta de recebimentos pendentes»
+
+- **Sintoma:** ao carregar em **Cobrado**: «O diário Banco não tem conta de recebimentos pendentes para receber o cheque cobrado. Indique-a na linha do método de pagamento do separador «Pagamentos de entrada» do diário (Contabilidade › Configurar › Geral › Diários) e tente de novo.» O cheque fica **No banco**.
+- **O que fazer:** peça ao Administrador que a preencha. No ecrã, o separador chama-se **Pagamentos recebidos** (ver «Antes de começar»). Depois, carregue de novo em **Cobrado**.
+
+### «Defina o produto de despesas de devolução»
+
+- **Sintoma:** ao devolver um cheque com despesas: «Defina o produto de despesas de devolução da empresa Empresa Demonstração, Lda (peça ao administrador que o faça em Definições › Contabilidade › Cheques).» O cheque fica **No banco**.
+- **O que fazer:** peça ao Administrador que escolha o **Produto de despesas de devolução** em **Definições**, secção **Cheques devolvidos**. Ou devolva sem despesas.
+
+### «está pré-datado»
+
+- **Sintoma:** ao carregar em **Depositar**: «O cheque 0002003 está pré-datado para 13/11/2026: não pode ser depositado antes.»
+- **O que fazer:** espere pela data. Se a data está errada, corrija **Pré-datado para** enquanto o cheque está **Em carteira**.
+
+### «A data de pré-datação não pode ser anterior à data de emissão»
+
+- **O que fazer:** escreva em **Pré-datado para** uma data igual ou posterior à **Data de emissão**, ou deixe-o vazio.
+
+### «já está registado»
+
+- **Sintoma:** ao guardar: «O cheque 0002001 do banco Banco Exemplo já está registado (CHQ/00004).»
+- **O que fazer:** abra o cheque indicado. Se foi devolvido, use **Apresentar de novo** em vez de o registar outra vez.
+
+### O campo «Motivo» está vazio
+
+- **Sintoma:** ao carregar em **Devolver cheque** ou **Sustar pagamento** sem motivo: «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **O que fazer:** escolha o **Motivo**.
+
+{/* Nota interna (DOCS-046, DOC-0037, master 584213fd9, base docs_demo_v7fc_test): percorrido pela barra com o perfil Contabilista até ao último passo (CHQ/00001 a 00005, 00010 a 00012); Administrador nas Definições e no diário Banco. Linhas conferidas no razão. Defeitos abertos: as mensagens dizem «Definições › Contabilidade › Cheques» e «Pagamentos de entrada», e no ecrã são separador Faturação e Pagamentos recebidos. Um recibo com o diário Banco sem conta na linha usa a 120002 pela empresa, mas Cobrado exige-a no diário. Corrigido no produto: menu pelo painel (NV3F-11), lançamentos sem recibo (NV3F-12), linha do tempo em português (V3FC-14), mensagem de Cobrado (V3FC-13). Auditoria 03/11, por clique: «Não tem acesso» do Faturação pela ligação à lista; motivos Pagamento suspenso, Assinatura irregular e Cheque caducado sem Apresentar de novo, Outro motivo com ele. Só por RPC: «não pode ser alterado» do cheque (Cobrado, Devolvido e Pagamento sustado abrem só de leitura; No banco não reconferido). O alerta correu pelo acionamento direto da tarefa, como admin, e a nota saiu em inglês («Post-dated cheque 0002003 falls due on 13/11/2026…»), defeito no relatório. */}
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); acesso extra Tesouraria: Gestor visto nos Ajustes avançados (grupo Bancos e tesouraria (PT), campo Tesouraria) e provado com um utilizador só com ele (lê a lista dos cheques e tem o painel dos bancos); recusa do Administrativo vista por clique, ao abrir a ligação da lista */}

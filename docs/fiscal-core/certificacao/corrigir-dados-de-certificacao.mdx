@@ -1,0 +1,129 @@
+---
+id: corrigir-dados-de-certificacao
+slug: /fiscal-core/corrigir-dados-de-certificacao
+title: Como corrigir dados de certificação de um documento
+sidebar_label: Corrigir dados de certificação
+sidebar_position: 8
+description: Corrigir o ATCUD de uma fatura já emitida e ainda não comunicada à AT, com motivo e registo permanente, libertar uma série parada, e saber o que o produto recusa (motivo curto, ATCUD não devido, assinatura, série, documentos já comunicados).
+keywords: [corrigir ATCUD, atcud errado, atcud em falta, corrigir dados de certificação, corrigir dados de certificacao, correção auditada, correcao auditada, corrigir documento certificado, assinatura, série, administração fiscal, administracao fiscal, registo de auditoria]
+doc_id: DOC-0019
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/certificacao/integridade-dos-documentos, fiscal-core/faturacao/anular-uma-fatura, troubleshooting/faturacao-e-at/nao-consigo-alterar-um-documento-certificado]
+---
+
+## Para que serve?
+
+Num documento certificado já emitido só há um dado de certificação que se pode corrigir: o **ATCUD**, e só para o valor que a série e o número do documento ditam. A janela **Corrigir dados de certificação** serve para completar um ATCUD em falta ou reparar um errado, com um motivo que fica para sempre no registo de auditoria.
+
+A assinatura e a série nunca se alteram. Um documento já comunicado à AT não se corrige: anula-se e emite-se de novo.
+
+## Quando utilizar?
+
+- O ATCUD de uma fatura emitida está em falta ou não coincide com o código de validação da série e o número.
+- Não o use para o nome, o NIF ou a morada do cliente: na própria fatura há o botão **Corrigir os dados do cliente**, que, quando só o NIF difere, anula a fatura e prepara uma fatura nova em rascunho, sem nota de crédito; para qualquer outra diferença emite uma nota de crédito (uma regularização de IVA, com data e prova) e prepara a fatura nova. O Ofício-Circulado 25120/2026 manda anular a fatura e emitir uma nova, sem nota de crédito, para um NIF ou uma morada errados: veja [Como corrigir uma fatura](/fiscal-core/corrigir-uma-fatura). <span className="fd-pending">Em preparação: uma morada errada ainda segue o caminho da nota de crédito. Pendente de validação por contabilista certificado: a regularização de IVA do caminho da nota de crédito.</span> Veja também [Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado).
+- Não o use em documentos de formação nem noutros a que não é devido ATCUD: o produto recusa (ver «Problemas frequentes»).
+- Não o use para um erro de valores ou de artigos: emita uma [nota de crédito](/fiscal-core/emitir-uma-nota-de-credito).
+
+## Onde encontrar?
+
+Abra o documento em **Faturação › Faturar › Faturas de clientes** e, no menu **Ações**, escolha **Corrigir dados de certificação**.
+
+## Antes de começar
+
+- Entra como **Administrador** do sistema, ou tem o acesso extra **Administração fiscal** (nenhum valor do campo **Perfil** o dá). Com os perfis **Contabilista certificado**, **Contabilista** ou **Administrativo**, a opção não aparece em **Ações**. Para a correção da morada de um contacto ou da descrição de venda de um artigo existe **Contabilidade › Configurar › Outras definições › Segurança e auditoria › Correção auditada de registos** (fora do administrador, só com o modo programador ativo), também só para estes; para os outros mostra «Sem acesso: Não tem acesso a «Correção auditada de registos». Quem faz: quem tem o acesso extra «Administração fiscal». Só o administrador dá esse acesso (Definições › Utilizadores e empresas › Utilizadores, «Ajustes avançados» do utilizador).»
+- O documento está publicado e **ainda não foi comunicado à AT**.
+- Sabe o motivo numa frase e, se tiver, um anexo como prova.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a fatura e carregue em **Ações › Corrigir dados de certificação**.
+   ![Menu Ações de uma fatura emitida, com a opção Corrigir dados de certificação assinalada](/images/fiscal-core/corrigir-dados-de-certificacao/01-acoes-corrigir-dados-de-certificacao.png)
+2. Leia o aviso da janela («Só o ATCUD pode ser corrigido, e só para o valor que a sua série e número ditam. Um documento já comunicado à AT é anulado e reemitido…»). O **Campo a corrigir** é **ATCUD** e o **Valor atual** é o que está na fatura.
+   ![Janela Corrigir dados de certificação com o aviso, o campo ATCUD, o valor atual, o novo valor, o motivo e a evidência](/images/fiscal-core/corrigir-dados-de-certificacao/02-janela-corrigir-dados-de-certificacao.png)
+3. Confira **Novo valor**: o produto já o preenche com o ATCUD devido, que é o código de validação da série, um traço e o número do documento na série (na demonstração, `DEMOFT2026-33` para a `FT D26/33`). Só falta o motivo. Se escrever outro valor, o produto recusa-o (ver «Problemas frequentes»).
+   ![Janela com o Novo valor já preenchido com DEMOFT2026-33, igual ao valor atual](/images/fiscal-core/corrigir-dados-de-certificacao/05-novo-valor-preenchido.png)
+4. Em **Motivo**, explique o que estava errado, com pelo menos 10 carateres. Se tiver, junte uma prova em **Evidência**.
+5. Carregue em **Corrigir**. O ATCUD fica corrigido, o motivo e os valores anterior e novo ficam no registo de auditoria e na conversa do documento.
+
+</StepByStep>
+
+<span className="fd-pending">Pendente de validação no ecrã: a conclusão com êxito (passo 5). A demonstração só tem documentos com o ATCUD certo e criar um errado exigiria alterar a base de dados; por isso só se provaram as recusas, abaixo.</span>
+
+Se o documento já tiver sido comunicado à AT, a janela mostra, em **Bloqueios**, o motivo e não tem botão **Corrigir** (ver «Problemas frequentes»).
+
+### Libertar uma série parada
+
+O campo **Campo a corrigir** tem uma segunda opção, **Libertar uma série parada pelo controlo de integridade**. Quando a [verificação de integridade](/fiscal-core/integridade-dos-documentos) encontra a cadeia de assinaturas de uma série quebrada, a série pára: não se emite nenhum documento nela (as outras séries continuam a funcionar). Libertá-la é uma operação de integridade da cadeia de assinaturas.
+
+<HelpCallout type="risco" title="Só depois de a situação estar tratada">
+O ecrã avisa: «Liberte-a só depois de a situação estar tratada (cópia de segurança reposta ou situação explicada à Autoridade Tributária). Se a cadeia continuar quebrada, o controlo de integridade seguinte para a série outra vez.» A libertação e o seu motivo ficam registados para sempre no registo de auditoria. Só quem tem o acesso extra **Administração fiscal** (e o **Administrador**) a faz, com um motivo de pelo menos 10 carateres. <span className="fd-pending">Pendente de validação por contabilista certificado: quando se pode libertar uma série parada e o que dizer à AT.</span>
+</HelpCallout>
+
+- **Onde:** abra a série em **Contabilidade › Configurar › Faturação certificada › Séries fiscais**. Uma série parada tem na ficha o botão **Libertar após controlo de integridade**, que abre esta mesma janela já com a opção da libertação e a série escolhida. Se abrir a janela a partir de uma fatura e escolher a libertação sem escolher a série, o produto recusa: «Escolha a série parada pelo controlo de integridade que quer libertar.»
+- **Passos:** escreva o **Motivo** (o que foi verificado e tratado) e carregue em **Libertar série**.
+
+<span className="fd-pending">Pendente de validação no ecrã: a libertação com êxito e o botão da ficha da série. A demonstração não tem nenhuma série parada e pará-la exigiria quebrar a cadeia de assinaturas, o que o produto impede; só se viu a janela e a recusa «Escolha a série parada…». O nome do botão vem da tradução do produto, não do ecrã.</span>
+
+## Resultado esperado
+
+- O documento mantém o número, a assinatura, a série e a data; só o ATCUD muda para o valor que a série e o número ditam.
+- O valor anterior, o novo, o motivo e quem corrigiu ficam registados para sempre.
+- Um valor igual ao atual, ou incoerente, nunca é gravado, e um motivo com menos de 10 carateres também não.
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Corrigir, anular ou creditar">
+Corrigir o ATCUD só é possível enquanto o documento não foi comunicado à AT. Depois, o caminho é anular e emitir um documento novo ([anular](/fiscal-core/anular-uma-fatura)). A assinatura e a série não se corrigem nunca, porque a assinatura é verificada pela AT. <span className="fd-pending">Pendente de validação por contabilista certificado: a correção do ATCUD e a consequência para o SAF-T já entregue.</span>
+</HelpCallout>
+
+- Não há atalho para contornar este controlo: alterar a base de dados à mão deixa de ser fiscalmente defensável e fica no registo de integridade ([a integridade dos documentos](/fiscal-core/integridade-dos-documentos)).
+
+## Problemas frequentes
+
+### «exige um motivo de pelo menos 10 carateres»
+
+- **Sintoma:** ao carregar em **Corrigir** com um motivo curto (por exemplo «curto»), aparece «Operação inválida»: «A correção do documento “FT D26/33” exige um motivo de pelo menos 10 carateres: diga o que estava errado e porque é corrigido.»
+  ![Janela Operação inválida com a recusa do motivo com menos de 10 carateres](/images/fiscal-core/corrigir-dados-de-certificacao/06-recusa-motivo-curto.png)
+- **Causa:** o motivo fica para sempre no registo de auditoria e tem de dizer o que estava errado.
+- **O que fazer:** escreva o motivo por extenso (o que estava errado e porque se corrige) e carregue em **Corrigir** outra vez. É a recusa mais provável.
+
+### «Não é devido ATCUD ao documento»
+
+- **Sintoma:** num documento de formação (por exemplo a `FT FOR26/1`, de uma série de formação), aparece «Operação inválida»: «Não é devido ATCUD ao documento “FT FOR26/1” (tipo de documento, data anterior à data de início do ATCUD da empresa, ou série sem código de validação): não lhe pode ser atribuído depois. Um documento emitido sem ATCUD fica sem ele (Portaria 195/2020).»
+  ![Janela Operação inválida com a recusa «Não é devido ATCUD» na FT FOR26/1](/images/fiscal-core/corrigir-dados-de-certificacao/07-recusa-atcud-nao-devido.png)
+- **Causa:** um documento de formação, ou de uma série sem código de validação, ou anterior à data de início do ATCUD, nunca leva ATCUD. Aqui o valor atual e o **Novo valor** estão vazios.
+- **O que fazer:** nada: o documento fica sem ATCUD, como a lei prevê. <span className="fd-pending">Pendente de validação por contabilista certificado: documentos sem ATCUD devido e a Portaria 195/2020.</span>
+
+### A janela recusa o valor: «não é coerente com a sua série e número»
+
+- **Sintoma:** ao carregar em **Corrigir** com `DEMOFT2026-99`, aparece «Operação inválida»: «O ATCUD do documento “FT D26/33” só pode ser “DEMOFT2026-33” (código de validação da série “FT D26” e número do documento na série). “DEMOFT2026-99” não é coerente com a sua série e número.»
+  ![Janela Operação inválida com a recusa do ATCUD DEMOFT2026-99 na FT D26/33](/images/fiscal-core/corrigir-dados-de-certificacao/03-recusa-atcud-incoerente.png)
+- **Causa:** o ATCUD não se escolhe: é o que a série e o número ditam.
+- **O que fazer:** escreva o valor que a mensagem indica.
+
+### «já está correto: não há nada a corrigir»
+
+- **Sintoma:** «O ATCUD do documento “FT D26/33” já está correto (“DEMOFT2026-33”): não há nada a corrigir.»
+- **O que fazer:** nada. O documento não precisa de correção.
+
+### A janela mostra «Bloqueios» e não tem o botão Corrigir
+
+- **Sintoma:** «O documento “FT D26/10” já foi comunicado à Autoridade Tributária: os seus dados de certificação nunca são corrigidos no próprio documento. Anule-o registando o motivo e emita um novo documento.»
+  ![Janela Corrigir dados de certificação da FT D26/10 com o bloqueio de documento já comunicado e só o botão Fechar](/images/fiscal-core/corrigir-dados-de-certificacao/04-recusa-documento-comunicado.png)
+- **Causa:** o documento já foi comunicado à AT.
+- **O que fazer:** [anule o documento](/fiscal-core/anular-uma-fatura) e emita um novo.
+
+### A opção não aparece em Ações
+
+- **Causa:** não tem o acesso extra **Administração fiscal**: nenhum valor do campo **Perfil** o dá.
+
+{/* Nota interna (DOCS-046 / NV3B-06 a 09, master f16f4a3e0, base docs_demo_v3bcor_test, perfil Administrador/admin; a FT FOR26/1 é um documento de formação criado para a prova (série FOR26 de formação); nenhum utilizador demo tem Administração fiscal): sucesso não provocável sem escrita na BD. «2 empresas escolhidas» aparece no admin porque o admin tem 2 empresas; usámos a Empresa Demonstração (cids=4). Série parada: não testada. */}
+
+{/* Nota interna (v23-T, DOC-0019, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

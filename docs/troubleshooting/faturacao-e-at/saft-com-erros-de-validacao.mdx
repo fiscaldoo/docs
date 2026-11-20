@@ -1,0 +1,144 @@
+---
+id: saft-com-erros-de-validacao
+slug: /troubleshooting/saft-com-erros-de-validacao
+title: "O SAF-T não é gerado ou fica Inválido: o período atravessa exercícios, falta o referencial contabilístico ou falta um NIF"
+sidebar_label: O SAF-T não é gerado ou fica Inválido
+description: As recusas da janela Gerar SAF-T (PT) antes de criar o ficheiro e o que fazer em cada uma, o registo Inválido por um NIF em falta, e a fatura de um cliente de outro país emitida sem NIF, corrigida com nota de crédito e fatura nova.
+keywords: [SAF-T não é gerado, saft nao e gerado, SAF-T inválido, saft invalido, erros do SAF-T, atravessa exercícios, atravessa exercicios, um ficheiro SAF-T (PT) cobre um único exercício, 366 dias, data de fim anterior à data de início, referencial contabilístico, referencial contabilistico, não tem referencial contabilístico, Operação inválida, não está ativa na sua sessão, seletor de empresas, empresa escolhida no topo do ecrã, empresas assinaladas no topo, cliente estrangeiro sem NIF, cliente de outro país sem NIF, não tem NIF, empresa de outro país sem NIF, fatura sem NIF a empresa da UE, IVA português a empresa estrangeira, Consumidor final, 999999990, Consumidor-final, fornecedor sem NIF, fatura de compra sem NIF, nota de crédito e fatura nova, Corrigir os dados do cliente, Regenerar]
+doc_id: DOC-0343
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 27cebe13a)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/at-e-saft/gerar-o-saft, fiscal-core/at-e-saft/corrigir-erros-do-saft, accounting-pt/plano-de-contas/referencial-contabilistico]
+---
+
+## Sintoma
+
+Acontece uma de duas coisas:
+
+- na janela **Gerar SAF-T (PT)**, carregou em **Gerar com … documentos** e abriu-se uma janela de erro: não se criou nenhum registo de exportação;
+- o registo da exportação ficou **Inválido** e não tem **Descarregar ficheiro**.
+
+Os passos para gerar o ficheiro estão em [Como gerar o ficheiro SAF-T de faturação](/fiscal-core/gerar-o-saft) e em [Como gerar o SAF-T de contabilidade](/accounting-pt/saft-de-contabilidade), e a leitura e a correção da lista de erros de um ficheiro inválido em [Como corrigir os erros de validação do SAF-T](/fiscal-core/corrigir-erros-do-saft). Este artigo junta as recusas da janela e o que fazer à fatura de um cliente de outro país sem NIF.
+
+## Mensagem
+
+As recusas da janela, provocadas na base de demonstração. As partes em itálico mudam com as datas e a empresa.
+
+Com **Intervalo personalizado** de 01/12/2025 a 31/01/2026 (perfil **Contabilista**), a janela **Erro de Validação**:
+
+> «O período de *01/12/2025* a *31/01/2026* atravessa exercícios: um ficheiro SAF-T (PT) cobre um único exercício, e o que começa em *01/12/2025* termina em *31/12/2025*. Escolha uma data de fim até *31/12/2025* e gere outro ficheiro para o exercício seguinte.»
+
+![Janela Erro de Validação: o período de 01/12/2025 a 31/01/2026 atravessa exercícios e um ficheiro SAF-T cobre um único exercício](/images/troubleshooting/saft-com-erros-de-validacao/01-periodo-atravessa-exercicios.png)
+
+Com um período de mais de um ano (01/01/2025 a 31/03/2026), também **Erro de Validação**:
+
+> «O período não pode ultrapassar um exercício (366 dias). Reduza o período, ou crie um ficheiro por exercício.»
+
+Com a **Data de fim** antes da **Data de início** (31/10/2026 a 01/10/2026):
+
+> «A data de fim não pode ser anterior à data de início. Altere as datas para que o início seja igual ou anterior ao fim.»
+
+Com o **Modo** **C — Contabilidade** numa empresa sem referencial contabilístico, a janela **Aviso**, com os botões **Abrir a empresa** e **Fechar**:
+
+> «A empresa «*Empresa Teste Filial*» não tem referencial contabilístico (SNC, SNC-PE, SNC-ME, ...). Determina a referência de taxonomia do SAF-T, pelo que esta operação não pode continuar. Defina o referencial contabilístico na ficha da empresa (separador Localização PT) e tente novamente.»
+
+![Janela Aviso: a Empresa Teste Filial não tem referencial contabilístico, com os botões Abrir a empresa e Fechar](/images/troubleshooting/saft-com-erros-de-validacao/02-sem-referencial.png)
+
+Com uma **Empresa** na janela que não está assinalada no seletor de empresas, no topo do ecrã, a janela **Operação inválida**:
+
+> «A empresa «*Empresa Teste Filial*» não está ativa na sua sessão. O que aconteceu: o ficheiro SAF-T de uma empresa gera-se com essa empresa assinalada no topo do ecrã. Como resolver: assinale «*Empresa Teste Filial*» no seletor de empresas, no topo do ecrã (ou escolha uma empresa que já esteja assinalada), e gere de novo.»
+
+As duas últimas foram provocadas com o administrador, o único utilizador da demonstração com acesso a mais do que uma empresa.
+
+## Causas verificadas
+
+- **O período atravessa dois exercícios, ou é maior do que um ano.** Um ficheiro SAF-T cobre um único exercício: o fiscaldoo não deixa gerar um que atravesse dois. Na demonstração o exercício é o ano civil, por isso dezembro e janeiro não vão no mesmo ficheiro.
+- **A data de fim é anterior à data de início.** Acontece ao escrever as datas à mão em **Intervalo personalizado**.
+- **A empresa não tem referencial contabilístico** (SNC, SNC-PE, SNC-ME…). Só conta nos modos **C — Contabilidade** e **I — Contabilidade integrada com a faturação**. Na mesma empresa sem referencial, o modo **F — Faturação** não dá esta recusa: gerou o ficheiro de setembro de 2026 (**Gerar com 0 documentos**, registo **Gerado**, com 0 erros).
+- **A Empresa da janela não está assinalada no topo do ecrã.** A lista **Empresa** da janela mostra todas as empresas do utilizador, mas o ficheiro só se gera para uma empresa assinalada no seletor de empresas do topo do ecrã (a que aparece no topo, se só tiver uma assinalada). Na demonstração, com a **Empresa Teste Filial** escolhida no topo, a janela abriu com ela e não deu este erro.
+- **Falta o NIF de um fornecedor ou de um cliente.** Um fornecedor sem número fiscal, de Portugal ou de outro país, deixa o registo **Inválido** (num ficheiro **C** ou **I**, pelas faturas de compra dele), com a **Chave** com o nome dele; um cliente sem NIF não, só dá um aviso quando a fatura leva o nome ou a morada dele. Em que ficheiros cada um conta, e o exemplo até **Gerado**, estão em [Como corrigir os erros de validação do SAF-T](/fiscal-core/corrigir-erros-do-saft), secções «Fornecedor sem NIF» e «Cliente sem NIF: não é um erro».
+- **O fornecedor de uma autofaturação não tem NIF português válido ou morada completa.** Esta causa aparece logo ao **Confirmar** a fatura de autofaturação, e não só ao gerar o ficheiro do modo S: o programa recusa e nada fica emitido nem gasta número. O NIF genérico de consumidor final (999999990) também é recusado. Ver [Como emitir faturas de autofaturação](/fiscal-core/autofaturacao). Visto ao carregar em **Confirmar** com o perfil **Contabilista certificado**, no diário de autofaturação com a série AF26 ativa: com um fornecedor sem morada, a janela **Operação inválida** diz «O quê: a fatura de autofaturação não pode ser emitida a «…»: o fornecedor não tem morada (rua), localidade, código postal. … Como resolver: preencha a ficha do fornecedor e confirme de novo. Nada foi emitido e nenhum número foi gasto.»; com o NIF 999999990, «… o NIF é o número genérico de consumidor final (999999990). … Como resolver: preencha o NIF verdadeiro do fornecedor no respetivo contacto e confirme de novo. Nada foi emitido e nenhum número foi usado.» Nos dois casos a fatura ficou em **Rascunho**, sem número.
+- **Uma fatura com várias taxas e descontos já não trava o SAF-T por 1 cêntimo.** O ficheiro declara os totais do documento (sem IVA e IVA), quer a empresa arredonde o IVA por linha quer pelo total do documento: a linha leva o saldo lançado e o IVA do documento fica dentro de 1 cêntimo por taxa face às linhas. Visto no ecrã: uma fatura nova de novembro de 2026 com quatro linhas (3 × 7,35 € com 10 % de desconto a 23 %; 5 × 3,33 € com 15 % a 6 %; 7 × 1,17 € com 5 % a 13 %; 9 × 2,49 € com 7,5 % a 23 %) ficou com 62,51 € sem IVA, 11,20 € de IVA e 73,71 € de total; o **Gerar SAF-T** do mês, no modo **F**, terminou no estado **Gerado**, sem erros, e o ficheiro declara para essa fatura `NetTotal` 62,51, `TaxPayable` 11,20 e `GrossTotal` 73,71, os mesmos valores do documento.
+
+{/* Nota interna (DOCS-043 #3531 e DOCS-044 #3539, ronda fix-saft2 e correções da auditoria AS2, DEC-1445/1466; 30/10/2026, master 9d1671e9f): as cinco recusas da janela refeitas no ecrã na base docs_demo_saft2_test (três com Contabilista; referencial e empresa com o administrador, o único utilizador da demonstração com mais de uma empresa). Fonte única (AS2-04): as regras do NIF do cliente e do fornecedor e o exemplo do F de outubro vivem no DOC-0054; a captura 03 passou para lá (08). Exemplo do cliente de Espanha refeito na base docs_demo_saft3_test, com as faturas emitidas pela ordem do fix-vies2 (AS2-06): FT D26/36 (a do DOC-0022), NIF ES99999999R, Corrigir os dados do cliente (NC D26/2 e FT D26/39), F de outubro de novo (registo 12).  Ronda única (31/10/2026, master 27cebe13a, base docs_demo_ronda_test): exemplo refeito pela mesma ordem; NC D26/2 e FT D26/39 com a data de 31/10/2026 (Data de referência da regularização 31/10/2026 por omissão); F de outubro com 16 documentos (11 de venda, 4 guias, 1 de conferência; SAFT-159) e 8 avisos (SAFT-157 FS-04: sem avisos da ficha Consumidor final); XML com a FT D26/39 e a NC D26/2 ao cliente 99999999R/ES e a NC com Reference FT D26/36. As cinco recusas da janela não mudaram de código nem de tradução desde 9d1671e9f e não se refizeram. */}
+
+{/* Nota interna (lote v23-BL, DOCS-064 #3900, master c689f7580, docs_demo_v23bl_test, 12/11/2026, req. 46883): o NIF do exemplo passa a ES99999999R (antes ES12345678Z, um DNI espanhol com dígito de controlo válido). Passo 1 visto de novo por clique com um utilizador só Administrativo: a ficha Cliente Particular Espanha ficou com NIF por validar e Não verificado. Os passos 2 a 4 não foram refeitos (emitir NC e FT numa cópia está fora deste lote); no ficheiro, o produto escreve o NIF sem o prefixo do país, por isso 99999999R. */}
+
+## O que confirmar
+
+1. A janela de erro que apareceu: o título (**Erro de Validação**, **Aviso** ou **Operação inválida**) e o texto.
+2. Em **PASSO 1 DE 3: PERÍODO**, o **Modo**, o **Período**, a **Data de início** e a **Data de fim**.
+3. Que a **Empresa** da janela está assinalada no seletor de empresas, no topo do ecrã.
+4. Num registo **Inválido**, o **N.º de erros**, os **Erros por tipo** e, na lista **Erros**, a coluna **Chave**: o nome do cliente ou do fornecedor.
+5. Para um erro ou um aviso de NIF, o **País** da ficha, se é um particular ou uma empresa, e se tem, de facto, um número fiscal do país dele.
+
+## Como resolver
+
+### O período atravessa exercícios, passa de um ano ou tem as datas trocadas
+
+Carregue em **Fechar**. Em **Período**, escolha **Mês**, **Trimestre** ou **Exercício fiscal**, que calculam as datas sozinhos, ou corrija as datas do **Intervalo personalizado** para ficarem dentro de um exercício, com a data de início antes da data de fim. Para um período que passa de um exercício para o outro, gere um ficheiro para cada exercício. Na demonstração, com **Mês** e a **Data de referência** 15/10/2026, o ficheiro foi gerado de 01/10/2026 a 31/10/2026.
+
+**Quem faz:** quem gera o ficheiro (perfil **Contabilista** ou acima).
+
+### A empresa não tem referencial contabilístico
+
+Para o ficheiro de faturação, confirme que o **Modo** é **F — Faturação**: não precisa do referencial. Para um ficheiro de contabilidade (modos **C** ou **I**), o referencial tem de ser escolhido primeiro: [Como escolher o referencial contabilístico e a categoria da entidade](/accounting-pt/referencial-contabilistico). Esse artigo faz-se com o perfil de administrador, com a decisão do contabilista certificado. Depois, gere de novo.
+
+**Quem faz:** o administrador, com o contabilista certificado.
+
+### A Empresa da janela é outra
+
+Carregue em **Fechar**, feche a janela **Gerar SAF-T (PT)**, escolha a empresa do ficheiro no seletor de empresas, no topo do ecrã, e abra de novo **Contabilidade › Declarar › Ficheiro SAF-T › Gerar SAF-T**. A janela abre com essa empresa.
+
+**Quem faz:** quem gera o ficheiro.
+
+### O ficheiro ficou Inválido
+
+Leia a lista **Erros** e corrija cada linha como está em [Como corrigir os erros de validação do SAF-T](/fiscal-core/corrigir-erros-do-saft). Não entregue um ficheiro **Inválido**. Um cliente de outro país sem NIF não torna o ficheiro inválido, mas pode deixar uma fatura errada: veja a secção seguinte.
+
+**Quem faz:** quem a coluna **Quem corrige** indica.
+
+### O cliente é de outro país e não tem NIF
+
+O ficheiro não fica **Inválido** por isto: o que ele faz com o cliente, e o aviso, estão em [Como corrigir os erros de validação do SAF-T](/fiscal-core/corrigir-erros-do-saft), secção «Cliente sem NIF: não é um erro». A questão é a fatura já emitida. Veja que cliente é:
+
+- **Um particular que não tem número fiscal.** É o caso do aviso: o ficheiro não pede nada.
+- **Um cliente que tem número fiscal e faltou registá-lo.** Confira o número num documento do cliente e escreva-o na ficha. A ficha de um cliente sem NIF com documentos certificados avisa no topo: «Este parceiro é usado em documentos certificados e não tem NIF: pode preencher o NIF aqui e guardar. Os documentos já emitidos mantêm os dados com que foram emitidos (no SAF-T saem como “Consumidor final”, com aviso) e o NIF preenchido agora vale só para os documentos emitidos a partir de agora. Depois de preenchido, o NIF já não pode ser alterado aqui e o parceiro não pode ser apagado (arquive-o).» As faturas seguintes saem com o NIF. Se o cliente quer também a fatura já emitida com o NIF, corrija-a com **Corrigir os dados do cliente**, que emite a nota de crédito e prepara a fatura nova. Os passos, e onde está o botão em cada perfil, estão em [Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado#nome-morada-ou-nif-do-cliente).
+- **Uma empresa de outro país da União Europeia.** A fatura emitida sem NIF saiu como venda a um particular: **Posição Fiscal** «Intra-comunitário privado (UE)» e o IVA português. Fale com o contabilista certificado antes de corrigir: a fatura nova pode precisar de outro IVA, e a isenção intracomunitária só se aplica com o NIF válido no VIES ([Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes)). <span className="fd-pending">Pendente de validação por contabilista certificado: fatura emitida sem NIF a uma empresa de outro país da UE, com o IVA português de uma venda a particular. A fatura a um adquirente sujeito passivo leva o NIF dele (CIVA, art. 36.º, n.º 5, a)), e a venda de bens expedidos para outro Estado-membro a uma empresa registada lá, que usa o NIF dela, pode seguir a isenção das transmissões intracomunitárias (RITI, art. 14.º, n.º 1, a)). Falta decidir o IVA da fatura nova e a data da regularização.</span>
+
+**Exemplo, até ao ficheiro de novo.** Na demonstração, a 31/10/2026:
+
+1. Com o perfil **Administrativo**, na ficha **Cliente Particular Espanha** escreveu-se o NIF `ES99999999R` (fictício) e guardou-se. A ficha ficou com **NIF por validar** e **Não verificado** no VIES.
+2. A fatura a corrigir é a `FT D26/36`, de 10,00 € + 2,30 € de IVA a 23 %, emitida antes sem NIF (a do exemplo de [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada)). **Corrigir os dados do cliente** abriu a janela com o **Cliente na fatura emitida** «Cliente Particular Espanha, Espanha, Consumidor final». Com a **Prova da regularização** escrita, **Emitir nota de crédito e preparar fatura nova** emitiu a `NC D26/2`, de 12,30 €, com a referência «NC de FT D26/36: Correção dos dados do cliente», e abriu o rascunho da fatura nova, com o NIF, a mesma linha, o IVA a 23 % e a **Posição Fiscal** «Intra-comunitário privado (UE)». O rascunho abre com o aviso «O NIF deste cliente da UE não está validado no VIES, por isso foi aplicado o IVA português e não a isenção intracomunitária. Abra o cliente e carregue em «Validar VIES»; se o NIF for válido, volte a este rascunho e carregue em «Recalcular o IVA».». O NIF ainda não foi validado no VIES; o IVA da fatura nova de uma empresa da UE decide-se com o contabilista certificado (ponto anterior). **Confirmar** emitiu a `FT D26/39`, de 12,30 €, com a data de 31/10/2026, e o histórico dela diz que a venda não entra no campo 7 da declaração de IVA nem na declaração recapitulativa, porque nenhuma linha tem a isenção intracomunitária.
+3. Os lançamentos, conferidos com o perfil **Contabilista certificado**: a `NC D26/2` debita 10,00 € em 711 Mercadorias e 2,30 € em 2433 IVA - Liquidado e credita 12,30 € em 2111 Clientes gerais; a `FT D26/39` faz o inverso. <span className="fd-pending">Pendente de validação por contabilista certificado: regularização do IVA da nota de crédito que corrige os dados do cliente (CIVA, art. 78.º).</span>
+4. Com o perfil **Contabilista**, o ficheiro **F** de outubro gerado de novo (**Gerar com 16 documentos**: 11 documentos de venda, 4 guias de transporte e 1 documento de conferência) ficou **Gerado**, com 0 erros e 8 avisos. O aviso deste cliente sem NIF continua, porque a `FT D26/36` não muda. A `FT D26/39` e a `NC D26/2` saem no ficheiro com o cliente identificado (NIF `99999999R`, país ES), e a nota de crédito leva a referência à `FT D26/36`. Os três avisos novos são da morada da ficha do cliente, que não tem rua, localidade nem código postal: preencha-os na ficha. <span className="fd-pending">Pendente de validação por contabilista certificado: adquirente com que sai no SAF-T a nota de crédito que corrige uma fatura emitida a consumidor final.</span>
+
+**Quem faz:** quem mantém os contactos (**Contabilista** ou **Administrativo**) preenche o NIF na ficha; quem corrige a fatura está em [Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado#nome-morada-ou-nif-do-cliente); o contabilista certificado decide o que fazer à fatura de uma empresa.
+
+Gerar o ficheiro e preencher o NIF na ficha não criam lançamentos contabilísticos. A nota de crédito e a fatura nova criam os delas (passo 3).
+
+{/* Nota interna (ronda única, 31/10/2026): a janela Corrigir os dados do cliente diz agora «uma nota de crédito corrige a fatura inteira» (FS-01 corrigido no comboio 109). A NC D26/2 sai no SAF-T com o cliente identificado, embora corrija uma fatura emitida a consumidor final: questão FS-02, nas perguntas ao CC (DEC-1466), com a marca visível no passo 4 (AS2-03). Rever o exemplo se o produto mudar. */}
+
+## Resultado esperado
+
+- Com as datas e a empresa certas, a janela cria o registo da exportação.
+- Depois de **Regenerar**, o registo novo fica **Gerado**, com **N.º de erros** 0, e tem **Descarregar ficheiro**. O registo inválido fica como histórico.
+- Numa fatura a uma empresa da União Europeia, o ficheiro válido não basta: a fatura fica como o contabilista certificado decidir.
+- Depois de uma nota de crédito e de uma fatura nova com o NIF, o ficheiro do mês leva os três documentos, e o aviso da fatura antiga continua. O cliente com que a nota de crédito sai no ficheiro está por validar (passo 4).
+
+## Quando contactar o suporte
+
+- O ficheiro fica **Inválido** por um NIF em falta num caso em que [Como corrigir os erros de validação do SAF-T](/fiscal-core/corrigir-erros-do-saft) diz que não devia ficar.
+- O registo fica no estado **Erro** (a geração falhou), ou aparece uma janela de erro que não está neste artigo.
+- A janela recusa um período de um só mês, dentro do exercício, numa empresa assinalada no topo do ecrã.
+
+## Informação a enviar
+
+- O texto completo da janela de erro, copiado do ecrã, ou a folha de **Exportar erros (XLSX)** do registo inválido.
+- O nome do registo da exportação (empresa, data e hora), o **Modo** e as datas.
+- O nome do cliente, o país dele e se é um particular ou uma empresa, quando o erro é de NIF.
+- O perfil com que entrou.

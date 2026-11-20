@@ -1,0 +1,88 @@
+---
+id: fluxos-de-caixa
+slug: /accounting-pt/fluxos-de-caixa
+title: Como obter a demonstração de fluxos de caixa
+sidebar_label: Fluxos de caixa
+sidebar_position: 7
+description: Obter a demonstração dos fluxos de caixa do SNC, ler as atividades operacionais, de investimento e de financiamento e conferir o caixa final com o balanço.
+keywords: [fluxos de caixa, demonstração de fluxos de caixa, demonstracao de fluxos de caixa, DFC, cash flow, atividades operacionais, atividades de investimento, atividades de financiamento, caixa e equivalentes, SNC]
+doc_id: DOC-0145
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/usar-os-relatorios, accounting-pt/relatorios/diario-e-razao, accounting-pt/relatorios/exportar-pdf-para-assinar]
+---
+
+## Para que serve?
+
+A demonstração dos fluxos de caixa mostra de onde veio e para onde foi o dinheiro no exercício, em três blocos: atividades operacionais, de investimento e de financiamento. Termina no caixa e seus equivalentes no fim do período. É uma das demonstrações financeiras do SNC e faz parte do conjunto que se entrega com a IES.
+
+## Quando utilizar?
+
+- No fim do exercício, para preparar as demonstrações financeiras.
+- Para explicar à gerência porque é que o saldo do banco subiu ou desceu.
+- **Não** a use para saber o que falta receber ou pagar: para isso há a antiguidade de saldos.
+
+## Onde encontrar?
+
+**Contabilidade › Consultar › Demonstrações financeiras › Fluxos de caixa**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. Com ele faz todos os passos deste artigo (testado com o perfil Contabilista).
+- Os lançamentos do exercício estão publicados.
+- O exemplo é a Empresa Demonstração, Lda, no exercício de 2026, a 10/11/2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Consultar › Demonstrações financeiras › Fluxos de caixa**. Abre a **Demonstração dos Fluxos de Caixa (SNC)** no exercício corrente (`01/01/2026 – 31/12/2026`), com as colunas **Linha**, **Notas** e **Valor**. Para mudar de período, comparar com o ano anterior ou guardar as opções, veja [Como filtrar, comparar períodos e exportar um relatório](/accounting-pt/usar-os-relatorios).
+2. Leia as atividades operacionais. No exemplo: **Recebimentos de clientes** 32.674,40 €, **Pagamentos a fornecedores** -31.936,10 € e **Pagamentos ao pessoal** -36.972,06 €, o que dá **Caixa gerada pelas operações** de -36.233,76 €. Com **Outros recebimentos/pagamentos** (-2.675,61 €), os **Fluxos de caixa das atividades operacionais** são -38.909,37 €.
+   ![Fluxos de caixa das atividades operacionais de 2026, sem a coluna Notas e sem a linha a zero do imposto sobre o rendimento: dos recebimentos de clientes até ao total do bloco](/images/accounting-pt/fluxos-de-caixa/01-fluxos-operacionais.png)
+3. Leia o investimento e o financiamento. No exemplo, o investimento é -9.000,00 € (**Ativos fixos tangíveis** -4.200,00 € e **Ativos intangíveis** -4.800,00 €). O financiamento é 81.300,00 €: 160.000,00 € recebidos e -78.700,00 € pagos em **Financiamentos obtidos**.
+4. Confira o fim da demonstração. **Variação de caixa e seus equivalentes (1+2+3)** é a soma dos três blocos: -38.909,37 - 9.000,00 + 81.300,00 = 33.390,63 €. Somada a **Caixa e seus equivalentes no início do período** (0,00 €), dá **Caixa e seus equivalentes no fim do período**: 33.390,63 €.
+   ![Fim da demonstração de fluxos de caixa, sem a coluna Notas, sem as rubricas de investimento e sem as linhas a zero, salvo o efeito das diferenças de câmbio: os totais dos blocos, a variação de caixa de 33.390,63 euros, o caixa no início do período e o caixa no fim do período](/images/accounting-pt/fluxos-de-caixa/02-variacao-e-caixa-final.png)
+5. Confira o caixa final com o [balanço](/accounting-pt/balanco) do mesmo exercício: a linha **Caixa e depósitos bancários** tem de dar o mesmo valor. No exemplo, 33.390,63 € nos dois.
+6. Para entregar a demonstração a assinar, carregue em **Exportar** e escolha **Exportar PDF para assinar** ([como fazer](/accounting-pt/exportar-pdf-para-assinar)).
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, **Fluxos de caixa** abre a mesma **Demonstração dos Fluxos de Caixa (SNC)**, com a mesma barra, o mesmo aviso dos pagamentos por reconciliar e o **Exportar PDF para assinar** em **Exportar** (visto com um utilizador só com o perfil **Contabilista**). Para conferir o caixa final com o balancete (ver «Notas importantes»), abra **Contabilidade › Consultar › Livros e balancetes › Balancete (formato PT)**, que tem as colunas do [balancete](/accounting-pt/balancete). **Balancete**, no mesmo grupo, abre o balancete do Enterprise, com outras colunas, e **Razão** abre o razão do Enterprise ([diferenças](/accounting-pt/diario-e-razao)).
+
+{/* Nota interna (lote EE-04, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee04_test, cópia da odoo20_ee_test com EE_FASE=construir, 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0145. Contabilista: Fluxos de caixa = /odoo/fiscaldoo-demonstracao-fluxos-caixa-snc; Linha, Notas, Valor; Mais filtros com De/até, Incluir rascunhos, Período predefinido, Empresas, Agrupar contas por hierarquia, Mostrar valores em; Exportar com as 6 opções; aviso dos pagamentos por reconciliar igual; sem o aviso «linhas ainda não geradas». Números da base Enterprise diferentes dos da base-mãe (Recebimentos de clientes 32.797,00 €): os do artigo ficam. Ver reports/LOTE_EE-04.md. */}
+
+## Resultado esperado
+
+- Os três blocos somam a **Variação de caixa e seus equivalentes** e esta, somada ao caixa inicial, dá o caixa final.
+- O caixa final é igual à linha **Caixa e depósitos bancários** do balanço.
+- Nenhum lançamento é criado: a demonstração só lê.
+
+## Notas importantes
+
+- **O caixa é calculado diário a diário.** O caixa de cada diário de banco é a conta do banco mais as suas contas de passagem (pagamentos e recebimentos pendentes). Se um diário ficar a dever (saldo credor), esse valor não reduz o caixa: conta como financiamento, e no balanço vai para **Financiamentos obtidos**. Não se compensa entre diários.
+- **Porque o caixa inicial é 0,00 €, se o banco abre negativo.** A conta 121 abre 2026 a -78.700,00 €: é um saldo credor, por isso está em **Financiamentos obtidos** do balanço de 2025, e não no caixa. No fim de 2026 a 121 tem 33.159,53 € a débito e o balanço já não tem **Financiamentos obtidos** no passivo corrente: os 78.700,00 € são o pagamento que aparece no financiamento. Os 160.000,00 € recebidos são o empréstimo bancário, em **Financiamentos obtidos** do passivo não corrente.
+- **Como conferir com o balancete.** Sem diários a dever, o caixa final é igual à soma das contas de caixa, depósitos e passagem no [balancete](/accounting-pt/balancete) (ou no [razão](/accounting-pt/diario-e-razao)) do mesmo exercício: 33.390,63 €, a soma de **112** (578,46 €), **113** (20,14 €), **120001** (-367,50 €), **120002** (0,00 €), **120003** (0,00 €) e **121** (33.159,53 €). Se um diário ficar a dever, desconte primeiro os **Financiamentos obtidos** do passivo corrente do balanço.
+- **O aviso de pagamentos por reconciliar é informativo.** No exemplo, o ecrã diz: «Há pagamentos por reconciliar: as contas de transferência e de pagamentos pendentes dos diários de banco têm saldo. O caixa apresentado já as abate à conta do banco de cada diário.» Reconcilie antes de entregar a demonstração ([pendentes de reconciliação](/accounting-pt/pendentes-de-reconciliacao)).
+- <span className="fd-pending">Pendente de validação por contabilista certificado: se as contas de passagem entram em «caixa e seus equivalentes» e se o saldo credor do banco se apresenta como financiamento na demonstração entregue.</span>
+
+## Problemas frequentes
+
+### Todas as linhas estão a zero
+
+- **Causa:** a empresa não tem lançamentos no período. Numa empresa sem **Referencial contabilístico**, em vez dos zeros aparece: «O referencial contabilístico de “…” não está definido, por isso esta demonstração não pode ser mostrada: sem ele as demonstrações financeiras sairiam vazias ou desequilibradas. Nada foi calculado nem exportado.» (visto na Empresa Teste Portugal).
+- **O que fazer:** confirme a empresa e o período na barra do topo. Sem lançamentos, os zeros estão certos. Sem referencial, peça-o como a mensagem indica.
+
+### O caixa final não bate com o saldo do banco
+
+- **Causa:** o caixa final soma os diários com saldo devedor, com as contas de passagem de cada um. Não é o saldo da conta 121.
+- **O que fazer:** confira com o balanço (passo 5). Para o banco em particular, veja os [pendentes de reconciliação](/accounting-pt/pendentes-de-reconciliacao).
+
+{/* Nota interna (DOCS-046, DOC-0145): visto em docs_demo_v6a4_test (master 8f78854ec, REP-130 / DEC-1664) com o Contabilista, na base final do lote. Valores lidos no ecrã, aritmética conferida, caixa igual ao Balanço, contas conferidas por RPC e no razão. NV3E-03 resolvida pelo produto. Defeito V6A4-05: aviso «linhas ainda não geradas, por isso mostra zero» nesta demonstração e na das alterações no capital próprio, com valores. A opção «Mostrar linhas a zero» do artigo antigo já não existe: as linhas a zero aparecem. PDF para assinar conferido (1 página). Empresa vazia vista na auditoria de 03/11; regeneração tentada numa cópia: recusada, valores iguais. Não testados: comparação (no DOC-0140), variantes do mapeamento, que não estão na barra do Contabilista. */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AY, 10/11/2026, master fa7915ea8, docs_demo_v23ay_test, porta 8505): passos 3 a 5 e notas refeitos depois do REP-134 (DEC-1822) com um utilizador só com o perfil Contabilista: financiamento 160.000,00 / -78.700,00, caixa final 33.390,63 € igual ao Balanço e à classe 1 do Balancete (112, 113, 120001, 120002, 120003 e 121). Captura 02 refeita. O aviso «linhas ainda não geradas» deixou de existir (ACC-228): problema retirado. Mensagem do referencial vista com o administrador na Empresa Teste Portugal. */}

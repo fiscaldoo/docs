@@ -1,0 +1,120 @@
+---
+id: importar-um-saft
+slug: /migration-toolkit/importar-um-saft
+title: Como importar um ficheiro SAF-T de outro programa
+sidebar_label: Importar um SAF-T
+description: Carregar o plano de contas, os saldos de abertura, os clientes e fornecedores e os lançamentos de um ficheiro SAF-T de contabilidade, com validação e pré-visualização antes de gravar.
+keywords: [importar SAF-T, ficheiro SAF-T, migração, migracao, programa anterior, SAF-T de contabilidade, validar SAF-T, pré-visualizar, NIF do ficheiro, Windows-1252, TaxAccountingBasis]
+doc_id: DOC-0300
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [migration-toolkit/importar/importar-dados-mestres, migration-toolkit/planear/validar-a-migracao, accounting-pt/declaracoes/saft-de-contabilidade]
+---
+
+## Para que serve?
+
+Traz para a empresa os dados de um ficheiro SAF-T de contabilidade gerado por outro programa: plano de contas, saldos de abertura, clientes e fornecedores e lançamentos. O ficheiro é conferido com o esquema oficial e com o NIF da empresa, o ecrã mostra o que vai criar, e só depois de confirmar se grava alguma coisa.
+
+## Quando utilizar?
+
+- Quando o programa anterior exporta o SAF-T de contabilidade (tipo de contabilidade **C**) e quer aproveitar o plano e os lançamentos em vez de os importar um a um.
+- **Não use** para o mesmo ficheiro de que já importou os [saldos de abertura](/migration-toolkit/importar-saldos-de-abertura) por CSV, sem desligar **Saldos de abertura** na importação: ficaria duplicado.
+- **Não use** para ficheiros de outro NIF sem saber porquê: o ecrã recusa-os (ver «Problemas frequentes»).
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Migração e importações › Importar ficheiro SAF-T**. O **Contabilista** não vê o menu.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado** (ou é o administrador): tem a permissão «Migração / Importação fiscal» e o botão **Novo**, e importa até ao fim.
+- A empresa ativa (canto superior direito) é a do NIF do ficheiro.
+- O ficheiro é XML, até 50 MB, e está escrito na codificação **Windows-1252** (é a que o SAF-T português exige). Exemplo usado aqui, inventado: um SAF-T de 2025 da «Empresa Migração Exemplo, Lda» (NIF 599999934), com 14 contas, 2 clientes, 1 fornecedor e 3 lançamentos (uma venda de 1.230,00 €, uma compra de 615,00 € e o recebimento da venda), do programa fictício «Contabilidade Exemplo».
+- Crie primeiro os parceiros e o plano, se quiser controlar nomes: a importação mantém o que já existe (ver «Notas importantes»). No exemplo, a empresa já tem o plano de contas português e as fichas «Cliente Alfa, Lda» e «Fornecedor Beta, SA», com os NIF do ficheiro.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra o menu e carregue em **Novo**. A lista mostra cada importação com o nome do ficheiro, a empresa, o tipo de contabilidade e o estado.
+   ![Lista de importações de SAF-T com um ficheiro Pré-visualizado e outro Com erros](/images/migration-toolkit/importar-um-saft/01-lista.png)
+2. Em **Ficheiro SAF-T**, escolha o ficheiro e carregue em **Validar**. O ecrã confere o ficheiro com o esquema oficial e preenche **Tipo de contabilidade**, **NIF no ficheiro**, **Empresa no ficheiro** e o período. Um ficheiro com um problema fica **Com erros** e **nada é gravado**; o bloco **Relatório** diz quantos registos foram rejeitados (por exemplo, «Ficheiro: Rejeitado 1»), e **Abrir o relatório por tipo e resultado** mostra o motivo de cada um. Corrija o ficheiro no programa de origem e crie uma nova importação.
+   ![Importação com erros: o relatório diz «Ficheiro: Rejeitado 1», com os botões para abrir e descarregar o relatório](/images/migration-toolkit/importar-um-saft/02-ficheiro-recusado.png)
+3. Com o estado **Validado**, confira **O que importar**. O **Validar** liga só o que o ficheiro traz: num SAF-T de contabilidade ficam ligados **Plano de contas**, **Saldos de abertura**, **Clientes e fornecedores** e **Lançamentos**, e desligados **Produtos** e **Documentos de venda (SalesInvoices)**. Desligue o que não quer trazer e, se quiser só uma parte do ano, preencha **Importar desde (data)** e **Importar até (data)**.
+   ![O que importar depois de Validar um SAF-T de contabilidade: Plano de contas, Saldos de abertura, Clientes e fornecedores e Lançamentos ligados; Produtos e Documentos de venda desligados; as datas vazias](/images/migration-toolkit/importar-um-saft/03-o-que-importar.png)
+4. Carregue em **Pré-visualizar**. O estado passa a **Pré-visualizado** e o ecrã diz quantos clientes, fornecedores e contas são novos e quantos já existem, quantos lançamentos cria, quantos já tinham sido importados e quantos rejeita, o balancete calculado a partir do ficheiro, as taxonomias e, quando importa produtos ou documentos de venda, se os impostos do ficheiro correspondem aos da empresa (nunca se cria imposto). Num ficheiro só de contabilidade, como o do exemplo, a tabela de impostos não é comparada. Com o exemplo: «Clientes e fornecedores: 1 novos, 2 já existem. Contas: 5 novas, 9 já existem. Lançamentos: 3 a criar, 0 já importados, 0 seriam rejeitados (desequilibrados ou com conta inválida). Balancete calculado a partir do ficheiro (antes de confirmar): débito 3.075,00, crédito 3.075,00.» Confira os totais com o balancete do programa anterior.
+   ![Pré-visualização do ficheiro de exemplo, NIF 599999934: 1 cliente ou fornecedor novo e 2 que já existem, 5 contas novas e 9 que já existem, 3 lançamentos a criar e balancete de 3.075,00 a débito e a crédito](/images/migration-toolkit/importar-um-saft/04-pre-visualizacao.png)
+5. Carregue em **Confirmar a importação**. Em «Até agora nada foi escrito na contabilidade. Criar os registos válidos da pré-visualização? Os listados como erros são recusados e ficam no registo com o motivo.», carregue em **Confirmar**. O estado passa a **Importado** e o **Relatório** diz o que foi criado; com o exemplo, «Parceiro: Importado 1, Já existente 2 · Conta: Importado 5, Aviso 9 · Diário: Importado 1 · Lançamento: Importado 4» (os 3 lançamentos do ficheiro e o de abertura).
+   ![Diálogo de confirmação: «Até agora nada foi escrito na contabilidade. Criar os registos válidos da pré-visualização? Os listados como erros são recusados e ficam no registo com o motivo.»](/images/migration-toolkit/importar-um-saft/05-importado.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+Com o ficheiro de exemplo, em **Contabilidade › Consultar**, no razão:
+
+| Lançamento | Data | Conta | Débito | Crédito |
+|---|---|---|---|---|
+| `ABR/2024/00001` (saldos de abertura) | 31/12/2024 | `1111` Caixa | 1.500,00 € | |
+| | | `1211` Depósitos à ordem | 20.000,00 € | |
+| | | `5111` Capital | | 21.500,00 € |
+| `DIV/2025/00001` | 10/03/2025 | `2111` Clientes gerais (Cliente Alfa, Lda) | 1.230,00 € | |
+| | | `7111` Vendas de mercadorias | | 1.000,00 € |
+| | | `2433` IVA - Liquidado | | 230,00 € |
+| `DIV/2025/00002` | 15/04/2025 | `6211` Serviços especializados | 500,00 € | |
+| | | `2432` IVA - Dedutível | 115,00 € | |
+| | | `2211` Fornecedores gerais (Fornecedor Beta, SA) | | 615,00 € |
+| `DIV/2025/00003` | 20/05/2025 | `1211` Depósitos à ordem | 1.230,00 € | |
+| | | `2111` Clientes gerais (Cliente Alfa, Lda) | | 1.230,00 € |
+
+- Os lançamentos ficam **publicados** (não em rascunho), num diário novo, **Importado Diversos**, criado porque não existia.
+- Os saldos de abertura do ficheiro viram um lançamento no diário **Lançamentos de abertura**, datado do dia anterior ao início do período do ficheiro.
+- Das 14 contas do ficheiro, 5 são criadas (`1111`, `1211`, `5111`, `6211` e `7111`), com a taxonomia do ficheiro. As outras 9 (`11`, `21`, `51`, `62`, `71`, `2111`, `2211`, `2432` e `2433`) já existiam no plano da empresa e ficam como estavam, com o nome do plano; no relatório, cada uma tem o aviso «Já existe com outro nome (…): mantida, nunca é substituída.». Por isso o razão mostra `2111` Clientes gerais e não «Clientes», o nome do ficheiro.
+- Das 3 entidades, 1 cliente (Cliente Gama, Lda) é criado; Cliente Alfa e Fornecedor Beta já existiam, pelo NIF («Já existe como Cliente Alfa, Lda.» e «Já existe como Fornecedor Beta, SA.»).
+- Confira o resultado no [registo de importações e no balancete](/migration-toolkit/validar-a-migracao).
+
+## Notas importantes
+
+- **Contas que já existem não se alteram.** Uma conta com o mesmo código mas outro nome mantém o nome da empresa; o aviso fica no relatório. O tipo das contas novas é deduzido pelo código: no exemplo, `1111` e `1211` ficaram «Banco e Caixa», `5111` «Capital Próprio», `6211` «Despesas» e `7111` «Rendimentos». Confira-o na lista de contas. <span className="fd-pending">Pendente de validação por contabilista certificado: tipo das contas importadas e tipo SAF-T dos lançamentos de abertura.</span>
+- **Parceiros que já existem** (pelo NIF) não são criados outra vez: o relatório mostra «Já existe como Cliente Alfa, Lda.».
+- **Importar o mesmo ficheiro outra vez não duplica nada:** ver «Importei o mesmo ficheiro outra vez» em «Problemas frequentes».
+- **Documentos de venda, produtos, mapa de contabilização e perfis de mapeamento** servem os ficheiros de faturação (SalesInvoices) e não foram percorridos neste artigo, que usa um ficheiro de contabilidade. <span className="fd-pending">Pendente de validação no ecrã: importação de um SAF-T de faturação, com o **Mapa de contabilização da faturação importada** e os **Perfis de mapeamento da importação de SAF-T** (Contabilidade › Configurar › Sistema).</span>
+- **Documentos importados não são certificados.** Os documentos de venda de um SAF-T de faturação não passam a ser documentos emitidos aqui; para as séries e documentos certificados do programa anterior, veja o artigo «Como migrar as séries e os documentos certificados do programa anterior» (em preparação).
+- **Lançamentos desequilibrados** passam o **Validar**, mas a pré-visualização conta-os em «seriam rejeitados» e mostra cada um em **Erros e avisos**, por exemplo «Transação desequilibrada. Transação 2025-03-10 DIV D2025-009 do diário DIV (linha 2 do ficheiro): débito 1.230,00, crédito 1.220,00. Nada foi importado para ela; corrija os montantes no sistema que gerou o ficheiro.». Se confirmar, entram os outros e esse fica recusado no relatório. Já um lançamento com uma conta que o ficheiro não define não chega à pré-visualização: o esquema oficial recusa o ficheiro inteiro, no **Validar**.
+
+## Problemas frequentes
+
+### «O ficheiro declara a codificação UTF-8, mas o SAF-T (PT) tem de estar escrito em Windows-1252»
+
+- **Sintoma:** o **Validar** deixa a importação **Com erros**, com «Ficheiro: Rejeitado 1» no relatório. Em **Abrir o relatório por tipo e resultado**, a mensagem é «O ficheiro declara a codificação UTF-8, mas o SAF-T (PT) tem de estar escrito em Windows-1252. Exporte o ficheiro de novo, com essa codificação, no sistema que o gerou.»
+- **O que fazer:** exporte o ficheiro de novo no programa de origem com a codificação Windows-1252. Não edite o ficheiro à mão.
+
+### «O ficheiro pertence ao NIF … mas a empresa … tem o NIF …»
+
+- **Sintoma:** depois de **Validar**, o ficheiro fica **Rejeitado** e o relatório (**Abrir o relatório por tipo e resultado**) diz «O ficheiro pertence ao NIF 599999985 mas a empresa Empresa Demonstração, Lda tem o NIF PT599999993. Escolha a empresa certa; só o perfil «Contabilista certificado (assina, fecha períodos)» pode importar um ficheiro de outro NIF, e tem de indicar o motivo.» (visto no ecrã com o perfil **Contabilista certificado**, com um SAF-T de faturação de agosto de 2026 de outro NIF)
+  ![Relatório da importação com o ficheiro rejeitado por ser de outro NIF](/images/migration-toolkit/importar-um-saft/06-outro-nif.png)
+- **O que fazer:** mude para a empresa do ficheiro (canto superior direito) e importe aí.
+
+### «Falta … no ficheiro» ou «tem um problema que a Autoridade Tributária não aceita»
+
+- **Sintoma:** mensagens com a linha, a coluna e o elemento do ficheiro, por exemplo «Falta «TaxonomyReference» no ficheiro (… elemento AuditFile > MasterFiles > GeneralLedgerAccounts)» ou «O ficheiro tem «cliente» num sítio onde não é permitido».
+- **O que fazer:** o ficheiro não cumpre o esquema oficial do SAF-T. Diga ao fornecedor do programa anterior o elemento e a linha da mensagem, e importe o ficheiro corrigido numa importação nova.
+
+### «AVISO: este mesmo ficheiro já foi importado»
+
+- **Sintoma:** numa importação nova com um ficheiro que já foi importado na empresa, a pré-visualização diz «AVISO: este mesmo ficheiro já foi importado. Os registos já importados são saltados, nada é duplicado.», com «Contas: 0 novas, 14 já existem. Lançamentos: 0 a criar, 3 já importados» no exemplo.
+- **O que acontece se confirmar:** nada é criado outra vez. O relatório diz «Parceiro: Já existente 3 · Conta: Já existente 5, Aviso 9 · Lançamento: Já existente 4», e a empresa continua com os mesmos 4 lançamentos (cada um com «Já importado.» no relatório e o de abertura com «O lançamento de abertura já foi importado.»).
+- **O que fazer:** se só queria conferir, carregue em **Eliminar a importação** antes de confirmar. Se o programa anterior corrigiu o ficheiro, os lançamentos que já entraram não são substituídos: corrija-os aqui, com o contabilista certificado.
+
+### Quero desfazer uma importação
+
+- **Antes de confirmar:** carregue em **Eliminar a importação** e confirme; nada tinha sido escrito na contabilidade. A importação fica com o estado **Eliminada** e a lista do menu deixa de a mostrar (filtro **Esconder eliminadas**).
+- **Depois de Importado:** o **Eliminar a importação** pede confirmação («Eliminar esta importação? Só é possível enquanto nenhum documento criado por ela tiver sido publicado; os rascunhos que criou também são eliminados.») e recusa, porque os lançamentos importados ficam publicados: «Esta importação não pode ser eliminada. 4 documento(s) já foram publicados (DIV/2025/00001, DIV/2025/00002, DIV/2025/00003, ABR/2024/00001): os documentos publicados nunca se eliminam; …». Mantenha a importação como histórico, use o [estorno](/accounting-pt/estornar-um-lancamento) em cada lançamento a desfazer e fale com o contabilista certificado.
+
+{/* Nota interna (lote v23-BD, DOCS-064 #3900 req. 46610, master ce51f2d47): a captura 04 é do lote 19 (03/11) e mostrava um NIF válido fora dos exemplos (prefixo 503). Vinha do ficheiro de exemplo escrito à mão nesse lote (saft_contabilidade_exemplo.xml, com esse NIF na empresa e outros três válidos nos parceiros), não do produto nem do simulador; o texto passou a 599999934 no v23-A sem refazer a captura. O NIF foi tapado com um bloco cheio; o resto da captura não foi percorrido de novo neste lote. */}
+
+{/* Nota interna (lote v23-BK, DOCS-064 #3900 req. 46431, master acd623385, cópia docs_demo_v23bk_test): captura 04 refeita sem bloco, por clique com um utilizador só com o perfil Contabilista certificado (Validar e Pré-visualizar; a importação ficou Pré-visualizada, sem confirmar). Ficheiro de exemplo com NIF de exemplo em todo o lado: empresa 599999934, Cliente Alfa 599999918, Cliente Gama 599999926, Fornecedor Beta 599999942, produtor 599999950. Na cópia, a «Empresa Migração Exemplo, Lda» (599999934, plano português) foi criada pelo assistente Nova empresa cliente (por RPC, com o administrador) e as fichas Cliente Alfa e Fornecedor Beta por RPC. Contagens iguais às do texto (1 novo e 2 existentes, 5 novas e 9 existentes, 3 lançamentos, 3.075,00). A frase da tabela de impostos é hoje «1 entradas no ficheiro, não comparadas com os impostos da empresa porque não se importam Produtos nem Documentos de venda…»: o passo 4 foi acertado. */}

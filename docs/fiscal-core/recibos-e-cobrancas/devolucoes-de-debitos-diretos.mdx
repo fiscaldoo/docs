@@ -1,0 +1,149 @@
+---
+id: devolucoes-de-debitos-diretos
+slug: /fiscal-core/devolucoes-de-debitos-diretos
+title: Como tratar as devoluções de débitos diretos
+sidebar_label: Devoluções de débitos diretos
+sidebar_position: 4
+description: Importar o ficheiro de retorno do banco, ver as cobranças rejeitadas ou devolvidas, reenviar as que se podem reenviar e tratar o recebimento de uma cobrança devolvida; o que o ecrã recusa.
+keywords: [devolução de débito direto, cobrança devolvida, MD01, pagamento por reconciliar, retorno do banco, pain.002, camt.054, cobrança rejeitada, AM04, falta de provisão, reenviar os erros, causa resolvida, ficheiro de retorno, SDD, SEPA, MD06]
+doc_id: DOC-0043
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/recibos-e-cobrancas/debitos-diretos-lotes, fiscal-core/recibos-e-cobrancas/emitir-um-recibo]
+---
+
+## Para que serve?
+
+Depois de levar o ficheiro de um [lote de débitos diretos](/fiscal-core/debitos-diretos-lotes) ao banco, o banco responde com um ficheiro de retorno: diz que cobranças foram aceites, rejeitadas ou devolvidas, e porquê. Importá-lo no fiscaldoo põe a resposta e o código do motivo em cada cobrança, e permite reenviar, num lote novo, só as que falharam.
+
+## Quando utilizar?
+
+- Quando o banco lhe deu o ficheiro de retorno de um lote que marcou como enviado.
+- Quando uma cobrança foi rejeitada (por exemplo, sem saldo na conta do cliente) e quer cobrá-la de novo.
+- Quando o banco devolveu uma cobrança que já tinha cobrado e quer saber o que fica por tratar na fatura e no recebimento.
+- Não use o ficheiro de retorno para cobranças de um lote que ainda não foi marcado como **Enviado**: o fiscaldoo não as encontra.
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Cobranças a clientes › Retornos de débito direto**. O lote, em **Contabilidade › Lançar › Cobranças a clientes › Lotes de débito direto**, também mostra a resposta do banco em cada cobrança. O resumo por motivo abre em **Contabilidade › Reconciliar › Pagamentos online › O que há para fazer com os pagamentos online?**, ligação **Retornos de débito direto por motivo**. Antes de importar o primeiro ficheiro de retorno, diz «Aqui aparecem os retornos de débitos diretos, agrupados por motivo, depois de importado um ficheiro de retornos.».
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** (ou quem tem o acesso extra **Tesouraria: Gestor**, dado nos **Ajustes avançados** do utilizador, campo **Tesouraria**), que é quem importa o ficheiro do banco.
+- O lote está **Enviado** e tem o ficheiro de retorno do banco, em formato `pain.002` (estado do pagamento) ou `camt.054` (notificação de débito ou crédito).
+- Fale com o cliente antes de reenviar: o reenvio exige que confirme que a causa está resolvida (passo 5).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Retornos de débito direto**. Numa empresa sem retornos a lista diz «Ainda não foi importado nenhum ficheiro de retorno do banco». Carregue em **Importar ficheiro do banco**.
+   ![Lista Ficheiros de retorno SDD com o botão Importar ficheiro do banco](/images/fiscal-core/devolucoes-de-debitos-diretos/01-lista-e-importar.png)
+2. Na janela **Importar ficheiro de retorno do banco**, carregue em **Escolher ficheiro**, escolha o ficheiro do banco e carregue em **Importar**. A janela avisa: «Nada é enviado ao banco nem a ninguém: o ficheiro é apenas lido. O mesmo ficheiro não pode ser importado duas vezes.»
+   ![Janela Importar ficheiro de retorno do banco com o campo Ficheiro do banco](/images/fiscal-core/devolucoes-de-debitos-diretos/02-assistente-importar.png)
+3. Abre-se o ficheiro importado (`RET/…`) com os contadores **Aceite**, **Devolvido**, **Rejeitada** e **Não aplicados**, o **Valor devolvido ou rejeitado** e, em **Cobranças**, uma linha por cobrança: o **Id. ponta a ponta**, o cliente, o lote, a **Resposta do banco**, o **Código do motivo** (por exemplo `AM04`), o motivo («Falta de provisão»), o montante e o **Resultado**. Para uma cobrança rejeitada o **Resultado** é **Aplicado** e a nota diz «Rejeitada: as faturas ficam em aberto.»
+   ![Ficheiro de retorno RET/00004 com uma cobrança rejeitada pelo motivo AM04, falta de provisão, resultado aplicado](/images/fiscal-core/devolucoes-de-debitos-diretos/04-retorno-rejeitado.png)
+4. Abra o lote da cobrança. A linha mostra a **Resposta do banco** («Rejeitada»), o **Código do motivo** e, em **Reenvio**, **Exige correção**.
+   ![Lote com a cobrança rejeitada, código AM04 e o reenvio a exigir correção](/images/fiscal-core/devolucoes-de-debitos-diretos/05-lote-rejeitado.png)
+5. Resolva a causa com o cliente (aqui, a falta de saldo na conta) e carregue em **Causa resolvida**, no fim da linha, e em **Confirmar**. O **Reenvio** passa a **Elegível para reenvio**.
+   ![Linha do lote com o reenvio elegível depois de confirmar que a causa está resolvida](/images/fiscal-core/devolucoes-de-debitos-diretos/06-causa-resolvida.png)
+6. Carregue em **Reenviar os erros**. A janela **Confirmação** diz: «É criado um lote novo, em rascunho, só com as cobranças que o banco rejeitou ou devolveu. As aceites não entram. Daqui não se envia nada ao banco.» Carregue em **Confirmar**.
+   ![Janela de confirmação de Reenviar os erros](/images/fiscal-core/devolucoes-de-debitos-diretos/07-reenviar-confirmar.png)
+7. Abre-se o lote novo, em **Rascunho**, com a indicação «Reenvio das cobranças com erro de SDD/…». Siga o [lote de débitos diretos](/fiscal-core/debitos-diretos-lotes) a partir da validação.
+   ![Lote de reenvio em rascunho, com a ligação ao lote de origem](/images/fiscal-core/devolucoes-de-debitos-diretos/08-lote-de-reenvio.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, **Contabilidade › Lançar › Cobranças a clientes › Retornos de débito direto** abre a mesma lista do fiscaldoo, com o botão **Importar ficheiro do banco** e a explicação «Importe o ficheiro que o banco deu (pain.002 ou camt.054): cada cobrança recebe a resposta e o código do motivo; uma cobrança devolvida volta a abrir a fatura.» (visto com um utilizador só com o perfil **Contabilista**).
+
+{/* Nota interna (lote EE-12, DOCS-073 #4142, DEC-1794, master 589ecfd27, base Enterprise docs_ee_ee12_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee12_test): DOC-0043. Contabilista: lista vazia com as colunas Referência, Importado em, Nome do ficheiro, Formato, Aplicado, Devolvido, Rejeitada, Não aplicados e Valor devolvido ou rejeitado. Nenhum ficheiro importado. Igual na cópia Community. Ver reports/LOTE_EE-12.md. */}
+
+## Resultado esperado
+
+- O ficheiro de retorno fica guardado e não se altera nem se apaga: é o registo do que o banco disse.
+- A fatura de uma cobrança **rejeitada** continua em aberto, sem lançamentos novos.
+- O reenvio vai num lote novo em rascunho; o lote de origem recusa um segundo reenvio da mesma cobrança.
+- O resumo **Retornos de débito direto por motivo** soma o montante por código de motivo e por resposta do banco.
+  ![Resumo dos retornos por código de motivo, com o motivo AM04 e o total](/images/fiscal-core/devolucoes-de-debitos-diretos/09-resumo-por-motivo.png)
+- A fatura de uma cobrança **devolvida** (já cobrada e depois devolvida pelo banco) volta a **Por pagar**, mas o recebimento que estava registado **não é estornado nem anulado**: fica por tratar. Veja [Se a cobrança foi devolvida depois de cobrada](#se-a-cobrança-foi-devolvida-depois-de-cobrada).
+
+## Se a cobrança foi devolvida depois de cobrada
+
+Uma cobrança **devolvida** é a que o banco já tinha cobrado e depois devolveu (o ficheiro `camt.054` traz a indicação de devolução e o motivo). No exemplo, a fatura FT D26/58 foi cobrada no lote SDD/00010 com data de cobrança 04/11/2026, o recebimento de 104,55 € ficou registado como pagamento no diário **Banco** a 04/11/2026 e o banco devolveu a cobrança com o motivo `MD01`.
+
+<StepByStep>
+
+1. Importe o ficheiro como nos passos 1 e 2. O ficheiro importado (`RET/00005`) mostra **Devolvido** a 1, o **Valor devolvido ou rejeitado** e, na cobrança, a **Resposta do banco** «Devolvido», o código `MD01` e o **Resultado** **Aplicado**. A nota diz «Devolvida: 104.55 voltaram a ficar em aberto nas faturas.»
+   ![Ficheiro de retorno RET/00005 com uma cobrança devolvida, motivo MD01, resultado aplicado](/images/fiscal-core/devolucoes-de-debitos-diretos/10-retorno-devolvido.png)
+2. Abra a fatura. Voltou a **Por pagar**, com os 104,55 € em aberto, mas o botão **Pagamentos** continua a mostrar 1: o recebimento não desapareceu.
+   ![Fatura FT D26/58 por pagar, com o botão Pagamentos a 1](/images/fiscal-core/devolucoes-de-debitos-diretos/11-fatura-reaberta.png)
+3. Abra o pagamento (**Pagamentos**). Continua em **Pago**, **não** passa a **Reconciliado**, e a ficha oferece **Mudar para Rascunho**, **Marcar como Enviada** e **Cancelar com motivo**; nenhum deles cria o estorno do recebimento. O fiscaldoo não cria estorno, não avisa e não abre nenhuma tarefa: o pagamento fica por reconciliar sem que nada o assinale.
+   ![Pagamento PBNK1/2026/00041 em Pago, com os botões Mudar para Rascunho, Marcar como Enviada e Cancelar com motivo](/images/fiscal-core/devolucoes-de-debitos-diretos/12-pagamento-por-reconciliar.png)
+4. Para tirar o recebimento da frente, carregue em **Cancelar com motivo**, escreva o motivo (por exemplo, «Cobrança devolvida pelo banco (MD01).») e carregue em **Cancelar pagamento**. A janela avisa que um pagamento reconciliado tem de ser desreconciliado primeiro, e o motivo fica guardado no pagamento e no registo de auditoria.
+   ![Janela Cancelar com motivo, com o campo Motivo](/images/fiscal-core/devolucoes-de-debitos-diretos/13-cancelar-pagamento.png)
+5. O pagamento passa a **Anulado** e o seu lançamento (débito de 104,55 € em «120002 Recebimentos Pendentes» e crédito de 104,55 € em «2111 Clientes gerais») fica anulado, sem lançamento de estorno. A fatura continua **Por pagar**, e pode voltar a ser cobrada ou paga (por exemplo, num [lote novo](/fiscal-core/debitos-diretos-lotes), se o cliente tiver um mandato válido).
+
+</StepByStep>
+
+<HelpCallout type="atencao" title="O produto não avisa que há um pagamento por tratar">
+Depois de importar uma devolução, abra sempre a fatura e o pagamento que lhe está ligado. Se o deixar como está, a fatura aparece por pagar e o pagamento aparece pago, sem ligação entre os dois.
+</HelpCallout>
+
+- O fiscaldoo só desfaz a reconciliação de um recebimento com data **igual ou posterior** à data de cobrança do lote. Com um recebimento anterior (por exemplo, um pagamento de 01/11/2026 numa cobrança de 04/11/2026), a nota diz «Devolvida: não se encontrou nenhum recibo desta cobrança para reverter.» e a fatura continua paga.
+- <span className="fd-pending">Pendente de validação por contabilista certificado: o tratamento contabilístico de um recebimento devolvido (cancelar o pagamento, como acima, ou mantê-lo para o regularizar com o movimento do banco), a regularização do recibo, se o recebimento tinha recibo, e o prazo de reembolso do cliente (8 semanas no esquema CORE, segundo o texto do aviso).</span>
+
+## Notas importantes
+
+<HelpCallout type="atencao" title="O reenvio não é automático nem imediato">
+Reenviar os erros só cria um lote em rascunho. Enquanto não o validar, descarregar o ficheiro, levar ao banco e marcar como enviado, o cliente não é cobrado. Uma cobrança já reenviada não se reenvia outra vez.
+</HelpCallout>
+
+- Nem todas as rejeições se reenviam: o campo **Reenvio** mostra **Bloqueado**, **Exige correção** ou **Elegível para reenvio** conforme o motivo do banco.
+  - **Bloqueado** (por exemplo `MD01`, `AC04`, `MD07`, ou um código que o fiscaldoo não conhece): o cliente recusou, ou o mandato ou a conta não são válidos. Não se reenvia: crie um mandato novo ou indique outra conta e faça um lote novo.
+  - **Exige correção** (por exemplo `AM04`, `MS03`): corrige-se a causa com o cliente e carrega-se em **Causa resolvida**.
+  - **Causa resolvida** só aparece nas linhas **Exige correção**. Nas linhas **Bloqueado** o botão nem aparece, por isso não há como o carregar no ecrã (o servidor também o recusaria).
+- O ficheiro importa-se uma só vez por empresa, mesmo que o nome mude.
+
+## Problemas frequentes
+
+### «O ficheiro não pode ser lido como ficheiro de retorno do banco»
+
+- **Sintoma:** ao importar um ficheiro que não é de retorno (por exemplo o ficheiro do próprio lote, `pain.008`): «O ficheiro não pode ser lido como ficheiro de retorno do banco (format): Unsupported format (…pain.008.001.02): a pain.002.001.03 or camt.054.001.02 file is expected. Nada foi alterado.» A parte final da mensagem aparece em inglês.
+- **O que fazer:** peça ao banco o ficheiro de retorno (`pain.002` ou `camt.054`).
+  ![Mensagem Operação inválida ao importar um ficheiro que não é de retorno](/images/fiscal-core/devolucoes-de-debitos-diretos/03-ficheiro-errado.png)
+
+### «Nenhuma cobrança de um lote enviado tem este id. ponta a ponta»
+
+- **Sintoma:** o ficheiro importa-se, mas a linha fica com o **Resultado** «Cobrança não encontrada», **Não aplicados** a 1 e o montante a 0,00 €.
+- **Causa:** o lote não está **Enviado**, ou o ficheiro é de outra empresa ou de outro lote.
+- **O que fazer:** confirme que o lote está **Enviado** e importe o ficheiro certo. O ficheiro que ficou importado não se importa de novo (ver a seguir).
+
+### «Este ficheiro já foi importado nesta empresa»
+
+- **Sintoma:** «Este ficheiro já foi importado nesta empresa. Nada foi alterado.»
+- **O que fazer:** abra o ficheiro importado na lista de retornos; não é preciso importá-lo outra vez.
+
+### «Nenhuma cobrança pode ser enviada de novo»
+
+Ao carregar em **Reenviar os erros**, a janela **Operação inválida** diz «Nenhuma cobrança pode ser enviada de novo. Veja os motivos abaixo e resolva-os primeiro com o cliente:» e, a seguir, um motivo por cobrança.
+
+- **«RUM/…: já foi enviado de novo em SDD/…»**
+  - **O que fazer:** a cobrança já tem um lote de reenvio. Abra o lote que o ecrã indica; não se reenvia duas vezes.
+- **«o código do banco MD01 está bloqueado (ou é desconhecido): o cliente recusou, ou o mandato ou a conta não são válidos. Resolva primeiro com o cliente.»**
+  - **O que fazer:** não há reenvio nem **Causa resolvida** para um código **Bloqueado**. Fale com o cliente e crie um mandato novo ou indique outra conta, e faça um lote novo com a fatura.
+  ![Janela Operação inválida com o motivo do código MD01 bloqueado](/images/fiscal-core/devolucoes-de-debitos-diretos/14-reenvio-bloqueado.png)
+- **«o código do banco AM04 exige que a causa seja corrigida primeiro. Corrija-a, use «Causa resolvida» na cobrança e volte a reenviar.»**
+  - **O que fazer:** corrija a causa com o cliente, carregue em **Causa resolvida** na linha (passo 5) e volte a carregar em **Reenviar os erros**.
+  ![Janela Operação inválida com o motivo do código AM04 a exigir que a causa seja corrigida](/images/fiscal-core/devolucoes-de-debitos-diretos/15-reenvio-causa-por-confirmar.png)
+
+{/* Nota interna (DOCS-046 v3-FC2 corretor docs-v3fc2cor, DOC-0043, master f16f4a3e0, base docs_demo_v3fc2_test, perfil Contabilista): ficheiros de retorno fictícios (retorno_banco_*.xml, sem dados reais) com o id ponta a ponta «FT D26-54», rejeição AM04. Lotes SDD/00002 e 00007 rejeitados e reenviados (SDD/00003 e 00008). Devolvida: FT D26/58, lote SDD/00010 (cobrança 04/11/2026), recebimento PBNK1/2026/00041 criado pelo assistente de pagamento com data 04/11/2026 (o ecrã Emitir recibo fixa a data de hoje, 01/11/2026, e o lote tem de ter data a partir de 02/11), camt.054 com RvslInd e MD01 (RET/00005). Cancelar o pagamento testado em FT D26/60 (PBNK1/2026/00042, RET/00007): fica Anulado, lançamento anulado, sem estorno. Recebimento anterior à data de cobrança: FT D26/57, RET/00008. AM04 por confirmar: SDD/00012, RET/00006. A recusa «Um código bloqueado resolve-se com um novo mandato ou conta» foi lida do produto, não do ecrã: o botão Causa resolvida está invisível nas linhas bloqueadas. Não percorrido: recebimento certificado (RG) devolvido, reconciliação com extrato bancário, B2B (feito pela auditoria). Defeitos: mensagem de formato com inglês no meio; Retornos e o resumo só em modo programador; a nota e o chatter da devolução têm ponto decimal e «Returned» em inglês (V3FC2-09); o pagamento deixado sem reconciliar não gera aviso nem tarefa (V3FC2-10 e #3636 BNK-035). */}
+
+{/* Nota interna (lote v23-AT, DOC-0043, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); acesso extra Tesouraria: Gestor visto nos Ajustes avançados (grupo Bancos e tesouraria (PT), campo Tesouraria) e provado com um utilizador sem valor no campo Perfil e só com ele: tem Lotes, Mandatos e Retornos de débito direto e Cobranças Multibanco */}
+
+{/* Nota interna (lote v23-AU, DOC-0043, depois do comboio 181 com o UX-149 (8), master 09afad64d, docs_demo_v23au_test, porta 8504): por clique, sem modo de programador, Contabilidade › Reconciliar › Pagamentos online › O que há para fazer com os pagamentos online?, ligações Recebimentos Multibanco por período e Retornos de débito direto por motivo abertas com utilizadores criados por RPC só com o perfil Contabilista, Contabilista certificado, Auditor / ROC e Gerência (na base-mãe, sem ficheiros importados, cada uma mostra o estado vazio: «Aqui aparecem os recebimentos Multibanco por período, depois de importado um ficheiro Multibanco.» e «Aqui aparecem os retornos de débitos diretos, agrupados por motivo, depois de importado um ficheiro de retornos.»); o Administrativo não tem o painel. As entradas de Contabilidade › Consultar › Impostos e tesouraria só aparecem com o modo de programador, também ao administrador. */}

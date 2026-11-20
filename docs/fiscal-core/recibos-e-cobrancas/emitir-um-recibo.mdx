@@ -1,0 +1,111 @@
+---
+id: emitir-um-recibo
+slug: /fiscal-core/emitir-um-recibo
+title: Como registar um pagamento recebido e emitir o recibo
+sidebar_label: Emitir um recibo
+sidebar_position: 1
+description: Registar o pagamento total ou parcial de uma fatura e emitir, no mesmo passo, o recibo certificado com número e ATCUD; o que fazer quando a data é recusada.
+keywords: [recibo, recibos, emitir recibo, RG, pagamento recebido, registar pagamento, receber, cliente pagou, fatura paga, pagamento parcial, pago em parte, recibos e pagamentos recebidos, ATCUD do recibo, quitação, data de pagamento, data anterior, data futura, posterior a hoje, valor acima da dívida]
+doc_id: DOC-0034
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 54a9f5f03; revisto em ab9649f2e)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/emitir-uma-fatura-certificada, fiscal-core/faturacao/anular-uma-fatura]
+---
+
+## Para que serve?
+
+Quando o cliente paga uma fatura, o pagamento regista-se a partir da própria fatura. No mesmo passo, o fiscaldoo emite o recibo: um documento certificado com número da série de recibos e ATCUD, que prova o pagamento ao cliente.
+
+Se o cliente pagou tudo, a fatura fica paga e deixa de aparecer no que há por cobrar. Se pagou só uma parte, a fatura fica **Pago em parte** com o resto em dívida.
+
+## Quando utilizar?
+
+- O cliente pagou, no todo ou em parte, uma fatura que estava **Por pagar** (transferência, numerário, multibanco).
+- O cliente pede o recibo de uma fatura que já pagou.
+
+Um pagamento que cobre várias faturas de uma vez não se trata aqui.
+
+## Onde encontrar?
+
+**Faturação › Faturar › Faturas de clientes** › abrir a fatura › **Emitir recibo**
+
+Os recibos emitidos ficam em **Faturação › Receber › Recibos e pagamentos recebidos**.
+
+## Antes de começar
+
+- O seu perfil é **Administrativo** ou **Contabilista**.
+- A fatura está **Publicada** e **Por pagar** (ou **Pago em parte**): [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada).
+- Sabe o valor que recebeu.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Faturação › Faturar › Faturas de clientes** e abra a fatura que o cliente pagou. Está **Por pagar**.
+2. Carregue em **Emitir recibo**.
+   ![Fatura FT D26/31 com o botão Emitir recibo assinalado](/images/fiscal-core/emitir-um-recibo/01-botao-emitir-recibo.png)
+3. Na janela **Emitir recibo**, confirme o **Diário**: vem **Recibos (RG)**. A linha **Conta bancária** aparece a cinzento e vazia: com o diário de recibos não se preenche.
+4. Confirme o **Valor**: vem o valor em dívida da fatura. Se o cliente pagou só uma parte, escreva o que recebeu. Nunca escreva mais do que o valor em dívida (veja «Notas importantes»).
+5. A **Data de Pagamento** vem com a data de hoje. É a data do recibo: não pode ser anterior à do último recibo já emitido na série nem posterior a hoje (veja «Problemas frequentes»). Para a mudar, carregue no campo e escolha a data no calendário.
+6. O **Memorando** vem com o número da fatura. Deixe-o como está.
+   ![Janela Emitir recibo com o diário Recibos (RG), o valor 123,00 €, a data de pagamento 30/10/2026 e o memorando FT D26/31](/images/fiscal-core/emitir-um-recibo/02-janela-emitir-recibo.png)
+7. Carregue em **Criar Pagamento**. Abre-se o recibo.
+
+</StepByStep>
+
+## Resultado esperado
+
+- O recibo tem o número da série de recibos (`RG D26/16` no exemplo) e o estado **Reconciliado**.
+- Na ficha do recibo veem-se a **Série do documento**, o **ATCUD** (`DEMORG2026-16`), a **Mensagem do código QR** e o **Estado do recibo**: **Emitido**.
+- O botão **1 Fatura**, no topo, abre a fatura, que passa a **Pago**.
+
+![Recibo RG D26/16 reconciliado, de 123,00 € à Papelaria Exemplo, Lda, com a série RG D26, o ATCUD DEMORG2026-16 e o estado do recibo Emitido](/images/fiscal-core/emitir-um-recibo/03-recibo-emitido.png)
+
+**Pagamento parcial.** Na fatura `FT D26/33`, de 30/10/2026 e 12,30 €, um pagamento de 5,00 € emitiu o recibo `RG D26/17`, com a mesma data. A fatura passou a **Pago em parte**, com **Pagamentos 1**, e ficou com 7,30 € na coluna **Em dívida** da lista de faturas. Para o resto, carregue de novo em **Emitir recibo**: o **Valor** vem já com 7,30 €. O **Saldo do cliente**, na ficha da fatura, soma tudo o que o cliente deve, também noutras faturas.
+
+![Fatura FT D26/33 com a etiqueta Pago em parte e o botão Pagamentos 1](/images/fiscal-core/emitir-um-recibo/05-fatura-pago-em-parte.png)
+
+## Vídeo demonstrativo
+
+<VideoTutorial src="/videos/emitir-um-recibo.mp4" captions="/videos/emitir-um-recibo.vtt" poster="/videos/emitir-um-recibo-poster.png" width="1440" height="1140" title="Emitir o recibo de uma fatura paga" duration="28 s" />
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Um recibo nunca passa do valor em dívida">
+Um recibo só paga faturas. Se escrever no **Valor** mais do que o valor em dívida, a janela avisa logo, e **Criar Pagamento** é recusado (veja «Problemas frequentes»). Se o cliente pagou a mais, registe só o valor em dívida e fale com o contabilista certificado sobre o excesso: a mensagem propõe registá-lo como adiantamento, num pagamento próprio. <span className="fd-pending">Pendente de validação por contabilista certificado: tratamento de um pagamento a mais (adiantamento ou devolução).</span>
+</HelpCallout>
+
+- O recibo é um documento certificado: depois de emitido, não se altera. Se foi emitido por engano (valor ou data errados), anula-se com o motivo: [Como anular uma fatura ou outro documento certificado](/fiscal-core/anular-uma-fatura).
+- Se o cliente pagou menos porque reteve imposto na fonte ou porque lhe deu um desconto, não registe a diferença como pagamento parcial sem falar com o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: pagamento com retenção na fonte ou desconto financeiro.</span>
+
+## Problemas frequentes
+
+### «… anterior ao último documento já numerado na série “RG D26” …»
+
+- **Sintoma:** ao carregar em **Criar Pagamento** abre-se a janela **Operação inválida**. Numa demonstração refeita a 31/10/2026 (o `RG D26/16` dessa vez foi emitido a 31/10/2026, e não a 30/10/2026 como no exemplo acima), o recibo da fatura `FT D26/28`, de 09/09/2026, com a **Data de Pagamento** 01/10/2026, foi recusado: «O documento “(ainda sem número)” tem a data 01/10/2026, anterior ao último documento já numerado na série “RG D26” (RG D26/16, datado de 31/10/2026). Uma série certificada numera documentos por ordem cronológica; corrija a data ou use uma data igual ou posterior a 31/10/2026.» O documento «(ainda sem número)» é o recibo novo; a mensagem nomeia o último recibo da série e a data dele, que é a que conta.
+  ![Janela Operação inválida: o recibo novo, com a data 01/10/2026, é anterior ao último recibo da série RG D26, o RG D26/16, de 31/10/2026](/images/fiscal-core/emitir-um-recibo/04-erro-data-anterior.png)
+- **Causa:** a **Data de Pagamento** é a data do recibo, e os recibos de uma série seguem a ordem das datas. Já há um recibo com data mais recente.
+- **O que fazer:** carregue em **Fechar** e use a data indicada na mensagem ou posterior (normalmente, a de hoje). O recibo sai com essa data, mesmo que o dinheiro tenha entrado antes. <span className="fd-pending">Pendente de validação por contabilista certificado: recibo emitido depois da data em que o dinheiro entrou.</span>
+
+### «A data do recibo (…) é posterior a hoje …»
+
+- **Sintoma:** com uma **Data de Pagamento** posterior a hoje, **Criar Pagamento** abre a janela **Operação inválida**. Na demonstração, a 31/10/2026, na `FT D26/31` com a data 01/11/2026: «A data do recibo (01/11/2026) é posterior a hoje (31/10/2026). Um recibo regista um pagamento já recebido: use a data de hoje ou uma anterior. Depois de emitido, a série fica fechada a recibos datados até 01/11/2026, e anular o recibo não a reabre (o número e a data de um documento anulado ficam na série). Nada foi registado.»
+- **Causa:** um recibo prova um pagamento que já foi recebido. Não se emite antes de o dinheiro entrar.
+- **O que fazer:** carregue em **Fechar**. Se o cliente já pagou, escolha o dia em que o dinheiro entrou; se ainda não pagou, carregue em **Descartar** e emita o recibo quando receber. A janela da mensagem está em [Não consigo emitir o recibo](/troubleshooting/recibo-nao-e-emitido).
+
+### «O quê: o recibo está … acima do que o cliente deve»
+
+- **Sintoma:** com um **Valor** acima do valor em dívida, a janela **Emitir recibo** mostra logo um aviso («O valor está 2,70 € acima do que o cliente deve nestes documentos…»). Ao carregar em **Criar Pagamento** abre-se **Operação inválida**: «O quê: o recibo está 2,70 € acima do que o cliente deve (10,00 € contra 7,30 €). Porquê: um recibo só paga documentos; o excesso não paga nenhum e o SAF-T do mês ficaria inválido (e o cliente ficava com um crédito sem tratamento de IVA). Como resolver: indique no máximo 7,30 €. Se o cliente pagou adiantado, registe o excesso num pagamento próprio marcado como “Adiantamento” e clique em “Criar fatura de adiantamento”. Nada foi registado.» No exemplo, é a `FT D26/33`, com 7,30 € em dívida e 10,00 € escritos.
+- **Causa:** o **Valor** passa o que o cliente deve na fatura.
+- **O que fazer:** carregue em **Fechar**, escreva no **Valor** no máximo o valor em dívida e carregue de novo em **Criar Pagamento**. Para o excesso, veja «Notas importantes».
+
+### Não vejo o botão Emitir recibo
+
+- **Causa:** a fatura ainda está em **Rascunho** ou já está **Pago**.
+- **O que fazer:** confirme primeiro a fatura ([Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada)). Se já está **Pago**, o recibo já existe: abra-o pelo botão **Pagamentos** da fatura ou em **Faturação › Receber › Recibos e pagamentos recebidos**.
+
+{/* Nota interna (correções finais antes da junção, 31/10/2026, master ab9649f2e, base docs_demo_corfin_test, perfil Faturação, por clique): a mensagem da data anterior já não nomeia a fatura: FT D26/28 com a Data de Pagamento 01/10/2026, depois do RG D26/16 de 31/10/2026 (recibo da FT D26/31 com a data de hoje), deu a mensagem citada (captura 04 refeita a 2×). A FT D26/31 com 01/11/2026 deu a recusa da data futura (P-E1-01 resolvido em master). O exemplo do caminho principal (RG D26/16 a 30/10/2026, RG D26/17 parcial) é de uma base anterior: na demonstração de hoje o RG D26/16 tem a data de 31/10/2026; não foi refeito. */}

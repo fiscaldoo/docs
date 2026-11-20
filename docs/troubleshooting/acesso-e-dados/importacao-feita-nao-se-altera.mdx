@@ -1,0 +1,71 @@
+---
+id: importacao-feita-nao-se-altera
+slug: /troubleshooting/importacao-feita-nao-se-altera
+title: Uma importação já feita não se altera nem se apaga
+sidebar_label: Importação feita não se altera
+sidebar_position: 13
+description: As importações de SAF-T, os lotes de migração e o histórico de salários ficam como histórico. Para corrigir, faz-se uma importação nova.
+keywords: [importação já feita, importacao feita, não se altera, não se apaga, lote de migração, importação de SAF-T, histórico, migração, importar outra vez, campos calculados pelo sistema]
+doc_id: DOC-0425
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-permissao, troubleshooting/acesso-e-dados/registo-de-prova-nao-se-altera]
+---
+
+## Sintoma
+
+Ao editar ou apagar o registo de uma importação, ou ao escrever à mão um campo que o importador preenche, o fiscaldoo recusa e manda criar uma importação nova. Nada foi alterado.
+
+## Mensagem
+
+Copiadas da base de demonstração em português, provocadas pela integração:
+
+- Com o **Administrador**, ao criar o registo de um lote de migração com o estado preenchido (numa importação do SAF-T, o estado é ignorado e a importação cria-se):
+  > «Estes campos são calculados pelo sistema ou fixados pelo importador e não podem ser definidos: state.»
+- Com o **Administrador**, ao alterar o estado de uma importação do SAF-T já criada:
+  > «Estes campos não são editáveis: state. Retire-os da alteração, ou crie um novo registo se os dados tiverem de ser outros.»
+- Com o **Administrador**, ao apagar uma importação do SAF-T:
+  > «Uma importação faz parte do histórico fiscal e nunca se elimina: use «Eliminar a importação», que apaga os rascunhos que criou e deixa a importação marcada como eliminada, com quem a eliminou e quando.»
+- Com o **Administrador**, ao escrever à mão o registo da importação:
+  > «O registo da importação só é escrito pelo importador. Use os botões da importação em vez de editar o registo.»
+- Com o perfil **Contabilista**, ao iniciar uma importação do SAF-T ou de documentos de outro software:
+  > «Não tem permissão para importar um ficheiro SAF-T (PT): é necessário o perfil «Contabilista certificado (assina, fecha períodos)», que o seu utilizador não tem. […] Peça ao administrador que lhe atribua esse acesso, ou peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que o faça por si.»
+
+## Causas verificadas
+
+- Uma importação é **histórico fiscal**: o que entrou, quando e por quem. Alterá-la ou apagá-la destruiria esse histórico, por isso só o importador escreve o estado e o registo.
+- Importar exige a permissão **Migração/Importação fiscal**; o histórico de salários exige **Administrador de Salários**.
+
+## O que confirmar
+
+1. Se o que quer é corrigir dados: faz-se uma **importação nova** com o ficheiro corrigido.
+2. Se o que quer é desfazer uma importação do SAF-T por engano: use **Eliminar a importação**, na própria importação.
+3. Se tem a permissão **Migração/Importação fiscal**.
+
+## Como resolver
+
+1. Corrija o ficheiro de origem.
+2. Faça uma importação nova, pelo mesmo menu que usou da primeira vez.
+3. Se tem de retirar uma importação do SAF-T, abra-a e use **Eliminar a importação**: fica como «eliminada», com quem e quando.
+
+**Quem faz:** o utilizador com o perfil **Contabilista certificado**, que traz a permissão **Migração/Importação fiscal**; o administrador atribui o perfil.
+
+## Resultado esperado
+
+A importação nova aparece ao lado da antiga, que fica como histórico.
+
+## Quando contactar o suporte
+
+- Tem a permissão e o botão **Importar** devolve uma mensagem que não está aqui.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com o tipo de importação e a mensagem completa.
+
+{/* Nota interna (DOCS-040): a demonstração não tem importações concluídas, por isso só se provocou o que se faz em registos novos (5 de 28 mensagens). Pendente de validação: mensagens dos lotes de migração concluídos, do registo de importações bancárias e do histórico de salários. Ligar aos artigos de importação quando entrarem (DOC-0300, DOC-0369). */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-BA, master ce51f2d47, docs_demo_v23ba_test, 10/11/2026, regra do check-perfis): a recusa da importação do SAF-T foi provocada pela integração com um utilizador criado só com o perfil Contabilista (opera) (o menu Importar ficheiro SAF-T não lhe aparece); hoje pede o perfil «Contabilista certificado (assina, fecha períodos)» e manda pedir ao administrador. */}

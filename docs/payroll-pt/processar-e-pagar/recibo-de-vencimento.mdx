@@ -1,0 +1,107 @@
+---
+id: recibo-de-vencimento
+slug: /payroll-pt/recibo-de-vencimento
+title: Como ler e emitir o recibo de vencimento
+sidebar_label: Ler e emitir o recibo
+sidebar_position: 4
+description: O que diz cada parte do recibo de vencimento no fiscaldoo, como imprimir o PDF para o trabalhador e como registar a entrega até à data do pagamento.
+keywords: [recibo de vencimento, recibo de salário, recibo de salario, recibo do ordenado, imprimir recibo, PDF do recibo, entregar o recibo, entrega do recibo, art. 276, líquido a receber, liquido a receber, custo total para a empresa, ler o recibo]
+doc_id: DOC-0203
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ba9c8bd7)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/processar-e-pagar/retencao-de-irs, payroll-pt/processar-e-pagar/pagar-os-salarios]
+---
+
+## Para que serve?
+
+O recibo de vencimento mostra, para um trabalhador e um mês, o que ele ganhou, o que lhe foi descontado e o que recebe. A empresa tem de lho entregar até ao dia do pagamento. No fiscaldoo, o recibo é criado e calculado no lote do mês; aqui lê-se, imprime-se o PDF e regista-se a entrega.
+
+## Quando utilizar?
+
+- Para conferir um recibo antes de validar o lote do mês.
+- Para responder a uma dúvida do trabalhador sobre um valor.
+- Para imprimir o recibo e registar que foi entregue (em papel, por e-mail ou no portal).
+
+## Onde encontrar?
+
+**Salários › Processar › Recibos de vencimento** › abrir o recibo
+
+A lista tem as colunas **Trabalhador**, **Período**, **Bruto**, **Descontos**, **Líquido**, **Estado**, **Cálculo** e **Pagamento**. O recibo também se abre a partir do lote do mês (**Salários › Processar › Processar o mês**).
+
+## Antes de começar
+
+- O seu perfil é **Processador de salários**, com ou sem o acesso extra **Administrador de Salários**. Com ou sem esse acesso, faz todos os passos deste artigo.
+- O recibo está calculado. Para o imprimir e entregar como definitivo, o lote está **Validado** (ver [Como processar os salários do mês](/payroll-pt/processar-o-mes)).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Processar › Recibos de vencimento** e carregue no recibo, por exemplo o de Ana Margarida Pinto de setembro de 2026.
+2. Leia o topo. Os três quadros dão o resumo: **Bruto** (2.400,00 €), **Descontos** (435,00 €) e **Líquido a pagar** (1.965,00 €). À direita, o estado: **Rascunho**, **Validado** ou **Pago**. Os botões mudam com o estado: num recibo **Validado** são **Pagar**, **Corrigir o IRS retido**, **Retificar** e **Ações**; num recibo **Pago**, **Imprimir recibo**, **Corrigir o IRS retido**, **Retificar** e **Ações**.
+   ![Topo do recibo de setembro de Ana Margarida Pinto, pago: Bruto 2.400,00 €, Descontos 435,00 €, Líquido a pagar 1.965,00 €, com os botões Imprimir recibo, Corrigir o IRS retido, Retificar e Ações](/images/payroll-pt/recibo-de-vencimento/01-recibo-pago.png)
+3. No separador **Linhas**, confira cada rubrica: **Quantidade**, **Valor base**, **Abonos** ou **Descontos**. Carregue em **Como foi calculado?** numa linha para ver a regra, o valor usado e a fonte legal.
+4. Por baixo das linhas, leia os totais: **Total de abonos**, **Segurança Social (trabalhador)**, **Total de IRS retido**, **Total de descontos** e **Líquido a receber**. **Contribuição da empresa para a Segurança Social** e **Custo total para a empresa** não saem do salário: são o custo da empresa. O bloco **Como se chegou aos valores** resume a tabela de IRS e as taxas da Segurança Social.
+5. Para o detalhe da Segurança Social e do IRS (base, tabela, escalão, taxa, parcela a abater), abra o separador **Segurança Social e IRS** (ver [Como se calcula a retenção de IRS nos salários](/payroll-pt/retencao-de-irs)).
+6. Carregue em **Imprimir recibo**. Descarrega-se o PDF «Recibo - *nome do trabalhador*.pdf», numa folha A4 na horizontal com o **Original** e o **Duplicado** lado a lado.
+7. Entregue o recibo ao trabalhador e registe a entrega: carregue em **Ações** e escolha **Entregue por e-mail**, **Entregue no portal** ou **Entregue em papel**. O menu da engrenagem do recibo (ao lado do título) tem ainda **Recibo**, **Duplicar**, **Eliminar** e **Anular recibo**. Num recibo **Pago** o fiscaldoo recusa as duas ações com a janela **Operação inválida**: o recibo pago não se elimina e, num lote contabilizado num só lançamento, não se anula sozinho (ver [O recibo já está validado e não se altera](/troubleshooting/recibo-validado-nao-se-altera), onde estão as mensagens vistas no ecrã).
+   ![Menu Ações do recibo: Criar corretivo, Recalcular o que mudou, Alteração retroativa da retribuição, Confirmar o retrato e os três registos de entrega](/images/payroll-pt/recibo-de-vencimento/02-menu-acoes.png)
+
+</StepByStep>
+
+### O que vem no PDF
+
+O recibo imprime-se numa folha A4 na horizontal, com duas metades iguais separadas por uma linha tracejada: **Original** à esquerda e **Duplicado** à direita. Cada metade tem, por esta ordem (recibo de setembro de 2026 de Ana Margarida Pinto, conferido na demonstração):
+
+- o título **Recibo de Vencimentos** e, numa linha discreta, a entidade empregadora e o NIF («Entidade empregadora: Empresa Demonstração, Lda — NIF PT599999993»);
+- o cabeçalho em duas colunas: à esquerda o **Período** (Setembro 2026), a **Data Fecho** (30/09/2026), o **Vencimento** (2.400,00), o **Venc./Hora** (13,85) e os **Dias úteis** (22); à direita o **Trabalhador**, o **Nº Mecan.**, a **Categoria profissional**, o **Número da Segurança Social**, o **NIF** e o **Departamento**, e o **Seguro de acidentes de trabalho** («Apólice n.º DEMO-AT-2026-001 — Seguradora Fictícia, SA»);
+- o quadro **Faltas** (**Alim.**, **Turno**, **CDH**, **CDD**, **SDH**, **SDD**) e o quadro **Retenção de IRS** (**IRS retido** 171,00 e **Total Remun.** 2.400,00);
+- a tabela **Código**, **Descrição**, **Remunerações** e **Descontos**: **R03** Retribuição base 2.400,00, **R22** Retribuição perdida por faltas 0,00, **D01** Segurança Social (trabalhador) 264,00 e **D02** IRS retido (7,12 %) 171,00, com a informação adicional das férias do ano (dias úteis 22,0, gozados 10,0 e em falta 12,0), que o artigo 276.º, n.º 3, do Código do Trabalho não exige;
+- o **Total** (2.400,00 de remunerações e 435,00 de descontos) e o **Total Pago (EUR)** 1.965,00;
+- as **Obs.**: a forma de pagamento («Pagamento efetuado por Transferência bancária — PT50 ****0175 — 30/09/2026», com os dígitos do meio escondidos) e a moeda;
+- só no **Original**, a declaração de recebimento («Declaro que recebi a quantia constante neste recibo…») com a linha de assinatura.
+
+Com mais de 20 linhas, o recibo continua na folha seguinte («Folha 1/2»). <span className="fd-pending">Pendente de validação no ecrã: o recibo com mais de 20 linhas e o recibo de um trabalhador com faltas; a demonstração não tem nenhum.</span>
+
+![PDF do recibo de setembro de Ana Margarida Pinto em A4 horizontal: Original e Duplicado lado a lado, com o cabeçalho em duas colunas, as Faltas, a Retenção de IRS, a tabela de códigos, o Total Pago e, no Original, a declaração de recebimento](/images/payroll-pt/recibo-de-vencimento/03-recibo-pdf-original-e-duplicado.png)
+
+Os códigos da coluna **Código** (R03, D01, D02…) são estáveis: cada rubrica tem o seu **Código no recibo**, atribuído uma só vez, que se pode editar e é único por empresa (R01… para o que se paga, D04… para o que se desconta); o código interno da rubrica nunca se imprime. Os três códigos das linhas que o motor escreve (Segurança Social D01, IRS D02 e benefícios em espécie D03) escolhem-se na configuração de salários. <span className="fd-pending">Pendente de validação no ecrã: onde se editam o **Código no recibo** e os três códigos na configuração; não se percorreu.</span>
+
+<span className="fd-pending">Pendente de validação por contabilista certificado ou jurista do trabalho: se o recibo tem de indicar a apólice e a seguradora (CT art. 276.º, n.º 3), a identificação da entidade numa linha discreta e se o desenho em duas vias cumpre o artigo 276.º (a lei fixa o conteúdo, não o desenho).</span>
+
+Ler, imprimir e registar a entrega não gera lançamentos contabilísticos.
+
+## Resultado esperado
+
+- O PDF está descarregado e foi entregue ao trabalhador.
+- O aviso «O recibo ainda não foi entregue» desaparece do recibo. Se registar a entrega depois da data do pagamento, o recibo passa a avisar: «Entrega: O recibo foi entregue em 01/11/2026, depois da data do pagamento, 30/10/2026… (contraordenação leve). Como resolver: guarde a prova…»: o aviso só desaparece por completo com a entrega até ao pagamento. No separador **Pagamento e obrigações** ficam **Entregue em** (data e hora), **Canal de entrega** (por exemplo **Em papel**) e **Entregas** (**1**).
+
+![Separador Pagamento e obrigações: Data-limite do pagamento 30/10/2026, Entregue em 29/10/2026 15:01, Canal de entrega Em papel, Entregas 1](/images/payroll-pt/recibo-de-vencimento/03-entrega-registada.png)
+
+## Notas importantes
+
+- **O recibo entrega-se até ao pagamento.** Enquanto a entrega não está registada, o recibo validado avisa: «Entrega: O recibo ainda não foi entregue ao trabalhador e o pagamento é em 29/10/2026. O que aconteceu: o art. 276.º, n.º 3 do Código do Trabalho exige a entrega até ao pagamento. Como resolver: envie-o ou ponha-o no portal e registe a entrega.» <span className="fd-pending">Pendente de validação por contabilista certificado ou jurista do trabalho: prova da entrega por canal (e-mail, portal, papel).</span>
+- **Um recibo validado não se altera.** O recibo diz: «Recibo de vencimento já validado: já não se altera. Para corrigir, crie um recibo corretivo.» As ações de correção (**Criar corretivo**, **Recalcular o que mudou**, **Alteração retroativa da retribuição**, **Corrigir o IRS retido**, **Retificar**) mudam declarações já entregues e têm artigo próprio.
+- **O recibo corretivo mostra o IRS em duas parcelas.** Quando o corretivo tem a diferença do ordenado e a do subsídio, **Como se chegou aos valores** escreve cada parcela do IRS com a sua conta e a soma. Visto no ecrã numa cópia de teste, no corretivo de dezembro de um trabalhador de 2.000,00 € por mês, com os duodécimos do subsídio de férias, depois de um aumento para 2.100,00 € desde março (ver [Como pagar os subsídios de férias e de Natal](/payroll-pt/subsidios-de-ferias-e-natal)): «Ordenado de 12/2026, corrigido: 2.000,00 € já declarados + 100,00 € = 2.100,00 €. Imposto do mês recalculado: 2.100,00 € × 31,1 % − 320,66 € = 332,44 € → 332,00 €. Já retido nesse mês: 301,00 €. Retém-se agora: 31,00 €», a seguir «Subsídio de férias — diferença tributado à parte (CIRS, art. 99.º-C, n.º 5) … Retém-se agora: 31,00 €» e «IRS retido: 62,00 € = 31,00 € + 31,00 €». Fecha com a Segurança Social («11 % de 200,00 € = 22,00 €; a cargo da empresa 23,75 % = 47,50 €»), «Este recibo corrige um anterior, que tinha retido 326,00 € de IRS» e «Líquido a pagar: 116,00 €». No corretivo feito à mão de outubro (2.150,00 € × 34,9 % − 401,19 € = 349,16 € → 349,00 €, já retido 301,00 €) o recibo retém 48,00 €.
+- **Data-limite do pagamento.** O separador **Pagamento e obrigações** mostra a data-limite e porquê, por exemplo: «O período acaba em 31/10/2026, um dia não útil: o pagamento vence no dia útil anterior, 30/10/2026 (CT art. 278.º, interpretação).» <span className="fd-pending">Pendente de validação por jurista do trabalho: vencimento no dia útil anterior.</span>
+- A linha **Lançamento contabilístico** deste separador só fica preenchida depois de o lote ser contabilizado. Ver [Como contabilizar o processamento dos salários](/payroll-pt/contabilizar-os-salarios).
+
+{/* Nota interna (lote 98, PAY-152, master 73d6a5fed, docs_demo_98_test, 19/11/2026, administrador): a base não tem o recibo de outubro de 2026 (só junho a setembro de Ana Margarida Pinto, pagos); passos, quadros e PDF refeitos com o de setembro (Imprimir recibo → «Recibo - Ana Margarida Pinto.pdf», A4 horizontal, pdftotext conferido). Capturas 01 e 03 novas. */}
+
+{/* Nota interna (DOCS-022, 3.ª auditoria, master ba9c8bd7): a apólice já sai no PDF (D27 resolvido, só os códigos internos ficam por validar). As ações de correção estão no DOC-0209. */}
+
+## Problemas frequentes
+
+### O recibo continua a avisar que não foi entregue
+
+- **Causa:** a entrega não foi registada no recibo (imprimir o PDF não conta como entrega).
+- **O que fazer:** carregue em **Ações** e escolha o canal usado. O registo fica no separador **Pagamento e obrigações**.
+
+### O líquido do recibo não bate com a soma das linhas
+
+- **Causa:** as linhas mostram as rubricas (abonos e descontos que não são legais, como uma penhora); a Segurança Social e o IRS estão no bloco **Descontos legais** e nos totais, por baixo das linhas.
+- **O que fazer:** some **Total de abonos** e subtraia **Total de descontos**: dá o **Líquido a receber**. No exemplo, 2.400,00 € − 435,00 € = 1.965,00 €.

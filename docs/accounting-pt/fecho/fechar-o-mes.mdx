@@ -1,0 +1,91 @@
+---
+id: fechar-o-mes
+slug: /accounting-pt/fechar-o-mes
+title: Como fechar a contabilidade do mês
+sidebar_label: Fechar o mês
+sidebar_position: 2
+description: Percorrer a lista do que falta para fechar um mês (bancos, IVA, retenções, SAF-T e lançamentos por publicar), confirmar que está tudo em ordem e bloquear as vendas e as compras até ao fim do mês.
+keywords: [fechar o mês, fecho do mês, fecho mensal, o que falta para fechar, está tudo em ordem, bloquear o mês, data de bloqueio, bloquear vendas e compras, verificações do fecho, encerramento mensal, lançamentos por publicar, bancos reconciliados, IVA apurado]
+doc_id: DOC-0131
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master f16f4a3e0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/fecho/datas-de-bloqueio, accounting-pt/iva/apuramento-do-iva, accounting-pt/retencoes/pagar-as-retencoes]
+---
+
+{/* Nota interna (v3-A1 + correção v3a1cor, DOC-0131, risco alto, video=sim: vídeo é de outra corrente, a secção «Vídeo demonstrativo» entra quando existir). Validado na base docs_demo_v3a1cor_test (8219) com o Contabilista (painel, cartões, fatura antes do bloqueio) e o Responsável fiscal (bloqueio). O bloqueio de compras aplica-se TAMBÉM ao Contabilista (corrige o V3A1-10 do relatório, que não é defeito): fatura de 20/01/2026 criada e confirmada pelo Contabilista com o bloqueio de compras a 31/01/2026 ficou FTF/2026/00053, data da fatura 20/01/2026 e data contabilística 28/02/2026; a FTF/2026/00051 (15/01/2026) ficou com 01/11/2026. Defeito menor do produto para o Gestor: o aviso do rascunho diz «o lançamento contabilístico fica datado de 01/11/2026» mas o campo Data Contabilística mostra 28/02/2026 e é essa a data que fica ao confirmar. Defeito V3A1-09 confirmado no ecrã: o cartão «Mês fechado» de janeiro lista «IVA apurado no fim do exercício» e «O resultado do exercício está apurado e atualizado». O painel não impediu o bloqueio com cartões por resolver. O estado vazio e o PDF não se aplicam a este ecrã. */}
+
+## Para que serve?
+
+Fechar o mês é garantir que tudo o que pertence a esse mês está registado e conferido (bancos, IVA, retenções, ficheiro SAF-T, lançamentos) e, no fim, impedir que se alterem datas desse mês. O fiscaldoo reúne as verificações num só ecrã, **O que falta para fechar?**, e propõe o bloqueio das vendas e das compras até ao último dia do mês.
+
+O fecho do mês não substitui o fecho do exercício: este só acontece uma vez por ano.
+
+## Quando utilizar?
+
+- Todos os meses, depois de reconciliados os bancos e entregue (ou pelo menos apurado) o IVA do mês.
+- Antes de gerar relatórios ou o SAF-T de um mês que já não vai mudar.
+- Não bloqueie um mês em que ainda falta registar faturas: depois de bloqueado, uma fatura com data desse mês já não fica lançada nessa data (o lançamento passa para depois do bloqueio) e, para a manter na data, é preciso reabrir o período. Se todas as faturas do mês já estão registadas, pode bloquear.
+
+## Onde encontrar?
+
+- **Contabilidade › Fechar › Contabilidade do mês › Está tudo em ordem?**: verificações da configuração (série fiscal, IVA, plano de contas, banco, bloqueios).
+- **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**: o ecrã **O que falta para fechar?**, com os cartões do mês e o botão de bloqueio.
+
+## Antes de começar
+
+- O perfil **Contabilista** vê os dois ecrãs e abre os cartões. O botão **Bloquear vendas e compras até ao fim do mês** abre a janela para todos, mas **Aplicar** só funciona a quem pode alterar as datas: vendas e compras exigem o perfil **Contabilista certificado**; a data de bloqueio global, também; a definitiva, só o administrador (ou quem tem o acesso extra **Administração fiscal**).
+- Os bancos do mês estão reconciliados ([Como reconciliar movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios)) e o IVA do mês apurado ([Como apurar o IVA do período](/accounting-pt/apuramento-do-iva)).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Está tudo em ordem?**. Cada linha é um aviso do que está mal configurado: com ícone vermelho, como **Faturação** («Não há nenhuma série fiscal ativa para 2026 em: Faturas (2.ª série). Não é possível emitir faturas nesses diários.»), ou amarelo, como **IVA** («4 taxa(s) a zero sem motivo de isenção») e **Banco** («Movimentos bancários à espera de reconciliação há mais de 30 dias: 2.»). As linhas com ícone verde estão em ordem (**Plano de contas**, **Bloqueios**). O botão **Corrigir** leva ao ecrã onde se resolve; os restantes avisos têm a indicação «Peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)»» (vista no ecrã com o perfil **Contabilista**).
+   ![Ecrã Está tudo em ordem com avisos de faturação, IVA e banco e linhas em ordem](/images/accounting-pt/fechar-o-mes/06-esta-tudo-em-ordem.png)
+2. Abra **Fechar o mês**. O ecrã abre no primeiro mês ainda por fechar e o seletor mostra os meses dos dois anos. No exemplo, a base abriu em janeiro de 2026; a captura abaixo foi tirada depois de janeiro fechado, por isso mostra fevereiro. Cada cartão diz o que falta: **Bancos reconciliados** e **SAF-T validado** em **Concluída** («Aqui não falta nada.»), **IVA apurado** («Períodos de IVA terminados e ainda não entregues»), **Retenções** («Guias de retenção ainda por pagar») e **Mês fechado** («Verificações do fecho que falham»).
+   ![Ecrã O que falta para fechar com os cartões de fevereiro de 2026 e o botão Bloquear vendas e compras até ao fim do mês](/images/accounting-pt/fechar-o-mes/01-o-que-falta-para-fechar.png)
+3. Abra cada cartão que não está **Concluída**: abre a lista do que falta (por exemplo as declarações de IVA, ou os **Lançamentos por publicar**, que no exemplo são rascunhos de diferimento). Resolva-os e volte atrás: os cartões atualizam-se. Os apuramentos fazem-se nos artigos próprios: [IVA](/accounting-pt/apuramento-do-iva), [retenções](/accounting-pt/pagar-as-retencoes), [depreciações](/accounting-pt/processar-depreciacoes).
+4. Em **Listas de apoio** estão os ecrãs de que o fecho precisa de vez em quando: **Reavaliação cambial**, **Imparidades de créditos**, **Exercícios fiscais**, **Inventário para a AT**, **Datas de bloqueio e exceções**, **Coerência do resultado líquido**, entre outros.
+   ![Listas de apoio do ecrã de fecho com Inventário para a AT e Coerência do resultado líquido](/images/accounting-pt/fechar-o-mes/05-listas-de-apoio-fecho.png)
+5. Quando tudo estiver resolvido, o **Contabilista certificado** carrega em **Bloquear vendas e compras até ao fim do mês**. A janela **Fechar o mês** propõe «bloquear as vendas e as compras até 31/01/2026, o fim do mês», mostra as **Datas de bloqueio** atuais e as propostas, e avisa «Nada fica bloqueado enquanto não escrever o motivo e carregar em Aplicar».
+   ![Janela Fechar o mês com as datas de bloqueio atuais e propostas](/images/accounting-pt/fechar-o-mes/02-bloquear-mes.png)
+6. Escreva o **Motivo** (fica na auditoria) e carregue em **Aplicar**. O ecrã responde «Datas de bloqueio guardadas. Data de bloqueio de vendas subiu para 31/01/2026. Data de bloqueio de compras subiu para 31/01/2026. O motivo ficou registado na auditoria.» e o ecrã passa para o mês seguinte.
+   ![Janela com o motivo preenchido e o botão Aplicar](/images/accounting-pt/fechar-o-mes/04-bloquear-com-motivo.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- As datas de bloqueio de vendas e de compras ficam em 31/01/2026; a data de bloqueio global mantém-se (no exemplo, 31/12/2025) e a da declaração de impostos fica como estava (na demonstração, vazia).
+- **O bloqueio de compras aplica-se também ao Contabilista.** Uma fatura de fornecedor com data da fatura anterior ou igual a 31/01/2026 continua a poder ser registada, mas a **Data da Fatura de Fornecedor** mantém-se (22/01/2026) e a **Data Contabilística**, a do lançamento, passa para depois do bloqueio (no rascunho do exemplo, feito a 07/11/2026, ficou 07/11/2026). O rascunho avisa: «A data do documento (22/01/2026) está num período bloqueado (até 31/01/2026); o lançamento vai ficar com a data contabilística de 07/11/2026. O documento mantém a sua data. Se o lançamento tiver de ficar na data do documento, peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que reabra o período antes de lançar.» (visto no ecrã com o perfil **Contabilista**) O bloqueio não impede o registo atrasado; faz com que ele já não conte no mês fechado.
+   ![Rascunho de fatura de fornecedor com data de 22/01/2026, o aviso do período bloqueado e a data contabilística de 07/11/2026](/images/accounting-pt/fechar-o-mes/07-fatura-antes-do-bloqueio.png)
+   {/* Nota interna (lote v23-O, DOCS-066, master dbbb5ac5c, docs_demo_v23o_test): aviso e captura 07 refeitos com o perfil Contabilista, depois de o Contabilista certificado bloquear janeiro de 2026 em Fechar o mês; o aviso e o campo Data Contabilística dizem agora a mesma data (07/11/2026, no rascunho). Rascunho não confirmado. */}
+- O fecho do mês **não faz lançamentos**: só grava as datas de bloqueio. As regras e as exceções às datas estão em [Como funcionam as datas de bloqueio](/accounting-pt/datas-de-bloqueio).
+- O ecrã abre no mês seguinte.
+
+## Notas importantes
+
+- **O ecrã não obriga a resolver os cartões.** No exemplo, o bloqueio foi aplicado com **IVA apurado** e **Mês fechado** por resolver: o fiscaldoo propõe e avisa, mas quem decide é quem carrega em **Aplicar**. <span className="fd-pending">Pendente de validação por contabilista certificado: que verificações devem estar concluídas antes de bloquear um mês.</span>
+- **Recuar uma data de bloqueio** cria uma exceção e fica registado com o motivo.
+- **A data de bloqueio definitiva não se desfaz**: só o administrador (ou quem tem o acesso extra **Administração fiscal**) a avança.
+- O cartão **Mês fechado** inclui verificações de fim de exercício mesmo num mês que não é o último do ano: em janeiro de 2026 lista **IVA apurado no fim do exercício** e **O resultado do exercício está apurado e atualizado**. Num mês que não é dezembro, essas duas só passam a contar no fecho do exercício (Como fechar o exercício); no resto do ano, os cartões que interessam são os outros. {/* Nota interna (v3a1cor, V3A1-09): confirmado no ecrã; defeito do produto (verificações anuais num fecho mensal). */}
+- **Rascunhos por publicar.** O cartão **Mês fechado** mostra-os como falha, mas o ecrã deixa bloquear na mesma: um mês com rascunhos por publicar não fica fechado de facto. Publique-os (ou apague-os) antes de bloquear.
+
+## Problemas frequentes
+
+### «Há campos obrigatórios por preencher» ao aplicar
+
+- **Sintoma:** ao carregar em **Aplicar** sem **Motivo**, «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **O que fazer:** escreva o motivo.
+   ![Janela Fechar o mês com o motivo por preencher](/images/accounting-pt/fechar-o-mes/03-bloquear-sem-motivo.png)
+
+### «O seu perfil não a pode alterar»
+
+- **Sintoma:** a janela lista as datas que o seu perfil não pode alterar, por exemplo «Data de bloqueio de vendas: o seu perfil não a pode alterar; peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)».». A data de bloqueio global e a da declaração de impostos dizem «peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» ou ao administrador.», e a definitiva diz «peça ao administrador.» (visto no ecrã com o perfil **Contabilista**).
+- **O que fazer:** peça ao Contabilista certificado que aplique o bloqueio. Na janela dele (vista no ecrã com esse perfil), as datas que o perfil não pode alterar são só duas: «Data de bloqueio da declaração de impostos: o seu perfil não a pode subir, só recuá-la (uma exceção). Para a subir, peça ao administrador.» e «Data de bloqueio definitivo: o seu perfil não a pode alterar; peça ao administrador.»
+
+{/* Nota interna (lote v23-G, DOCS-066, master 5228a94bd, docs_demo_v23g_test): a linha da data de bloqueio de vendas foi calculada pela integração (RPC) na janela Fixar datas de bloqueio com um utilizador só com o perfil Contabilista (texto novo). */}

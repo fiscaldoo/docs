@@ -1,0 +1,88 @@
+---
+id: simular-o-resultado
+slug: /accounting-pt/simular-o-resultado
+title: Como simular o resultado do exercício antes de fechar
+sidebar_label: Simular o resultado
+sidebar_position: 2
+description: Obter uma demonstração de resultados provisória do exercício com uma estimativa do imposto sobre o rendimento, sem lançar nada, e guardar cada cenário para comparar.
+keywords: [simular o resultado, simulação do resultado, simulacao do resultado, resultado provisório, resultado provisorio, estimativa de IRC, antes do fecho, cenário, cenario, demonstração de resultados provisória]
+doc_id: DOC-0134
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ba9c8bd7, comboio 126)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/demonstracao-de-resultados, accounting-pt/fecho/datas-de-bloqueio]
+---
+
+## Para que serve?
+
+Antes de fechar o exercício, a simulação responde a «com o que já está lançado e com este imposto estimado, qual seria o resultado?». Mostra uma demonstração de resultados provisória e **não lança nada**. Cada simulação fica guardada, com a data e o utilizador, para comparar cenários.
+
+## Quando utilizar?
+
+- Antes do apuramento, para ter uma ideia do resultado e do imposto a estimar.
+- Para comparar cenários (por exemplo, com imposto de valores diferentes).
+- **Não** a use como resultado final: só parte dos lançamentos já publicados.
+
+## Onde encontrar?
+
+**Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**, em **Listas de apoio** carregue em **Exercícios fiscais**, abra o exercício e carregue em **Simular o resultado**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**. O **Contabilista** e a **Gerência** abrem o exercício, mas não têm o botão **Simular o resultado**.
+- Os lançamentos do exercício estão publicados.
+- O exemplo é o exercício de 2026 da Empresa Demonstração, Lda, a 01/11/2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês** e, em **Listas de apoio**, **Exercícios fiscais**. A lista mostra cada exercício, o estado e o resultado: 2026 **Aberto** com -59.791,84 € e 2025 **Fechado** com 31.104,16 €.
+2. Abra o exercício **2026** e carregue em **Simular o resultado**.
+3. Escreva o nome do cenário em **Cenário**, por exemplo `Cenário prudente`. Em **Imposto sobre o rendimento (estimativa)**, escreva a estimativa, por exemplo `5000`. A **Demonstração de resultados provisória** da janela atualiza-se: **Vendas e prestações de serviços** 38.073,00 €, **Custo das mercadorias vendidas** 11.100,00 €, **Fornecimentos e serviços externos** 26.127,87 €, **Gastos com o pessoal** 56.076,97 €, **Depreciações** 2.060,00 € e **Outros gastos e perdas** 2.500,00 €, que dão **Resultado antes de impostos** de -59.791,84 €. Com a estimativa de 5.000,00 €, o **Resultado líquido** é -64.791,84 €.
+   ![Janela Simular o resultado com o cenário, a estimativa do imposto e a demonstração de resultados provisória, com o resultado antes de impostos e o resultado líquido](/images/accounting-pt/simular-o-resultado/01-janela-simular.png)
+4. Se já sabe o valor das existências no fim do ano, marque **Já sei o inventário final?** e escreva-o em **Inventário final (estimativa)**. A janela passa a mostrar esse campo. No exemplo, com `3000`, o **Custo das mercadorias vendidas** baixa de 11.100,00 € para 8.100,00 € (menos os 3.000,00 € de existências) e o **Resultado antes de impostos** passa a -56.791,84 €. Com uma estimativa de imposto de 2.000,00 €, o **Resultado líquido** é -58.791,84 €.
+   ![Janela Simular o resultado com a caixa Já sei o inventário final marcada, o inventário final de 3.000,00 € e o imposto de 2.000,00 €](/images/accounting-pt/simular-o-resultado/02-inventario-final.png)
+5. Carregue em **Simular e guardar**. Abre a **Simulação da demonstração de resultados provisória #1**, com o exercício, a data, quem simulou, o cenário, as estimativas e a demonstração. Nenhum lançamento é criado. A ficha mostra também **Existências iniciais** com 0,00 €: não é um campo que escreva.
+6. Para rever os cenários, volte ao exercício e abra o separador **Simulações**. Cada linha mostra **Simulado em**, **Simulado por**, **Cenário**, **Inventário final (estimativa)**, **Imposto sobre o rendimento (estimativa)**, **Resultado antes de impostos** e **Resultado líquido (simulado)**; no exemplo, as duas simulações guardadas (-64.791,84 € e -58.791,84 €).
+   ![Separador Simulações do exercício 2026 com duas simulações guardadas, a mais recente em cima](/images/accounting-pt/simular-o-resultado/03-separador-simulacoes.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- Uma simulação guardada, com o cenário, o imposto estimado e o resultado líquido (no exemplo, -64.791,84 €).
+- O **Resultado antes de impostos** da simulação (-59.791,84 €) é igual ao da [demonstração de resultados](/accounting-pt/demonstracao-de-resultados) do exercício.
+- No separador **Simulações** do exercício 2026, as simulações guardadas, da mais recente para a mais antiga. Um exercício sem simulações (o de 2025, já fechado) mostra o separador vazio.
+- Nada foi lançado: o resultado do exercício na lista continua a ser -59.791,84 € e o exercício continua **Aberto**.
+
+## Notas importantes
+
+- **A estimativa do imposto é sua.** O produto não a calcula: mete o valor que indicar. <span className="fd-pending">Pendente de validação por contabilista certificado: o valor a estimar (matéria coletável, derramas e tributações autónomas).</span>
+- **A simulação não substitui o apuramento.** O resultado só entra no capital próprio depois do apuramento do exercício (ver alterações no capital próprio).
+
+- **O cenário pode ficar em branco.** A simulação grava na mesma, mas fica sem nome no separador **Simulações**, o que dificulta a comparação. Dê sempre um nome.
+- **Só os exercícios abertos se simulam.** Num exercício **Fechado** (2025, no exemplo) não há botão **Simular o resultado**; as simulações já feitas continuam consultáveis.
+- **A demonstração mostra o que for escrito.** Enquanto escreve, a janela atualiza o resultado, incluindo valores que o produto depois recusa ao guardar (ver abaixo). O inventário final entra como redução ao custo das mercadorias vendidas; <span className="fd-pending">Pendente de validação por contabilista certificado: tratamento do inventário final e das existências iniciais na estimativa do custo das mercadorias vendidas (a tabela de existências iniciais não é editável).</span>
+
+## Problemas frequentes
+
+### «Operação inválida: O inventário final e a estimativa do imposto não podem ser negativos. Indique-os como valores positivos.»
+
+- **Causa:** escreveu um valor negativo (por exemplo `-500` no inventário final, ou `-100` no imposto) e carregou em **Simular e guardar**. A mensagem aparece nos dois casos.
+- **O que fazer:** carregue em **Fechar**, corrija o valor para positivo e volte a carregar em **Simular e guardar**. Nada fica guardado. Se a estimativa for uma devolução de imposto, o produto não a aceita como valor negativo.
+  ![Mensagem Operação inválida a recusar um valor negativo no inventário final](/images/accounting-pt/simular-o-resultado/04-valor-negativo.png)
+
+### Não aparece o botão Simular o resultado, ou «Não tem permissão para criar «Simular a demonstração de resultados provisória»»
+
+- **Causa:** o seu perfil não é um dos que fazem a simulação. Ao **Contabilista**, à **Gerência** e ao **Auditor / ROC**, o exercício aberto não mostra o botão **Simular o resultado**. Um pedido feito por outro caminho (por exemplo, por uma integração) é recusado com «Não tem permissão para criar «Simular a demonstração de resultados provisória». Quem faz: «Contabilista certificado (assina, fecha períodos)». Quem atribui o perfil: o administrador do sistema (Definições › Utilizadores e empresas › Utilizadores). Peça-lhe o perfil de que precisa, ou peça a um utilizador com esse perfil que o faça.» Ao **Auditor / ROC**, a recusa diz «O seu perfil (Auditor) é só de leitura: consulta tudo e nunca cria, altera ou elimina nada.».
+- **O que fazer:** peça a quem tem o perfil **Contabilista certificado** que faça a simulação, ou ao administrador do sistema, que atribui o perfil em **Definições › Utilizadores e empresas › Utilizadores**.
+
+{/* Nota interna (lote v23-Q, #3947, DOC-0134, master 808f8ca1f, docs_demo_v23q_test, porta 8452): com utilizadores criados só com cada valor do campo Perfil (DEC-1777). No ecrã, exercício 2026: o Contabilista certificado tem Simular o resultado e a janela abre; Contabilista, Gerência e Auditor não têm o botão. O assistente não tem ação de janela, por isso a recusa não se abre por clique com nenhum perfil: provocada pela integração (create do assistente) com o Contabilista e a Gerência (mesmo texto) e com o Auditor (texto do só de leitura). A antiga «Sem acesso: Não tem acesso a…» já não é o texto de hoje (UX-124). */}
+
+{/* Nota interna (DOCS-046, DOC-0134): visto em docs_demo_v3a4_test (master ba9c8bd7) com o perfil Responsável fiscal (demo.gestor_contabilidade); Contabilista e Gerência recusados (mensagem copiada). Sucessor 01/11: provado no ecrã a caixa «Já sei o inventário final?» (campo Inventário final aparece; 3000 -> CMV 8.100,00), imposto e inventário negativos (Operação inválida, texto copiado), cenário vazio (grava sem nome, simulação #2), separador Simulações (2026 com 2; 2025 fechado vazio e sem botão). A demonstração da janela aceita e mostra valores negativos antes de os recusar ao guardar (defeito menor, V3A4-06). Só há uma empresa na demonstração: simulação noutra empresa não testada (não há segunda empresa com exercício). Simulações #1 («Cenário prudente», 5.000,00 €) e #2 (sem nome, 3.000,00/2.000,00) ficaram na base. */}
+
+{/* Nota interna (lote v23-AB, master 97b34fac3, docs_demo_v23ab_test, porta 8480, utilizadores criados só com cada valor do campo Perfil): números e capturas 01 e 02 refeitos na cópia limpa da base-mãe (docs_demo_v23ab2_test) com um utilizador só Contabilista certificado: 2026 Aberto -59.791,84 €, as duas simulações gravadas (-64.791,84 € e -58.791,84 €). */}

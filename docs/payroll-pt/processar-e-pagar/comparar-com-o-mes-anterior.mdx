@@ -1,0 +1,85 @@
+---
+id: comparar-com-o-mes-anterior
+slug: /payroll-pt/comparar-com-o-mes-anterior
+title: Como comparar os salários com o mês anterior
+sidebar_label: Comparar com o mês anterior
+sidebar_position: 9
+description: Comparar, rubrica a rubrica, os recibos fechados de um mês com os do mês anterior para apanhar enganos (rubricas duplicadas, descontos que desapareceram) antes de pagar, e abrir os recibos que explicam cada diferença.
+keywords: [mês contra o mês anterior, comparar salários, diferenças por rubrica, erro nos recibos, rubrica nova, rubrica terminou, conferir salários, variação mensal, comparação de recibos]
+doc_id: DOC-0210
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/processar-e-pagar/corrigir-um-processamento]
+---
+
+## Para que serve?
+
+Mostra o que mudou nos salários de um mês para o outro, rubrica a rubrica: quanto era, quanto é, a diferença em valor e em percentagem. Serve para apanhar enganos (uma rubrica duplicada, um desconto que desapareceu, uma falta que ficou por lançar) antes de pagar. Só lê recibos já fechados; não calcula nem altera nada.
+
+## Quando utilizar?
+
+- Depois de [processar o mês](/payroll-pt/processar-o-mes) e antes de pagar, para confirmar que nada saiu do normal.
+- Quando um trabalhador diz que o recibo mudou e quer saber porquê.
+
+## Onde encontrar?
+
+**Salários › Processar › Mês contra o mês anterior**
+
+## Antes de começar
+
+- Perfil **Processador de salários**, com o qual se fez o percurso inteiro deste artigo. {/* Nota interna (DOCS-046): a arquitetura previa Administrativo e Contabilista; na demonstração o Contabilista não tem a aplicação Salários e o perfil de Recursos Humanos não vê este menu. */}
+- Há recibos **fechados** (validados ou pagos) no mês e no mês anterior. Recibos em rascunho não contam.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Processar › Mês contra o mês anterior**. O ecrã propõe o mês de hoje (no exemplo, `01/11/2026`).
+2. Escolha o **Mês** que quer analisar. Qualquer dia do mês serve (no exemplo, `15/09/2026`). Para olhar só para parte da empresa, escolha os departamentos em **Só estes departamentos**; em branco entram todos.
+3. Carregue em **Comparar**. Aparece a lista com uma linha por rubrica (**Alínea**), com **Mês anterior**, **Este mês**, **Diferença** e **Diferença (%)**, ordenada pelas maiores alterações, e o total no fim.
+   ![Comparação de setembro de 2026 com agosto: Retribuição perdida por faltas de -483,33 no mês anterior e Retribuição base de 11.560,00, com total de 11.076,67 no mês anterior](/images/payroll-pt/comparar-com-o-mes-anterior/01-comparacao-de-setembro.png)
+4. Veja as colunas **Nova** e **Terminou**. **Nova** marca uma rubrica que não existia no mês anterior; **Terminou**, uma que existia e já não existe. No exemplo, a **Retribuição perdida por faltas** está marcada **Terminou**: em agosto houve faltas, em setembro não.
+   ![Colunas Diferença (%), Nova, Terminou e Recibos, com Terminou ligado na Retribuição perdida por faltas](/images/payroll-pt/comparar-com-o-mes-anterior/02-diferencas.png)
+5. Para perceber uma diferença, carregue na lupa **Recibos** dessa linha. Abre-se a lista dos recibos fechados dos dois meses. No exemplo, ao abrir **Retribuição perdida por faltas**, vê-se que o recibo de agosto de Fábio Nuno Carvalho é de 966,67 € brutos, em vez dos 1.450,00 € dos outros meses: foi daí que veio a retribuição perdida.
+6. Se quiser guardar a comparação, carregue em **Descarregar Excel** ou **Imprimir PDF**. Repetem a lista que está no ecrã. O PDF chama-se «Mês contra o mês anterior».
+
+</StepByStep>
+
+**Exemplo.** Em setembro de 2026 a **Retribuição base** é de 11.560,00 € nos dois meses (diferença 0,00) e a **Retribuição perdida por faltas** passa de -483,33 € (agosto) para 0,00 €. O total passa de 11.076,67 € para 11.560,00 €: a diferença de 483,33 € é toda ela a falta que deixou de existir.
+
+## No Enterprise
+
+No Odoo Enterprise, a comparação do mês com o anterior faz-se no mesmo ecrã: com o perfil **Processador de salários**, **Salários › Processar › Mês contra o mês anterior** abre o formulário com **Mês**, **Só estes departamentos** e o botão **Comparar**, como no Community. Os relatórios da aplicação **Folha de Salários** do Enterprise não aparecem numa empresa portuguesa e não substituem este ecrã.
+
+{/* Nota interna (lote EE-07, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee07b_test: cópia da odoo20_ee_test com a aplicação de salários do Enterprise (hr_payroll) instalada e o código de master; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado: Processador de salários em Mês contra o mês anterior (formulário com Mês, Só estes departamentos e Comparar); administrador sem a aplicação Folha de Salários. Caminhos do artigo conferidos com o verificador do test_doc_paths na mesma cópia (0 erros). Ver reports/LOTE_EE-07.md. */}
+
+## Resultado esperado
+
+- Cada rubrica aparece uma vez, com o valor dos dois meses somado de todos os trabalhadores (ou só dos departamentos escolhidos).
+- A soma da coluna **Diferença** é a diferença entre os dois totais do fim da lista.
+- A lupa **Recibos** abre os recibos fechados dos dois meses.
+
+## Notas importantes
+
+- **Só recibos fechados.** Um mês sem recibos fechados, ou o mês anterior sem recibos, não dá uma comparação válida: no primeiro mês de processamento todas as rubricas aparecem como **Nova** e **Diferença (%)** fica a 0,00 (no teste, junho de 2026, com 11.560,00 € de **Retribuição base** marcada **Nova**).
+- **O que a lupa não faz.** A lupa **Recibos** abre todos os recibos fechados dos dois meses (no exemplo, 16, oito de cada mês), não só os que têm a rubrica da linha. Procure nessa lista o que mudou. {/* Nota interna (DOCS-046): defeito V4PAYb-06: a lupa «Recibos» não filtra pela rubrica; o guia antigo dizia «que têm essa rubrica». */}
+- **Leia a diferença em euros.** **Diferença (%)** sai com o sinal trocado nas rubricas negativas: a **Retribuição perdida por faltas** de -483,33 € para 0,00 € mostra uma diferença de 483,33 € mas **-100,00 %**; de -58,67 € para -483,33 € (agosto contra julho) mostra 723,81 %. Confie na coluna **Diferença**. {/* Nota interna (DOCS-046): defeito V4PAYb-05, percentagem calculada sobre o valor com sinal; ver reports/LOTE_V4_PAY2b.md. */}
+- **O que o ecrã não vê.** Só compara as rubricas que existem nos recibos fechados; não compara dias trabalhados, horas nem o IRS por escalão. Uma rubrica nunca lançada nos dois meses também não aparece.
+- Para corrigir um erro que apanhe aqui, veja [Como corrigir um processamento](/payroll-pt/corrigir-um-processamento).
+
+## Problemas frequentes
+
+### «Não há recibos fechados nestes dois meses»
+
+- **Sintoma:** ao carregar em **Comparar**, a faixa diz «Não há recibos fechados nestes dois meses.» e a lista está vazia. Aconteceu com o mês proposto (novembro de 2026, sem processamento) e com um departamento sem trabalhadores com recibos (no teste, «Comercial (demonstração)», em setembro).
+- **Causa:** nem o mês escolhido nem o anterior têm recibos fechados para o que escolheu.
+- **O que fazer:** escolha um mês já processado, tire o filtro dos departamentos ou [valide os recibos do mês](/payroll-pt/processar-o-mes).
+
+### O Excel tem um nome em inglês
+
+- **Sintoma:** **Descarregar Excel** guarda um ficheiro chamado `Month against the month before.xlsx`.
+- **O que fazer:** mude o nome do ficheiro. O conteúdo é o da lista do ecrã. {/* Nota interna (DOCS-046): defeito V4PAYb-04, nomes dos ficheiros Excel em inglês. */}

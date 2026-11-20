@@ -1,0 +1,118 @@
+---
+id: recebimentos-e-pagamentos-por-meio
+slug: /accounting-pt/recebimentos-e-pagamentos-por-meio
+title: Como ver os recebimentos e pagamentos por meio de pagamento
+sidebar_label: Recebimentos e pagamentos por meio
+description: Ver quanto entrou e saiu por Multibanco, débito direto, transferência, cheque e outros meios num período, em lista, em PDF ou em XLSX.
+keywords: [recebimentos por meio, pagamentos por meio, recebimentos e pagamentos por meio, linhas de recebimentos e pagamentos, recebimentos por método de pagamento, recebimentos por metodo de pagamento, meios de pagamento, multibanco, débito direto, debito direto, transferência bancária, transferencia bancaria, cheque, numerário]
+doc_id: DOC-0118
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c60255305)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/pendentes-de-reconciliacao, accounting-pt/bancos-e-tesouraria/pagar-a-fornecedores, accounting-pt/bancos-e-tesouraria/movimentos-de-caixa]
+---
+
+{/* Nota interna (v13-ACC, DOC-0118): base docs_demo_v13acc_test, porta 8254, master 56504fe86. Percorrido por clique com o perfil Contabilista. O perfil Faturação não tem o menu nem a ligação do painel (hub_links accounting vazio). Totais conferidos: XLSX 20 recebimentos 28.291,60 e 39 pagamentos 40.957,16; lista 54+5 registos; relatório «Recebimentos por método de pagamento» total 28.291,60. A definição de cada meio (e a data do cheque) vem do módulo l10n_pt_arxi_payments, modelo das linhas; a demonstração não tem Multibanco, débito direto nem cheques nestas datas. A coluna do fim soma os dois sentidos: defeito no relatório LOTE_V13ACC. */}
+
+## Para que serve?
+
+Mostra quanto entrou e quanto saiu num período, separado por meio de pagamento: Multibanco, débito direto, transferência bancária, cheque e outros. Serve, por exemplo, para saber quanto foi recebido por transferência e quanto em dinheiro.
+
+## Quando utilizar?
+
+- Quando a gerência pergunta quanto entrou e saiu por cada meio.
+- Quando quer entregar ao contabilista um mapa do período, em PDF ou em XLSX.
+- Quando quer ver cada pagamento de um meio e abrir o documento de onde veio.
+- Não use para saber o dinheiro que está no banco: isso vê-se nos [pendentes de reconciliação](/accounting-pt/pendentes-de-reconciliacao).
+
+## Onde encontrar?
+
+- **Contabilidade › Lançar › Início › O que há para fazer?** › **Listas de apoio** › **Recebimentos e pagamentos por meio**: recebimentos e pagamentos, por meio.
+- **Contabilidade › Consultar › Impostos e tesouraria › Recebimentos por método de pagamento**: só recebimentos, por método e por cliente.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. O perfil **Administrativo** não tem a aplicação **Contabilidade**, por isso não tem a ligação nem o menu.
+- Os pagamentos do período estão registados. Um movimento do banco ainda por reconciliar não conta: só contam os pagamentos confirmados.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Lançar › Início › O que há para fazer?**. Em **Listas de apoio**, carregue em **Recebimentos e pagamentos por meio**.
+   ![Grupo Listas de apoio do painel da Contabilidade, com a ligação Recebimentos e pagamentos por meio assinalada](/images/accounting-pt/recebimentos-e-pagamentos-por-meio/01-painel-listas-de-apoio.png)
+2. Em **De** e **Até**, escolha o período. Abre de 1 de janeiro até hoje.
+3. Em **Mostrar**, escolha **Recebimentos e pagamentos**, **Recebimentos** ou **Pagamentos**.
+   ![Janela Recebimentos e pagamentos por meio, com as datas, a opção Mostrar e os botões Abrir as linhas, Imprimir, Exportar XLSX e Fechar](/images/accounting-pt/recebimentos-e-pagamentos-por-meio/02-janela-periodo.png)
+4. Carregue no que precisa:
+   - **Abrir as linhas** mostra a lista no ecrã, agrupada por meio e por sentido.
+   - **Imprimir** descarrega um PDF.
+   - **Exportar XLSX** descarrega uma folha de cálculo com dois separadores, **Por meio** e **Por mês**.
+5. Na lista, carregue num grupo para o abrir. Em cada linha, o ícone do fim abre o documento de onde veio.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, os dois caminhos e os dois mapas são os mesmos (visto com um utilizador só com o perfil **Contabilista**). A janela **Recebimentos e pagamentos por meio** abre com **De** a 1 de janeiro, **Até** hoje e **Mostrar**, e com os botões **Abrir as linhas**, **Imprimir**, **Exportar XLSX** e **Fechar**; **Abrir as linhas** agrupa por **Meio** e por **Sentido**. **Recebimentos por método de pagamento** é o mesmo relatório do fiscaldoo, com **Exportar PDF** e **Exportar**, e deu o mesmo total de 2026 do exemplo, 28.291,60 €. O perfil **Administrativo** também não tem a aplicação **Contabilidade**.
+
+{/* Nota interna (lote EE-05, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee05_test (cópia da odoo20_ee_test com EE_FASE=construir), 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0118. Contabilista: O que há para fazer? › Listas de apoio › Recebimentos e pagamentos por meio (De 01/01/2026, Até 11/11/2026, Mostrar Recebimentos e pagamentos); Abrir as linhas → Linhas de recebimentos e pagamentos agrupadas Meio > Sentido (Transferência bancária 54 registos 68.670,30 €, Outro 5 registos 578,46 €: a base Enterprise tem mais pagamentos em banco do que a demonstração Community, por isso estes números não entram no artigo). Recebimentos por método de pagamento: Pagamento manual (Caixa) 578,46 € e Pagamento manual (Recibos (RG)) 27.713,14 €, Total 28.291,60 €. Administrativo: só a aplicação Faturação. Ver reports/LOTE_EE-05.md. */}
+
+## Resultado esperado
+
+A lista mostra um grupo por meio e, dentro de cada meio, **Recebimentos** e **Pagamentos**, com o número de registos e o montante.
+
+![Linhas agrupadas: Transferência bancária com 15 recebimentos de 27.713,14 € e 7 pagamentos de 3.985,10 €, e Outro com 5 recebimentos de 578,46 €](/images/accounting-pt/recebimentos-e-pagamentos-por-meio/03-linhas-por-meio.png)
+
+No exemplo, de 01/01/2026 a 04/11/2026, o XLSX mostra o mesmo em totais: 20 recebimentos de 28.291,60 €, 7 pagamentos de 3.985,10 € e um líquido de 24.306,50 €. Estes dados só se consultam: não geram lançamentos.
+
+## O que cada meio conta
+
+| Meio | O que entra |
+|---|---|
+| **Multibanco** | Pagamentos que vieram de uma referência Multibanco |
+| **Débito direto** | Cobranças de um lote de débito direto |
+| **Cheque** | Cheques já cobrados, na data da cobrança e não na data do cheque |
+| **Transferência bancária** | Todos os outros pagamentos de um diário de banco |
+| **Outro** | Os restantes, por exemplo o dinheiro em caixa |
+
+Um pagamento com cartão registado num diário de banco conta como **Transferência bancária**. O produto decide o meio pelo diário e pela origem do pagamento, não pela forma como o cliente pagou. Visto no ecrã com um pagamento por cartão de crédito de 123,00 € registado no diário de banco (numa linha de método de pagamento com o mecanismo SAF-T **CC**): a lista contou-o como **Transferência bancária**; um recebimento no diário de **Caixa** de 3.198,00 € ficou em **Outro**. Os meios **Multibanco**, **Débito direto** e **Cheque** não se provocaram nesta ronda: a demonstração não tem referências Multibanco pagas, lotes de débito direto nem cheques cobrados.
+
+## Ver só os recebimentos, por cliente
+
+**Contabilidade › Consultar › Impostos e tesouraria › Recebimentos por método de pagamento** mostra cada cliente dentro do método, com o NIF. Escolha **Mês**, **Trimestre** ou **Ano** no topo. Carregue em **Exportar PDF** ou em **Exportar** para guardar.
+
+![Relatório Recebimentos por método de pagamento de 2026, com as linhas Pagamento manual (Caixa) e Pagamento manual (Recibos (RG)) e os clientes por baixo, cada um com o NIF](/images/accounting-pt/recebimentos-e-pagamentos-por-meio/04-recebimentos-por-metodo.png)
+
+No exemplo, o total de 2026 é 28.291,60 €, o mesmo valor dos recebimentos acima. O método aparece com o diário entre parênteses: **Pagamento manual (Recibos (RG))** com 27.713,14 € e **Pagamento manual (Caixa)** com 578,46 €.
+
+## Notas importantes
+
+- A lista não tem total no rodapé, porque somar recebimentos e pagamentos não daria um saldo. Use os totais de **Recebimentos** e de **Pagamentos** dentro de cada meio, ou o **Líquido** do XLSX: o total da linha do meio soma os dois sentidos (no exemplo, 31.698,24 € na **Transferência bancária**).
+- A lista vê só o que foi registado como pagamento. Não vê faturas por pagar nem movimentos do banco por reconciliar.
+- Os valores estão na moeda da empresa.
+
+## O aviso de numerário
+
+A lei proíbe pagar ou receber em numerário 3.000,00 € ou mais numa só operação (10.000,00 € para pessoas singulares não residentes que não sejam empresários), e os pagamentos da mesma operação somam-se (Lei Geral Tributária, art. 63.º-E, n.os 1, 3 e 4). O fiscaldoo avisa, nunca bloqueia: o aviso diz que é só um aviso e que nada foi bloqueado, e sugere uma transferência bancária, um cheque ou um cartão para toda a operação. Para as empresas com contabilidade organizada, pagar a um fornecedor em numerário uma fatura de 1.000,00 € ou mais também avisa (art. 63.º-E, n.º 2): o meio de pagamento tem de identificar o destinatário.
+
+- **O que conta como numerário.** O diário de **Caixa**, o método de pagamento do ponto de venda do tipo Caixa e qualquer pagamento com o meio SAF-T **NU** (numerário), mesmo registado num diário de **Banco**. A regra é a mesma nos pagamentos, na fatura-recibo e no ponto de venda.
+- **Os conciliados também contam.** Num diário de Banco com o meio **NU**, o pagamento fica **Reconciliado** quando a fatura fica paga e continua a somar ao limite da operação (por exemplo, dois pagamentos de 1.500,00 € em numerário, num diário de Banco, avisam depois de conciliados). Os rascunhos, os cancelados e os rejeitados nunca contam.
+- **A fatura-recibo e o ponto de venda** avisam com a mesma regra, e não só com os diários de Caixa.
+
+Visto no ecrã, em dois recebimentos de uma fatura nova de 3.198,00 €: no diário de **Caixa**, ao registar o pagamento de 3.198,00 € a janela mostrou «Numerário (recebimento) de 3.198,00 €: a lei proíbe pagar ou receber em numerário 3.000,00 € ou mais numa operação, e os pagamentos da mesma operação somam-se (LGT, art. 63.º-E, n.os 1, 3 e 4). Isto é só um aviso, nada foi bloqueado. Como resolver: use uma transferência bancária, um cheque ou um cartão para toda a operação.» e o recebimento registou-se na mesma. Noutra fatura igual, no diário de **Banco**, com uma linha de método de pagamento com o mecanismo SAF-T **NU**, o 1.º pagamento de 1.500,00 € não avisou; no 2.º, de 1.698,00 €, o aviso saiu com a soma («Numerário (recebimento) de 3.198,00 €…»). Os dois pagamentos ficaram **Reconciliados** e a fatura **Paga**. O relatório de meios contou estes dois pagamentos como **Transferência bancária**, porque o diário é de banco. <span className="fd-pending">Pendente de validação por contabilista certificado: os limites (3.000,00 €, 1.000,00 €) e quem é obrigado a cada um, que são os da lei em vigor na data do pagamento.</span>
+
+## Problemas frequentes
+
+**«A data inicial *31/10/2026* é depois da data final *01/10/2026*.»** As datas estão trocadas. Carregue em **Fechar**, corrija **De** e **Até**, e volte a carregar no botão.
+
+**Falta um meio na lista.** Só aparecem os meios com movimentos no período. Alargue as datas. Se estiver a usar **Mostrar**, confirme que escolheu **Recebimentos e pagamentos**.
+
+**Os valores são mais baixos do que os do extrato do banco.** Há movimentos por reconciliar, que aqui ainda não contam. Veja os [pendentes de reconciliação](/accounting-pt/pendentes-de-reconciliacao).
+
+**Na lista, quero outro agrupamento.** Em **Procurar**, abra as opções. Pode filtrar por **Recebimentos**, **Pagamentos**, **Multibanco**, **Débito direto**, **Transferência bancária** ou **Cheque**, e agrupar por **Meio**, **Sentido**, **Mês** ou **Parceiro**.
+
+{/* Nota interna (lote 99, FIX-M263 e FIX-M265, 19/11/2026): texto do bilhete do programador (payments 1.9.34, base 1.31.100, cert 1.0.100, pos 1.7.3) e das frases do aviso; nada confirmado no ecrã por a sessão não poder publicar pagamentos. */}

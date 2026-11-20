@@ -1,0 +1,90 @@
+---
+id: extrato-dos-colaboradores
+slug: /payroll-pt/extrato-dos-colaboradores
+title: Como ver o extrato e os pagamentos de um colaborador
+sidebar_label: Extrato do colaborador
+sidebar_position: 21
+description: Ver o que foi processado e pago a um trabalhador, na lista de recibos, nos pagamentos de salários e no relatório de extrato.
+keywords: [ver, extrato, pagamentos, colaborador, extrato e pagamentos dos colaboradores, conta corrente do trabalhador, recibos de um trabalhador, pagamentos de salários, pagamentos de salarios]
+doc_id: DOC-0212
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7b476ad71)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/pagar-os-salarios, payroll-pt/processar-e-pagar/recibo-de-vencimento]
+---
+
+## Para que serve?
+
+Mostra o que foi processado a uma pessoa em cada mês e o que já lhe foi pago. A resposta está em duas listas: **Recibos de vencimento** e **Pagamentos de salários**.
+
+O relatório **Extrato e pagamentos dos colaboradores** mostra os movimentos de cada trabalhador nas contas do pessoal. Só tem linhas quando o lançamento dos salários identifica o trabalhador (ver «Notas importantes»).
+
+## Quando utilizar?
+
+- Quando um trabalhador pergunta quanto recebeu num mês.
+- Quando quer confirmar se um recibo já foi pago.
+- Não use estas listas para o saldo contabilístico das contas do pessoal: esse confere-se em [reconciliar os salários](/payroll-pt/reconciliar-salarios-com-a-contabilidade).
+
+## Onde encontrar?
+
+- **Salários › Processar › Recibos de vencimento**
+- **Salários › Pagar › Pagamentos de salários**
+- **Salários › Processar › Extrato e pagamentos dos colaboradores**
+
+## Antes de começar
+
+O seu perfil é **Processador de salários**, com ou sem o acesso extra **Administrador de Salários**. Os recibos do mês estão, pelo menos, calculados.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Processar › Recibos de vencimento**.
+2. Na pesquisa, escreva o nome do trabalhador e escolha **Procurar Trabalhador por**: a lista fica só com os recibos dessa pessoa (no exemplo, 4 recibos de Ana Margarida Pinto, em vez de 32). Há uma linha por recibo, com **Período**, **Bruto**, **Descontos**, **Líquido**, **Estado**, **Cálculo** e **Pagamento**.
+   ![Lista de recibos com o período, o bruto, os descontos, o líquido, o estado e o pagamento](/images/payroll-pt/extrato-dos-colaboradores/01-recibos-por-pagar-e-pagos.png)
+3. Para ver o detalhe de um mês, abra a linha. Veja [o recibo de vencimento](/payroll-pt/recibo-de-vencimento).
+4. Abra **Salários › Pagar › Pagamentos de salários**, escreva de novo o nome e escolha **Procurar Trabalhador por** ou **Procurar Recibo por**: as duas deixam só os pagamentos dessa pessoa (no exemplo, 4 de 32). Há uma linha por pagamento, com **Recibo**, **Valor**, **Método**, **Estado**, **Lote**, **Data-valor** e **Data-limite**.
+
+</StepByStep>
+
+**Exemplo.** Para um trabalhador com 2.400,00 € de bruto em setembro de 2026 e 435,00 € de descontos, a lista de recibos mostra 1.965,00 € de líquido, **Estado** **Pago** e **Pagamento** **Pago**. A lista de pagamentos mostra o valor pago, **Transferência bancária** e **Executado**, com a **Data-valor**.
+
+## No Enterprise
+
+No Odoo Enterprise, as duas listas e o relatório são os mesmos, com o perfil **Processador de salários**. Em **Recibos de vencimento**, a linha de setembro de 2026 de Ana Margarida Pinto mostra 2.400,00 €, 435,00 € e 1.965,00 €, com **Estado** e **Pagamento** **Pago**. Em **Pagamentos de salários**, o pagamento é de 1.965,00 €, **Transferência bancária**, **Executado**, com a **Data-valor** 30/09/2026. **Extrato e pagamentos dos colaboradores** abre com a mesma explicação de «Problemas frequentes».
+
+{/* Nota interna (lote EE-16, comboios 198 e 199, master 7b476ad71, 13/11/2026; cópia Enterprise docs_ee_ee16_test (portas 8524/8525, cópia da odoo20_ee_test com ee_neutralizar) e cópia Community docs_demo_ee16_test (porta 8526), utilizadores criados nas cópias só com o perfil indicado): FIX-M217 (880ee98be, em master). Por clique com um utilizador só com o perfil Processador de salários, Pagamentos de salários (32 linhas), «Ana Margarida»: «Procurar Recibo por» deixa 1-4 / 4 (faceta «Recibo Ana Margarida») e «Procurar Trabalhador por» deixa 1-4 / 4. O defeito do EE-14 (Procurar Recibo por deixava as 32) está corrigido. Ver reports/LOTE_EE-16.md. */}
+{/* Nota interna (lote EE-14, PAY-141 510dff3e5 em master acd623385, docs_demo_ee14_test, porta 8526, 12/11/2026): por clique com um utilizador criado na cópia só com o perfil Processador de salários: em Recibos de vencimento, «Ana Margarida» oferece «Procurar Trabalhador por», «Procurar Lote de processamento por» e «Filtro personalizado...»; Procurar Trabalhador por deixa 4 de 32 linhas. Em Pagamentos de salários a primeira opção é «Procurar Recibo por» e deixa as 32 linhas (defeito no relatório do lote); «Procurar Trabalhador por» deixa 4. */}
+{/* Nota interna (lote EE-09, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 12/11/2026): conferido numa cópia local da base Enterprise (docs_ee_ee09_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Processador de salários: as três entradas por clique; linhas de setembro lidas no ecrã. A barra de pesquisa de Recibos de vencimento só oferece «Filtro personalizado...» (vista de pesquisa só com o id), no Enterprise e no Community: o passo 2 deixou de mandar procurar pelo nome; defeito no relatório do lote. Com o Processador, a explicação do relatório acaba em «… nas definições de salários (peça a quem gere os salários).», nas duas edições. Menus e vistas destes ecrãs comparados, perfil a perfil, com uma cópia da demonstração Community (docs_demo_ee09_test, 2c8d358c0, porta 8524): iguais. Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-09.md. */}
+
+## Resultado esperado
+
+O **Líquido** do recibo e o **Valor** do pagamento são iguais quando o mês está pago por inteiro. Um recibo com **Pagamento** por fazer ainda não tem pagamento executado.
+
+## Notas importantes
+
+- **O relatório Extrato e pagamentos dos colaboradores.** Está em **Salários › Processar**:
+  - Com **Administrador de Salários**, abre. Depois de validar e contabilizar um recibo com **Lançar os salários** em **Por trabalhador**, tem uma linha por trabalhador, com **NIF**, **Saldo inicial**, **Débito**, **Crédito** e **Saldo**.
+  - Com **Processador de salários**, abre da mesma forma.
+- **Por trabalhador ou por lote.** **Lançar os salários** está em **Salários › Configurar › Empresa › Definições de salários**, com **Por trabalhador** e **Agregado por lote**. Em **Agregado por lote**, os lançamentos não têm o nome do trabalhador. O relatório explica porque está vazio: «Os lançamentos de salários deste período não identificam o trabalhador, por isso não há nada para mostrar por colaborador. O que aconteceu: foram lançados sem o trabalhador nas linhas (por exemplo, agregados por lote). Como resolver: os lançamentos já feitos não mudam; para os próximos recibos, confirme que a opção «Lançar os salários» está em «Por trabalhador» em Salários › Configurar › Empresa › Definições de salários.»
+- **Mudar a opção não muda o passado.** A mesma mensagem aparece com **Por trabalhador** quando os lançamentos do período foram feitos sem o trabalhador.
+- **As listas não mostram** adiantamentos nem empréstimos: esses têm listas próprias, em **Salários › Pagar › Adiantamentos de salário** e **Salários › Preparar › Descontos e empréstimos › Empréstimos aos trabalhadores**.
+
+## Problemas frequentes
+
+### «Os lançamentos de salários deste período não identificam o trabalhador…»
+
+- **Sintoma:** só a linha **Total**, com 0,00 €, e esta explicação.
+- **Causa:** os lançamentos do período não têm o trabalhador.
+- **O que fazer:** use as duas listas deste artigo. Para os meses seguintes, fale com o contabilista antes de mudar **Lançar os salários**.
+
+### Não encontro um trabalhador nos pagamentos
+
+- **Sintoma:** o trabalhador tem recibo, mas não aparece em **Pagamentos de salários**.
+- **Causa:** o recibo do mês ainda não está pago.
+- **O que fazer:** siga [Como pagar os salários](/payroll-pt/pagar-os-salarios).
+
+{/* Nota interna (DOCS-046, lote v15-REV, master 255d77e63): relatório aberto com Administrador de Salários e Processador de Salários. Na demonstração, Lançar os salários já está em Por trabalhador e as 44 linhas antigas das contas 23 não têm contacto: mensagem vista. Recibo de novembro validado e contabilizado por clique: linha do trabalhador com 864,58 € a débito, 1.641,16 € a crédito e 776,58 € de saldo. Processador recusado porque o ecrã lê os diários: defeito no relatório do lote. */}

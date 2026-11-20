@@ -1,0 +1,97 @@
+---
+id: iva-de-dividas-antigas
+slug: /accounting-pt/iva-de-dividas-antigas
+title: Como regularizar o IVA de dívidas antigas a fornecedores
+sidebar_label: IVA de dívidas antigas a fornecedores
+sidebar_position: 9
+description: Listar as dívidas a fornecedores em aberto há mais de 12 meses e ver o IVA dedutível que ainda lhes corresponde, para o contabilista certificado decidir a regularização.
+keywords: [iva de dívidas antigas, dívidas antigas a fornecedores, dividas antigas a fornecedores, pendentes antigos a fornecedores, regularização de iva, regularizacao de iva, iva dedutível, iva dedutivel, fornecedores em aberto, saldo antigo por pagar, 12 meses]
+doc_id: DOC-0096
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/iva/apuramento-do-iva, accounting-pt/iva/declaracao-periodica-de-iva, accounting-pt/compras/fatura-de-fornecedor]
+---
+
+## Para que serve?
+
+Quando uma fatura de fornecedor fica por pagar durante muito tempo, o IVA que deduziu quando a registou continua deduzido. A lista **Pendentes Antigos a Fornecedores (Regularização de IVA)** mostra as dívidas a fornecedores em aberto há mais de 12 meses e, para cada uma, o **IVA dedutível associado**: a parte do IVA que corresponde ao que ainda está por pagar. Serve para o contabilista certificado ver o que há para avaliar.
+
+**A lista só mede e identifica.** Não lança nada, não corrige o IVA e não prepara nenhum campo da declaração. A regularização, se a lei a exigir, decide-se e lança-se à parte.
+
+## Quando utilizar?
+
+- No fecho do ano ou do período de IVA, para ter a lista das dívidas a fornecedores com mais de 12 meses e o IVA a elas associado.
+- Depois de [registar as faturas de fornecedor](/accounting-pt/fatura-de-fornecedor) e de pagar as que estão para pagar, para ver o que ficou por liquidar.
+- **Não** a use como prova de que o IVA tem de ser regularizado: o prazo de 12 meses é o valor de partida do produto e não está confirmado. <span className="fd-pending">Pendente de validação por contabilista certificado: o prazo, a base legal e a forma de regularizar o IVA dedutível de dívidas a fornecedores em aberto há muito tempo.</span>
+
+## Onde encontrar?
+
+A lista não tem entrada própria no menu do Contabilista. Abre-se pela página do IVA:
+
+**Contabilidade › Declarar › IVA › O que há para fazer com o IVA?**, e em **Listas de apoio**, **Dívidas antigas a fornecedores (IVA)**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. Com ele faz todos os passos deste artigo, incluindo exportar para PDF (testado com o perfil Contabilista).
+- As faturas de fornecedor estão confirmadas e os pagamentos registados: a lista só vê o que está lançado no Odoo.
+- O exemplo é a Empresa Demonstração, Lda. **Os números deste artigo são os da demonstração de hoje e mudam com os dados**: cada fatura, pagamento ou nota que lance altera os totais e o IVA associado. Confira sempre os seus próprios valores no ecrã. A demonstração não tem dívidas a fornecedores com mais de 12 meses em 2026 (o exercício de 2025 está fechado), por isso o exemplo olha para **2027**. As dívidas que a demonstração tem por pagar são as faturas de agosto e setembro de 2026 da **Cloud Services Inc.** (FTF/2026/00039 e FTF/2026/00040, em dólares) e a de julho de 2026 de **Rui Matos** (FTF/2026/00044), mais lançamentos sem terceiro. Nenhuma tem IVA dedutível, por isso o cálculo do IVA associado (passo 5) é explicado com um exemplo de contas e não com um documento da demonstração.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Declarar › IVA › O que há para fazer com o IVA?** e, em **Listas de apoio**, escolha **Dívidas antigas a fornecedores (IVA)**.
+   ![Lista de apoio do IVA com a última entrada, Dívidas antigas a fornecedores (IVA), assinalada](/images/accounting-pt/iva-de-dividas-antigas/01-listas-de-apoio-do-iva.png)
+2. Abre o relatório do ano 2026 (01/01/2026 – 31/12/2026). Nas colunas, **Linha**, **Documento**, **Vencimento**, **Saldo antigo por pagar** e **IVA dedutível associado**. Em 2026 mostra só **Total 0,00 €**, porque nenhuma dívida tem ainda mais de 12 meses de vencida a 31/12/2026.
+3. Para ver o ano seguinte, escolha **2027** na lista do período (também funcionam **Mês**, **Trimestre**, as setas e **Mais filtros**, com as datas **De** e **até**). A lista agrupa por **Terceiro**. No exemplo, em ordem alfabética: **Cloud Services Inc.** -2.096,87 € (2 documentos), **Rui Matos** -600,00 € e **Sem terceiro** -47.187,10 €, com o **Total** -49.883,97 € e **IVA dedutível associado** 0,00 €.
+   ![Pendentes antigos a fornecedores em 2027, com os terceiros, o saldo antigo por pagar e o IVA dedutível associado, e o total](/images/accounting-pt/iva-de-dividas-antigas/02-pendentes-antigos-2027.png)
+4. Para ver os documentos, carregue na seta do terceiro, ou em **Mais filtros** e marque **Desdobrar tudo**. Cada linha mostra o número do documento (por exemplo **FTF/2026/00039**), a referência do fornecedor (**INV-USD-20260826**), o **Vencimento** (26/08/2026), o saldo ainda por pagar (-720,72 €) e o IVA a ele associado (0,00 €). Com os três grupos abertos, a **Cloud Services Inc.** tem a FTF/2026/00040 (INV-USD-20260926, 26/09/2026, -1.376,15 €), **Rui Matos** a FTF/2026/00044 (FH RUI/2026/2, 20/07/2026, -600,00 €) e **Sem terceiro** os salários e o apuramento do IVA.
+   ![Documentos desdobrados da lista de 2027: as faturas FTF/2026/00039 e FTF/2026/00040 da Cloud Services Inc., a FTF/2026/00044 de Rui Matos e os lançamentos sem terceiro](/images/accounting-pt/iva-de-dividas-antigas/03-detalhe-por-documento.png)
+5. Confira o IVA de cada documento: é o IVA do documento a multiplicar pela parte que ainda está por pagar. Nos três documentos da demonstração é 0,00 € (ver as notas abaixo). Um exemplo de contas, que não está na demonstração: uma fatura de 615,00 € com 115,00 € de IVA, com 300,00 € já pagos, deixa 315,00 € por pagar e o IVA associado é 315,00 × 115,00 ÷ 615,00 = **58,90 €**; se estivesse toda por pagar, seria o IVA do documento, 115,00 €. <span className="fd-pending">Pendente de validação no ecrã: o cálculo com IVA, porque exige confirmar uma fatura com IVA e um pagamento, e a sessão não deixou confirmar documentos. Foi conferido numa versão anterior do artigo.</span>
+6. Para guardar, carregue em **Exportar PDF** (gera `Empresa_Demonstracao_Lda_Pendentes_Antigos_a_Fornecedores_Regularizacao_de_IVA_2027-01-01_2027-12-31.pdf`) ou abra **Exportar**. **Guardar opções** guarda os filtros escolhidos e **Repor** volta aos de partida.
+7. Os outros campos de **Mais filtros** são os comuns a todos os relatórios do fiscaldoo: **Comparar com período anterior**, **Limites dos escalões (dias)**, **Dias por período**, **Períodos**, **Empresas**, **Agrupar contas por hierarquia**, **Mostrar valores em** (**Unidades**, **Milhares** ou **Milhões**) e **Diários**. O prazo de 12 meses só muda com **Dias contados desde** e com a data **até**; **Incluir rascunhos** muda o que entra (ver as notas abaixo). Os restantes não foram experimentados neste artigo.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, a lista abre-se pelo mesmo caminho e é o mesmo relatório do fiscaldoo: **Dívidas antigas a fornecedores (IVA)**, com as colunas **Linha**, **Documento**, **Vencimento**, **Saldo antigo por pagar** e **IVA dedutível associado**, e os botões **Exportar PDF**, **Exportar**, **Guardar opções**, **Copiar ligação** e **Repor** (visto com um utilizador só com o perfil **Contabilista**). Em 2026 mostra também **Total 0,00 €**.
+
+{/* Nota interna (lote EE-03, DOCS-073 #4142, DEC-1794, master e4dd4ae90, base Enterprise docs_ee_ee03_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0096. Contabilista: O que há para fazer com o IVA? › Listas de apoio › Dívidas antigas a fornecedores (IVA) abriu o visualizador do fiscaldoo no ano 2026 (01/01/2026 – 31/12/2026), com Comparar com período anterior e Mais filtros. Ver reports/LOTE_EE-03.md. */}
+
+## Resultado esperado
+
+- A lista mostra, por terceiro e por documento, o que está por pagar há mais de 12 meses e o IVA a ele associado. Cada **IVA dedutível associado** é proporcional ao que falta pagar.
+- O PDF repete as linhas por terceiro e o total. <span className="fd-pending">Pendente de validação no ecrã: o PDF com os totais de hoje (-49.883,97 € e 0,00 €); a versão anterior do artigo conferiu 1 página, sem os documentos desdobrados.</span> Para os documentos, use o ecrã.
+- A lista **não gera lançamentos**. A regularização do IVA, quando houver, é um lançamento a fazer à parte. <span className="fd-pending">Pendente de validação por contabilista certificado: as contas e o período em que se regulariza.</span>
+
+## Notas importantes
+
+- **O prazo de 12 meses não se altera no ecrã.** A dívida entra na lista quando o vencimento mais 12 meses é anterior à data final do período escolhido. Com a data final 31/12/2027, a FTF/2026/00044 de Rui Matos (vencida a 20/07/2026) entra; com 31/12/2026 não entra. Em **Mais filtros**, **Dias contados desde** escolhe se os 12 meses contam desde o **Vencimento** (valor de partida) ou desde a data do documento.
+- **A lista não separa só as faturas de fornecedores.** Vê todos os saldos a pagar dos terceiros e, em **Sem terceiro**, os lançamentos sem terceiro. No exemplo de 2027 aparecem aí os salários de junho a setembro de 2026 e o apuramento do IVA de junho e julho de 2026 (47.187,10 € no total, com IVA dedutível 0,00 €). Confirme cada linha antes de a tratar como dívida a fornecedor.
+- **O IVA dedutível é 0,00 € quando o documento não tem IVA ou o IVA é autoliquidado.** É o caso da **Cloud Services Inc.** (dois documentos em dólares, FTF/2026/00039 e 00040, 2.096,87 € no total, conferidos no ecrã) e de **Rui Matos** (600,00 €, sem IVA).
+- **Só entram dívidas.** Notas de crédito e adiantamentos a fornecedores (saldo a seu favor) ficam de fora.
+- **Rascunhos.** Os documentos por confirmar só entram se marcar **Incluir rascunhos** em **Mais filtros**.
+- Ligação ao IVA: este artigo não altera o [apuramento do IVA](/accounting-pt/apuramento-do-iva) nem a [declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva).
+
+## Problemas frequentes
+
+### A lista aparece só com «Total 0,00 €»
+
+- **Sintoma:** abriu o relatório e só vê a linha **Total** a 0,00 €.
+- **Causa:** nenhuma dívida a fornecedores tem vencimento anterior a 12 meses antes da data final do período, que por omissão é o ano em curso.
+- **O que fazer:** escolha um período posterior, ou ajuste a data **até** em **Mais filtros**, e confirme que o fornecedor tem a fatura confirmada e por pagar.
+
+### O IVA associado é 0,00 € numa dívida que tem IVA
+
+- **Sintoma:** o **Saldo antigo por pagar** aparece e o **IVA dedutível associado** é 0,00 €.
+- **Causa:** o IVA do lançamento é autoliquidado (anula-se a si próprio) ou o documento não tem IVA.
+- **O que fazer:** abra o documento pelo número e veja as linhas de imposto.
+
+{/* Nota interna (DOCS-046 corrigido, DOC-0096): refeito em docs_demo_v3a3cor_test (master f16f4a3e0, 01/11/2026) com o perfil Contabilista, hub do IVA › Listas de apoio. Totais, texto, PDF (1 página, -53.153,97 € / 288,90 €) e capturas 01 a 03 refeitos contra a base de hoje; 00049 e 00050 (criadas para o DOC-0106) entram na lista. Faturas de exemplo FTF/2026/00046 e 00047 criadas por RPC (2025 está fechado). Código: arxi_report_engine/models/report_dynamic_handler_vat_regularization.py (12 meses = valor por omissão, VALIDAR-CC; parâmetro de sistema, sem campo no ecrã). Não testado: empresa vazia real (só período sem dados) nem outro prazo. O resumo do artigo no mapa fala em «regulariza o IVA deduzido»: o ecrã só mede. */}
+
+{/* Nota interna (lote 99, master 73d6a5fed, docs_demo_99_test, porta 9784, 19/11/2026, administrador, só leitura): a FTF/2026/00046 (Energia Norte) e a FTF/2026/00047 (Distribuidora Douro) deste artigo NÃO existem na base-mãe (a série acaba na 00045; eram faturas criadas por RPC num lote antigo). Capturas 02 e 03 refeitas com as três dívidas reais; o total passou de -51.428,97/288,90 para -49.883,97/0,00. O ramo do IVA com documento com IVA fica pendente: confirmar faturas foi recusado pela sessão. */}

@@ -1,0 +1,143 @@
+---
+id: apuramento-do-iva
+slug: /accounting-pt/apuramento-do-iva
+title: Como apurar o IVA do período
+sidebar_label: Apuramento do IVA
+description: Passar o IVA dedutível, o IVA liquidado e as regularizações do mês ou do trimestre para o IVA a pagar ou a recuperar, e refazer o apuramento quando os dados do período mudam.
+keywords: [apuramento do IVA, apuramento do iva, apurar IVA, apurar iva, apurar um período de IVA, apurar um periodo de iva, IVA a pagar, IVA a recuperar, conta 2436, conta 2432, conta 2433, conta 2434, conta 2435, conta 2437, excesso do período anterior, excesso do periodo anterior, IVA a recuperar do período anterior, estornar apuramento, refazer apuramento, apuramento desatualizado, apuramento desatualizado IVA]
+doc_id: DOC-0090
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/iva/declaracao-periodica-de-iva]
+---
+
+## Para que serve?
+
+No fim de cada período de IVA, o apuramento junta os saldos do IVA dedutível (2432), do IVA liquidado (2433) e das regularizações (2434), desconta o IVA a recuperar que vem do período anterior e passa o resultado para a conta do Estado: **IVA - A pagar** (2436) ou **IVA - A recuperar** (2437). É este lançamento que permite depois registar o pagamento da declaração periódica.
+
+## Quando utilizar?
+
+- No fim de cada mês (regime mensal) ou trimestre (regime trimestral), com os documentos do período lançados.
+- Antes de registar o pagamento da [declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva): sem apuramento, o pagamento é recusado.
+- Outra vez, depois de estornar o apuramento, quando um documento do período foi lançado, anulado ou alterado depois de apurar (ver «O apuramento não se atualiza sozinho»).
+
+## Onde encontrar?
+
+**Contabilidade › Fechar › Contabilidade do mês › Apuramento do IVA**. Abre a lista **Apuramentos de IVA**, com um apuramento por período.
+
+![Menu Fechar da Contabilidade, no grupo Contabilidade do mês, com a opção Apuramento do IVA assinalada](/images/accounting-pt/apuramento-do-iva/01-menu-fechar-apuramento-do-iva.png)
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** ou **Contabilista certificado** (o perfil **Administrativo** não tem a aplicação **Contabilidade**). Estornar um apuramento é só do perfil **Contabilista certificado** e do administrador.
+- Os documentos do período estão publicados. O apuramento conta só os lançamentos publicados: um rascunho com data do período fica de fora.
+- O período de IVA não está fechado: num período fechado o apuramento é recusado (ver «Problemas frequentes»).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Na lista **Apuramentos de IVA**, carregue em **Apurar um período de IVA**.
+   ![Botão Apurar um período de IVA assinalado, ao lado do título Apuramentos de IVA](/images/accounting-pt/apuramento-do-iva/02-botao-apurar-um-periodo.png)
+2. Em **Início do período** e **Fim do período**, escreva as duas datas do período. A janela abre com o mês anterior; por baixo, **Período** mostra o nome, por exemplo «outubro de 2026».
+
+   Se o mês anterior já estiver apurado, a janela abre na mesma com ele e mostra valores que já não contam. Na demonstração, com setembro de 2026 já apurado, mostrou os saldos vazios, um **Excesso do período anterior** de 78,92 € (o crédito de agosto, que o apuramento de setembro já usou) e «A recuperar do Estado: 78,92 €». Esses valores não contam: **Lançar o apuramento** é recusado («sobrepõe-se ao apuramento…», ver «Problemas frequentes»). Escreva as datas do período que quer apurar.
+
+   {/* Nota interna (11.º produtor de vídeos, 30/10/2026): defeito do produto, a janela abre no mês anterior já apurado e volta a mostrar o excesso que esse apuramento já usou; rever com o VAT-068 (#3529). */}
+
+   Cuidado: o **Fim do período** não muda quando muda o início. Se mudar só o **Início do período**, por exemplo para 01/12/2026, o fim fica em 30/09/2026: a janela não avisa, **Período** mostra «01/12/2026 – 30/09/2026», os saldos ficam vazios com «Equilibrado: nada a pagar e nada a recuperar», e só ao carregar em **Lançar o apuramento** aparece «Escolha uma empresa e um período cujo início não seja posterior ao fim.». Confira o **Período** antes de lançar.
+3. Confira os **Saldos do período** e o texto de **Em palavras simples**. No exemplo: **IVA dedutível (2432)** 23,00 €, **IVA liquidado (2433)** -1.605,39 €, **Resultado** -1.582,39 €, «IVA cobrado nas vendas: 1.605,39 €» e «A pagar ao Estado: 1.582,39 €». **Diário** pode ficar vazio: o fiscaldoo usa o diário de operações diversas.
+   ![Janela Apuramento do IVA do período de outubro de 2026, com os saldos das contas 2432, 2433 e 2434, A pagar ao Estado: 1.582,39 € e o botão Lançar o apuramento assinalado](/images/accounting-pt/apuramento-do-iva/03-janela-apuramento-do-periodo.png)
+
+   Se o período anterior ficou com IVA a recuperar, aparece também **Excesso do período anterior**: é esse crédito (campo 61 da declaração, na conta 2437), e a janela soma-o ao **Resultado**. <span className="fd-pending">Pendente de validação por contabilista certificado: correspondência do excesso com o campo 61.</span> Nesse mês, o **Resultado** não é a soma das três primeiras linhas. Em junho de 2026, por exemplo: 642,85 € − 2.012,21 € + 959,30 € = −410,06 €, «A pagar ao Estado: 410,06 €». Confirme que o excesso é o que ficou a recuperar no período anterior: na lista **Apuramentos de IVA**, maio de 2026 tem «A recuperar do Estado: 959,30 €».
+   ![Ficha do apuramento de junho de 2026: IVA dedutível (2432) 642,85 €, IVA liquidado (2433) -2.012,21 €, Excesso do período anterior 959,30 €, Resultado -410,06 € e Conta do resultado 2436 IVA - A pagar](/images/accounting-pt/apuramento-do-iva/06-ficha-com-excesso-do-periodo-anterior.png)
+
+   {/* Nota interna (DOCS-016): rever o cuidado do passo 2 quando o VAT-058 (#3421) entrar em master; descreve o ecrã de hoje. */}
+4. Carregue em **Lançar o apuramento**. Abre-se o apuramento do período, por exemplo **Apuramento do IVA — outubro de 2026**.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o caminho, a janela **Apuramento do IVA do período** e o apuramento lançado são os mesmos (visto com um utilizador só com o perfil **Contabilista**, até ao apuramento **Apurado**, com a **Conta do resultado** 2436 e o lançamento no diário de operações diversas).
+
+O Enterprise acrescenta o seu **Relatório de impostos**, em **Contabilidade › Consultar › Impostos e tesouraria › Relatório de impostos** (no Community, uma entrada com este nome só aparece em modo programador). Mostra os valores do período por campo da declaração, mas, com o perfil **Contabilista**, não apura nada: o lançamento do apuramento, com a **Conta do resultado**, faz-se só pela janela **Apuramento do IVA do período** deste artigo.
+
+{/* Nota interna (lote EE-01, DOCS-073 #4142, DEC-1794, master ce51f2d47, base Enterprise docs_ee_ee01_test, 10/11/2026): percurso com um utilizador só com o perfil Contabilista: lista Apuramentos de IVA, Apurar um período de IVA, janela com os mesmos campos, Lançar o apuramento de um mês ainda por apurar na cópia (ficha com Exportar para PDF, Exportar para XLSX e Estornar). Relatório de impostos do Enterprise com o relatório «Declaração Periódica de IVA (PT)»: «O método 'dpiva_q06_2027_140' deve começar com o prefixo '_report_engine_'.» e fica «A carregar...»; defeito no relatório do lote. Lote EE-02 (master 7a46de91a, comboio 188, EEA-070): o Relatório de impostos abre para o Contabilista no ecrã «Declaração de imposto», no mês corrente, só com o botão Imprimir; frase provisória trocada. */}
+
+## Resultado esperado
+
+- O apuramento aparece na lista **Apuramentos de IVA** com o estado **Apurado** e o resultado em palavras simples («A pagar ao Estado: 1.582,39 €»).
+- Na ficha do apuramento, **Lançamento do apuramento** mostra o lançamento criado (no exemplo `MISC/2026/00109`) e **Conta do resultado** a conta do Estado (`2436 IVA - A pagar`).
+- No lançamento, cada saldo passa pela conta `2435 IVA - Apuramento`. No exemplo: `2433 IVA - Liquidado` a débito 1.605,39 € e `2432 IVA - Dedutível` a crédito 23,00 €, cada um com a linha contrária na `2435`, e a diferença, 1.582,39 €, sai da `2435` para `2436 IVA - A pagar`, a crédito. Num período a recuperar, a diferença vai a débito da `2437 IVA - A recuperar`. Com **Excesso do período anterior** num período a pagar, o lançamento usa primeiro esse crédito, a crédito da `2437`, e só o resto vai à `2436`: em junho, 959,30 € e 410,06 €.
+- Já pode registar o pagamento da declaração do período (ver [Como preparar e entregar a declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva), «Depois de entregar»).
+
+## Vídeo demonstrativo
+
+O vídeo mostra os passos 1 a 4 com o exemplo de outubro de 2026, depois de apurado setembro. A janela abre em setembro, o mês anterior, já apurado (ver o passo 2), e o vídeo escreve as datas de outubro. Outubro não tem **Excesso do período anterior**: 23,00 € de IVA dedutível, 1.605,39 € de IVA liquidado e 1.582,39 € a pagar ao Estado.
+
+<VideoTutorial src="/videos/apuramento-do-iva.mp4" captions="/videos/apuramento-do-iva.vtt" poster="/videos/apuramento-do-iva-poster.png" width="1440" height="1140" title="Apurar o IVA do período" duration="27 s" />
+
+## Notas importantes
+
+### O apuramento não se atualiza sozinho
+
+O apuramento fica com os saldos do momento em que foi lançado. Se depois disso lançar, anular ou alterar um documento com data do período, o apuramento fica desatualizado: o IVA na conta do Estado deixa de bater com a declaração do período. Na demonstração, depois do apuramento de outubro foi lançada a fatura de fornecedor `FTF/2026/00048`, com 23,00 € de IVA; ao apurar outubro de novo, a janela mostrou só o que ficou por apurar («A recuperar do Estado: 23,00 €») e **Lançar o apuramento** foi recusado (ver «Problemas frequentes»).
+
+Para o refazer, estorne-o e apure de novo:
+
+1. Abra o apuramento do período e carregue em **Estornar**.
+2. Na janela **Estornar o apuramento de IVA**, escreva o **Motivo**, por exemplo «Fatura de fornecedor FTF/2026/00048 lançada depois do apuramento», e carregue em **Estornar o apuramento**. O apuramento passa a **Estornado** e o lançamento é anulado por um lançamento de estorno.
+   ![Janela Estornar o apuramento de IVA, com o apuramento de outubro de 2026, o motivo escrito e o botão Estornar o apuramento assinalado](/images/accounting-pt/apuramento-do-iva/04-janela-estornar.png)
+3. Faça de novo os passos de «Como utilizar» para o mesmo período.
+
+O apuramento estornado fica na lista, com o motivo. Os apuramentos estornam-se do mais recente para o mais antigo.
+
+<HelpCallout type="risco" title="Período já pago">
+Estornar não mexe nos pagamentos já registados na declaração do período: se o apuramento novo der outro valor, a diferença fica na conta do Estado. Antes de estornar um período já pago, decida com o contabilista certificado como tratar essa diferença. <span className="fd-pending">Pendente de validação por contabilista certificado: diferença entre o IVA pago e o apuramento refeito.</span>
+</HelpCallout>
+
+### Exportar o apuramento
+
+Na ficha do apuramento, **Exportar para PDF** e **Exportar para XLSX** descarregam o apuramento; nada fica gravado. No teste, com o perfil **Contabilista**, o PDF do apuramento de agosto de 2026 («apuramento_iva_2026-08-01_2026-08-31.pdf») trouxe a empresa, o período, o **Estado** (**Apurado**), **Exportado por** e **Exportado em**, uma linha com o valor de cada conta (2432, 2433 e 2434), o **Resultado** (78,92 €), o **Lançamento do apuramento** (`OD/2026/00115`) e a **Data do lançamento**. Por agora, não entregue estes ficheiros ao cliente como documento final: os nomes das três linhas ainda não saem certos. Confira os valores na ficha do apuramento.
+
+{/* Nota interna (DOCS-069, lote v23-AF, master 97b34fac3, base docs_demo_v23af_test): no PDF as três linhas saem em inglês («Deductible VAT (2432)», «Liquidated VAT (2433)», «Adjustments (2434)») e o valor negativo parte-se em duas linhas; defeito VAT-077. Auditoria docs-aud-v23af: o XLSX tem as mesmas três linhas em inglês, com os valores em número (sem o sinal partido). Retirar a frase «Por agora, não entregue…» quando o VAT-077 entrar em master. */}
+
+## Problemas frequentes
+
+### Lançar o apuramento é recusado: «sobrepõe-se ao apuramento … que ainda está ativo»
+
+- **Sintoma:** janela **Operação inválida** com «O período 01/10/2026 – 31/10/2026 sobrepõe-se ao apuramento de 31/10/2026 (MISC/2026/00105 (Apuramento de IVA 01/10/2026 – 31/10/2026)), que ainda está ativo. Como resolver: estorne primeiro esse apuramento, com motivo, se tiver de ser refeito.»
+  ![Janela Operação inválida com a mensagem de que o período se sobrepõe a um apuramento ainda ativo](/images/accounting-pt/apuramento-do-iva/05-recusa-periodo-ja-apurado.png)
+- **Causa:** o período já tem um apuramento.
+- **O que fazer:** se os dados do período mudaram depois desse apuramento, estorne-o e apure de novo (ver «O apuramento não se atualiza sozinho»). Se não mudaram, não há nada a fazer.
+
+### Estornar é recusado: «é mais recente e ainda está ativo»
+
+- **Sintoma:** «O apuramento de 31/10/2026 é mais recente e ainda está ativo. Como resolver: estorne primeiro os apuramentos mais recentes.»
+- **Causa:** tentou estornar um período anterior (no exemplo, setembro) com um apuramento mais recente ativo.
+- **O que fazer:** estorne primeiro os apuramentos mais recentes, do último para o mais antigo, e apure-os de novo pela ordem inversa.
+
+### Estornar dá «Sem acesso»
+
+- **Sintoma:** «Não tem acesso a «Estornar um apuramento de IVA». Quem faz: «Contabilista certificado (assina, fecha períodos)». Quem atribui o perfil: o administrador do sistema (Definições › Utilizadores e empresas › Utilizadores). …»
+- **Causa:** o perfil **Contabilista** vê o botão **Estornar**, mas não pode estornar.
+- **O que fazer:** peça a um utilizador com o perfil **Contabilista certificado** que estorne o apuramento.
+
+{/* Nota interna (lote v23-M, master dbbb5ac5c, docs_demo_v23m_test): «Sem acesso» do Estornar provocado no ecrã com um utilizador criado só com o perfil Contabilista (Apuramento do IVA — agosto de 2026, botão Estornar). */}
+
+### «Não há nada a apurar»
+
+- **Sintoma:** «Não há nada a apurar em 01/11/2026 – 30/11/2026: as contas 2432, 2433 e 2434 não têm movimento no período.»
+- **Causa:** o período não tem IVA lançado (ou as datas estão erradas).
+- **O que fazer:** confirme as datas do período e se os documentos do período estão publicados.
+
+### O período está bloqueado
+
+- **Sintoma:** «O período de IVA que termina em 31/01/2026 está bloqueado (até 31/01/2026): o apuramento não pode ser lançado num período fechado. Como resolver: a data de bloqueio só pode ser alterada por quem pode reabrir o período.»
+- **Causa:** o período de IVA foi fechado (na declaração, **Fechar período de IVA**).
+- **O que fazer:** apure cada período antes de o fechar. Se for mesmo preciso apurar um período já fechado, fale com quem pode reabrir o período, como a mensagem indica.

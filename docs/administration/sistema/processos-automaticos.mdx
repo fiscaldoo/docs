@@ -1,0 +1,67 @@
+---
+id: processos-automaticos
+slug: /administration/processos-automaticos
+title: Que processos automáticos o fiscaldoo corre
+sidebar_label: Processos automáticos
+sidebar_position: 1
+description: As tarefas que o fiscaldoo corre sozinho (avisos de prazos, certificação, IVA, bancos, salários, cópias, Copiloto), quais vêm desligadas, onde se veem e como confirmar quando correm.
+keywords: [processos automáticos, processos automaticos, tarefas agendadas, ações agendadas, acoes agendadas, cron, agendador, executar manualmente, próxima data de execução, proxima data de execucao, tarefas automáticas]
+doc_id: DOC-0323
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 02a978ea9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/seguranca-e-arquivo/copias-de-seguranca, administration/seguranca-e-arquivo/registo-de-auditoria, management/resumo-de-segunda-feira]
+---
+
+O fiscaldoo corre sozinho várias tarefas: avisa de prazos, guarda os PDF certificados, prepara os períodos do IVA, importa extratos, atualiza câmbios. Cada tarefa é uma **ação agendada**, com um intervalo (de 5 em 5 minutos, diária, semanal, mensal) e uma data da próxima execução. Este artigo é para o administrador do sistema e para quem dá suporte.
+
+## Onde se veem
+
+**Definições › Técnico › Automação › Ações agendadas**, com o perfil de administrador do sistema e o **modo de programador** ligado. Para o ligar, abra **Definições**, desça até ao grupo **Ferramentas de desenvolvimento** e carregue em **Ativar o modo de programador**; o menu **Técnico** aparece ao lado de **Traduções** (num ecrã mais estreito, os dois ficam no botão **+** do fim da barra de menus). Sem o modo de programador, o menu **Técnico** não aparece.
+
+A lista mostra **Prioridade**, **Nome da ação**, **Modelo**, **Próxima Data de Execução**, **Número do intervalo**, **Unidade de intervalo** e **Ativo**. Tem as tarefas do fiscaldoo e as do Odoo (121 na demonstração a 05/11/2026). Para encontrar uma, escreva parte do nome na pesquisa, por exemplo `câmbio` ou `IVA`.
+
+![Ficha da ação agendada Atualizar taxas de câmbio a partir do BCE, com o botão Executar Manualmente, o modelo Empresa, Executar a cada 1 Dias, Ativo ligado e a Próxima Data de Execução 03/11/2026 10:27](/images/administration/processos-automaticos/01-acao-agendada.png)
+
+## As tarefas do fiscaldoo
+
+Na demonstração (02/11/2026) há 68 tarefas do fiscaldoo. Por área (o nome é o da lista):
+
+- **Certificação e AT:** «Certificação PT: guardar o PDF certificado dos documentos emitidos» (de 10 em 10 minutos); «Certificação PT: verificar a numeração das séries»; «PT AT: alertas do prazo de comunicação de faturas»; «PT AT: avisar antes de o certificado ou a chave pública da AT expirarem»; «PT AT: avisar das credenciais do cofre que não são usadas»; «Guias de transporte: atualizar o aviso do prazo de comunicação».
+- **IVA, SAF-T e obrigações:** «DP IVA: gerar os períodos do ano», «DP IVA: pré-calcular os períodos anteriores» e «DP IVA: alertas de prazo»; «SAF-T (PT): fila de geração em segundo plano» e «SAF-T (PT): revisão trimestral do calendário da obrigação de contabilidade»; «PT IES: gerar e validar os ficheiros XML pedidos»; as três do «Calendário fiscal PT» (gerar as obrigações, lembrar os responsáveis, marcar as atrasadas); «Pagamentos por conta (IRC): atualizar o estado»; «COPE: avaliar a sujeição»; «Retenções na fonte: sincronizar impostos com as taxas em vigor»; «Regime simplificado: alertas dos limiares de volume de negócios».
+- **Contabilidade:** «Exercícios: criar o exercício corrente»; «PT: alerta de atraso de contabilização (CIRC, art. 123.º, n.º 3)»; «PT: avisar sobre a Contabilidade por estorno em empresas portuguesas»; «Ativos fixos: simular a depreciação do mês anterior (precisa de aprovação)»; «Atualizar taxas de câmbio a partir do BCE».
+- **Bancos, cobranças e pagamentos:** importação de extratos em segundo plano; previsão de tesouraria; cheques pré-datados; avisos de cobrança; referências Multibanco fora de validade; mandatos de débito direto SEPA; prestadores de pagamento online (estado e caducidade dos pagamentos em aberto); subscrições (faturas do dia e novas tentativas de cobrança).
+- **Salários e pessoas:** oito tarefas «Salários: …» ligadas (documentos a expirar, atribuições de férias do ano, acréscimo mensal de férias e subsídios, lembretes da lei em vigilância, linha anual do Orçamento do Estado em vigilância, trabalho noturno, ausências sem fim conhecido, rubricas a rever) e uma desligada (veja «As que vêm desligadas»); «DMR: reenvio simulado depois de uma rejeição temporária»; apoios do Estado; formação; pedidos de assinatura expirados.
+- **Segurança e registos:** «Auditoria PT: retirar o perfil de Auditor depois da data de fim» (de hora a hora); «Registos PT: arquivar a exportação anual dos registos de controlo»; as duas das cópias de segurança (cópia em atraso e restauro de cópias mais antigas). Veja [cópias de segurança](/administration/copias-de-seguranca).
+- **Copiloto e relatórios:** cinco tarefas do Copiloto (menções em notas, anomalias e resumo semanal, linhas de banco, fecho do mês e lote de salários, regras agendadas); relatórios em PDF e e-mails agendados em segundo plano; o [resumo de segunda-feira](/management/resumo-de-segunda-feira).
+
+## As que vêm desligadas
+
+Estas tarefas existem mas estão desligadas (**Ativo** desligado) até alguém as ligar:
+
+- «PT AT: resolver comunicações sem resposta (consulta de estado)»;
+- «Banco: aplicar as regras de reconciliação automáticas às linhas por reconciliar» e «Banco: reconciliação automática dos diários que a têm ligada»;
+- «EDI: receber e processar mensagens»;
+- «Pessoas: verificar as páginas oficiais dos apoios (semanal, só se o interruptor estiver ligado)»;
+- «Formação: extratos anuais por e-mail (15 de janeiro)»;
+- «Salários: anonimizar os dados dos trabalhadores cujo prazo de conservação terminou».
+
+O «Resumo de segunda-feira para a Gerência» também vem desligado e liga-se sozinho quando uma empresa pede o resumo (na demonstração foi ligado para o artigo do resumo). Uma atualização do fiscaldoo não o desliga: fica ativo enquanto uma empresa tiver o [resumo de segunda-feira](/management/resumo-de-segunda-feira) ligado.
+
+## Como confirmar que uma tarefa corre
+
+- Abra a ficha da tarefa e veja **Ativo** e a **Próxima Data de Execução**. Depois de cada volta, a data passa para a volta seguinte.
+- A ficha não mostra a última execução nem se a última volta deu erro. Uma **Próxima Data de Execução** que ficou muito para trás é sinal de que a tarefa não está a correr: fale com o suporte, que lê o registo do servidor.
+- **Executar Manualmente** corre a tarefa logo. Na demonstração, ao correr o resumo de segunda-feira, o e-mail foi criado e a **Próxima Data de Execução** ficou igual (segunda-feira seguinte, 07:00).
+
+## Notas importantes
+
+- **Não corra à mão, numa base real, as tarefas que falam com o exterior** (AT, BCE, prestadores de pagamento, EDI) sem saber o que fazem: a comunicação é real.
+- **Não desligue tarefas de certificação, da AT ou de prazos** para resolver um problema: deixam de chegar avisos de prazos legais. Fale primeiro com o suporte.
+
+{/* Nota interna (DOCS-046, lote v5-ADM, 02/11/2026, master 6fb7ee1d4, base docs_demo_v5adm_test): conceito, risco normal. Lista lida por RPC com o administrador (ir.cron com id externo de módulos l10n_pt_arxi*, arxi_*, fiscaldoo*, l10n_pt_fiscaldoo*: 67, 60 ativas depois de ligar o resumo; 117 no ecrã com o filtro Tudo); menu, colunas, pesquisa «câmbio» e ficha vistos no ecrã com o administrador em modo programador. Esta base corre as tarefas (max_cron_threads = 1, guarda de rede ligada; nada bloqueado). O mapeamento tinha 10 linhas FC com nomes em inglês; os nomes acima são os do ecrã em pt_PT. */}
+
+{/* Nota interna (lote v21-EE, 05/11/2026, master 02a978ea9, base docs_demo_v21ee_test, administrador): o caminho com `?debug=1` passou a clique em Definições › Ferramentas de desenvolvimento › Ativar o modo de programador; Técnico › Automação › Ações agendadas mostrou 1-80 / 121. A contagem das 68 tarefas do fiscaldoo é a de 02/11 e não foi refeita. */}

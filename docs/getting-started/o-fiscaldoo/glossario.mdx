@@ -1,0 +1,123 @@
+---
+id: glossario
+slug: /getting-started/glossario
+title: O que quer dizer cada termo (glossário)
+sidebar_label: Glossário
+description: "Os termos de faturação, contabilidade, bancos, ativos, salários e EDI que aparecem nos ecrãs do fiscaldoo, explicados em palavras simples."
+keywords: [glossário, glossario, termos, o que quer dizer, dicionário, dicionario, palavras do ecrã, significado]
+doc_id: DOC-0004
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 3a28c9b91)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [getting-started/o-fiscaldoo/o-que-e-o-fiscaldoo]
+---
+
+{/* Nota interna (DOCS-046, lote v13-PPL): funde os 5 glossários e o dicionário das dicas. Sem códigos de conta. Página de consulta, sem passos. Termos não visitados um a um no ecrã: a auditoria confere por amostragem. Marcas legais: Pendente de validação nas regras com efeito fiscal. */}
+
+Procure a palavra que vê no ecrã e leia o que quer dizer. Para ir direto, use a pesquisa do seu navegador (Ctrl+F).
+
+Se vir uma palavra que não está aqui, ou outra palavra para a mesma coisa, avise o suporte.
+
+## Contabilidade e relatórios
+
+| Termo | O que quer dizer |
+|---|---|
+| **Balanço** | O que a empresa tem e deve, numa data. |
+| **Demonstração de Resultados** | O que a empresa ganhou e gastou num período. |
+| **Demonstração de Fluxos de Caixa** | O dinheiro que entrou e saiu num período. |
+| **Balancete** | Lista de todas as contas, com os débitos, os créditos e o saldo. |
+| **Razão** | Os movimentos de cada conta, um a um. |
+| **Extrato de conta corrente** | Os movimentos de um cliente ou fornecedor. |
+| **Antiguidade de saldos** | O que os clientes ou fornecedores devem, por tempo de atraso. |
+| **Terceiros** | Clientes, fornecedores e outras entidades com quem a empresa tem contas. |
+| **Linha de lançamento** | Cada linha de um lançamento contabilístico. |
+
+## Bancos
+
+| Termo | O que quer dizer |
+|---|---|
+| **Extrato** | A lista de movimentos enviada pelo banco, num ficheiro. |
+| **Linha bancária** | Um movimento do extrato. |
+| **Reconciliar** | Ligar o movimento do banco ao documento ou ao lançamento da contabilidade. |
+| **Por classificar, Classificado, Ignorado, Duplicado** | Os estados de cada movimento. |
+| **Pendentes de reconciliação** | Movimentos que ainda não batem certo entre o banco e a contabilidade. |
+| **Diferença** | O saldo do banco menos o saldo da contabilidade. |
+| **Tolerância** | A diferença pequena que se aceita ao reconciliar num clique. |
+| **Lançamento direto** | Lançar um movimento sem documento, como uma comissão ou juros. |
+| **Reconciliação automática** | Reconcilia sozinha os movimentos claros e deixa os outros para rever. |
+| **Conta de transferências** | A conta por onde passam as transferências entre contas da empresa, e que termina a zero. |
+| **Padrão confirmado** | Uma descrição de movimento lançada várias vezes na mesma conta, que pode virar um modelo. |
+| **Registo de importações** | A prova de cada importação: quem, quando e que ficheiro. |
+| **Conservar até** | A data até à qual o ficheiro do extrato não pode ser apagado. |
+
+## Ativos
+
+| Termo | O que quer dizer |
+|---|---|
+| **Ativo fixo (tangível, intangível)** | Bem durável da empresa, como um equipamento, uma viatura ou um programa informático. |
+| **Ficha do ativo** | O registo de um ativo: código, categoria, valor, datas e localização. |
+| **Categoria** | Grupo de ativos com as mesmas contas e o mesmo diário. |
+| **Depreciação, Amortização** | O gasto anual de um ativo. Os tangíveis depreciam-se e os intangíveis amortizam-se. |
+| **Quota** | A parte da depreciação de um período. |
+| **Quadro contabilístico, Quadro fiscal** | O plano das quotas pela contabilidade e pelas regras fiscais. |
+| **Processar períodos** | Confirmar os períodos terminados e lançar a depreciação. |
+| **Anular processamento** | Reverter os lançamentos de períodos processados, que nunca se apagam. |
+| **Lote de processamento** | Processar vários ativos de uma vez, depois de simular. |
+| **Alienação, Abate, Sinistro** | Saída do ativo por venda, por fim de vida ou por perda, como um incêndio ou um roubo. |
+| **Valor líquido contabilístico (VLC)** | O custo menos as depreciações acumuladas e a imparidade. |
+| **Mais-valia, Menos-valia** | O ganho ou a perda ao vender um ativo. |
+| **Imparidade** | Perda de valor de um ativo. |
+| **Revalorização** | Passar o ativo ao justo valor, em toda a classe de uma vez. |
+| **Componente, Ativo principal** | Uma parte de um ativo com vida útil própria, ligada ao ativo principal. |
+| **Campanha de inventário** | A contagem física dos ativos de uma ou mais localizações. |
+| **Modelo 32, Modelo 31** | Os mapas fiscais das depreciações e das mais-valias. Pendente de validação por contabilista certificado. |
+
+## Pessoas e salários
+
+| Termo | O que quer dizer |
+|---|---|
+| **Ajuda de custo** | O valor pago ao trabalhador pelas despesas de uma deslocação. Até um limite diário não paga imposto. Pendente de validação por contabilista certificado. |
+| **Parte isenta, Parte tributável** | A parte da ajuda de custo que não paga IRS e a parte que paga. |
+| **Tributação autónoma** | Imposto que a empresa paga sobre certas despesas. |
+| **Mapa de deslocação** | A folha onde se regista o dia, o destino e o motivo de cada deslocação. |
+| **Crédito de horas** | Horas de formação que a empresa devia ter dado e não deu num ano. |
+| **40 horas** | O mínimo anual de formação para cada trabalhador. Pendente de validação por contabilista certificado. |
+| **Formação obrigatória** | Curso exigido pela função, com validade. |
+| **Cessação** | O fim do contrato de trabalho. |
+| **Contrato a termo** | Contrato com data para acabar (certo) ou sem data fixa (incerto). |
+| **Salário mínimo (RMMG)** | A remuneração mínima mensal garantida. |
+| **Apoio à contratação** | Ajuda do Estado à empresa que contrata certas pessoas. |
+| **Aceite do trabalhador** | A confirmação do trabalhador de que leu um documento. |
+| **Assinatura qualificada** | Assinatura eletrónica com valor legal reforçado, como o Cartão de Cidadão ou a Chave Móvel. |
+| **Portal de assinatura** | A página onde o signatário assina sem ter conta no programa. Pendente de validação no ecrã. |
+| **Signatário** | A pessoa que tem de assinar um documento. |
+| **Chefia** | Quem é responsável por uma equipa. |
+| **Gerência** | O perfil de quem decide: lê todo o negócio e aprova, sem configurar. |
+| **Declaração de formação na saída** | O papel com as horas de formação por receber de quem sai, e quanto valem. |
+| **Requisição de viatura** | O pedido de uma viatura da empresa, aprovado pelo responsável da viatura. |
+| **Grupo pequeno** | Menos de 5 pessoas. Os euros não se mostram, para ninguém ser identificado. |
+| **A tratar** | A lista do que precisa de ação. |
+| **Deslocações por refaturar** | Deslocações feitas a clientes que ainda não lhes foram cobradas. |
+
+## EDI e faturação eletrónica
+
+| Termo | O que quer dizer |
+|---|---|
+| **EDI** | Troca eletrónica de documentos, como encomendas e faturas, diretamente entre computadores. É também o nome da aplicação onde se recebem e se acompanham essas mensagens. |
+| **Saphety** | Empresa que faz de operador de EDI e de faturação eletrónica. |
+| **GLN** | Número de 13 dígitos que identifica uma empresa, uma loja ou um armazém. |
+| **GTIN** | O código de barras do artigo. |
+| **SSCC** | Código de 18 dígitos que identifica uma palete ou caixa expedida. |
+| **GS1** | A organização que atribui os códigos de barras e os GLN. |
+| **EANCOM** | A forma padrão de escrever as mensagens de EDI no retalho. |
+| **Encomenda (ORDERS)** | O pedido do retalhista. |
+| **Resposta à encomenda (ORDRSP)** | A resposta que aceita, altera ou recusa. |
+| **Aviso de expedição (DESADV)** | O aviso do que vai a caminho. |
+| **Aviso de receção (RECADV)** | O aviso do retalhista sobre o que recebeu. |
+| **Fatura EDI (INVOIC)** | A fatura enviada por EDI. |
+| **Peppol** | A rede europeia de faturas eletrónicas entre empresas. |
+| **Ponto de acesso** | O serviço que liga a empresa à rede Peppol. |
+| **Simulador** | Serviço de teste que imita o operador, sem enviar nada a sério. |

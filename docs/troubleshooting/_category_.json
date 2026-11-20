@@ -1,0 +1,10 @@
+{
+  "label": "Resolução de problemas",
+  "position": 10,
+  "link": {
+    "type": "generated-index",
+    "slug": "/troubleshooting",
+    "title": "Resolução de problemas",
+    "description": "Erros frequentes por sintoma, mensagens do sistema e como pedir suporte."
+  }
+}

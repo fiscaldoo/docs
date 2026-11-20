@@ -1,0 +1,69 @@
+---
+id: so-o-responsavel-fiscal-pode
+slug: /troubleshooting/so-o-responsavel-fiscal-pode
+title: Aparece «Não tem permissão para comunicar com a Autoridade Tributária»
+sidebar_label: «…comunicar com a Autoridade Tributária»
+sidebar_position: 3
+description: Comunicar com a AT, registar a submissão e o pagamento do IVA, fechar um período de IVA e alterar dados fiscais já em uso são do perfil Contabilista certificado, que traz o acesso Responsável fiscal.
+keywords: [responsável fiscal, responsavel fiscal, só o responsável fiscal, so o responsavel fiscal, submeter declaração, submeter declaracao, fechar período de IVA, fechar periodo de iva, comunicar com a autoridade tributária, comunicar com a autoridade tributaria, submissões fiscais, submissoes fiscais, perfil, sem permissão, sem permissao]
+doc_id: DOC-0409
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 54a9f5f03)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-permissao, administration/utilizadores-e-permissoes/perfis-e-permissoes, accounting-pt/iva/declaracao-periodica-de-iva]
+---
+
+## Sintoma
+
+Uma operação que entrega ou fixa dados perante a Autoridade Tributária e Aduaneira (AT) é recusada com uma mensagem que nomeia o perfil **Contabilista certificado**. É esse perfil que traz o acesso **Responsável fiscal**, que dá nome a este artigo.
+
+## Mensagem
+
+Três exemplos, copiados da base de demonstração em português:
+
+- Com o perfil **Contabilista**, ao registar a submissão de uma declaração periódica de IVA:
+  > «Só o perfil «Contabilista certificado (assina, fecha períodos)» pode submeter uma declaração de IVA. O que aconteceu: submeter é separado de preparar. Como resolver: peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)».»
+- Com o perfil **Contabilista**, ao fechar um período de IVA:
+  > «Só o perfil «Contabilista certificado (assina, fecha períodos)» e o administrador podem fechar um período de IVA. O que aconteceu: fechar bloqueia a contabilidade do período. Como resolver: peça a um utilizador com esse perfil.»
+- Com o perfil **Administrativo**, ao pedir a comunicação de uma série:
+  > «Não tem permissão para comunicar com a Autoridade Tributária. É necessário o perfil «Contabilista certificado (assina, fecha períodos)» ou o acesso extra «Submissões fiscais»; peça a um administrador que lho atribua.»
+
+
+No ecrã, estes botões (**Registar submissão**, **Fechar período de IVA**) aparecem ao perfil **Contabilista certificado** e não aparecem ao **Contabilista**. As mensagens foram provocadas pela integração, que é onde aparecem a quem não tem o acesso. As três mensagens nomeiam o valor do campo **Perfil**; a terceira fala também do acesso extra «Submissões fiscais», que nenhum perfil dá e só o administrador atribui, nos **Ajustes avançados**. Ao alterar o nome ou o NIF de um cliente com documentos emitidos, a recusa manda pedir a correção auditada «a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)»»: [Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado).
+
+## Causas verificadas
+
+O **Responsável fiscal** é o acesso de quem responde perante a AT. Não é um valor do campo **Perfil**: vem com o perfil **Contabilista certificado** (e o administrador também o tem). Só quem o tem (e o administrador, em várias destas operações) faz o que entrega ou fixa dados fiscais:
+
+- registar a submissão da declaração periódica de IVA e fechar o período de IVA;
+- comunicar com a AT, por exemplo para criar e comunicar uma série;
+- definir a periodicidade do IVA da empresa e corrigir o nome ou o NIF de um cliente já usado em documentos (correção auditada).
+
+Nos **Ajustes avançados**, o nível **Contabilista Certificado / Gestor fiscal** prepara as declarações, mas esse nível sozinho não submete (o perfil **Contabilista certificado** dá os dois): o ecrã diz que, para isso, é preciso o perfil «Responsável fiscal» ou «Submissões fiscais» ([Como dar a cada utilizador o perfil certo](/administration/perfis-e-permissoes)).
+
+## O que confirmar
+
+1. A operação que a mensagem nomeia.
+2. Quem na empresa tem o perfil **Contabilista certificado** (ou o acesso extra **Responsável fiscal**). O administrador vê-o na ficha de cada utilizador, em **Ajustes avançados**, grupo **LOCALIZAÇÃO PT**, campo **Localização PT — Responsável fiscal (submete à AT)**.
+
+## Como resolver
+
+- **Peça a operação ao Contabilista certificado.** É o caminho normal: preparar e entregar são de pessoas diferentes. Por exemplo, o **Contabilista** calcula e valida a declaração; o **Contabilista certificado** entrega-a e carrega em **Registar submissão** ([Como preparar e entregar a declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva)).
+- **Se passa a ser quem entrega à AT:** o administrador escolhe o perfil **Contabilista certificado**, que já inclui o **Responsável fiscal**; sem esse perfil, dá o acesso extra **Responsável fiscal** no campo **Localização PT — Responsável fiscal (submete à AT)**, em **Ajustes avançados**: [Como dar a cada utilizador o perfil certo](/administration/perfis-e-permissoes).
+
+**Quem faz:** o Contabilista certificado; ou o administrador, que dá o perfil.
+
+## Resultado esperado
+
+Feita pelo Contabilista certificado, a operação passa: por exemplo, a declaração fica **Submetida**.
+
+## Quando contactar o suporte
+
+- A mensagem aparece a um utilizador com **Responsável fiscal** escolhido nesse campo dos **Ajustes avançados**.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com o documento ou a declaração (por exemplo o período `2026/9`) e a mensagem completa.

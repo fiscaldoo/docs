@@ -1,0 +1,213 @@
+---
+id: proteger-dados-dos-trabalhadores
+slug: /payroll-pt/proteger-dados-dos-trabalhadores
+title: Como proteger os dados pessoais dos trabalhadores nos salários
+sidebar_label: Proteger os dados dos trabalhadores
+description: Quem vê o quê nos salários, como dar o acesso Ver ausência médica, onde guardar o certificado de uma baixa e onde consultar quem fez o quê.
+keywords: [RGPD, proteção de dados, protecao de dados, dados pessoais, dados de saúde, dados de saude, ver ausência médica, ver ausencia medica, perfil médico, perfil medico, baixa, certificado, greve, sindicato, relatório de auditoria dos salários, relatorio de auditoria dos salarios, registo do portal do trabalhador, campos da ficha do trabalhador, quem vê os salários, quem ve os salarios]
+doc_id: DOC-0186
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c689f7580)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/utilizadores-e-permissoes/perfis-e-permissoes, payroll-pt/faltas-e-licencas/baixas-por-doenca, troubleshooting/salarios-e-pessoas/prova-da-ausencia-ou-baixa]
+---
+
+{/* Nota interna (DOCS-063, #3853, lote v14-REV): revisto na docs_demo_v14rev_test, master cf8052b9e (RH-021 e RH-022, comboios 151 a 154), com um utilizador de cada perfil. Auditado na mesma base, master f671d6842 (FIX-M156, comboio 156): a lista abre por clique com o perfil médico, sozinho e com RH. Defeitos V14AUD-01, 02, 04 e 05 em reports/AUDITORIA_V14REV.md. As letras dos tipos neutros não se publicam: a ligação letra e motivo é o dado protegido. */}
+
+## Para que serve?
+
+Os salários guardam dados que nem todos os colegas devem ver: quanto cada pessoa ganha, as penhoras, as baixas, as greves e as quotas sindicais. Os dados de saúde e a filiação sindical são categorias especiais do Regulamento Geral sobre a Proteção de Dados (RGPD, art. 9.º).
+
+O fiscaldoo protege-os de três formas: cada perfil só abre o que lhe cabe, o tipo de ausência tem um nome neutro para quem não pode saber o motivo, e o certificado de uma baixa fica num registo reservado. Este artigo mostra como dar o perfil certo, onde guardar o certificado e onde consultar quem fez o quê.
+
+## Quando utilizar?
+
+- Quando dá acesso aos salários ou às ausências a uma pessoa nova.
+- Quando alguém tem de tratar certificados de baixa.
+- Quando quer saber quem processou um recibo ou quem consultou um certificado.
+
+## Onde encontrar?
+
+- **Perfis:** **Definições › Utilizadores e empresas › Utilizadores**, na ficha do utilizador.
+- **Registo reservado das baixas:** **Salários › Preparar › Ausências e presenças › Baixas por incapacidade**. Só aparece a quem tem o acesso extra **Ver ausência médica**, com ou sem um valor no campo **Perfil**: o caminho é o mesmo.
+- **Quem fez o quê:** **Auditoria › Registos › Registo de auditoria** e **Auditoria › Conferências › Relatório de auditoria dos salários**.
+- **Registo do portal do trabalhador** e **Campos da ficha do trabalhador:** abrem-se no painel **Salários › Preparar › O que há para fazer este mês?**. Cada perfil vê a sua ligação: a primeira no painel do perfil **Gestor de RH**, a segunda em **Outros registos e tabelas**, no de quem tem o acesso extra **Administrador de Salários**.
+
+## Antes de começar
+
+- Para atribuir perfis, entra como **administrador do sistema**.
+- **Ver ausência médica** é um acesso extra, dado nos **Ajustes avançados** do utilizador. Nenhum valor do campo **Perfil** o traz e não vem atribuído a ninguém, nem ao administrador do sistema. Sem ele, o administrador recebe «Não tem acesso a «Registo de ausência por incapacidade (PT)». Os dados de saúde são protegidos (RGPD, artigo 9.º): só se mostram a quem tem o acesso «Ver ausência médica». Quem faz: quem tem o acesso extra «Ver ausência médica». Só o administrador dá esse acesso (Definições › Utilizadores e empresas › Utilizadores, «Ajustes avançados» do utilizador).»
+- Decida quem trata os certificados. Este acesso abre dados de saúde: quanto menos pessoas, melhor.
+
+## O que cada perfil vê hoje
+
+Visto na empresa de demonstração, com um utilizador criado só com cada valor do campo **Perfil**, com e sem o acesso extra indicado, e com um utilizador só com o acesso **Ver ausência médica**, sem valor no campo **Perfil**. Um «não» quer dizer que o menu não aparece ou que o acesso é recusado.
+
+| O quê | Gestor de RH | Gestor de RH com o acesso Ver ausência médica | Processador de salários | Processador de salários com o acesso Administrador de Salários | Gerência | Auditor / ROC | Só o acesso Ver ausência médica |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| **Ausências** (lista de toda a empresa) | sim | sim | sim | sim | não | não | não |
+| **Nome real** do tipo de uma ausência de saúde | não: nome neutro | sim, na lista e na ausência | não: nome neutro | não: nome neutro | não | não | sim, no registo reservado |
+| **Baixas por incapacidade** (registo reservado) | não | sim | não | não | não | não | sim |
+| **Ficheiro** de uma ausência de saúde ou de família | não: **Documento de prova** vazio | sim | não: sem o campo | não: sem o campo | não | não | não: não abre as ausências |
+| **Ficheiro** de um certificado (registo reservado) | não | sim | não | não | não | não | sim |
+| **Ausências de greve** de outros trabalhadores | não | não | sim | sim | não | não | não |
+| **Recibos de vencimento** | não | não | sim | sim | sim | não | não |
+| **Penhoras** e **Quotas sindicais a entregar** | não | não | sim | sim | não | não | não |
+| **Relatório de auditoria dos salários** | não | não | não | não | sim | sim | não |
+
+O que o acesso **Ver ausência médica** acrescenta a um Gestor de RH: o nome real do tipo (por exemplo **Doença** em vez do nome neutro «Falta justificada — impossibilidade de prestar trabalho (CT art. 249.º/2-d)», seguido de uma letra) na lista **Ausências** e na ausência, o botão **Registo médico** numa baixa, o menu **Baixas por incapacidade**, o **Anexar ficheiro** de **Documento de prova** a gravar (sem o acesso, o botão está lá, mas recusa) e, no **⋮** da ficha do trabalhador, as ligações **Baixas por incapacidade** e **Exames de saúde de trabalhadores noturnos**. A greve de outro trabalhador continua fechada, com ou sem o acesso: «Não tem acesso a este registo de «Ausências». O seu perfil chega para esta área, mas este registo não é um dos seus. …».
+
+**Ausências de parto, de família e de dádiva de sangue.** Nestes tipos, as listas de **Pessoas › Férias e ausências › Pedidos de ausência** só mostram o tipo ao Gestor de RH, a quem tem o acesso **Ver ausência médica** e ao próprio trabalhador; os outros perfis leem «Ausência» na coluna **Tipo de tempo**, no título e no tipo aplicado, e o filtro, o agrupamento, a pesquisa, a exportação, as mensagens e o resumo do pedido também dizem «Ausência» (os tipos escondidos contam como um só). No registo de auditoria (**Auditoria › Registos › Registo de auditoria**), a coluna **Registo (na data do evento)** de um pedido destes tipos diz «[restrito]» (visto com um utilizador só com o perfil **Auditor / ROC**). Os totais não mudam. Na demonstração, a mesma dádiva de sangue de 11/06/2026 lê-se «Dádiva de sangue» com um utilizador só com o perfil **Gestor de RH** e «Ausência» com um utilizador só com o perfil **Processador de salários**.
+
+O perfil **Contabilista** não tem os menus **Salários** nem **Auditoria**, por isso a resposta é «não» em todas as linhas. Se abrir o registo reservado por uma ligação, recebe a mesma recusa do administrador: «Não tem acesso a «Registo de ausência por incapacidade (PT)». …».
+
+Cada **Trabalhador** vê em **O meu espaço** só as suas ausências e **O meu recibo**. O ficheiro da sua própria baixa fica fechado também para ele: se o pedir, quem tem o acesso **Ver ausência médica** pode entregar-lho.
+
+Esta tabela não substitui o parecer sobre as regras do RGPD na empresa, como a base legal e os prazos de conservação. <span className="fd-pending">Pendente de validação por jurista: bases de licitude, prazos de conservação e direito de acesso do trabalhador ao ficheiro (RGPD, art. 15.º).</span>
+
+## Como utilizar
+
+### Dar o perfil a quem trata os certificados
+
+<StepByStep>
+
+1. Abra **Definições › Utilizadores e empresas › Utilizadores** e abra o utilizador.
+2. No separador **Perfil**, escolha o perfil do trabalho do dia a dia. Para quem trata das ausências, escolha **Gestor de RH**.
+3. Carregue em **Ajustes avançados**. Em **Salários PT — Ver ausência médica (saúde)**, escolha **Ver ausência médica**. As restantes linhas de **Salários PT** ficam como estão.
+   ![Separador Ajustes avançados com a linha Salários PT — Ver ausência médica (saúde) preenchida com Ver ausência médica e as outras linhas de Salários PT](/images/payroll-pt/proteger-dados-dos-trabalhadores/01-perfil-ver-ausencia-medica.png)
+4. Carregue em **Guardar**. Escolher depois outro **Perfil** não retira esta linha: tire-a à mão, escolhendo **Não**, quando a pessoa deixar de tratar certificados.
+5. Peça à pessoa que entre de novo e confirme que tem o menu **Baixas por incapacidade**, em **Salários › Preparar › Ausências e presenças**.
+
+</StepByStep>
+
+O acesso **Ver ausência médica** sozinho, sem valor no campo **Perfil**, abre o registo reservado, mas não as ausências: o botão **Abrir a ausência** não lhe aparece e uma ausência aberta por ligação responde «Não tem acesso a «Ausências». Esta área abre com o perfil «Processador de salários», «Gestor de RH», «Gerência» ou «Trabalhador». …». Dê-lhe também o perfil **Gestor de RH** se a mesma pessoa regista as ausências, ou se tem de juntar o documento a uma ausência de família.
+
+### Registar a ausência sem revelar o motivo
+
+<StepByStep>
+
+1. Em **Salários › Preparar › Ausências e presenças › Ausências**, carregue em **Novo** e escolha o **Trabalhador**.
+2. Em **Tipo de tempo**, escolha a letra indicada por quem tem o acesso **Ver ausência médica**. Os tipos de saúde têm só um nome neutro («Falta justificada — impossibilidade de prestar trabalho…», «Falta justificada — protegida por lei…») e uma letra, e o ecrã explica porquê.
+   ![Campo Tipo de tempo com um nome neutro e o aviso Ausência com justificação reservada](/images/payroll-pt/proteger-dados-dos-trabalhadores/02-tipo-neutro-na-ausencia.png)
+3. Deixe **Descrição** vazia. Num tipo de saúde ou de greve, o programa recusa qualquer texto ao guardar.
+   ![Janela Operação inválida: este tipo de ausência não pode ter texto livre](/images/payroll-pt/proteger-dados-dos-trabalhadores/03-recusa-texto-livre.png)
+4. Carregue em **Guardar**. Não anexe aqui o certificado, nem numa nota: sem o acesso **Ver ausência médica**, o programa recusa. Com o acesso, o ficheiro fica em **Documento de prova**, mas o lugar do certificado de uma baixa é o registo reservado (a seguir).
+   ![Aviso Erro de envio: não se podem anexar ficheiros a esta ausência](/images/payroll-pt/proteger-dados-dos-trabalhadores/04-recusa-ficheiro-na-ausencia.png)
+
+</StepByStep>
+
+Os passos completos de uma baixa, com a aprovação e o efeito no recibo, estão em [Como tratar uma baixa por doença ou acidente de trabalho](/payroll-pt/baixas-por-doenca).
+
+### Guardar o certificado no registo reservado
+
+Este procedimento faz-se com o acesso extra **Ver ausência médica**, com ou sem um valor no campo **Perfil**.
+
+<StepByStep>
+
+1. Abra **Salários › Preparar › Ausências e presenças › Baixas por incapacidade** e abra a baixa. O registo aparece logo que a ausência é guardada, e o aviso do topo diz o que pode ser escrito.
+   ![Aviso do registo reservado: nunca escreva aqui o diagnóstico nem qualquer dado clínico](/images/payroll-pt/proteger-dados-dos-trabalhadores/05-aviso-do-registo-medico.png)
+2. No separador **Certificados**, carregue em **Adicionar uma linha** e preencha **Número do certificado**, **Emitido em**, **Válido desde** e **Válido até**.
+3. Em **Ficheiro**, junte a cópia do certificado e carregue em **Guardar**.
+   ![Separador Certificados com a linha do certificado CIT-0002 e o ficheiro junto](/images/payroll-pt/proteger-dados-dos-trabalhadores/06-certificados-no-registo-medico.png)
+4. Não escreva o diagnóstico: nem em **Nota**, nem no nome do ficheiro.
+
+</StepByStep>
+
+Quando a baixa fica **Aprovado**, o ecrã diz «Este registo já está fechado (validado, aprovado, pago ou enviado), por isso já não se altera.» e **Adicionar uma linha** desaparece. Junte o certificado antes de a ausência chegar a esse estado.
+
+### Juntar o documento de uma ausência de família
+
+Os tipos de assistência a um familiar ou à pessoa cuidada, de cuidador informal, de acompanhamento de grávida, de deslocação para o parto, de amamentação e de dádiva de sangue também pedem um documento: «É obrigatório juntar um documento que justifique este tipo de ausência.» Esse documento pode revelar dados de saúde, por isso fica fechado como o de uma baixa. Só quem tem **Ver ausência médica** o junta e o abre, e essa pessoa precisa também de um perfil que abra as ausências, como **Gestor de RH**.
+
+<StepByStep>
+
+1. Em **Salários › Preparar › Ausências e presenças › Ausências**, abra a ausência.
+2. No separador **Lei portuguesa: comunicação, prova e efeito**, em **Documento de prova**, carregue em **Anexar ficheiro** e escolha o documento.
+3. Carregue em **Guardar**.
+
+</StepByStep>
+
+Sem o acesso, o **Gestor de RH** vê **Documento de prova** vazio e o **Processador de salários**, com ou sem o acesso **Administrador de Salários**, não vê o campo: não sabem que há um ficheiro nem o conseguem abrir.
+
+### Consultar quem fez o quê
+
+<StepByStep>
+
+1. Para os salários, abra **Auditoria › Conferências › Relatório de auditoria dos salários**. Mostra quem criou, calculou, validou, pagou, corrigiu ou submeteu cada recibo e declaração, e quando. A lista vem agrupada por **Utilizador**. Para tirar a lista do programa é preciso a permissão de exportar: o perfil **Auditor / ROC** não tem **Ações** ao marcar as linhas.
+2. Para os dados de saúde, abra **Auditoria › Registos › Registo de auditoria**. A lista vem agrupada por tipo de evento: abra o grupo **Dados de uma ausência médica consultados**. Cada vez que alguém abre uma baixa fica uma linha, com ou sem certificado: os certificados lidos ao abrir contam como parte da abertura. Ler só os certificados deixa uma linha própria. {/* Nota interna (lote v17-PAY, master 00c68a6d8): 1 abertura de uma baixa = 1 linha nova, medido; medido também na auditoria de 05/11/2026: abertura com 1 certificado = 1 linha; leitura só do certificado, por chamada ao servidor = 1 linha. */} Cada linha diz quem foi e quando, mas não de quem era nem que tipo de ausência: em **Registo (na data do evento)** aparece `[restrito]`. Assim é para quem não tem o acesso **Ver ausência médica**, incluindo **Auditor**, **Gerência** e o administrador do sistema.
+   ![Linhas do registo de auditoria com a data, o evento, o utilizador e, no registo, a palavra restrito](/images/payroll-pt/proteger-dados-dos-trabalhadores/08-registo-de-auditoria-restrito.png)
+3. Para o portal, abra o **Registo do portal do trabalhador** (perfil **Gestor de RH** ou administrador do sistema). Mostra, por exemplo, «Recibo descarregado», com o trabalhador e a hora.
+
+</StepByStep>
+
+### Rever os dados que a ficha do trabalhador guarda
+
+Com o acesso **Administrador de Salários** (ou de administrador do sistema), abra **Campos da ficha do trabalhador**. São 27 dados, cada um com a **Classificação** (por exemplo **Fiscal (IRS)**, **Segurança Social** ou **Opcional (gestão interna)**), a **Base legal** e as datas de validade.
+
+![Lista Campos da ficha do trabalhador com o dado, a classificação e a base legal](/images/payroll-pt/proteger-dados-dos-trabalhadores/07-campos-da-ficha.png)
+
+Esta lista documenta para que serve cada dado. Não decide quem o vê: o que cada pessoa vê depende só do perfil. Num dado já em uso, o ecrã não deixa alterar a linha: feche-a em **Válido até** e registe uma nova.
+
+## No Enterprise
+
+No Odoo Enterprise, os dados de saúde protegem-se com os mesmos perfis e o mesmo acesso extra **Ver ausência médica**: com ele, o **Gestor de RH** abre a ausência com o botão **Registo médico** e junta o ficheiro em **Documento de prova**, no separador **Lei portuguesa: comunicação, prova e efeito**, como no Community. Muda o seguinte:
+
+- **O ficheiro da prova fica só na ausência.** Um ficheiro junto em **Documento de prova** de uma ausência de saúde ou de família não é copiado para a aplicação **Documentos** do Enterprise. No exemplo, depois de o **Gestor de RH** com o acesso **Ver ausência médica** juntar um PDF a uma ausência **Doença: 2 dias**, a pesquisa pelo nome do ficheiro em **Documentos**, feita pelo administrador do sistema, não encontrou nada. O mesmo com um PDF junto a uma ausência **Assistência a filho (art. 49.º)** de 2 dias: o ficheiro ficou na ausência e não apareceu em **Documentos**. Quem não tem o acesso continua sem ver o ficheiro, como no Community.
+- **O certificado de uma baixa** guarda-se, como no Community, no registo reservado (ver «Guardar o certificado no registo reservado», acima). O ficheiro junto em **Certificados** também não passa para **Documentos**.
+
+{/* Nota interna (lote EE-14, EEA-076 b8b965b48 em master acd623385, ponte l10n_pt_fiscaldoo_ee_documents_hr instalada; cópia docs_ee_ee14_test, porta 8524, 12/11/2026): ausência de Bruno Miguel Teixeira de 16/11/2026 a 17/11/2026, tipo «Falta justificada — impossibilidade de prestar trabalho (CT art. 249.º/2-d) — C» (Doença para quem tem o acesso), criada por RPC com um utilizador só com o perfil Gestor de RH e o acesso Ver ausência médica; por clique, o mesmo utilizador juntou declaracao-medica-novembro.pdf em Documento de prova e guardou. A base continuou com 68 documentos em Documentos, nenhum ligado a ausências; o administrador, na Empresa Demonstração, pesquisou «declaracao-medica» em Documentos: 0. Os três tópicos antigos (cópia em Documentos, grupo «HR (Empresa Demonstração, Lda)» e quem não a via) e o conselho «Não use o Documento de prova para certificados de baixa» saíram. Não se provaram neste lote os tipos de família (o EEA-076 diz que também ficam de fora, DEC-1842) nem a regra das cópias antigas (só as lê quem tem o acesso): a cópia não tem cópias antigas. */}
+
+{/* Nota interna (lote EE-07, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee07b_test: cópia da odoo20_ee_test com a aplicação de salários do Enterprise (hr_payroll) instalada e o código de master; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado: Gestor de RH com o acesso Ver ausência médica: ausência própria de 14/12/2026 a 15/12/2026 (Fábio Nuno Carvalho, tipo de doença, criada por RPC só para o teste) e ficheiro de exemplo sem dados de saúde junto pelo ecrã em Documento de prova; administrador: o ficheiro aparece em Documentos › Tudo, na pasta Fábio Nuno Carvalho (dentro de «Employees - Empresa Demonstração, Lda»), com a ligação «… em Doença: 2 dias (14/12/2026 até 15/12/2026)»; acesso da cópia: contacto do trabalhador «ver»; Gestor de RH, Gestor de RH com Ver ausência médica, Processador de salários, Processador com Administrador de Salários e Contabilista não a encontram (só o Contabilista tem a aplicação Documentos). Auditoria docs-aud-ee07 (11/11/2026, master 7cd24fcc9, cópia docs_ee_audee07_test): o administrador do lote tinha o acesso Ver ausência médica (vem da linhagem da 8070; o administrador da base de demonstração não o tem); um administrador sem o acesso vê na ligação o nome neutro «… em Falta justificada — impossibilidade de prestar trabalho (CT art. 249.º/2-d) — C: 2 dias …» e abre o ficheiro; o Gestor de RH da demonstração, membro do grupo «HR (Empresa Demonstração, Lda)» (papel editar na cópia), abre-a pelo botão Documentos da ficha do trabalhador, sem Ver ausência médica; Gestores de RH criados depois veem 0 Documentos; a cópia nasce no momento do anexo, antes de guardar; uma ausência de família (Assistência a filho) é copiada da mesma maneira; o ficheiro de Certificados do registo reservado não passa para Documentos. Defeito em cartão: EEA-076 #4179. Defeito do produto no relatório (o módulo documents_hr_holidays do Enterprise copia os anexos das ausências para Documentos). Caminhos do artigo conferidos com o verificador do test_doc_paths na mesma cópia (0 erros). Ver reports/LOTE_EE-07.md. */}
+
+## Resultado esperado
+
+- Quem regista a ausência vê um nome neutro e não consegue escrever o motivo nem juntar o ficheiro.
+- O certificado e o ficheiro só abrem a quem tem o acesso **Ver ausência médica**. Para os outros perfis, a ligação direta ao ficheiro responde que a página não existe.
+- O administrador do sistema não vê os dados de saúde sem o acesso, nem no registo de auditoria, mas é ele quem o atribui: escolha com cuidado quem é administrador.
+- Na lista de ausências, o menu **Ações** do perfil **Gestor de RH** só tem **Eliminar**: não há exportação por ali.
+- Nada disto gera lançamentos contabilísticos.
+
+## O que estas proteções não cobrem
+
+- **Descrição de uma ausência de família.** O texto que escrever em **Descrição** fica à vista de quem abre a ausência. Não escreva dados de saúde de um familiar.
+- **Listas do registo reservado.** O registo de auditoria guarda a abertura de um registo, não a consulta da lista.
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Antes de dar o acesso a alguém">
+O acesso **Ver ausência médica** abre dados de saúde de todos os trabalhadores da empresa escolhida. Não o dê por comodidade nem para resolver um «Não tem acesso». <span className="fd-pending">Pendente de validação por jurista: quem, em cada empresa, pode ter este acesso.</span>
+</HelpCallout>
+
+- Cada empresa vê só os seus dados. Um utilizador criado noutra empresa não vê as baixas desta, mesmo com o acesso: confirme a empresa da ficha.
+- O relatório e o registo de auditoria dizem o que o programa registou. Não veem o que alguém leu num papel, numa captura de ecrã ou numa cópia fora do programa.
+
+## Problemas frequentes
+
+### «Este tipo de ausência não pode ter texto livre»
+
+- **Sintoma:** ao guardar, a janela **Operação inválida** diz «Este tipo de ausência não pode ter texto livre. O que aconteceu: os «Motivos» e a «Descrição» de uma ausência são lidos por colegas e chefias e, numa ausência por motivo de saúde ou greve, revelariam uma categoria especial de dados (RGPD art. 9.º).»
+- **O que fazer:** apague a **Descrição** e guarde. O que for preciso registar fica no registo reservado, sem diagnóstico.
+
+### «Não se podem anexar ficheiros a esta ausência»
+
+- **Sintoma:** ao juntar o ficheiro a uma ausência de saúde ou de família, em **Documento de prova** ou numa nota, aparece «Não se podem anexar ficheiros a esta ausência. O que aconteceu: um ficheiro desta ausência é um dado de saúde (RGPD, art. 9.º) e os colegas e chefias leem a ausência. Como resolver: peça ao acesso «Ver ausência médica» que o anexe (na ausência de um familiar, essa pessoa precisa também de um perfil que abra as ausências, como «RH»).» (visto com um utilizador só com o perfil **Gestor de RH**, numa dádiva de sangue e numa baixa)
+- **O que fazer:** entregue o ficheiro a quem tem o acesso **Ver ausência médica**. Numa baixa, junta-o em **Certificados**. Numa ausência de família, em **Documento de prova**.
+
+### O menu Baixas por incapacidade está vazio
+
+- **Sintoma:** a pessoa tem o acesso, mas a lista diz «Aqui aparecem as baixas por doença dos trabalhadores».
+- **O que fazer:** confirme na ficha do utilizador se a empresa é a certa. Na demonstração, um utilizador criado noutra empresa via a lista vazia, com as baixas registadas.
+
+### Uma exportação por outra via é recusada
+
+- **Sintoma:** um pedido de exportação de fora do ecrã (por exemplo de uma integração), com os perfis **Gestor de RH**, **Processador de salários** ou **Gerência**, ou com o acesso extra **Administrador de Salários**, responde «O seu perfil não tem permissão para exportar dados por esta via. Para obter um ficheiro, use as exportações dos relatórios (XLSX ou PDF) ou peça ao administrador do sistema.»
+- **O que fazer:** use as exportações dos relatórios a que o perfil tem acesso. Não peça um perfil maior só para exportar.
+
+{/* Nota interna (DOCS-063 #3853, lote v23-N, master dbbb5ac5c, docs_demo_v23n_test, porta 8442): RH-024 e RH-025 vistos por clique em Pedidos de ausência com utilizadores criados só com o Perfil Gestor de RH e só com Processador de salários (coluna Tipo de tempo). O «[restrito]» do registo de auditoria e o filtro/pesquisa/exportação vêm do bilhete (rh_024/rh_025): não havia na cópia linha de auditoria de um pedido destes tipos. */}
+
+{/* Nota interna (lote v23-AM, DOCS-069 #4052 e DOCS-066 #3947, master 8d5d6c606, docs_demo_v23am_test, porta 8502): «perfil Ver ausência médica» passou a acesso extra. Tabela inteira refeita com utilizadores criados por RPC só com um valor do Perfil (perfil.rh, perfil.proc, perfil.ger, perfil.aud, perfil.cont), perfil.rhmed (Gestor de RH + acesso), perfil.procadm (Processador + Administrador de Salários) e perfil.med (só o acesso, sem Perfil): menus lidos no navegador; nome do tipo, greve e ficheiro vistos nas ausências 9 (doença), 10 (greve) e 11 (dádiva) criadas por RPC como admin; ficheiro junto por clique por perfil.rhmed e recusado por clique a perfil.rh; recusas do registo reservado (perfil.rh, perfil.cont, admin), das Ausências (perfil.med) e da greve por ligação; [restrito] visto com perfil.aud. Captura 03 refeita (a mensagem diz agora «acesso»). */}
+
+{/* Nota interna (lote EE-15, comboio 197, master c689f7580, 12/11/2026, cópia Enterprise docs_ee_ee15_test, porta 8530, Gestor de RH com Ver ausência médica criado na cópia): EEA-076 (b8b965b48), tipos de família: ausência de Bruno Miguel Teixeira, Assistência a filho (art. 49.º), 23/11/2026 a 24/11/2026, criada por RPC pelo administrador; PDF junto em Documento de prova por clique pelo Gestor de RH com o acesso; a ausência ficou com 1 anexo e Documentos com 65 documentos antes e depois, 0 pelo nome do ficheiro (contagem por RPC com o administrador). Ver reports/LOTE_EE-15.md. */}

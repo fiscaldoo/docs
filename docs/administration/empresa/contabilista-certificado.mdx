@@ -1,0 +1,109 @@
+---
+id: contabilista-certificado
+slug: /administration/contabilista-certificado
+title: Como indicar o contabilista certificado responsável
+sidebar_label: Indicar o contabilista certificado
+sidebar_position: 2
+description: Registar o contabilista certificado responsável pela empresa, com o número da OCC e as datas, mudar de contabilista sem perder o histórico e decidir se as declarações ficam bloqueadas sem ele.
+keywords: [contabilista certificado, CC, OCC, ordem dos contabilistas certificados, número da OCC, numero da occ, cédula, cedula, responsável, responsavel, mudar de contabilista, histórico dos contabilistas, historico dos contabilistas, bloquear submissões, bloquear submissoes, TOC]
+doc_id: DOC-0310
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/empresa/dados-da-empresa, accounting-pt/iva/declaracao-periodica-de-iva]
+---
+
+## Para que serve?
+
+Cada empresa com contabilidade organizada tem um contabilista certificado responsável. O fiscaldoo guarda quem é, com o número de inscrição na Ordem dos Contabilistas Certificados (OCC) e as datas em que o é. As declarações usam o contabilista em vigor na data, e o histórico mostra quem era o responsável em cada período.
+
+## Quando utilizar?
+
+- Ao preparar uma empresa nova, depois do assistente: [Como configurar uma empresa nova com o assistente](/getting-started/configurar-uma-empresa-nova).
+- Quando a ficha da empresa avisa que não há contabilista certificado em vigor.
+- Quando a empresa muda de contabilista certificado.
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Sistema e segurança › Contabilista certificado**
+
+Na ficha da empresa (**Definições › Utilizadores e empresas › Empresas**, separador **Localização PT**), o grupo **CONTABILISTA CERTIFICADO E SUBMISSÕES** mostra quem está em vigor e o botão **Histórico dos contabilistas certificados**.
+
+## Antes de começar
+
+- Faça os passos como administrador, ou com o acesso extra **Administração fiscal**, que nenhum valor do campo **Perfil** dá. Só com esse acesso (e o administrador da base de dados, que o tem) se vê o botão **Novo** e se alteram os registos. Os passos foram feitos com o administrador.
+- Com os perfis **Contabilista certificado** ou **Auditor / ROC**, a lista abre-se só para consultar, sem **Novo**. O perfil **Contabilista** não vê o menu.
+- O contabilista certificado já existe como contacto, com o NIF. A janela não cria contactos: no campo, uma pessoa que não existe dá «Sem registos». Crie-a antes em **Contactos**.
+- Está na empresa certa (canto superior direito): o registo é da empresa em uso.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › Sistema e segurança › Contabilista certificado**. Sem registos, a lista diz «Nenhum contabilista certificado registado.»
+2. Carregue em **Novo**.
+3. Em **Contabilista certificado**, escolha a pessoa, por exemplo **Ana Exemplo Contabilista**. O **NIF** vem da ficha do contacto e não se escreve aqui.
+4. Em **N.º da OCC**, escreva o número da cédula profissional, só com dígitos (até 8), por exemplo `12345`.
+5. Em **Responsável desde**, escolha a data em que passou a ser o responsável, por exemplo `01/01/2026`. Deixe **Responsável até** vazio enquanto for o responsável. **Nota** é opcional.
+6. Carregue em **Guardar** (ícone da nuvem).
+   ![Registo do contabilista certificado gravado, com o NIF vindo do contacto, o n.º da OCC 12345 e a data de início 01/01/2026](/images/administration/contabilista-certificado/02-registo-gravado.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- O registo aparece na lista com o **Contabilista certificado**, o **NIF**, o **N.º da OCC** e **Responsável desde**.
+- Na ficha da empresa, separador **Localização PT**, **Contabilista certificado em vigor** mostra «Ana Exemplo Contabilista (OCC n.º 12345)» e o aviso de falta de contabilista desaparece.
+  ![Grupo Contabilista certificado e submissões da ficha da empresa, com o contabilista em vigor e o botão Histórico dos contabilistas certificados](/images/administration/contabilista-certificado/04-ficha-da-empresa.png)
+- Nenhum lançamento contabilístico é criado: é um dado da empresa.
+
+## Mudar de contabilista certificado
+
+Uma empresa tem um contabilista de cada vez. Não troque o nome no registo antigo: o histórico ficaria errado.
+
+1. Abra o registo do contabilista que sai e preencha **Responsável até** com o último dia em que foi responsável. Carregue em **Guardar**.
+2. Carregue em **Novo** e registe o contabilista que entra, com **Responsável desde** no dia seguinte.
+
+## Notas importantes
+
+- **Bloquear submissões sem contabilista certificado?** (grupo **CONTABILISTA CERTIFICADO E SUBMISSÕES** da ficha da empresa) vem desligado: o fiscaldoo só avisa. Ligado, uma declaração fiscal e a validação da declaração periódica de IVA de uma empresa com **Contabilidade organizada** em **Sim** não avançam sem contabilista registado. Só o perfil **Contabilista certificado** ou o administrador o mudam.
+- A lei pede que as declarações de uma empresa com contabilidade organizada sejam assinadas pelo contabilista certificado responsável. <span className="fd-pending">Pendente de validação por contabilista certificado: obrigação de contabilista certificado por tipo de empresa e declarações que o identificam.</span>
+- O fiscaldoo aceita até 8 dígitos no **N.º da OCC**: o próprio ecrã diz que é «um limite do produto, não da lei».
+
+## Problemas frequentes
+
+### «… já tem um contabilista certificado ativo neste período …»
+
+- **Sintoma:** ao guardar, abre-se a janela: «Empresa Demonstração, Lda já tem um contabilista certificado ativo neste período (Ana Exemplo Contabilista, desde 01/01/2026). Uma empresa tem um contabilista de cada vez: termine o período anterior (indique a sua data de fim) antes de este começar.»
+  ![Janela com a mensagem de que a empresa já tem um contabilista certificado ativo neste período](/images/administration/contabilista-certificado/03-erro-sobreposicao.png)
+- **O que fazer:** feche a janela, descarte o registo novo e siga «Mudar de contabilista certificado»: primeiro a data de fim no registo antigo, depois o novo.
+
+### «O número da OCC “12A” não é aceite…»
+
+- **Sintoma:** ao guardar: «O número da OCC “12A” não é aceite: tem só dígitos e este produto guarda até 8 (um limite do produto, não da lei). …»
+- **O que fazer:** escreva só os dígitos do cartão da OCC. Se o número tiver mais de 8 dígitos, contacte o suporte.
+
+### «A data de fim (…) é anterior à data de início (…)»
+
+- **Sintoma:** ao guardar, o fiscaldoo recusa: «A data de fim (31/12/2019) é anterior à data de início (01/01/2020). Corrija o período de responsabilidade ou deixe a data de fim vazia se o contabilista continua responsável.»
+- **O que fazer:** corrija **Responsável até**, ou deixe-o vazio se a pessoa continua responsável.
+
+### «A empresa de um registo de contabilista certificado não pode mudar»
+
+- **Sintoma:** ao trocar a empresa de um registo gravado: «A empresa de um registo de contabilista certificado não pode mudar. Crie um novo registo na outra empresa e termine este.»
+- **O que fazer:** escolha a outra empresa no canto superior direito e registe lá o contabilista; no registo antigo, preencha **Responsável até**.
+
+### «… já esteve em vigor (desde …) e faz parte do histórico da empresa: não pode ser apagado»
+
+- **Sintoma:** ao apagar um registo que já esteve em vigor: «O registo de Contabilista (exemplo) como contabilista certificado de Empresa Teste Portugal já esteve em vigor (desde 01/01/2020) e faz parte do histórico da empresa: não pode ser apagado. Indique antes uma data de fim ou arquive-o.»
+- **O que fazer:** não se apaga: preencha **Responsável até** ou arquive o registo.
+
+{/* Nota interna (DOCS-069, lote v23-AF, master 97b34fac3, base docs_demo_v23af_test): as três mensagens acima foram provocadas por RPC com o administrador, na Empresa Teste Portugal, sobre um registo criado para isso (Contabilista (exemplo), 01/01/2020 a 31/12/2020, arquivado no fim). A lista vazia diz hoje «Nenhum contabilista certificado registado. … Só o administrador o regista.» */}
+
+### «Há campos obrigatórios por preencher»
+
+- **Causa:** falta **Responsável desde** (o campo fica a vermelho).
+- **O que fazer:** escolha a data no calendário e guarde de novo.

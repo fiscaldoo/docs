@@ -1,0 +1,103 @@
+---
+id: periodo-bloqueado
+slug: /troubleshooting/periodo-bloqueado
+title: Não consigo lançar num período bloqueado ou num exercício fechado
+sidebar_label: Período bloqueado ou exercício fechado
+description: Porque um lançamento com data de um exercício fechado não se publica, quem pode abrir uma exceção à data de bloqueio e o que fazer em vez de lançar no período fechado.
+keywords: [período bloqueado, periodo bloqueado, exercício fechado, exercicio fechado, data de bloqueio, data de bloqueio global, bloqueio definitivo, exceção, excecao, exceção à data de bloqueio, Fixar datas de bloqueio, Datas de bloqueio e exceções, não pode criar o lançamento, nao pode criar o lancamento, lançar no ano anterior, lancar no ano anterior, administrador, reabrir exercício, reabrir exercicio, será contabilizado em]
+doc_id: DOC-0345
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master d88933a51)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/dia-a-dia/lancamentos-contabilisticos, accounting-pt/dia-a-dia/estornar-um-lancamento, troubleshooting/contabilidade-e-iva/lancamento-publicado-nao-se-altera]
+---
+
+## Sintoma
+
+Escreve num lançamento uma data de um período já fechado. Aparecem avisos no topo e, ao carregar em **Publicar**, abre-se **Operação inválida**. O lançamento fica em **Rascunho** e não é gravado.
+
+## Mensagem
+
+Num lançamento manual com a data 15/12/2025, numa empresa com o exercício de 2025 fechado (perfil **Contabilista**), aparecem primeiro dois avisos:
+
+> «A data está a ser definida para antes de: Data de bloqueio geral (*31/12/2025*). O lançamento de diário será contabilizado em *29/10/2026* ao ser lançado.»
+>
+> «*302* dias desde o fim do mês a que este lançamento respeita (limite do CIRC, art. 123.º, n.º 3). Lance-o ou reveja a sua data; nada é bloqueado.»
+
+![Avisos no topo do lançamento: data antes da data de bloqueio geral de 31/12/2025 e 302 dias desde o fim do mês](/images/troubleshooting/periodo-bloqueado/01-avisos-data-bloqueada.png)
+
+Ao carregar em **Publicar**:
+
+> «O exercício *2025* (*01/01/2025* a *31/12/2025*) está fechado: não pode criar o lançamento (novo, por gravar) datado de *15/12/2025*. Porquê: um exercício fechado fica bloqueado para as contas já aprovadas não mudarem. Como resolver: lance-o num exercício aberto ou, se for mesmo necessário, peça ao administrador uma exceção com motivo (Contabilidade › Fechar › Fecho do exercício › Datas de bloqueio e exceções, com o modo programador ativo).»
+
+{/* Nota interna (lote v23-Q, #3947, master 808f8ca1f, docs_demo_v23q_test, porta 8452): «peça ao administrador uma exceção» (antes «peça à Administração fiscal uma exceção») provocado no ecrã com um utilizador criado só com o perfil Contabilista (DEC-1777): lançamento de 15/12/2025, Publicar → Operação inválida; a variante «não pode alterar o lançamento» provocada pela integração (Voltar a rascunho do OD/2025/00049; no ecrã, o Contabilista tem Voltar a rascunho no menu Ações do lançamento e recebe a mesma recusa (auditoria docs-aud-v23q)). O resto da mensagem não mudou. Captura 02 refeita. */}
+
+![Janela Operação inválida: o exercício 2025 está fechado e não pode criar o lançamento datado de 15/12/2025](/images/troubleshooting/periodo-bloqueado/02-exercicio-fechado.png)
+
+As mensagens foram provocadas na base de demonstração. O primeiro aviso diz que o lançamento «será contabilizado em» hoje, mas não é: a publicação é recusada e a data não muda. A mensagem final manda abrir as datas de bloqueio «com o modo programador ativo», mas não é preciso: o caminho, pelo **Painel do fecho do exercício**, está abaixo.
+
+{/* Nota interna (DOCS-036, P-E1-06; auditoria v23-G, master 5228a94bd): a mensagem do exercício fechado já não mostra «account.move» (diz «(novo, por gravar)», visto no ecrã com o perfil Contabilista; captura 02 refeita) e continua a pedir o modo programador, mas «Datas de bloqueio e exceções» abre-se pelo Painel do fecho do exercício sem ele (visto com o perfil Contabilista certificado); o aviso «será contabilizado em» já está no ACC-201 (#3436). */}
+
+## Causas verificadas
+
+- **O exercício está fechado.** Quando o exercício é fechado, a **Data de bloqueio global** passa para o último dia dele (na demonstração, 31/12/2025). Nenhum lançamento com data até esse dia se publica.
+- **Há outras datas de bloqueio.** Além da global, a empresa pode ter **Data de bloqueio da declaração de impostos**, **Data de bloqueio de vendas**, **Data de bloqueio de compras** e **Data de bloqueio definitivo**. Cada uma fecha o seu tipo de lançamento até à data.
+- **O «administrador» da mensagem é o administrador do sistema** da sua empresa, não a Autoridade Tributária: é quem abre as exceções.
+
+## O que confirmar
+
+1. A data do lançamento: é mesmo de um período fechado, ou é um engano?
+2. As datas de bloqueio da empresa, em **Contabilidade › Fechar › Fecho do exercício › Painel do fecho do exercício** › **Datas de bloqueio e exceções**. A lista mostra cada data em vigor, quem a pôs, o motivo e o estado (na demonstração, «Data de bloqueio global», 31/12/2025, «Fecho do exercício fiscal 2025 (01/01/2025 a 31/12/2025)», **Em vigor**). O **Contabilista** não tem este painel.
+3. Se o lançamento pode ir para o período aberto. Um custo esquecido de um ano fechado, por exemplo, pode ter de ser tratado como correção de anos anteriores, não lançado no ano fechado. <span className="fd-pending">Pendente de validação por contabilista certificado: tratamento de um gasto ou rendimento de um exercício já fechado (NCRF 4, erros e alterações de estimativas) e o efeito no IRC.</span>
+
+## Como resolver
+
+### A data estava errada (perfil Contabilista)
+
+1. Carregue em **Fechar**.
+2. Escreva uma data do período aberto e carregue em **Publicar**.
+
+### O lançamento tem de ir para o período fechado
+
+Só com uma exceção à data de bloqueio, e só com a decisão do contabilista certificado. A exceção abre-a e revoga-a o administrador (ou quem tem o acesso extra **Administração fiscal**); o lançamento publica-o quem a exceção abrange.
+
+1. Em **Contabilidade › Fechar › Fecho do exercício › Painel do fecho do exercício**, abra **Datas de bloqueio e exceções** › **Exceções e revogação**. Esta lista mostra as exceções ativas e tem a ligação **Abrir as datas de bloqueio**.
+2. Carregue em **Abrir as datas de bloqueio**: abre-se **Fixar datas de bloqueio**, com a **Empresa** e as datas atuais. Em **Data de bloqueio global**, escreva uma data anterior à do lançamento (no exemplo, 30/11/2025, para um lançamento de 15/12/2025). O ecrã avisa «Data de bloqueio global recuada de 31/12/2025 para 30/11/2025: isto abre uma exceção (só para si, até ser revogada); a data da empresa mantém-se.» e mostra **A exceção aplica-se a** (**Só para mim** ou **Para todos**) e **Exceção válida até**.
+3. Escolha **Para todos** se quem vai lançar é outra pessoa (por exemplo, o Contabilista). Em **Exceção válida até**, ponha uma data e hora próximas, e escreva o **Motivo**. Carregue em **Aplicar**. A mensagem confirma: «Exceção aberta. Data de bloqueio geral recuada para *30/11/2025* (para todos, até *29/10/2026 23:00:00*); a data da empresa continua *31/12/2025*.»
+4. Quem a exceção abrange publica o lançamento com a data do período fechado. O aviso da data de bloqueio deixa de aparecer; o aviso dos dias desde o fim do mês continua.
+5. Logo que o lançamento esteja publicado, feche a exceção. Em **Exceções e revogação**, abra a linha da exceção e carregue em **Revogar com motivo**. Na janela **Revogar exceções às datas de bloqueio** («O motivo que indicar fica guardado na exceção e no registo de auditoria, com quem a revogou e quando.»), escreva o **Motivo** e carregue em **Revogar**. A exceção passa a **Revogado** e sai da lista das exceções ativas. Se não a revogar, termina sozinha na data de **Exceção válida até**.
+
+Com o perfil **Contabilista certificado**, o passo 2 mostra outro aviso: «O seu perfil não a pode abrir. Peça ao administrador; se carregar em Aplicar, nada será guardado.»
+
+Na demonstração, numa cópia da base: o administrador abriu a exceção para todos até 29/10/2026 23:00, com motivo; o **Contabilista** publicou o lançamento `MISC/2025/00060`, de 15/12/2025, com as linhas 6241 Eletricidade a débito 100,00 € e 2722 Credores por acréscimos de gastos a crédito 100,00 € (conferidas no lançamento publicado); o administrador revogou a exceção com motivo. Depois da revogação, **Voltar a rascunho** nesse lançamento foi recusado com a mensagem do exercício fechado: o período voltou a fechar. Para o exemplo não ficar nas contas de 2025, o lançamento foi estornado na mesma data antes da revogação (`MISC/2025/00061`, com as linhas trocadas).
+
+**Quem faz:** o administrador (abre e revoga a exceção) e o perfil que publica o lançamento.
+
+{/* Nota interna (lote v23-G, DOCS-066, master 5228a94bd, docs_demo_v23g_test): provocadas de novo com utilizadores criados só com o valor do campo Perfil (DEC-1777), pela integração (RPC): Contabilista ao criar um lançamento de 15/12/2025 (exercício fechado; muda só o fim do caminho) e Contabilista certificado ao recuar a Data de bloqueio global para 30/11/2025 na janela Fixar datas de bloqueio (agora «Peça ao administrador»). Citações acertadas ao texto de hoje. */}
+
+A **Data de bloqueio definitivo** só avança e não se desfaz: um período com bloqueio definitivo não aceita exceções.
+
+<HelpCallout type="risco" title="Um exercício fechado pode já ter sido declarado">
+As contas de um exercício fechado podem já ter servido para a declaração de IRC, a IES e o SAF-T. Um lançamento novo nesse exercício pode mudar valores já entregues. Decida com o contabilista certificado se se lança no exercício fechado (e se as declarações se substituem) ou no exercício aberto. <span className="fd-pending">Pendente de validação por contabilista certificado: quando abrir uma exceção num exercício já declarado e que declarações substituir.</span>
+</HelpCallout>
+
+## Resultado esperado
+
+- Com a data corrigida, o lançamento é publicado no período aberto e recebe número (por exemplo `MISC/2026/…`).
+- Com a exceção, o lançamento é publicado na data do período fechado. Depois da revogação, o período volta a fechar e a exceção fica registada como **Revogado**, com o motivo, quem a abriu e quem a revogou.
+
+## Quando contactar o suporte
+
+- A mensagem aparece com uma data posterior a todas as datas de bloqueio da lista.
+- A exceção está ativa, para si, e a publicação continua a ser recusada.
+- Precisa de corrigir um período com **Data de bloqueio definitivo**.
+
+## Informação a enviar
+
+- A empresa, a data do lançamento e o diário.
+- O texto completo da mensagem, copiado do ecrã.
+- As linhas da lista **Datas de bloqueio e exceções** (uma captura serve).
+- O perfil com que entrou.

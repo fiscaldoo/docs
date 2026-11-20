@@ -1,0 +1,141 @@
+---
+id: contas-individuais-de-terceiros
+slug: /accounting-pt/contas-individuais-de-terceiros
+title: Como criar contas individuais para clientes e fornecedores
+sidebar_label: Contas individuais de terceiros
+sidebar_position: 10
+description: Dar a cada cliente, fornecedor e conta bancária da empresa a sua própria subconta (2111, 2211, 1211), incluindo os parceiros que já existiam antes de ligar a opção, e decidir se os saldos antigos passam para as contas novas.
+keywords: [contas individuais, contas correntes individuais, subconta de cliente, subconta de fornecedor, 2111, 2211, 1211, conta corrente, clientes gerais, fornecedores gerais, parceiros existentes, saldos antigos, reclassificação, modo de programador]
+doc_id: DOC-0079
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/plano-de-contas/criar-e-alterar-contas, accounting-pt/plano-de-contas/taxonomias]
+---
+
+<HelpCallout type="nota" title="O assistente está escondido do menu: só o vê o administrador, ou o Contabilista certificado com o modo de programador">
+O assistente deste artigo é de configuração e corre-se uma vez por empresa. Por isso, o fiscaldoo esconde-o do menu, para que os menus do dia a dia fiquem curtos. O administrador vê-o sem mais nada. O perfil **Contabilista certificado** só o vê com o modo de programador: carregue em Ctrl+K, escreva `debug` e escolha **Ativar o modo de depuração (debug)**. O perfil **Contabilista** não o vê, nem com o modo de programador. O modo de programador só mostra os menus escondidos: não dá a ninguém mais permissões do que as que o seu perfil já tem.
+</HelpCallout>
+
+## Para que serve?
+
+Por omissão, todos os clientes lançam na conta `2111 Clientes gerais` e todos os fornecedores na `2211 Fornecedores gerais`. Muitas empresas preferem uma **conta corrente por terceiro**, para que o balancete mostre o saldo de cada cliente e de cada fornecedor.
+
+Com a opção **Contas correntes individuais** ligada na empresa, o fiscaldoo cria uma subconta para cada um:
+
+| Para | Conta individual | Debaixo de |
+|---|---|---|
+| Cliente | `2111nnnn` (por exemplo `21110010 Clínica Dentária Sorriso, SA`) | `2111 Clientes gerais` |
+| Fornecedor | `2211nnnn` | `2211 Fornecedores gerais` |
+| Conta bancária da empresa | `1211nnnn` (com o nome do IBAN) | `121 Depósitos à ordem` |
+
+A subconta tem o nome do parceiro e a mesma taxonomia da conta geral, por isso entra na mesma rubrica do balanço.
+
+Os **clientes e fornecedores novos** recebem a conta sozinhos, no seu primeiro documento ou lançamento. Os que já existiam quando a opção foi ligada ficam na conta geral até esse momento: o assistente deste artigo dá-lhes a conta a todos de uma vez e, se quiser, passa para lá os saldos antigos.
+
+## Quando utilizar?
+
+- Logo depois de ligar a opção numa empresa que já tem clientes e fornecedores.
+- **Não** precisa do assistente numa empresa nova, sem parceiros: ligue a opção e cada cliente ou fornecedor recebe a sua conta no primeiro documento.
+- <span className="fd-pending">Pendente de validação por contabilista certificado: se a empresa deve usar contas correntes individuais (é uma escolha de organização, não uma obrigação do SNC) e, se mudar a meio do exercício, se os saldos antigos passam já pelo assistente ou depois, pelo contabilista certificado.</span>
+
+## Onde encontrar?
+
+- **A opção:** em **Definições**, secção **Empresas**, **Gerir empresas**. Abra a empresa, separador **Contabilidade**, grupo **Contas de clientes e fornecedores**, caixa **Contas correntes individuais**.
+- **O assistente:** **Contabilidade › Configurar › Plano e regras legais › Ferramentas das contas › Contas individuais dos parceiros existentes** (fora do administrador, só com o modo programador).
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado** (com o modo de programador), ou é o administrador. O Contabilista não vê o assistente, nem com o modo de programador.
+- A empresa ativa no topo do ecrã é a empresa a tratar. No exemplo: Empresa Demonstração, Lda.
+- A opção **Contas correntes individuais** já está ligada nessa empresa.
+- Decida com o contabilista certificado se os saldos antigos passam já para as contas individuais (passo 3).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contas individuais dos parceiros existentes**. A janela diz: «Cria a conta individual (2111nnnn / 2211nnnn / 1211nnnn) dos clientes, fornecedores e contas bancárias da empresa que ainda usam a conta geral. Os documentos em aberto (faturas, recibos, pagamentos) nunca são movidos: ficam na conta geral, ainda em aberto e com o seu prazo, até serem pagos ou creditados.»
+2. Confira os três contadores. No exemplo: **Clientes que vão ganhar conta** 24, **Fornecedores que vão ganhar conta** 19 e **Contas bancárias que vão ganhar conta** 1. Se o seu utilizador só tem uma empresa, a janela não mostra a **Empresa**: trata a empresa ativa no topo do ecrã. Com mais do que uma empresa (por exemplo, o administrador), aparece o campo **Empresa**: confira-o.
+   ![Janela Contas individuais dos parceiros existentes com 24 clientes, 19 fornecedores e 1 conta bancária que vão ganhar conta, a opção Passar os saldos antigos para as contas individuais ligada e o aviso sobre os diários de banco na conta geral de bancos](/images/accounting-pt/contas-individuais-de-terceiros/01-assistente-contas-individuais.png)
+3. Decida a opção **Passar os saldos antigos para as contas individuais**. Vem ligada.
+   - **Ligada:** os lançamentos manuais em aberto de cada parceiro (aberturas, acertos) passam para a sua conta individual. Os documentos em aberto ficam na conta geral.
+   - **Desligada:** criam-se as contas, mas os saldos antigos de clientes e fornecedores ficam na conta geral. A ajuda da opção diz: «Desligue só se o contabilista certificado o fizer: o SAF-T avisa de itens publicados numa conta agregadora.»
+   - **O banco, nos dois casos:** a janela avisa «Os diários de banco que ainda estão na conta geral de bancos (121) passam para uma conta individual e levam o saldo consigo, por um lançamento novo de reclassificação, seja qual for a opção acima: a conta geral deixa de aceitar movimentos e o saldo do banco não muda.»
+4. Carregue em **Criar as contas** e espere alguns segundos. A janela fica aberta e mostra o **Resultado**.
+
+</StepByStep>
+
+## Resultado esperado
+
+### Com a opção ligada (como vem)
+
+No exemplo, a Clínica Dentária Sorriso, SA tinha na `2111` um saldo inicial de 300,00 € lançado à mão (lançamento de abertura de 02/01/2026, com vencimento a 31/01/2026). Além disso, a `2111` e a `2211` tinham 4 faturas de clientes e 3 de fornecedores por pagar, e o diário **Banco** lançava na `121`.
+
+- O **Resultado** diz: «24 cliente(s), 19 fornecedor(es) e 1 conta(s) bancária(s) têm agora a sua conta. Os lançamentos manuais em aberto (aberturas, acertos) de 1 parceiro(s) passaram para a sua conta individual, item a item e com o mesmo prazo, por um lançamento de reclassificação cada um. 7 documento(s) em aberto (faturas, recibos, pagamentos) FICAM na conta geral, ainda em aberto e com o seu prazo, até serem pagos ou creditados. Ficam lá também 0 outro(s) item(ns) (sem parceiro, sem conta individual ou em moeda estrangeira): peça ao contabilista certificado que os reclassifique, porque o SAF-T avisa de itens publicados numa conta agregadora. 1 diário(s) de banco passam a lançar numa conta própria. O saldo de 1 conta(s) de banco passou para a conta individual por um lançamento novo de reclassificação: o saldo do banco não mudou e nenhum lançamento publicado foi tocado.»
+- O assistente criou dois lançamentos no diário **Operações Diversas**, com a data do dia e a referência «Reclassificação do saldo para a conta individual».
+  - O saldo inicial da Clínica passou para a sua conta, com o mesmo vencimento (31/01/2026). O item antigo da `2111` ficou conciliado com a linha a crédito:
+
+    | Conta | Parceiro | Débito | Crédito |
+    |---|---|---|---|
+    | `2111 Clientes gerais` | Clínica Dentária Sorriso, SA | | 300,00 € |
+    | `21110010 Clínica Dentária Sorriso, SA` | Clínica Dentária Sorriso, SA | 300,00 € | |
+
+  - O saldo do diário **Banco** na `121` passou para a conta nova do IBAN:
+
+    | Conta | Débito | Crédito |
+    |---|---|---|
+    | `121 Depósitos à ordem` | | 33.159,53 € |
+    | `12110001 PT50 9999 0000 1234 5678 9012 2` | 33.159,53 € | |
+
+- As 7 faturas ficaram na `2111` e na `2211`, por pagar.
+- No **Balancete** de 2026 (**Contabilidade › Consultar › Livros e balancetes › Balancete**, abra a classe 1 e a classe 2 até às contas), os saldos ficam repartidos, com os mesmos totais de antes: a `2111` fica com 6.588,13 € a débito (as 4 faturas) e a `21110010` com os 300,00 € da Clínica (6.888,13 € no total); a `121` fica sem saldo e a `12110001` fica com os 33.159,53 € a débito.
+- No painel da **Contabilidade**, o cartão **Banco** mantém o **Saldo contabilístico**, o **Saldo bancário** e a **Diferença**: no exemplo, **Saldo contabilístico** 32.792,03 € antes e depois.
+
+### Com a opção desligada
+
+Com os mesmos dados do exemplo:
+
+- O **Resultado** diz: «24 cliente(s), 19 fornecedor(es) e 1 conta(s) bancária(s) passaram a ter conta própria. Os lançamentos já feitos NÃO foram alterados: os saldos antigos de clientes e fornecedores ficam na conta geral (211 / 221). Para os passar para as contas individuais use a reclassificação de saldos, com o contabilista certificado. 1 diário(s) de banco passam a lançar numa conta própria. O saldo de 1 conta(s) de banco passou para a conta individual por um lançamento novo de reclassificação: o saldo do banco não mudou e nenhum lançamento publicado foi tocado.»
+- O assistente cria só o lançamento do banco, igual ao da opção ligada (`121` a crédito e `12110001` a débito, 33.159,53 €). A `2111` fica com 6.888,13 € a débito, com os 300,00 € da Clínica, e a `21110010` fica sem saldo.
+- No cartão **Banco** do painel, o **Saldo contabilístico** também fica igual (32.792,03 €).
+
+### Nos dois casos
+
+- Ao abrir o assistente outra vez, os contadores estão a 0. Correr o assistente outra vez não cria contas repetidas.
+- No plano de contas há agora 24 contas `2111nnnn` e 19 `2211nnnn`, além das gerais, e a `12110001` da conta bancária. Na ficha do cliente Clínica Dentária Sorriso, SA, a conta a receber passou a ser `21110010 Clínica Dentária Sorriso, SA`.
+
+## Notas importantes
+
+- **A conta geral passa a agregadora.** Depois do assistente, a `2111` e a `2211` têm contas-filhas e deixam de aceitar lançamentos novos: um lançamento manual na `2111` é recusado com «A conta 2111 é agregadora; escolha uma conta de movimento. Só se pode lançar em contas de movimento (o SAF-T e o SNC não admitem lançamentos em contas agregadoras).» Os lançamentos que já lá estavam ficam. No exemplo, a `2111` ficou agregadora com 72 linhas publicadas em 2026 com a opção ligada (71 com ela desligada, porque não há a linha da reclassificação da Clínica). Fale com o contabilista certificado antes de ligar a opção a meio de um exercício.
+- **Um saldo pode ficar repartido.** As faturas em aberto ficam na conta geral até serem pagas. Até lá, o saldo de um cliente pode estar dividido entre a `2111` e a sua conta individual.
+- **Se correu o assistente com a opção desligada, pode corrê-lo outra vez com ela ligada para passar os saldos dos parceiros.** No exemplo, a 2.ª corrida deu «0 cliente(s), 0 fornecedor(es) e 0 conta(s) bancária(s) têm agora a sua conta» e passou os 300,00 € da Clínica para a `21110010` («… de 1 parceiro(s) passaram para a sua conta individual …»). O saldo do banco já tinha passado na 1.ª corrida.
+- **As outras empresas não mudam.** A opção é por empresa: na demonstração, as outras duas empresas continuam com as contas gerais.
+
+## Problemas frequentes
+
+### Não encontro o assistente no menu Configurar
+
+- **Causa:** o assistente está escondido do menu. O Contabilista certificado só o vê com o modo de programador, e o Contabilista não o vê de todo.
+- **O que fazer:** com o perfil Contabilista certificado, ative o modo de programador (Ctrl+K, `debug`). Com outro perfil, peça a um utilizador com o perfil Contabilista certificado, ou ao administrador, que corra o assistente.
+
+### «Ligue a opção «Contas correntes individuais» na empresa …»
+
+- **Sintoma:** a janela não tem contadores nem **Criar as contas**, só **Fechar**, e mostra: «Ligue a opção «Contas correntes individuais» na empresa (só empresas portuguesas) antes de executar este assistente.»
+- **Causa:** a opção não está ligada na empresa da janela. Na demonstração acontece nas outras duas empresas.
+- **O que fazer:** ligue a opção na ficha da empresa (separador **Contabilidade**) e abra o assistente outra vez.
+
+### «A conta … é a conta individual de … e não pode receber itens de …»
+
+- **Sintoma:** num lançamento à mão, com a conta de um cliente e outro **Parceiro**: «A conta 21110010 é a conta individual de Clínica Dentária Sorriso, SA e não pode receber itens de Padaria Aurora, Lda. O que aconteceu: o item indica um parceiro que não é o titular da conta. Como resolver: use a conta individual de Padaria Aurora, Lda (é criada sozinha no seu primeiro documento) ou mude o parceiro do item.»
+- **Causa:** cada conta individual é só do seu titular, para que o saldo de um cliente não se misture com o de outro.
+- **O que fazer:** escolha a conta do próprio parceiro, ou mude o **Parceiro** da linha.
+
+{/* Nota interna (DOCS-046 v22-F, DOC-0079, master d83bdf7ae; refeito da auditoria v22-D, docs-aud-v22d 572f694). Três cópias limpas da demonstração, utilizadores criados por RPC só com um perfil (cc.v22f = Contabilista certificado, cont.v22f = Contabilista), só na Empresa Demonstração. Menu Configurar por clique: admin vê o assistente sem modo de programador; Contabilista certificado só com ele; Contabilista nunca. Nas três: saldo inicial de 300,00 € da Clínica (Lançamentos de abertura, 02/01/2026, 2111 a débito / 561 a crédito, vencimento 31/01/2026) criado por RPC. docs_demo_v22f_test: saldo inicial criado ANTES de ligar a opção, opção ligada por clique pelo admin; corrida com a opção ligada (OD/2026/00140 e 00141); Resultado lido na janela ao reabrir o registo (a minha leitura de logo a seguir ao clique foi cedo demais); balancete e cartão Banco. docs_demo_v22f3_test: saldo inicial ANTES, opção ligada por RPC; captura 01 (24/19/1, opção ligada); corrida com a opção desligada por clique, Resultado visto na janela; balancete e cartão Banco antes e depois; 2.ª corrida com a opção ligada. docs_demo_v22f2_test: saldo inicial criado DEPOIS de ligar a opção, o que deu logo à Clínica a conta 21110001 (contadores 23/19/1); só confirmou o Resultado da opção desligada. A recusa da conta individual e a da conta agregadora foram provocadas por RPC com o utilizador Contabilista. Auditoria v22-F (docs-aud-v22f): refeito por clique em duas cópias limpas (docs_demo_v22fa_test com a opção ligada; docs_demo_v22fb_test com a opção desligada e uma 2.ª corrida), com utilizadores só Contabilista certificado e só Contabilista; as duas recusas vistas no ecrã com o Contabilista. ACC-269 (#3983) em master: os avisos «Nesta versão» saíram no lote v23-I. */}
+
+{/* Nota interna (DOCS-065 req. 46421, lote v23-I, master 5228a94bd). Duas cópias da base-mãe v2, com o saldo inicial de 300,00 € da Clínica e a opção ligada por RPC (admin) antes do assistente; assistente por clique com um utilizador criado só com o perfil Contabilista certificado, com o modo de programador. docs_demo_v23i2_test: opção ligada, captura 01, Resultado copiado da janela, OD/2026/00139 (Clínica) e OD/2026/00140 (121 C / 12110001 D 33.159,53). docs_demo_v23i_test: opção desligada, Resultado copiado, só OD/2026/00141 (banco); 2.ª corrida ligada: OD/2026/00142 (Clínica), «0 cliente(s)…» e 9 documentos em aberto (a cópia tinha mais 2 faturas de fornecedor do DOC-0354). Cartão Banco lido no painel antes e depois nas duas: Saldo contabilístico 32.792,03 €, Saldo bancário −39.140,47 €, Diferença −71.932,50 €, sem mudança (a linha Operações diversas do cartão passou de 151.000,00 € para 33.159,53 €). Linhas dos lançamentos e saldos de 2026 das contas lidos por RPC, não no ecrã do Balancete. O aviso amarelo de diários que já deixaram saldo na 121 (bases tratadas antes do ACC-269) não se provoca numa cópia nova: fica fora do artigo. */}
+
+{/* Nota interna (DOCS-046, lote v23-K, 07/11/2026, master a3603e0f2, base docs_demo_v23k_test na 8434, base-mãe v2): captura 01 refeita sem o ícone do modo de programador: caminho seguido com um utilizador só com o perfil Contabilista certificado e o modo de programador, e a mesma ação aberta depois sem ele. Na base-mãe v2 a opção Contas correntes individuais vem desligada (o assistente só dizia para a ligar): foi ligada por RPC (administrador) nesta cópia. Contadores 24, 19 e 1 lidos antes de publicar as faturas FT D26/31 e FT D26/32, que depois deram contas individuais a dois clientes. */}

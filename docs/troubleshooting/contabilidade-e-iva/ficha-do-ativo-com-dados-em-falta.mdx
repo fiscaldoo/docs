@@ -1,0 +1,159 @@
+---
+id: ficha-do-ativo-com-dados-em-falta
+slug: /troubleshooting/ficha-do-ativo-com-dados-em-falta
+title: "O ativo não é guardado nem posto em uso: faltam dados ou estão errados"
+sidebar_label: Ativo não é guardado nem posto em uso
+description: As recusas da ficha do ativo ao gravar ou ao carregar em Pôr em uso (datas, valores, vida útil, taxa fiscal, método, número de série repetido e componentes) e o que corrigir em cada uma.
+keywords: [ativo não é guardado, ativo nao e guardado, Pôr em uso, por em uso, não pode ser posto em uso, nao pode ser posto em uso, falta data de início de utilização, vida útil contabilística, valor residual, anterior à sua aquisição, quotas decrescentes, número de série repetido, taxa DR 25/2009, unidades de produção, componente de si próprio, período de utilidade esperada]
+doc_id: DOC-0379
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/contabilidade-e-iva/depreciacoes-nao-sao-processadas, accounting-pt/ativos/registar-um-ativo, troubleshooting/contabilidade-e-iva/categoria-do-ativo-sem-contas]
+---
+
+## Sintoma
+
+Ao gravar a ficha de um ativo, ou ao carregar em **Pôr em uso**, abre-se **Erro de Validação** ou **Operação inválida**, e o ativo fica como estava.
+
+## Mensagem
+
+Ao carregar em **Pôr em uso** com a ficha incompleta:
+
+> «O ativo “*Impressora nova*” não pode ser posto em uso: falta(m) *data de início de utilização, vida útil contabilística maior que zero*. A depreciação começa com a entrada em funcionamento e reparte-se pela vida útil, por isso são necessárias. Preencha-os e tente novamente.»
+
+![Janela Erro de Validação: o ativo Impressora nova não pode ser posto em uso, faltam a data de início de utilização e a vida útil](/images/troubleshooting/ficha-do-ativo-com-dados-em-falta/01-por-em-uso-faltam-dados.png)
+
+Sem categoria:
+
+> «O ativo “*nome do ativo*” não pode ser posto em uso sem categoria: a categoria indica em que contas SNC e diário se lança a sua depreciação. Escolha uma categoria e tente novamente.»
+
+Sem **Nome**, ou com o nome só com espaços, ao gravar:
+
+> «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+
+As restantes estão em «Como resolver», caso a caso. Todas foram provocadas na base de demonstração. Os valores aparecem como no ecrã: algumas mensagens mostram-nos em euros (1.000,00 €), outras sem formato (1000.0 é 1.000,00 €).
+
+Este artigo trata só as mensagens aqui citadas: para outra, copie a mensagem e contacte o suporte.
+
+## Causas verificadas
+
+- **Faltam dados para pôr em uso:** categoria, **Data de início de utilização** ou **Vida útil** maior que zero.
+- **As datas não batem certo.** A **Data de aquisição** vem preenchida com a data de hoje: num ativo antigo, se só escrever o início de utilização, a ficha recusa.
+- **Os valores são impossíveis:** negativos, ou um valor residual igual ou superior ao de aquisição.
+- **O método não se aplica a este ativo.**
+- **Uma quota do plano passa o valor a depreciar.** A soma das linhas do **Plano de depreciação** não pode passar do valor depreciável.
+- **A categoria nova é de investimentos em curso** (classe 45), e o ativo já tem plano de depreciação.
+- **O número de série já existe noutro ativo.** O código do ativo (`AF/…`) é o sistema que o atribui e fica só de leitura, por isso não se repete ao gravar a ficha. O código da etiqueta também vem do código do ativo e não aparece na ficha, por isso a recusa de uma etiqueta repetida não se vê ao gravar.
+
+## O que confirmar
+
+1. No separador **Geral**: **Nome**, **Categoria**, **Condição**, **Data de aquisição** e **Data de início de utilização**.
+2. No separador **Quadro contabilístico**: **Valor de aquisição**, **Valor residual**, **Vida útil** e **Método**.
+3. No separador **Quadro fiscal**: a base da vida fiscal, a **Taxa DR 25/2009** e o método fiscal.
+
+Numa ficha nova, depois de escrever o **Nome**, o topo pode mostrar uma sugestão tirada da descrição. Com o nome «Computador portátil» apareceu «Sugestão a partir da descrição: · [II-2240] Computadores», com o botão **Usar a sugestão**. Ao carregar nele, a ficha grava-se no estado **Em preparação**, com essa **Taxa DR 25/2009**. A **Categoria** fica vazia quando a sugestão não traz nenhuma: escolha-a antes de **Pôr em uso**.
+
+## Como resolver
+
+Corrija o dado que a mensagem indica e grave outra vez. Num ativo **Em uso** com períodos processados, o custo, a vida útil e a categoria já não se alteram na ficha: o fiscaldoo recusa e diz que caminho seguir, como explica [As depreciações não são processadas](/troubleshooting/depreciacoes-nao-sao-processadas). Como registar a ficha do princípio: [Como registar um ativo fixo](/accounting-pt/registar-um-ativo).
+
+**Quem faz:** Contabilista. <span className="fd-pending">Pendente de validação por contabilista certificado: as referências legais citadas nas mensagens (DR 25/2009 e CIRC, art. 30.º) e a escolha do método e da taxa de cada ativo.</span>
+
+### Datas
+
+> «O início de utilização (*01/06/2026*) do ativo “*nome do ativo*” é anterior à sua aquisição (*03/11/2026*). Um ativo não pode entrar em funcionamento antes de ser adquirido, e a depreciação (DR 25/2009, art. 1.º a 3.º) começaria demasiado cedo. Corrija uma das duas datas e grave novamente.»
+
+> «A data de saída de “*nome do ativo*” (*01/01/2026*) é anterior à entrada em funcionamento (*01/06/2026*). Um ativo não pode sair antes de começar; corrija as datas.»
+
+### Valores
+
+> «Os valores do ativo “*nome do ativo*” não podem ser negativos: o valor de aquisição, os custos atribuíveis e o valor residual são montantes a depreciar, e um valor negativo inverteria a depreciação. Corrija o valor (uma devolução é um documento à parte) e grave novamente.»
+
+> «O valor residual (*1.000,00 €*) do ativo “*nome do ativo*” tem de ser inferior ao valor de aquisição (*1.000,00 €*): caso contrário não haveria nada a depreciar. Reduza o valor residual (ou preencha o valor de aquisição) e grave novamente.»
+
+> «A vida útil contabilística do ativo “*nome do ativo*” não pode ser negativa. Indique o número de anos que a gestão espera usar o ativo (maior que zero) e grave novamente.»
+
+No separador **Plano de depreciação**, ao mudar o valor de uma linha para mais do que o ativo ainda tem por depreciar e gravar (na demonstração, 5.000,00 numa linha de 40,00 de um ativo de 2.400,00):
+
+> «A depreciação contabilístico de “*Portátil da receção*” chegaria a *7.360,00*, acima do valor depreciável (*2.400,00*): um ativo não pode ser depreciado mais de 100 %. Reduza a quota ou corrija o valor.»
+
+Volte a pôr na linha o valor que ela tinha e grave.
+
+### Categoria de investimentos em curso
+
+Ao escolher, num ativo que já tem **Plano de depreciação**, uma categoria de investimentos em curso (na demonstração, uma categoria «Ativos fixos tangíveis em curso», da conta 453) e gravar:
+
+> «O ativo “*Portátil da receção*” já tem linhas de depreciação e não pode passar para a categoria “*Ativos fixos tangíveis em curso*” (investimentos em curso, classe SNC 45): esses não se depreciam. Mantenha a categoria, ou crie um novo ativo para o investimento em curso.»
+
+Um investimento em curso não se deprecia: mantenha a categoria do ativo em uso e registe a obra em curso num ativo novo, com a categoria de investimentos em curso. <span className="fd-pending">Pendente de validação por contabilista certificado: a passagem de um investimento em curso (classe 45) para a sua categoria final quando entra em funcionamento.</span>
+
+### Ativo usado (Condição = Usado)
+
+Se preencheu o histórico à entrada e voltou a pôr a **Condição** em **Novo**, os campos escondem-se, mas os valores ficam. Volte a **Usado** e limpe-os, ou deixe **Usado**:
+
+> «O ativo “*nome do ativo*” tem depreciação ou vida remanescente à entrada, por isso tem de estar marcado como usado (Condição = Usado). Um ativo novo começa sem nada depreciado.»
+
+> «O histórico à entrada de “*nome do ativo*” não pode ser negativo: a depreciação acumulada e a vida remanescente são zero ou positivas.»
+
+> «A depreciação à entrada de “*nome do ativo*” (*2000.0*) é superior ao valor depreciável (*1000.0*): um ativo não pode ser depreciado mais de 100 %. Corrija a depreciação acumulada.»
+
+> «O ativo “*nome do ativo*” é usado: o método das quotas decrescentes só é permitido para ativos novos (CIRC, art. 30.º). Use quotas constantes.»
+
+### Método e taxa
+
+> «A taxa *[II-2240] Computadores* é válida de *01/01/2010* a *(em aberto)*, mas o ativo “*nome do ativo*” entra em funcionamento em *01/06/2005*. A depreciação fiscal usa a taxa em vigor nessa data. Escolha a versão do código que estava em vigor em *01/06/2005*.»
+
+> «O ativo “*nome do ativo*” deprecia-se pelo período de utilidade esperada: preencha a vida fiscal esperada em anos (maior que zero) no separador Fiscal.»
+
+> «O ativo “*nome do ativo*” usa o período de utilidade esperada: só se aplicam quotas constantes (as quotas decrescentes pertencem às taxas do DR 25/2009).»
+
+> «Os parâmetros do método contabilístico de “*nome do ativo*” não são válidos: o fator de saldo decrescente é pelo menos 1 (1 = taxa de linha reta) e o total de unidades estimadas não pode ser negativo. Corrija e grave novamente.»
+
+Com **Unidades de produção**, o ativo põe-se em uso sem o total de unidades. Só ao carregar em **Calcular quadro contabilístico** (em **Ações**) aparece:
+
+> «O ativo “*nome do ativo*” usa o método de unidades de produção mas não tem o total de unidades estimadas: preencha-o no separador Contabilístico antes de gerar o quadro.»
+
+As mensagens falam em separador **Fiscal** e **Contabilístico**: no ecrã são **Quadro fiscal** e **Quadro contabilístico**.
+
+### Número de série e componentes
+
+> «O número de série *SN-2026-0001* já existe no ativo *Computador portátil do armazém* desta empresa. Identifica um único ativo físico: corrija o número ou deixe-o vazio se ainda não o conhece.»
+
+> «Um ativo não pode ser componente de si próprio: escolha outro ativo principal.»
+
+O campo **Ativo principal** só propõe ativos da mesma empresa: na demonstração, um ativo de outra empresa não apareceu na lista, nem pelo nome.
+
+> «O componente “*nome do ativo*” passaria a ser o ativo principal do seu próprio ativo principal: os componentes não podem formar um ciclo.»
+
+### Método fiscal e reduzido valor
+
+Com **Quotas decrescentes** no quadro fiscal, numa categoria de edifícios, de viaturas ligeiras ou de mobiliário. Escolha **Quotas constantes**:
+
+> «O ativo “*Armazém*” pertence à categoria “*Edifícios e outras construções*” (*Edifícios*): o método das quotas decrescentes não é permitido para edifícios, viaturas ligeiras de passageiros ou mistas, nem para mobiliário e equipamento social (CIRC, art. 30.º). Use quotas constantes.»
+
+Com **Reduzido valor (confirmado)** marcado. Desmarque a opção ou corrija os dados:
+
+> «O ativo “*Monitor da receção*” não pode ser de reduzido valor: o custo unitário está acima do limite ou faz parte de um conjunto depreciado como um todo (DR 25/2009, art. 19.º). Desmarque a opção ou corrija os dados.»
+
+{/* Nota interna (DOCS-063 req. 46233, lote v23-AC, master 97b34fac3, docs_demo_v23ac_test, porta 8482): com um utilizador criado só com o perfil Contabilista (Empresa Demonstração, Lda), por clique na ficha do «Portátil da receção» (cópia da Impressora multifunções, 2.400,00, posto em uso e com o quadro calculado por RPC só na cópia): linha de 40,00 mudada para 5.000 → recusa da quota acima de 100 %; categoria «Ativos fixos tangíveis em curso» (classe 45, conta 453, criada por RPC só na cópia) → recusa do investimento em curso. Nada ficou gravado. Componente de outra empresa: com um ativo «Servidor da sede» criado por RPC na Empresa Teste Portugal, o campo Ativo principal não o propõe (só os 8 ativos da Empresa Demonstração e Criar): a recusa não se alcança no ecrã e não se cita. Defeito do produto (LOW; auditoria docs-aud-v23ac, master 97b34fac3; cartão a abrir pelo Gestor): a recusa da quota acima de 100 % diz «A depreciação contabilístico» (concordância) e mostra os valores sem «€» (7.360,00 e 2.400,00). A citação do artigo é a do ecrã de hoje, tal e qual: atualizá-la quando a correção entrar em master. */}
+{/* Nota interna (DOCS-063 req. 46233, lote v23-X, 08/11/2026, master cebcb888d, docs_demo_v23x_test): com um utilizador criado só com o perfil Contabilista, por clique em Contabilidade › Lançar › Terceiros e ativos › Ativos fixos › Novo: nome «Computador portátil», faixa da sugestão com a taxa [II-2240] Computadores e sem categoria; Usar a sugestão gravou o rascunho com essa taxa e a categoria vazia (lido por RPC; ficou o rascunho AF/00009 na cópia). O campo do código da etiqueta não está entre os campos da ficha (código igual ao do ativo, AF/00009): a recusa da etiqueta repetida não se alcança ao gravar. Não provocados neste lote (orçamento): investimento em curso (a demonstração não tem categoria da classe 45), quota acima de 100 % e componente de outra empresa; continuam fora do artigo. */}
+{/* Nota interna (v16-RESTOS, master 255d77e63): as mensagens desta secção vieram por clique com o Contabilista. Por provocar: ver LOTE_V16-RESTOS. Lote v22-B (06/11/2026, master d83bdf7ae): as duas mensagens repetidas desta secção (Condição = Usado e ciclo de componentes) saíram; os nomes de exemplo «Caso T» e «Caso U» passaram a *nome do ativo*. Com um utilizador só com o perfil Contabilista: a ficha nova «Impressora da receção» deu por clique a recusa de Pôr em uso do início do artigo (sem categoria, a primeira falta citada é a data e a vida útil); o botão Pôr em uso aparece a este perfil; a recusa de alterar um ativo com períodos processados (AF/00007) também. */}
+
+## Resultado esperado
+
+A ficha grava sem mensagem. Depois de **Pôr em uso**, o estado passa a **Em uso** e o **Plano de depreciação** mostra as quotas.
+
+## Quando contactar o suporte
+
+- A mensagem aparece com todos os dados corretos.
+- **Pôr em uso** não dá mensagem, o ativo continua **Em preparação** e os dados estão completos.
+
+## Informação a enviar
+
+- O código do ativo (por exemplo `AF/00008`) e a empresa.
+- O texto completo da mensagem, copiado do ecrã.
+- O perfil com que entrou e o botão que carregou.

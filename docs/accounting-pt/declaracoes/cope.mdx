@@ -1,0 +1,120 @@
+---
+id: cope
+slug: /accounting-pt/cope
+title: Como preparar a comunicação COPE ao Banco de Portugal
+sidebar_label: Comunicação COPE (Banco de Portugal)
+sidebar_position: 8
+description: Ver se a empresa está sujeita à COPE, gerar as linhas das operações com o estrangeiro, classificá-las, gerar o ficheiro do mês e conferir os totais, sem enviar nada ao Banco de Portugal.
+keywords: [COPE, Banco de Portugal, operações e posições com o exterior, comunicação ao Banco de Portugal, limiar de 250 000 euros, código estatístico das operações, Instrução 27/2012, ficheiro COPE, linhas do COPE, código da instituição financeira, conta bancária externa]
+doc_id: DOC-0167
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/declaracoes/calendario-fiscal, accounting-pt/declaracoes/relatorio-de-gestao]
+---
+
+## Para que serve?
+
+As empresas com muitas operações com entidades de outros países têm de as comunicar ao Banco de Portugal (a «COPE»: comunicação de operações e posições com o exterior). O fiscaldoo faz três coisas: **avalia** por ano se a empresa passou o limiar; **cria uma linha** por cada fatura ou nota de crédito de um cliente ou fornecedor de outro país; e **gera o ficheiro do mês** com as linhas já classificadas, com uma conferência dos totais. **Não comunica nada ao Banco de Portugal:** o ficheiro descarrega-se e entrega-se na aplicação do Banco, fora do fiscaldoo.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o limiar anual (250.000,00 € desde 15/03/2024), o prazo de início do reporte, a escolha do código estatístico de cada operação e a leitura de «Saída» e «Entrada» nas notas de crédito (Instrução do Banco de Portugal n.º 27/2012, com a redação da Instrução n.º 4/2024).</span>
+
+## Quando utilizar?
+
+- No início de cada ano e sempre que o painel avisar que a empresa está **Perto do limiar** ou **Sujeita à COPE**.
+- Todos os meses em que a empresa já está a reportar: gere as linhas do mês, classifique-as e gere o ficheiro.
+- **Não** serve para o IVA das operações com o estrangeiro nem para a declaração recapitulativa: são outros ecrãs (ver o artigo do calendário fiscal).
+
+## Onde encontrar?
+
+**Contabilidade › Declarar › Declarações anuais › O que há para fazer com as declarações anuais?**, grupo **Mapas e ficheiros**, linha **COPE (Banco de Portugal)**. Perfil **Contabilista**. A lista abre com quatro botões: **Verificar o estado do COPE**, **Linhas do COPE**, **Gerar as linhas do COPE** e **Ficheiro COPE**.
+
+## Antes de começar
+
+- Perfil do exemplo: **Contabilista**, que faz todos os passos, incluindo o código do banco (passo 6). O **Auditor / ROC** não tem o menu **Declarar**, por isso não chega aqui pelos menus. Com a lista aberta por uma ligação, só vê o botão **Linhas do COPE** (consulta): não verifica, não classifica e não gera ficheiros.
+- Exemplo: Empresa Demonstração, Lda, 2026, com 7 documentos com clientes e fornecedores de outros países (Estados Unidos, Alemanha, Espanha). Os terceiros e os montantes são **inventados**.
+- Cada cliente ou fornecedor do estrangeiro precisa de ter o **país** preenchido, senão o documento não entra (o ecrã conta-os em «Documentos sem país do Terceiro»).
+- **Nota sobre o exemplo.** A empresa de demonstração está **Dispensada** (2,4 % do limiar). Gera-se na mesma as linhas e o ficheiro, para mostrar o percurso; numa empresa dispensada não há comunicação a fazer. O exemplo supõe que os pagamentos e recebimentos passaram por **contas bancárias fora de Portugal** (ver «Conta interna» abaixo).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra o painel das declarações anuais e carregue em **COPE (Banco de Portugal)**. A lista tem uma linha por empresa e ano: 2026, **Total com o exterior** 5.992,87 €, **Limiar anual de isenção** 250.000,00 €, **Limiar anual atingido** 2,4 %, **Obrigatoriedade** «Dispensada».
+   ![Lista das avaliações COPE com os botões Verificar o estado do COPE, Linhas do COPE, Gerar as linhas do COPE e Ficheiro COPE, e a linha de 2026 Dispensada](/images/accounting-pt/cope/01-avaliacoes.png)
+2. Carregue em **Verificar o estado do COPE** para recalcular o ano em curso (o fiscaldoo também o repete sozinho todos os dias). Abre a **Avaliação COPE**: **Entradas** 1.560,00 €, **Saídas** 4.432,87 €, **Total com o exterior** 5.992,87 €, **Mês de maior movimento** setembro, com 1.376,15 €, **Limiar mensal** 250.000,00 € e **Limiar mensal atingido** 0,55 %, **Documentos com o exterior** 7 e **Documentos sem país do Terceiro** 0. A barra mostra uma de quatro situações: **Dispensada**, **Sujeita à COPE** (o total do ano chegou ao limiar), **Sujeita: iniciar o reporte no prazo de 4 meses** (um mês passou o limiar mensal: aparece também **Iniciar o reporte até**; com 300.000,00 € em outubro de 2026, 28/02/2027) ou **Não é possível avaliar** (falta a regra do limiar para essa data). Em baixo, o **Histórico dos limiares** guarda as regras com a respetiva instrução do Banco.
+   ![Avaliação COPE de 2026: dispensada, com os totais do ano e o mês de maior movimento](/images/accounting-pt/cope/03-avaliacao.png)
+3. Carregue em **Gerar as linhas do COPE**. Escolha **De** 01/01/2026 e **Até** 31/10/2026 (a janela propõe só o mês corrente) e carregue em **Gerar**. O fiscaldoo cria **uma linha por documento** publicado com um terceiro não residente: 7 linhas, todas **Por classificar**. A janela avisa: «As linhas que já existem mantêm-se».
+   ![Janela Gerar as linhas do COPE com as datas De e Até](/images/accounting-pt/cope/06-gerar-linhas.png)
+4. Carregue em **Linhas do COPE**: abre com o filtro **Por classificar**. Cada linha traz a **Data**, o **Documento**, o **Terceiro**, o **Sentido** (**Entrada** ou **Saída**), o **Montante** na moeda do documento e o **País da contraparte** (vem do terceiro). Falta o **Código estatístico** e o **Tipo de conta**.
+   ![Lista das linhas COPE por classificar, com o código estatístico e o tipo de conta em branco](/images/accounting-pt/cope/02-linhas-por-classificar.png)
+5. **Classificar várias linhas de uma vez.** Marque as 5 linhas de serviços (Cloud Services e Harbor Tech, dos Estados Unidos, e Software Berlin) e carregue em **Classificar**. Escolha o **Código estatístico** D2020 («Serviços de informática») e o **Tipo de conta** «Conta bancária externa», e carregue em **Aplicar**. A janela diz: «Só os campos que preencher são aplicados a todas as linhas selecionadas». Se preencher o **País da contraparte** ele muda em **todas** as linhas marcadas, por isso deixe-o em branco quando as linhas são de países diferentes. Faça o mesmo às duas linhas da Bodega Sol Ibérica (fatura e nota de crédito) com o código A1010 («Exportação e importação de mercadorias») e o tipo **Conta interna (banco residente)**.
+   ![Janela Classificar linhas COPE com o código estatístico e o tipo de conta](/images/accounting-pt/cope/04-classificar.png)
+6. **Completar cada linha.** Uma linha só passa a **Classificada** quando tem tudo o que o Banco pede, e o ecrã diz o que falta. Há dois casos:
+   - **Conta bancária externa** ou **Outra conta externa:** abra a linha e escolha o **País da conta externa** (no exemplo, o mesmo da contraparte).
+   - **Conta interna (banco residente):** a linha mostra «Falta preencher: Conta bancária com código de instituição financeira». Escolha a conta da empresa em **Conta bancária (residente)**. Por baixo aparece **Código da instituição financeira**: se vier vazio, escreva os 4 algarismos que o Banco de Portugal atribuiu ao banco. O código grava-se na conta bancária da empresa, sem abrir a ficha da conta, e o histórico da linha regista-o: «O código da instituição financeira da conta PT50 9999 0000 1234 5678 9012 2 passou de - para 0033.» Nas outras linhas com a mesma conta, o código já aparece. No exemplo usou-se 0033, um código de exemplo. {/* Nota interna (DOCS-057 req. 46425, lote v23-I, master 5228a94bd, docs_demo_v23i_test): depois do ACC-266, por clique com utilizadores criados só com um perfil: Contabilista (Perfil contabilista) gravou 0033 na linha FT D26/5 (antes, «12» recusado com a mensagem de «Problemas frequentes») e a linha passou a Classificada; Responsável fiscal (só esse grupo) gravou 0035 e 0033 na linha NC D26/1, com as duas mensagens no histórico. Linhas geradas e as duas da Bodega pré-classificadas (A1010, Conta interna, Espanha) por RPC com o utilizador Contabilista. Captura 09 (ficha da conta bancária) retirada: o passo já não a abre. */}
+
+   Guarde a linha: passa a **Classificada** e sai da lista «Por classificar».
+   - Para **recomeçar** uma linha, use **Repor classificação** (pede confirmação: «A classificação desta linha vai ser limpa. Continuar?»). Atenção: repõe também o **País da contraparte**, que tem de voltar a escolher. Uma linha nunca se apaga.
+   ![Linha COPE Classificada: o código estatístico A1010, o tipo de conta Conta interna (banco residente), a conta bancária da empresa, o código da instituição financeira 0033 e o país da contraparte Espanha](/images/accounting-pt/cope/05-linha.png)
+7. Carregue em **Ficheiro COPE**, escolha o **Ano** (2026) e o **Mês** (02) e carregue em **Gerar ficheiro**. A janela só cria o ficheiro: «nada é enviado». Aparece o nome do ficheiro (BOP_COPE.599999993.202602.….xml, com as 2 linhas, o código A1010, o tipo de conta interna e o código do banco 0033) e a conferência, com **Subtotais iguais aos do ecrã** marcado e a frase «Os subtotais do ficheiro são iguais aos do ecrã», por país: Espanha, Entradas 600,00, Saídas 600,00, Total 1.200,00, 2 linhas, **Igual**. Carregue no nome do ficheiro para o descarregar.
+   ![Janela Ficheiro COPE com o ano e o mês](/images/accounting-pt/cope/07-ficheiro-janela.png)
+   ![Resultado: nome do ficheiro e conferência dos totais por país, com o resultado Igual](/images/accounting-pt/cope/08-ficheiro-resultado.png)
+8. Entregue o ficheiro na aplicação de recolha do Banco de Portugal, **fora do fiscaldoo**, e corrija o que ela recusar. O fiscaldoo avisa na própria janela: o ficheiro segue o formato do manual do Banco mas **não foi verificado pelo esquema do próprio Banco**.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, **COPE (Banco de Portugal)**, no painel das declarações anuais, abre a mesma lista, com **Verificar o estado do COPE**, **Linhas do COPE**, **Gerar as linhas do COPE** e **Ficheiro COPE**, e a empresa de demonstração aparece como **Dispensada** (2,4 % do limiar) (visto com um utilizador só com o perfil **Contabilista**). O painel tem as mesmas entradas **Contas bancárias (código COPE da instituição)**, **Operações com o estrangeiro por código** e **Operações com o estrangeiro por país**.
+
+{/* Nota interna (lote EE-04, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee04_test, cópia da odoo20_ee_test com EE_FASE=construir, 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0167. Contabilista: lista do COPE de 2026 (Total com o exterior 5.992,87 €, limiar 250.000,00 €, mês de maior movimento 1.376,15 €, 2,4 %, Dispensada). Não gerados no Enterprise: linhas e ficheiro. Ver reports/LOTE_EE-04.md. */}
+
+## Resultado esperado
+
+- Cada ano com uma avaliação («Dispensada» ou «Sujeita…») e os totais explicados.
+- Todas as linhas do mês **Classificadas**; um ficheiro XML por mês. No exemplo, o de fevereiro de 2026 (2 linhas de Espanha, conta interna); o do mês sem linhas não se gera.
+- A conferência com o resultado **Igual** em todos os países (entradas, saídas, totais e número de linhas).
+
+## Notas importantes
+
+- **Código da instituição.** Está na conta bancária da empresa, com um código por banco, e escreve-se na linha COPE (passo 6). O fiscaldoo só confere que tem 4 algarismos: não confere se é o código certo do banco. <span className="fd-pending">Pendente de validação por contabilista certificado: a tabela de códigos do manual do Banco de Portugal (secção 7.4) e o código de cada banco da empresa.</span>
+- **Os tipos de conta** são cinco: **Conta interna (banco residente)**, **Conta bancária externa** e **Outra conta externa** (estas pedem o país da conta), **Conta de compensação** e **Sem movimento de conta** (estas duas não pedem conta nem país da conta). <span className="fd-pending">Pendente de validação por contabilista certificado: qual usar em cada situação (por exemplo, uma fatura e a sua nota de crédito compensadas entre si).</span>
+- **Notas de crédito.** A nota de crédito do cliente da Bodega (NC D26/1) aparece com o sentido **Saída**, o oposto da fatura (**Entrada**), e o ficheiro regista ambas com o montante em valor absoluto. <span className="fd-pending">Pendente de validação por contabilista certificado: se o Banco quer a nota de crédito como saída com o mesmo código, ou outro tratamento.</span>
+- **Regras de sugestão.** O perfil **Contabilista** pode criar regras de sugestão. Marque as linhas e carregue em **Aplicar sugestões**: preenche só o **Código estatístico** e o **Tipo de conta** que estejam vazios, com a primeira regra que serve a linha. Não preenche os países nem mostra mensagem, por isso a linha pode continuar **Por classificar**. No exemplo, uma regra da Alemanha com D2020 preencheu o código e a linha ficou à espera do **País da contraparte**.
+- **Valores no ficheiro.** O montante é o da moeda do documento (1500.00 USD), com ponto decimal; a conferência compara em euros.
+- **Quem pode o quê.** O Contabilista faz tudo isto. O Contabilista grava o código do banco na própria linha (passo 6). O Auditor / ROC consulta as linhas. O Auditor / ROC não altera a conta bancária: «O seu perfil (Auditor) é só de leitura».
+
+## Problemas frequentes
+
+### «O ficheiro COPE de 02/2026 não pode ser gerado: 1 linha(s) ainda estão «Por classificar». Classifique-as em «Linhas COPE» (o Banco de Portugal rejeita registos incompletos) e volte a gerar o ficheiro.»
+
+- **Causa:** o mês tem pelo menos uma linha por classificar (no exemplo, a fatura da Bodega estava sem o país da conta externa).
+- **O que fazer:** abra **Linhas do COPE** (filtro **Por classificar**), complete a linha e volte a gerar. A coluna **Obrigatoriedade** e o campo «Falta preencher» dizem o que falta.
+
+### «Não há linhas COPE em 07/2026. Use primeiro «Gerar linhas COPE» para o período.»
+
+- **Causa:** escolheu um mês sem documentos com o estrangeiro (ou ainda não gerou as linhas desse mês).
+- **O que fazer:** gere as linhas do período (passo 3) ou escolha o mês certo.
+
+### «A data de início não pode ser posterior à data de fim. Escolha um período que comece primeiro.»
+
+- **Causa:** em **Gerar as linhas do COPE**, a data **De** é posterior à data **Até** (por exemplo, De 01/11/2026 e Até 31/10/2026).
+- **O que fazer:** corrija a data **De**.
+
+### «O código de instituição financeira «12» não é válido: tem de ter quatro dígitos (o código que o Banco de Portugal atribuiu ao banco).»
+
+- **Causa:** o **Código da instituição financeira** escrito na linha (passo 6) não tem 4 algarismos. A janela **Erro de Validação** traz esta mensagem.
+- **O que fazer:** escreva os 4 algarismos, com os zeros à esquerda (por exemplo, 0033).
+
+### A linha não passa a «Classificada»
+
+- **Causa:** falta um destes campos: **Código estatístico**, **Tipo de conta**, **País da contraparte** e, conforme o tipo de conta, o **País da conta externa** ou a conta bancária com o código da instituição.
+- **O que fazer:** abra a linha: o separador mostra **Falta preencher: …**.
+
+{/* Nota interna (DOCS-046, DOC-0167, risco alto): visto em docs_demo_v6p1b_test (master cf08b95ce, porta 8171) com demo.contabilista: avaliação, gerar linhas, classificar em lote e linha a linha, Conta interna com o código 0033 pela ficha da conta (Link interno), código de 2 algarismos recusado, duas recusas do ficheiro, ficheiro de fevereiro descarregado e lido (id_banco 0033). Banco de Portugal NÃO contactado. Auditor recusado por chamada ao servidor. V3A5-19 resolvido; V3A5-21 resolvido (mês e valores); auditoria de 03/11 (master 584213fd9): Aplicar sugestões, os 5 tipos de conta, datas trocadas e Sujeita com reporte em 4 meses provocados; Sujeita à COPE sem nenhum mês acima do limiar não provocada. A conta bancária só se abre a partir da linha: o menu Contactos › Configurar › Contas bancárias não aparece ao Contabilista nem ao Responsável fiscal (defeito V6P1B-02).  Lote v22-C (DOCS-057 req. 45817, master d83bdf7ae, docs_demo_v22c_test): capturas 01, 02 e 05 refeitas com um utilizador só Contabilista, colunas alargadas pelo puxador do cabeçalho; linhas geradas e NC D26/1 classificada por RPC com esse utilizador. Passo 6 por clique com utilizadores de um só perfil: Contabilista e Responsável fiscal abrem a conta bancária só de leitura; o Contabilista Certificado gravou o 0033 e a linha passou a Classificada sozinha (defeito no relatório do lote). */}
+
+{/* Nota interna (v23-T, DOC-0167, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

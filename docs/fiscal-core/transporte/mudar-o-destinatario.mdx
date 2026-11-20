@@ -1,0 +1,91 @@
+---
+id: mudar-o-destinatario
+slug: /fiscal-core/mudar-o-destinatario
+title: Como mudar o destinatário de uma guia já emitida
+sidebar_label: Mudar o destinatário
+sidebar_position: 5
+description: Quando quem recebe a mercadoria muda depois de a guia ser emitida, regista na guia o documento adicional de transporte com o destinatário anterior, o novo e o motivo.
+keywords: [mudar o destinatário, alterar o destinatário, mudança de destinatário, mudanca de destinatario, guia emitida, guia de transporte, documento adicional de transporte, documento de transporte adicional, novo destinatário, alterações da guia, alteracoes da guia]
+doc_id: DOC-0447
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 73d6a5fed)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/transporte/emitir-uma-guia-de-transporte, fiscal-core/transporte/alterar-o-local-de-descarga, fiscal-core/transporte/bens-nao-aceites]
+---
+
+## Para que serve?
+
+Depois de emitida, a guia de transporte não se edita: cada alteração tem a sua entrada no menu **Ações**. **Mudar o destinatário** serve para quando a mercadoria passa a ir para outra pessoa ou empresa. O fiscaldoo não altera a guia: emite um documento adicional de transporte que diz quem era o destinatário, quem passa a ser e porquê, e que fica na própria guia.
+
+## Quando utilizar?
+
+- Durante o transporte, o cliente pede que a mercadoria seja entregue a outra empresa.
+- O destinatário indicado na guia estava errado e a mercadoria ainda não foi entregue. <span className="fd-pending">Pendente de validação por contabilista certificado: se este caso se resolve com o documento adicional ou se pede outro documento.</span>
+- Não use esta entrada quando só muda a morada de entrega: veja [Como alterar o local de descarga de uma guia já comunicada](/fiscal-core/alterar-o-local-de-descarga).
+- Não use esta entrada quando o cliente recusa a mercadoria na entrega: veja [Como registar bens não aceites pelo destinatário](/fiscal-core/bens-nao-aceites).
+
+## Onde encontrar?
+
+**Faturação › Faturar › Guias de transporte**, abra a guia e carregue em **Ações › Mudar o destinatário**.
+
+![Menu Ações de uma guia de transporte, com a entrada Mudar o destinatário assinalada, entre Alterar o local de descarga e Bens não aceites](/images/fiscal-core/mudar-o-destinatario/01-botao-mudar-o-destinatario.png)
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado** (visto no ecrã com esse perfil e com o administrador). Os perfis **Contabilista** e **Administrativo** não têm **Mudar o destinatário** no menu **Ações**: o **Contabilista** só vê **Cancelar** e o **Administrativo** só vê **Registar o código da AT à mão** e **Cancelar**.
+- A guia está emitida: [Como emitir uma guia de transporte e obter o código da AT](/fiscal-core/emitir-uma-guia-de-transporte).
+- O novo destinatário existe como contacto. Se não existir, crie-o antes em **Faturação › Clientes e artigos › Clientes**.
+- A guia tem destinatário. Uma guia global não o tem (ver «Problemas frequentes»).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a guia em **Faturação › Faturar › Guias de transporte**. No exemplo, a guia da entrega `DEM/OUT/00004`, para a **Escola de Condução Rota, Lda**.
+2. No topo da guia, carregue em **Ações** e escolha **Mudar o destinatário**.
+3. Leia o **Destinatário atual** (no exemplo, «Escola de Condução Rota, Lda (PT599990040)»). O campo **Alteração** já diz **Mudança de destinatário**.
+4. Em **Novo destinatário**, escolha o contacto (no exemplo, `Padaria Aurora, Lda`).
+5. Em **Motivo**, escreva porque muda (no exemplo, «O cliente pediu a entrega a outra empresa»).
+   ![Janela Mudar o destinatário com o destinatário atual Escola de Condução Rota, Lda, o novo destinatário Padaria Aurora, Lda e o motivo preenchidos](/images/fiscal-core/mudar-o-destinatario/02-janela-mudar-o-destinatario.png)
+6. Carregue em **Emitir o documento adicional**. A janela fecha. Na guia, no separador **Guia de transporte**, a tabela das alterações (colunas **Alterado em**, **Alteração**, **Novo local de descarga (texto)**, **Novo destinatário (texto)**, **Motivo** e **Alterado por**) ganha uma linha com o **Alterado em** (data e hora), a **Alteração** («Destinatário»), o **Novo destinatário (texto)** (no exemplo «Padaria Aurora, Lda», NIF PT599990015, Rua de Demonstração, 1, Porto 4000-100), o **Motivo** e o **Alterado por**. Visto numa guia criada para este passo, porque a `DEM/OUT/00004` da demonstração não se altera (`GT D26/5`, para a Escola de Condução Rota, Lda, com o ATCUD e os carateres da assinatura de sempre): depois de emitir, o número, o ATCUD, o destinatário da guia e a mensagem do código QR ficaram como estavam.
+
+</StepByStep>
+
+## Resultado esperado
+
+- A guia mantém o número, o ATCUD e o **Código AT**. A janela avisa, no topo, que a guia não é alterada e que o documento adicional se imprime a partir dela: no separador **Guia de transporte**, carregue na linha do documento e depois em **Imprimir**.
+- O documento adicional diz o destinatário anterior, o novo e o motivo.
+- Se o transporte já começou, o documento adicional também acompanha a mercadoria: veja o mesmo caso em [Como alterar o local de descarga de uma guia já comunicada](/fiscal-core/alterar-o-local-de-descarga). <span className="fd-pending">Pendente de validação por contabilista certificado: o que a lei exige quando o destinatário muda durante o transporte, e se a AT tem de ser avisada.</span>
+
+## Notas importantes
+
+- A mudança de destinatário não mexe no stock nem na fatura. Se a fatura já saiu para o destinatário anterior, a correção da fatura é outro assunto: veja [Como corrigir uma fatura](/fiscal-core/corrigir-uma-fatura).
+- O novo destinatário tem de ser diferente do atual, e o **Motivo** é obrigatório.
+
+## Problemas frequentes
+
+### «Há campos obrigatórios por preencher…»
+
+- **Sintoma:** ao carregar em **Emitir o documento adicional** sem o **Motivo**, aparece «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.» e o campo **Motivo** fica a vermelho.
+- **O que fazer:** escreva o motivo e carregue outra vez.
+
+### «O novo destinatário é igual ao atual.»
+
+- **Sintoma:** a janela **Operação inválida** diz «O novo destinatário é igual ao atual.».
+- **Causa:** o contacto escolhido em **Novo destinatário** é o que a guia já tem.
+- **O que fazer:** carregue em **Fechar**, escolha outro contacto e repita.
+
+### «Esta guia não tem destinatário (guia global)…»
+
+- **Sintoma:** a mensagem diz «Esta guia não tem destinatário (guia global): não há destinatário a mudar. Emita antes a guia da entrega.» Visto numa guia global criada para o provar (`GT D26/6`, sem destinatário): a janela mostrou exatamente esta mensagem.
+- **O que fazer:** numa guia global não há destinatário a mudar. Emita a guia da entrega para o cliente.
+
+### Não encontro «Mudar o destinatário» no menu Ações
+
+- **Causa:** o seu perfil não tem a entrada (veja [Como alterar o local de descarga de uma guia já comunicada](/fiscal-core/alterar-o-local-de-descarga)) ou a guia ainda não foi emitida.
+- **O que fazer:** peça a alteração a quem tem o perfil **Contabilista certificado**.
+
+{/* Nota interna (lote 100, DOCS-046, risco normal, secção 9 do relatório de validação de 19/11/2026: «guias: faltam alterações e recusas»): as alterações do local de descarga e os bens não aceites já tinham artigo; faltava a mudança de destinatário. Visto a 19/11/2026 em docs_demo_100_test (master 73d6a5fed, porta 9860) com o administrador, na guia DEM/OUT/00004 (GT D26/4): menu Ações (Registar o código da AT à mão, Alterar o local de descarga, Mudar o destinatário, Bens não aceites, Anular a guia, Validar, Imprimir, Cancelar), janela com Guia de transporte, Alteração, Destinatário atual, Novo destinatário, Motivo; recusas «Há campos obrigatórios por preencher…» (sem motivo) e «O novo destinatário é igual ao atual.» (com o mesmo destinatário). Não se carregou em «Emitir o documento adicional»: não se alteram guias da demonstração. Auditoria 19/11/2026: menu Ações visto com demo.gestor_contabilidade (Contabilista certificado: Registar o código da AT à mão, Alterar o local de descarga, Mudar o destinatário, Bens não aceites, Anular a guia, Cancelar), demo.contabilista (só Cancelar) e demo.faturacao (Administrativo: Registar o código da AT à mão, Cancelar); captura 02 refeita sem cortes. */}

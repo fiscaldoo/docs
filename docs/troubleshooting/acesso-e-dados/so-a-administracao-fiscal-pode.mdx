@@ -1,0 +1,64 @@
+---
+id: so-a-administracao-fiscal-pode
+slug: /troubleshooting/so-a-administracao-fiscal-pode
+title: Aparece «Só o administrador pode reabrir um exercício fiscal» ou «Peça ao administrador para ligar a IA»
+sidebar_label: «Só o administrador pode reabrir…»
+sidebar_position: 4
+description: Reabrir um exercício fechado e ligar o Copiloto à IA são do administrador, ou de quem tem o acesso extra Administração fiscal; nenhum valor do campo Perfil o dá, e não é a Autoridade Tributária.
+keywords: [administração fiscal, administracao fiscal, só a administração fiscal, so a administracao fiscal, administrador fiscal, reabrir exercício, reabrir exercicio, reabrir o exercício fiscal, ligar a IA, copiloto desligado, perfil, sem permissão, sem permissao]
+doc_id: DOC-0410
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 54a9f5f03)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-permissao, administration/utilizadores-e-permissoes/perfis-e-permissoes, troubleshooting/acesso-e-dados/so-o-responsavel-fiscal-pode]
+---
+
+## Sintoma
+
+Uma operação que desfaz um fecho ou muda uma regra da empresa é recusada com uma mensagem que manda pedir ao administrador ou que nomeia o acesso extra **Administração fiscal**.
+
+**Administração fiscal** é um acesso do fiscaldoo, não a Autoridade Tributária. A mensagem não vem da AT e nada foi enviado.
+
+## Mensagem
+
+Exemplos copiados da base de demonstração em português:
+
+- Com o perfil **Contabilista certificado**, ao reabrir o exercício de 2025, já fechado (pela integração; no ecrã, a reabertura não está disponível a este perfil):
+  > «Só o administrador pode reabrir um exercício fiscal.»
+- Com os perfis **Contabilista** e **Contabilista certificado**, no ecrã **Copiloto**, por baixo de **IA desligada**:
+  > «O Copiloto está desligado nesta empresa. Peça ao administrador para ligar a IA.»
+- Com o perfil **Contabilista certificado**, ao criar uma chave de assinatura (pela integração):
+  > «Não tem permissão para alterar «Chave RSA de assinatura da certificação PT (só a parte pública e metadados)». … Quem faz: quem tem o acesso extra «Administração fiscal». Só o administrador dá esse acesso (Definições › Utilizadores e empresas › Utilizadores, «Ajustes avançados» do utilizador).»
+
+As duas primeiras dizem «o administrador» porque nenhum valor do campo **Perfil** dá este acesso.
+
+## Causas verificadas
+
+A **Administração fiscal** é o último nível do campo **Localização PT — Faturação, contabilidade e fiscal** e inclui os anteriores (**Faturação**, **Contabilista**, **Contabilista Certificado / Gestor fiscal**). Fica com as operações que desfazem o que outro perfil fechou ou que mudam regras para todos, por exemplo reabrir um exercício fechado e ligar a IA do Copiloto. Nenhum valor do campo **Perfil** a dá: o administrador tem-na, e só a tem mais alguém se o administrador a der nos **Ajustes avançados**. Ao perfil **Contabilista certificado**, a reabertura é recusada (mensagem acima) e o Copiloto mostra o mesmo aviso «Peça ao administrador para ligar a IA.».
+
+## O que confirmar
+
+1. Se a operação é mesmo necessária. Reabrir um exercício fechado volta a permitir lançamentos num ano que já foi declarado: decida-o com o contabilista certificado antes de o pedir.
+2. Quem na empresa tem o acesso **Administração fiscal** (o administrador tem-no sempre). O administrador vê-o na ficha de cada utilizador, em **Ajustes avançados**, grupo **LOCALIZAÇÃO PT**.
+
+## Como resolver
+
+- **Peça a operação ao administrador**, ou a quem tem o acesso extra **Administração fiscal**. Este acesso dá-se a poucas pessoas, de propósito.
+- **Se a tarefa passa a ser sua:** o administrador escolhe **Administração fiscal** em **Localização PT — Faturação, contabilidade e fiscal**, nos **Ajustes avançados**. O separador **Perfil** não tem este nível: [Como dar a cada utilizador o perfil certo](/administration/perfis-e-permissoes).
+
+**Quem faz:** o administrador, ou quem tem o acesso extra Administração fiscal; é o administrador quem dá esse acesso.
+
+## Resultado esperado
+
+Feita por quem tem Administração fiscal, a operação passa e fica registada em nome dessa pessoa.
+
+## Quando contactar o suporte
+
+- A mensagem aparece a um utilizador com **Administração fiscal** escolhido nos **Ajustes avançados**.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com o exercício ou o registo em causa e a mensagem completa.

@@ -1,0 +1,153 @@
+---
+id: dmr
+slug: /payroll-pt/dmr
+title: Como enviar a declaração mensal de remunerações (DMR) à AT
+sidebar_label: Declaração mensal de remunerações (DMR)
+sidebar_position: 1
+description: Preparar no fiscaldoo a DMR do mês a partir dos salários pagos, descarregar o ficheiro, entregá-lo no Portal das Finanças e registar a entrega e a resposta da AT.
+keywords: [DMR, declaração mensal de remunerações, declaracao mensal de remuneracoes, DMR AT, entregar DMR, ficheiro DMR, Portal das Finanças, Portal das Financas, rendimentos do trabalho dependente, retenção de IRS, retencao de IRS, Quadro 5, Quadro 4, prazo da DMR, dia 10]
+doc_id: DOC-0223
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 25a465133)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/pagar-os-salarios, payroll-pt/declarar/declaracao-a-seguranca-social]
+---
+
+## Para que serve?
+
+A declaração mensal de remunerações (DMR) diz à Autoridade Tributária e Aduaneira (AT), trabalhador a trabalhador, o que a empresa pagou no mês, o IRS que reteve e as contribuições obrigatórias. O fiscaldoo prepara a DMR a partir dos salários pagos nesse mês e gera o ficheiro no formato da AT.
+
+O fiscaldoo não envia nada à AT. A entrega faz-se no Portal das Finanças; depois regista-se no fiscaldoo que foi entregue e o que a AT respondeu.
+
+## Quando utilizar?
+
+- Todos os meses em que houve salários pagos, depois de [pagar os salários](/payroll-pt/pagar-os-salarios).
+- Quando a AT responder à entrega (aceite ou rejeitada), para o registar.
+
+A DMR de um mês já gerada ou entregue não se elimina nem se altera: corrige-se com uma declaração de substituição (ver [Corrigir uma DMR já entregue](#corrigir-uma-dmr-já-entregue)).
+
+## Onde encontrar?
+
+**Salários › Declarar › Declaração mensal de remunerações (DMR)** › **Novo**
+
+No ecrã **O que há para fazer este mês?**, o passo 6, **Entregar as declarações**, e o contador **Declarações por entregar** lembram as DMR que faltam.
+
+## Antes de começar
+
+- **Preparar** a DMR (criar, gerar, validar e descarregar o ficheiro): perfil **Processador de salários**, com ou sem o acesso extra **Administrador de Salários**.
+- **Registar a entrega e a resposta da AT**: o acesso extra **Submissor de declarações**, que nenhum valor do campo **Perfil** traz. O administrador dá-o em **Ajustes avançados**, na linha **Salários PT — Submissor de Declarações**. Sem ele, os botões **Submeter** e **Registar …** não aparecem: com o perfil **Processador de salários** sozinho, a DMR **Validada** só mostra **Sem efeito**, **Gerar ficheiro de entrega** e **Descarregar ficheiro de entrega**.
+- Os salários estão pagos e o pagamento foi registado com **Banco executou** (a DMR declara o rendimento **pago** no mês, não o mês a que o salário diz respeito). O mês da DMR é o da data em que carregou em **Banco executou**: o fiscaldoo paga «hoje». No exemplo deste artigo, os salários de outubro foram pagos a 01/11/2026, por isso entram na DMR de **novembro**.
+- Tem à mão o código do serviço de finanças da empresa (quatro algarismos), o NIF do contabilista certificado e o NIF do representante legal.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Declarar › Declaração mensal de remunerações (DMR)** e carregue em **Novo**.
+2. Preencha o **Serviço de Finanças (Quadro 1)** com o código de quatro algarismos (com três ou com letras, o fiscaldoo recusa: «O código de serviço de finanças «111» não é válido. O que aconteceu: o código de um Serviço de Finanças tem 4 dígitos.»). O **NIF do declarante (Quadro 2)** é o da empresa e vem preenchido. O **Ano (Quadro 3)** vem com o ano de hoje; o **Mês (Quadro 3)** vem vazio: escolha o mês do **pagamento**, o da data do **Banco executou** (no exemplo, **Novembro**, mesmo que os salários sejam de outubro). O **Prazo de entrega** preenche-se sozinho (10/12/2026 para novembro de 2026).
+3. Em **Tipo de declaração (Quadro 6)**, deixe **1.ª declaração**. As outras opções são **Declaração de substituição** (ver [Corrigir uma DMR já entregue](#corrigir-uma-dmr-já-entregue)) e **Declaração ao abrigo da al. d) do n.º 1 do art. 119.º do CIRS (facto que altera o rendimento declarado)**.
+4. No Quadro 7, escreva o **NIF do Contabilista Certificado (Quadro 7)** e o **NIF do declarante / representante legal (Quadro 7)**. **Contabilista Certificado obrigatório** vem marcado; a caixa **Contabilista Certificado suplente** vem por marcar. <span className="fd-pending">Pendente de validação por contabilista certificado: quando se marca **Contabilista Certificado suplente** e quando a declaração dispensa o contabilista certificado.</span> Os campos **Justo impedimento — motivo**, **Justo impedimento — duração** e **Justo impedimento — data da ocorrência** só se preenchem numa entrega fora de prazo.
+5. Carregue em **Gerar**. A DMR passa a **Gerada**: o separador **Titulares (Quadro 5)** tem as linhas por trabalhador e o **Resumo (Quadro 4)** os totais. Até **Validar**, o **Serviço de Finanças**, o mês e os NIF ainda se corrigem; depois de **Validar**, todos os campos ficam só de leitura e um código errado já não se corrige nesta DMR.
+6. Confira o **Resumo (Quadro 4)** com o total dos recibos pagos no mês.
+   ![Separador Resumo (Quadro 4) da DMR com os salários de outubro pagos a 01/11/2026: rendimentos sujeitos 11.560,00, retenção 875,00, contribuições 1.271,60 e rendimentos não sujeitos 968,63](/images/payroll-pt/dmr/01-resumo-quadro-4.png)
+7. Carregue em **Validar**. A DMR passa a **Validada** e deixa de se poder alterar: confirme o **Serviço de Finanças** e os NIF antes.
+8. Carregue em **Gerar ficheiro de entrega** e depois em **Descarregar ficheiro de entrega**. O ficheiro tem o nome `DMR_<NIF da empresa>_2026_11_first.txt` (ano e mês da DMR), com 24 registos no exemplo (5 + 16 + 3): os registos de cabeçalho e de totais (001 a 005), 16 registos 006 (um por linha do Quadro 5, com os códigos A e A21) e três registos finais (009, 099 e 999).
+   ![Barra da DMR validada, com Descarregar ficheiro de entrega assinalado](/images/payroll-pt/dmr/02-descarregar-ficheiro-de-entrega.png)
+9. Entregue o ficheiro no Portal das Finanças, na área da declaração mensal de remunerações, e guarde o comprovativo que o Portal dá.
+10. Com o acesso extra **Submissor de declarações**, abra a DMR e carregue em **Submeter**. A DMR passa a **Submetida**.
+11. Carregue em **Registar a entrega à AT**. Na janela, confirme **Entregue em** (vem com a data de hoje), escreva a **Referência da Autoridade Tributária** que o Portal deu e junte o **Comprovativo** em **Escolher ficheiro**. Carregue em **Registar**. A DMR continua **Submetida** e o separador **Tentativas** mostra a tentativa com a **Resposta da AT** «À espera da resposta».
+    ![Janela Registar a entrega à Autoridade Tributária com os campos Entregue em, Referência da Autoridade Tributária e Comprovativo](/images/payroll-pt/dmr/04-janela-registar-a-entrega.png)
+12. Quando o Portal mostrar a resposta, carregue em **Registar como aceite** ou em **Registar como rejeitada**.
+
+</StepByStep>
+
+{/* Nota interna (DOCS-022): vídeo previsto (video=sim, corrente DOCS-006): DMR dos salários de outubro (mês de novembro), de «Novo» até «Descarregar ficheiro de entrega» (o registo da entrega fica para um segundo episódio). Entra como secção «Vídeo demonstrativo» depois de «Resultado esperado» quando existir. */}
+
+**Exemplo.** Os salários de outubro de 2026 (8 trabalhadores) foram pagos com **Banco executou** a 01/11/2026. A DMR de **novembro** de 2026, com prazo 10/12/2026, tem 16 linhas no Quadro 5: por trabalhador, uma com o tipo de rendimento **A — Rendimentos do trabalho dependente sujeitos (exceto os referidos com outros códigos)** e outra com o subsídio de alimentação, que o fiscaldoo declara à parte com o código **A21 — Subsídio de refeição (parte não sujeita)**. No Resumo (Quadro 4): rendimentos sujeitos 11.560,00 €, retenção de IRS 875,00 € e contribuições obrigatórias 1.271,60 €; rendimentos não sujeitos 968,63 €; total 12.528,63 €.
+
+### Corrigir uma DMR já entregue
+
+Uma DMR gerada ou entregue não se altera: faz-se outra do mesmo mês, com **Tipo de declaração (Quadro 6)** em **Declaração de substituição**.
+
+<StepByStep>
+
+1. Em **Salários › Declarar › Declaração mensal de remunerações (DMR)**, carregue em **Novo** e preencha como no passo 2 (o mesmo **Ano** e **Mês**, o **Serviço de Finanças** e os NIF).
+2. Em **Tipo de declaração (Quadro 6)**, escolha **Declaração de substituição** e carregue em **Gerar**. A substituição declara **todos** os recibos pagos do mês, como a original: no exemplo, 16 linhas, rendimentos 12.528,63 € e IRS 875,00 €, os mesmos da DMR aceite, porque nenhum recibo mudou. No topo, o bloco **Diferenças face à declaração que substitui** mostra, em **Substitui**, qual é a original e, em **Diferença: rendimento**, **Diferença: IRS retido**, **Diferença: contribuições** e **Diferença: quotas sindicais**, o que mudou face a ela (0,00 em todos no exemplo).
+3. Valide, descarregue o ficheiro e entregue-o no Portal das Finanças como a 1.ª declaração (passos 7 a 12).
+
+</StepByStep>
+
+Gerada a substituição, a DMR por substituir continua **Aceite**: o ecrã não a marca como substituída. Num mês em que corrigiu um recibo, a linha **DMR de substituição** da correção cria esta declaração (ver [Como corrigir um recibo já processado](/payroll-pt/corrigir-um-processamento)). Depois de pago o recibo corretivo, carregue em **Gerar** na substituição: no exemplo, um corretivo de 50,00 € passou o **Resumo** a 12.578,63 € de rendimentos e 1.277,10 € de contribuições, com **Diferença: rendimento** 50,00 e **Diferença: contribuições** 5,50. <span className="fd-pending">Pendente de validação por contabilista certificado: se a substituição deve ser entregue por inteiro (todos os trabalhadores do mês) ou só com os trabalhadores corrigidos, e o prazo para a entregar.</span>
+
+**O aviso de contas.** Nas duas DMR, depois de **Gerar**, vem a faixa «Antes de submeter: as contas do mês não batem certo…». Numa substituição, hoje, ela soma a declaração nova à que substitui: «Remuneração bruta: os recibos dizem 12.528,63 € e DMR diz 25.057,26 € (diferença de -12.528,63 €)» e o IRS «875,00 € … 1.750,00 €». A diferença não existe: o **Resumo** tem os 12.528,63 € certos. Confira sempre o **Resumo** com os recibos e ignore este aviso numa substituição. Junto vem «Esta declaração não tem diferenças face à que substitui. Verifique o recibo corretivo ou confirme-a de propósito.», que é verdade quando nenhum recibo mudou desde a original. {/* Nota interna (DOCS-022, 3.ª auditoria, NC-42, master ba9c8bd7): defeito P-13 do PAY-067 (#3614): o aviso de contas de uma DMR de substituição soma a original e a substituição (25.057,26 e 1.750,00 em vez de 12.528,63 e 875,00). Descrito como é hoje; retirar o parágrafo quando o PAY-067 entrar em master. */}
+
+**Sem efeito.** A mensagem de **Eliminar** manda marcar a declaração como «Sem efeito» e a de **Duplicar**, como «Substituída» ou «Sem efeito». Hoje o ecrã não tem nenhum botão com esse nome (a DMR **Aceite** só tem **Gerar ficheiro de entrega**, **Descarregar ficheiro de entrega**, **Duplicar** e **Eliminar**): não há como marcar uma DMR como «Sem efeito». {/* Nota interna (DOCS-022, 3.ª auditoria, NC-41, master ba9c8bd7): defeito P-12 do PAY-067 (#3614): a mensagem manda para um botão «Sem efeito» que não existe. Retirar este parágrafo quando o PAY-067 entrar em master. */}
+
+## Resultado esperado
+
+- A DMR passa por **Rascunho**, **Gerada**, **Validada**, **Submetida** e fica **Aceite** depois de **Registar como aceite**. Uma DMR **Aceite** já não se elimina nem se duplica.
+- Na lista, a linha do mês mostra o **Número de linhas**, os **Rendimentos do ano**, o **IRS retido** e o **Estado** (no exemplo: 16, 12.528,63, 875,00, **Aceite**).
+- O contador **Declarações por entregar** do ecrã do mês deixa de contar esta DMR.
+
+![Barra da DMR submetida, com Registar como aceite, Registar a entrega à AT e Registar como rejeitada](/images/payroll-pt/dmr/03-registar-a-entrega-a-at.png)
+
+## Notas importantes
+
+- **Prazo.** A DMR entrega-se até ao dia 10 do mês seguinte ao do pagamento (CIRS, art. 119.º). O fiscaldoo mostra o **Prazo de entrega** na DMR. Quando o dia 10 cai num fim de semana, o prazo passa ao dia útil seguinte: a DMR de setembro de 2026 mostra 12/10/2026 (segunda-feira), porque 10/10/2026 é um sábado.
+- **Preparar não é entregar.** **Gerar**, **Validar** e o ficheiro ficam só no fiscaldoo; o aviso da DMR diz: «O ficheiro de entrega segue o formato oficial da AT (DMR-AT 2024), mas ainda não foi conferido com o validador do Portal das Finanças. Daqui nunca se envia nada.» **Submeter** e os botões **Registar …** só registam o que fez no Portal.
+- **Mês do pagamento.** Um salário de outubro pago em novembro entra na DMR de novembro, e **Gerar** no mês de outubro é recusado («Não há recibos pagos em 10/2026»). O mês é o da data de **Banco executou**, que o fiscaldoo põe sempre a «hoje»: não há como pagar, no ecrã, com uma data anterior. Confirme essa data antes de escolher o **Mês (Quadro 3)**.
+- **Uma DMR gerada ou entregue não se apaga.** Em **Rascunho**, **Eliminar** funciona. Em **Gerada**, **Validada**, **Submetida** ou **Aceite**, **Eliminar** é recusado (ver «Problemas frequentes») e, numa **Aceite**, **Duplicar** também. Corrige-se com uma declaração de substituição.
+- **Não gere de novo o ficheiro de uma DMR aceite.** Numa DMR **Aceite**, **Gerar ficheiro de entrega** continua ativo e não avisa de nada: o ficheiro entregue deve ser o que descarregou antes de **Submeter**. {/* Nota interna (DOCS-022, 3.ª auditoria, NC-43): defeito P-14, #3614 (PAY-067): «Gerar ficheiro de entrega» ativo numa DMR aceite, sem aviso. Retirar esta nota quando o PAY-067 entrar em master. */}
+- Numa base de testes, o **Submissor de declarações** vê ainda os botões **Simular: a AT aceita**, **Simular: a AT recusa** e **Simular: portal ocupado (tentar de novo)**. Servem para ensaiar e não existem numa base real.
+- Cada entrega da DMR fica no separador **Tentativas**, com as colunas **Tentativa**, **Submetida em**, **Submetida por**, **Resposta da AT**, **Respondida em**, **Motivo dado pela AT**, **Próxima tentativa simulada** e **Simulada**. No exemplo, a DMR de 08/2026 submetida mostra a tentativa 1 «À espera da resposta».
+
+## Problemas frequentes
+
+### «… não está pronta» ao carregar em Gerar ficheiro de entrega
+
+- **Sintoma:** **Gerar ficheiro de entrega** aparece já na DMR **Gerada**, mas o ficheiro só se gera com o que **Validar** exige: NIF com dígito de controlo certo, Contabilista Certificado quando é obrigatório, serviço de finanças, titulares e Quadro 4 igual ao Quadro 5. Sem o **Serviço de Finanças**, por exemplo: «Operação inválida. A declaração «*DMR 2026-08 (Declaração de substituição)*» não está pronta: serviço de finanças (Quadro 1). O que aconteceu: são obrigatórios para declarar. Como corrigir: preencha-os.»
+- **Causa:** falta à declaração um dos dados que a validação pede.
+- **O que fazer:** carregue em **Fechar**, preencha o que a mensagem diz (até **Validar**, os campos ainda se alteram) e carregue de novo em **Gerar ficheiro de entrega**.
+
+### «Já existe uma declaração deste tipo» ao carregar em Gerar
+
+- **Sintoma:** «Erro de Validação. Já existe uma declaração deste tipo para Empresa Demonstração, Lda em 11/2026 (DMR 2026-11 (1.ª declaração)). O que aconteceu: uma empresa tem uma declaração viva de cada tipo por mês de pagamento. Como corrigir: trabalhe na existente, ou marque-a primeiro como «Substituída» / «Sem efeito».»
+- **Causa:** já existe a DMR desse mês.
+- **O que fazer:** carregue em **Fechar**, descarte o registo novo e abra a DMR que já existe na lista.
+
+### «Não há recibos pagos» ao carregar em Gerar
+
+- **Sintoma:** «Operação inválida. Não há recibos pagos em 11/2026 para Empresa Demonstração, Lda. O que aconteceu: uma DMR declara o rendimento PAGO no mês. Como corrigir: marque primeiro os recibos como pagos.»
+- **Causa:** nenhum pagamento de salários foi confirmado nesse mês, ou escolheu o mês a que o salário diz respeito em vez do mês do pagamento.
+- **O que fazer:** confirme o mês em **Mês (Quadro 3)**. Se os salários já foram pagos, registe o pagamento ([Como pagar os salários](/payroll-pt/pagar-os-salarios)). Com os recibos por pagar, a DMR vazia fica em **Rascunho**, com 0 linhas: **Eliminar** (na engrenagem, depois **Eliminar** na janela) apaga-a se a criou por engano. Só se apaga em **Rascunho**.
+
+### «Só uma declaração em rascunho pode ser eliminada» ao eliminar
+
+- **Sintoma:** «Operação inválida. Só uma declaração em rascunho pode ser eliminada. O que aconteceu: já foi gerada ou está mais adiante e fica para registo. Como corrigir: marque-a antes como «Sem efeito».»
+- **Causa:** a DMR já foi gerada (ou está **Validada**, **Submetida** ou **Aceite**) e fica para registo.
+- **O que fazer:** não a elimine. Se está errada, faça uma DMR de substituição (ver [Corrigir uma DMR já entregue](#corrigir-uma-dmr-já-entregue)). O botão «Sem efeito» que a mensagem cita não existe no ecrã de hoje.
+
+### «Já existe uma declaração deste tipo» ao duplicar
+
+- **Sintoma:** em **Duplicar** de uma DMR **Aceite**: «Erro de Validação. Já existe uma declaração deste tipo para Empresa Demonstração, Lda em 11/2026 (DMR 2026-11 (1.ª declaração)). …»
+- **Causa:** a empresa só tem uma declaração viva de cada tipo por mês.
+- **O que fazer:** para corrigir, crie uma **Declaração de substituição** com **Novo**, não duplique.
+
+### Registar a entrega à AT não guarda
+
+- **Sintoma:** ao carregar em **Registar** aparece «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** falta a **Referência da Autoridade Tributária** ou o **Comprovativo**.
+- **O que fazer:** escreva a referência que o Portal das Finanças deu, junte o comprovativo e carregue de novo em **Registar**.
+
+### Aparece «Antes de submeter: as contas do mês não batem certo»
+
+- **Sintoma:** depois de **Gerar**, a DMR mostra, por exemplo: «Líquido a receber: os recibos dizem 10.382,03 € e Contabilidade diz 0,00 € (diferença de 10.382,03 €). IRS retido: os recibos dizem 875,00 € e Contabilidade diz 0,00 € …», com a ligação **Ver a reconciliação**.
+- **Causa:** o lote do mês ainda não foi contabilizado, ou o lançamento não está publicado. O aviso compara os recibos com a contabilidade; não compara a DMR com os recibos.
+- **O que fazer:** o aviso não impede validar nem entregar. Confira o Quadro 4 com os recibos pagos (passo 6) e peça ao **Administrador de Salários** que [contabilize o lote](/payroll-pt/contabilizar-os-salarios) antes do fecho do mês.
+
+{/* Nota interna (DOCS-063 #3853, lote v23-S, master cebcb888d, docs_demo_v23s_test, porta 8458): DPIVA-107 na DMR visto por clique com um utilizador só com o Perfil Processador de salários: DMR de substituição de 08/2026 criada e gerada pelo ecrã, Serviço de Finanças apagado e gravado, Gerar ficheiro de entrega recusado com a mensagem citada. Os outros bloqueios da lista (NIF, Contabilista Certificado, titulares, Quadros 4 e 5) vêm do bilhete dpiva_107 e não foram provocados um a um. */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): botões da DMR 2026-09 (Validada) e 2026-08 (Submetida) com um utilizador só Processador de salários e outro Processador + Submissor de declarações; nenhum perfil traz o Submissor (matriz de grupos). */}

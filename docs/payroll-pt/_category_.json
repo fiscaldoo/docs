@@ -1,0 +1,10 @@
+{
+  "label": "Salários",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "slug": "/payroll-pt",
+    "title": "Salários",
+    "description": "Configuração, tempo de trabalho, processamento, pagamento, declarações à AT e à Segurança Social."
+  }
+}

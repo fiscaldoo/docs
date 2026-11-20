@@ -1,0 +1,160 @@
+---
+id: emitir-uma-guia-de-transporte
+slug: /fiscal-core/emitir-uma-guia-de-transporte
+title: Como emitir uma guia de transporte e obter o código da AT
+sidebar_label: Emitir uma guia de transporte
+sidebar_position: 1
+description: Criar a entrega, emitir a guia com o início do transporte, a matrícula e o transportador, confirmar que a AT lhe deu o código e só depois validar a saída dos bens.
+keywords: [guia de transporte, guia de remessa, GT, GR, emitir guia, código da AT, codigo da at, código AT, comunicar guia, comunicar à AT, transporte de mercadorias, entrega, saída de bens, saida de bens, matrícula, matricula, transportador, início do transporte, inicio do transporte, o que há para fazer com as guias de transporte, guias não comunicadas, validar entrega]
+doc_id: DOC-0047
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/at-e-saft/ligar-a-at, fiscal-core/faturacao/balcao]
+---
+
+## Para que serve?
+
+Os bens que saem do armazém para um cliente circulam acompanhados de uma guia de transporte. No fiscaldoo, a guia nasce de uma entrega da aplicação **Inventário**: emite-se com número, ATCUD (código único do documento) e assinatura, comunica-se à Autoridade Tributária e Aduaneira (AT) e a AT devolve um código. Só com o código os bens podem sair.
+
+Emitir a guia e comunicá-la à AT são dois passos diferentes. Com a comunicação automática, que é a opção por omissão, o fiscaldoo comunica a guia logo que a emite. O botão **Comunicar à AT** só aparece quando a guia fica por comunicar: numa empresa com a comunicação manual, ou quando a comunicação automática não foi possível. O fiscaldoo não deixa validar a saída dos bens sem a guia emitida e comunicada.
+
+## Quando utilizar?
+
+- Vai enviar mercadoria a um cliente, pela sua viatura ou por um transportador.
+- A entrega veio de uma venda e tem de sair com a guia.
+
+A guia não é uma fatura. Se a fatura vai acompanhar os bens no lugar da guia, isso escolhe-se na própria fatura: o cartão **Guias de transporte** do **Balcão** diz-o («A fatura com função de transporte emite-se aqui, na própria fatura»).
+
+## Onde encontrar?
+
+**Inventário › O que há para fazer com as guias de transporte?** › **Nova guia de transporte**
+
+As guias emitidas estão em **Inventário › Operações › Guias › Guias de transporte**, e as que faltam comunicar em **Inventário › Operações › Guias › Guias não comunicadas**. Na aplicação **Faturação**, estão em **Faturar › Guias de transporte** e no cartão **Guias de transporte** do **Balcão**; aí não se cria nenhuma guia.
+
+## Antes de começar
+
+- O seu utilizador tem acesso à aplicação **Inventário**. Em **Definições › Utilizadores e empresas › Utilizadores**, a lista **Perfil** não tem nenhum valor para o inventário: o acesso dá-se em **Ajustes avançados**, linha **Inventário**, opção **Utilizador**. Os passos foram feitos do princípio ao fim com um utilizador **Administrativo** com esse acesso. Os perfis **Administrativo** e **Contabilista** não trazem **Inventário**. Numa guia emitida, ambos têm **Imprimir guia**, **Validar**, **Imprimir** e **Cancelar** com esse acesso, e só **Cancelar** sem ele. Numa guia emitida e ainda por comunicar, o **Administrativo** com esse acesso tem também **Comunicar à AT** e **Registar o código da AT à mão**; o **Contabilista** não os tem, nem com o acesso. O **Auditor** sem **Inventário** só tem **Imprimir guia**. **Alterar o local de descarga**, **Mudar o destinatário**, **Bens não aceites** e **Anular a guia** aparecem ao perfil **Contabilista certificado** (e ao administrador), ao lado de **Imprimir guia** e **Cancelar** e, numa guia por comunicar, de **Comunicar à AT** e **Registar o código da AT à mão**: esse perfil abre a entrega, mas não tem **Validar** nem **Imprimir**. Ao **Administrativo** não aparecem, nem com o acesso **Inventário**. {/* Nota interna (lote v23-D, DEC-1777, master 2bfd78d1a, docs_demo_v23d_test): provado no ecrã com um utilizador só com o perfil Contabilista certificado e um só com o perfil Administrativo e Inventário, opção Utilizador, na GT D26/4 e na GT D26/5. Lote v23-E (master 7a44f0c73, docs_demo_v23e_test): botões da GT D26/6 emitida e por comunicar vistos com um utilizador só Administrativo e um só Contabilista, ambos com Inventário, opção Utilizador, e um só Contabilista certificado. */} Veja [Como alterar o local de descarga de uma guia já comunicada](/fiscal-core/alterar-o-local-de-descarga).
+- A empresa tem a série das guias de transporte ativa (na demonstração, `GT D26`): [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais).
+- Para a guia receber o código da AT, a empresa tem as credenciais da AT guardadas: [Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). Sem elas, a guia emite-se na mesma, mas fica por comunicar e o código tem de vir do Portal das Finanças ou por telefone.
+- A comunicação das guias é automática por omissão: a guia é comunicada à AT quando é emitida. O administrador vê a opção em **Definições › Inventário › Documentos de transporte (PT) › Comunicação das guias**, com as escolhas **Automático (comunicação automática à AT, quando a guia é emitida)** e **Manual (o utilizador carrega em «Comunicar à AT»)**. Os passos seguem a comunicação automática; o passo 8 diz o que muda com a manual.
+- O cliente e os artigos já existem: [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes) e [Como criar um artigo com o IVA e o tipo certos](/fiscal-core/artigos).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Inventário › O que há para fazer com as guias de transporte?** e carregue em **Nova guia de transporte**. A página mostra os cartões **Guias por comunicar**, **Guias comunicadas**, **Guias anuladas** e **Guias sem comunicação** do mês, e a lista **O que está pendente**.
+   ![Página O que há para fazer com as guias de transporte? com o botão Nova guia de transporte assinalado](/images/fiscal-core/emitir-uma-guia-de-transporte/01-painel-das-guias.png)
+2. Em **Endereço de Entrega**, escolha o cliente (no exemplo, `Papelaria Exemplo, Lda`).
+3. **Tipo de Operação** já vem preenchido com a entrega do armazém (**Armazém Demonstração: Entregas**): confira-o. A entrega abre já com o resumo «[GT] Guia de transporte (incluindo as globais) (ainda não emitida)», com «Ainda não emitida, por isso não há nada a comunicar», e o separador **Guia de transporte**.
+4. No separador **Operações**, carregue em **Adicionar um Artigo**, escolha o **Artigo** e escreva a quantidade em **Demanda** (no exemplo, 10 `Kit de canetas`).
+5. Carregue em **Guardar** (ícone da nuvem) e depois em **Confirmar**. Com o artigo em armazém, a entrega fica **Pronto**, e **Emitir guia** aparece no lugar de **Confirmar**. Sem quantidade em armazém, fica **Em Espera**, com **Disponibilidade do artigo** «Não disponível», e **Emitir guia** ainda não aparece: dê entrada do artigo e a entrega passa a **Pronto**.
+6. Abra o separador **Guia de transporte** e, no bloco **TRANSPORTE**, preencha:
+   - **Início do transporte**: a data e a hora reais a que os bens saem (no exemplo, 30/10/2026 06:00);
+   - **Matrícula**: a matrícula da viatura (`AA-00-AA` no exemplo);
+   - **Transportador**: quem transporta. Se é a própria empresa, escolha-a (`Empresa Demonstração, Lda`).
+   ![Bloco Transporte com o início do transporte 30/10/2026 06:00 assinalado, a matrícula AA-00-AA e o transportador Empresa Demonstração, Lda](/images/fiscal-core/emitir-uma-guia-de-transporte/02-dados-do-transporte.png)
+7. Carregue em **Emitir guia**. Abre-se a janela **Confirmação**: «Emitir a guia? Recebe o número e a assinatura e deixa de poder ser alterada.» Carregue em **Confirmar**.
+   ![Janela Confirmação com a pergunta Emitir a guia? e os botões Confirmar e Descartar](/images/fiscal-core/emitir-uma-guia-de-transporte/03-confirmar-emissao.png)
+8. A guia tem agora número (`GT D26/5`) e ATCUD (`DEMOGT2026-5`). Com a comunicação automática, que é a opção por omissão, o fiscaldoo comunicou-a à AT ao emitir: o resumo diz **Comunicada** — «Nada: a guia está comunicada.» e não há botão **Comunicar à AT**. Com a comunicação manual, o resumo diz **Por comunicar** — «Comunique-a à AT antes de o transporte começar.»: carregue em **Comunicar à AT**, e a mensagem «Comunicação com a Autoridade Tributária. Aceites: 1, rejeitadas: 0, sem resposta: 0.» confirma o envio.
+9. Confirme, no bloco **COMUNICAÇÃO À AUTORIDADE TRIBUTÁRIA** do separador **Guia de transporte**, que a guia está **Comunicada** e tem **Código AT**. No cimo ficam **Imprimir guia**, **Validar**, **Imprimir** e **Cancelar**. Se a guia ficou **Por comunicar**, veja «Problemas frequentes».
+   ![Bloco Comunicação à Autoridade Tributária da GT D26/5 com Comunicada e o Código AT assinalados, Comunicada por Automática (pelo programa) e a Data do código AT 29/10/2026](/images/fiscal-core/emitir-uma-guia-de-transporte/04-guia-comunicada.png)
+10. Quando os bens saírem, carregue em **Validar**. A entrega passa a **Concluído**.
+
+</StepByStep>
+
+**Exemplo.** Entrega `DEM/OUT/00005` à Papelaria Exemplo, Lda, de 10 `Kit de canetas`, com início do transporte a 30/10/2026 às 06:00: ficou a guia `GT D26/5`, de 29/10/2026, comunicada à AT ao ser emitida.
+
+### Os outros campos do separador Guia de transporte
+
+- **Local de carga** e **Local de descarga** já vêm preenchidos antes de emitir: a morada da empresa e a do cliente (no exemplo, `Empresa Demonstração, Lda` e `Papelaria Exemplo, Lda`).
+- **Consumidor final**: para uma guia a um particular, que não precisa de código da AT (o próprio fiscaldoo o diz na mensagem de **Validar**).
+- **Guia global**, **Continuação de**, **Exceção à guia de transporte** e **Fatura como documento de transporte** são para casos que não são a entrega comum e não são usados neste artigo. <span className="fd-pending">Pendente de validação por contabilista certificado: quando se usa a guia global e as exceções à guia.</span>
+
+## Resultado esperado
+
+- A guia `GT D26/5` está **Comunicada**, com o **Código AT** que a AT devolveu, **Comunicada por** «Automática (pelo programa)» e a **Data do código AT**. «Automática (pelo programa)» quer dizer que foi o fiscaldoo a enviar a guia; também aparece quando se carrega em **Comunicar à AT**. Na demonstração o código vem do simulador (`MOCK-12FB1C03`); o código verdadeiro vem da AT.
+- A **Situação da guia** é **Normal** e o bloco **CERTIFICAÇÃO** tem a **Série do documento** `GT D26`, os carateres da assinatura e a mensagem do código QR (tipo `GT`, NIF do cliente 599999985, data 20261029, ATCUD).
+- A entrega está **Concluído**. Em **O que há para fazer com as guias de transporte?**, **Guias comunicadas** passou de 3 para 4.
+- Na demonstração, a guia e a saída de 10 `Kit de canetas` não geraram lançamentos contabilísticos. <span className="fd-pending">Pendente de validação por contabilista certificado: lançamento da saída de bens de stock valorizados (custo das mercadorias vendidas).</span>
+
+## Vídeo demonstrativo
+
+O primeiro vídeo mostra os passos 1 a 5: abrir **Nova guia de transporte**, escolher a `Papelaria Exemplo, Lda` em **Endereço de Entrega**, conferir as **Entregas** em **Tipo de Operação**, juntar 10 `Kit de canetas`, guardar e carregar em **Confirmar**. A entrega fica **Pronto**, com o botão **Emitir guia**.
+
+<VideoTutorial src="/videos/emitir-uma-guia-de-transporte-1.mp4" captions="/videos/emitir-uma-guia-de-transporte-1.vtt" poster="/videos/emitir-uma-guia-de-transporte-1-poster.png" width="1440" height="1140" title="Preparar a entrega da guia de transporte" duration="27 s" />
+
+O segundo vídeo continua na mesma entrega e mostra os passos 6 e 7 e o que o passo 9 manda confirmar: o início do transporte, a matrícula e o transportador, **Emitir guia** e **Confirmar**. Com a comunicação automática, que é a opção por omissão, a guia é comunicada ao ser emitida (**Comunicada por** «Automática (pelo programa)»). O vídeo mostra o resultado do passo 8 nos dados do passo 9 e não mostra o passo 10 (**Validar**). Foi gravado a 06/11/2026, por isso o início do transporte é 09/11/2026 às 08:00: uma data já passada, além da tolerância de 30 minutos, é recusada (veja «Problemas frequentes»).
+
+<VideoTutorial src="/videos/emitir-uma-guia-de-transporte-2.mp4" captions="/videos/emitir-uma-guia-de-transporte-2.vtt" poster="/videos/emitir-uma-guia-de-transporte-2-poster.png" width="1440" height="1140" title="Emitir a guia de transporte" duration="28 s" />
+
+{/* Nota interna (lote v22-H, 06/11/2026, master d83bdf7ae): VID-0047-2 regravado na entrega do VID-0047-1 (DEM/OUT/00005, Papelaria Exemplo, Lda), com um utilizador só Administrativo e Inventário, opção Utilizador; GT D26/5 Comunicada pelo simulador. */}
+
+{/* Nota interna (DOCS-006, 5.º produtor): no master 54a9f5f03 a guia é comunicada ao emitir (comunicação automática por omissão, DEC-977) e o botão Comunicar à AT não aparece; o separador Guia de transporte e o resumo aparecem ao escolher o Tipo de Operação (passo 3), não no passo 5. Os passos 5 e 8 foram revistos no fix-art1 (DEC-1343) e a frase do 2.º episódio acertada na junção com o ramo videos (C1). */}
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Os bens só saem com o código da AT">
+O próprio ecrã avisa, numa guia por comunicar: «O transporte só pode começar depois de comunicada». A guia tem de estar **Comunicada** antes do **Início do transporte**: com a comunicação automática, confirme-o no passo 9. Se não conseguir comunicar (por exemplo, sem ligação), obtenha o código no Portal das Finanças ou por telefone e registe-o na guia, como está em [A guia de transporte não tem código da AT](/troubleshooting/guia-sem-codigo-da-at). <span className="fd-pending">Pendente de validação por contabilista certificado: prazo de comunicação, alteração do início ou do local de descarga depois de comunicada e o que fazer quando a comunicação falha.</span>
+</HelpCallout>
+
+- **Depois de emitida, a guia não se altera.** Confira o cliente, os artigos e as quantidades antes de **Emitir guia**. Se a guia ficou por comunicar por lhe faltar a matrícula ou o transportador, estes completam-se depois de emitir, sem emitir outra guia.
+- **O que a página das guias não vê.** **Guias por comunicar** conta só as guias emitidas. Uma entrega em rascunho ou por fazer, sem **Emitir guia**, não aparece em nenhum cartão.
+- **PDF da guia.** O botão **Imprimir** do cimo da entrega imprime a «Nota de entrega», que não é a guia. A guia imprime-se no menu da roda dentada, ao lado do nome da entrega: **Imprimir › Guia de transporte**. Na demonstração, com o acesso **Inventário**, a `GT D26/5` saiu no ficheiro «Guia GT D26_5.pdf», com duas páginas (**Original** e **Duplicado**) e, em cada uma: «Este documento não serve de fatura», o título «Guia de transporte (incluindo as globais) GT D26/5», o remetente e o destinatário com o NIF, os locais de carga e de descarga, o **Início do transporte**, a **Matrícula**, o **Transportador**, o **Código AT** (o do simulador), o artigo e a quantidade, o ATCUD `DEMOGT2026-5`, o código QR e «Processado por programa certificado n.º 9876/AT». A mensagem do código QR, conferida no registo da guia, tem o NIF da empresa (599999993), o do cliente (599999985), o tipo `GT`, a data 20261029, o número `GT D26/5` e o ATCUD. O número do certificado e o código AT da demonstração são fictícios.
+
+{/* Nota interna (DOCS-020): defeitos P-A39 (Nova guia de transporte sem Tipo de Operação), P-A40 (não há perfil de inventário na lista Perfil), P-A41 (o botão «Imprimir» do cimo dá a Nota de entrega com «Delivery Address»; a guia está só no menu da roda dentada › Imprimir › Guia de transporte, visto a 29/10/2026 com o acesso Inventário; título do PDF «Guia de transporte (incluindo as globais)», F4-05) e P-A42 («Enter a Description...» em inglês) no LOTE_A. Rever os passos 3 e o ponto do PDF quando os cartões entrarem. */}
+
+## Problemas frequentes
+
+### «… não podem ser validadas: o tipo de operação exige um documento de transporte e a guia não foi emitida»
+
+- **Sintoma:** **Validar** antes de emitir a guia abre **Operação inválida**: «As transferências DEM/OUT/00005 não podem ser validadas: o tipo de operação exige um documento de transporte e a guia não foi emitida. Emita a guia («Emitir guia») antes de os bens saírem.»
+  ![Janela Operação inválida a dizer que a transferência não pode ser validada porque a guia não foi emitida](/images/fiscal-core/emitir-uma-guia-de-transporte/05-erro-validar-sem-guia.png)
+- **O que fazer:** carregue em **Fechar** e siga os passos 5 a 9 antes de **Validar**.
+
+### «… não pode ser cancelada como uma transferência normal: foi emitida»
+
+- **Sintoma:** numa guia emitida, **Cancelar** (no cimo) pede «Tem a certeza de que deseja cancelar essa transferência?» e, depois de **Confirmar**, abre **Operação inválida**: «A guia de transporte “GT D26/5” não pode ser cancelada como uma transferência normal: foi emitida. Para anular uma guia use «Anular a guia»: regista o motivo e é uma operação própria. Esse botão só aparece ao perfil «Contabilista certificado (assina, fecha períodos)»: se o seu for outro, peça a um utilizador com esse perfil que anule a guia.»
+- **Causa:** a guia já tem número e assinatura.
+- **O que fazer:** carregue em **Fechar** e peça a anulação a quem tem o perfil **Contabilista certificado**. Esse perfil carrega em **Anular a guia**, escreve o **Motivo** e carrega outra vez em **Anular a guia**. A janela avisa: «Uma guia só pode ser anulada antes de o transporte começar. Mantém o número e a assinatura, mas passa a aparecer como «Anulada». Ficam guardados o motivo, quem a anulou e a data. Se a guia foi comunicada automaticamente, a anulação também é enviada à Autoridade Tributária. A transferência fica cancelada (copie-a para emitir uma guia nova). Não se pode desfazer.» Depois, o bloco da guia diz «Anulada» e «Nada: a guia foi anulada.», e a entrega fica cancelada, só com **Imprimir guia**. No separador **Guia de transporte**, a **Situação da guia** passa a **Anulada**, com **Anulada em**, **Anulada por** e **Motivo da anulação**, e **Comunicada?** diz **Anulada**. O número, o ATCUD e o **Código AT** ficam como estavam. Por baixo da entrega fica a mensagem (na demonstração, numa cópia em que a `GT D26/5` ainda não tinha sido validada) «Guia GT D26/5 anulada antes do início do transporte: Encomenda cancelada pelo cliente antes da saída.»
+- **O que se passa com a AT depende de como a guia recebeu o código** (campo **Comunicada por**):
+  - **«Automática (pelo programa)»:** a guia foi comunicada pelo fiscaldoo, ao ser emitida ou com **Comunicar à AT**. Neste caso, **Anular a guia** envia logo a anulação à AT: o **Código AT** da guia, a situação «anulada» e o motivo, com os dados da guia. É o que a janela chama «comunicada automaticamente». Na demonstração, a anulação foi ao simulador, e a lista de apoio **Comunicações à AT (faturas e histórico)**, em **Contabilidade › Declarar › Autoridade Tributária › O que há para fazer com as obrigações?**, ganhou uma linha **Guia de transporte (anulação)**, no estado **Aceite (simulado)**. A linha tem a hora de envio e a hora da resposta; ao abri-la, o registo mostra também quem anulou, em **Utilizador**. Nesta versão, na guia, **Última comunicação à AT** continua a mostrar o registo da guia, e não a anulação: veja-a nessa lista.
+    ![Registo da comunicação Guia de transporte (anulação) da entrega DEM/OUT/00005: transporte Simulado, ambiente Teste, 1 tentativa, enviada e respondida a 06/11/2026 às 19:10, pelo utilizador com o perfil Contabilista certificado](/images/fiscal-core/emitir-uma-guia-de-transporte/08-anulacao-comunicada.png)
+  - **«Portal das Finanças» ou «Por telefone»:** o código foi registado à mão, com **Registar o código da AT à mão**. Neste caso, o fiscaldoo não envia nada à AT. A mensagem da guia avisa: «Guia GT D26/4 anulada antes do início do transporte: Encomenda cancelada pelo cliente antes da saída. O seu código AT (DEMO-AT-0004) foi obtido por telefone ou no Portal: anule-a também no Portal das Finanças.» Anule-a também no Portal das Finanças. <span className="fd-pending">Pendente de validação no ecrã: a anulação da guia no Portal das Finanças (a demonstração nunca liga à AT verdadeira).</span>
+
+{/* Nota interna (lote v23-E, master 7a44f0c73, docs_demo_v23e_test, credenciais da AT fictícias do ambiente Teste, só simulador): tudo por clique com um utilizador só Contabilista certificado. GT D26/5 (DEM/OUT/00005, emitida pela integração, comunicada ao emitir: MOCK-CCBCF32B) anulada; comunicação 37 «Guia de transporte (anulação)», Aceite (simulado), pedido com at_doc_code_id, status A e reason. GT D26/6 (DEM/OUT/00006, emitida sem transportador): transportador preenchido e «Comunicar à AT» com o mesmo perfil, Comunicada por «Automática (pelo programa)»; a anulação também foi enviada (comunicação 39). GT D26/4: «Registar o código da AT à mão» com Portal das Finanças e DEMO-AT-0004, depois anulada: nenhuma comunicação, só a mensagem citada. Substitui a nota do v23-D, que dizia faltar esta prova. */}
+
+### «… não pode ser anulada: o transporte começou …»
+
+- **Sintoma:** **Anular a guia** › **Anular a guia** abre **Operação inválida**: «A guia “GT D26/1” não pode ser anulada: o transporte começou em 06/11/2026 16:41:28 e uma guia só se anula antes do início do transporte. Corrija-a com uma guia de devolução ou outro documento.»
+  ![Janela Operação inválida a dizer que a guia GT D26/1 não pode ser anulada porque o transporte já começou](/images/fiscal-core/emitir-uma-guia-de-transporte/09-erro-anular-depois-do-inicio.png)
+- **Causa:** a hora do **Início do transporte** já passou. A recusa vale mesmo que os bens ainda não tenham saído e a entrega não esteja validada.
+- **O que fazer:** carregue em **Fechar**. A guia fica como estava, sem anulação. Fale com o contabilista certificado sobre o documento que a corrige. <span className="fd-pending">Pendente de validação por contabilista certificado: como corrigir uma guia cujo transporte já começou (guia de devolução ou outro documento).</span>
+
+### «O início do transporte … está no passado, além da tolerância de 30 minutos»
+
+- **Sintoma:** **Emitir guia** › **Confirmar** abre «A guia de transporte não pode ser emitida: - O início do transporte (30/09/2026 06:00:00) está no passado, além da tolerância de 30 minutos. Indique a data e a hora reais a que os bens saem.»
+  ![Janela Operação inválida com a mensagem do início do transporte no passado](/images/fiscal-core/emitir-uma-guia-de-transporte/06-erro-inicio-no-passado.png)
+- **O que fazer:** carregue em **Fechar**, corrija o **Início do transporte** para a data e a hora reais de saída e emita de novo. A guia ainda não tinha número.
+
+### «… ainda não pode ser comunicada à Autoridade Tributária. Falta: o transportador.»
+
+- **Sintoma:** depois de **Emitir guia** › **Confirmar**, a guia fica **Por comunicar** e o separador **Guia de transporte** avisa «Esta guia não foi comunicada à Autoridade Tributária. O transporte só pode começar depois de comunicada: carregue em «Comunicar à AT» (ou registe o código AT se já o tiver).» As mensagens, por baixo da entrega, dizem porquê: «A guia foi emitida mas não foi possível comunicá-la automaticamente: A guia “GT D26/6” ainda não pode ser comunicada à Autoridade Tributária. Falta: o transportador. …». Com a comunicação manual, é **Comunicar à AT** que abre a janela «Nada foi enviado à Autoridade Tributária, por causa destas guias: - A guia “…” ainda não pode ser comunicada à Autoridade Tributária. Falta: o transportador. …»
+  ![Separador Guia de transporte de uma guia emitida sem transportador: Matrícula AA-00-AA, Transportador vazio, o aviso «Não comunicada à Autoridade Tributária» assinalado e Comunicada? Por comunicar](/images/fiscal-core/emitir-uma-guia-de-transporte/07-erro-falta-transportador.png)
+- **O que fazer:** preencha **Transportador** (e **Matrícula**) no bloco **TRANSPORTE**, guarde e carregue em **Comunicar à AT**. Não é preciso emitir a guia outra vez. A mensagem «Comunicação com a Autoridade Tributária. Aceites: 1, …» confirma o envio, e a guia fica **Comunicada**.
+
+### «… os bens não podem sair antes de a Autoridade Tributária dar o código à guia»
+
+- **Sintoma:** **Validar** com a guia emitida mas por comunicar abre «As transferências DEM/OUT/00005 não podem ser validadas: os bens não podem sair antes de a Autoridade Tributária dar o código à guia. Comunique a guia à Autoridade Tributária ou registe o código obtido por telefone ou no Portal (uma guia para um consumidor final não o precisa).»
+- **O que fazer:** carregue em **Fechar**. Veja nas mensagens da entrega porque é que a guia não foi comunicada, corrija a causa e carregue em **Comunicar à AT**.
+
+### «Há campos obrigatórios por preencher»
+
+- **Sintoma:** ao guardar a entrega nova, **Tipo de Operação** fica a vermelho.
+- **O que fazer:** escolha a entrega do armazém (passo 3). O botão **Nova guia de transporte** não a preenche.
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): mensagem por clique numa guia própria (DEM/OUT/00005, criada por RPC e emitida por clique com Administrativo + Inventário: Utilizador; GT D26/5, não comunicada): Cancelar do cimo › Confirmar. */}

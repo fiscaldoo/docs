@@ -1,0 +1,118 @@
+---
+id: processar-depreciacoes
+slug: /accounting-pt/processar-depreciacoes
+title: Como processar as depreciações do mês
+sidebar_label: Processar as depreciações do mês
+sidebar_position: 2
+description: Simular e lançar de uma vez as depreciações dos ativos em uso até ao fim de um mês, com um lançamento por ativo e por período.
+keywords: [depreciações do mês, depreciacoes do mes, processar depreciações, processar depreciacoes, amortizações, amortizacoes, lançar depreciações, lancar depreciacoes, simular depreciações, lote de depreciações, quota contabilística, quota fiscal máxima, quota aceite, quota não aceite, anular lote, conta 642, conta 438]
+doc_id: DOC-0123
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/ativos/registar-um-ativo, accounting-pt/dia-a-dia/estornar-um-lancamento]
+---
+
+## Para que serve?
+
+No fecho de cada mês, as depreciações (e as amortizações dos intangíveis) dos ativos em uso têm de entrar na contabilidade. O lote das **Depreciações do mês** junta os ativos, mostra primeiro uma simulação com as quotas e, depois de confirmado, publica um lançamento por ativo e por mês ainda por processar.
+
+## Quando utilizar?
+
+- No fecho de cada mês, depois de registar os ativos novos do mês com **Processamento** **Mensal** (ver [Como registar um ativo fixo](/accounting-pt/registar-um-ativo)).
+- Quando um ativo foi registado com data de início anterior e tem meses por processar, como o `Computador da contabilidade` do artigo anterior: em uso desde 01/07/2026, com julho, agosto e setembro por processar.
+- Antes de fechar o exercício, para garantir que todas as quotas do ano estão lançadas, incluindo as dos ativos com **Processamento** **Anual** (quota a 31/12).
+
+## Onde encontrar?
+
+**Contabilidade › Fechar › Contabilidade do mês › Depreciações do mês**. A lista e o ecrã chamam-se **Depreciações do mês**.
+
+![Menu Fechar da Contabilidade, com Depreciações do mês assinalado no grupo Contabilidade do mês](/images/accounting-pt/processar-depreciacoes/01-menu-fechar-depreciacoes-do-mes.png)
+
+## Antes de começar
+
+- **Quem faz o quê.** O perfil **Contabilista** cria o lote e simula; vê o lote **Simulado** sem o botão **Confirmar**. Confirmar e anular um lote é do perfil **Contabilista certificado**.
+- Os ativos novos estão **Em uso**, com o **Processamento** certo.
+- Só se confirmam meses já terminados. Um lote novo vem com **Até** no último dia do mês anterior (a 11/11/2026, 31/10/2026). Com uma data mais à frente, **Simular** faz só uma previsão e **Confirmar** recusa o lote até o mês acabar (ver «Problemas frequentes»). A depreciação de um mês só é devida quando o mês acaba, e um ativo vendido ou abatido durante o mês não tem a quota desse mês (Decreto Regulamentar n.º 25/2009, art. 7.º, n.º 2). <span className="fd-pending">Pendente de validação por contabilista certificado: a leitura do art. 7.º, n.º 2, do Decreto Regulamentar n.º 25/2009 para o mês da venda ou do abate.</span>
+- Um mês confirmado num lote não se processa noutro lote. Registe todos os ativos do mês antes de confirmar (ver «Problemas frequentes»).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Na lista **Depreciações do mês**, carregue em **Novo**. O lote abre em **Rascunho**, com **Período** **Mês**, **Até** no último dia do mês anterior, **Estado do ativo** **Em uso** e **Lançamentos** **Um lançamento por ativo**.
+2. Em **Até**, escreva o último dia do mês a processar, por exemplo `30/09/2026`. Para processar só algumas categorias, localizações ou centros de custo, escolha-os em **Categorias**, **Localizações** ou **Centros de custo**; vazio quer dizer todos.
+   ![Lote com o Período Mês, Até 30/09/2026, Estado do ativo Em uso e Lançamentos Um lançamento por ativo](/images/accounting-pt/processar-depreciacoes/02-mes-ate-30-09.png)
+3. Carregue em **Simular**. O lote passa a **Simulado** e mostra uma linha por ativo, com **Quota contabilística**, **Quota fiscal máxima**, **Quota aceite** e **Quota não aceite**. Nada foi lançado.
+4. Confira as quotas de cada ativo. O lote só tem os ativos com quotas por lançar até à data **Até**. A **Quota contabilística** é o que o lote vai lançar: no exemplo, o lote tem uma só linha, a do `Computador da contabilidade`, com 99,99 € (julho, agosto e setembro, 33,33 € cada). Os outros ativos da demonstração não aparecem, porque as quotas deles até setembro já estão lançadas ou, com **Processamento** **Anual**, só se lançam a 31/12. A **Quota fiscal máxima** é o limite fiscal das quotas do lote (no exemplo, também 99,99 €), e a **Quota aceite** e a **Quota não aceite** repartem a quota contabilística por esse limite: no exemplo, 99,99 € aceites e 0,00 € não aceites.
+   ![Lote Simulado até 30/09/2026 com uma só linha, Computador da contabilidade, com 99,99 € de quota contabilística, de quota fiscal máxima e de quota aceite, e 0,00 € de quota não aceite](/images/accounting-pt/processar-depreciacoes/03-simulacao.png)
+5. Se mudar algum ativo depois de simular, carregue outra vez em **Simular**. **Totais por categoria** e **Exportar XLSX** ajudam a conferir.
+6. Quem tem o perfil **Contabilista certificado** abre o lote **Simulado** e carrega em **Confirmar**.
+   ![Barra do lote Simulado com o botão Confirmar assinalado, que só o perfil Contabilista certificado vê](/images/accounting-pt/processar-depreciacoes/04-botao-confirmar.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o lote das **Depreciações do mês** está no mesmo caminho e passa pelos mesmos estados (**Rascunho**, **Simulado**, **Confirmado**): o **Contabilista** cria e simula, sem o botão **Confirmar**; o **Contabilista certificado** confirma, e o lote fica com **Anular lote**. Os lançamentos vão para as mesmas contas (no exemplo do Enterprise, 6425 a débito e 4385 a crédito). O lote só trata os **Ativos fixos** do fiscaldoo: numa empresa portuguesa, os ativos do próprio Enterprise não têm menu (ver [Como registar um ativo fixo](/accounting-pt/registar-um-ativo#no-enterprise)).
+
+{/* Nota interna (lote EE-02, DOCS-073 #4142, DEC-1794, master 7a46de91a, base Enterprise docs_ee_ee02_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): Contabilista: Novo com Até 30/09/2026 e 31/10/2026 deu «A simulação não tem resultado. Nada para depreciar…» (a demonstração Enterprise já traz as quotas mensais lançadas até outubro); com Até 30/11/2026 simulou a Impressora multifunções (40,00 €) e os Telemóveis da equipa comercial (100,00 €), com Totais por categoria, Exportar XLSX e Comparar com outra simulação. Contabilista certificado: Confirmar, lote Confirmado com Confirmado por e Confirmado em e o botão Anular lote; dois lançamentos 6425/4385 de 30/11/2026, em rascunho com publicação agendada para essa data, por ser futura (na cópia Community da auditoria EE-02, com Até 10/11/2026, a simulação também trouxe as quotas de novembro; desde o EEA-072 #4153, comboio 192, um mês por acabar só dá previsão e Confirmar recusa-o: ver a nota do lote v23-BG). Lote criado só na cópia. Ver reports/LOTE_EE-02.md. */}
+
+## Resultado esperado
+
+- O lote passa a **Confirmado**, com **Confirmado por** (quem confirmou) e **Confirmado em** preenchidos, e o botão **Anular lote** em vez de **Confirmar**.
+  ![Lote Confirmado com Confirmado por e Confirmado em preenchidos e o botão Anular lote](/images/accounting-pt/processar-depreciacoes/05-lote-confirmado.png)
+- Foi publicado um lançamento por mês de cada ativo com quota: para o `Computador da contabilidade`, `OD/2026/00139` (31/07/2026), `00140` (31/08/2026) e `00141` (30/09/2026), no exemplo, cada um com 33,33 € a débito da `6425 Equipamento administrativo` (gastos de depreciação) e a crédito da `4385 Equipamento administrativo` (depreciações acumuladas).
+- No **Plano de depreciação** do ativo, as linhas de julho a setembro passam a **Processado**, com o lançamento ao lado; outubro em diante continua **Planeado**.
+
+## Vídeo demonstrativo
+
+No vídeo, o mesmo perfil cria, simula e confirma o lote: o **Contabilista certificado**, o único que vê **Confirmar**.
+
+<VideoTutorial src="/videos/processar-depreciacoes.mp4" captions="/videos/processar-depreciacoes.vtt" poster="/videos/processar-depreciacoes-poster.png" width="1440" height="1140" title="Processar as depreciações do mês" duration="26 s" />
+
+## Notas importantes
+
+- **A quota não aceite do ano vê-se na ficha do ativo.** O lote mostra só as quotas e os limites dos meses que processa (no exemplo, 99,99 € de quota e 99,99 € de quota fiscal máxima). Para a quota não aceite do ano, use o separador **Contabilidade e imposto** da ficha de cada ativo, com o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: leitura da quota fiscal máxima e da quota não aceite num lote mensal.</span>
+- **Anular um lote confirmado** (perfil **Contabilista certificado**). Escreva primeiro o motivo no campo **Motivo do cancelamento** do lote, carregue em **Anular lote** e, na janela **Confirmação** («Os lançamentos deste lote são revertidos (nada é eliminado). Escreva primeiro o motivo. Continuar?»), em **Confirmar**. O lote passa a **Anulado**, com **Cancelado por** e **Cancelado em**, e cada lançamento do lote é estornado («Reversão: Depreciação …», com a data do lançamento que estorna), e as quotas voltam a **Planeado** no plano do ativo.
+- **Hoje, os estornos de um lote anulado ficam com a data do dia da anulação**, não com a data de cada quota. Num teste à parte, o lote de setembro de outro ativo (três quotas de 10,00 €, de julho a setembro) foi anulado a 29/10/2026: os três estornos ficaram com data de 29/10/2026. Julho, agosto e setembro continuam com as quotas antigas e outubro fica com os estornos; se refizer o lote desses meses, eles ficam com a quota duas vezes no balancete do mês. Não anule um lote de meses já fechados sem decidir com o contabilista certificado como acertar esses meses.
+
+{/* Nota interna (DOCS-021): Quota fiscal máxima anual num lote mensal = B1-09 (ACC-201 #3436); estornos do «Anular lote» na data do dia = defeito novo do lote B1 (para cartão do Gestor). Quando os cartões fecharem, rever as duas notas. Teste à parte: lote action-880/1 (Monitor, AF/00010) anulado, estornos MISC/2026/00112 a 00114; lote refeito action-880/2. */}
+
+## Problemas frequentes
+
+### «O período até … já foi confirmado para alguns destes ativos»
+
+- **Sintoma:** ao carregar em **Confirmar**, a janela **Operação inválida** diz «O período até 30/09/2026 já foi confirmado para alguns destes ativos no lote “Mês 2026-09-30”: um período confirmado não pode ser processado de novo. Anule esse lote primeiro ou altere os filtros.»
+- **Causa:** já há um lote confirmado para esse mês com alguns dos mesmos ativos. Acontece quando um ativo é registado depois de o mês ter sido processado.
+- **O que fazer:** para um só ativo em atraso, abra a ficha dele e carregue em **Processar períodos contabilísticos**: os meses em falta desse ativo são publicados logo, sem lote e sem pedir confirmação (na demonstração, um programa em uso desde 01/09/2026 e registado a 29/10/2026 ficou com a quota de setembro, 16,67 €, em `MISC/2026/00121`). Anular o lote do mês para o refazer tem o efeito descrito em «Notas importantes».
+
+### Anular lote é recusado: «Escreva o motivo do cancelamento»
+
+- **Sintoma:** janela **Operação inválida** com «Escreva o motivo do cancelamento do lote “Mês 2026-09-30” antes de o cancelar.»
+- **Causa:** o campo **Motivo do cancelamento** do lote está vazio.
+- **O que fazer:** feche a janela, escreva o motivo no lote e carregue outra vez em **Anular lote**.
+
+### «O período até … ainda não terminou»
+
+- **Sintoma:** ao carregar em **Confirmar**, a janela **Operação inválida** diz «O período até 30/11/2026 ainda não terminou. O que aconteceu: a depreciação de um mês só é devida quando o mês acaba, e um ativo vendido ou abatido durante ele já teria a quota registada. Como resolver: escolha em «Até» o último dia de um mês que já terminou (o último dia do mês anterior é 31/10/2026) e simule de novo.»
+  ![Janela Operação inválida a recusar o lote até 30/11/2026 porque o mês ainda não terminou](/images/accounting-pt/processar-depreciacoes/06-recusa-mes-por-acabar.png)
+- **Causa:** o **Até** do lote fica depois de hoje. Já ao **Simular** o ecrã avisa: «Previsão: o período ainda não terminou. O período vai até 30/11/2026, que é posterior a hoje, por isso isto é só uma previsão: Confirmar recusa-o até o período terminar. Escolha o último dia do mês anterior para processar o que já é devido.»
+- **O que fazer:** mude o **Até** para o último dia de um mês que já acabou, carregue em **Simular** e depois em **Confirmar**. A previsão serve para ver as quotas que aí vêm; não se confirma.
+
+{/* Nota interna (lote v23-BG, EEA-072 #4153, master 7cd24fcc9, docs_demo_v23bg_test, porta 8506, 11/11/2026): utilizadores criados na cópia, cada um só com o perfil indicado. Contabilista: Novo vem com Até 31/10/2026; Simular deu «A simulação não tem resultado. Nada para depreciar…» (a demonstração já tem as quotas lançadas até outubro); um lote até 30/11/2026 (criado por RPC com esse utilizador, só na cópia) simulou 2 linhas com o aviso «Previsão: o período ainda não terminou…». Contabilista certificado: Confirmar nesse lote deu a recusa da captura 06; nada foi lançado. */}
+
+{/* Nota interna (lote v23-BI, DOCS-063 #3853, master 2c8d358c0, docs_demo_v23bi_test, porta 8522, 11/11/2026): o ativo Computador da contabilidade criado na cópia como no artigo registar-um-ativo (por RPC com o Contabilista; Pôr em uso por clique); na cópia ficou com o código AF/00009 (o registar-um-ativo diz AF/00011), por isso este artigo não cita o código. Passos 1 a 6 por clique: Contabilista, Novo (Até 31/10/2026), Até 30/09/2026, Simular: uma só linha (99,99 / 99,99 / 99,99 / 0,00); os ativos anuais já não aparecem num lote mensal (a nota antiga da Quota fiscal máxima de um ano saiu). Contabilista certificado: Confirmar, OD/2026/00139 a 00141 (6425 a débito, 4385 a crédito, 33,33 cada), plano de julho a setembro Processado. Depois, Anular lote com o motivo (janela Confirmação igual ao texto): estornos OD/2026/00142 a 00144 nas mesmas datas, plano de volta a Planeado; o resultado de 2026 da cópia ficou como na base-mãe. */}
+
+### O ativo não aparece na simulação ou tem quota 0,00 €
+
+- **Causa:** o ativo não está **Em uso**, tem **Processamento** **Anual** (a quota lança-se só a 31/12), ou já está processado até à data **Até**.
+- **O que fazer:** confirme o estado e o **Processamento** na ficha do ativo e o **Plano de depreciação**.
+
+### Não tenho o botão Confirmar
+
+- **Causa:** o seu perfil é **Contabilista**.
+- **O que fazer:** deixe o lote **Simulado** e peça a quem tem o perfil **Contabilista certificado** que o confirme.

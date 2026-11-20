@@ -1,0 +1,115 @@
+---
+id: taxonomias
+slug: /accounting-pt/taxonomias
+title: Como atribuir as taxonomias SNC às contas
+sidebar_label: Atribuir as taxonomias às contas
+sidebar_position: 2
+description: Encontrar as contas de movimento sem taxonomia do SAF-T, escolher a taxonomia certa na ficha da conta e confirmar que nenhuma ficou de fora.
+keywords: [ainda não se podem gerar, conta(s) sem taxonomia, conta(s) com saldo não têm rubrica no Balanço, Controlo do Balanço, balanço desequilibrado, taxonomia, taxonomias, taxonomia SNC, taxonomia do SAF-T, taxonomia SAF-T, código de taxonomia, codigo de taxonomia, contas sem taxonomia, atribuir taxonomia, atribuir taxonomia a uma conta, taxonomias do SAF-T, comparar o plano com o SNC, verificação do plano de contas, verificacao do plano de contas, plano de contas, IES, SAF-T de contabilidade, saldos de contas não mapeadas]
+doc_id: DOC-0080
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/balanco, accounting-pt/declaracoes/saft-de-contabilidade, accounting-pt/relatorios/demonstracao-de-resultados]
+---
+
+## Para que serve?
+
+Cada conta de movimento do plano tem uma **taxonomia**: o código oficial que diz em que linha do balanço, da demonstração de resultados, da IES e do SAF-T de contabilidade entra o saldo dessa conta. As contas do plano oficial já a trazem. Uma conta nova criada pela empresa (uma extensão do plano) pode ficar sem ela. O efeito depende do estado das demonstrações da empresa:
+
+- **enquanto as linhas do balanço e da demonstração de resultados não estão geradas** (empresa nova, ou referencial acabado de mudar), uma única conta de movimento sem taxonomia, com ou sem saldo, impede o balanço e a demonstração de resultados por inteiro;
+- **depois de geradas**, uma conta sem taxonomia e sem saldo não muda nada no balanço nem na demonstração de resultados; com saldo, fica fora dos totais e o balanço aparece **Desequilibrado**, com um aviso que indica a conta.
+
+As duas mensagens estão em «Problemas frequentes». Os anexos A e I da IES (**Contabilidade › Declarar › Declarações anuais › IES**) são mais exigentes: só se validam e geram com todas as contas de movimento com taxonomia, com ou sem saldo. <span className="fd-pending">Pendente de validação por contabilista certificado: o bloqueio do anexo A foi provocado no ecrã (**Gerar o Anexo A** recusa com contas sem taxonomia, mesmo sem saldo); o do anexo I foi lido no programa.</span>
+
+{/* Nota interna (DOCS-035, 2.ª ronda da aud-v2e, NB2b2-05): l10n_pt_arxi_reports/models/ies_annex.py, action_generate chama action_validate_taxonomies, que bloqueia com a lista das contas se a cobertura não for 100 %; _coverage conta todas as contas de movimento ativas fora do extrapatrimonial sem taxonomia ou sem mapeamento (_l10n_pt_get_statement_readiness), sem olhar ao saldo. Provar no ecrã com um anexo A quando houver base com a IES. */}
+
+Este artigo mostra como encontrar as contas sem taxonomia, como lhes dar a taxonomia certa e como confirmar que nenhuma ficou de fora. **Atribuir uma taxonomia não cria lançamentos**: só muda a rubrica onde o saldo da conta aparece.
+
+## Quando utilizar?
+
+- Depois de criar contas novas no plano, e antes de tirar o [balanço](/accounting-pt/balanco) ou o [SAF-T de contabilidade](/accounting-pt/saft-de-contabilidade).
+- No fecho do exercício, antes da IES.
+
+## Onde encontrar?
+
+- **Contabilidade › Configurar › Plano e regras legais › Comparar o plano com o SNC**: o ecrã **Verificação do plano de contas SNC**, que lista as contas de movimento sem taxonomia.
+- **Contabilidade › Configurar › Geral › Plano de contas**: na ficha da conta, separador **Portugal**, campo **Taxonomia**.
+
+As listas **Contas sem taxonomia**, **Atribuir taxonomia a uma conta** e **Taxonomias do SAF-T** existem, mas só aparecem no menu em modo de programador. Este artigo usa os dois ecrãs que estão sempre à vista.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**. Com ele faz todos os passos (testado com esse perfil). O **Contabilista** não tem **Plano de contas** nem **Comparar o plano com o SNC** no menu **Configurar**.
+- Sabe qual é o referencial contabilístico da empresa: o SNC usa as taxonomias que começam por **S**, e as microentidades as que começam por **M**. O campo **Taxonomia** só oferece as do referencial da empresa: na Empresa Demonstração (SNC), escrever `M78` dá «Sem registos». <span className="fd-pending">Pendente de validação por contabilista certificado: que conjunto de taxonomias (S ou M) corresponde a cada referencial da empresa (SNC, NC-ME, NCRF-PE, ESNL).</span>
+- No exemplo, a Empresa Demonstração, Lda (SNC) criou duas contas novas: `622610` Reparação de viaturas e `278900` Devedores e credores diversos.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › Plano e regras legais › Comparar o plano com o SNC**. Abre-se **Verificação do plano de contas SNC** da **Empresa** ativa, já com as secções preenchidas: cada vez que abre este menu, a verificação corre de novo, sem precisar de guardar.
+2. Veja a secção **CONTAS DE MOVIMENTO SEM TAXONOMIA DO SAF-T**. No exemplo aparece só `278900 — Devedores e credores diversos`. A `622610` não aparece, porque recebeu a taxonomia sozinha (ver «Notas importantes»).
+   ![Verificação do plano de contas SNC: o Resumo e as secções, com a conta 278900 Devedores e credores diversos em Contas de movimento sem taxonomia do SAF-T](/images/accounting-pt/taxonomias/01-contas-sem-taxonomia.png)
+3. Abra a conta: **Contabilidade › Configurar › Geral › Plano de contas**, pesquise `278900` e abra-a. Carregue no separador **Portugal**. Com a **Taxonomia** vazia, o separador mostra **Deriva da conta** (`278`) e a lista **SUGESTÕES**: as taxonomias possíveis para esse código, com o **Código de taxonomia** e a **Descrição**. No exemplo, **138** «Outras contas a receber e a pagar - Outros devedores e credores - (CORRENTE)» e **139** «… - (NÃO CORRENTE)». Cada linha tem o botão **Escolher**.
+   ![Separador Portugal da conta 278900 com o campo Taxonomia vazio, Deriva da conta 278 e as sugestões 138, Outros devedores e credores (CORRENTE), e 139, (NÃO CORRENTE), com o botão Escolher da 138 assinalado](/images/accounting-pt/taxonomias/02-taxonomia-e-sugestoes.png)
+4. Nas **SUGESTÕES**, carregue em **Escolher** na linha da taxonomia certa. No exemplo, a **138**: o campo **Taxonomia** fica com **S138 - Outras contas a receber e a pagar - Outros devedores e credores - (CORRENTE)**. Também pode escrever no campo o número (`138`) ou parte da descrição (`Outros devedores e credores`) e escolher da lista. Pela descrição, a lista mostra também as de imparidade (S144, S145): escolha só uma das sugestões. <span className="fd-pending">Pendente de validação por contabilista certificado: como decidir entre a taxonomia corrente e a não corrente de uma conta a receber ou a pagar.</span>
+5. Com **Escolher**, a taxonomia fica gravada logo. Se a escreveu no campo, carregue no ícone de guardar. A lista **SUGESTÕES** deixa de aparecer.
+6. Abra de novo **Comparar o plano com o SNC**. A secção diz «Nenhuma — todas as contas de movimento têm taxonomia.»
+   ![Secção Contas de movimento sem taxonomia do SAF-T com a frase Nenhuma, todas as contas de movimento têm taxonomia, assinalada](/images/accounting-pt/taxonomias/03-nenhuma-conta-sem-taxonomia.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, as taxonomias atribuem-se nos mesmos dois ecrãs, com o perfil **Contabilista certificado**: **Verificação do plano de contas SNC** tem as mesmas secções, e a ficha da conta tem o separador **Portugal**, ao lado de **Contabilidade**, com **Taxonomia**, **Deriva da conta**, as **SUGESTÕES** com **Escolher** e a **CATEGORIA DE AGRUPAMENTO DO SAF-T**.
+
+{/* Nota interna (lote EE-02, DOCS-073 #4142, DEC-1794, master 7a46de91a, base Enterprise docs_ee_ee02_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): Contabilista certificado: conta nova 278900 Devedores e credores diversos criada na cópia; o separador Portugal mostrou Deriva da conta 278 e as SUGESTÕES 138 e 139 (CORRENTE e NÃO CORRENTE); Escolher na 138 gravou a taxonomia e tirou as sugestões; Comparar o plano com o SNC: «Nenhuma — todas as contas de movimento têm taxonomia.». Ver reports/LOTE_EE-02.md. */}
+
+## Resultado esperado
+
+- Todas as contas de movimento têm taxonomia, e a verificação diz «Nenhuma — todas as contas de movimento têm taxonomia.»
+- Nenhum lançamento foi criado. O saldo que a conta vier a ter entra na rubrica dessa taxonomia no [balanço](/accounting-pt/balanco) (com **Desdobrar tudo**, a conta aparece debaixo da rubrica) e no SAF-T de contabilidade.
+
+## Notas importantes
+
+- **O que é automático.** Uma conta nova com um código que só tem uma taxonomia possível recebe-a ao ser criada. No exemplo, a `622610` Reparação de viaturas ficou logo com **S362 - Fornecimentos e serviços externos - Serviços especializados - Conservação e reparação**, com **Extensão própria do plano SNC** marcada e **Deriva da conta** `6226`. Quando há mais do que uma possível (como na `278900`), fica vazia e aparece na verificação. Confira a taxonomia que veio sozinha tanto como a que escolhe.
+- **Uma taxonomia que não condiz com a conta grava-se, mas com aviso.** No teste, a `278900` gravou **S1 - Caixa**, e o separador **Portugal** passou a mostrar: «A taxonomia «S1 - Caixa» não condiz com a conta 278900: a Autoridade Tributária publica-a para outros códigos de conta, por isso o saldo desta conta iria para a linha errada do balanço, da IES e do SAF-T. Escolha uma das taxonomias sugeridas (o campo lista as que condizem com o código) ou, se for uma exceção verificada, peça ao administrador do sistema que a confirme no separador «Portugal».» Não escolha uma taxonomia que não esteja nas **SUGESTÕES** da conta sem a confirmar com o contabilista certificado. Para tirar a taxonomia de uma conta, apague-a e clique fora do campo (ou saia com a tecla Tab): o campo fica vazio.
+- **O que a verificação vê.** A secção **CONTAS DE MOVIMENTO SEM TAXONOMIA DO SAF-T** diz que contas não têm taxonomia, e a secção **CONTAS DE MOVIMENTO CUJA TAXONOMIA NÃO CONDIZ COM O CÓDIGO** é a das taxonomias que não condizem com a conta (no exemplo, «Nenhuma — todas as taxonomias condizem com o código da sua conta.»). O **Resumo** conta umas e outras: no exemplo, antes do passo 4, «1 conta(s) de movimento sem taxonomia» e «0 taxonomia(s) que não condiz(em) com o código da conta».
+- **As outras secções.** **CONTAS AGREGADORAS QUE AINDA TÊM TAXONOMIA** lista contas de grau superior com taxonomia (no exemplo, 9, como `11 — Caixa`); **CÓDIGOS FORA DO PLANO OFICIAL** lista as contas próprias da empresa (no exemplo, 21, já com a `622610` e a `278900`). São listas para conferir, não erros que o programa trava. <span className="fd-pending">Pendente de validação por contabilista certificado: se uma conta agregadora com taxonomia deve ficar sem ela.</span>
+- **Outra empresa.** A verificação é sempre da empresa ativa. Na Empresa Teste Portugal (COMMUNITY), ainda sem referencial, a mesma verificação mostrou 2 contas de movimento sem pai (`999001` e `999002`) e nenhuma conta sem taxonomia. Uma empresa que passou a SNC-ME tem o caso próprio de [Como escolher o referencial contabilístico e a categoria da entidade](/accounting-pt/referencial-contabilistico).
+- **Os botões Recodificar conta e Alterar tipo de conta**, que aparecem no separador **Portugal** de algumas contas (por exemplo a `6226`), mudam o código ou o tipo da conta, não a taxonomia: não são precisos aqui.
+
+## Problemas frequentes
+
+### «Sem registos» ao escrever a taxonomia
+
+- **Sintoma:** no campo **Taxonomia**, escrever, por exemplo, `M78` dá «Sem registos».
+- **Causa verificada:** o campo só oferece as taxonomias do referencial da empresa. A M78 é das microentidades e a Empresa Demonstração usa o SNC.
+- **O que fazer:** carregue em **Escolher** numa das **SUGESTÕES**, ou escreva o número de uma delas (por exemplo `138`).
+
+### «… ainda não se podem gerar: N conta(s) sem taxonomia…»
+
+- **Sintoma:** o balanço e a demonstração de resultados não mostram valores, com uma mensagem como esta, copiada numa versão anterior da demonstração com o administrador <span className="fd-pending">Pendente de validação no ecrã: na demonstração de hoje a mensagem não se provoca, porque a Empresa Teste Filial ainda não tem referencial e o balanço mostra a mensagem do referencial por definir</span>: «As linhas desta demonstração não estão geradas para a empresa Empresa Teste Filial (COMMUNITY) e a geração automática não funcionou: As demonstrações financeiras de “Empresa Teste Filial (COMMUNITY)” ainda não se podem gerar: 317 conta(s) sem taxonomia, o código que põe a conta no Balanço e na Demonstração dos resultados (54 Prémios de emissão, 541 Prémios de emissão, … e mais 302). Abra cada uma destas contas no plano de contas, escolha a taxonomia e abra a demonstração outra vez. Corrija o que indica e abra a demonstração outra vez, ou gere as linhas à mão: procure «Contabilidade › Configurar › Plano e regras legais › Gerar linhas das demonstrações» na pesquisa de menus. (Para o ver, ligue o modo programador.)» Por baixo, os totais a 0,00 € e **Equilibrado** não são valores da empresa.
+- **Causa verificada:** as linhas das demonstrações ainda não estão geradas e há pelo menos uma conta de movimento sem taxonomia, com ou sem saldo.
+- **O que fazer:** dê a taxonomia a cada conta da lista (passos 3 a 5) e abra a demonstração de novo. Se a empresa acabou de passar a SNC-ME, veja também [Como escolher o referencial contabilístico e a categoria da entidade](/accounting-pt/referencial-contabilistico).
+
+### «… conta(s) com saldo não têm rubrica no Balanço…» e o balanço Desequilibrado
+
+- **Sintoma:** o balanço abre com **Desequilibrado** e duas mensagens. Na demonstração, com 100,00 € lançados na `278900` sem taxonomia: «Controlo do Balanço em 31/12/2026: o Ativo (255.275,00) não é igual ao Capital próprio mais o Passivo (255.375,00); a diferença é -100,00. Nada foi ajustado. Veja primeiro as contas com saldo que não têm linha no Balanço e os rendimentos e gastos de exercícios anteriores que nunca foram apurados (…). (O modo programador tem de estar ligado para o ver; o menu é dos perfis «Contabilista (opera)» e «Contabilista certificado (assina, fecha períodos)»: se tiver outro perfil, peça a um utilizador com um deles.)» e «1 conta(s) com saldo não têm rubrica no Balanço e ficam fora dos seus totais, pelo que o Ativo pode diferir do Capital próprio mais o Passivo (soma desses saldos: 100,00): 278900 (100,00). Consulte-as em … (O modo programador …)». As duas apontam a lista **Saldos de contas não mapeadas**, que a barra só mostra em modo programador; sem ele, o Contabilista certificado abre-a em **Contabilidade › Declarar › Declarações anuais › O que há para fazer com as declarações anuais? › Antes de entregar › Saldos de contas não mapeadas**.
+- **Causa verificada:** a conta tem saldo e não tem taxonomia, por isso o saldo não entra em nenhuma rubrica. A mesma mensagem aparece para saldos de exercícios anteriores que nunca foram apurados.
+- **O que fazer:** dê a taxonomia à conta que a mensagem indica (passos 3 a 5) e abra o balanço de novo: com taxonomia, o saldo entra na rubrica dela. Na demonstração, o lançamento de teste foi anulado com o lançamento inverso e o balanço voltou a **Equilibrado**; depois, a `278900` voltou a S138.
+
+### «Os códigos de conta devem ser exclusivos…»
+
+- **Sintoma:** ao guardar uma conta nova, janela **Erro de Validação**: «Os códigos de conta devem ser exclusivos. Não é possível criar contas com os códigos duplicados: 622610».
+- **O que fazer:** a conta já existe. Pesquise o código no **Plano de contas** e abra-a, em vez de a criar.
+
+{/* Nota interna (DOCS-065 req. 46421, lote v23-I, master 5228a94bd, docs_demo_v23i_test): depois do ACC-263, com um utilizador criado só com o perfil Contabilista certificado, conta 278900 criada por RPC com esse utilizador (sem taxonomia) e o resto por clique: «138» e «S138» acham a S138; «Outros devedores e credores» dá S138, S139, S144 e S145; «M78» dá «Sem registos»; SUGESTÕES só com Código de taxonomia, Descrição e o botão Escolher (sem Notas nem Vigente desde); Escolher na 138 grava a S138 sem carregar em guardar e as SUGESTÕES saem. Captura 02 refeita (1000 px). A conta ficou com a S138. */}
+
+{/* Nota interna (DOCS-035, lote B2b, 29/10/2026, base docs_demo_loteb2b_test na 8101, perfil demo.gestor_contabilidade, por clique): contas 622610 (taxonomia S362 automática, extensão de 6226) e 278900 (sem taxonomia; sugestões S138/S139) criadas para o exemplo e deixadas na base para o auditor, sem saldo. 278900: S1 - Caixa aceite e gravada sem aviso e a verificação disse «Nenhuma» (defeito B2-12); depois S138 gravada. Verificações guardadas: action-929 registos 1 a 5. Os menus Contas sem taxonomia, Atribuir taxonomia a uma conta, Taxonomias do SAF-T e Saldos de contas não mapeadas (FC-REPORTS-062/071/076, FC-BASE-042) estão em DEBUG_ONLY do arxi_ux_kit/menu_use.py (UX-055, DEC-1086, classe R «law»): só em modo de programador; responde ao B2-02 do LOTE_B2. A verificação não tem botão «Verificar»: só corre ao guardar (defeito B2-13). Empresa vazia: admin, Empresa Teste Filial. O Resumo não conta as contas sem taxonomia (B2-13). Correção da aud-v2e (30/10/2026, mesma base, perfil demo.gestor_contabilidade salvo onde se diz): NB2b-02 — mensagem do bloqueio copiada com o administrador na Filial (o CC só tem a Empresa Demonstração, que já tem as linhas geradas; a última frase da mensagem muda com as permissões, segundo o código); caso com saldo provado na Empresa Demonstração: taxonomia da 278900 apagada (clicar fora, sem Tab: ficou vazia, confirmado), MISC/2026/00146 (278900 D 100,00 / 6226 C 100,00, 30/10/2026) → Balanço (SNC) Desequilibrado com as duas mensagens copiadas; MISC/2026/00147 com as linhas inversas anula-o; balanço Equilibrado de novo; S138 reposta. NB2b-03: captura 02 refeita a 840 px com as colunas opcionais Notas e Vigente desde escondidas e a coluna Descrição alargada. NB2b-04: a verificação da Filial deixou de servir de exemplo (passou a SNC-ME); exemplo trocado pela Empresa Teste Portugal, verificada antes de receber o referencial SNC-PE no DOC-0081. */}
+
+{/* Nota interna (DOCS-046, lote v23-K, 07/11/2026, master a3603e0f2, base docs_demo_v23k_test na 8434, base-mãe v2): captura 01 refeita por clique com um utilizador só com o perfil Contabilista certificado. As contas 622610 Reparação de viaturas (recebeu S362 sozinha) e 278900 Devedores e credores diversos (sem «(teste)»; sem taxonomia) foram criadas por RPC com esse utilizador. As capturas 02 e 03 não mostram o nome da conta e não foram refeitas. */}

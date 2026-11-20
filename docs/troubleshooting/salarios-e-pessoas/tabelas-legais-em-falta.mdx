@@ -1,0 +1,88 @@
+---
+id: tabelas-legais-em-falta
+slug: /troubleshooting/tabelas-legais-em-falta
+title: Falta uma tabela legal em vigor nessa data
+sidebar_label: Tabela legal em falta
+description: Porque Calcular recusa um recibo de um ano novo (calendário de feriados por criar ou tabelas legais do ano por publicar), o que fazer em cada caso e que tabela de IRS o recibo usa até sair a do ano.
+keywords: [tabela legal em falta, tabelas legais, tabelas legais por publicar, tabela de IRS, tabelas de retenção, calendário de feriados, calendario de feriados, gerar feriados, recibo de janeiro, ano novo, salários de janeiro, salarios de janeiro, não pode ser calculado, nao pode ser calculado, taxa da Segurança Social, em vigor]
+doc_id: DOC-0407
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado, troubleshooting/salarios-e-pessoas/recibo-sem-dados-para-calcular, troubleshooting/salarios-e-pessoas/mes-dos-salarios-fechado]
+---
+
+## Sintoma
+
+Num recibo de um ano que ainda não começou, ou que começou há pouco, **Calcular** abre **Operação inválida** e o recibo fica em **Rascunho**. Por cima do recibo continuam os avisos «Segurança Social não calculada…» e «IRS por calcular…»: são a consequência, não a causa.
+
+## Mensagem
+
+Vistas com o perfil **Processador de salários**, num recibo novo de Ana Margarida Pinto (Empresa Demonstração, Lda), aberto em **Recibos de vencimento › Novo**.
+
+Recibo de 01/01/2027 a 31/01/2027 (com ou sem calendário de feriados de 2027):
+
+> «O recibo «Ana Margarida Pinto (01/01/2027 — 31/01/2027)» não pode ser calculado nem validado: as tabelas legais de 2027 ainda não estão publicadas. O que aconteceu: calcular agora usaria valores em falta ou desatualizados (salário mínimo, IRS, Segurança Social) e daria montantes errados. Como resolver: aguarde o pacote de atualização legal de 2027 e instale-o; a vigilância da lei marca o ano como confirmado.»
+
+![Janela Operação inválida: o recibo de janeiro de 2027 não pode ser calculado nem validado porque as tabelas legais de 2027 ainda não estão publicadas](/images/troubleshooting/tabelas-legais-em-falta/02-tabelas-legais-por-publicar.png)
+
+Recibo de 01/01/2028 a 31/01/2028: a mesma recusa, com «as tabelas legais de 2028 ainda não estão publicadas» e «o pacote de atualização legal de 2028».
+
+![Janela Operação inválida: o recibo de janeiro de 2028 não pode ser calculado nem validado porque as tabelas legais de 2028 ainda não estão publicadas](/images/troubleshooting/tabelas-legais-em-falta/03-tabelas-legais-2028.png)
+
+Um recibo com data a partir de 2029 nem se grava: «O ano de rendimento 2029 do recibo de «Ana Margarida Pinto» não é aceitável. O que aconteceu: … esse ano tem de estar entre 2000 e 2028…».
+
+Num ano com tabelas publicadas (novembro de 2026), **Calcular** passa à verificação seguinte, o calendário de feriados. Sem o calendário do ano e do território:
+
+> «Não existe calendário de feriados para 2026 (Continente) na empresa «Empresa Demonstração, Lda». O que aconteceu: os dias úteis nunca se adivinham sem os feriados do ano. Como resolver: crie o calendário em Salários › Configurar › Empresa › Faltas e feriados › Calendários de feriados e carregue em «Gerar feriados».»
+
+![Janela Operação inválida: não existe calendário de feriados para 2026 (Continente) na Empresa Demonstração, Lda](/images/troubleshooting/tabelas-legais-em-falta/01-calendario-de-feriados-em-falta.png)
+
+Esta última foi provocada na demonstração arquivando o calendário de 2026 da empresa, que ela já tinha. Em 2027 e 2028 a primeira recusa é a das tabelas legais, antes do calendário.
+
+## Causas verificadas
+
+- **As tabelas legais do ano não estão publicadas.** É a primeira coisa que **Calcular** confere. Em **Salários › Configurar › Legislação › Lei ainda não publicada**, o produto tem as linhas **Horizonte 2027: nada confirmado** e **Horizonte 2028: nada confirmado**. Enquanto a linha do ano estiver aberta, nenhum recibo desse ano se calcula, com ou sem calendário. Só um pacote de atualização legal a fecha.
+- **Falta o calendário de feriados do ano.** Cada empresa tem um calendário por ano e território (Continente, Açores, Madeira). Na demonstração havia o de 2026; o de 2027 criou-se para o ensaio.
+- **Há outras tabelas legais com data**: a taxa do regime de Segurança Social, o código de remuneração da Segurança Social, o método do subsídio de férias da empresa e a tabela de IRS da situação familiar. Cada uma tem a sua mensagem («… não tem nenhuma taxa de Segurança Social em vigor em …», «… não tem nenhum método do subsídio de férias em vigor em …»). <span className="fd-pending">Pendente de validação no ecrã: na demonstração os recibos de 2026 encontraram estas tabelas; provocar a recusa exigia apagar uma tabela legal da base.</span>
+
+## O que confirmar
+
+1. As datas do recibo (**Início do período** e **Fim do período**): um engano no ano dá a mesma recusa.
+2. Em **Salários › Configurar › Empresa › Faltas e feriados › Calendários de feriados**, se há uma linha da empresa com o **Ano** e o **Território** do recibo. A lista mostra só a empresa escolhida no canto superior direito.
+3. Em **Salários › Configurar › Legislação › Lei ainda não publicada**, as linhas do ano do recibo (**Estado** **Não confirmado**, **Anunciado, sem diploma** ou **Hipótese**). Em 01/11/2026, 2027 tinha 12 linhas abertas, entre elas «Tabelas de retenção de IRS para 2027», «Salário mínimo para 2027», «IAS (indexante dos apoios sociais) para 2027» e «Horizonte 2027: nada confirmado»; 2028 tinha «Horizonte 2028: nada confirmado». A linha **Horizonte** do ano é a que fecha o cálculo desse ano.
+
+## Como resolver
+
+**Calendário de feriados em falta (num ano com tabelas publicadas).** Feito com o administrador da demonstração. O menu **Salários › Configurar** é do **Administrador de Salários**; o Processador de salários não o tem.
+
+1. Abra **Salários › Configurar › Empresa › Faltas e feriados › Calendários de feriados** e carregue em **Novo**.
+2. Confirme a **Empresa** (vem a do canto superior direito), escreva o **Ano** (2027) e escolha o **Território** (Continente).
+3. Guarde e carregue em **Gerar feriados**. No exemplo ficaram 14 linhas: **Feriados obrigatórios** 13, **Dos quais em dia útil** 8. O calendário fica com o nome **Feriados 2027 — Continente** e deixa de se editar.
+4. Volte ao recibo e carregue de novo em **Calcular**. Num recibo de 2027 ou 2028, a recusa seguinte é a das tabelas legais do ano (acima): o calendário não a resolve.
+
+Os feriados municipais e os dias que a empresa dá (por exemplo, Carnaval) entram nas linhas do calendário. <span className="fd-pending">Pendente de validação por contabilista certificado: confirmar no calendário gerado o tratamento do Carnaval e do feriado municipal da sede antes de processar janeiro.</span>
+
+**Tabelas legais do ano por publicar.** Não há nada a fazer no recibo, nem criar o calendário do ano. Espere pelo pacote de atualização legal do ano (ver [Como processar os salários do mês](/payroll-pt/processar-o-mes)) e processe depois. Não mude as datas do recibo para o ano anterior para conseguir calcular: o recibo ficaria com o salário mínimo, o IRS e a Segurança Social do ano errado. <span className="fd-pending">Pendente de validação por contabilista certificado: tabelas de retenção a aplicar em janeiro enquanto o despacho do ano não é publicado.</span>
+
+
+## Resultado esperado
+
+- Com o calendário criado, num ano com tabelas publicadas, **Calcular** passa à verificação seguinte.
+- Para 2027 e 2028, a recusa repete-se até o pacote do ano ser instalado: **Calcular** e **Validar** são recusados.
+
+## Quando contactar o suporte
+
+- O calendário do ano e do território existe e **Calcular** continua a dizer que não existe.
+- O ano já começou, o pacote de atualização legal do ano já foi instalado e a recusa «tabelas legais … ainda não estão publicadas» continua.
+- O **Como foi calculado?** do recibo mostra a tabela de IRS de um ano diferente do ano do pagamento.
+
+## Informação a enviar
+
+- A empresa, o trabalhador e as datas do recibo.
+- O texto completo da mensagem, copiado do ecrã.
+- Uma captura da lista **Calendários de feriados** e da lista **Lei ainda não publicada**.
+- O perfil com que entrou.

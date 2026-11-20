@@ -1,0 +1,164 @@
+---
+id: recibo-final-da-cessacao
+slug: /troubleshooting/recibo-final-da-cessacao
+title: O recibo final da cessação não pode ser criado ou validado
+sidebar_label: Recibo final da cessação recusado
+description: Porque o recibo final de um trabalhador que sai não se cria ou não se valida, a recusa de um segundo recibo final e o que fazer em cada caso.
+keywords: [recibo final, recibo final recusado, cessação, cessacao, criar recibo final, segundo recibo final, 2.º recibo final, já tem um recibo final, ja tem um recibo final, já cobre os mesmos dias, ja cobre os mesmos dias, não tem cessação, nao tem cessacao, não tem contrato a partir de, nao tem contrato a partir de, fim do contrato, férias de anos anteriores, ferias de anos anteriores, reabrir cessação, reabrir cessacao]
+doc_id: DOC-0402
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 0289754a8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado, people/trabalhadores/cessacao-do-contrato, payroll-pt/declarar/vinculo-a-seguranca-social]
+---
+
+## Sintoma
+
+Está a tratar da saída de um trabalhador e acontece uma destas coisas:
+
+- o botão **Criar recibo final** não aparece, ou responde com **Operação inválida**;
+- o recibo final abre, mas **Validar** responde com **Operação inválida**;
+- a cessação não se grava.
+
+## Mensagem
+
+Vistas com o perfil **Processador de salários**, na Empresa Demonstração, Lda. Os nomes e as datas mudam com o seu caso.
+
+Ao carregar em **Criar recibo final** quando a cessação já tem outro recibo final:
+
+> ««*Nome do trabalhador*» já tem um recibo final desta cessação: «*Nome do trabalhador (01/10/2026 — 31/10/2026)*» (*Rascunho, sem lote, criado em 05/11/2026 13:09:39 por Salários (demonstração)*). O que aconteceu: dois recibos finais da mesma cessação liquidavam-na duas vezes. Como resolver: abra o existente na lista de recibos (menu Salários) ou anule-o (com motivo) antes de criar outro.»
+
+![Janela Operação inválida: o trabalhador já tem um recibo final para esta cessação](/images/troubleshooting/recibo-final-da-cessacao/01-segundo-recibo-final.png)
+
+Ao carregar em **Validar**, quando um recibo normal já paga os mesmos dias:
+
+> «O recibo final de «*Nome do trabalhador*» não pode ser validado: um recibo regular (*Nome do trabalhador (01/10/2026 — 31/10/2026)*) já cobre os mesmos dias. O que aconteceu: o trabalhador seria pago duas vezes pelo mesmo mês. Como resolver: se esse recibo já está pago, mantenha-o e apague do recibo final a linha do vencimento base (o recibo final leva então só as parcelas da cessação); se não, anule esse recibo regular (com o motivo) ou corrija-o, para que o recibo final leve o mês todo. Depois valide outra vez.»
+
+![Janela Operação inválida: um recibo regular já cobre os mesmos dias do recibo final](/images/troubleshooting/recibo-final-da-cessacao/02-recibo-normal-cobre-os-mesmos-dias.png)
+
+Com o recibo normal **Pago**, o que esta mensagem manda fazer não resolve hoje: veja [Um recibo normal cobre os mesmos dias](#um-recibo-normal-cobre-os-mesmos-dias).
+
+Ao carregar em **Calcular** num recibo do tipo **Normal** com uma linha de **Compensação legal da cessação**:
+
+> «O recibo final de «*Gabriela Sousa Reis*» não tem cessação. O que aconteceu: o aviso, a formação e a compensação da cessação vêm do seu registo. Como corrigir: escolha a cessação no recibo (Cessação).»
+
+A mensagem diz «recibo final», embora o recibo seja normal.
+
+{/* Nota interna (DOC-0402): o catálogo tem outra mensagem para este caso («Uma parcela da cessação pertence a um recibo final…»), que não apareceu. Defeito no relatório do lote v7-TS3. */}
+
+Ao guardar um recibo normal para um mês depois do último dia do contrato:
+
+> ««*Fábio Nuno Carvalho*» não tem contrato a partir de *30/09/2026*. O que aconteceu: a cessação (*Fábio Nuno Carvalho — Denúncia pelo trabalhador — 30/09/2026*) termina o contrato em *30/09/2026*, pelo que um recibo regular para o período que começa em *01/10/2026* pagaria um mês sem contrato. Como resolver: não processe este mês; se algo for devido pelo tempo trabalhado, use um acerto ou o recibo corretivo do recibo final.»
+
+Ao guardar a cessação com o campo **Férias de anos anteriores não gozadas** errado:
+
+> «As férias de anos anteriores não gozadas não podem ser negativas.»
+
+> «As férias de anos anteriores ainda vencidas precisam do fundamento (um adiamento acordado, uma recusa do empregador). Como corrigir: preencha «Fundamento das férias anteriores».»
+
+## Causas verificadas
+
+- **A cessação ainda está em Rascunho.** **Criar recibo final** só aparece depois de **Confirmar**. Sem **Trabalhador**, **Modalidade de cessação**, **Iniciador** e **Último dia do contrato**, a cessação não se grava: «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **A cessação já tem um recibo final em curso.** Enquanto não estiver **Anulado**, um recibo final em **Rascunho** conta como o recibo final dessa cessação.
+- **A cessação já está liquidada.** Com o recibo final validado, passa a **Liquidado** e a barra só mostra **Certificado de trabalho**: já não há **Criar recibo final** nem **Reabrir**.
+- **Um recibo normal, validado ou pago, cobre os mesmos dias.** O recibo final leva o mês em que o contrato acaba. Com o recibo normal **Validado** há saída. Com o recibo normal **Pago**, hoje não há: o recibo final nasce só com as parcelas da cessação, mas **Validar** é recusado por causa do salário mínimo. É um limite do ecrã, não uma regra dos salários.
+- **O recibo foi feito à mão, sem cessação.** Um recibo novo do tipo **Final (cessação)**, sem **Cessação**, grava-se, mas não traz linhas: **Validar** responde que falta a retribuição base.
+- **Uma linha da cessação está num recibo normal.** As rubricas de compensação pertencem ao recibo final.
+- **O contrato já acabou.** Depois do último dia de uma cessação confirmada, um recibo normal de um mês seguinte é recusado.
+
+## O que confirmar
+
+1. O estado da cessação, em **Salários › Preparar › Trabalhadores e contratos › Cessações**: **Rascunho**, **Confirmado** ou **Liquidado**.
+2. Em **Salários › Processar › Recibos de vencimento**, os recibos do trabalhador no mês do último dia: tipo e estado.
+3. Se o recibo normal desse mês está **Validado** ou **Pago**. O caminho é diferente.
+
+## Como resolver
+
+### A cessação não tem o botão
+
+Preencha os campos obrigatórios, guarde e carregue em **Confirmar**. Os passos estão em [Como tratar a saída de um trabalhador](/people/cessacao-do-contrato).
+
+**Quem faz:** Processador de salários.
+
+### O segundo recibo final
+
+Um recibo final é único por cessação. Depende do estado do primeiro:
+
+- **Em Rascunho:** abra-o em **Salários › Processar › Recibos de vencimento** e continue nele. Se quer mesmo começar de novo, abra **Ações › Anular**, escreva o **Motivo**, carregue em **Confirmar anulação** e volte a **Criar recibo final**. Na demonstração, o rascunho anulado ficou **Anulado** e nasceu um recibo novo.
+- **Validado:** a cessação fica **Liquidado** e não há segundo recibo final. Uma diferença corrige-se com um recibo corretivo do recibo final: [O recibo já está validado e não se altera](/troubleshooting/recibo-validado-nao-se-altera).
+
+Faça o recibo final sempre com o botão da cessação, e não com **Novo** na lista de recibos. **Novo**, com o tipo **Final (cessação)** e a mesma cessação, gravou um segundo rascunho sem qualquer recusa.
+
+### Um recibo normal cobre os mesmos dias
+
+Se o recibo normal está **Validado**:
+
+1. Abra-o e, em **Ações › Anular**, escreva o **Motivo** e carregue em **Confirmar anulação**.
+2. Volte ao recibo final, carregue em **Calcular** e em **Validar**.
+
+Na demonstração, com a cessação de 31/10/2026, o recibo final passou a **Validado** depois de anulado o recibo normal de outubro.
+
+Se o recibo normal está **Pago**, hoje o ecrã não tem saída para um último dia nesse mês. Na demonstração, com o último dia a 31/10/2026 e outubro pago:
+
+- **Criar recibo final** cria o recibo só com as parcelas da cessação, sem **Retribuição base**;
+- **Validar** responde: «A retribuição de *Nome do trabalhador* (0,00 €) está abaixo do salário mínimo que se aplica ao trabalhador (920,00 €) em 920,00 €. […]». Apagar a linha base de um recibo final criado antes do pagamento dá a mesma recusa, apesar do que a mensagem anterior indica;
+- com uma parcela de aviso em falta, **Calcular** já responde: «A parcela da cessação «Indemnização do aviso em falta devida pelo trabalhador (cessação)» de «*Nome do trabalhador*» não tem base. […]».
+
+O que fazer:
+
+1. Não crie corretivos nem outro recibo final: não desbloqueiam a validação.
+2. Deixe o recibo final em **Rascunho** e a cessação em **Confirmado**.
+3. Contacte o suporte, com a informação indicada no fim deste artigo.
+4. Confirme em [Vínculo à Segurança Social](/payroll-pt/vinculo-a-seguranca-social) o que tem de comunicar sobre a saída.
+
+{/* Nota interna (auditoria v17-PAY2, master 00c68a6d8): o PAY-085 já está em master, mas Validar continua recusado pelo salário mínimo: defeito no relatório da auditoria; rever esta secção quando for corrigido. */}
+
+**Quem faz:** Processador de salários, para anular o recibo normal **Validado** e validar o recibo final.
+
+### Um recibo final feito à mão
+
+Anule-o em **Ações › Anular** e crie o recibo final com o botão da cessação, que traz a retribuição até ao último dia e as parcelas.
+
+### Uma linha da cessação num recibo normal
+
+Retire a linha do recibo normal. A compensação paga-se no recibo final, criado com o botão da cessação.
+
+### Um recibo normal depois do último dia
+
+Não o crie: esse mês já não tem contrato. Se ainda é devido algo, use o que a mensagem indica.
+
+### Férias de anos anteriores
+
+Escreva zero ou um número positivo em **Férias de anos anteriores não gozadas** e, se houver dias, preencha **Fundamento das férias anteriores**. <span className="fd-pending">Pendente de validação por contabilista certificado: que fundamentos justificam manter férias vencidas de anos anteriores.</span>
+
+### Anular um recibo final já contabilizado
+
+Anular um recibo final já contabilizado por lote cria o estorno também por lote. Se a empresa entretanto deixou de lançar os salários por lote, a anulação é recusada, com a indicação de voltar a pôr **Lançar os salários** em **Agregado por lote** ou de corrigir com um recibo corretivo. Os pagamentos já feitos não se desfazem.
+
+{/* Nota interna (DOCS-063 req. 46145): frase do bilhete PAY-109; a recusa não foi provocada no ecrã neste lote. */}
+
+### A cessação está errada e já criou um recibo final
+
+Com o recibo final em **Rascunho**, **Reabrir** volta a pôr a cessação em **Rascunho**, sem recusa. Corrija os dados, carregue em **Confirmar** e continue no recibo que já existe. Com o recibo final validado, a cessação está **Liquidado** e não há **Reabrir**: contacte o suporte.
+
+## Resultado esperado
+
+- O recibo final fica **Validado**, com as barras **Pagar** e **Retificar**, e a cessação passa a **Liquidado**.
+- O recibo normal do mesmo mês, se estava **Validado**, fica **Anulado**, com o motivo.
+
+Depois, comunique a saída à Segurança Social: [Vínculo à Segurança Social](/payroll-pt/vinculo-a-seguranca-social).
+
+## Quando contactar o suporte
+
+- O recibo normal do mês do último dia está **Pago** e o recibo final é recusado.
+- A cessação tem dados errados e já está **Liquidado**.
+
+## Informação a enviar
+
+- O nome do trabalhador, a cessação e o último dia do contrato.
+- Os recibos desse trabalhador no mês, com o tipo e o estado.
+- O texto completo da mensagem, copiado do ecrã.
+- O perfil com que entrou.

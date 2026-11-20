@@ -1,0 +1,76 @@
+---
+id: divergencias-de-rececao
+slug: /fiscal-core/divergencias-de-rececao
+title: Como tratar avisos de receção e divergências
+sidebar_label: Divergências de receção
+sidebar_position: 7
+description: Comparar o que o cliente diz ter recebido com o que foi expedido, propor a nota de crédito e marcar a diferença como tratada.
+keywords: [aviso de receção, divergências de receção, nota de crédito, retalhista, edi, quantidades recebidas, aviso de rececao, divergencias de rececao, nota de credito]
+doc_id: DOC-0061
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 3a28c9b91)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao-eletronica/aviso-de-expedicao, fiscal-core/faturacao-eletronica/fatura-edi]
+---
+
+## Para que serve?
+
+Quando um retalhista envia um aviso de receção com quantidades diferentes das expedidas, cada diferença fica numa lista. A partir dela propõe a nota de crédito ou regista que o assunto ficou tratado.
+
+## Quando utilizar?
+
+- Quando o cliente recebeu menos do que foi expedido e é preciso creditar a falta.
+- Quando a diferença já foi resolvida de outra forma, por exemplo numa conversa com o cliente.
+- **Não** use **Marcar como tratada** para creditar a falta: esse botão não cria nenhum documento.
+
+## Onde encontrar?
+
+**EDI › Divergências de receção**. A lista abre com o filtro **Por tratar** e agrupada por **Cliente**.
+
+## Antes de começar
+
+- O seu perfil é **Administrativo** (testado até ao último passo com este perfil).
+- O aviso de expedição da guia já foi enviado e aceite: veja [Como enviar o aviso de expedição a partir da guia](/fiscal-core/aviso-de-expedicao). A fatura da encomenda já está emitida.
+- O exemplo criou-se assim, na demonstração, com o administrador: duplicar o orçamento `S00004` do Retalhista Exemplo (EDI), que fica `S00005`, e confirmá-lo; emitir a guia da entrega (`GT D26/5`), enviar o aviso de expedição, validar a entrega e emitir a fatura (`FT D26/31`, de 35,61 €). A demonstração não está ligada à AT: o código AT da guia `GT D26/5` é fictício. Foi escrito à mão em **Registar o código da AT à mão**, só para o aviso de expedição poder sair, e não veio da AT. Numa empresa, a guia é comunicada à AT antes do aviso de expedição: veja [Como emitir uma guia de transporte e obter o código da AT](/fiscal-core/emitir-uma-guia-de-transporte).
+- Os avisos de receção chegam com **EDI › Receber mensagens**. O exemplo vem do simulador do operador EDI da demonstração, do cliente Retalhista Exemplo (EDI): o simulador responde a cada aviso de expedição aceite com um aviso de receção com uma unidade a menos na primeira linha. Nenhuma mensagem foi trocada com um retalhista real.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **EDI › Divergências de receção** e abra o grupo do cliente. As colunas são **Aviso**, **Cliente**, **Artigo**, **Expedido**, **Recebido pelo retalhista** e **Diferença**.
+2. Abra a linha. No exemplo, o aviso `SIMREC000006` responde à guia `GT D26/5` (encomenda `S00005`): foram expedidas 12,00 unidades de Bolachas de água e sal 200 g e o retalhista recebeu 11,00. A **Diferença** é -1,00 e o **Estado** é **Com divergência**.
+   ![Linha do aviso SIMREC000006 com os botões Propor nota de crédito e Marcar como tratada](/images/fiscal-core/divergencias-de-rececao/01-linha-com-divergencia.png)
+3. Se faltam artigos, carregue em **Propor nota de crédito**. Abre-se um rascunho de **Nota de Crédito de Cliente**, com a fatura em **Documento retificado** e a quantidade em falta. Repetir o botão abre o mesmo rascunho. O botão não emite nada.
+4. Confira o rascunho e preencha os campos que vêm vazios: **Motivo da retificação** e **Motivo da regularização de IVA**. **Data de referência da regularização** e **Prova da regularização** aparecem depois de escolher o motivo de IVA: preencha-as também. Sem o motivo de IVA, **Confirmar** recusa na janela **Operação inválida**. Para a escolha do motivo, siga [Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito). No exemplo, a falta de 1 unidade a 1,60 €, com IVA a 6 % (0,10 €), deu a nota de crédito `NC D26/2`, de 1,70 €, sobre a fatura `FT D26/31`. A nota ficou logo abatida à fatura: aparece como **Pago** e a fatura passa a ter 33,91 € em dívida, em vez de 35,61 €.
+5. A nota de crédito não muda a linha: continua **Com divergência** e na lista **Por tratar**. Repetir **Propor nota de crédito** abre agora a nota já emitida. Quando o assunto estiver resolvido, carregue em **Marcar como tratada**. O **Estado** passa a **Processada** e os dois botões desaparecem.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, **EDI › Divergências de receção** abre a mesma lista do fiscaldoo, com o filtro **Por tratar**, agrupada por **Cliente**, e com as colunas **Aviso**, **Cliente**, **Artigo**, **Expedido**, **Recebido pelo retalhista** e **Diferença** (visto com um utilizador só com o perfil **Administrativo**). Na base de demonstração, a lista diz «Não há divergências de receção».
+
+{/* Nota interna (lote EE-12, DOCS-073 #4142, DEC-1794, master 589ecfd27, base Enterprise docs_ee_ee12_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee12_test): DOC-0061. Administrativo: lista vazia com a explicação «Quando um cliente do retalho confirma uma receção com quantidades diferentes das expedidas, cada diferença fica listada aqui para propor a nota de crédito.». Igual na cópia Community. Ver reports/LOTE_EE-12.md. */}
+
+## Resultado esperado
+
+Depois de tratada, a linha sai da lista **Por tratar**. Sem mais diferenças, o ecrã mostra «Não há divergências de receção».
+
+![Lista de divergências vazia, com o filtro Por tratar e a mensagem Não há divergências de receção](/images/fiscal-core/divergencias-de-rececao/02-lista-vazia.png)
+
+## Notas importantes
+
+- **Marcar como tratada não cria nenhum documento.** Na demonstração, o botão só mudou o estado, sem nota de crédito nem aviso no ecrã. Se ainda deve creditar a falta, faça-o antes.
+- **O botão vale para o aviso inteiro.** Num aviso com várias linhas, o estado muda em todas. Trate primeiro as faltas a creditar.
+- <span className="fd-pending">Pendente de validação por contabilista certificado: quando deve emitir a nota de crédito, e como regularizar o IVA, se o cliente recebeu menos do que foi faturado.</span>
+
+## Problemas frequentes
+
+- **«Nenhum aviso de expedição (DESADV) corresponde ao aviso *SIMREC0001* (referência de expedição *SIMDES0001*). O que aconteceu: um aviso de receção compara-se com o que foi expedido. Como resolver: confira o aviso de expedição enviado a este cliente e processe a mensagem outra vez.»** Aparece em **EDI › Mensagens**, na secção **Erros** do aviso, que fica **Por rever** e não entra nas divergências. Depois de conferir, carregue em **Reprocessar**. Enquanto o aviso de expedição não existir, a mensagem repete-se.
+- **«Nenhuma fatura registada da encomenda cobre os artigos em falta, por isso não foi proposta nota de crédito. Como resolver: emita primeiro a fatura, ou crie a nota de crédito à mão a partir da fatura.»** Aparece, na janela **Operação inválida**, quando a encomenda ainda não tem fatura registada para esses artigos. Faça o que a mensagem indica.
+
+{/* Nota interna (DOCS-063 #3853 req. 46122, lote v23-AP, 09/11/2026, master a67618a71, docs_demo_v23ap_test, porta 8512): só com o simulador do operador EDI (UX-138: um aviso de receção por cada aviso de expedição aceite, com uma unidade a menos na 1.ª linha). Por RPC como administrador, só na cópia: encomenda S00005 (cópia da S00004, rascunho da base-mãe) confirmada, guia GT D26/5 emitida (início do transporte, matrícula AA-00-AA, transportador a própria empresa), código AT registado à mão pelo assistente «Registar o código da AT à mão» (a cópia não tem credenciais da AT de teste: nada foi enviado à AT), aviso de expedição DESADV|GT D26/5 enviado ao simulador (Aceite), entrega validada e fatura FT D26/31 emitida (35,61 €). Por clique com um utilizador criado só com o perfil Administrativo: Troca de documentos › Receber mensagens (aviso SAPHETY|SIM-IN-RECADV-6, Com divergência), linha SIMREC000006 (12,00 / 11,00 / -1,00; captura 01), Propor nota de crédito (rascunho com a FT D26/31 em Documento retificado e 1,00 unidade a 1,60 €), Confirmar sem os campos (Operação inválida do motivo de regularização de IVA), Motivo da retificação, motivo «Anulação ou redução da operação…», Data de referência e Prova (só aparecem depois do motivo), Confirmar: NC D26/2 de 1,70 €, Pago. Propor nota de crédito outra vez abriu a NC D26/2; Marcar como tratada: Processada, sem botões e sem mensagem; lista Por tratar vazia (captura 02). A 2.ª mensagem de «Problemas frequentes» (sem fatura registada) não foi provocada neste lote. Auditoria docs-aud-v23ap (a67618a71, cópia da base-mãe sem os documentos do produtor): exemplo refeito do zero, com o mesmo resultado (S00005, GT D26/5, código AT fictício DEMO-AT-0005 escrito à mão, DESADV Aceite, FT D26/31 de 35,61 €; com o Administrativo: SIMREC000006, Operação inválida sem o motivo de IVA, NC D26/2 de 1,70 € Pago, 33,91 € em dívida, Processada, lista vazia). O artigo passou a dizer como se cria o exemplo e que o código AT não veio da AT. */}

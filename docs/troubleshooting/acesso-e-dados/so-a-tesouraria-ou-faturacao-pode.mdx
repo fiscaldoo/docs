@@ -1,0 +1,75 @@
+---
+id: so-a-tesouraria-ou-faturacao-pode
+slug: /troubleshooting/so-a-tesouraria-ou-faturacao-pode
+title: Aparece «O seu perfil não pode…» na tesouraria, na faturação ou nas vendas
+sidebar_label: «O seu perfil não pode…»
+sidebar_position: 8
+description: Notas de pagamento, referências Multibanco e comunicação de guias de transporte à AT têm perfis próprios; a mensagem «O seu perfil não pode…» ou «Não tem permissão para criar…» diz a quem pedir.
+keywords: [o seu perfil não pode, o seu perfil nao pode, não tem permissão para criar, nao tem permissao para criar, quem faz, tesouraria, gestor de tesouraria, nota de pagamento, emitir notas de pagamento, pagamentos, referências multibanco, referencias multibanco, anular referência multibanco, guias de transporte, comunicar guias, comunicar à AT, faturação, faturacao, vendas, perfil, sem permissão, sem permissao]
+doc_id: DOC-0417
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-permissao, administration/utilizadores-e-permissoes/perfis-e-permissoes, troubleshooting/acesso-e-dados/so-o-contabilista-pode]
+---
+
+## Sintoma
+
+Uma operação de pagamentos, de referências Multibanco ou de guias de transporte é recusada com uma mensagem que começa por «O seu perfil não pode…» ou por «Não tem permissão para criar «…»».
+
+## Mensagem
+
+Exemplos copiados da base de demonstração em português, com um utilizador que só tem o perfil indicado. Foram provocados pela integração, porque no ecrã o fiscaldoo não mostra o botão a quem não pode usá-lo (ver «Causas verificadas»):
+
+- Com o perfil **Administrativo** (e também com o **Gestor de RH**), ao emitir a nota de pagamento de um pagamento:
+  > «O seu perfil não pode emitir notas de pagamento: só a Tesouraria e o contabilista o fazem.»
+- Com o perfil **Administrativo** (e também com o **Gestor de RH**), ao anular uma referência Multibanco:
+  > «Não tem permissão para criar «Anular referência Multibanco». Quem faz: «Contabilista (opera)». Quem atribui o perfil: o administrador do sistema (Definições › Utilizadores e empresas › Utilizadores). Peça-lhe o perfil de que precisa, ou peça a um utilizador com esse perfil que o faça.»
+- Com o perfil **Gestor de RH**, ao emitir uma referência Multibanco:
+  > «Não tem permissão para criar «Emitir referências Multibanco». Quem faz: «Administrativo». Quem atribui o perfil: …»
+- Com o perfil **Contabilista** (e também com o **Gestor de RH**), ao comunicar uma guia de transporte à AT:
+  > «O seu perfil não pode comunicar guias de transporte à Autoridade Tributária. Peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que carregue em «Comunicar à AT» nesta guia, ou peça ao administrador que deixe o seu perfil fazê-lo.»
+
+Cada mensagem diz a quem pedir, mas não sempre no mesmo sítio da frase: leia-a até ao fim. Em **Quem faz** está o valor do campo **Perfil** que faz a operação; como pedir esse perfil está em «Quem atribui o perfil».
+
+{/* Nota interna (DOCS-066 #3947, lote v23-BA, master ce51f2d47, docs_demo_v23ba_test, 10/11/2026, DEF-QA8-c-02): as duas mensagens Multibanco foram provocadas de novo pela integração com utilizadores criados só com o perfil Administrativo e só com o Gestor de RH. «Quem faz» diz hoje o valor do campo Perfil («Contabilista (opera)» e «Administrativo»), já não listas de grupos; a explicação da lista antiga saiu. */}
+
+## Causas verificadas
+
+Conferido com um utilizador criado só com cada perfil (Administrativo, Contabilista (opera), Contabilista certificado e Gestor de RH) e com um utilizador que só tem o nível **Tesouraria: Aprovador**:
+
+- **Notas de pagamento:** são da Tesouraria e do contabilista. O botão **Emitir nota de pagamento** aparece ao **Contabilista**, ao **Contabilista certificado** e a quem tem um nível de **Tesouraria**; ao **Administrativo** não aparece. O **Gestor de RH** nem abre os pagamentos.
+- **Emitir e anular referências Multibanco:** emitem-nas o **Administrativo** (na fatura, em **Ações › Referências Multibanco**), o **Contabilista**, o **Contabilista certificado** e a Tesouraria (no botão **Referências Multibanco** da fatura). Anulá-las (**Anular a referência**, na ficha da referência) é só da Tesouraria e do contabilista: o Administrativo vê a referência, mas sem esse botão. O **Gestor de RH** não abre as faturas nem as referências.
+- **Guias de transporte:** o **Administrativo** comunica-as à AT sem acessos extra, tal como o **Contabilista certificado**. O **Contabilista** e o **Gestor de RH** não: o botão **Comunicar à AT** não lhes aparece na guia.
+
+Os níveis de **Tesouraria** (**Tesouraria: Utilizador**, **Tesouraria: Aprovador** e **Tesouraria: Gestor**) não vêm com nenhum perfil: o administrador dá-os à parte, no campo **Tesouraria** dos **Ajustes avançados** da ficha do utilizador, a quem trata só da tesouraria.
+
+## O que confirmar
+
+1. A operação recusada e a quem a mensagem diz para pedir.
+2. Quem na empresa tem esse perfil.
+
+## Como resolver
+
+- **Nota de pagamento ou anular uma referência Multibanco:** peça ao contabilista ou a quem trata da tesouraria. Se a tarefa passa a ser sua, fale com o administrador: estas operações vêm com o perfil **Contabilista**, que inclui os pagamentos e a contabilidade, ou com um nível de **Tesouraria**, que é um acesso extra para quem trata só da tesouraria, e não para juntar ao **Administrativo** ([Como dar a cada utilizador o perfil certo](/administration/perfis-e-permissoes)).
+- **Emitir uma referência Multibanco:** peça a quem fatura (**Administrativo**), ao contabilista ou à Tesouraria.
+- **Comunicar uma guia de transporte:** peça a quem tem o perfil **Contabilista certificado** que carregue em **Comunicar à AT** na guia ([Aparece «Não tem permissão para comunicar com a Autoridade Tributária»](/troubleshooting/so-o-responsavel-fiscal-pode) diz quem dá esse perfil), ou a quem emite as guias com o perfil **Administrativo**. A outra saída é a que a mensagem indica: o administrador deixa o seu perfil fazê-lo.
+
+**Quem faz:** quem tem o perfil indicado; ou o administrador, que dá o perfil.
+
+## Resultado esperado
+
+Feita por quem tem o perfil indicado, a operação passa. O botão **Emitir nota de pagamento** só aparece numa nota de pagamento em **Rascunho** com o estado de aprovação **Pronto a pagar**: noutros estados não aparece, mesmo à Tesouraria. Uma guia que já tem o código da AT não se comunica outra vez: «Nada foi enviado à Autoridade Tributária, por causa destas guias: - “GT D26/2” já tem o seu código AT (DEMO-AT-0002) e nunca é comunicada outra vez.»
+
+## Quando contactar o suporte
+
+- A mensagem aparece a um utilizador que já tem o perfil que ela indica.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com o pagamento, a referência ou a guia em causa e a mensagem completa.
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): mensagem da guia provocada pela integração (RPC) na guia própria GT D26/5 com utilizadores só Contabilista e só Gestor de RH (o botão não lhes aparece). O título mantém-se: as mensagens continuam a começar por «O seu perfil não pode…». */}

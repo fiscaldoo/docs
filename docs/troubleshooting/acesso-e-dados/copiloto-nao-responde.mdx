@@ -1,0 +1,78 @@
+---
+id: copiloto-nao-responde
+slug: /troubleshooting/copiloto-nao-responde
+title: O Copiloto não responde ou a ligação à IA falhou
+sidebar_label: O Copiloto não responde
+sidebar_position: 15
+description: "O que fazer quando o Copiloto só dá ajuda passo a passo, ou quando a ligação à IA, a chave ou o consentimento recusam: a conversa com a IA está desligada, falta a chave ou a ligação."
+keywords: [copiloto não responde, copiloto, IA, ligação à IA, chave de API, consentimento, a conversa com a IA está desligada, interruptores, definições da IA, endereço do servidor, AMÁLIA, retirar a chave, limite mensal]
+doc_id: DOC-0370
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master b8b799c8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-permissao, troubleshooting/acesso-e-dados/so-a-administracao-fiscal-pode, troubleshooting/acesso-e-dados/cofre-sem-chave-de-cifra]
+---
+
+## Sintoma
+
+Ao abrir o Copiloto (o ícone de estrela, na barra de cima), ele não responde às perguntas e mostra só a ajuda passo a passo; ou, nas **Definições da IA**, um botão recusa com uma mensagem.
+
+## Mensagem
+
+Copiadas da base de demonstração em português:
+
+- Com o acesso extra **Administração fiscal** (o administrador tem-no), ao abrir o Copiloto numa empresa onde a IA está desligada:
+  > «A conversa com a IA está desligada para si nesta empresa, por isso só dou a ajuda passo a passo. Para ligar a IA, peça ao administrador: Copiloto › Controlo › Interruptores.»
+
+  Os cartões **Perguntar aos números**, **Abrir uma lista**, **Criar um relatório** e **Escrever um texto** dizem «Precisa da conversa com a IA: veja o aviso acima.», e **Importar faturas de fornecedor** diz que «O leitor de documentos está desligado».
+- Em **Copiloto › Ligações às IAs › Ligações**, pela integração, com o acesso extra **Administração fiscal**:
+  > «Não há nenhuma chave deste fornecedor para retirar. Nada foi alterado: escreva primeiro uma chave, ou escolha outro fornecedor.»
+  >
+  > «O limite mensal de uma ligação não pode ser negativo. Corrija o valor e guarde outra vez (0 = sem limite próprio).»
+  >
+  > «O fornecedor escolhido aqui não precisa de consentimento. Nada foi feito: escolha primeiro a Z.ai ou a DeepSeek.»
+  >
+  > «Os dados pessoais e sensíveis não estão autorizados nesta ligação. Nada foi alterado: use primeiro «Autorizar dados pessoais e sensíveis…» se os quiser autorizar.»
+  >
+  > «A ligação por omissão não se pode desligar. Nada foi alterado: escolha primeiro outra ligação como por omissão.»
+- Ao guardar uma chave de API num servidor sem chave de cifra do cofre: [O cofre de credenciais não tem chave de cifra no servidor](/troubleshooting/cofre-sem-chave-de-cifra).
+
+## Causas verificadas
+
+- **A IA está desligada por omissão.** Cada empresa e cada agente têm um interruptor em **Copiloto › Controlo › Interruptores**, e só o administrador (ou quem tem o acesso extra **Administração fiscal**) o liga. Sem ele, o Copiloto dá só a ajuda passo a passo.
+- **A ligação não está completa.** A ligação precisa de uma chave de API (guardada no cofre) ou do endereço do servidor; sem ela, o Copiloto não tem como responder. (Já **Retirar a chave** numa ligação sem chave recusa com outra frase: diz só que não há chave guardada, e não explica porque é que o Copiloto não responde.)
+- **Consentimento e dados sensíveis.** Alguns fornecedores pedem consentimento (**Z.ai**, **DeepSeek**), e os dados pessoais e sensíveis só seguem se forem autorizados na ligação.
+- **Limite mensal e ligação por omissão.** A empresa precisa de uma ligação por omissão ligada; o limite mensal não pode ser negativo.
+
+## O que confirmar
+
+1. Que o interruptor do agente está ligado, em **Copiloto › Controlo › Interruptores**.
+2. Que existe uma ligação **por omissão**, ligada, em **Copiloto › Ligações às IAs › Ligações**, e que tem chave.
+3. Que a chave foi guardada sem a mensagem do cofre.
+4. O consentimento, para os fornecedores que o pedem ([Privacidade e consentimentos](/copilot/privacidade-e-consentimentos)).
+
+## Como resolver
+
+1. **Peça ao administrador** que ligue o interruptor e complete a ligação.
+2. Escreva a chave de API na ligação e guarde. Se aparecer a mensagem da chave de cifra, é o administrador do servidor que resolve.
+3. Dê o consentimento, se o fornecedor o pedir.
+4. Volte a abrir o Copiloto.
+
+**Quem faz:** o administrador (ou quem tem o acesso extra Administração fiscal); o administrador do servidor, no caso da chave de cifra.
+
+## Resultado esperado
+
+O Copiloto deixa de dizer que a conversa está desligada e responde às perguntas.
+
+## Quando contactar o suporte
+
+- A ligação tem chave, o interruptor está ligado e o Copiloto continua sem responder.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com a empresa, o fornecedor da ligação e a mensagem. Nunca envie a chave de API.
+
+{/* Nota interna (DOCS-040): Pendente de validação: a falha de ligação à IA com endereço ou chave fictícios («A IA respondeu num formato que o Copiloto não aceita», «A IA precisou de mais de n voltas…») não se provocou: exigia ligar os interruptores e uma resposta de um servidor de IA, e a regra do lote proíbe IA real. Fazer com um servidor local de teste. */}

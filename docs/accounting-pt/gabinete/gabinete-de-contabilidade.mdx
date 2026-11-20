@@ -1,0 +1,71 @@
+---
+id: gabinete-de-contabilidade
+slug: /accounting-pt/gabinete-de-contabilidade
+title: Como configurar o fiscaldoo para um gabinete de contabilidade
+sidebar_label: Configurar o gabinete
+sidebar_position: 1
+description: Ligar o modo gabinete nas Definições para que o contabilista veja o painel das empresas clientes, os documentos recebidos e a caixa de entrada do gabinete.
+keywords: [gabinete de contabilidade, modo gabinete, empresas clientes, painel do gabinete, escritório de contabilidade, vários clientes, definições]
+doc_id: DOC-0173
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/gabinete/nova-empresa-cliente, accounting-pt/gabinete/empresas-clientes-em-dia, accounting-pt/gabinete/documentos-dos-clientes-do-gabinete]
+---
+
+## Para que serve?
+
+O **Modo gabinete** é um interruptor das Definições. Ligado, o contabilista passa a ver os menus de quem trata a contabilidade de vários clientes e, **ao iniciar sessão**, entra num painel com todas as empresas clientes, em vez de em «O que há para fazer?».
+
+## Quando utilizar?
+
+- Quando a empresa onde o produto está instalado é um gabinete que lança e declara por conta de clientes.
+- **Não** o ligue numa empresa que faz só a sua própria contabilidade: o ecrã diz «Deixe desligado numa empresa que faz a sua própria contabilidade». Ter várias empresas não liga o modo.
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Geral › Definições**, bloco **Gabinete de contabilidade**, opção **Modo gabinete**. Só o administrador técnico abre as Definições.
+
+## Antes de começar
+
+- Perfil: administrador técnico (para ligar). O resultado vê-se com o perfil **Contabilista**.
+- O módulo do painel das empresas clientes está instalado (na demonstração está).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Entre como administrador técnico e abra **Contabilidade › Configurar › Geral › Definições** (abre no separador **Faturação**). Em **Gabinete de contabilidade**, a opção **Modo gabinete** vem desligada.
+   ![Bloco Gabinete de contabilidade com o Modo gabinete desligado](/images/accounting-pt/gabinete-de-contabilidade/01-modo-desligado.png)
+2. Marque **Modo gabinete** e carregue em **Guardar**.
+   ![Modo gabinete marcado](/images/accounting-pt/gabinete-de-contabilidade/02-modo-ligado.png)
+3. Entre como **Contabilista** (inicie sessão). O produto abre logo em **Empresas clientes: o que está em dia?**, com uma linha por empresa a que a pessoa tem acesso (veja [Como ver que empresas clientes estão em dia](/accounting-pt/empresas-clientes-em-dia)). Se, depois, abrir a **Contabilidade** pelo menu de aplicações, abre **O que há para fazer?**, como antes; o painel fica em **Configurar › Sistema e segurança › Gabinete e empresas clientes › Empresas clientes: o que está em dia?**.
+   ![Painel das empresas clientes depois de ligar o modo](/images/accounting-pt/gabinete-de-contabilidade/03-painel.png)
+4. Confira os menus novos: **Lançar › Compras › Documentos recebidos dos clientes do gabinete**, **Consultar › Terceiros › O que chegou e o que falta**, **Configurar › Sistema e segurança › Gabinete e empresas clientes › Caixa de entrada do gabinete** e **Configurar › Sistema e segurança › Gabinete e empresas clientes › Empresas clientes: o que está em dia?**. O perfil **Contabilista certificado** tem ainda **Configurar › Sistema e segurança › Gabinete e empresas clientes › Nova empresa cliente** ([como criar a empresa de um cliente novo](/accounting-pt/nova-empresa-cliente)).
+
+</StepByStep>
+
+## Resultado esperado
+
+- Com o modo desligado, o menu **Configurar** do Contabilista só tem **Geral**, **Modelos de lançamento**, **Bancos e ativos**, **Categorias de ativos**, **Modelos de reconciliação** e **Outras definições de contas e extratos**. Com o modo ligado acrescenta **Sistema e segurança**, com o bloco **Gabinete e empresas clientes** (a caixa de entrada e o painel).
+- O administrador técnico mantém o seu ecrã de sempre.
+
+## Notas importantes
+
+- O interruptor é **um só para toda a base de dados**: liga o modo a todas as empresas.
+- O modo não dá acesso a nenhuma empresa. Cada pessoa continua a ver só as empresas que o administrador lhe atribuiu.
+- A **Caixa de entrada do gabinete** só recebe e-mails depois de se escolher a empresa do gabinete e de se ligarem os interruptores do Copiloto, o que só o administrador faz (ou quem tem o acesso extra **Administração fiscal**); sem isso a lista fica vazia e o ecrã explica-o (veja [Como tratar os documentos recebidos dos clientes do gabinete](/accounting-pt/documentos-dos-clientes-do-gabinete)).
+
+## Problemas frequentes
+
+### O contabilista não vê o painel nem os menus do gabinete
+
+- **Causa:** o **Modo gabinete** está desligado.
+- **O que fazer:** peça ao administrador técnico que o ligue (passos 1 e 2). Depois de guardar, peça à pessoa que volte a iniciar sessão: é ao iniciar sessão que o painel abre.
+
+{/* Nota interna (DOCS-046 corretor, DOC-0173, risco normal): NV3I-01 corrigida em docs_demo_v3a5cor_test (master b1c81051): ao iniciar sessão demo.contabilista e demo.gestor_contabilidade abrem no painel (action-1304); abrir a Contabilidade pelo menu de aplicações abre «O que há para fazer?» (/odoo/accounting). O painel também está em Configurar › Sistema. O modo fica LIGADO na base. O texto do ecrã refere «rentabilidade por cliente», mas nenhum menu com esse nome apareceu (V3A5-05). «Parâmetro único»: ir.config_parameter arxi_ux_kit.office_mode (código), não testado com duas bases. */}
+
+{/* Nota interna (lote v23-AN, depois do comboio 174 com o UX-147, master a67618a71, docs_demo_v23an_test): caminho das Definições conferido por clique com o administrador (Contabilidade › Configurar, grupo Geral, Definições, que abre no separador Faturação) e com o verificador do test_doc_paths; Modo gabinete no bloco Gabinete de contabilidade, desligado. O resto do artigo não se refez. */}

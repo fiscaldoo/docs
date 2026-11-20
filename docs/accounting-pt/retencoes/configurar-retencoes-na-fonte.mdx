@@ -1,0 +1,102 @@
+---
+id: configurar-retencoes-na-fonte
+slug: /accounting-pt/configurar-retencoes-na-fonte
+title: Como configurar as retenções na fonte
+sidebar_label: Configurar as retenções na fonte
+description: Conferir as regras de retenção (taxa em vigor, código do Modelo 10) e indicar na ficha de cada fornecedor a retenção por omissão e a dispensa declarada, para a retenção entrar sozinha nas faturas.
+keywords: [retenções na fonte, retencoes na fonte, retenção na fonte, retencao na fonte, configurar retenções, configurar retencoes, Regras e códigos de retenção na fonte, regras e codigos de retencao na fonte, Retenção por omissão, retencao por omissao, dispensa de retenção, dispensa de retencao, art. 101.º-B, trabalho independente, categoria B, categoria F, rendas, IRS, IRC, taxa de retenção, taxa de retencao, código de rendimento do Modelo 10, codigo de rendimento do modelo 10, Retenção IRS 23%]
+doc_id: DOC-0103
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/compras/fatura-de-fornecedor, troubleshooting/acesso-e-dados/so-o-responsavel-fiscal-pode]
+---
+
+{/* Nota interna (DOCS-043, revisão no master fe8c5365c, base docs_demo_b2cnova_test): refeitos com o Responsável fiscal a lista (10 regras, mesmas taxas e artigos) e a regra IRS_B_ART151 (23,0000, WHT_IRS_B_ART151, dois impostos); com o Contabilista a ficha da Ana Ferreira (Retenção por omissão IRS cat. B — art. 151.º), a fatura em rascunho de 500,00 € (retenção sozinha; com 23%: IVA 115,00, retenção -115,00, total 500,00; linhas 6221 D 500 / 2432 D 115 / 242 C 115 / 2211 C 500) e a recusa sem retenção (mesma mensagem); rascunho eliminado. Capturas 01 a 03 refeitas (02 e 03 aparadas para tirar texto cortado). Não refeitos: código M10 escrito e reposto, dispensa sem data, empresa vazia. B2c2-05 e B2c2-08 continuam. */}
+
+{/* Nota interna (DOCS-035, lote B2c2): validado no ecrã na base docs_demo_loteb2c2_test (8117): regras com o Responsável fiscal (demo CC/Gestor fiscal + Responsável fiscal); ficha da fornecedora Ana Ferreira e faturas de fornecedor em rascunho (FTF de 30/10/2026, eliminadas depois) com o Contabilista; empresa vazia (Empresa Teste Filial, Lda) vista com o administrador: as mesmas 10 regras, com os impostos da própria empresa. */}
+
+## Para que serve?
+
+Para a retenção na fonte entrar sozinha nas faturas de um fornecedor e com a taxa certa, há duas coisas a configurar: as **regras de retenção**, que dizem o que se retém (imposto, categoria de rendimento, artigo da lei, taxa em vigor, código do Modelo 10), e, na ficha de cada fornecedor, a **Retenção por omissão** e, quando a houver, a **Dispensa de retenção declarada**.
+
+Com isto feito, a linha da fatura do fornecedor vem já com o imposto de retenção, e o fiscaldoo recusa confirmar uma fatura desse fornecedor sem retenção, salvo se ele declarou a dispensa.
+
+## Quando utilizar?
+
+- Quando começa a trabalhar com um fornecedor sujeito a retenção, por exemplo um profissional independente ou o senhorio do escritório.
+- Quando um fornecedor entrega a declaração de que tem direito à dispensa de retenção.
+- Para conferir a taxa em vigor de uma retenção e o código de rendimento que vai para o Modelo 10.
+- Não é para os salários: as retenções do trabalho dependente (categoria A) não estão nestas regras e tratam-se nos salários ([Como preparar a DMR](/payroll-pt/dmr)).
+
+## Onde encontrar?
+
+- **Contabilidade › Configurar › IVA e retenções › Regras e códigos de retenção na fonte**: a lista **Retenções na fonte (PT)**, com **Código**, **Nome**, **Imposto**, **Categoria de rendimento**, **Residência**, **Natureza**, **Artigo legal** e **Taxa em vigor (%)**. Os botões **Códigos de rendimento do Modelo 10** e **Códigos de rendimento do Modelo 39** abrem as listas oficiais desses códigos.
+- **Contabilidade › Lançar › Terceiros e ativos › Fornecedores** › ficha do fornecedor › separador **Vendas e Compras**, grupo **COMPRAS**: **Retenção por omissão** e **Dispensa de retenção declarada**.
+
+## Antes de começar
+
+- **Regras:** o perfil é **Contabilista certificado**. O **Contabilista** não vê o menu **IVA e retenções** (ver [Aparece «Não tem permissão para comunicar com a Autoridade Tributária»](/troubleshooting/so-o-responsavel-fiscal-pode)).
+- **Fichas dos fornecedores:** o **Contabilista** ou o **Administrativo** preenchem os campos de retenção.
+- As regras são as mesmas em todas as empresas da base; cada empresa tem os seus próprios impostos de retenção. Numa empresa sem lançamentos (na demonstração, a Empresa Teste Filial) aparecem as mesmas 10 regras, cada uma com os impostos dessa empresa.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Com o perfil **Contabilista certificado**, abra **Regras e códigos de retenção na fonte**. A demonstração tem 10 regras: seis de IRS das categorias B e F (por exemplo **IRS cat. B — atividades profissionais da tabela do art. 151.º**, 23 %, e **IRS cat. F — rendimentos prediais (rendas)**, 25 %), **IRS cat. E — rendimentos de capitais (taxa liberatória)**, **IRS — não residentes (taxa liberatória)** e duas de IRC (**IRC — retenção geral** e **IRC — membros de órgãos estatutários**).
+2. Abra a regra da situação do fornecedor, por exemplo **IRS cat. B — atividades profissionais da tabela do art. 151.º**, e confira:
+   - **Taxa em vigor (%)** (23,0000): não se escreve. Vem da regra legal indicada em **Chave da regra legal** (`WHT_IRS_B_ART151`), com a data a partir da qual vale;
+   - **Artigo legal** (CIRS art. 101.º n.º 1 alínea b));
+   - **Código de rendimento do Modelo 10** (`B`): o código que esta retenção leva no Modelo 10. Escreve-se à mão, com um código da lista oficial que abre no botão **Códigos de rendimento do Modelo 10**;
+   - **WithholdingTaxType do SAF-T** (**IRS**): o tipo de retenção que vai para o SAF-T;
+   - a tabela em baixo: os impostos **Retenção IRS 23% — trabalho independente (art. 151.º)** da empresa, com o valor -23,0000. São dois: um para as compras e um para as vendas.
+
+   <span className="fd-pending">Pendente de validação por contabilista certificado: taxas em vigor e artigos de cada regra (CIRS, art. 71.º e art. 101.º; CIRC, art. 94.º) e códigos de rendimento do Modelo 10.</span>
+
+   ![Regra IRS cat. B — atividades profissionais da tabela do art. 151.º com a Taxa em vigor (%) 23,0000 assinalada, o Código de rendimento do Modelo 10 B e os dois impostos Retenção IRS 23% da Empresa Demonstração, Lda](/images/accounting-pt/configurar-retencoes-na-fonte/01-regra-art-151.png)
+3. Se a regra não tiver **Código de rendimento do Modelo 10**, escreva-o, depois de o confirmar com o contabilista certificado, e carregue em **Guardar**. Na demonstração, três regras não o têm: **IRS cat. E — rendimentos de capitais (taxa liberatória)**, **IRS — não residentes (taxa liberatória)** e **IRC — retenção geral**.
+4. Como Contabilista, abra a ficha do fornecedor em **Contabilidade › Lançar › Terceiros e ativos › Fornecedores** e o separador **Vendas e Compras**. Em **Retenção por omissão**, escolha a regra. A lista mostra as regras de IRS (as de IRC estão em **Pesquisar mais…**). Na demonstração, a fornecedora Ana Ferreira tem **IRS cat. B — atividades profissionais da tabela do art. 151.º**.
+   ![Ficha da fornecedora Ana Ferreira, separador Vendas e Compras: Retenção por omissão IRS cat. B — atividades profissionais da tabela do art. 151.º, assinalada, e Dispensa de retenção declarada por marcar](/images/accounting-pt/configurar-retencoes-na-fonte/02-retencao-por-omissao.png)
+5. Se o fornecedor entregou a declaração de dispensa, marque **Dispensa de retenção declarada** e escreva a data da declaração em **Dispensa declarada em**. Aparecem também **Limite anual da dispensa** (15.000,00 na demonstração), **Rendimento de categoria B neste ano** (1.500,00 para a Ana Ferreira: as faturas de fevereiro e março, de 1.000,00 € e 500,00 €) e **Rendimento de categoria F neste ano**. <span className="fd-pending">Pendente de validação por contabilista certificado: condições e limite da dispensa de retenção (CIRS, art. 101.º-B, n.º 1, alínea a); Código do IVA, art. 53.º).</span>
+6. Carregue em **Guardar**.
+7. Confira numa fatura nova do fornecedor (**Contabilidade › Lançar › Compras › Faturas de fornecedores** › **Novo**): ao escrever uma linha, **Impostos** já traz **Retenção IRS 23% — trabalho independente (art. 151.º)**. A taxa de IVA escolhe-se como de costume (ver [Como lançar uma fatura de fornecedor](/accounting-pt/fatura-de-fornecedor)).
+   ![Linha de uma fatura de fornecedor da Ana Ferreira com Preço 500,00 e, em Impostos, assinalados, a retenção que veio da ficha e a taxa de IVA 23%](/images/accounting-pt/configurar-retencoes-na-fonte/03-fatura-com-retencao.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- A ficha do fornecedor guarda a **Retenção por omissão** (e a dispensa, com a data, se a houver).
+- Numa fatura nova desse fornecedor, a linha vem com o imposto de retenção. Numa fatura de 500,00 € com IVA de 23 %, os totais ficam **IVA 23%** 115,00 €, **Retenção na fonte** -115,00 € e **Total** 500,00 €, e a retenção vai a crédito da conta `242 Retenção de impostos sobre rendimentos`. As linhas completas estão em [Como lançar uma fatura de fornecedor](/accounting-pt/fatura-de-fornecedor).
+- A configuração não gera lançamentos: só as faturas os geram.
+
+## Notas importantes
+
+- **A taxa vem da data.** A taxa aplicada é a que estiver em vigor na **Data de pagamento/colocação à disposição do rendimento** da fatura (se ficar vazia, a data do documento). A ajuda do campo diz: «Data em que o rendimento é pago ou colocado à disposição do beneficiário (CIRS art. 101.º n.º 8). A taxa de retenção é a que estiver em vigor nesta data.» <span className="fd-pending">Pendente de validação por contabilista certificado: data que decide a taxa de retenção (CIRS, art. 101.º, n.º 8).</span>
+- **Outros campos da fatura que mexem na retenção:** **Comissão de intermediação** (estas comissões nunca têm dispensa) e, no separador **Outra Informação**, **Natureza do rendimento de capitais**, para os juros de empréstimos.
+- **A dispensa não é automática.** Sem **Dispensa de retenção declarada** e a data, o fiscaldoo retém sempre. A ajuda do campo lembra que a dispensa «Não abrange as comissões de intermediação».
+
+## Problemas frequentes
+
+### Confirmar a fatura é recusado: o fornecedor «está sujeito a retenção»
+
+- **Sintoma:** «Operação inválida — «Ana Ferreira» está sujeito a retenção (IRS cat. B — atividades profissionais da tabela do art. 151.º) e este documento não tem nenhuma. O fornecedor não declarou a dispensa. Acrescente o imposto de retenção às linhas ou registe a declaração do fornecedor no seu contacto (separador de contabilidade) se tiver direito à dispensa do art. 101.º-B n.º 1 a) do CIRS.»
+- **Causa:** o fornecedor tem **Retenção por omissão** e a retenção foi tirada da linha.
+- **O que fazer:** se a fatura do fornecedor tem retenção, acrescente-a em **Impostos**. Se o fornecedor tem direito à dispensa, registe a declaração na ficha (passo 5): os campos estão no separador **Vendas e Compras**, não num separador de contabilidade como diz a mensagem.
+
+{/* Nota interna (DOCS-035, defeito B2c2-05): a mensagem manda ao «separador de contabilidade», mas a Dispensa de retenção declarada está no separador Vendas e Compras. Rever quando o texto for corrigido. */}
+
+### Ao guardar a ficha: «Há campos obrigatórios por preencher»
+
+- **Sintoma:** «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.», com **Dispensa declarada em** a vermelho.
+- **Causa:** **Dispensa de retenção declarada** está marcada sem a data da declaração.
+- **O que fazer:** escreva a data da declaração do fornecedor, ou desmarque a dispensa.
+
+### O Contabilista não encontra as regras de retenção
+
+- **Causa:** o menu **Configurar › IVA e retenções** é só do perfil **Contabilista certificado** (e do administrador).
+- **O que fazer:** peça ao Contabilista certificado que confira ou altere a regra. O Contabilista consegue preencher a **Retenção por omissão** na ficha do fornecedor.

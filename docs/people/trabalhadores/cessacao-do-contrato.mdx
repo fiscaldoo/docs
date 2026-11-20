@@ -1,0 +1,184 @@
+---
+id: cessacao-do-contrato
+slug: /people/cessacao-do-contrato
+title: Como tratar a saída de um trabalhador
+sidebar_label: Tratar a saída de um trabalhador
+sidebar_position: 3
+description: Registar a cessação do contrato (modalidade, último dia e aviso), fazer o recibo final com as férias, os subsídios proporcionais e a compensação, emitir o certificado de trabalho e preparar a comunicação à Segurança Social.
+keywords: [cessação do contrato, cessacao do contrato, saída do trabalhador, saida do trabalhador, despedimento, caducidade, fim do contrato a termo, revogação por acordo, denúncia, compensação, compensacao, recibo final, acerto final, férias proporcionais, ferias proporcionais, subsídio de Natal proporcional, aviso prévio, aviso previo, certificado de trabalho, declaração de situação de desemprego, declaracao de situacao de desemprego]
+doc_id: DOC-0242
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/trabalhadores/contrato-de-trabalho, payroll-pt/declarar/vinculo-a-seguranca-social, payroll-pt/processar-e-pagar/processar-o-mes]
+---
+
+## Para que serve?
+
+Quando um contrato acaba, a empresa tem de pagar o que falta (o salário até ao último dia, as férias e os subsídios proporcionais e, em muitos casos, uma compensação), entregar o certificado de trabalho e comunicar a cessação à Segurança Social. O fiscaldoo regista a cessação, confere o aviso prévio, calcula o recibo final parcela a parcela e prepara o certificado e a comunicação.
+
+O fiscaldoo não envia nada à Segurança Social e não emite a declaração de situação de desemprego (ver «Notas importantes»).
+
+## Quando utilizar?
+
+- Um contrato a termo vai caducar, ou houve despedimento, revogação por acordo, denúncia pelo trabalhador ou outra forma de cessação.
+- Antes de processar o mês em que o contrato acaba: o recibo final faz-se à parte, e o trabalhador já não entra no lote normal desse mês.
+
+## Onde encontrar?
+
+**Salários › Preparar › Trabalhadores e contratos › Cessações** (a mesma lista está em **Pessoas › Contratos e saídas › Cessações**).
+
+O recibo final faz-se na própria cessação, com o botão **Criar recibo final**. Os pagamentos ficam em **Salários › Pagar › Pagamentos de salários** e os certificados emitidos em **Pessoas › Contratos e saídas › Certificados de trabalho**.
+
+## Antes de começar
+
+- O seu perfil é **Processador de salários**, com ou sem o acesso extra **Administrador de Salários**. O **Processador de salários** faz todos os passos deste artigo, menos **Contabilizar**, que precisa do acesso **Administrador de Salários**.
+- O contrato do trabalhador está registado, com o tipo e as datas ([Como registar um contrato de trabalho](/people/contrato-de-trabalho)).
+- Os recibos dos meses anteriores estão processados. O recibo final usa a situação de IRS do último recibo validado.
+- No exemplo, o contrato a termo certo de Hugo Miguel Santos (de 01/02/2026 a 30/11/2026, salário de 1.250,00 €) caduca no fim do prazo, e a empresa avisou-o a 10/11/2026.
+
+## Como utilizar
+
+### 1. Registar e confirmar a cessação
+
+<StepByStep>
+
+1. Abra **Salários › Preparar › Trabalhadores e contratos › Cessações** e carregue em **Novo**.
+2. Em **Trabalhador**, escolha o trabalhador. O **Contrato** e o **Tipo de contrato** vêm da ficha (no exemplo, 01/02/2026 e **Termo certo**).
+3. Em **Modalidade de cessação**, escolha a forma como o contrato acaba. As opções são: as caducidades (termo certo, termo incerto, reforma, morte do trabalhador, impossibilidade superveniente, extinção do empregador), **Revogação por acordo (arts. 349.º, 350.º)**, os despedimentos (por facto imputável ao trabalhador, coletivo, extinção do posto de trabalho, inadaptação), **Resolução pelo trabalhador com justa causa (arts. 394.º a 399.º)**, **Denúncia pelo trabalhador (arts. 400.º a 402.º)**, **Abandono do trabalho (art. 403.º)** e **Outra modalidade prevista na lei (art. 340.º)**. No exemplo, **Caducidade — termo certo (arts. 343.º a), 344.º)**.
+4. Em **Iniciador**, escolha **Entidade empregadora**, **Trabalhador**, **Ambos (acordo)** ou **Por força da lei**.
+5. Em **Data do aviso**, escreva o dia em que a comunicação foi feita (no exemplo, `10/11/2026`). Em **Último dia do contrato**, escreva o último dia efetivo de trabalho, nunca o da comunicação (no exemplo, `30/11/2026`).
+   ![Cessação de Hugo Miguel Santos: termo certo, caducidade, iniciador Entidade empregadora, aviso a 10/11/2026 e último dia 30/11/2026](/images/people/cessacao-do-contrato/01-cessacao-rascunho.png)
+6. Confira o aviso prévio, que o fiscaldoo calcula sozinho: **Dias de aviso exigidos**, **Dias de aviso dados**, **Dias de aviso em falta** e **Último dia para comunicar**. No exemplo: 15 exigidos, 20 dados, 0 em falta, último dia 15/11/2026.
+   ![Aviso prévio: 15 dias exigidos, 20 dados, 0 em falta, último dia para comunicar 15/11/2026](/images/people/cessacao-do-contrato/02-aviso-previo.png)
+7. Se houver dias de férias de anos anteriores por gozar, preencha **Férias de anos anteriores não gozadas** (grupo **FÉRIAS**). Se a modalidade for um acordo ou um despedimento, preencha o grupo **MOTIVO E ACORDO**.
+8. Guarde e carregue em **Confirmar**. A cessação passa a **Confirmado**, com **Confirmado por** e **Confirmada em**, e a barra mostra **Criar recibo final**, **Reabrir**, **Certificado de trabalho** e **Anular**.
+
+</StepByStep>
+
+Ao confirmar, o fiscaldoo cria a comunicação da cessação à Segurança Social, em **Rascunho** (no exemplo, «Cessação / Hugo Miguel Santos / 30/11/2026»).
+
+### 2. Fazer o recibo final
+
+<StepByStep>
+
+1. Na cessação confirmada, carregue em **Criar recibo final**. Abre-se o recibo do trabalhador, de 01/11/2026 a 30/11/2026, já com a **Retribuição base** e as parcelas da cessação.
+2. Carregue em **Calcular**. No exemplo, o **Total de IRS retido** fica em 274,00 € e o **Líquido a receber** em 4.467,65 €.
+3. Confira as linhas e o bloco **COMO SE CHEGOU AOS VALORES**. Cada linha tem **Como foi calculado?**.
+4. Carregue em **Validar**. A cessação passa a **Liquidado**.
+5. Com o acesso **Administrador de Salários**, carregue em **Contabilizar**. Sem este passo, **Executar** é recusado ao Processador de salários, e **Pagar** não deixa marcar como pago um recibo contabilizado sem pagamento registado ([Como contabilizar o processamento dos salários](/payroll-pt/contabilizar-os-salarios)).
+6. Para pagar, abra **Ações** e carregue em **Gerar pagamento**. Faça a transferência no banco.
+7. Abra **Salários › Pagar › Pagamentos de salários** e o pagamento do trabalhador. Preencha **Data-valor** com a data dada pelo banco (no exemplo, `30/11/2026`), guarde e carregue em **Executar**. O recibo passa a **Pago**.
+
+</StepByStep>
+
+No exemplo, o recibo final de Hugo Miguel Santos tem estas linhas:
+
+| Linha | Quantidade | Valor |
+|---|---|---|
+| Retribuição base | 1.250,00 | 1.250,00 € |
+| Subsídio de Natal | 1,00 | 1.037,67 € |
+| Retribuição de férias proporcional ao serviço do ano (cessação) | 18,26 | 1.053,64 € |
+| Subsídio de férias proporcional ao serviço do ano (cessação) | 18,26 | 1.053,64 € |
+| Compensação legal da cessação | 19,92 | 830,14 € |
+| Retribuição de férias vencidas e não gozadas (cessação) | 0,00 | 0,00 € |
+| Subsídio de férias vencido e não gozado (cessação) | 0,00 | 0,00 € |
+
+- **Total de abonos** 5.225,09 €, **Segurança Social (trabalhador)** 483,44 €, **Total de IRS retido** 274,00 €, **Líquido a receber** 4.467,65 €.
+- **Contribuição da empresa para a Segurança Social** 1.043,80 € e **Custo total para a empresa** 6.268,89 €.
+
+![Totais do recibo final: abonos 5.225,09 €, Segurança Social 483,44 €, IRS 274,00 €, líquido 4.467,65 €](/images/people/cessacao-do-contrato/03-totais-do-recibo-final.png)
+
+**Como se chega aos números do exemplo.** O contrato durou 303 dias (de 01/02/2026 a 30/11/2026). O subsídio de Natal é 1.250,00 € × 303 ÷ 365 = 1.037,67 €. Num contrato que não chegou a 12 meses, as férias são proporcionais à duração: 22 dias × 303 ÷ 365 = 18,26 dias. A compensação da caducidade de um termo certo é de 24 dias por ano: (1.250,00 € ÷ 30) × 24 × 303 ÷ 365 = 830,14 € (19,92 dias, sem arredondar a meio da conta). A Segurança Social incide sobre 4.394,95 € (11 % = 483,44 € do trabalhador; 23,75 % = 1.043,80 € da empresa): a compensação, 830,14 €, fica fora da base. O IRS tem três partes: 219,00 € do mês, 26,00 € do subsídio de Natal e 29,00 € do subsídio de férias, estes retidos à parte. A parte do mês incide sobre 2.405,01 €: a retribuição base, a retribuição de férias e 101,37 € da compensação (2.405,01 € × 34,9 % − 401,19 € = 438,16 €; em novembro de 2026 só se retém metade, arredondada ao euro para baixo). Os outros 728,77 € da compensação ficam fora do IRS: são a média mensal das remunerações regulares (7.287,67 € ÷ 10 meses) × 1 ano de antiguidade. A média é baixa porque a demonstração só tem recibos validados de junho a setembro; com todos os meses processados, a compensação ficaria toda fora do IRS. Por exemplo, com outubro também processado, a média sobe para 853,77 € (8.537,67 € ÷ 10 meses), maior do que a compensação; a parte do mês incide sobre 2.303,64 € (metade de 402,78 € = 201,00 €) e o recibo dá 256,00 € de IRS e 4.485,65 € de líquido. O bloco **COMO SE CHEGOU AOS VALORES** resume esta retenção. <span className="fd-pending">Pendente de validação por contabilista certificado: dias por ano e método da fração na compensação, férias proporcionais num contrato de menos de 12 meses, exclusão da compensação da base da Segurança Social e parte da compensação fora do IRS (se o subsídio de Natal entra na média).</span>
+
+{/* Nota interna (DOCS-034 #3470, vaga DOCS-046 #3616; auditoria de 03/11/2026, master 8f78854ec, base docs_demo_aud0241_test): cessação de Hugo Miguel Santos, botão «Criar recibo final», Calcular duas vezes, Validar, Gerar pagamento e Executar no ecrã com o Processador de Salários (demo.salarios); Contabilizar com o Administrador de Salários, depois de criar os 4 modelos de contabilização em falta nesta base. O lote «Acerto final» foi feito no ecrã com a mesma cessação e deu os mesmos valores ao cêntimo. Revisão v8-REV (DOCS-054, master 8c5a23228, base docs_demo_v8rev_test): 1.º Calcular dá 274,00 € e 4.467,65 € no botão; recusa do 2.º recibo e do lote vistas no ecrã; o lote Acerto final não foi recalculado com sucesso nesta revisão. */}
+
+#### Em vez do botão: o lote Acerto final
+
+O botão faz um recibo sem lote, e o **Ficheiro de transferências** só existe no lote. Se quer pagar por ficheiro, ou há várias saídas no mesmo mês, use o lote em vez do botão. O recibo sai igual, ao cêntimo. Não dá para usar os dois na mesma cessação: o fiscaldoo recusa o segundo recibo final (ver «Problemas frequentes»).
+
+<StepByStep>
+
+1. Abra **Salários › Processar › Processar o mês** e carregue em **Novo**.
+2. Em **Tipo**, escolha **Acerto final**. O **Nome** passa a «Acerto final de novembro de 2026» e o período fica de 01/11/2026 a 30/11/2026. Os outros tipos são **Normal**, **Férias**, **Natal**, **Corretivo** e **Simulação**.
+3. Guarde e carregue em **Criar os recibos do mês**. O lote só recebe os trabalhadores com uma cessação confirmada que acaba nesse período (no exemplo, só Hugo Miguel Santos), com um recibo do tipo **Final (cessação)**.
+4. Carregue em **Calcular**. O lote passa a **Calculado** e mostra o líquido do recibo (no exemplo, 4.467,65 €).
+5. Abra o recibo e confira as linhas e o bloco **COMO SE CHEGOU AOS VALORES**.
+6. Valide e pague o lote como um lote normal ([Como processar os salários do mês](/payroll-pt/processar-o-mes) e [Como pagar os salários](/payroll-pt/pagar-os-salarios)). Com o Processador de salários, o ficheiro só se descarrega depois de contabilizar.
+
+</StepByStep>
+
+{/* Nota interna (DOCS-054, v16-REV1, master 255d77e63): botão e lote deram o mesmo recibo, ao cêntimo; recusa do 2.º recibo final e do lote Acerto final vistas por clique. Nessa base, com o lote de outubro também processado, o IRS deu 256,00 € e o líquido 4.485,65 €. Conferido a 05/11/2026 (master 00c68a6d8, base docs_demo_v16rev1b_test, só junho a setembro processados, o que o exemplo assume): 5.225,09 € de abonos e 4.467,65 € de líquido, logo 274,00 € de IRS. As contas de outubro dão os 256,00 € ao cêntimo. A janela Fim de contrato e o termo incerto não foram vistos neste lote. */}
+
+### 3. Emitir o certificado de trabalho
+
+<StepByStep>
+
+1. Na cessação confirmada, carregue em **Certificado de trabalho**. Abre-se o certificado em **Rascunho**, com a **Data de admissão** (01/02/2026), a **Data de cessação** (30/11/2026) e os **CARGOS DESEMPENHADOS** com as datas (no exemplo, «Operador de armazém», de 01/02/2026 a 30/11/2026).
+2. Só se o trabalhador pedir, preencha **OUTRAS REFERÊNCIAS (SÓ A PEDIDO DO TRABALHADOR, CT ART. 341.º/2)**.
+   ![Certificado de trabalho de Hugo Miguel Santos com a data de admissão 01/02/2026 e a data de cessação 30/11/2026](/images/people/cessacao-do-contrato/04-certificado-de-trabalho.png)
+3. Carregue em **Emitir**. O certificado passa a **Emitido** e fica fechado: depois disso só há **Reemitir** e **Registar a entrega**.
+4. Quando o entregar ao trabalhador, preencha **Entregue em** e **Entregue por** no grupo **ENTREGA** e carregue em **Registar a entrega**.
+
+</StepByStep>
+
+### 4. Comunicar a cessação à Segurança Social
+
+A comunicação criada ao confirmar a cessação está em **Salários › Preparar › O que há para fazer este mês?** › **Vínculo laboral à Segurança Social**. Siga [Como comunicar a admissão, a cessação ou alterações à Segurança Social](/payroll-pt/vinculo-a-seguranca-social): o artigo usa a mesma cessação de Hugo Miguel Santos.
+
+## No Enterprise
+
+No Odoo Enterprise, a cessação faz-se da mesma maneira, com o perfil **Processador de salários**: as listas **Cessações** e **Certificados de trabalho** têm as mesmas colunas e o formulário **Novo** da cessação tem os mesmos campos. O recibo final é o da aplicação **Salários** do fiscaldoo; a aplicação de salários do Enterprise não aparece numa empresa portuguesa (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
+
+{/* Nota interna (lote EE-10, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): cópia Enterprise docs_ee_ee10b_test no portátil (pg_dump da odoo20_ee_test, -u dos módulos mudados até master e -i de hr_payroll, planning, hr_appraisal e hr_recruitment), porta 8504, guarda de rede ligada; utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): ee10_proc em Salários › Preparar › Trabalhadores e contratos › Cessações e Pessoas › Contratos e saídas › Cessações e Certificados de trabalho (colunas iguais às da cópia Community) e no formulário Novo da cessação (mesmos rótulos, de Trabalhador a Base das férias anteriores); o recibo final, o pagamento e a contabilização não foram refeitos na cópia Enterprise (são os da aplicação Salários do fiscaldoo, já conferida no lote EE-06). Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee10_test (master e4dd4ae90, a do lote EE-10 interrompido) e com o texto do artigo. Ver reports/LOTE_EE-10.md. */}
+
+## Resultado esperado
+
+- Depois de validar o recibo, a cessação fica **Liquidado** na lista **Cessações**.
+- O recibo final do trabalhador fica **Pago**, com cada parcela numa linha.
+- O certificado de trabalho fica **Emitido** em **Certificados de trabalho**.
+- A comunicação da cessação aparece em **Vínculo laboral à Segurança Social**, em **Rascunho**.
+
+## Notas importantes
+
+- **Confirme as compensações antes de pagar.** Os valores da compensação e dos créditos vêm de regras legais guardadas no produto (**Salários › Configurar** › regras de compensação e de cessação). Valide-os com o contabilista certificado ou com o jurista.
+- **Declaração de situação de desemprego.** O fiscaldoo não a emite nem a prepara. Se o trabalhador a pedir para requerer o subsídio de desemprego, a empresa preenche-a fora do fiscaldoo, na Segurança Social Direta ou no modelo da Segurança Social, com as datas e o motivo da cessação que ficaram registados aqui. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo de entrega da declaração de situação de desemprego ao trabalhador e forma de entrega.</span>
+- **O aviso prévio conta-se pela Data do aviso.** Se os **Dias de aviso em falta** forem mais do que zero, o recibo final leva a linha do aviso em falta (a pagar pela empresa ou a descontar ao trabalhador, conforme quem não cumpriu).
+- **Uma cessação liquidada fica fechada.** Corrija os dados antes de calcular e validar o recibo final; depois disso, a correção faz-se com um recibo corretivo ([Como corrigir um recibo já processado](/payroll-pt/corrigir-um-processamento)).
+- **O prazo de pagamento dos créditos.** O fiscaldoo avisa no campo **Pagamento dos créditos** quando não conhece o prazo da modalidade: no exemplo, «O prazo dos créditos desta modalidade de cessação não foi encontrado nas fontes lidas (a confirmar pelo contabilista certificado).»
+- **Contabilização.** O recibo final só se contabiliza quando todas as rubricas com valor têm modelo de contabilização, incluindo as da cessação ([Como contabilizar o processamento dos salários](/payroll-pt/contabilizar-os-salarios)).
+
+## Problemas frequentes
+
+### Criar recibo final responde «… já tem um recibo final desta cessação»
+
+- **Sintoma:** «Operação inválida «Hugo Miguel Santos» já tem um recibo final desta cessação: «Hugo Miguel Santos (01/11/2026 — 30/11/2026)» (Rascunho, sem lote, criado em 04/11/2026 00:09:11 por Salários (demonstração)). O que aconteceu: dois recibos finais da mesma cessação liquidavam-na duas vezes. Como resolver: abra o existente na lista de recibos (menu Salários) ou anule-o (com motivo) antes de criar outro.»
+- **Causa:** a cessação já tem um recibo final. A mensagem diz qual é, em que estado está, quem o criou e quando.
+- **O que fazer:** continue no recibo que a mensagem indica. Se o quer refazer, abra **Ações**, carregue em **Anular**, escreva o motivo e crie-o de novo.
+
+### O lote Acerto final fica sem nenhum recibo
+
+- **Sintoma:** em **Criar os recibos do mês** aparece a mesma mensagem, «… já tem um recibo final desta cessação», e o lote continua em **Rascunho**, sem recibos.
+- **Causa:** um dos trabalhadores já tem recibo final feito com o botão. A recusa desfaz o lote todo: os outros trabalhadores com cessação nesse mês também não entram. No exemplo, com duas cessações de novembro, a recusa nomeou só a trabalhadora que já tinha recibo, e o colega também ficou de fora.
+- **O que fazer:** anule o recibo indicado e carregue de novo em **Criar os recibos do mês**, ou faça os recibos desse mês com **Criar recibo final**, um a um.
+
+### Contabilizar responde «Contabilização bloqueada»
+
+- **Sintoma:** «Contabilização bloqueada: 4 rubrica(s) com valor não têm modelo de contabilização em 30/11/2026: Subsídio de Natal, Retribuição de férias proporcional ao serviço do ano (cessação), Subsídio de férias proporcional ao serviço do ano (cessação), Compensação legal da cessação. O que aconteceu: o lançamento não pode ser construído sem uma conta para cada linha. Como corrigir: crie um modelo para cada uma (Salários › Configurar › Rubricas › Modelos de contabilização).»
+- **Causa:** as rubricas indicadas ainda não têm modelo de contabilização nessa data.
+- **O que fazer:** carregue em **Fechar**, crie o modelo de cada rubrica como em [Como contabilizar o processamento dos salários](/payroll-pt/contabilizar-os-salarios) e carregue de novo em **Contabilizar**.
+
+### Confirmar diz que há campos obrigatórios por preencher
+
+- **Sintoma:** «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** falta o **Iniciador**, a **Data do aviso** ou o **Último dia do contrato**.
+- **O que fazer:** preencha os campos a vermelho e carregue de novo em **Confirmar**.
+
+### O certificado de trabalho já não se altera
+
+- **Sintoma:** depois de **Emitir**: «Este registo já está fechado (validado, aprovado, pago ou enviado), por isso já não se altera. Para corrigir, use as ações do documento: anule-o ou crie uma correção.»
+- **Causa:** um certificado emitido fica fechado.
+- **O que fazer:** carregue em **Reemitir** para fazer uma versão nova.

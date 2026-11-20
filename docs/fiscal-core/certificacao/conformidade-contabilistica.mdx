@@ -1,0 +1,103 @@
+---
+id: conformidade-contabilistica
+slug: /fiscal-core/conformidade-contabilistica
+title: Como confirmar que os documentos certificados estão bem contabilizados
+sidebar_label: Conformidade contabilística
+sidebar_position: 7
+description: Abrir o painel de conformidade contabilística, perceber cada ponto verificado (atrasos, períodos, numeração, assinaturas, tentativas bloqueadas) e abrir a lista do que há a corrigir.
+keywords: [conformidade, conformidade contabilística, conformidade contabilistica, painel de conformidade, buracos na numeração, buracos na numeracao, documentos sem assinatura, tentativas bloqueadas, atrasos de lançamento, rascunhos em período fechado, numeração, controlo]
+doc_id: DOC-0018
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master f16f4a3e0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/certificacao/autodiagnostico-da-certificacao, fiscal-core/certificacao/justificar-lacunas-de-numeracao, fiscal-core/certificacao/integridade-dos-documentos]
+---
+
+## Para que serve?
+
+O painel de conformidade contabilística é uma lista de 9 pontos de controlo (a tabela tem uma linha por ponto, com os períodos fechados e abertos em linhas separadas) da faturação certificada: atrasos de lançamento, períodos fechados, buracos na numeração, números e ATCUD diferentes, documentos sem assinatura ou sem série, e tentativas bloqueadas de alterar documentos protegidos. Mostra só o que está mal ou merece atenção, com o número de casos e o que significa.
+
+Não altera nada: cada ponto a corrigir tem um botão **Abrir lista** que leva à lista dos casos.
+
+## Quando utilizar?
+
+- No fim de cada mês, antes de [declarar o IVA](/accounting-pt/apuramento-do-iva) ou de gerar o SAF-T.
+- Quando o [autodiagnóstico](/fiscal-core/autodiagnostico-da-certificacao) ou uma auditoria pergunta pela numeração ou pelas assinaturas.
+- Não o use para saber se um documento concreto foi alterado: veja a [integridade dos documentos](/fiscal-core/integridade-dos-documentos).
+
+## Onde encontrar?
+
+**Auditoria › Integridade › Conformidade contabilística**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**, **Auditor / ROC** ou **Gerência** (ou entra como administrador): todos têm a aplicação **Auditoria** e abrem o painel. Os perfis **Contabilista** e **Administrativo** não têm a aplicação **Auditoria**, por isso não chegam ao painel (ver «Problemas frequentes»).
+- Escolha a empresa certa: o painel é da empresa ativa.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Auditoria › Integridade › Conformidade contabilística**. O painel calcula-se ao abrir: por cima da tabela diz quantos pontos estão **a corrigir** e quantos **a precisar de atenção** («1 ponto(s) a corrigir e 1 a precisar de atenção») e a data e hora do cálculo.
+   ![Painel de conformidade contabilística com a frase «1 ponto(s) a corrigir e 1 a precisar de atenção» e a tabela de 9 pontos](/images/fiscal-core/conformidade-contabilistica/01-painel-de-conformidade.png)
+2. Leia a coluna **Estado**: **Em ordem**, **Informação** (só para saber, por exemplo o exercício fechado), **Atenção** ou **A corrigir**.
+3. Nos pontos **A corrigir** ou **Atenção**, carregue em **Abrir lista**. Abre-se a lista dos casos (por exemplo, a série com buracos) com o painel no caminho de navegação; volte atrás com o nome do painel.
+   ![Linha «Buracos na numeração: 4, A corrigir», com o botão Abrir lista](/images/fiscal-core/conformidade-contabilistica/02-buracos-na-numeracao.png)
+
+   <HelpCallout type="aviso" title="Nesta lista não use «Novo» nem «Criar e comunicar»">
+   A lista dos buracos mostra os botões **Novo** e **Criar e comunicar**, que são os da lista de séries e não fazem parte do painel. **Criar e comunicar** serve para criar uma série nova e comunicá-la à AT: não o use para tratar um buraco. Para o tratar, [justifique a lacuna](/fiscal-core/justificar-lacunas-de-numeracao). A lista das tentativas bloqueadas não tem estes botões.
+   ![Lista «Buracos na numeração» com os botões Novo e Criar e comunicar, este assinalado](/images/fiscal-core/conformidade-contabilistica/03-lista-com-novo-e-criar-e-comunicar.png)
+   </HelpCallout>
+4. Corrija cada ponto (ver a tabela) e abra o painel de novo para o recalcular.
+
+</StepByStep>
+
+### Os 9 pontos do painel
+
+| Ponto verificado | O que significa | O que fazer se não está em ordem |
+|---|---|---|
+| Lançamentos com mais de 90 dias de atraso | Rascunhos que passaram o prazo | Publique-os ou apague-os ([atrasos de contabilização](/accounting-pt/atrasos-de-registo)) |
+| Períodos fechados | Informação: «Exercício fechado até 31/12/2025» | Nada |
+| Períodos abertos | Informação: «Aberto desde 01/01/2026 (11 mês/meses)» | Nada |
+| Rascunhos em período fechado | Rascunhos que não se podem publicar enquanto o período estiver fechado | Mude a data do rascunho. Reabrir um exercício fechado é uma decisão do contabilista certificado: não o faça sozinho. <span className="fd-pending">Pendente de validação por contabilista certificado: reabertura de um exercício fechado.</span> |
+| Buracos na numeração | Números de uma série que nenhum documento tem e sem justificação | [Justifique o buraco na série](/fiscal-core/justificar-lacunas-de-numeracao): um número nunca se reutiliza |
+| Documentos com número e ATCUD diferentes | Número, série e ATCUD têm de coincidir | Fale com o contabilista certificado |
+| Documentos publicados sem assinatura | Todos os publicados dos diários certificados têm de estar assinados | Fale com o seu fornecedor do fiscaldoo |
+| Documentos publicados sem série | Todos têm de pertencer a uma série | Fale com o seu fornecedor do fiscaldoo |
+| Tentativas bloqueadas nos últimos 30 dias | Tentativas de alterar ou apagar documentos protegidos que o sistema recusou | **Abrir lista** para ver quem tentou e o quê |
+
+## Resultado esperado
+
+- Com tudo em ordem, o painel diz que não há pontos a corrigir.
+- Os pontos **A corrigir** abrem a lista dos casos; o número de **Casos** da tabela é o número de linhas dessa lista, exceto nos buracos, em que o número conta os números em falta (4) e a lista mostra a série (1 linha).
+- Abrir o painel não altera documentos nem comunica nada.
+
+## Notas importantes
+
+<HelpCallout type="aviso" title="O que o painel não vê">
+O painel só vê o que já está no sistema: um documento que ainda não foi introduzido não aparece como atraso. Uma lista vazia significa «nada encontrado», não «tudo cumprido». O que a lei exige em cada caso confirma-se com o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: tratamento dos buracos de numeração.</span>
+</HelpCallout>
+
+- Cada abertura cria uma nova «foto» do painel (o título muda de «#1» para «#3», «#4»…). Não é um erro.
+- Os buracos mostrados na demonstração são da série **D26** das guias de transporte: a conformidade vê todas as séries, ao contrário do [autodiagnóstico](/fiscal-core/autodiagnostico-da-certificacao).
+
+## Problemas frequentes
+
+### Não vejo a aplicação Auditoria
+
+- **Sintoma:** com o perfil **Contabilista** ou **Administrativo**, o menu de aplicações não tem **Auditoria**. A mensagem «Sem acesso: Não tem permissão para executar «Conformidade contabilística»» só sai por uma ligação direta guardada.
+- **Causa:** estes perfis não têm a aplicação **Auditoria**.
+- **O que fazer:** peça o perfil **Contabilista certificado** ao administrador do sistema, ou a quem o tem que abra o painel por si.
+
+### As «Tentativas bloqueadas» dizem OdooBot
+
+- **Sintoma:** a lista mostra «Bloqueado: alteração» num documento, com o utilizador **OdooBot** e a origem **RPC**.
+- **Causa:** o bloqueio foi feito por um processo automático do sistema, não por uma pessoa. Cada linha é uma recusa do sistema; o documento não foi alterado.
+- **O que fazer:** se a origem não for conhecida (importação, integração), peça ao seu fornecedor do fiscaldoo.
+
+{/* Nota interna (DOCS-046 / NV3B-04 e 05, master f16f4a3e0, base docs_demo_v3bcor_test, perfil Responsável fiscal): a lista dos buracos mostra os botões Novo e Criar e comunicar (da lista de séries); o CERT-138 vai tirar esses botões desta lista: quando entrar, retirar o aviso do passo 3 e a captura 03. Confirmado com a lista das tentativas bloqueadas sem botões. Empresa vazia não testada. */}
+
+{/* Nota interna (v23-T, DOC-0018, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

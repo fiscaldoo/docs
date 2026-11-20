@@ -1,0 +1,109 @@
+---
+id: verificacao-da-doenca
+slug: /payroll-pt/verificacao-da-doenca
+title: Como registar a verificação da doença pedida pela empresa
+sidebar_label: Verificação da doença
+sidebar_position: 3
+description: Registar o pedido de verificação da doença à Segurança Social (CVIT), a convocatória, o exame, o resultado e a reapreciação, e ler os prazos que o fiscaldoo calcula.
+keywords: [verificação da doença, verificacao da doenca, CVIT, comissão de verificação de incapacidade temporária, junta médica, baixa fraudulenta, médico da empresa, reapreciação, convocatória, Lei 105/2009, art. 17.º, faltas injustificadas]
+doc_id: DOC-0434
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master cebcb888d)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/faltas-e-licencas/baixas-por-doenca, payroll-pt/faltas-e-licencas/faltas, payroll-pt/configurar/proteger-dados-dos-trabalhadores]
+---
+
+## Para que serve?
+
+Quando um trabalhador está de baixa por doença, a empresa pode pedir à Segurança Social que uma comissão médica verifique a doença (a comissão de verificação de incapacidade temporária, CVIT). O fiscaldoo **não comunica nada** à Segurança Social: serve para registar as datas e o resultado que a Segurança Social lhe comunicar, e calcula os prazos da lei e o que a empresa pode ou não fazer a seguir.
+
+## Quando utilizar?
+
+- A empresa pediu à Segurança Social a verificação da doença de um trabalhador de baixa.
+- A Segurança Social comunicou a convocatória, o resultado do exame ou a decisão de uma reapreciação.
+
+A baixa em si regista-se antes: veja [Como tratar uma baixa por doença ou acidente de trabalho](/payroll-pt/baixas-por-doenca).
+
+## Onde encontrar?
+
+**Salários › Preparar › Ausências e presenças › Baixas por incapacidade** › abra a baixa › separador **Verificação da doença**.
+
+## Antes de começar
+
+- O seu perfil é **Gestor de RH** e tem o acesso extra **Ver ausência médica**. Com um utilizador criado só com o perfil **Gestor de RH**, o menu **Baixas por incapacidade** não aparece; com o mesmo perfil e esse acesso, aparece e o separador pode ser preenchido. O acesso e quem o dá estão em [Como tratar uma baixa por doença ou acidente de trabalho](/payroll-pt/baixas-por-doenca).
+- A baixa já está registada e aprovada nas **Ausências**.
+- Tenha à mão a comunicação da Segurança Social com as datas.
+- Feito a 8 de novembro de 2026 na `Empresa Demonstração, Lda`, com uma baixa por doença de Bruno Miguel Teixeira de 02/11/2026 a 13/11/2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Preparar › Ausências e presenças › Baixas por incapacidade** e abra a baixa do trabalhador.
+2. Carregue no separador **Verificação da doença**. Tem dois blocos: **Pedido (Lei 105/2009 arts. 17.º e 18.º)** e **Resultado e reapreciação (arts. 19.º, 20.º e 22.º)**.
+3. Em **Verificação pedida em**, escreva o dia em que a empresa fez o pedido à Segurança Social, por exemplo 03/11/2026, e guarde. Aparece **A Segurança Social tem de convocar até** 05/11/2026 (48 horas depois do pedido).
+   Se esse dia já passou e **Trabalhador convocado em** continua vazio, fica marcado **O empregador pode designar um médico**.
+   ![Bloco Pedido: verificação pedida em 03/11/2026, a Segurança Social tem de convocar até 05/11/2026, sem convocatória, e O empregador pode designar um médico marcado](/images/payroll-pt/verificacao-da-doenca/01-pedido-sem-convocatoria.png)
+4. Quando a Segurança Social comunicar a convocatória, escreva **Trabalhador convocado em**, por exemplo 04/11/2026. Aparece **Exame devido até** 09/11/2026 (três dias úteis seguintes: 05, 06 e 09/11) e **O empregador pode designar um médico** deixa de estar marcado.
+5. Depois do exame, escreva **Exame em** (06/11/2026), escolha o **Resultado da verificação** e escreva **Resultado comunicado em** (06/11/2026). Os resultados possíveis são **Apto para a atividade**, **Não apto (a incapacidade está confirmada)**, **Exame não realizado pela Segurança Social**, **Trabalhador não compareceu, sem motivo válido** e **Trabalhador não compareceu, com motivo válido**.
+6. Se o trabalhador ou a empresa pedir a reapreciação, escreva **Reapreciação pedida em** (07/11/2026). Quando a comissão decidir, escreva **Reapreciação decidida em**. Guarde.
+   ![Separador Verificação da doença completo: pedido a 03/11/2026, convocado a 04/11/2026, exame devido até 09/11/2026, exame a 06/11/2026, resultado Apto para a atividade comunicado a 06/11/2026, reapreciação pedida a 07/11/2026 e Ainda sem decisão desfavorável marcado](/images/payroll-pt/verificacao-da-doenca/02-resultado-e-reapreciacao.png)
+
+</StepByStep>
+
+### Como se leem as marcas
+
+O fiscaldoo calcula três marcas, que não se escrevem:
+
+- **O empregador pode designar um médico** (art. 18.º/1). A ajuda do campo diz: «se a Segurança Social disser que não pode realizar o exame, se passarem 48 horas sem convocatória, ou se o exame não se realizou a tempo.» No exemplo, ficou marcada a 08/11 sem convocatória e desmarcou-se ao escrever a convocatória.
+- **Ainda sem decisão desfavorável** (art. 22.º). A ajuda do campo diz: «o empregador não pode basear uma decisão desfavorável no resultado enquanto decorre o prazo para pedir reapreciação ou a reapreciação está pendente.» No exemplo, com o resultado **Apto para a atividade** e a reapreciação pedida a 07/11 sem decisão, ficou marcada.
+- **Os dias podem ser considerados injustificados** (art. 17.º/4-c-iii): marcada com o resultado **Trabalhador não compareceu, sem motivo válido**. A ajuda do campo diz «decisão do empregador; nada muda sozinho»: o fiscaldoo não transforma a baixa em faltas injustificadas; se a empresa decidir assim, trata as faltas como em [Como tratar faltas e atrasos no recibo](/payroll-pt/faltas).
+  ![Bloco Resultado e reapreciação com o resultado Trabalhador não compareceu, sem motivo válido, e a marca Os dias podem ser considerados injustificados](/images/payroll-pt/verificacao-da-doenca/04-faltou-sem-motivo.png)
+
+Registar a verificação não gera lançamentos contabilísticos nem muda o recibo.
+
+## O que diz a lei
+
+Lei n.º 105/2009, de 14 de setembro, arts. 17.º a 22.º (versão consolidada da Procuradoria-Geral Distrital de Lisboa, lida a 8 de novembro de 2026):
+
+- **Art. 17.º:** a empresa pede a verificação à CVIT da área de residência do trabalhador e informa-o no mesmo dia; a Segurança Social convoca-o em 48 horas para um dos três dias úteis seguintes e comunica o resultado em 24 horas depois do exame. A falta ao exame sem motivo atendível pode levar a que os dias de doença sejam considerados faltas injustificadas.
+- **Art. 18.º:** a empresa pode designar um médico sem ligação anterior a ela se a Segurança Social não puder fazer o exame, se não houver convocatória em 48 horas ou se o exame não se fizer no prazo.
+- **Arts. 19.º e 20.º:** se o resultado da verificação for diferente do certificado de incapacidade apresentado pelo trabalhador, qualquer das partes pode pedir a reavaliação (no ecrã, «Reapreciação») nas 24 horas seguintes a conhecer o resultado; a comissão de reavaliação decide e comunica o resultado em 8 dias a contar do pedido.
+- **Art. 22.º:** enquanto corre o prazo da reapreciação ou ela não está decidida, a empresa não pode basear no resultado uma decisão desfavorável ao trabalhador.
+
+Como a lei conta estes prazos:
+
+- As 48 horas contam-se desde que a Segurança Social recebe o pedido (art. 17.º, n.º 4). O fiscaldoo guarda só o dia: mostra o dia do pedido mais dois.
+- Os três dias úteis para o exame não incluem sábados, domingos nem feriados (ver «Notas importantes»).
+- A reavaliação é pedida sobre o resultado de um exame que diverge do certificado do trabalhador (art. 19.º, n.º 1). Se o trabalhador faltou ao exame sem motivo atendível, não há exame para reavaliar, e os dias podem ser considerados faltas injustificadas (art. 17.º, n.º 4, alínea c), subalínea iii)). Por isso, com **Trabalhador não compareceu, sem motivo válido**, a marca **Ainda sem decisão desfavorável** fica desmarcada, mesmo com uma data em **Reapreciação pedida em**.
+
+{/* Nota interna (auditoria docs-aud-v23w, #4052): marca do contabilista certificado tirada da vista do leitor e decidida pela lei (Lei 105/2009, arts. 17.º/4 e /8-b, 19.º/1, 20.º e 22.º; texto publicado no DR, 1.ª série, n.º 178, de 14/09/2009). O D6 do RH-032 (#4065, req. 46485) fica respondido: o comportamento é o da lei. Os feriados contados como dias úteis no Exame devido até são o defeito AUD-V23W-03. */}
+
+## Resultado esperado
+
+- A baixa tem no separador **Verificação da doença** as datas e o resultado comunicados pela Segurança Social.
+- Os prazos (**A Segurança Social tem de convocar até**, **Exame devido até**) e as três marcas estão calculados.
+
+## Notas importantes
+
+- **São dados de saúde.** Só quem tem o acesso **Ver ausência médica** abre a baixa. Escreva só datas e o resultado, nunca o diagnóstico nem o que o médico disse.
+- **O fiscaldoo conta os dias úteis de segunda a sexta.** Um feriado nesses dias não é descontado, mas um feriado não é dia útil. Com uma convocatória a 30/11/2026, por exemplo, **Exame devido até** mostra 03/12/2026, e o prazo da lei vai até 04/12/2026, porque 01/12 é feriado. Nesse caso, a marca **O empregador pode designar um médico** pode aparecer um dia antes do tempo: confira o prazo com a comunicação da Segurança Social antes de designar um médico.
+- **Oposição à verificação.** Se o trabalhador se opuser à verificação, marque **Trabalhador opôs-se à verificação** no bloco **Prestação e prova** da baixa (ver [Como tratar uma baixa por doença ou acidente de trabalho](/payroll-pt/baixas-por-doenca)).
+
+## Problemas frequentes
+
+### «A data «Exame em» (…) é anterior a «Trabalhador convocado em» (…)»
+
+- **Causa:** uma data da verificação está antes do passo anterior. A ordem é pedido, convocatória, exame e resultado.
+  ![Janela Erro de Validação: a data Exame em (02/11/2026) é anterior a Trabalhador convocado em (04/11/2026); os passos seguem a ordem pedido, convocação, exame, resultado](/images/payroll-pt/verificacao-da-doenca/03-datas-fora-de-ordem.png)
+- **O que fazer:** carregue em **Fechar**, confira as datas na comunicação da Segurança Social e corrija a que estiver errada.
+
+### Não vejo o menu Baixas por incapacidade
+
+- **Causa:** falta-lhe o acesso **Ver ausência médica**, que não vem com nenhum perfil.
+- **O que fazer:** peça ao administrador do sistema que lho atribua (ver [Como tratar uma baixa por doença ou acidente de trabalho](/payroll-pt/baixas-por-doenca)).
+
+{/* Nota interna (lote v23-W, #4052 DOCS-069, tema que só a pasta congelada tinha: Salários/verificacao-de-incapacidade-pedida-pelo-empregador.md; master cebcb888d, docs_demo_v23w_test, porta 8468). A baixa de Bruno Miguel Teixeira (02 a 13/11/2026) foi criada e aprovada por RPC com o utilizador w.rhmed (Perfil Gestor de RH + Ver ausência médica); o separador foi preenchido por clique com esse utilizador, a 08/11/2026 (as marcas dependem do dia de hoje). Prova DEC-1777: utilizador só com o Perfil Gestor de RH não tem o menu Baixas por incapacidade. Falha provocada: exame 02/11 antes da convocatória 04/11 (mensagem citada). Diferença em relação ao guia antigo: o guia dizia que o quadro não recusa datas fora da ordem; hoje recusa. Possível defeito (LOTE_V23-W): com «não compareceu, sem motivo válido» e reapreciação pendente, «Ainda sem decisão desfavorável» fica desmarcada e «podem ser considerados injustificados» marcada. */}

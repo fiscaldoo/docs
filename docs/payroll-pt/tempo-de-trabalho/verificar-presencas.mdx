@@ -1,0 +1,97 @@
+---
+id: verificar-presencas
+slug: /payroll-pt/verificar-presencas
+title: Como verificar as presenças do período antes de processar
+sidebar_label: Verificar as presenças
+sidebar_position: 2
+description: Ver, antes de calcular os recibos, os dias em que as presenças não batem com o horário, saber quais param o recibo e corrigi-los.
+keywords: [verificar presenças, verificar presencas, presenças do período, entrada sem saída, presença por validar, dia sem presença, presença fora do horário, o recibo não calcula, recibo não pode ser calculado, relógio de ponto]
+doc_id: DOC-0188
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/tempo-de-trabalho/trabalho-suplementar, payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/faltas-e-licencas/faltas]
+---
+
+## Para que serve?
+
+Antes de calcular os recibos, o ecrã **Verificar presenças** mostra os dias em que as presenças (as picagens) não batem certo com o horário do trabalhador. Há quatro casos. Dois **param o recibo** até serem resolvidos: **Entrada sem saída** e **Presença por validar**. Os outros dois só informam: **Dia útil sem presença** e **Presença fora do horário**.
+
+Só tem efeito nas empresas que calculam as horas pelas presenças. Essa opção, **Horas pelas Presenças do programa**, é do administrador do sistema e está em **Definições**, separador **Salários**. Depois de guardar, o mesmo bloco diz quantos trabalhadores ainda estão no outro modo e pede **Aplicar aos trabalhadores**. Sem a opção, a recusa do cálculo não acontece. O fiscaldoo não lê relógios de ponto externos: as presenças são as que estão registadas.
+
+## Quando utilizar?
+
+- No fim do mês, antes de carregar em **Calcular** no lote de salários.
+- Quando o cálculo de um recibo recusa por haver presenças em aberto.
+- Para ver os dias em que um trabalhador não tem presença nem ausência registada.
+
+Para pagar horas a mais registe-as em [Trabalho suplementar](/payroll-pt/trabalho-suplementar); para um dia em que o trabalhador faltou, ver [Faltas](/payroll-pt/faltas).
+
+## Onde encontrar?
+
+**Salários › Preparar › Ausências e presenças › Verificar presenças**.
+
+## Antes de começar
+
+- O seu perfil é **Processador de salários** ou **Gestor de RH**: os dois têm **Verificar presenças** e leem os casos.
+- **O Processador de salários não corrige presenças.** Não tem o menu **Presenças**; por uma ligação, abre a presença e lê-a, mas ao guardar uma alteração recebe a janela **Sem acesso**: «Não tem permissão para alterar este registo de «Presença». O seu perfil só consulta «Presença»: não cria, altera nem elimina nada aí. Esta área abre com o perfil «Gestor de RH». Peça ao administrador para lhe atribuir o perfil de que precisa.» Peça a correção a quem tem o perfil **Gestor de RH**.
+
+{/* Nota interna (lote v23-Q, #3947, DOC-0188, master 808f8ca1f, docs_demo_v23q_test, porta 8452): provocado no ecrã com um utilizador criado só com o perfil Processador de salários (DEC-1777): presença de 02/11/2026 sem saída criada pela integração (a base-mãe nova não tem presenças); o Processador não tem o menu Presenças (nem em Salários nem em Pessoas) e abriu-a por ligação; um campo de texto alterado e Guardar → janela «Sem acesso» com o texto citado e «Mostrar detalhe técnico». O defeito V23D-01 («Pode pertencer a outra empresa») já não aparece. */}
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Preparar › Ausências e presenças › Verificar presenças**. Abre-se o formulário **Presenças de …** com **De** e **Até** (por omissão, o último dia do mês anterior) e **Casos que param o recibo** a 0.
+2. Em **De** escreva o primeiro dia e em **Até** o último, por exemplo `02/11/2026` e `06/11/2026`. Em **Trabalhadores** escolha um ou mais trabalhadores; vazio quer dizer todos.
+3. Carregue em **Verificar o período**. Aparece a lista, uma linha por trabalhador e dia, com **Caso**, **O que fazer**, **Pára o recibo** e a **Presença**. No topo, **Casos que param o recibo** conta as linhas vermelhas e o aviso diz «Um recibo deste período não é calculado enquanto houver uma entrada sem saída ou uma presença por validar.»
+   ![Verificação de 02/11/2026 a 06/11/2026: Casos que param o recibo 2, linhas vermelhas para Entrada sem saída e Presença por validar](/images/payroll-pt/verificar-presencas/01-casos-que-param-o-recibo.png)
+4. Leia o **Caso** de cada linha vermelha: **Entrada sem saída** («registou a entrada em 02/11/2026 e nunca registou a saída») e **Presença por validar** («A presença … não está validada»). As linhas a cinzento são informativas e não param o recibo.
+5. Corrija a presença, ou peça a correção ao RH ou ao Responsável pelas presenças. Abra **Pessoas › Tempo de trabalho › Presenças**; o administrador do sistema também a encontra em **Salários › Preparar › Ausências e presenças › Presenças**. A lista abre agrupada por mês e por trabalhador: carregue nos grupos para ver as linhas. Na presença, em **Entrada/Saída**, carregue no campo à direita da seta, escolha o dia e a hora da saída, carregue em **Aplicar** e guarde. Ou carregue em **Validar** ou **Recusar** se estiver em **Rascunho**. Num **Dia útil sem presença**, registe a presença ou a ausência em **Ausências**.
+6. Volte a carregar em **Verificar o período**. Quando nada pára, o aviso passa a «Nada pára os recibos deste período. Os casos abaixo são informativos.» e **Casos que param o recibo** fica a 0.
+   ![Mesma verificação depois de corrigir as presenças: Casos que param o recibo 0 e a mensagem Nada pára os recibos deste período](/images/payroll-pt/verificar-presencas/02-depois-de-corrigir.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, os casos que param o recibo verificam-se da mesma maneira: com o perfil **Processador de salários** ou **Gestor de RH**, **Salários › Preparar › Ausências e presenças › Verificar presenças** abre o mesmo formulário, com o botão **Verificar o período**.
+
+Muda só o passo 5. **Pessoas › Tempo de trabalho › Presenças** abre num gráfico de Gantt, com uma linha por trabalhador, e não na lista. Para seguir o passo, carregue no botão **Lista**, à direita da barra de pesquisa: a lista vem agrupada por mês e por trabalhador, como no Community. Na presença, o **Gestor de RH** tem o campo **Entrada/Saída** e os botões **Validar** e **Recusar**. O mesmo acontece em **Salários › Preparar › Ausências e presenças › Presenças**, que só o administrador do sistema tem.
+
+{/* Nota interna (lote EE-07, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee07b_test: cópia da odoo20_ee_test com a aplicação de salários do Enterprise (hr_payroll) instalada e o código de master; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado: Processador de salários e Gestor de RH em Verificar presenças (formulário Presenças de … com Verificar o período); Gestor de RH em Pessoas › Tempo de trabalho › Presenças (abre em Gantt; botões Gantt e Lista; lista com o filtro Data: Mês > Trabalhador) e numa presença criada na cópia só para ver o formulário (Novo, Validar, Recusar). A demonstração Enterprise não tem presenças. Caminhos do artigo conferidos com o verificador do test_doc_paths na mesma cópia (0 erros). Ver reports/LOTE_EE-07.md. */}
+
+## Resultado esperado
+
+- **Casos que param o recibo** é igual ao número de linhas vermelhas da lista (no exemplo, 2 antes de corrigir e 0 depois).
+- **Presença fora do horário** não pára o recibo: «Bruno Miguel Teixeira trabalhou mais do que as horas previstas em 03/11/2026: o excesso é classificado como trabalho suplementar.» (visto com uma presença de 10 horas). Esse suplementar paga-se no recibo do mês.
+- A verificação não grava presenças, não gera lançamentos contabilísticos e não altera recibos.
+
+## Notas importantes
+
+- **A lista só vê o que está registado.** Um trabalhador cuja presença nunca foi registada aparece como **Dia útil sem presença** e uma presença registada com horas erradas, mas dentro do horário, não tem caso. Os fins de semana e os feriados sem presença não aparecem (em outubro de 2026 a lista saltou o feriado de 05/10).
+- **Verifique outra vez depois de corrigir.** A lista não se atualiza sozinha.
+- **Uma presença validada com horas a mais pede o motivo.** O fiscaldoo recusa: «A presença de Bruno Miguel Teixeira em 03/11/2026 produz trabalho suplementar e não tem motivo. … Como resolver: preencha «Motivo do trabalho suplementar» no registo legal da presença e valide outra vez.»; o motivo e o limite diário de 2 horas (CT art. 228.º/1-d-e) são os do artigo [Registar e pagar trabalho suplementar](/payroll-pt/trabalho-suplementar). <span className="fd-pending">Pendente de validação por contabilista certificado: limites do art. 228.º e fundamentos do art. 227.º do Código do Trabalho.</span>
+
+## Problemas frequentes
+
+### «O recibo de … não pode ser calculado: … presença(s) … ainda estão em aberto»
+
+- **Mensagem:** «O recibo de Ana Margarida Pinto não pode ser calculado: 1 presença(s) de 01/11/2026 a 30/11/2026 ainda estão em aberto. O que aconteceu: uma presença sem saída ou por validar não entra nas horas, e calcular agora pagaria as horas erradas. Como resolver: abra Salários › Preparar › Ausências e presenças › Verificar presenças, resolva cada caso e calcule outra vez. Primeiro caso: Ana Margarida Pinto registou a entrada em 02/11/2026 e nunca registou a saída. Como resolver: abra a presença e preencha a saída.»
+- **Causa:** o trabalhador tem uma **Entrada sem saída** ou uma **Presença por validar** no período do recibo. Aparece ao carregar em **Calcular** no lote do mês.
+- **O que fazer:** corra **Verificar presenças** para o período, resolva as linhas vermelhas e carregue de novo em **Calcular**. Na demonstração, depois de corrigir, o lote de novembro de 2026 passou a **Calculado**.
+
+### «Não se pode criar uma presença num período fechado»
+
+- **Mensagem:** «Não se pode criar uma presença num período fechado. O que aconteceu: um recibo validado ou pago de Hugo Miguel Santos já cobre o dia 03/11/2026. Como resolver: corrija a presença que existe com a ação «Corrigir» (cria uma presença nova que aponta para a original). A tentativa ficou registada na auditoria.»
+- **Causa:** o dia já está num recibo validado ou pago do trabalhador.
+- **O que fazer:** não crie outra presença nesse dia. Corrija a que existe, como a mensagem indica.
+
+### Ao guardar a presença aparece «Sem acesso»
+
+- **Mensagem:** «Não tem permissão para alterar este registo de «Presença». O seu perfil só consulta «Presença»: não cria, altera nem elimina nada aí. Esta área abre com o perfil «Gestor de RH». Peça ao administrador para lhe atribuir o perfil de que precisa.»
+- **Causa:** o **Processador de salários** verifica, mas não corrige presenças.
+- **O que fazer:** peça a quem tem o perfil **Gestor de RH** que corrija a presença, e volte a verificar.

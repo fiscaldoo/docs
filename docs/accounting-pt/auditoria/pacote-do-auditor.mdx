@@ -1,0 +1,112 @@
+---
+id: pacote-do-auditor
+slug: /accounting-pt/pacote-do-auditor
+title: Como preparar o pacote para o auditor
+sidebar_label: Pacote do auditor
+sidebar_position: 3
+description: Gerar o ficheiro ZIP com os SAF-T, o balancete, o razão e os registos de auditoria de um período, e exportar os registos de controlo de um ano, para entregar ao auditor ou ao revisor oficial de contas.
+keywords: [pacote do auditor, ficheiro para o auditor, revisor oficial de contas, ROC, SAF-T gerados, balancete e razão, registos de auditoria, registos de controlo, exportar registos de controlo de um ano, ZIP para o auditor]
+doc_id: DOC-0172
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/declaracoes/saft-de-contabilidade, accounting-pt/relatorios/balancete, accounting-pt/auditoria/lancamentos-desequilibrados]
+---
+
+## Para que serve?
+
+O **Pacote do auditor** junta num só ficheiro ZIP o que um auditor ou um revisor oficial de contas costuma pedir de um período: os ficheiros SAF-T já gerados, o balancete, o razão e o registo de auditoria. **Só junta o que já existe:** não gera nada novo na contabilidade nem altera dados. O ficheiro faz-se no seu computador e não é enviado a ninguém.
+
+Há ainda um segundo ficheiro, os **registos de controlo de um ano** (registo de auditoria, importações fiscais e cópias de segurança), que o fiscaldoo guarda 10 anos e que só se cria depois de o ano acabar.
+
+## Quando utilizar?
+
+- O auditor pediu os ficheiros de um período (um trimestre, o ano).
+- Antes de uma inspeção ou da certificação legal de contas, para entregar tudo de uma vez.
+- Terminou um ano e quer arquivar os registos de controlo desse ano.
+- **Não** o use para gerar o SAF-T: o pacote só aproveita os que já estão gerados. O de contabilidade gera-se em [Como gerar o SAF-T de contabilidade](/accounting-pt/saft-de-contabilidade).
+
+## Onde encontrar?
+
+**Auditoria › Pacote do auditor**, com o perfil **Auditor / ROC**, **Gerência** ou **Contabilista certificado**. O perfil **Contabilista** não tem a aplicação **Auditoria**. **Pacote do auditor** é uma entrada da barra da aplicação. Os **SAF-T gerados** e, nos perfis **Auditor / ROC** e **Gerência**, o **Relatório de auditoria dos salários** estão em **Auditoria › Conferências**; **Exportar os registos de controlo de um ano** está em **Auditoria › Registos**.
+
+## Antes de começar
+
+- Perfil do exemplo: **Auditor / ROC** (só leitura). A **Gerência**, que é quem costuma entregar o pacote ao auditor, gera o mesmo pacote. O **Contabilista certificado** gera-o sem o ficheiro dos salários, e a janela avisa (ver «Notas importantes»).
+- O período tem de ter **SAF-T gerados**: confirme-o em **Auditoria › Conferências › SAF-T gerados**. No exemplo há 8 (de janeiro a agosto de 2026, todos «Gerado»).
+   ![Lista dos SAF-T gerados de janeiro a agosto de 2026, todos no estado Gerado](/images/accounting-pt/pacote-do-auditor/04-saft-gerados.png)
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Auditoria › Pacote do auditor**. A janela traz a **Empresa** e as datas **Data de início** (1 de janeiro do ano em curso) e **Data de fim** (hoje).
+2. Confirme ou mude o período. No exemplo, ficou o que vem por omissão: **01/01/2026** a **07/11/2026**.
+   ![Janela do pacote do auditor com a Empresa Demonstração, Lda e o período de 01/01/2026 a 07/11/2026](/images/accounting-pt/pacote-do-auditor/01-janela.png)
+3. Carregue em **Gerar pacote**. Aparece a ligação **pacote_auditor_2026-01-01_2026-11-07.zip**; carregue nela para descarregar o ficheiro.
+   ![Janela com a ligação para descarregar o pacote gerado](/images/accounting-pt/pacote-do-auditor/02-pacote.png)
+4. Abra o ZIP. No exemplo tem:
+   - a pasta **saft** com os 8 ficheiros SAF-T de 2026 que já estavam gerados (de janeiro a agosto);
+   - **saft_gerados.csv**: uma linha por SAF-T, com o período, o modo (F é o de faturação) e o código de controlo (SHA-256) de cada ficheiro;
+   - **balancete.csv** e **razao.csv**: o mesmo conteúdo da exportação dos relatórios, para a empresa e o período escolhidos;
+   - **registos_auditoria.csv**: os registos de auditoria do período, com 10 colunas (data e hora, evento, utilizador, empresa, modelo e número do registo, origem, tipo de acesso, modelo acedido e número de registos), sem os valores antes e depois;
+   - **salarios_auditoria.csv**: os recibos de salários validados ou pagos do período, só para quem tem permissão para os ler (ver «Notas importantes»).
+5. Para arquivar os registos de controlo de um ano que já acabou, abra **Auditoria › Registos › Exportar os registos de controlo de um ano** (com o administrador), escreva o **Ano** (no exemplo, **2025**) e carregue em **Exportar os registos**. O ficheiro descarregado, **registos_controlo_3_2025.zip** (o 3 identifica a empresa), tem o registo de auditoria, as importações fiscais, o registo de cópias de segurança e o **manifest.csv** com o número de linhas e o SHA-256 de cada parte. No exemplo as três partes têm 0 linhas, porque em 2025 não houve movimentos registados. Depois disso, a janela mostra **Já arquivada** marcada para 2025, e os perfis **Auditor / ROC**, **Gerência** e **Contabilista certificado** descarregam o mesmo ficheiro com **Exportar os registos**.
+   ![Janela de exportação dos registos de controlo vista com o perfil Auditor, com o ano de 2025 já arquivado e o botão Exportar os registos](/images/accounting-pt/pacote-do-auditor/03-exportar-registos.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, a janela **Pacote do auditor** é a mesma (visto com um utilizador só com o perfil **Auditor / ROC** e outro só com o perfil **Contabilista certificado**, a quem a janela diz «Sem os salários: o seu perfil não os lê.»). Muda o ZIP: além do que o passo 4 descreve, traz a pasta **enterprise**, com a exportação dos relatórios do Enterprise para o mesmo período: **balancete.csv**, **razao_geral.csv**, **balanco_snc.csv**, **demonstracao_resultados_snc.csv**, **recebimentos_vencidos.csv** e **pagamentos_vencidos.csv**. O **balancete.csv** e o **razao.csv** da raiz continuam a ser os do fiscaldoo, com as colunas do **Balancete (formato PT)** e do razão deste produto. **Exportar os registos de controlo de um ano** abre a mesma janela.
+
+{/* Nota interna (lote EE-04, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee04_test, cópia da odoo20_ee_test com EE_FASE=construir, 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0172. Auditor: Gerar pacote (01/01/2026–11/11/2026) deu pacote_auditor_2026-01-01_2026-11-11.zip com saft/ (8 SAF-T), saft_gerados.csv, balancete.csv (Saldo inicial, Movimentos do período, Saldo final), razao.csv (Conta, Data, Diário, Documento, Descrição, Terceiro, Débito, Crédito, Saldo), registos_auditoria.csv, salarios_auditoria.csv e enterprise/ com os 6 ficheiros (cabeçalhos: «Balancete;Saldo;Débito;Crédito;Saldo», «Razão;Data;Parceiro;Moeda;Débito;Crédito;Saldo», «Balanço (SNC);Notas;Saldo», «Demonstração de Resultados por Naturezas (SNC);Notas;Valor», «Antiguidade de saldos a receber;…» e «Antiguidade de saldos a pagar;…», com as linhas «Recebimentos Vencidos» e «Pagamento Vencido»). ZIP apagado depois de lido. Exportar os registos de controlo de um ano (Auditor): «Este ano ainda não foi arquivado, por isso não há nada para descarregar. Peça ao administrador que o exporte.» para 2026. Ver reports/LOTE_EE-04.md. */}
+
+## Resultado esperado
+
+- Um ZIP com o nome **pacote_auditor_AAAA-MM-DD_AAAA-MM-DD.zip** (início e fim do período).
+- Cada geração fica registada no registo de auditoria (um registo de **exportação** do pacote e um de **descarga** por cada SAF-T incluído), com o código de controlo do ZIP.
+- Depois de exportado, o ano fica **Já arquivado**: voltar a exportar o mesmo ano entrega o mesmo ficheiro, não cria outro.
+
+## Notas importantes
+
+- **Só entram os SAF-T cujo período está todo dentro do pacote.** Com o período 01/01/2026 a 15/08/2026, o SAF-T de agosto (que acaba a 31/08) ficou de fora e o ZIP trouxe 7 ficheiros. O mês fica de fora **sem aviso nem erro**, e o balancete e o razão continuam a ir até 15/08: só os SAF-T ficam de fora. O mesmo vale para um início a meio do mês (um início a 05/01 deixa janeiro de fora). Para incluir um mês, o início e o fim do período têm de ser o primeiro e o último dia desse mês.
+- O pacote **não gera** SAF-T. Se faltar o de um mês, gere-o primeiro e volte a abrir o pacote.
+- **Salários.** O ficheiro **salarios_auditoria.csv** só vem para quem pode ler recibos: no exemplo, os perfis **Auditor / ROC** e **Gerência**. Com o perfil **Contabilista certificado**, a janela avisa antes e depois de gerar: «Sem os salários: o seu perfil não os lê.». No exemplo, o ZIP do Contabilista certificado tinha 4 ficheiros além dos SAF-T e os do Auditor e da Gerência tinham 5. Se o auditor precisar dos salários, gere o pacote com o perfil **Auditor / ROC** ou **Gerência**.
+  ![Janela do pacote do auditor com o perfil Contabilista certificado e o aviso Sem os salários: o seu perfil não os lê](/images/accounting-pt/pacote-do-auditor/05-sem-salarios.png)
+- **Os cabeçalhos das colunas dos CSV estão em inglês** (por exemplo, `timestamp`, `event`, `gross`) e os ficheiros usam o ponto e vírgula como separador e as datas no formato dd-mm-aaaa. Ao abrir no Excel, escolha o separador «ponto e vírgula».
+- **Não é uma certificação.** O pacote junta ficheiros; a conferência dos números (por exemplo, [lançamentos desequilibrados](/accounting-pt/lancamentos-desequilibrados) ou o [balancete](/accounting-pt/balancete)) continua a ser sua. <span className="fd-pending">Pendente de validação por contabilista certificado: se este conjunto de ficheiros chega para o que o revisor oficial de contas pede no vosso caso.</span>
+- **Os registos de controlo de um ano só se arquivam com o administrador**, e só para anos já terminados. Os perfis **Auditor / ROC**, **Gerência** e **Contabilista certificado** veem o menu e descarregam um ano já arquivado; num ano por arquivar, a janela não tem **Exportar os registos** (ver o problema frequente abaixo).
+
+## Problemas frequentes
+
+### «Não há nenhum SAF-T (PT) válido gerado para esta empresa e período»
+
+- **Causa:** o período escolhido (no exemplo, 01/09/2026 a 30/10/2026) não tem nenhum SAF-T gerado, ou o período não cobre um mês inteiro.
+- **O que fazer:** confirme em **SAF-T gerados**, gere o ficheiro em falta e abra de novo o pacote. A janela diz-o: «Gere-o primeiro no menu SAF-T e abra de novo este pacote.»
+
+### «A data de início não pode ser posterior à data de fim»
+
+- **Causa:** trocou as datas (testado com 31/08/2026 a 01/01/2026).
+- **O que fazer:** corrija o período e gere de novo.
+
+### «Este ano ainda não foi arquivado, por isso não há nada para descarregar. Peça ao administrador que o exporte.»
+
+- **Causa:** o ano ainda não foi arquivado, e só o administrador o arquiva. Com os perfis **Auditor / ROC**, **Gerência** e **Contabilista certificado**, a janela mostra esta frase por baixo de **Já arquivada** (desmarcada) e só tem o botão **Cancelar**.
+- **O que fazer:** peça ao administrador que exporte o ano. Depois, a mesma janela mostra **Já arquivada** marcada e o botão **Exportar os registos**, que descarrega o ficheiro.
+
+### «Escolha um ano que já tenha terminado»
+
+- **Causa:** pediu o ano em curso (testado com 2026). O ecrã diz: «2026 não é válido.»
+- **O que fazer:** escolha um ano anterior. Para um período do ano em curso, use o **Pacote do auditor**.
+
+{/* Nota interna (DOCS-046, DOC-0172, risco alto): visto em docs_demo_v3a5_test (master f16f4a3e) com demo.auditor (pacote, SAF-T gerados, ZIP aberto), demo.gestor_contabilidade (pacote sem o ficheiro dos salários; exportação recusada) e admin (exportação de 2025, ZIP aberto; segunda exportação devolve o mesmo ficheiro; 2026 recusado). O Auditor abre «Exportar os registos de controlo de um ano», mas o ecrã mostra «Já arquivada» desmarcada para 2025 e só o botão Cancelar (modo de consulta), apesar de o código prever o descarregamento de um ano já arquivado: defeito V3A5-08, por isso o artigo não promete o descarregamento ao Auditor. Menu «Relatório de auditoria dos salários» não aberto (outro artigo). A janela do pacote gerado tem o título «Odoo» (V3A5-09). */}
+
+{/* Nota interna (lote v23-M, master dbbb5ac5c, docs_demo_v23m_test, UX-130/UX-132): refeito no ecrã com utilizadores criados só com os perfis Auditor, Gerência, Contabilista certificado e Contabilista (DEC-1777). Auditor e Gerência: menu, pacote gerado e ZIP com 5 ficheiros e 8 SAF-T. Contabilista certificado: aviso «Sem os salários: o seu perfil não os lê.» e ZIP com 4 ficheiros. Contabilista: sem a aplicação Auditoria. Exportar os registos de controlo: recusa «Só o administrador…» provocada no ecrã com o Auditor e o Contabilista certificado. Capturas 01, 02 e 05 novas; 03 e 04 não foram refeitas. Auditoria docs-aud-v23m (mesma base): tudo confirmado no ecrã; a Gerência também recebe a recusa da exportação; captura 03 refeita com o administrador (texto da janela de hoje, 2025 já arquivado) e 04 refeita com o Auditor (a anterior mostrava a lista vazia da Empresa Teste Portugal). */}
+
+{/* Nota interna (lote v23-AB, master 97b34fac3, docs_demo_v23ab_test, porta 8480, utilizadores criados só com cada valor do campo Perfil): UX-137 com Auditor, Gerência, Contabilista certificado e administrador: 2025 por arquivar dá a frase «Este ano ainda não foi arquivado…» e só Cancelar; o administrador exportou 2025 (registos_controlo_3_2025.zip, 3 partes com 0 linhas) e depois os três perfis veem Já arquivada marcada e Exportação; o Auditor descarregou o mesmo ZIP. Captura 03 refeita com o Auditor. O Contabilista não tem a aplicação Auditoria. */}
+
+{/* Nota interna (lote v23-BE, depois do comboio 188 com o I18N-041 #4146, master 7a46de91a, docs_demo_v23be_test, porta 8504): o botão «Exportação» passou a «Exportar os registos». Por clique: com o Auditor (utilizador criado por RPC só com esse perfil), 2025 por arquivar dá a frase «Este ano ainda não foi arquivado…» e só Cancelar; o administrador exportou 2025 com Exportar os registos (registos_controlo_3_2025.zip); depois o Auditor viu Já arquivada marcada e Exportar os registos (captura 03 refeita). O resto do artigo não foi percorrido. */}

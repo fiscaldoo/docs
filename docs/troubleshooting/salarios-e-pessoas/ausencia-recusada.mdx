@@ -1,0 +1,58 @@
+---
+id: ausencia-recusada
+slug: /troubleshooting/ausencia-recusada
+title: A ausência não é aceite
+sidebar_label: A ausência não é aceite
+description: "Ponto de entrada: o que fazer quando um pedido de ausência ou de férias não se guarda ou não é aprovado, e para onde ir em cada caso."
+keywords: [ausência recusada, ausencia recusada, ausência não é aceite, pedido de férias recusado, não consigo pedir férias, erro de validação ausência]
+doc_id: DOC-0363
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 0289754a8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/o-meu-espaco/pedir-ferias, people/ausencias-e-presencas/saldos-de-ferias, troubleshooting/salarios-e-pessoas/ausencia-sobreposta, troubleshooting/salarios-e-pessoas/ausencia-com-dias-a-mais, troubleshooting/salarios-e-pessoas/ausencia-nao-avanca]
+---
+
+## Sintoma
+
+O pedido de ausência ou de férias não se guarda, fica parado em **Para Aprovar** ou aparece **Recusado**.
+
+## Mensagem
+
+Escolha a linha que corresponde ao que o ecrã diz:
+
+| O ecrã diz | Artigo |
+|---|---|
+| «Já tem uma ausência marcada que coincide com este período…» | [A ausência ou a presença sobrepõe-se a outro registo do mesmo dia](/troubleshooting/ausencia-sobreposta) |
+| «Apenas *N* dia(s) disponível(is)» ou «… não tem uma atribuição válida para o tipo de ausência …» | [A ausência tem mais dias do que os permitidos](/troubleshooting/ausencia-com-dias-a-mais) |
+| Não há botões **Aprovar** e **Recusar**, ou o estado não muda | [Não consigo aprovar, recusar ou fazer avançar a ausência](/troubleshooting/ausencia-nao-avanca) |
+| «Não pode pedir ausência num dia obrigatório.» | A empresa fechou esse dia a ausências: veja [Como configurar os tipos de ausência e os planos de férias](/people/configurar-ausencias) |
+| «Erro de Acesso Não tem permissão para ver este campo de «Trabalhador»…», ao escolher as datas | [Como pedir férias ou outra ausência](/people/pedir-ferias), em «Problemas frequentes» |
+| «não tem nenhum período aprovado de 10 dias úteis seguidos…» | É só um alerta, não bloqueia o pedido (ver [Como pedir férias ou outra ausência](/people/pedir-ferias)) |
+
+## Causas verificadas
+
+Cada linha da tabela foi provocada no ecrã com o perfil **Trabalhador**, e a ausência aprovada com o **Gestor de RH**. <span className="fd-pending">Pendente de validação no ecrã: a ausência já paga num recibo, a prova da ausência e o pedido de férias sem tipo, datas ou contrato, que têm artigo próprio fora deste lote.</span>
+
+## O que confirmar
+
+1. A mensagem completa, copiada do ecrã.
+2. O tipo de tempo, as datas e o estado do pedido.
+
+## Como resolver
+
+Siga o artigo da linha da tabela. Um pedido **Recusado** pelo RH fecha-se sem efeito: o RH pode carregar em **Voltar à aprovação** para o decidir de novo, ou o trabalhador faz outro pedido.
+
+## Resultado esperado
+
+O pedido guarda-se e fica **Para Aprovar** ou **Aprovado**.
+
+## Quando contactar o suporte
+
+A mensagem não está na tabela.
+
+## Informação a enviar
+
+O perfil, o trabalhador, o tipo de tempo, as datas e o texto completo da mensagem.

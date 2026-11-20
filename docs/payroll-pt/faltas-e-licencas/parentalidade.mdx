@@ -1,0 +1,143 @@
+---
+id: parentalidade
+slug: /payroll-pt/parentalidade
+title: Como tratar licenças parentais e a proteção na parentalidade
+sidebar_label: Licenças parentais e proteção
+description: Registar um caso de nascimento com os períodos de cada progenitor, a proteção de uma trabalhadora grávida, puérpera ou a amamentar, e os pedidos de tempo para a família.
+keywords: [licença parental, licenca parental, parentalidade, caso de nascimento, 120 dias, 150 dias, 42 dias, 28 dias, licença do pai, proteção na parentalidade, grávida, puérpera, amamentação, horário flexível, tempo parcial, subsídio parental]
+doc_id: DOC-0198
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/faltas-e-licencas/faltas, payroll-pt/faltas-e-licencas/baixas-por-doenca]
+---
+
+## Para que serve?
+
+Serve para registar um nascimento e os períodos de licença da mãe e do pai, com o produto a recusar o que o Código do Trabalho não permite. Ao confirmar, cria os pedidos de ausência de cada período. Os mesmos ecrãs guardam a proteção de uma trabalhadora grávida, puérpera ou a amamentar, e os pedidos de tempo para a família.
+
+**O que o produto não faz nestes ecrãs:** não calcula nem pede o subsídio parental e não comunica a licença à Segurança Social. O caso só tem os botões **Confirmar** e **Anular**. O subsídio parental é uma prestação da Segurança Social (Decreto-Lei n.º 91/2009). <span className="fd-pending">Pendente de validação por contabilista certificado: a forma de citar este decreto e o que a empresa tem de declarar.</span>
+
+## Quando utilizar?
+
+- Quando um trabalhador entrega a declaração de nascimento ou anuncia a licença.
+- Quando uma trabalhadora comunica que está grávida, é puérpera ou está a amamentar.
+- Quando um trabalhador pede redução do período semanal, tempo parcial ou horário flexível.
+
+## Onde encontrar?
+
+**Salários › Preparar › O que há para fazer este mês?**, na secção **Parentalidade e família**. Cada cartão mostra quantos registos há e abre a lista: **Casos de licença parental**, **Proteção na parentalidade** e **Pedidos de tempo para a família**.
+
+![Secção Parentalidade e família do painel do mês, com os três cartões e o número de registos de cada um](/images/payroll-pt/parentalidade/02-painel-parentalidade.png)
+
+## Antes de começar
+
+- O perfil **Gestor de RH**, sem acessos extra: os três procedimentos foram refeitos com um utilizador criado só com esse perfil. A ficha da mãe e a do pai têm de existir.
+  {/* Nota interna (auditoria docs-aud-v23al, 08/11/2026, master 8d5d6c606, docs_demo_v23al_test): os três procedimentos refeitos por clique com um utilizador só com o perfil Gestor de RH, a partir dos cartões do painel do mês: caso de nascimento (Opção curta, declaração do outro progenitor, «Declaração devida até» = nascimento + 7 dias, um período «Mãe, obrigatória após o parto») até Confirmado, só com Anular, e o pedido de ausência Para Aprovar, do tipo Licença parental (qualquer modalidade do art. 39.º), com Aprovar e Recusar; proteção Grávida guardada Ativo, com Anular; pedido de horário flexível recebido a 04/11/2026, A aguardar a resposta da entidade empregadora, prazo 24/11/2026. */}
+- A data do nascimento e a declaração entregue ao empregador.
+- As férias já aprovadas de cada progenitor: um período de licença não pode coincidir com elas.
+
+## Como utilizar
+
+### Registar o caso de nascimento
+
+<StepByStep>
+
+1. Em **Casos de licença parental**, carregue em **Novo** e preencha **Mãe (trabalhadora)**, **Pai (trabalhador)**, **Data do nascimento**, **Filhos nascidos** e **Opção**.
+2. Em **Declaração ao empregador**, escolha **Declaração conjunta (licença partilhada, art. 40.º/10)** ou **Declaração do outro progenitor (licença não partilhada, art. 40.º/12)**, e preencha **Declaração entregue em** e **Declaração (referência)**. O campo **Declaração devida até** é automático: a data do nascimento mais 7 dias.
+3. Se houver internamento da criança, preencha **Internamento da criança (dias)** e **Fim do internamento**.
+4. Em **Períodos**, acrescente uma linha por período, com **Trabalhador**, **Tipo de período**, **De** e **Até**. Confira **Duração total (dias)**, **Dias planeados** e **Dias por gozar**, que o produto calcula.
+5. Carregue em **Confirmar**. O caso passa a **Confirmado** e fica só com o botão **Anular**.
+6. Abra **Salários › Preparar › Ausências e presenças › Pedidos de ausência**. Há um pedido por período, no estado **Para Aprovar**, do tipo **Licença parental (qualquer modalidade do art. 39.º)**. Aprove-os como os outros pedidos: [Como tratar faltas e atrasos no recibo](/payroll-pt/faltas).
+
+</StepByStep>
+
+### Registar a proteção na parentalidade
+
+<StepByStep>
+
+1. Em **Proteção na parentalidade**, crie um registo novo e escolha o **Trabalhador**.
+2. Em **Situação**, escolha **Grávida**, **Puérpera** ou **Amamentação**.
+3. Preencha **De** e **Declaração (referência)**. Escreva só a referência da declaração, nunca dados clínicos. **Até** pode ficar vazio enquanto a situação durar.
+4. Guarde. O registo fica **Ativo** e tem o botão **Anular**.
+
+</StepByStep>
+
+### Registar um pedido de tempo para a família
+
+<StepByStep>
+
+1. Em **Pedidos de tempo para a família**, crie um registo novo e escolha o **Trabalhador**.
+2. Em **Pedido**, escolha **Redução do período semanal (art. 54.º)**, **Tempo parcial (art. 55.º)** ou **Horário flexível (art. 56.º)**.
+3. Preencha **Data de nascimento do filho**, **Pedido recebido em**, **Começa em** e **Termina em**.
+4. Confira **Estado** e **Próximo prazo**. Um pedido recebido a 04/11/2026 fica **A aguardar a resposta da entidade empregadora**, com prazo a 24/11/2026.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, as licenças de parentalidade pedem-se da mesma maneira: com o perfil **Gestor de RH**, **Salários › Preparar › Ausências e presenças › Pedidos de ausência** tem os botões **Novo** e **Nova ausência em grupo**, e o pedido novo abre com o mesmo separador **Lei portuguesa: comunicação, prova e efeito**. A única aplicação de salários de uma empresa portuguesa continua a ser a **Salários** do fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
+
+{/* Nota interna (lote EE-07, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee07b_test: cópia da odoo20_ee_test com a aplicação de salários do Enterprise (hr_payroll) instalada e o código de master; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado: Gestor de RH em Pedidos de ausência (lista com Novo e Nova ausência em grupo; formulário novo com o separador Lei portuguesa e os mesmos campos; sem o botão dos recibos da Folha de Salários do Enterprise). Caminhos do artigo conferidos com o verificador do test_doc_paths na mesma cópia (0 erros). Ver reports/LOTE_EE-07.md. */}
+
+## Resultado esperado
+
+Um exemplo com nascimento a 11/01/2027, **Opção longa** e um filho deu **Duração total (dias)** 150, **Dias planeados** 150 e **Dias por gozar** 0:
+
+| Progenitor | Tipo de período | De | Até | Dias do caso | Dias do pedido de ausência |
+|---|---|---|---|---|---|
+| Mãe | **Mãe, obrigatória após o parto (art. 41.º/2)** | 11/01/2027 | 21/02/2027 | 42 | 30 |
+| Mãe | **Licença inicial (art. 40.º)** | 22/02/2027 | 09/06/2027 | 108 | 78 |
+| Pai | **Pai, obrigatória (art. 43.º/1)** | 12/01/2027 | 18/01/2027 | fora dos 150 | 5 |
+| Pai | **Pai, obrigatória (art. 43.º/1)** | 01/02/2027 | 21/02/2027 | fora dos 150 | 15 |
+
+O caso conta dias seguidos. O pedido de ausência conta dias de trabalho do horário. Por isso os números são diferentes, e os dois estão certos.
+
+## Notas importantes
+
+O que a lei fixa, e o que o ecrã mostrou:
+
+| Regra | Artigo | No ecrã |
+|---|---|---|
+| Licença inicial de 120 ou 150 dias seguidos | Código do Trabalho, art. 40.º/1 | **Opção curta** dá 120 e **Opção longa** dá 150 |
+| Mais 30 dias por cada gémeo além do primeiro | art. 40.º/6 | **Opção curta** com 2 filhos dá 150 |
+| 42 dias seguidos da mãe, a seguir ao parto | art. 41.º/2 | Sem esse período, o caso é recusado |
+| 28 dias do pai nos 42 dias seguintes ao nascimento, 7 deles logo a seguir | art. 43.º/1 | Fora desse prazo, ou com menos dias, é recusado |
+| Resposta do empregador em 20 dias ao pedido de tempo | art. 57.º/3 | **Próximo prazo**. O estado **Aceite por silêncio (art. 57.º/8)** é o que o produto tem para a falta de resposta |
+
+Sobre a proteção, o art. 63.º do Código do Trabalho pede o parecer prévio da entidade competente para o despedimento de trabalhadora grávida, puérpera ou lactante, ou de trabalhador em licença parental. Este artigo não percorre a cessação.
+
+Toda a dúvida sobre estes prazos num caso concreto é para o contabilista certificado ou para o jurista da empresa.
+
+## Problemas frequentes
+
+- **Sintoma:** «Há 7 dias sem licença entre 21/02/2027 e 01/03/2027. O que aconteceu: a licença inicial é consecutiva (art. 40.º/1). Como resolver: feche a lacuna ou declare a suspensão pelo internamento (art. 40.º/14) no período seguinte.»
+
+  ![Janela Erro de Validação ao confirmar um caso com 7 dias sem licença](/images/payroll-pt/parentalidade/01-recusa-dias-sem-licenca.png)
+
+  **Solução:** acerte as datas para os períodos ficarem seguidos.
+- **Sintoma:** «Um trabalhador já tem uma ausência marcada que coincide com este período: … de 03/08/2026 até 14/08/2026 - Aprovado».
+  **Solução:** anule essas férias e marque-as para depois da licença. O caso fica em **Rascunho** até deixar de haver sobreposição.
+- **Sintoma:** «O caso não tem períodos. O que aconteceu: não há nada a confirmar. Como resolver: registe os períodos de cada progenitor.»
+  **Solução:** acrescente os períodos em **Períodos**.
+- **Sintoma:** «A mãe não tem o período dos 42 dias obrigatórios após o parto (art. 41.º/2). Como resolver: registe um único período «Mãe, obrigatória após o parto».»
+  **Solução:** acrescente esse período, a começar no dia do nascimento.
+- **Sintoma:** «Os períodos têm 214 dias e a licença deste caso tem 150 (art. 40.º). Como resolver: encurte os períodos ou registe os gémeos, o internamento ou os períodos exclusivos que acrescentam dias.»
+  **Solução:** encurte os períodos, ou corrija os dados do caso.
+- **Sintoma:** «A licença obrigatória do pai tem 7 dias e o art. 43.º pede 28 (28 dias, mais 2 por cada gémeo além do primeiro). Como resolver: registe exatamente esses dias, em períodos que não se sobreponham.»
+  **Solução:** acerte os períodos do pai para somarem o número indicado.
+- **Sintoma:** ao guardar um período do pai, «A licença obrigatória do pai goza-se nos 42 dias seguintes ao nascimento (art. 43.º/1): de 12/01/2027 a 22/02/2027. Como resolver: corrija as datas.»
+  **Solução:** ponha os períodos do pai dentro das datas indicadas.
+- **Sintoma:** em **Proteção na parentalidade**, «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+  **Solução:** falta a **Declaração (referência)**. Escreva a referência do documento, nunca dados clínicos.
+- **Sintoma:** «O que aconteceu: o pedido foi recebido em 04/11/2026 e a lei exige 30 dias antes do início (arts. 54.º/6 e 57.º/1). Como resolver: comece em 04/12/2026 ou mais tarde.»
+  **Solução:** corrija **Começa em**.
+
+As ausências por doença têm artigo próprio: [Como tratar uma baixa por doença ou acidente de trabalho](/payroll-pt/baixas-por-doenca).
+
+{/* Nota interna (lote v23-AM, DOCS-069 #4052, master 8d5d6c606, docs_demo_v23am_test, porta 8502): passos refeitos com um utilizador só com o Perfil Gestor de RH (perfil.rh, DEC-1777). Por clique: painel com a secção Parentalidade e família e os três cartões; formulário Novo do caso (campos e colunas dos períodos iguais aos do texto); Confirmar (Confirmado, só Anular); Pedidos de ausência com os 4 pedidos Para Aprovar (30, 78, 5 e 15 dias); proteção de Carla Sofia Mendes do Novo ao Ativo, com a mensagem dos campos obrigatórios sem a referência; formulário do pedido de tempo. Pela sessão do mesmo utilizador (RPC, o editor de linhas e o campo Pedido não se preenchem pela ferramenta): o caso de 11/01/2027 com os 4 períodos e o pedido de Gabriela Sousa Reis (horário flexível, recebido a 04/11/2026: A aguardar a resposta da entidade empregadora, prazo 24/11/2026; com início a 20/11/2026, a recusa dos 30 dias). */}
+
+{/* Nota interna (DOCS-046, lote v13-A, 04/11/2026, master 56504fe86, docs_demo_v13a_test, porta 8250): perfil RH. Auditoria 05/11, master f671d6842 (PAY-101): caso novo percorrido por clique do Novo aos pedidos de ausência. Mensagens da sobreposição com férias e dos 214 dias vêm da v9-C. */}

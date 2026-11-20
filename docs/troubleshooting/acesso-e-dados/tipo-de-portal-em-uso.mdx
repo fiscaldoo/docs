@@ -1,0 +1,67 @@
+---
+id: tipo-de-portal-em-uso
+slug: /troubleshooting/tipo-de-portal-em-uso
+title: Não consigo alterar ou apagar um tipo de portal do cofre
+sidebar_label: Tipo de portal em uso
+sidebar_position: 16
+description: Um tipo de portal que ainda tem entradas ou permissões não muda de código nem se arquiva ou apaga. Passe-as antes para outro tipo.
+keywords: [tipo de portal, cofre, arquivar, apagar, eliminar, código do portal, tipos de portal, entradas do cofre, nao consigo alterar]
+doc_id: DOC-0429
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/seguranca-e-arquivo/cofre-de-credenciais, troubleshooting/acesso-e-dados/cofre-sem-permissao]
+---
+
+## Sintoma
+
+Em **Contabilidade › Configurar › Cofre de credenciais › Tipos de portal** (fora do administrador, só com o modo programador ativo), o **Código** de um tipo não se consegue alterar, ou **Arquivar** e **Eliminar** são recusados.
+
+## Mensagem
+
+Copiadas do ecrã, com o perfil de administrador, num tipo com uma entrada no cofre, em **⋮**:
+
+- Ao carregar em **Arquivar** e confirmar:
+  > «Este tipo de portal ainda tem entradas ou permissões no cofre, por isso não pode ser arquivado. Apague-as ou passe-as para outro tipo primeiro.»
+  ![Recusa de Arquivar um tipo de portal com entradas](/images/troubleshooting/tipo-de-portal-em-uso/01-arquivar.png)
+- Ao carregar em **Eliminar** e confirmar:
+  > «Este tipo de portal ainda tem entradas ou permissões no cofre, por isso não pode ser apagado. Apague-as ou passe-as para outro tipo primeiro.»
+
+No ecrã, o **Código** de um tipo com entradas fica só de leitura e não há mensagem. Quem altera o tipo por uma integração recebe esta recusa, que veio de uma chamada direta:
+
+> «O código de um tipo de portal não pode mudar enquanto houver entradas ou permissões que o usem. Crie um tipo novo com o novo código e passe as entradas para ele.»
+
+## Causas verificadas
+
+- **O tipo tem entradas no cofre.** A coluna **Entradas** da lista mostra-o. Se o tipo mudasse ou desaparecesse, essas entradas ficavam sem portal.
+- **O tipo tem permissões.** A recusa é a mesma, mesmo sem entradas. <span className="fd-pending">Pendente de validação no ecrã: este caso.</span>
+
+## O que confirmar
+
+1. A coluna **Entradas** em **Tipos de portal**.
+2. Se precisa mesmo de mudar o código: **Portal**, **Endereço de entrada** e **Sequência** não dependem dele.
+
+## Como resolver
+
+Quem faz: o administrador.
+
+1. Em **Tipos de portal**, carregue em **Novo** e preencha **Portal** e o novo **Código**.
+2. Em cada entrada do cofre, escolha o tipo novo no campo **Portal**, ou apague a que já não faz falta. Faça o mesmo às permissões. Veja [Como guardar senhas de portais no cofre de credenciais](/administration/cofre-de-credenciais).
+3. Volte ao tipo antigo e carregue em **⋮ › Arquivar** ou **⋮ › Eliminar**. Depois de passar a entrada, confirme **Eliminar** e o tipo sai da lista.
+
+## Resultado esperado
+
+O tipo antigo desaparece da lista, e a coluna **Entradas** do tipo novo conta as entradas passadas.
+
+## Quando contactar o suporte
+
+- A coluna **Entradas** mostra zero, não há permissões e a recusa continua.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com o nome do tipo de portal, sem qualquer senha.
+
+{/* Nota interna (DOCS-046, v13-RESTO): 2 de 3 mensagens por clique (ERR-1512, ERR-1513); ERR-1511 por RPC: o campo é só de leitura no ecrã. Tipo antigo criado por clique; tipo novo e entrada criados por RPC; a passagem da entrada foi por RPC (a automação não fechou a escolha no campo Portal, editável no formulário); Eliminar por clique. Permissões não testadas: a causa vem da própria frase. */}

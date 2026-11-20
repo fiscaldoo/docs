@@ -1,0 +1,84 @@
+---
+id: marcar-uma-encomenda-como-faturada
+slug: /fiscal-core/marcar-uma-encomenda-como-faturada
+title: Como fechar a faturação de uma encomenda que não vai ter mais faturas
+sidebar_label: Marcar uma encomenda como faturada
+sidebar_position: 14
+description: Marcar como faturada uma encomenda de venda que já não vai ter faturas no fiscaldoo (faturada no programa anterior ou fora do sistema), com o motivo no histórico e sem mudar nada de fiscal.
+keywords: [marcar como faturada, encomenda faturada, fechar a faturação, encomenda para faturar, faturada fora do sistema, programa anterior, ordem de venda, motivo]
+doc_id: DOC-0432
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master a67618a71)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/emitir-uma-fatura-certificada, migration-toolkit/importar/importar-documentos-em-aberto, administration/utilizadores-e-permissoes/perfis-e-permissoes]
+---
+
+## Para que serve?
+
+Uma encomenda de venda confirmada fica **Para Faturar** até ter faturas. Se ela já não vai ter nenhuma fatura no fiscaldoo, porque foi faturada no programa anterior ou fora do sistema, pode fechar a faturação da encomenda: deixa de aparecer como por faturar, o motivo fica no histórico e nada de fiscal muda.
+
+## Quando utilizar?
+
+- A encomenda foi faturada no programa que usava antes do fiscaldoo.
+- A encomenda foi faturada fora do sistema e a fatura não vai ser emitida aqui.
+- **Não** use para evitar uma fatura que ainda tem de emitir: se a venda está por faturar, emita a fatura ([Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada)).
+
+## Onde encontrar?
+
+**Vendas › Ordens › Orçamentos**: abra a encomenda confirmada e carregue em **Marcar como faturada**, no topo.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**, ou é o administrador do sistema. Com utilizadores criados só com cada valor do campo **Perfil**, o botão não aparece ao **Administrativo** nem ao **Contabilista**, e a **Gerência** e o **Auditor / ROC** não têm a aplicação **Vendas**.
+- A encomenda está confirmada (**Ordem de Vendas**) e não tem faturas em rascunho.
+- Tenha à mão o motivo, por exemplo o número da fatura do programa anterior.
+- Feito a 8 de novembro de 2026 na `Empresa Demonstração, Lda`, com a encomenda `S00001` (369,00 €).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Vendas › Ordens › Orçamentos**. A lista abre com o filtro **Os meus Orçamentos**: tire-o (o **x** do filtro) para ver as encomendas dos colegas.
+2. Abra a encomenda, por exemplo `S00001`. No topo estão **Criar Fatura** e **Marcar como faturada**.
+3. Carregue em **Marcar como faturada**. Abre a janela com o mesmo nome: «Use isto quando não há mais faturas a emitir para a encomenda (por exemplo foi faturada fora do sistema). O motivo, quem o fez e quando ficam no histórico da encomenda. Nada de fiscal na encomenda muda.», a **Encomenda** e o **Estado de faturação** (**Para Faturar**).
+   ![Janela Marcar como faturada com o texto de ajuda, a encomenda S00001, o estado de faturação Para Faturar, o campo Motivo e os botões Marcar como faturada e Cancelar](/images/fiscal-core/marcar-uma-encomenda-como-faturada/01-assistente.png)
+4. Em **Motivo**, escreva porque não há mais faturas, com pelo menos 10 caracteres. No exemplo: «Faturada no programa anterior antes da mudança para o fiscaldoo (FT A/2026/118).»
+5. Carregue em **Marcar como faturada**, no fundo da janela.
+
+</StepByStep>
+
+## Resultado esperado
+
+- A janela fecha e o topo da encomenda deixa de mostrar **Criar Fatura** e **Marcar como faturada**. **Marcar como faturada** continua no menu da engrenagem, mas numa encomenda já marcada é recusado: «… já está marcada como faturada, por isso não é preciso fazer mais nada. Escolha outra encomenda.»
+- No histórico da encomenda fica a mensagem «Marcada como faturada por …. Motivo: …», com o seu nome e a hora. Logo abaixo aparece uma segunda linha do mesmo momento: «Faturação encerrada».
+- No [registo de auditoria](/administration/registo-de-auditoria) fica um registo do tipo **Encomenda marcada como faturada**.
+- O número, as linhas e os valores da encomenda não mudam.
+
+## Notas importantes
+
+- **Só o administrador desfaz.** Depois de marcada, o administrador do sistema vê o botão **Reabrir a faturação**, que repõe **Criar Fatura** e **Marcar como faturada** e deixa no histórico a linha «Faturação reaberta». O **Contabilista certificado** não tem esse botão.
+
+## Problemas frequentes
+
+### «Indique o motivo com pelo menos 10 caracteres…»
+
+- **Causa:** o **Motivo** está vazio ou é curto demais.
+- **O que fazer:** carregue em **Fechar** e escreva um motivo que outra pessoa perceba daqui a um ano, por exemplo o número da fatura do programa anterior.
+
+### «S00001 tem faturas ainda em rascunho…»
+
+- **Causa:** a encomenda tem uma fatura em rascunho, por exemplo criada com **Criar Fatura** e nunca emitida. A mensagem completa: «S00001 tem faturas ainda em rascunho. Reveja-as e registe ou elimine cada uma primeiro, para não ficar nenhuma esquecida.»
+  ![Janela Operação inválida: S00001 tem faturas ainda em rascunho; reveja-as e registe ou elimine cada uma primeiro](/images/fiscal-core/marcar-uma-encomenda-como-faturada/02-faturas-em-rascunho.png)
+- **O que fazer:** abra a fatura em rascunho. Se a venda é para faturar aqui, emita-a; se não, elimine o rascunho. Depois volte à encomenda.
+
+### Não vejo o botão Marcar como faturada
+
+- **Causa:** o seu perfil não é **Contabilista certificado** nem é o administrador, ou a encomenda ainda é um orçamento (não confirmada).
+- **O que fazer:** confirme a encomenda ou peça a quem tem o perfil certo. Veja [Como dar a cada utilizador o perfil certo](/administration/perfis-e-permissoes).
+
+{/* Nota interna (lote v23-V2, #4052 DOCS-069, tema que só a pasta congelada tinha: Contabilidade/marcar-uma-encomenda-como-faturada.md; master cebcb888d, docs_demo_v23vinv_test, porta 8464). Percorrido por clique: o administrador confirmou a S00001 (orçamento da demonstração) e marcou-a; reabriu com «Reopen Invoicing»; o utilizador criado só com o Perfil Contabilista certificado marcou-a até ao fim (mensagem no histórico) e não tem «Reopen Invoicing»; os perfis Administrativo e Contabilista (utilizadores só com esse valor do campo Perfil, DEC-1777) abrem a encomenda sem o botão; Gerência e Auditor / ROC não têm a aplicação Vendas (auditoria docs-aud-v23v2, que também viu as linhas «Invoicing closed» e «Invoicing reopened» do FAT-153 e o tipo Encomenda marcada como faturada no Registo de auditoria). Falhas provocadas no ecrã: motivo «Só fora» (7 caracteres) e uma fatura em rascunho criada com «Criar Fatura» (Fatura normal › Criar Rascunho): mensagens citadas. Com a fatura em rascunho o estado passa a «Totalmente Faturado», mas o botão continua visível e recusa. Defeitos do produto (relatório LOTE_V23-V2): o botão «Reopen Invoicing» e as mensagens «Invoicing closed» e «Invoicing reopened» no histórico estão em inglês. A fatura em rascunho ficou na cópia. */}
+
+{/* Nota interna (lote v23-AN, depois do comboio 174 com o FAT-153, master a67618a71, docs_demo_v23an_test): encomenda S00005 (cópia da S00001, 369,00 €) criada e confirmada por RPC com o administrador, só para este artigo. Por clique: o utilizador só com o perfil Contabilista certificado marcou-a com o motivo do passo 4; histórico «Marcada como faturada por … Motivo: …» e «Faturação encerrada»; sem «Reabrir a faturação». O administrador viu «Reabrir a faturação», carregou e o histórico mostrou «Faturação reaberta», com Criar Fatura e Marcar como faturada de volta. A ação «Encerrar a faturação» (FAT-153) não aparece no menu Ações do formulário nem da lista, com o administrador nem com o Contabilista certificado: o artigo não a cita. */}

@@ -1,0 +1,121 @@
+---
+id: data-anterior-ao-ultimo-documento
+slug: /troubleshooting/data-anterior-ao-ultimo-documento
+title: A fatura não pode ter data anterior à do último documento da série
+sidebar_label: Data anterior à do último documento
+description: Porque a fatura ou o recibo é recusado com uma data anterior à do último documento da série, que data usar e o que fazer quando a série tem um documento com data futura.
+keywords: [data anterior, data anterior ao último documento, data anterior ao ultimo documento, ordem cronológica, ordem cronologica, numera documentos por ordem cronológica, fatura com data antiga, fatura de ontem, faturar com data passada, mudar data da fatura, recibo data anterior, data do recibo, recibo com data futura, data futura, série bloqueada, serie bloqueada, Operação inválida, operacao invalida, corrija a data]
+doc_id: DOC-0331
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/emitir-uma-fatura-certificada, fiscal-core/recibos-e-cobrancas/emitir-um-recibo, fiscal-core/certificacao/series-documentais, fiscal-core/faturacao/anular-uma-fatura]
+---
+
+## Sintoma
+
+Ao carregar em **Confirmar** numa fatura (ou em **Criar Pagamento** ao emitir um recibo), abre-se a janela **Operação inválida** e o documento não é emitido. A fatura fica em **Rascunho**; no recibo, a janela **Emitir recibo** continua aberta.
+
+## Mensagem
+
+Numa fatura com a **Data da Fatura** 18/09/2026, quando a última fatura da série é a `FT D26/30`, de 19/09/2026, com o perfil **Administrativo**:
+
+> «O documento “(ainda sem número)” tem a data *18/09/2026*, anterior ao último documento já numerado na série “*FT D26*” (*FT D26/30*, datado de *19/09/2026*). Uma série certificada numera documentos por ordem cronológica; corrija a data ou use uma data igual ou posterior a *19/09/2026*.»
+
+![Janela Operação inválida: a fatura com data 18/09/2026 é anterior ao último documento da série FT D26, a FT D26/30, datada de 19/09/2026](/images/troubleshooting/data-anterior-ao-ultimo-documento/01-data-anterior-ft.png)
+
+No recibo a mensagem é a mesma, com o último recibo da série. No exemplo, a 31/10/2026, um recibo com a **Data de Pagamento** de ontem, depois de outro recibo emitido hoje:
+
+> «O documento “(ainda sem número)” tem a data *30/10/2026*, anterior ao último documento já numerado na série “*RG D26*” (*RG D26/16*, datado de *31/10/2026*). Uma série certificada numera documentos por ordem cronológica; corrija a data ou use uma data igual ou posterior a *31/10/2026*.»
+
+![Janela Operação inválida ao emitir um recibo com a data de 30/10/2026, porque o último recibo da série RG D26, o RG D26/16, tem a data de 31/10/2026](/images/troubleshooting/data-anterior-ao-ultimo-documento/02-recibo-data-anterior.png)
+
+Se o último documento da série tem uma data posterior a hoje, a mensagem não diz «igual ou posterior»: termina em «… corrija a data ou use uma data posterior a *06/11/2026*.» (ver «A série tem um documento com data futura»).
+
+As duas mensagens foram provocadas na base de demonstração. As partes em itálico mudam com o documento.
+
+## Causas verificadas
+
+- **Já há um documento mais recente na mesma série.** Os números de uma série seguem a ordem das datas: a fatura 33 não pode ter data anterior à 32. O fiscaldoo compara a data do documento novo com a do último documento numerado da série, qualquer que seja o seu estado (também conta um documento anulado).
+- **No recibo, a data é a Data de Pagamento.** Os recibos têm a sua própria série (`RG`). A mensagem nomeia o último recibo da série e a data dele: é essa data que conta, e não a da fatura.
+- **Um documento com data futura bloqueia a série.** Depois de emitido um documento com data posterior a hoje, o fiscaldoo só aceita na série documentos com data posterior à desse documento. É uma regra do fiscaldoo: o Despacho n.º 8632/2014, ponto 3.4.2, diz que não pode ser emitido um novo documento «com a data atual ou anterior», e o fiscaldoo recusa também a própria data futura, até esse dia passar. <span className="fd-pending">Pendente de validação por contabilista certificado: se, no próprio dia da data futura, a lei deixa emitir um documento com essa data (Despacho n.º 8632/2014, ponto 3.4.2).</span> Numa fatura, o fiscaldoo avisa antes de emitir (ver «A série tem um documento com data futura»). Num recibo, a janela **Emitir recibo** não aceita uma **Data de Pagamento** posterior a hoje. Na demonstração, a 31/10/2026, com 01/11/2026: «A data do recibo (01/11/2026) é posterior a hoje (31/10/2026). Um recibo regista um pagamento já recebido: use a data de hoje ou uma anterior. Depois de emitido, a série fica fechada a recibos datados até 01/11/2026, e anular o recibo não a reabre (o número e a data de um documento anulado ficam na série). Nada foi registado.» Anular um documento com data futura não desbloqueia a série: o documento anulado mantém o número e a data, e continua a contar.
+
+{/* Nota interna (reconfirmação do Gestor, 31/10/2026, master ab9649f2e, base docs_demo_recon_test, cópia da base-mãe, perfil Faturação): o P-E1-01 está resolvido em master: «Emitir recibo» com a Data de Pagamento 01/11/2026 na FT D26/31 recusou com a mensagem citada e não registou nada. O recibo da FT D26/32 com a data de hoje foi emitido (RG D26/16); o da FT D26/30 com 30/10/2026 deu a mensagem citada em «Mensagem» (captura 02 refeita: a antiga, de um recibo depois de outro com data futura, dizia «igual ou posterior» e nomeava a fatura, o que o produto já não faz). Depois da FT D26/33 emitida com Confirmar datas e emitir a 06/11/2026, a fatura com a data de hoje recebeu «… (FT D26/33, datado de 06/11/2026). … use uma data posterior a 06/11/2026.» e a de 06/11/2026 a recusa da data futura. */}
+
+{/* Nota interna (segundo olhar, correções finais antes da junção, 31/10/2026, master ab9649f2e, base docs_demo_corfin_test, perfil Faturação, por clique): o RG D26/16 de hoje (recibo da FT D26/31) e depois a FT D26/30 com 30/10/2026: a mensagem é letra a letra a citada em «Mensagem», e a captura nova saiu igual, byte a byte, à 02-recibo-data-anterior.png. A recusa da Data de Pagamento 01/11/2026 é letra a letra a citada em «Causas verificadas». O caso da FT D26/33 com data futura não foi refeito nesta passagem. */}
+
+{/* Nota interna (fix-docs-008, NC-D8-08, 31/10/2026, master 511b97687, base docs_demo_fix008_test, cópia da base-mãe, perfil Faturação, por clique): numeração alinhada com a regra «um número, um documento» do guia editorial (§7). Rascunho ao Cliente Sem NIF Exemplo (1 [KIT-CAN] Kit de canetas, 10,00 € + 23 %) com 29/10/2026: Confirmar deu a mensagem citada em «Mensagem» (captura 01 refeita); com 30/10/2026, Confirmar emitiu a FT D26/33. A data futura (FT D26/41, 06/11/2026) e a Data de entrega são as do percurso do DOC-0022 (ronda única, base docs_demo_ronda_test), não refeitas aqui. */}
+
+## O que confirmar
+
+1. A data que escreveu. Muitas vezes é um engano de dia ou de mês.
+2. A data e o número do último documento da série: estão na própria mensagem (no exemplo, `FT D26/30`, de 19/09/2026).
+3. Se esse último documento tem uma data futura. Se tem, a série fica parada até essa data (ver «Como resolver»).
+4. Se o documento que quer emitir corresponde a uma venda que aconteceu antes, ou a um documento que foi passado à mão quando o programa não estava disponível. São casos diferentes (abaixo).
+
+## Como resolver
+
+### A data estava errada, ou a venda é de hoje
+
+1. Carregue em **Fechar**. A fatura continua em **Rascunho**, com tudo o que escreveu.
+2. Em **Data da Fatura**, escolha a data indicada na mensagem ou uma posterior. Normalmente é a data de hoje.
+3. Carregue em **Confirmar**. A fatura é emitida com o número seguinte da série.
+
+No recibo, carregue em **Fechar**, corrija a **Data de Pagamento** na janela **Emitir recibo** e carregue em **Criar Pagamento**.
+
+**Quem faz:** o mesmo perfil que está a emitir (**Administrativo** ou **Contabilista**).
+
+### A venda ou o pagamento aconteceram antes
+
+A data da fatura é a data em que a emite, não a data da venda. Emita-a com a data de hoje e, quando a venda foi anterior, indique o dia da entrega dos bens (ou da prestação do serviço) em **Data de entrega**, no separador **Outra Informação** da fatura. A lei pede essa data na fatura sempre que não coincide com a data de emissão (CIVA, art. 36.º, n.º 5, alínea f)). A **Data de entrega** sai no PDF, ao lado da **Data da fatura**: na demonstração, uma fatura emitida a 30/10/2026 com a **Data de entrega** 28/10/2026 mostra as duas datas no PDF (ver [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada), passo 5).
+
+A fatura tem um prazo para ser emitida: na regra geral, até ao 5.º dia útil seguinte ao momento em que o imposto é devido, que normalmente é a entrega dos bens ou a prestação do serviço (CIVA, art. 36.º, n.º 1, alínea a)). O IVA entra no período da declaração periódica que corresponde à data da fatura, se ela for emitida dentro do prazo. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo de emissão e exceções, exigibilidade do IVA quando a fatura é emitida fora do prazo (CIVA, art. 8.º) e a regra da data de entrega na fatura (CIVA, art. 36.º, n.º 5, alínea f)).</span>
+
+Num recibo, use a data em que o dinheiro chegou, desde que não seja anterior ao último recibo da série. Se for, emita-o com a data indicada na mensagem e escreva a data real do pagamento no **Memorando**. <span className="fd-pending">Pendente de validação por contabilista certificado: recibo emitido depois da data do pagamento.</span>
+
+### O documento foi passado à mão quando o programa não estava disponível
+
+Um documento manual não se reproduz com outra data numa série normal: integra-se numa série de recuperação, com a data e o número do documento em papel. Quem o faz é o Contabilista certificado. Numa fatura nova, no separador **Outra Informação**, o grupo **RECUPERAÇÃO (DOCUMENTO MANUAL OU DUPLICADO)** tem os campos **Número do original manual** e **Data do documento manual**. A ajuda do primeiro diz que, ao preenchê-lo, o documento «passa a ser um documento de recuperação, numerado pela série de recuperação anual»; a do segundo diz que a data do documento manual «tem de ser a data deste documento». Com o perfil **Administrativo**, o grupo aparece sem os dois campos. <span className="fd-pending">Pendente de validação no ecrã: a integração até à emissão não foi feita, porque a base de demonstração não tem série de recuperação ativa.</span>
+
+### A série tem um documento com data futura
+
+O último documento da série tem uma data posterior a hoje (por exemplo, uma fatura emitida com **Confirmar datas e emitir** e a data da próxima semana). O fiscaldoo só aceita na série documentos com data posterior à desse documento: no próprio dia da data futura, essa data ainda é recusada. É uma regra do fiscaldoo (ver «Causas verificadas»). <span className="fd-pending">Pendente de validação por contabilista certificado: a recusa da própria data futura (Despacho n.º 8632/2014, ponto 3.4.2).</span> Na demonstração, a 31/10/2026, depois da `FT D26/41` emitida com a data 06/11/2026, a fatura com a data de hoje foi recusada com «… (FT D26/41, datado de 06/11/2026). Uma série certificada numera documentos por ordem cronológica; corrija a data ou use uma data posterior a 06/11/2026.», e a fatura com 06/11/2026 também: «… Depois de um documento com data futura, a série só aceita documentos com data posterior (Despacho 8632/2014, 3.4.2). Dê a este documento uma data posterior a 06/11/2026 ou use outra série.»
+
+{/* Nota interna (correção da aud-v2e, 30/10/2026): o texto dizia «essa data ou posterior». O ecrã recusa a data igual (P-E1-20, reproduzido pelo produtor e pelo auditor do E1b a 30/10/2026) e a DEC-1361 mantém essa regra, que é a resposta escrita do CC (DEC-986, saf-07). A leitura do Despacho 8632/2014, 3.4.2, está de novo com o CC (pergunta 2 da aud-v2e): se a resposta mudar, rever esta frase e o DOC-0344. */}
+
+Numa fatura com data futura, o fiscaldoo mostra o aviso no topo da fatura e, ao carregar em **Confirmar**, recusa com «A data do documento “(ainda sem número)” (*04/01/2027*) é posterior à data do sistema (*29/10/2026*). Depois de emitida, a série deste documento fica fechada a documentos com data igual ou anterior a *04/01/2027*. …». Para emitir assim, a fatura tem o botão **Confirmar datas e emitir**, e a confirmação fica no registo de auditoria com o nome de quem a fez. Use-o só quando a data futura é mesmo a certa.
+
+![Janela Operação inválida: a data do documento, 04/01/2027, é posterior à data do sistema, 29/10/2026](/images/troubleshooting/data-anterior-ao-ultimo-documento/03-fatura-data-futura.png)
+
+Se a série já tem um documento com data futura:
+
+- **Não** emita documentos com a data futura que a mensagem indica, só para a série andar: estaria a emitir outro documento com data errada.
+- Não anule o documento com data futura para desbloquear a série: na demonstração, depois de anulado, a recusa manteve-se igual.
+- Peça ao perfil **Contabilista certificado** que decida, com o contabilista certificado da empresa, se espera pelo dia indicado ou se o documento errado se corrige por outra via (nota de crédito ou anulação, com o motivo). <span className="fd-pending">Pendente de validação por contabilista certificado: o que fazer aos documentos do período em que a série fica parada.</span>
+
+Para corrigir um documento já emitido, veja [Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado). Para anular, veja [Como anular uma fatura ou outro documento certificado](/fiscal-core/anular-uma-fatura).
+
+<span className="fd-pending">Pendente de validação no ecrã: a mesma regra vale para as guias de transporte (série GT) e, numa série que continua a de um programa anterior, para a data do último documento desse programa; estes dois casos não foram provocados neste lote.</span>
+
+## Resultado esperado
+
+- A fatura passa de **Rascunho** a **Publicada**, com o número seguinte da série, na data que escolheu.
+- O recibo é emitido com o número seguinte da série `RG` e a fatura passa a paga (ou paga em parte).
+
+## Quando contactar o suporte
+
+- A mensagem aparece com uma data igual ou posterior à do último documento indicado.
+- A data do último documento que a mensagem indica não corresponde a nenhum documento que reconheça.
+- A série tem um documento com data futura e precisa de continuar a faturar até ao dia dessa data, inclusive.
+
+## Informação a enviar
+
+- A empresa e a série (por exemplo `FT D26`).
+- O texto completo da mensagem, copiado do ecrã.
+- A data que tentou usar e o perfil com que entrou.
+- O número e a data do documento com data futura, se for o caso.
+
+{/* Nota interna (DOCS-066 #3947, lote v23-BA, master ce51f2d47, docs_demo_v23ba_test, 10/11/2026, DEF-QA8-c-01): por clique com um utilizador criado só com o perfil Administrativo, num rascunho criado para isto com data anterior à da FT D26/30 (último documento da série nesta base): Confirmar deu a mensagem de «Mensagem», com as partes em itálico desta base; nada foi emitido. */}

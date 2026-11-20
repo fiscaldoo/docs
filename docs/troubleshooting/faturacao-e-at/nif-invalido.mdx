@@ -1,0 +1,126 @@
+---
+id: nif-invalido
+slug: /troubleshooting/nif-invalido
+title: O NIF do cliente é inválido ou está em falta
+sidebar_label: NIF inválido ou em falta
+description: Porque a ficha do cliente não grava com um NIF inválido, o que acontece quando se fatura a um cliente sem NIF, como validar no VIES o NIF de um cliente de outro país da UE e porque a fatura com 0% EU é recusada sem o NIF válido.
+keywords: [NIF inválido, nif invalido, NIF não é válido, nif nao e valido, número de contribuinte, numero de contribuinte, contribuinte errado, dígito de controlo, digito de controlo, NIF em falta, cliente sem NIF, consumidor final, 999999990, VIES, Validar VIES, NIF espanhol, NIF estrangeiro, número de IVA, numero de iva, intracomunitário, intracomunitario, isenção intracomunitária, 0% EU recusada, Operação inválida, Motivo para emitir sem VIES válido, Recalcular o IVA, Responsável fiscal, NIF inválido no VIES, serviço indisponível]
+doc_id: DOC-0335
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 27cebe13a)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/clientes, troubleshooting/faturacao-e-at/nao-consigo-alterar-um-documento-certificado, fiscal-core/faturacao/balcao]
+---
+
+## Sintoma
+
+- Ao gravar a ficha de um cliente, abre-se **Erro de Validação** a dizer que o NIF não é válido, e a ficha não grava; ou
+- emitiu uma fatura a um cliente sem NIF e ela saiu como «Consumidor final»; ou
+- vai faturar com isenção a um cliente de outro país da União Europeia e não sabe se o número de IVA dele está validado; ou
+- ao confirmar uma fatura com **0% EU** abre-se **Operação inválida** a dizer que o NIF do cliente não está validado no VIES ou é inválido.
+
+## Mensagem
+
+Num cliente novo com o **País** vazio e o NIF `PT123456788` (perfil **Administrativo**):
+
+> «O NIF «*PT123456788*» não é válido.
+> Porquê: o último algarismo (dígito de controlo) não corresponde aos outros oito.
+> Como resolver: Confira o número no cartão de cidadão ou no documento de identificação fiscal e escreva-o de novo.»
+
+![Janela Erro de Validação: o NIF PT123456788 não é válido porque o dígito de controlo não corresponde aos outros oito](/images/troubleshooting/nif-invalido/01-nif-invalido-cliente.png)
+
+A mensagem foi provocada na base de demonstração. A ficha não ficou gravada. Com o **País** Portugal e o NIF escrito sem `PT` (`123456780`), a janela e a mensagem são as mesmas.
+
+Numa fatura a um cliente de Portugal sem NIF, o rascunho avisa, antes de emitir, que a fatura é tratada como emitida a consumidor final (o aviso, palavra a palavra, está em [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada), «Notas importantes»). Depois de emitida, o PDF mostra «Consumidor final» à esquerda, por baixo do título da fatura e do capital social; o bloco do cliente, à direita, tem só o nome e o país (na demonstração, a `FT D26/33`, ao «Cliente Sem NIF Exemplo», com «Portugal»).
+
+## Causas verificadas
+
+- **O número tem um algarismo trocado.** O último algarismo de um NIF português é calculado a partir dos outros oito. Se não bate, o NIF não existe e o fiscaldoo não grava a ficha.
+- **O cliente não tem NIF na ficha.** O fiscaldoo emite a fatura e trata-a como venda a consumidor final, num cliente de Portugal e num de outro país (aí, o consumidor final leva o país do cliente). O NIF não se acrescenta depois a essa fatura.
+- **O NIF do cliente da UE não está Válido no VIES.** Uma fatura com a isenção intracomunitária posta à mão é recusada ao confirmar.
+- **Cliente de outro país da UE.** O número de IVA escreve-se com o código do país à frente (por exemplo `ESB99999997`). Para uma venda isenta a outro país da UE, o número tem de estar validado no VIES, o sistema europeu que confirma os números de IVA.
+
+## O que confirmar
+
+1. O NIF num documento do cliente (cartão de cidadão, certidão, fatura dele). Não o escreva de memória.
+2. Na ficha do cliente, o **País**: o NIF português leva `PT` à frente ou nada; um número de outro país leva o código desse país.
+3. Se o cliente pediu fatura com NIF. Se pediu e a fatura saiu sem NIF, é preciso corrigir a fatura (abaixo).
+4. Para um cliente de outro país da UE, o estado do VIES, que a ficha mostra por baixo do NIF: **Não verificado**, **Válido**, **Inválido** ou **Serviço indisponível**.
+
+## Como resolver
+
+### O NIF da ficha é recusado (perfil Administrativo ou Contabilista)
+
+1. Carregue em **Fechar**.
+2. Em **NIF**, escreva o número certo e grave.
+
+Se a ficha já foi usada em documentos emitidos, o NIF já não se muda na ficha: o Contabilista certificado corrige-o com **Correção auditada**. Veja [Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado).
+
+### A fatura saiu sem o NIF que o cliente pediu
+
+A fatura emitida não se altera. Corrige-se com nota de crédito e fatura nova, com **Corrigir os dados do cliente** na fatura: veja o caso «Nome, morada ou NIF do cliente» em [Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado). Antes, ponha o NIF na ficha do cliente (ou crie a ficha certa). <span className="fd-pending">Pendente de validação por contabilista certificado: prazo e forma de emitir a fatura com NIF quando o cliente o pede depois da compra.</span>
+
+### Cliente de outro país da UE (perfil Administrativo)
+
+Abra a ficha do cliente, confira que o **NIF** tem o código do país à frente e carregue em **Validar VIES**. O que cada estado mostra, o que faz ao IVA e o que fazer com **Inválido** e com **Serviço indisponível** estão em [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes), secção «Validar o NIF no VIES: os quatro estados». Se o botão responde que o NIF «não começa pelo código de um país da União Europeia», veja «Problemas frequentes» no mesmo artigo.
+
+### A fatura com 0% EU é recusada ao confirmar
+
+Com o NIF do cliente ainda não **Válido**, uma linha com **0% EU** ou **0% EU S** posta à mão (na linha, ou pela posição **Intra-comunitário (UE)** e **Recalcular o IVA**) faz com que **Confirmar** abra a janela **Operação inválida**, e o rascunho fica como estava. Antes disso, o topo do rascunho já mostra uma faixa vermelha com o mesmo aviso. Com o NIF **Não verificado**, a janela diz (perfil **Administrativo**):
+
+> «A fatura (ainda sem número) tem a isenção intracomunitária (0 % EU) para o cliente “*Software Berlin GmbH*”, mas o NIF ainda não foi validado no VIES. A isenção (RITI art. 14.º) exige um NIF válido do cliente, por isso a fatura não pode ser confirmada. Como resolver: abra o cliente e carregue em «Validar VIES», ou mude o imposto. Se o contabilista certificado decidir emiti-la mesmo assim, peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que escreva o motivo no campo «Motivo para emitir sem VIES válido» desta fatura; fica registado na auditoria.»
+
+Com **Serviço indisponível**, a mensagem é a mesma, mas, em vez de «mas o NIF ainda não foi validado no VIES», diz «mas o serviço do VIES estava indisponível na última verificação». Com **Inválido**:
+
+> «A fatura (ainda sem número) tem a isenção intracomunitária (0 % EU) para o cliente “*Atelier Lumière SARL*”, mas o VIES indica que o NIF é inválido. A isenção (RITI art. 14.º) exige um NIF válido do cliente. Como resolver: corrija o NIF no cliente e carregue em «Validar VIES», ou mude o imposto.»
+
+Na demonstração, a recusa foi a mesma com os perfis **Administrativo** e **Contabilista certificado** (este, sem motivo escrito), vistos no ecrã, e, numa ronda anterior, com o **Contabilista**. A mensagem diz já qual é o perfil que escreve o motivo: o **Contabilista certificado**. A faixa de cada estado está em [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes), secção «A isenção posta à mão: uma faixa por estado». Para um cliente de Portugal ou de fora da União Europeia, a mensagem é outra: veja [Como escolher a taxa de IVA certa e saber que motivo de isenção sai](/accounting-pt/taxas-e-isencoes-de-iva), «Problemas frequentes».
+
+Há mais dois casos em que a fatura com **0% EU** é recusada, e nenhum motivo do Contabilista certificado a deixa sair, porque o NIF nem chega a ser verificado no VIES:
+
+- **O cliente não tem País.** «A fatura (ainda sem número) tem a isenção intracomunitária (0 % EU) para o cliente *Cliente Sem País GmbH*, mas o cliente não tem país. Sem o país a fatura seria emitida sem a posição fiscal intracomunitária, sem o aviso de risco e sem a classificação intra-UE, e a venda poderia ficar de fora do campo 7 da declaração periódica e da declaração recapitulativa. Como resolver: abra o cliente, preencha o país (o do prefixo do NIF) e, se o NIF ainda não foi validado, carregue em «Validar VIES»; ou altere o imposto.» Na demonstração, foi assim mesmo com o NIF `DE999999995` já **Válido** no VIES.
+- **O NIF não tem o código do país à frente.** «A fatura (ainda sem número) tem a isenção intracomunitária (0 % EU) para o cliente «*Maschinenbau Süd GmbH*», mas o NIF 999999995 não tem o código do país à frente, pelo que não pode ser validado no VIES (a isenção, art. 14.º do RITI, exige um NIF válido do cliente). Como resolver: abra o cliente, escreva o NIF com o código do país à frente (por exemplo DE999999995) e carregue em «Validar VIES»; ou altere o imposto. Nem o motivo de um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» a deixa sair.»
+
+Nos dois casos, corrija a ficha do cliente (o **País**, ou o NIF com o código do país) e valide o NIF no VIES antes de confirmar.
+
+**O que fazer:**
+
+1. Carregue em **Fechar**.
+2. Valide o NIF na ficha do cliente (secção anterior). Se fica **Válido**, o rascunho ainda tem o IVA de antes: siga «Rascunho feito antes da validação» em [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes) antes de confirmar.
+3. Se não fica **Válido**, a venda leva o IVA português: carregue em **Recalcular o IVA**, dentro da faixa vermelha, ou troque na linha o **0% EU** pela taxa portuguesa (por exemplo **23%**), e confirme. Como cada maneira repõe a taxa está em «Para tirar a isenção», no mesmo artigo. Fale com o contabilista certificado antes de emitir com a isenção.
+4. Só se o contabilista certificado decidir emitir com a isenção, com o NIF **Não verificado** ou **Serviço indisponível**, o Contabilista certificado escreve o motivo no rascunho e emite: os passos estão em [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes), secção «A decisão do Contabilista certificado». Com o NIF **Inválido**, ninguém a emite.
+
+Com o NIF **Não verificado** ou **Serviço indisponível**, a recusa é uma opção de cada empresa, que vem ligada (veja «A opção da empresa» no mesmo artigo); não a desligue sem o contabilista certificado. Com o NIF **Inválido**, a fatura é sempre recusada.
+
+<HelpCallout type="atencao" title="Confirme o VIES antes de faturar com isenção">
+Na venda de bens, a AT só aceita a isenção com o NIF do cliente válido no VIES (ficha doutrinária 15604): sem ele, a venda é tributada em Portugal. A isenção depende também de o cliente ser sujeito passivo noutro Estado-Membro, e a prova cabe a quem fatura. Valide o NIF antes da primeira fatura e não ponha a isenção à mão sem a decisão do contabilista certificado; se ele a decidir, guarde a prova com a fatura. <span className="fd-pending">Pendente de validação por contabilista certificado: prova da qualidade de sujeito passivo do adquirente (RITI, art. 14.º), quando se pode emitir com isenção sem o NIF válido no VIES (motivo do Contabilista certificado) e o que fazer a uma fatura já emitida sem VIES válido.</span>
+</HelpCallout>
+
+{/* Nota interna (DOCS-043 #3531, ronda do fix-vies2 depois do comboio 108; 30/10/2026, master 9d1671e9f com o VAT-065b/066b, base docs_demo_vies2_test): fonte única (AFV-09): o procedimento do VIES, as faixas, a decisão do Responsável fiscal e a opção vivem no DOC-0026; aqui ficam o sintoma, as mensagens e o que fazer, com ligações. Mensagens copiadas do ecrã: Não verificado (Cliente Alemanha Exemplo GmbH, Faturação e Responsável fiscal sem motivo), Serviço indisponível (Software Berlin GmbH, cenário unknown) e Inválido (Atelier Lumière SARL, cenário reject; também Contabilista). AFV-06: passo 2 com o Recalcular o IVA antes de confirmar (FT D26/37 confirmada sem recalcular saiu com 23% e Intra-comunitário privado (UE); FT D26/38 recalculada saiu com Intra-comunitário (UE)). Passo 3: 0% EU → 23% na linha deu o aviso nacional (rascunho à Atelier). AFV-08: a FT D26/33 da «Mensagem» é, nesta base, a fatura ao Cliente Sem NIF Exemplo (Portugal), com o PDF conferido («Consumidor final» à esquerda, bloco do cliente só com o nome e Portugal; ATCUD DEMOFT2026-33), o mesmo número e cliente do DOC-0022. Cenários do simulador repostos em accept. Ronda AV2 (30/10/2026, mesmo master, base docs_demo_vies3_test): AV2-08 (a frase da opção vale só para Não verificado e Serviço indisponível; o Inválido recusa sempre); AV2-10 (passo 2 só com a ligação ao DOC-0026); ligação ao caso «não começa pelo código de um país» do DOC-0026 (AV2-02, visto com a Faturação e a Contabilista). Ronda única (31/10/2026, master 27cebe13a, base docs_demo_ronda_test, Faturação): mensagens copiadas de novo do ecrã: Não verificado (Software Berlin GmbH), Inválido (Atelier Lumière SARL, cenário reject), cliente sem País (Cliente Sem País GmbH, DE999999995 Válido) e NIF sem código do país (Cliente DE sem prefixo, Alemanha, 999999995); o nome do cliente aparece uma só vez (FV2-01 corrigido no comboio 109); VAT-071/072: os dois casos novos recusam sem a caixa do motivo. NIF português inválido com a mensagem nova (SAFT-157 FS-06): «o último algarismo…», «…no documento de identificação fiscal…». */}
+
+{/* Nota interna (lote v23-BL, DOCS-064 #3900, master c689f7580, docs_demo_v23bl_test, 12/11/2026, req. 46883): exemplos trocados por números de exemplo calculados localmente (nunca o VIES): ESB99999997 (antes ESB12345609) e DE999999995/999999995 (antes DE811128135/811128135). Na cópia, com um utilizador só Administrativo: Cliente Sem País GmbH com DE999999995 Válido no simulador e Maschinenbau Süd GmbH (Alemanha, 999999995) com rascunhos de 10,00 € a 0% EU; as faixas vermelhas de recusa vistas no ecrã. Confirmar não foi carregado neste lote: a mensagem da janela é a de antes, em que o produto só põe o NIF da ficha («o NIF %(vat)s» e «por exemplo» + país + NIF). */}
+
+### Venda a um particular que não dá NIF
+
+Deixe o NIF vazio. A fatura sai como «Consumidor final», também num cliente de outro país (o aviso do rascunho está em [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada), «Notas importantes»). Ao balcão, pode usar a fatura simplificada: [Como vender ao balcão](/fiscal-core/balcao).
+
+## Resultado esperado
+
+- A ficha do cliente grava com o NIF certo, e as faturas seguintes saem com esse NIF no PDF e no SAF-T.
+- No cliente de outro país da UE, o estado do VIES fica **Válido**, com a data da validação.
+
+## Quando contactar o suporte
+
+- O fiscaldoo recusa um NIF que confirmou num documento oficial do cliente.
+- **Validar VIES** dá **Serviço indisponível** durante muito tempo.
+- Precisa de corrigir o NIF de muitas fichas importadas de outro programa.
+
+## Informação a enviar
+
+- O nome do cliente e o país (não envie documentos de identificação).
+- O texto completo da mensagem, copiado do ecrã.
+- Para o VIES, o estado e a data que a ficha mostra.
+- O perfil com que entrou.

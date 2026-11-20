@@ -1,0 +1,97 @@
+---
+id: estado-do-ativo-nao-permite
+slug: /troubleshooting/estado-do-ativo-nao-permite
+title: A operação não é possível no estado em que o ativo está
+sidebar_label: Operação recusada pelo estado do ativo
+description: Que botões aparece em cada estado do ativo, e o que significam as recusas ao parar, abater, vender ou testar a imparidade.
+keywords: [estado do ativo, parar ativo, retomar ativo, alienar, abater, sinistro, teste de imparidade, valor de venda negativo, motivo do abate, ativo principal abatido, botão não aparece]
+doc_id: DOC-0382
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 8c5a23228)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/ativos/alterar-a-vida-util, accounting-pt/ativos/abater-ou-vender-um-ativo]
+---
+
+## Sintoma
+
+Falta um botão na ficha do ativo (**Alienar / Abater**, **Parar**, **Teste de imparidade**), ou o botão existe e, ao avançar, aparece uma recusa.
+
+## Mensagem
+
+Na janela **Alienar / Abater**, com um valor de venda negativo e o **Comprador** ou a conta preenchidos (sem eles, aparece a recusa seguinte):
+
+> «O valor de venda não pode ser negativo.»
+
+![Janela Operação inválida com a mensagem O valor de venda não pode ser negativo.](/images/troubleshooting/estado-do-ativo-nao-permite/01-venda-negativa.png)
+
+Numa venda com valor, sem conta nem comprador:
+
+> «Uma alienação com valor de venda precisa da conta que o recebe (banco ou clientes) ou do comprador para a fatura de venda. Escolha um e tente novamente.»
+
+Na janela **Teste de imparidade**, com um valor negativo:
+
+> «O justo valor e o valor de uso não podem ser negativos.»
+
+Ao escolher como **Ativo principal** um ativo abatido:
+
+> «O ativo principal “*Computadores portáteis e servidor*” foi alienado ou abatido: não pode receber componentes.»
+
+Num abate ou sinistro sem motivo, ou em **Parar / alterar vida útil** sem motivo, o campo fica a vermelho e aparece:
+
+> «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+
+## Causas verificadas
+
+O estado do ativo decide o que se pode fazer. Estes são os botões de cada estado, com o perfil **Contabilista**:
+
+| Estado | Botões na ficha | Em **Ações** |
+|---|---|---|
+| **Em preparação** | **Pôr em uso**, **Duplicar em série**, **Dossier do bem (PDF)** | **Adicionar componente** |
+| **Em uso** | **Duplicar em série**, **Simular uma alteração**, **Alienar / Abater**, **Dossier do bem (PDF)** | **Calcular quadro contabilístico**, **Parar**, **Anular processamento**, **Teste de imparidade**, **Parar / alterar vida útil**, **Calcular quadro fiscal**, **Processar períodos fiscais**, **Revalorizar classe**, **Adicionar componente** |
+| **Parado** | os mesmos, mais **Retomar** | **Parar** deixa de aparecer |
+| **Abatido** | **Duplicar em série**, **Dossier do bem (PDF)** | sem o botão **Ações** |
+| **Fechado** | **Duplicar em série**, **Dossier do bem (PDF)** | sem o botão **Ações** |
+
+O botão que falta não é uma falha: o estado não permite essa operação.
+
+<span className="fd-pending">Pendente de validação: a linha **Fechado** foi vista com o estado posto por integração numa cópia de um ativo, porque a demonstração não tem nenhum ativo nesse estado. O estado **Alienado** (ativo vendido) não foi percorrido.</span>
+
+## O que confirmar
+
+1. O estado, no canto superior direito da ficha.
+2. Se escreveu o motivo, no caso de um abate, de um sinistro ou de **Parar / alterar vida útil**.
+3. Se os valores são positivos e se indicou o comprador ou a conta que recebe.
+
+## Como resolver
+
+- **Falta o botão num ativo «Em preparação»:** carregue em **Pôr em uso** e veja se a ficha é aceite. Os dados em falta têm artigo próprio: [Como registar um ativo](/accounting-pt/registar-um-ativo).
+- **Falta o botão num ativo «Abatido»:** se a baixa estava errada, reverta-a: [Não consigo alterar um ativo com depreciações processadas ou já abatido](/troubleshooting/ativo-com-periodos-processados).
+- **Falta «Parar» num ativo «Parado»:** o ativo já está parado. Carregue em **Retomar** para o voltar a pôr em uso.
+- **Valor de venda:** escreva um valor positivo e escolha o **Comprador** ou a conta. Para uma saída sem valor, use **Abate (sem valor de venda)**, com o motivo: [Como abater ou vender um ativo](/accounting-pt/abater-ou-vender-um-ativo).
+- **Ativo principal abatido:** escolha outro ativo principal, ou deixe o campo vazio.
+
+## Se tentar por outro caminho
+
+Estas recusas não aparecem na ficha, porque o botão não existe nesse estado. Surgem numa importação ou numa integração, e foram copiadas tentando por integração:
+
+- «Só um ativo em uso pode ser parado; «*Servidor de cópias de segurança*» não está em uso.»
+- «Só um ativo parado pode ser retomado; «*Servidor de cópias de segurança*» não está parado.»
+- «A vida útil só pode ser alterada num ativo em uso ou parado; «*Servidor de cópias de segurança*» não está em nenhum dos casos.»
+- «O ativo “*Impressora multifunções*” ainda tem períodos contabilísticos por processar: não pode ser fechado.»
+- «O ativo “*Impressora multifunções*” só pode ser alienado ou abatido pelo assistente de baixa, que regista o lançamento e o registo fiscal.»
+
+## Resultado esperado
+
+Com o ativo no estado certo, o botão aparece na ficha, como na tabela das **Causas verificadas**.
+
+## Quando contactar o suporte
+
+Se a recusa disser que o ativo já tem períodos processados, veja [Não consigo alterar um ativo com depreciações processadas ou já abatido](/troubleshooting/ativo-com-periodos-processados). Se não, [peça suporte](/troubleshooting/como-pedir-suporte).
+
+## Informação a enviar
+
+- O código do ativo.
+- O texto da mensagem.

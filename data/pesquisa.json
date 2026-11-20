@@ -1,0 +1,21 @@
+{
+ "_nota": "Pesquisa do portal (DOCS-012). «sinonimos»: grupos de palavras que se encontram umas pelas outras (scripts/search-pipeline.cjs; os acentos já são tolerados para todas as palavras). «exemplos_inicio»: as sugestões da página inicial. «aceitacao»: consultas que scripts/check-search.mjs corre no portal construído («captura»: grava as capturas de evidência); «esperado» é a lista de artigos aceites em 1.º lugar, por ordem de preferência (o primeiro que existir no portal).",
+ "sinonimos": [
+  ["anular", "anulação", "cancelar", "cancelamento", "estornar", "estorno"],
+  ["fatura", "faturação", "factura", "facturação", "FT"]
+ ],
+ "exemplos_inicio": ["Nota de crédito", "Comunicar série", "Declaração de IVA"],
+ "aceitacao": [
+  {"consulta": "certificacao", "igual_a": "certificação", "captura": true},
+  {"consulta": "serie", "igual_a": "série"},
+  {"consulta": "declaracao periodica", "igual_a": "declaração periódica"},
+  {"consulta": "cancelar fatura", "captura": true, "esperado": ["fiscal-core/anular-uma-fatura", "troubleshooting/nao-consigo-alterar-um-documento-certificado"]},
+  {"consulta": "Como cancelar uma fatura?", "esperado": ["fiscal-core/anular-uma-fatura", "troubleshooting/nao-consigo-alterar-um-documento-certificado"]},
+  {"consulta": "Anular FT", "captura": true, "esperado": ["fiscal-core/anular-uma-fatura", "troubleshooting/nao-consigo-alterar-um-documento-certificado"]},
+  {"consulta": "Erro ao cancelar documento", "esperado": ["troubleshooting/nao-consigo-anular-um-documento", "fiscal-core/anular-uma-fatura"], "_porque": "NC-027: enquanto o artigo de resolução «não consigo anular» não existir, a resposta é o artigo da anulação, que tem a recusa da janela em «Problemas frequentes»; o artigo de alterar um documento é outra dúvida"},
+  {"consulta": "Nota de crédito", "esperado": ["fiscal-core/emitir-uma-nota-de-credito"]},
+  {"consulta": "Comunicar série", "esperado": ["fiscal-core/series-documentais"]},
+  {"consulta": "Declaração de IVA", "esperado": ["accounting-pt/declaracao-periodica-de-iva"]},
+  {"consulta": "balancete analítico", "esperado": ["accounting-pt/razao-e-balancete-analiticos", "accounting-pt/balancete"], "_porque": "NC-D8-04 (DOCS-008): o nome que o contabilista usa para o balancete; palavra-chave no artigo. Desde o lote 37, o DOC-0157 é o artigo do menu com este nome e liga ao balancete"}
+ ]
+}

@@ -1,0 +1,93 @@
+---
+id: revisoes-de-contas
+slug: /accounting-pt/revisoes-de-contas
+title: Como rever as contas por período
+sidebar_label: Rever as contas por período
+description: Marcar uma conta como revista num período, com a nota do que conferiu, quem reviu e quando, e o aviso de saldo invulgar.
+keywords: [rever contas, revisões de contas, revisoes de contas, revisão de contas por período, revisao de contas por periodo, conta revista, saldo invulgar, conferir saldos, fecho do mês, marcar como revista, reabrir revisão]
+doc_id: DOC-0139
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 0289754a8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/fecho/fechar-o-mes, accounting-pt/fecho/inventario-para-a-at, accounting-pt/iva/declaracao-periodica-de-iva, accounting-pt/fecho/datas-de-bloqueio]
+---
+
+{/* Nota interna (v13-ACC, DOC-0139): base docs_demo_v13acc_test, porta 8254, master 56504fe86. Caminho percorrido por clique com o perfil Gestor de contabilidade. O Contabilista e o Auditor têm permissão no modelo, mas o menu Plano de contas não lhes aparece e o menu Revisões de contas só existe em modo de programador: defeito no relatório LOTE_V13ACC. O aviso da DP IVA foi lido no separador Verificações da declaração 2026/10, antes e depois de marcar a conta. */}
+
+## Para que serve?
+
+Guarda, para cada conta e cada período, se o saldo já foi conferido, por quem, quando e com que documento. No fim do mês, ou do ano, fica a prova de que alguém olhou para aquele saldo.
+
+O ecrã avisa quando um saldo é invulgar para o tipo de conta. Nunca impede nada: nem de marcar a conta como revista, nem de lançar no período.
+
+## Quando utilizar?
+
+- No fim do mês, ao conferir as contas de bancos, de caixa, de clientes e de fornecedores com os documentos que as sustentam.
+- No fim do ano, antes de fechar as contas, para deixar a prova do que foi conferido.
+- Quando a declaração periódica de IVA avisa que há contas do período por rever.
+- Não use para impedir lançamentos num mês já conferido: isso faz-se com as [datas de bloqueio](/accounting-pt/datas-de-bloqueio).
+
+## Onde encontrar?
+
+**Contabilidade › Fechar › Contabilidade do mês › Fechar o mês** › **Listas de apoio** › **Revisões de contas**. A lista abre com o filtro **Por rever**: mostra as revisões de todas as contas que ainda faltam rever. Para ver também as revistas, tire o filtro.
+
+O **Contabilista certificado** e o **Auditor / ROC** encontram a mesma ligação em **Contabilidade › Fechar › Fecho do exercício › Painel do fecho do exercício**, que o **Contabilista** não tem no menu.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**.
+- Tem à mão o documento que confirma o saldo, por exemplo o extrato do banco ou a folha de contagem da caixa.
+- Os lançamentos do período estão publicados. O saldo só conta lançamentos publicados.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**. Em **Listas de apoio**, carregue em **Revisões de contas**.
+   ![Listas de apoio do ecrã O que falta para fechar?, com a ligação Revisões de contas](/images/accounting-pt/revisoes-de-contas/01-listas-de-apoio.png)
+2. Carregue em **Novo**. Em **Conta**, escolha a conta, por exemplo **121 Depósitos à ordem**.
+3. Em **Início do período** e **Fim do período**, escolha as datas, por exemplo `01/10/2026` e `31/10/2026`. O **Saldo no fim do período** preenche-se sozinho.
+4. Em **Nota**, escreva o que conferiu e com que documento, por exemplo `Conferido com o extrato do banco de 31/10/2026.`. Guarde.
+   ![Revisão da conta 121 por rever, com o período de outubro, o saldo de 34.900,23 e a nota](/images/accounting-pt/revisoes-de-contas/02-revisao-por-marcar.png)
+5. Compare o **Saldo no fim do período** com o documento. Se o saldo for invulgar, aparece uma faixa amarela: veja a secção [Saldo invulgar](#saldo-invulgar).
+6. Carregue em **Marcar como revista**.
+
+</StepByStep>
+
+## Resultado esperado
+
+O estado passa a **Revista**. A ficha mostra **Revista por** e **Revista em**, e o histórico fica com a linha «Revista por *perfil*.».
+
+![Revisão marcada como revista, com o botão Reabrir, quem reviu e a data](/images/accounting-pt/revisoes-de-contas/03-conta-revista.png)
+
+Este procedimento não gera lançamentos: não muda nenhum saldo nem nenhum documento.
+
+## Saldo invulgar
+
+O saldo é invulgar quando está do lado contrário ao que o tipo de conta costuma ter. Um ativo, ou um gasto, com saldo credor. Um passivo, um capital próprio ou um rendimento com saldo devedor.
+
+![Faixa amarela: o saldo desta conta é invulgar para o seu tipo, na conta 120001 Conta Transitória com -367,50](/images/accounting-pt/revisoes-de-contas/04-saldo-invulgar.png)
+
+No exemplo, a **Conta Transitória** tem um saldo de -367,50, ou seja, credor. O sinal negativo quer dizer que os créditos são maiores do que os débitos.
+
+A faixa não impede de carregar em **Marcar como revista**. Se marcar, o histórico regista «Aviso: o saldo é invulgar para este tipo de conta.». O que se recomenda é corrigir primeiro a causa, por exemplo classificar os movimentos do banco que estão por tratar, e só depois marcar: uma vez marcada, a conta sai do aviso da declaração periódica de IVA, mesmo com o saldo invulgar.
+
+## Notas importantes
+
+- Marcar como revista não fecha o mês. Depois disso, ainda é possível lançar no período e o saldo da ficha muda. Para o impedir, use as [datas de bloqueio](/accounting-pt/datas-de-bloqueio).
+- Filtre a lista por **Por rever**, **Revista** ou **Saldo invulgar**. Agrupe por **Estado**, **Conta** ou **Período**.
+- O registo não diz que contas faltam rever. Só existem as revisões que alguém criou: uma conta sem revisão criada não aparece em lado nenhum, nem no aviso da declaração.
+- Cada empresa vê só as suas revisões.
+
+## Problemas frequentes
+
+**«O período da revisão termina (*01/10/2026*) antes de começar (*31/10/2026*): troque as datas.»** As datas estão trocadas. Corrija **Início do período** e **Fim do período** e guarde.
+
+**«A operação não pode ser concluída: Esta conta já tem uma revisão para esse período.»** Já existe uma revisão desta conta com as mesmas datas. Carregue em **Fechar** e, na lista da conta, abra a que existe.
+
+**Marquei por engano, ou encontrei um erro depois de marcar.** Abra a revisão e carregue em **Reabrir**. O estado volta a **Por rever**, os campos **Revista por** e **Revista em** desaparecem, e o histórico regista «Reaberta por *perfil*.». Pode voltar a marcar a seguir.
+
+**A declaração periódica de IVA avisa: «*1* conta(s) do período ainda estão por rever, p. ex. *120001*. O que aconteceu: a revisão das contas do período não está concluída, por isso a declaração ainda pode mudar. Como resolver: reveja-as em Revisões de contas e volte a correr as verificações.»** Aparece no separador **Verificações** da [declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva). É só um aviso: não impede a entrega. Marque as contas indicadas e carregue de novo em **Correr verificações**: a linha passa a **OK**, com «Não há contas do período à espera de revisão.». Uma conta com saldo invulgar também sai do aviso depois de marcada: registe na **Nota** porque o saldo está certo.

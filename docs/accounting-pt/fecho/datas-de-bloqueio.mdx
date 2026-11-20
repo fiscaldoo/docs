@@ -1,0 +1,118 @@
+---
+id: datas-de-bloqueio
+slug: /accounting-pt/datas-de-bloqueio
+title: Como bloquear períodos e gerir exceções
+sidebar_label: Bloquear períodos e gerir exceções
+sidebar_position: 2
+description: Bloquear as vendas e as compras de um mês fechado, perceber o que acontece a um documento com data nesse mês, abrir uma exceção para um lançamento atrasado e revogá-la.
+keywords: [datas de bloqueio, data de bloqueio, bloquear período, bloquear periodo, fechar o mês, fechar o mes, período fechado, periodo fechado, exceção, excecao, revogar exceção, revogar excecao, bloqueio de vendas, bloqueio de compras, bloqueio definitivo, lock date, reabrir período, reabrir periodo]
+doc_id: DOC-0132
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/compras/fatura-de-fornecedor, accounting-pt/iva/apuramento-do-iva, accounting-pt/dia-a-dia/estornar-um-lancamento]
+---
+
+## Para que serve?
+
+Uma data de bloqueio fecha a contabilidade até esse dia: depois de entregar o IVA ou de fechar o mês, ninguém lança por engano um documento com data nesse período. Quando um documento atrasado tem mesmo de entrar num período fechado, abre-se uma **exceção**, com motivo, e revoga-se quando deixa de ser precisa.
+
+Há cinco datas, e cada uma trava coisas diferentes (a ajuda de cada campo diz o mesmo):
+
+- **Data de bloqueio global**: todos os lançamentos até essa data, de todos os diários. Usa-se no fim do exercício.
+- **Data de bloqueio da declaração de impostos**: todos os lançamentos **com impostos** até essa data, de qualquer diário (faturas, lançamentos manuais, bancos). É a que se usa para proteger o IVA já declarado: trava só os lançamentos com impostos, sem fechar o resto da contabilidade.
+- **Data de bloqueio de vendas**: só os lançamentos dos diários de vendas.
+- **Data de bloqueio de compras**: só os lançamentos dos diários de compras.
+- **Data de bloqueio definitivo**: todos os lançamentos até essa data, sem exceções; não se desfaz.
+
+Bloquear ou abrir uma exceção não cria lançamentos; fica registado quem o fez, quando e porquê.
+
+## Quando utilizar?
+
+- No fim de cada mês, depois de conferir as compras e as vendas, para fechar esse mês.
+- Depois de entregar a [declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva), para que nenhum documento mude o IVA já declarado. Aqui a data que conta é a **Data de bloqueio da declaração de impostos**, não as de vendas e compras (ver «Notas importantes»).
+- Quando chega tarde uma fatura de um mês fechado e tem de ficar nesse mês: abra uma exceção antes de a fatura ser criada, confira a **Data Contabilística** antes de confirmar e revogue a exceção depois.
+
+## Onde encontrar?
+
+**Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**. O ecrã chama-se **O que falta para fechar?** e tem os botões **Bloquear vendas e compras até ao fim do mês**, **Datas de bloqueio** e, em **Listas de apoio**, **Datas de bloqueio e exceções**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**. Com ele faz todos os passos deste artigo (testado com esse perfil). O **Contabilista** vê as datas mas não as muda: a janela diz «Datas que o seu perfil não pode alterar» e qual o grupo preciso. A **Data de bloqueio da declaração de impostos** pede o grupo **Submissões fiscais** e a **Data de bloqueio definitivo** o grupo **Administração fiscal**, que nenhum valor do campo **Perfil** dá: só o tem o administrador, ou quem o recebe como acesso extra (não é a AT).
+- Os documentos do mês estão lançados e conferidos. O ecrã mostra o que ainda falta (bancos, IVA, retenções, SAF-T, verificações do fecho), mas não impede o bloqueio.
+- No exemplo, a Empresa Demonstração, Lda, com o exercício de 2025 já bloqueado (**Data de bloqueio global** 31/12/2025) e janeiro de 2026 por fechar.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**. O ecrã abre no primeiro mês por fechar (no exemplo, **janeiro de 2026**); a lista ao lado do título muda o mês.
+   ![Ecrã O que falta para fechar? de janeiro de 2026 com o botão Bloquear vendas e compras até ao fim do mês assinalado e o botão Datas de bloqueio](/images/accounting-pt/datas-de-bloqueio/01-o-que-falta-para-fechar.png)
+2. Carregue em **Bloquear vendas e compras até ao fim do mês**. Abre-se a janela **Fechar o mês** com a proposta: «Para fechar o mês, a proposta é bloquear as vendas e as compras até 31/01/2026, o fim do mês. Nada fica bloqueado enquanto não escrever o motivo e carregar em Aplicar…». A coluna da esquerda tem as datas atuais; a da direita as novas (**Data de bloqueio de vendas** e **Data de bloqueio de compras** já a 31/01/2026).
+3. Em **Motivo**, escreva porquê (por exemplo `Fecho de janeiro de 2026`) e carregue em **Aplicar**.
+   ![Janela Fechar o mês com a Data de bloqueio global 31/12/2025, as datas de vendas e de compras a 31/01/2026, o Motivo Fecho de janeiro de 2026 e o botão Aplicar assinalado](/images/accounting-pt/datas-de-bloqueio/02-fechar-o-mes-com-motivo.png)
+4. Para mudar outra data (por exemplo a **Data de bloqueio global** no fim do exercício), carregue em **Datas de bloqueio**: a janela **Fixar datas de bloqueio** tem os mesmos campos. Avançar uma data bloqueia mais e vale para todos os utilizadores.
+5. **Para abrir uma exceção** (uma fatura de compra de janeiro que chegou tarde), **antes** de alguém criar a fatura: em **Datas de bloqueio**, apague a **Data de bloqueio de compras**. Aparece «Data de bloqueio de compras (31/01/2026) removida: isto abre uma exceção (só para si, até ser revogada); a data da empresa mantém-se.» e dois campos novos: **A exceção aplica-se a** (**Só para mim** ou **Para todos**) e **Exceção válida até**.
+   - Se a fatura vai ser confirmada por outra pessoa (no percurso normal, o **Contabilista**), escolha **Para todos**. **Só para mim** só vale para quem abre a exceção (ver «Notas importantes»).
+   - Em **Exceção válida até**, ponha uma data próxima (no exemplo, `30/10/2026`, o dia seguinte): a exceção acaba aí, mesmo que se esqueça de a revogar. Vazio, fica até ser revogada.
+   - Escreva o **Motivo** e carregue em **Aplicar**. O ecrã confirma: «Exceção aberta. Data de bloqueio de compras removida (para todos, até 30/10/2026 00:00:00); a data da empresa continua 31/01/2026.»
+   ![Janela Fixar datas de bloqueio com a Data de bloqueio de compras apagada, a faixa da exceção para todos até 30/10/2026, o Motivo, A exceção aplica-se a Para todos assinalado e Exceção válida até 30/10/2026 00:00](/images/accounting-pt/datas-de-bloqueio/05-excecao-para-todos.png)
+6. Só com a exceção ativa, peça a quem lança (no exemplo, o **Contabilista**) que crie a fatura. **Antes de carregar em Confirmar**, ele confere a **Data Contabilística**: tem de ser uma data do mês da fatura, no exemplo 31/01/2026. Não confie na data que o ecrã propõe: a fatura de 15/01/2026 criada com a exceção já ativa veio com a **Data Contabilística** 29/10/2026, o dia em que foi registada. Carregue no campo, escreva `31/01/2026` e só depois carregue em **Confirmar**.
+   ![Fatura de fornecedor em rascunho com a Data da Fatura de Fornecedor 15/01/2026 e a Data Contabilística 31/01/2026 assinalada, antes de Confirmar](/images/accounting-pt/datas-de-bloqueio/06-data-contabilistica-antes-de-confirmar.png)
+   No exemplo, a `FTF/2026/00052` (Papelaria Central, 10,00 € + IVA 23 % 2,30 €) ficou **Publicada** com a **Data da Fatura de Fornecedor** 15/01/2026 e a **Data Contabilística** 31/01/2026. As linhas são 6233 Material de escritório a débito 10,00 €, 2432 IVA - Dedutível a débito 2,30 € e 2211 Fornecedores gerais a crédito 12,30 €, todas a 31/01/2026 (conferidas em **Contabilidade › Consultar › Livros e balancetes › Razão**, de 01/01/2026 a 31/01/2026). O IVA fica no período de janeiro.
+7. Confira em **Datas de bloqueio e exceções** (nas **Listas de apoio** do mesmo ecrã): uma linha por data em vigor e uma por exceção, com a **Natureza**, o **Tipo**, a **Data**, **Quem**, **Aplica-se a**, o **Motivo**, **Válida até** e o **Estado**.
+8. **Para revogar a exceção** quando o documento estiver lançado: carregue em **Exceções e revogação**, abra a exceção e carregue em **Revogar com motivo**. Na janela **Revogar exceções às datas de bloqueio**, escreva o **Motivo** e carregue em **Revogar**.
+   ![Exceção Data de bloqueio de compras sem data para todos os utilizadores, no estado Ativo, com o botão Revogar com motivo, o motivo Fatura de compra de janeiro chegada tarde e a Data Final 30/10/2026 00:00](/images/accounting-pt/datas-de-bloqueio/04-excecao-ativa.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, as datas de bloqueio gerem-se no mesmo ecrã **O que falta para fechar?**, com as mesmas janelas **Fechar o mês** e **Fixar datas de bloqueio**, o mesmo aviso «Datas que o seu perfil não pode alterar» e a mesma lista **Datas de bloqueio e exceções**. O Enterprise tem um assistente próprio para travar datas, mas só o administrador o vê: o **Contabilista certificado** usa o deste artigo.
+
+{/* Nota interna (lote EE-02, DOCS-073 #4142, DEC-1794, master 7a46de91a, base Enterprise docs_ee_ee02_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): Contabilista certificado: Bloquear vendas e compras até ao fim do mês abriu a janela Fechar o mês com a proposta de 31/01/2026; com o Motivo «Fecho de janeiro de 2026» e Aplicar, a lista Datas de bloqueio e exceções (filtro Em vigor) ficou com 3 linhas: global 31/12/2025 (Sistema) e vendas e compras 31/01/2026. Datas de bloqueio abriu Fixar datas de bloqueio com os mesmos campos. O menu de datas de bloqueio do Enterprise não está no menu deste perfil. Bloqueio feito só na cópia. Ver reports/LOTE_EE-02.md. */}
+
+## Resultado esperado
+
+- A empresa fica com as vendas e as compras bloqueadas até 31/01/2026, e a lista mostra-as **Em vigor** com o motivo e quem as fixou.
+- Uma exceção fica **Ativa** na lista (**Ativo** na ficha da exceção) até ser revogada ou até à hora de **Exceção válida até**, que a ficha mostra em **Data Final**; a ficha tem também o estado **Expirado**. Depois de revogada, a ficha diz **REVOGADO**, com o **Motivo da revogação**, **Revogada por**, **Revogada em**, e a **Data Final** passa a ser a hora da revogação.
+- Nenhum lançamento é criado.
+
+## Notas importantes
+
+- **Uma data bloqueada não impede de confirmar: muda a data contabilística.** Uma fatura de fornecedor com data de 15/01/2026, depois do bloqueio, mostra «A data deste documento (15/01/2026) está num período que já foi fechado (até 31/01/2026: Data de bloqueio de compras (31/01/2026)). O documento mantém a sua data, mas o lançamento contabilístico fica datado de 29/10/2026.…». Ao confirmar, a fatura fica com a **Data da Fatura de Fornecedor** de 15/01/2026 e o lançamento a 29/10/2026 (no exemplo, `FTF/2026/00049`: a conta de gasto a débito 10,00 €, 2432 IVA dedutível a débito 2,30 € e 2211 Fornecedores gerais a crédito 12,30 €, todas a 29/10/2026). O IVA entra no período de outubro, não no de janeiro. Se o documento tem de ficar em janeiro, abra uma exceção **Para todos** antes de a fatura ser criada e escreva a data de janeiro na **Data Contabilística** antes de **Confirmar** (passos 5 e 6). <span className="fd-pending">Pendente de validação por contabilista certificado: em que período se deduz o IVA de uma fatura de um mês já declarado (CIVA, art. 22.º e art. 78.º) e quando se deve abrir a exceção em vez de lançar na data do dia.</span>
+  ![Faixas amarelas de uma fatura de fornecedor de 15/01/2026: a data está antes da Data de bloqueio de compras e o lançamento será contabilizado em 29/10/2026](/images/accounting-pt/datas-de-bloqueio/03-fatura-em-periodo-bloqueado.png)
+- **A Data de bloqueio definitivo não se desfaz.** Só pode avançar; nenhuma exceção a abre. Use-a só para exercícios encerrados e aprovados.
+- **As datas de vendas e de compras não protegem o IVA já declarado.** Só valem para os diários de vendas e de compras. No exemplo, com vendas e compras bloqueadas até 31/01/2026, um lançamento manual no diário **Operações Diversas** com IVA e data de 15/01/2026 (`MISC/2026/00145`: 6233 a débito 10,00 €, 2432 IVA - Dedutível a débito 2,30 € e 2211 a crédito 12,30 €) foi publicado com a data de 15/01/2026, sem nenhum aviso de bloqueio. O que trava todos os lançamentos com IVA é a **Data de bloqueio da declaração de impostos**. Depois de entregar a declaração, feche o período na própria declaração, com **Fechar período de IVA** (secção «Fechar o período de IVA» de [Como preparar e entregar a declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva)), que sobe esta data até ao fim do período. Também a pode avançar em **Datas de bloqueio**: o perfil **Contabilista certificado** pode alterá-la, o **Contabilista** não. Se a empresa ligou **Bloquear o período quando a declaração é entregue** (na ficha da empresa, separador **Localização PT**; desligado no exemplo), registar a entrega já sobe esta data. <span className="fd-pending">Pendente de validação por contabilista certificado: que data de bloqueio avançar depois de entregar a declaração periódica de IVA, e quem a avança.</span>
+- **Só para mim só serve a quem abre a exceção.** Com uma exceção **Só para mim** aberta pelo **Contabilista certificado**, a fatura de 15/01/2026 criada pelo **Contabilista** continua com a faixa «A data deste documento (15/01/2026) está num período que já foi fechado […] o lançamento contabilístico fica datado de 29/10/2026.» Use **Só para mim** quando é a mesma pessoa que abre a exceção e confirma o documento. Para que outra pessoa o confirme, use **Para todos** com **Exceção válida até** próxima, e revogue a exceção logo que o documento esteja lançado: enquanto está ativa, todos podem lançar compras nesse período.
+- **A exceção não muda a data de um rascunho que já existe.** Com a exceção ativa, o lançamento fica na data que está na **Data Contabilística** quando se carrega em **Confirmar**, e essa data não se recalcula quando a exceção abre. No exemplo, um rascunho de 15/01/2026 criado antes da exceção ficou com a **Data Contabilística** 29/10/2026 depois de a exceção abrir; a faixa do bloqueio desapareceu, por isso nada avisa. Apague esse rascunho (botão **⋮** «Ações», ao lado do título › **Eliminar**, e **Eliminar** na janela «Adeus, registo!») e crie-o de novo com a exceção ativa. Mesmo assim, confira a **Data Contabilística** como no passo 6: a fatura criada de novo também veio com 29/10/2026 e foi preciso escrever 31/01/2026.
+- **O que a lista não diz.** **Datas de bloqueio e exceções** mostra o que está fixado, não se o mês está pronto a fechar: isso vê-se nos quadros do ecrã **O que falta para fechar?**.
+
+## Problemas frequentes
+
+### «Há campos obrigatórios por preencher»
+
+- **Sintoma:** ao carregar em **Aplicar** sem motivo, a janela não fecha e aparece «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»; por baixo de **Motivo**, «Escreva o motivo da alteração antes de carregar em Aplicar: cada alteração de uma data de bloqueio fica registada com ele.»
+- **O que fazer:** escreva o motivo e carregue de novo em **Aplicar**.
+
+### «Nenhuma data de bloqueio foi alterada»
+
+- **Sintoma:** janela **Operação inválida**: «Nenhuma data de bloqueio foi alterada. Porquê: As datas na janela são iguais às atuais. Como resolver: Altere pelo menos uma data, ou feche a janela se não é preciso alterar nada.»
+- **O que fazer:** confirme que mudou a data (para apagar uma data, apague o texto do campo e carregue em Enter antes de **Aplicar**).
+
+### «A data está a ser definida para antes de: Data de bloqueio de compras»
+
+- **Sintoma:** numa fatura em rascunho com a **Data Contabilística** num mês fechado (no exemplo, 31/01/2026), aparece «A data está a ser definida para antes de: Data de bloqueio de compras (31/01/2026). O lançamento de diário será contabilizado em 29/10/2026 ao ser lançado.» Se carregar em **Confirmar**, a fatura fica **Publicada** com a **Data Contabilística** 29/10/2026, sem mais nenhuma pergunta.
+- **Causa verificada:** não há exceção ativa para quem confirma (no exemplo, tinha sido revogada). Uma exceção **Só para mim** aberta por outra pessoa também não serve (ver «Notas importantes»).
+- **O que fazer:** não confirme. Peça a exceção (passo 5) e confirme só quando esta faixa tiver desaparecido e a **Data Contabilística** for a de janeiro.
+
+### «Datas que o seu perfil não pode alterar»
+
+- **Causa verificada:** o seu perfil não tem o grupo indicado na faixa (por exemplo o **Contabilista**, para as datas global, de vendas e de compras).
+- **O que fazer:** peça a quem tem o perfil **Contabilista certificado** que faça o bloqueio ou abra a exceção.
+
+{/* Nota interna (correção R2, AUDITORIA_V2_B2_D NB2-R01/NB2-R02, 29/10/2026, 8092, por clique): exceção «Correção R2» Para todos até 30/10/2026 aberta pelo Gestor e revogada no fim. Rascunho 570 (15/01/2026) criado pelo Contabilista ANTES da exceção: Data Contabilística 29/10/2026; com a exceção ativa continuou 29/10/2026 e sem faixa; apagado (⋮ › Eliminar). Rascunho 571 criado DEPOIS da exceção: também 29/10/2026 (diário FTF com numeração anual: _get_accounting_date devolve max(data da fatura, hoje)); o rascunho do auditor criado por RPC deu 28/02/2026 e o de 569 31/01/2026, por isso o artigo manda conferir e escrever a data. O Contabilista escreveu 31/01/2026 (o campo é editável em rascunho: a caixa só aparece ao clicar) → FTF/2026/00052 publicada a 31/01/2026, 6233 D 10,00 / 2432 D 2,30 / 2211 C 12,30, conferido no razão de janeiro. Depois: Mudar para Rascunho, exceção revogada, Confirmar com 31/01/2026 → faixa «A data está a ser definida para antes de…» e lançamento a 29/10/2026; Mudar para Rascunho e Cancelar (Anulada). Defeito P-V2-09 (ACC-205). Histórico: correção V2, NB2-10 a NB2-13: exceção 3 «Para todos» até 30/10/2026 criada e revogada a 29/10/2026; FTF/2026/00050 (15/01/2026, 6233) confirmada pelo Contabilista com a exceção → lançamento a 31/01/2026, depois voltou a rascunho e foi cancelada; MISC/2026/00145 (Operações Diversas com IVA, 15/01/2026) publicado com vendas e compras bloqueadas, depois cancelado. A Data de bloqueio da declaração de impostos não foi aplicada na demonstração (mudaria o ponto de partida do DOC-0131 e do IVA de janeiro): o efeito vem da ajuda do campo e do DOC-0091 (Fechar período de IVA). Defeito P-V2-02 (três datas diferentes num rascunho de fatura num período bloqueado): o artigo cita só a faixa e o lançamento confirmado. Exemplo original na 8092: vendas e compras bloqueadas até 31/01/2026 (ficaram, para o auditor); exceção 1 criada e revogada; fatura de teste FTF/2026/00049 confirmada (lançamento a 29/10/2026), voltou a rascunho e foi cancelada (não se pode eliminar: conservação de 10 anos). Defeito B2-10: a coluna Quem da data global de 2025 diz «OdooBot». A faixa «271 dias desde o fim do mês… (limite do CIRC, art. 123.º, n.º 3)» aparece também na fatura atrasada (DOC-0069). */}

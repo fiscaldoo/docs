@@ -1,0 +1,83 @@
+---
+id: integridade-dos-documentos
+slug: /fiscal-core/integridade-dos-documentos
+title: Como verificar a integridade dos documentos certificados
+sidebar_label: Verificar a integridade dos documentos
+sidebar_position: 2
+description: Correr o relatório de integridade da certificação (assinatura, numeração e cadeia de cada série) e os controlos de integridade e integralidade dos lançamentos, e ler o resultado.
+keywords: [integridade, integridade dos documentos, verificar integridade, relatório de integridade, relatorio de integridade, cadeia de assinaturas, hash, assinatura, numeração, numeracao, lacunas, integralidade, controlos de integridade, auditoria, certificação, certificacao]
+doc_id: DOC-0016
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master d7b8279e9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/certificacao/series-documentais, fiscal-core/certificacao/preparar-a-faturacao-certificada]
+---
+
+## Para que serve?
+
+Cada documento certificado leva uma assinatura que depende da do documento anterior da mesma série. Se um documento fosse alterado ou apagado por fora do programa, a cadeia partia-se. Estes dois ecrãs confirmam que não aconteceu:
+
+- O **Relatório de integridade da certificação** verifica, série a série, a assinatura, a numeração e a cadeia dos documentos certificados.
+- Os **Controlos de integridade e integralidade** verificam os lançamentos contabilísticos de um período: equilíbrio, totais, coerência das séries, cadeia de assinaturas e numeração, incluindo as lacunas por justificar das séries importadas do programa anterior (ver [Como justificar uma lacuna na numeração de uma série](/fiscal-core/justificar-lacunas-de-numeracao)).
+
+## Quando utilizar?
+
+- Antes de entregar o SAF-T de um período ou de fechar o exercício.
+- Antes e depois de uma migração, de um restauro de cópia de segurança ou de uma atualização do programa.
+- Quando um auditor ou a AT pede prova de que os documentos não foram alterados.
+
+## Onde encontrar?
+
+- **Auditoria › Integridade › Verificar integridade dos documentos** (abre o **Relatório de integridade da certificação**).
+- **Auditoria › Integridade › Controlos de integridade e integralidade**.
+
+O administrador encontra o primeiro também em **Definições › fiscaldoo · Certificação**, grupo **Configurar a certificação: séries e chaves**, linha **Verificar integridade**.
+
+## Antes de começar
+
+- O seu perfil tem a aplicação **Auditoria**. Os passos foram feitos com o perfil **Contabilista certificado**. Quem tem o perfil **Auditor / ROC** pode limitar a verificação do mesmo modo e exportar o resultado em Excel e em PDF, mas não pode alterar documentos, séries nem assinaturas. O perfil **Contabilista** e o perfil **Administrativo** não têm a aplicação **Auditoria**.
+- Está na empresa certa (canto superior direito).
+- Nenhum dos dois ecrãs altera dados: pode corrê-los quando quiser.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Auditoria › Integridade › Verificar integridade dos documentos**. Abre-se a janela **Relatório de integridade da certificação**, já com o resultado da empresa.
+2. Para limitar a verificação, preencha **De** e **Até**, escolha **Diários** ou uma **Série**, e carregue em **Executar**. Esta janela abre já com o resultado da empresa inteira: ao mudar **De**, **Até**, **Diários** ou **Série**, o resultado anterior desaparece enquanto não voltar a carregar em **Executar**. **Série** e **Diários** só deixam escolher as que já existem: não se criam séries aqui. Vazios, verificam-se todos os documentos certificados da empresa. **Incluir a cadeia de hash nativa?** junta a verificação própria do Odoo.
+3. Leia a frase do topo e a tabela. Cada linha é uma **Série / diário**, com **Documentos**, **Verificados**, **Problemas**, **Falhas em aberto**, **Resultado** e **Detalhe**. As séries com documentos têm também o botão **Documentos**.
+   ![Relatório de integridade da certificação com a frase Tudo certo e as séries FT D26, NC D26 e FR D26 verificadas](/images/fiscal-core/integridade-dos-documentos/01-relatorio-de-integridade.png)
+4. Para guardar a prova, carregue em **Imprimir PDF** ou **Exportar XLSX**. O ficheiro Excel chama-se `relatorio_integridade.xlsx` e sai em português, numa folha **Integridade**: o título «Relatório de integridade da certificação», a empresa (só o nome, com **De** e **Até** vazios; com as datas, também o período, por exemplo «Empresa Demonstração, Lda (De 01/01/2026 a 31/03/2026)») e uma linha por série ou diário, com as colunas **Tipo**, **Série / diário**, **Diário**, **Documentos**, **Verificados**, **Problemas**, **Problemas de ATCUD**, **Falhas em aberto**, **Resultado** e **Detalhe** (no exemplo, **Cadeia de assinaturas da série** ou **Cadeia de hash nativa** no **Tipo** e **Verificados** no **Resultado**). {/* Nota interna (lote v23-AS, depois do comboio 177 com o FIX-M194, master d7b8279e9, docs_demo_v23as_test, 09/11/2026): Exportar XLSX por clique com um utilizador só com o perfil Contabilista certificado, com De e Até vazios e depois com 01/01/2026 a 31/03/2026 escritos nos campos e Executar (16 documentos, Tudo certo): os dois ficheiros chamam-se relatorio_integridade.xlsx; a 2.ª linha diz «Empresa Demonstração, Lda» e «Empresa Demonstração, Lda (De 01/01/2026 a 31/03/2026)». */} Carregue em **Fechar**. {/* Nota interna (lote v23-AQ, depois do comboio 175 com o FIX-M189 / CERT-148, master d277b0e80, docs_demo_v23aq_test): Exportar XLSX por clique com um utilizador só com o perfil Contabilista certificado e com outro só com o Auditor / ROC; os dois ficheiros abertos (openpyxl): folha Integridade, cabeçalhos e valores em português, FT D26 com 30 documentos e 53 nas 7 séries, como na base de demonstração (os 3 documentos FT A2026 importados neste lote não entram na verificação). O nome do ficheiro descarregado continua integrity_report.xlsx e a linha da empresa mostra «Empresa Demonstração, Lda  - » quando De e Até estão vazios (observações no relatório do lote). Os estados Lacunas, Corrompido e Sem dados no ficheiro não se viram no ecrã (só há séries verificadas na base). */}
+5. Abra **Auditoria › Integridade › Controlos de integridade e integralidade**. Confirme a **Empresa**, o **De** e o **Até** (vêm do início do ano até hoje) e carregue em **Verificar de novo** se mudar as datas.
+   ![Controlos de integridade e integralidade sem diferenças nos 332 lançamentos de 01/01/2026 a 29/10/2026](/images/fiscal-core/integridade-dos-documentos/02-controlos-sem-diferencas.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- No relatório: «Tudo certo: os 53 documentos verificados têm a assinatura, a numeração e a cadeia intactas.» Na demonstração, as séries `FT D26` (30 documentos), `NC D26` (1), `FR D26` (2), `FS D26` (3), `ND D26` (1), `FS POS26` (1) e `RG D26` (15), cada uma com «Cadeia verificada». A caixa **Incluir a cadeia de hash nativa?** vem ligada, por isso aparece também uma linha por diário, «Os lançamentos têm o hash correto».
+- Num período sem documentos assinados (por exemplo, **De** 01/01/2020 e **Até** 31/12/2020), a frase do topo do relatório é «Ainda nada para verificar: não há documentos assinados no período. Emita um documento e verifique de novo.».
+- Nos controlos: **Lançamentos verificados** 332, **Diferenças** 0, e a frase «Sem diferenças: os 332 lançamentos de Empresa Demonstração, Lda entre 01/01/2026 e 29/10/2026 estão equilibrados, os totais batem certo, as séries são coerentes e a cadeia de assinaturas e a numeração estão intactas.»
+- Com problemas, a tabela de cada ecrã diz o **Controlo**, o **Documento**, a **Série**, **O que está errado** e **O que fazer**. <span className="fd-pending">Pendente de validação no ecrã: provocar uma quebra exige alterar a base de dados por fora do programa, o que não se faz; por isso não se viu um resultado com problemas.</span>
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Uma quebra da cadeia não se corrige à mão">
+Se um dos ecrãs mostrar um problema, não tente corrigir o documento nem a base de dados. Guarde o PDF do relatório e contacte o suporte e o contabilista certificado. Um documento certificado nunca se altera: corrige-se com outro documento ([Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado)). <span className="fd-pending">Pendente de validação por contabilista certificado: obrigações perante a AT quando se deteta uma quebra da cadeia.</span>
+</HelpCallout>
+
+- O relatório vê só os documentos certificados da empresa escolhida, nas séries que já têm documentos. Não vê rascunhos, documentos de outra empresa nem documentos que nunca entraram no programa (por exemplo, faturas manuais por registar). Uma tabela sem problemas não prova que todos os documentos da empresa estão no programa.
+- Com uma **Série** escolhida, as linhas da cadeia de hash nativa continuam a mostrar todos os diários da empresa: essa verificação limita-se só por **Diários**. Para ver só a série, desligue **Incluir a cadeia de hash nativa?** antes de **Executar**.
+- As séries são as do artigo [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais).
+
+## Problemas frequentes
+
+### O relatório mostra menos documentos do que esperava
+
+- **Causa:** o filtro **De**/**Até**, **Diários** ou **Série** está preenchido, ou está noutra empresa.
+- **O que fazer:** limpe os filtros, confirme a empresa no canto superior direito e carregue em **Executar**.
+
+{/* Nota interna (lote v23-AN, depois do comboio 174 com o CERT-148, master a67618a71, docs_demo_v23an_test): com um utilizador só com o perfil Auditor / ROC, Auditoria › Integridade › Verificar integridade dos documentos abriu já corrido (54 documentos); De, Até, Diários, Série e a caixa da cadeia nativa editáveis; ao mudar De e Até o resultado desapareceu e só ficaram Executar e Fechar; De 01/08/2026 a 31/10/2026 deu 9 documentos; Série FT D26 deu 31 documentos e as 7 linhas da cadeia nativa dos diários (achado do CERT-148, a decidir pelo Gestor); sem a cadeia nativa, só a linha FT D26; Exportar XLSX e Imprimir PDF descarregaram ficheiro. A Série e os Diários não oferecem criar com um nome que não existe. Captura 01 refeita com o Contabilista certificado. Auditoria docs-aud-v23an (09/11/2026, cópia nova da base de demonstração em a67618a71, utilizador só com o perfil Contabilista certificado): os 54 documentos e a FT D26 com 31 incluíam a FT D26/31 que o lote criou; na base de demonstração são 53 e 30, e a captura 01 foi refeita com esses números. Os Controlos de integridade e integralidade (passo 5, captura 02) não se refizeram neste lote. */}

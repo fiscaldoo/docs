@@ -1,0 +1,92 @@
+---
+id: indicadores-de-cobranca
+slug: /fiscal-core/indicadores-de-cobranca
+title: Como acompanhar os indicadores de cobrança
+sidebar_label: Indicadores de cobrança
+description: "Quanto os clientes devem, quanto está vencido, quantos dias se leva a cobrar e que clientes devem mais, e como conferir estes números."
+keywords: [indicadores de cobrança, indicadores de cobranca, dias para cobrar, DSO, clientes que mais devem, prazo médio de recebimento, clientes que pagam tarde, valor vencido]
+doc_id: DOC-0040
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/recibos-e-cobrancas/agenda-e-rota-de-cobranca, fiscal-core/recibos-e-cobrancas/avisos-de-cobranca]
+---
+
+{/* Nota interna (DOCS-046, lote v13-PPL): percorrido com demo.contabilista. Números conferidos por RPC, só leitura: 4 faturas abertas = 5.241,03 €; lançamentos OD sem cliente na conta de clientes = 78,92 €; soma 5.319,95 €. A diferença está em LOTE_V13PPL. */}
+
+## Para que serve?
+
+Responde num só ecrã: quanto devem os clientes, quanto já passou do prazo, quantos dias se leva em média a cobrar e quem deve mais.
+
+## Quando utilizar?
+
+- Quer ver como estão as cobranças antes de uma reunião ou no fecho do mês.
+- Quer saber a que clientes dar prioridade.
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Cobranças a clientes › Indicadores de cobrança**.
+
+## Antes de começar
+
+O perfil é o **Contabilista**. Os passos foram feitos até ao fim com esse perfil. Este ecrã só lê: não altera faturas nem contas.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Lançar › Cobranças a clientes › Indicadores de cobrança**. Os valores calculam-se ao abrir.
+2. Em **Dias de faturação considerados**, deixe 90 ou indique outro período, e carregue em **Recalcular**.
+3. Leia os valores e a tabela **CLIENTES QUE MAIS DEVEM**.
+   ![Indicadores de cobrança: devido 5.319,95 €, vencido 5.241,03 €, faturado 7.213,87 €, 66,4 dias para cobrar e três clientes na tabela, um com o nome tapado](/images/fiscal-core/indicadores-de-cobranca/01-indicadores.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, **Contabilidade › Lançar › Cobranças a clientes › Indicadores de cobrança** abre o mesmo ecrã do fiscaldoo, com **Recalcular**, **Dias de faturação considerados**, **Devido pelos clientes**, **Dos quais vencido**, **Faturado no período**, **Dias para cobrar (DSO)** e a tabela **CLIENTES QUE MAIS DEVEM** (visto com um utilizador só com o perfil **Contabilista**).
+
+{/* Nota interna (lote EE-12, DOCS-073 #4142, DEC-1794, master 589ecfd27, base Enterprise docs_ee_ee12_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee12_test): DOC-0040. Contabilista: ecrã aberto e calculado na cópia (os valores são os da base Enterprise, que tem mais uma fatura do que a base Community, por isso não entram no artigo). Igual na cópia Community. Ver reports/LOTE_EE-12.md. */}
+
+## Resultado esperado
+
+No exemplo, a 05/11/2026 e com 90 dias de faturação:
+
+| Indicador | Valor | O que quer dizer |
+|---|---|---|
+| **Devido pelos clientes** | 5.319,95 € | Tudo o que está por receber na conta de clientes. |
+| **Dos quais vencido** | 5.241,03 € | A parte que já passou do prazo. |
+| **Faturado no período** | 7.213,87 € | O faturado nos últimos 90 dias. As notas de crédito descontam. |
+| **Dias para cobrar (DSO)** | 66,4 | 5.319,95 ÷ 7.213,87 × 90. |
+
+Na tabela, cada cliente tem **Deve**, **Vencido** e **Peso no total (%)**: a Papelaria Central, Lda, com 4.847,43 €, pesa 92,5 %.
+
+## Notas importantes
+
+- **O devido pode ser maior do que a soma da tabela.** A tabela só tem clientes. No exemplo, a diferença de 78,92 € são lançamentos na conta de clientes feitos sem cliente indicado. Se vir uma diferença destas, peça ao contabilista para rever esses lançamentos.
+- **O DSO é uma estimativa.** Compara o que se deve hoje com o que se faturou no período. Sem faturação no período, dá 0. Um número alto pode vir de uma só fatura grande ou de um período curto: com 30 dias em vez de 90, o faturado desceu para 413,74 € e o valor subiu para 385,7 dias, com a mesma dívida. Veja a tabela antes de tirar conclusões.
+- **A tabela mostra só os que mais devem.** Para o detalhe de todos os clientes, por idade da dívida, veja os mapas de [contas por cobrar](/accounting-pt/por-cobrar).
+- **Os valores são os do momento do cálculo.** Veja a data em **Calculado em** e use **Recalcular** se registou recibos entretanto.
+
+## Problemas frequentes
+
+### O DSO mudou sem novas faturas
+
+- **Sintoma:** o valor em **Dias para cobrar (DSO)** muda de um dia para o outro.
+- **Causa:** o período anda com a data de hoje, por isso faturas antigas saem do cálculo.
+- **O que fazer:** para comparar meses, anote o valor sempre no mesmo dia, ou aumente os **Dias de faturação considerados**.
+
+### «O período tem de ter entre 1 e 3650 dias…»
+
+- **Mensagem:** «O período tem de ter entre 1 e 3650 dias. Corrija o número de dias de faturação considerados.»
+- **Causa:** em **Dias de faturação considerados** está 0, um número negativo ou mais de 3650.
+- **O que fazer:** escreva um número de 1 a 3650 e carregue em **Recalcular**.
+
+### Um cliente que já pagou continua na tabela
+
+- **Sintoma:** o cliente aparece com valor, mas o pagamento já entrou no banco.
+- **Causa:** o pagamento ainda não foi associado à fatura, ou o ecrã não foi recalculado.
+- **O que fazer:** registe o recibo ou faça a reconciliação e carregue em **Recalcular**.

@@ -1,0 +1,75 @@
+---
+id: reconciliar-pagamentos-online
+slug: /accounting-pt/reconciliar-pagamentos-online
+title: Como reconciliar os pagamentos online recebidos
+sidebar_label: Reconciliar pagamentos online
+sidebar_position: 5
+description: Ver os pedidos de pagamento online (Multibanco, MB WAY e cartão) e registar a transferência do prestador com a comissão, para fechar a conta transitória do prestador e reconciliar o banco.
+keywords: [pagamentos online, multibanco, mb way, cartão, cartao, prestador de pagamentos, transferências do prestador, transferencias do prestador, comissão do prestador, comissao do prestador, conta transitória, conta transitoria, eupago, ifthenpay, reconciliar pagamentos online]
+doc_id: DOC-0116
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master ba9c8bd7, comboio 126)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/reconciliar-movimentos-bancarios]
+---
+
+## Para que serve?
+
+Quando um cliente paga online (referência Multibanco, MB WAY ou cartão), o dinheiro não chega ao seu banco no mesmo dia: chega mais tarde, numa transferência única do prestador de pagamentos, **já sem a comissão**. O fiscaldoo lança o que o cliente pagou, em bruto, numa conta transitória do prestador. A **Transferência do prestador** fecha essa conta quando o dinheiro chega: banco (valor líquido) mais comissão (gasto, com o IVA dedutível) igual ao valor bruto. A comissão nunca é um desconto ao cliente nem um pagamento parcial da fatura.
+
+## Quando utilizar?
+
+- Quando o banco recebe uma transferência do prestador (Eupago, ifthenpay) pelos pagamentos de vários clientes.
+- Para ver quantos pedidos de pagamento estão emitidos, pagos, por pagar ou expirados no mês.
+- **Não** a use para um cliente que paga por transferência bancária normal: esse recebimento reconcilia-se com a fatura ([reconciliar os movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios)).
+
+## Onde encontrar?
+
+- Painel: **Contabilidade › Reconciliar › Pagamentos online › O que há para fazer com os pagamentos online?**
+- Transferências: **Contabilidade › Reconciliar › Pagamentos online › Transferências do prestador**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** ou **Contabilista certificado** (o perfil **Administrativo** vê o painel; a lista e a criação de transferências foram abertas com o Contabilista e com o Contabilista certificado).
+- O prestador está configurado com o diário, a conta de comissão (classe 62) e o imposto da comissão. <span className="fd-pending">Pendente de validação no ecrã: na demonstração não foi possível percorrer o lançamento da transferência. Ler o diário do prestador (Eupago) dá o erro «Não pode ter duas linhas de forma de pagamento do mesmo tipo (inbound) e com o mesmo nome (Eupago) num único diário», e não há pagamentos de clientes no diário do prestador. O que vem a seguir descreve o ecrã e o que o produto diz que faz.</span>
+- O exemplo é a Empresa Demonstração, Lda, em novembro de 2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Reconciliar › Pagamentos online › O que há para fazer com os pagamentos online?**. Os quadros mostram, no mês escolhido, **Pedidos emitidos**, **Pagos**, **Por pagar** e **Expirados ou cancelados**, com os valores e o número de pedidos por **Multibanco** e por **MB WAY e cartão**. Em novembro de 2026: 1 pedido emitido de 147,60 € (Multibanco), 0 pagos, 1 por pagar. Em baixo, **O que está pendente** lista as referências por pagar com o prazo (por exemplo **Referência Multibanco por pagar**, 147,60 €, pagar até 01/12/2026).
+   ![Painel de pagamentos online de novembro de 2026: 1 pedido emitido de 147,60 € por Multibanco, 0 pagos, 1 por pagar e 0 expirados, com o gráfico das referências Multibanco](/images/accounting-pt/reconciliar-pagamentos-online/01-pagamentos-online.png)
+2. Abra **Transferências do prestador**. A lista tem **Data da transferência**, **Prestador**, **Recebido dos clientes (bruto)**, **Comissão cobrada (com IVA)**, **Recebido no banco** e **Estado**. Na demonstração está vazia («Aqui aparecem as transferências que os prestadores de pagamento fizeram para o seu banco, assim que são recebidas»).
+   ![Lista Transferências do prestador vazia, com o botão Novo](/images/accounting-pt/reconciliar-pagamentos-online/02-lista-de-transferencias.png)
+3. Carregue em **Novo**. Escolha o **Prestador** e o **Banco** em que o dinheiro entrou, e indique a **Data da transferência**. Em **Lançamento**, carregue em **Adicionar uma linha** para escolher os pagamentos que o prestador transferiu: o **Recebido dos clientes (bruto)** soma-se sozinho. Indique a **Comissão cobrada (com IVA)** que está no documento do prestador e o número desse documento em **Documento do prestador**. O **Recebido no banco** calcula-se: bruto menos comissão.
+   ![Formulário Nova transferência com o prestador Eupago escolhido, o banco, o bruto, a comissão, o líquido e a lista de pagamentos](/images/accounting-pt/reconciliar-pagamentos-online/03-nova-transferencia.png)
+4. Carregue em **Lançar**. O estado passa de **Rascunho** a **Lançado**. O lançamento fecha a conta transitória do prestador (ver «Resultado esperado»). Depois, o movimento do extrato bancário com o valor líquido reconcilia-se com este lançamento em [reconciliar os movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios).
+
+</StepByStep>
+
+## Resultado esperado
+
+- A transferência lançada tem **Recebido no banco** igual ao do extrato e o estado **Lançado**. Uma transferência lançada não se edita nem se apaga: corrige-se com o estorno do seu lançamento.
+- Lançamento, segundo o produto: débito da conta do banco pelo valor líquido, débito da conta de comissão pela base da comissão e do IVA dedutível pelo IVA, e crédito da conta transitória do prestador pelo bruto, que fica reconciliada. <span className="fd-pending">Pendente de validação por contabilista certificado e no ecrã: contas, IVA da comissão e valores (não conferidos no razão, porque o lançamento não foi possível na demonstração).</span>
+
+## Notas importantes
+
+- **A lista de pagamentos não filtra pelo prestador.** Ao escolher os pagamentos, o ecrã lista os pagamentos liquidados do diário do **Banco** (60 na demonstração), mesmo depois de escolher o prestador. Escolha só os que o prestador transferiu.
+- **O produto recusa**, segundo a sua descrição: lançar sem pagamentos; lançar uma comissão sem o documento do prestador ou sem conta de comissão; liquidar o mesmo pagamento duas vezes; e uma comissão acima do bruto.
+- **O painel só vê os pedidos feitos pelo prestador no Odoo.** Os pagamentos que o cliente fez por outra via não aparecem.
+
+## Problemas frequentes
+
+### Não consigo lançar a transferência
+
+- **Sintoma:** a lista dos pagamentos a escolher não tem os pagamentos do prestador, ou o ecrã recusa lançar.
+- **Causa:** o diário do prestador não está bem configurado, ou os pagamentos dos clientes não passaram pela conta transitória do prestador.
+- **O que fazer:** peça a quem configura o prestador de pagamento que confirme o diário, a conta e o imposto da comissão, e confira se os pagamentos foram lançados no diário do prestador.
+
+{/* Nota interna (DOCS-046, DOC-0116): visto em docs_demo_v3a3_test (master ba9c8bd7) com o Contabilista (painel e lista) e o Gestor de contabilidade (formulário). NÃO percorrido o lançamento: ler journal_id dos payment.provider Eupago/ifthenpay dá ValidationError (defeito V3A3-09, médio: «Não pode ter duas linhas de forma de pagamento do mesmo tipo (inbound)…») e não existem pagamentos no diário do prestador; o seletor «Adicionar uma linha» lista os 60 pagamentos do diário Banco, sem filtrar pelo prestador (V3A3-10, baixo). As recusas da secção Notas vêm do código (l10n_pt_psp_settlement.py), não foram provocadas no ecrã. «Lançar» com banco por preencher só realçou o campo. Artigo a refazer quando o V3A3-09 for corrigido. */}
+
+{/* Nota interna (v23-T, DOC-0116, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

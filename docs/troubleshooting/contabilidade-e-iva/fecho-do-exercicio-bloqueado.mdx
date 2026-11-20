@@ -1,0 +1,136 @@
+---
+id: fecho-do-exercicio-bloqueado
+slug: /troubleshooting/fecho-do-exercicio-bloqueado
+title: O fecho do mês ou do exercício está bloqueado por verificações pendentes
+sidebar_label: Fecho bloqueado por verificações
+description: O que quer dizer cada ponto por resolver no painel do fecho do exercício, porque o botão Fechar o exercício fica desativado e o que os cartões do mês impedem ou não.
+keywords: [fecho bloqueado, fecho do exercício bloqueado, fecho do exercicio bloqueado, Falta resolver, ponto(s), Fechar o exercício desativado, Não foi possível fazer este passo, nao foi possivel fazer este passo, Confirmar que está feito, Regularizações de fim de exercício, IVA todo apurado, Apurar o resultado, Mês fechado, Verificações do fecho que falham, O que falta para fechar, salde-o, use Apurar resultados, Não existe Modelo 22, Preparar a declaração, data de aprovação das contas, publica-se sozinho, fora do Balanço, feche-o primeiro]
+doc_id: DOC-0351
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master a67618a71)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/fecho/fechar-o-mes, accounting-pt/fecho/fechar-o-exercicio, troubleshooting/contabilidade-e-iva/periodo-bloqueado, troubleshooting/contabilidade-e-iva/lancamento-desequilibrado]
+---
+
+{/* Nota interna (DOCS-063 req. 46233, lote v23-AP, 09/11/2026, master a67618a71, docs_demo_v23ap_test, porta 8512): as duas mensagens que estavam por leitura vistas por clique na Empresa Teste Filial (0 lançamentos e 0 rascunhos na base-mãe). IVA do histórico migrado: lançamento HMIG/2026/00001 (01/01/2026, D 2432 100,00 / C 561 100,00) importado por RPC, só na cópia, pelo assistente Importar lançamentos com Histórico migrado e Criar e publicar; no ecrã, com um utilizador criado só com o perfil Contabilista certificado e só a Filial, Iniciar o fecho e Ver detalhe do ponto «Sem saldo de IVA vindo do histórico migrado» («Há qualquer coisa que merece a sua atenção.» e a frase da tabela, igual). Data de bloqueio: o botão Datas de bloqueio do painel abre a janela Fixar datas de bloqueio (com o Contabilista certificado, só a frase de que o perfil não a pode alterar); com o administrador e a Filial como empresa ativa, Data de bloqueio definitivo 31/12/2026, Motivo e a caixa de confirmação, Aplicar gravou (notificação citada) e o ponto da data de bloqueio passou a «Isto tem de ser resolvido antes de fechar.» com a frase da tabela, igual. A entrada Fixar datas de bloqueio continua fora do menu Fechar (administrador e Contabilista certificado). A Filial da cópia ficou com a data de bloqueio definitivo a 31/12/2026. */}
+{/* Nota interna (DOCS-063 req. 46233, lote v23-Z, 08/11/2026, master cebcb888d, docs_demo_v23z_test): janela Fixar datas de bloqueio por clique com o administrador, na Empresa Teste Portugal (2 lançamentos em rascunho de 2026, da base-mãe) e com a Empresa Teste Filial escolhida no campo Empresa: os dois avisos, a recusa sem a caixa e a recusa com a caixa («Ainda há lançamentos provisórios…»). A data não foi gravada (lido por RPC). Não se registaram nem anularam os rascunhos, porque já estavam na base (regra de 08/11): a mensagem do painel do fecho com a data de bloqueio irreversível continua por leitura. Com a Filial escolhida, o aviso continuou a contar 2 rascunhos, que são da Empresa Teste Portugal (a Filial tem 0 por RPC): ver defeito no LOTE_V23-Z. O IVA do histórico migrado continua sem empresa migrada na demonstração. */}
+{/* Nota interna (DOCS-046, DOC-0351, v7-TS1): validado na base docs_demo_v7ts1_test (8181), master 584213fd9, com o perfil Contabilista Certificado / Gestor fiscal, por clique: Iniciar o fecho de 2026, os 6 «Ver detalhe», Confirmar que está feito nos dois primeiros passos (6 pontos passam a 5; o segundo recusa), e no mês de janeiro de 2026 o cartão «Mês fechado» e o bloqueio de vendas e compras com o motivo. O bloqueio foi aceite com o cartão por resolver. Auditoria de 03/11, master 58eeca54d (ACC-227): provocadas 4 das 8 verificações, a recusa do Modelo 22 e a da data de aprovação. A aprovação foi feita com o perfil Administração fiscal dado ao utilizador da demonstração, porque nenhum utilizador demo o tem. As outras 4 verificações ficam para o DOCS-059. Master escreve em pt_PT os diferimentos novos (ACC-227); os lançamentos antigos da demonstração, em inglês, foram reescritos na base de teste para a captura 03. */}
+
+## Sintoma
+
+**No exercício.** Em **Contabilidade › Fechar › Fecho do exercício › Painel do fecho do exercício**, depois de **Iniciar o fecho**, o botão **Fechar o exercício** fica desativado e o painel lista o que falta:
+
+> «Falta resolver *5* ponto(s) antes de poder fechar o exercício.»
+
+![Painel do fecho do exercício de 2026: falta resolver 5 pontos, com o próximo passo Regularizações de fim de exercício e o botão Fechar o exercício desativado](/images/troubleshooting/fecho-do-exercicio-bloqueado/02-painel-falta-resolver.png)
+
+Ao carregar em **Confirmar que está feito** num passo com trabalho por fazer, abre-se no painel uma caixa e o passo não avança.
+
+**No mês.** Em **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**, o ecrã **O que falta para fechar?** mostra cartões com um número. Estes cartões **não impedem** o bloqueio do mês: dizem o que está por fazer.
+
+![Ecrã Fechar o mês de janeiro de 2026 com os cartões Bancos reconciliados, IVA apurado, Retenções, SAF-T validado e Mês fechado](/images/troubleshooting/fecho-do-exercicio-bloqueado/01-fechar-o-mes-por-resolver.png)
+
+## Mensagem
+
+Ao confirmar as **Regularizações de fim de exercício** com depreciações e diferimentos por fazer:
+
+> «Não foi possível fazer este passo. A etapa 'Regularizações: depreciações, diferimentos, imparidades, provisões, inventário' ainda não pode ser confirmada: o sistema vê trabalho por fazer no exercício. Termine-o e confirme de novo: …»
+
+![Caixa Não foi possível fazer este passo, com a lista das amortizações e dos diferimentos por fazer](/images/troubleshooting/fecho-do-exercicio-bloqueado/03-nao-foi-possivel.png)
+
+## Causas verificadas
+
+Carregue em **Ver detalhe** ao lado de cada ponto: é aí que aparece o que falta. Estes foram os pontos por resolver no exercício de 2026 da demonstração.
+
+| Ponto no painel | O que diz | O que fazer |
+|---|---|---|
+| **Todos os lançamentos estão publicados** | «Publique estes lançamentos ou apague-os. O botão abre a lista.» | **Ver a lista**, e publique ou apague cada rascunho. |
+| **As linhas do banco estão reconciliadas** | «O programa não fecha um ano que ainda tem linhas do banco por reconciliar. Associe cada linha a uma fatura, a um pagamento ou a uma conta. Uma linha publicada não se apaga: se estiver errada, associe-a a um lançamento de acerto. O botão abre a lista.» | **Ver a lista**, e trate cada linha. |
+| **Os ativos fixos estão prontos para o fim do ano** | «Processe as depreciações em falta antes de fechar. O botão abre o ecrã de processamento.» | **Ver a lista**, e processe. |
+| **Confirmar que já não há lançamentos por fazer** | «Confirme que os últimos meses já não têm lançamentos por fazer.» | **Confirmar que está feito**. Esta confirmação é sua: o passo avança sem mais verificações. |
+| **Regularizações de fim de exercício** | «Amortizações: *Edifício da loja (Porto)* - *1* período(s) de depreciação do ano estão planeados mas por processar (o primeiro: *31/12/2026*). Processe-os antes de fechar.» e, para os diferimentos, «o lançamento … de *05/10/2026* ainda está em rascunho: publique-o.» | **Ir fazê-lo**, e depois **Confirmar que está feito**. |
+| **IVA todo apurado** | «A conta de IVA *2432* ainda tem um saldo por saldar de *973,16 €*: salde-o (lançamento de apuramento do IVA) antes de fechar o exercício.» | Veja o [apuramento do IVA](/accounting-pt/apuramento-do-iva). <span className="fd-pending">Pendente de validação por contabilista certificado: tratamento do saldo de IVA de fim de exercício.</span> |
+| **Apurar o resultado do exercício** | «O IRC ainda não foi estimado: se apurar o resultado agora, o resultado líquido do exercício será o resultado antes de impostos. Estime primeiro o IRC (lança o movimento na 812 / 241) ou salte esse passo indicando o motivo.» e «A conta *611* ainda tem um saldo de *11.100,00 €*: use «Apurar resultados».» | Siga os passos do [fecho do exercício](/accounting-pt/fechar-o-exercicio). |
+
+O painel diz também **Resolva primeiro** (os pontos a vermelho de **O que dizem as contas**) e **Falta fazer** (os passos). Comece pelos primeiros.
+
+Depois de fechar o exercício, dois passos têm recusas próprias:
+
+| Passo no painel | O que diz | O que fazer |
+|---|---|---|
+| **Preparar a declaração de IRC (Modelo 22)** | Na caixa **Não foi possível fazer este passo**, ao confirmar: «Não existe Modelo 22 de *2025*: prepare-o primeiro com o botão «Preparar a declaração» da etapa.» Num exercício ainda aberto, a mesma frase já aparece no painel, neste passo. | O botão não está no painel. Carregue em **Abrir a ficha do exercício**, separador **Processo de fecho**, linha **Modelo 22 preparada e conferida**, e em **Preparar a declaração**. Volte ao painel e carregue em **Confirmar que está feito**. |
+| **Aprovar as contas** (só o administrador) | Na janela **Operação inválida**, com uma data futura: «A data de aprovação das contas de *2025* não pode ser posterior a hoje (*03/11/2026*): registe a aprovação quando a reunião tiver acontecido.» | Registe a aprovação depois da reunião, com a data dela. |
+
+Estes pontos só aparecem por resolver em certos casos. Provocados à parte, **Ver detalhe** mostrou:
+
+| Ponto no painel | O que diz | O que fazer |
+|---|---|---|
+| **Nenhum lançamento está à espera de uma data futura** | «*Renda de dezembro*: publica-se sozinho em *20/12/2026*» | **Ver a lista** abre **Lançamentos agendados**. |
+| **O exercício anterior ainda não está fechado** | «O exercício *2026* (*01/01/2026* a *31/12/2026*) ainda está *Aberto*: feche-o primeiro.» | Feche primeiro esse exercício. |
+| **O plano de contas está pronto para o fim do exercício** | «O plano de contas de *Empresa Demonstração, Lda* não tem a conta *818* ativa.» | Em **Plano de contas**, escolha o filtro **Conta inativas**, abra a conta e carregue em **Desarquivar**. |
+| **O Balanço está equilibrado (Ativo = Capital próprio + Passivo)** | «*1* conta(s) com saldo estão fora do Balanço, por isso o Ativo pode ser diferente do Capital próprio mais o Passivo: *278940* (*75,00 €*). Veja Consultar › Demonstrações financeiras › Saldos de contas não mapeadas.» | Dê a taxonomia à conta: veja [contas sem taxonomia](/troubleshooting/conta-sem-taxonomia). |
+| **A data de bloqueio não impede os lançamentos de fecho** | «A data de bloqueio irreversível de *Nome da empresa* é *31/12/2026*, igual ou posterior ao fim do exercício (*31/12/2026*): os lançamentos de apuramento e de encerramento já não podem ser datados nele e o bloqueio não se desfaz.» | Este bloqueio não se desfaz no ecrã: fale com o suporte. <span className="fd-pending">Pendente de validação por contabilista certificado: como fechar um exercício com este bloqueio já aplicado.</span> |
+| **Sem saldo de IVA vindo do histórico migrado** (só numa empresa migrada) | «A conta de IVA *2432* traz *100,00 €* do histórico migrado. Não é pedido no apuramento do IVA e passa tal como está para o ano seguinte: se não estiver certo, corrija-o com um lançamento de regularização.» É um aviso: não conta nos pontos por resolver. | Confira o saldo com o programa anterior. <span className="fd-pending">Pendente de validação por contabilista certificado: tratamento do IVA herdado do programa anterior.</span> |
+
+**Antes de pôr a data de bloqueio irreversível.** A **Data de bloqueio definitivo** só a muda o administrador, na janela **Fixar datas de bloqueio**. A janela não tem entrada nos menus: abre-se no painel do fecho do exercício, com o botão **Datas de bloqueio**. Ao Contabilista certificado, a mesma janela diz «Data de bloqueio definitivo: o seu perfil não a pode alterar; peça ao administrador.» Antes de a abrir, ponha como empresa ativa, no canto superior direito, a empresa que vai bloquear. Ao escrever a **Data de bloqueio definitivo**, a janela avisa, por exemplo: «Data de bloqueio definitivo *31/12/2026* deixa *2* lançamentos em rascunho bloqueados: registe-os ou anule-os antes de bloquear.» e «Esta data não pode voltar atrás. Os lançamentos até *31/12/2026* ficam fechados para sempre.» Com o **Motivo** escrito e sem marcar **Confirmo: esta data não pode voltar atrás?**, **Aplicar** responde «… Marque a caixa de confirmação se é isso que quer; nada foi gravado.». Com a caixa marcada e rascunhos no período, responde «Ainda há lançamentos provisórios no período que quer travar. Deve lançá-los ou excluí-los.», com o botão **Mostrar lançamentos provisórios**. Nos dois casos a data não fica gravada. Registe ou anule esses rascunhos com o contabilista certificado antes de bloquear. Sem rascunhos no período, **Aplicar** grava e avisa: «Datas de bloqueio guardadas. Data de bloqueio definitivo subiu para *31/12/2026*. O motivo ficou registado na auditoria.» Se a data for o último dia do exercício ou depois, o painel passa a mostrar o ponto **A data de bloqueio não impede os lançamentos de fecho** da tabela acima.
+
+Duas verificações passaram sempre, e por isso não têm mensagem aqui:
+
+- **Os débitos e os créditos dos lançamentos batem certo** e **Sem valores negativos a débito ou a crédito.** Um lançamento feito no programa não chega a falhar. Sem equilíbrio, não se grava ([O lançamento não está equilibrado](/troubleshooting/lancamento-desequilibrado)). Um valor negativo passa para o outro lado da linha: -100,00 em **Crédito** ficou 100,00 em **Débito**. Em **Importar lançamentos**, **Verificar** recusa o ficheiro nos dois casos.
+
+**Nos cartões do mês** (janeiro de 2026, na demonstração):
+
+| Cartão | O que diz |
+|---|---|
+| **Bancos reconciliados** | **Sem prova**. «Não há nenhuma linha de extrato neste mês: importe o extrato de cada banco para provar a reconciliação.» |
+| **IVA apurado** | «Períodos de IVA terminados e ainda não entregues: *3*» |
+| **Retenções** | **Nenhuma**. «Sem retenções no mês: não há nada a entregar.» |
+| **SAF-T validado** | **Concluída**. «SAF-T validado para o período: …» |
+| **Mês fechado** | «Verificações do fecho que falham: Todos os lançamentos estão publicados». Carregar no cartão abre **Lançamentos por publicar**. |
+
+## O que confirmar
+
+1. O **Exercício** escolhido no topo do painel, ou o mês em **O que falta para fechar?**.
+2. O seu perfil. O **Contabilista** não vê **Fecho do exercício**, e os últimos passos só avançam com o administrador: veja [fechar o exercício](/accounting-pt/fechar-o-exercicio).
+3. Se o número de pontos baixou. Cada passo confirmado tira um ponto: no exemplo, de 6 para 5.
+
+## Como resolver
+
+### O exercício (perfil Contabilista certificado)
+
+1. Trate primeiro os pontos de **Resolva primeiro**, com **Ver a lista**.
+2. Siga depois o **Próximo passo** que o painel indica. Na caixa **Não foi possível fazer este passo**, resolva cada linha da lista e carregue outra vez em **Confirmar que está feito**.
+3. Quando não faltar nenhum ponto, continue em [fechar o exercício](/accounting-pt/fechar-o-exercicio), onde estão os passos até ao fim.
+
+Não use lançamentos só para fazer desaparecer um ponto: cada um destes pontos é uma pergunta sobre as contas. Na dúvida, fale com o contabilista certificado.
+
+### O mês (perfil Contabilista certificado)
+
+Os passos estão em [fechar o mês](/accounting-pt/fechar-o-mes). Os cartões não travam o bloqueio: com **Mês fechado** a mostrar 1, carregar em **Bloquear vendas e compras até ao fim do mês**, escrever o **Motivo** e carregar em **Aplicar** foi aceite. A mensagem confirmou:
+
+> «Datas de bloqueio guardadas. Data de bloqueio de vendas subiu para *31/01/2026*. Data de bloqueio de compras subiu para *31/01/2026*. O motivo ficou registado na auditoria.»
+
+<HelpCallout type="risco" title="Bloquear o mês com pontos por resolver">
+O programa aceita, mas os pontos continuam por fazer, e os lançamentos em falta terão de entrar depois do bloqueio ou com uma exceção ([período bloqueado](/troubleshooting/periodo-bloqueado)). Trate os cartões antes de bloquear ou decida-o com o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: quando se pode bloquear um mês com pontos por resolver, por exemplo com IVA por entregar.</span>
+</HelpCallout>
+
+## Resultado esperado
+
+- **Exercício:** a contagem de **Falta resolver** baixa a cada ponto resolvido e, quando chega ao fim, o botão **Fechar o exercício** fica ativo.
+- **Mês:** o número de cada cartão acompanha o que falta. O bloqueio não muda os cartões: no exemplo, **Mês fechado** continuou a mostrar 1 depois de bloquear.
+
+## Quando contactar o suporte
+
+- Resolveu o que **Ver detalhe** mostra e o ponto continua por resolver.
+- O ponto indica um lançamento ou uma conta que não existe.
+- O botão **Fechar o exercício** continua desativado sem nenhum ponto na lista.
+
+## Informação a enviar
+
+- A empresa e o exercício, ou o mês.
+- O texto do ponto e de **Ver detalhe**, copiado do ecrã.
+- Uma captura do painel, com o número de pontos.
+- O perfil com que entrou.

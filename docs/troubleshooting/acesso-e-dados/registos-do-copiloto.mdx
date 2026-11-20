@@ -1,0 +1,92 @@
+---
+id: registos-do-copiloto
+slug: /troubleshooting/registos-do-copiloto
+title: Os registos do Copiloto não se criam, alteram nem apagam à mão
+sidebar_label: Registos do Copiloto só de leitura
+sidebar_position: 14
+description: O registo, as chamadas à IA, as sugestões, os consentimentos, os interruptores, as perguntas e os exemplos do leitor são escritos só pelo Copiloto e ficam como prova.
+keywords: [registos do Copiloto, registo do Copiloto, chamadas à IA, chamadas a IA, sugestões da IA, sugestoes da IA, consentimentos da IA, interruptores, perguntas ao Ajudante, correções do leitor, correcoes do leitor, não se apaga, nao se apaga, não se altera, nao se altera, escrito só pelo Copiloto, escrito so pelo Copiloto, importar registo do Copiloto]
+doc_id: DOC-0424
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 255d77e63)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-permissao, copilot/configurar/registo-do-copiloto, copilot/configurar/privacidade-e-consentimentos]
+---
+
+## Sintoma
+
+Abre uma lista do menu **Copiloto › Controlo** (por exemplo **Registo**) e não encontra o botão **Novo**, nem forma de alterar ou de apagar uma linha. Ou um programa ligado por integração recebe uma das mensagens abaixo.
+
+![Lista Registo do Copiloto, sem botão Novo, com a coluna O que aconteceu](/images/troubleshooting/registos-do-copiloto/01-registo-sem-botao-novo.png)
+
+## Mensagem
+
+No ecrã não há mensagem: estas listas não têm **Novo**, **Importar** nem **Eliminar**, e clicar numa linha do **Registo** não abre nenhuma ficha.
+
+As mensagens seguintes são uma proteção interna: quem trabalha no ecrã nunca as vê. Só as recebe um programa ligado por integração, e servem ao técnico que o configurou:
+
+| Registo | Ao criar |
+|---|---|
+| **Registo** | «O registo do Copiloto é escrito só pelo Copiloto. Nada foi registado. Use as ações do Copiloto para fazer um registo: o registo nunca se preenche à mão nem se importa.» |
+| **Chamadas à IA** | «O registo de chamadas à IA é escrito só pelo Copiloto. Nada foi registado. Use os agentes do Copiloto para fazer uma chamada: nunca se preenche à mão nem se importa.» |
+| **Sugestões da IA** | «As sugestões da IA são criadas só pelo Copiloto. Nada foi registado: peça a sugestão ao Copiloto, a partir dos ecrãs dele.» |
+| **Consentimentos da IA** | «O consentimento só é registado pelo assistente de consentimento das definições da IA. Nada foi registado: abra as definições da IA e use «Dar consentimento».» |
+| **Interruptores** | «Os interruptores do Copiloto são criados pelo sistema, um por empresa e agente. Use o interruptor existente para o ligar ou desligar.» |
+| **Perguntas ao Ajudante** | «As perguntas ao Ajudante só são guardadas pelo próprio Ajudante. Nada foi registado: faça a pergunta com o ícone do Copiloto.» |
+| **Correções do leitor** | «Os exemplos do leitor são criados pelo leitor de documentos quando corrige um rascunho. Nada foi gravado: corrija antes o próprio rascunho.» |
+
+Ao alterar ou apagar uma linha que já existe:
+
+> «O registo do Copiloto nunca pode ser alterado. Nada foi alterado. Se algo estiver errado, peça ao Copiloto que registe uma linha nova em vez de editar a antiga.»
+
+> «O registo do Copiloto nunca pode ser apagado. Nada foi apagado, porque é a prova do que o Copiloto fez e de quem o aceitou. Guarde-o e acrescente uma linha nova se for preciso.»
+
+> «Só o campo «Ligado» de um interruptor do Copiloto pode ser alterado. Altere apenas esse campo.»
+
+> «Um interruptor do Copiloto não pode ser apagado, porque é o registo do que foi escolhido. Use o botão «Ligado» para o desligar.»
+
+Estas mensagens são iguais com os perfis **Contabilista** e **Administrador**. Foram copiadas da base de demonstração em português, tentando a operação por integração, porque o ecrã não oferece estes botões.
+
+## Causas verificadas
+
+- **Estas listas são a prova do que o Copiloto fez.** Mostram o que aconteceu, quem o fez e quem o aceitou. Se pudessem ser escritas à mão, deixavam de provar alguma coisa, por isso a recusa vale para todos os perfis, incluindo o administrador.
+- **Os interruptores nascem com o sistema.** Há um por empresa e por agente, e o que se muda é só o **Ligado**.
+
+## O que confirmar
+
+1. Que lista tem aberta. **Lidos pelo Copiloto** também não tem botão **Novo**: as linhas vêm dos ficheiros que o Copiloto lê.
+2. O que queria fazer: corrigir uma linha antiga, ligar um agente ou dar um consentimento.
+3. O seu perfil: o **Contabilista** vê os **Interruptores**, mas clicar em **Ligado** não muda nada. O **Administrador** consegue mudá-lo. O perfil **Auditor / ROC** vê as mesmas listas. O **Administrativo** não vê o menu **Copiloto**.
+
+## Como resolver
+
+**O que pode fazer sozinho:**
+
+- **Ligar ou desligar um agente:** em **Copiloto › Controlo › Interruptores**, se o seu perfil o permitir, carregue em **Ligado** na linha do agente.
+- **Corrigir o que o leitor de documentos leu:** corrija o rascunho. A correção entra sozinha em **Copiloto › Agentes › Correções do leitor**. <span className="fd-pending">Pendente de validação no ecrã: a lista estava vazia na demonstração e esta passagem não se viu.</span>
+- **Corrigir uma linha errada do Registo:** não se corrige. Deixe-a ficar e faça a ação certa no Copiloto, que fica numa linha nova.
+
+**O que pede a outra pessoa:**
+
+- **Dar ou retirar um consentimento:** peça ao administrador que siga [Privacidade e consentimentos](/copilot/privacidade-e-consentimentos).
+- **Ligar um interruptor sem permissão para isso:** peça ao administrador.
+
+Para saber o que cada coluna do registo quer dizer, veja [Registo do Copiloto](/copilot/registo-do-copiloto).
+
+## Resultado esperado
+
+A linha antiga continua na lista, sem alterações. A correção aparece numa linha nova, ou o interruptor fica com o estado que escolheu.
+
+## Quando contactar o suporte
+
+- Uma linha desapareceu de uma destas listas.
+- Aparece uma mensagem que não está neste artigo, por exemplo ao abrir uma lista.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com o nome da lista, a data da linha e a mensagem completa.
+
+{/* Nota interna (DOCS-046, lote v16-NOVOS, master 255d77e63): nenhuma destas mensagens tem caminho por clique, porque as listas não têm Novo, Eliminar nem Importar para estes perfis; 13 de 13 por RPC em pt_PT com demo.contabilista e admin. Vistos por clique: lista do Registo, cuja linha não abre ficha (só há vista de lista); ações só Exportar com admin, nenhuma com demo.contabilista; Ligado sem efeito com demo.contabilista e com efeito com admin (reposto); menus por load_menus com admin, contabilista, auditor e faturação. Sugestões, chamadas, consentimentos, perguntas e correções estão vazios na demonstração, por isso as mensagens de alterar e apagar destes não se provocaram. A linha do Registo da captura diz «AI connection «Anthropic» created.» em inglês: defeito no relatório do lote. */}

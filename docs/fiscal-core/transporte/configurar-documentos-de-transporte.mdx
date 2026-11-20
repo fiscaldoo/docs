@@ -1,0 +1,115 @@
+---
+id: configurar-documentos-de-transporte
+slug: /fiscal-core/configurar-documentos-de-transporte
+title: Como configurar os documentos de transporte
+sidebar_label: Configurar os documentos de transporte
+sidebar_position: 2
+description: Séries das guias, comunicação à AT (automática ou manual), código AT, cópias, tolerância do início do transporte, tipos de guia e que operações exigem guia, com o que o ecrã recusa.
+keywords: [configurar guias de transporte, documentos de transporte, guia de remessa, GR, GT, GA, GC, GD, série das guias, comunicação das guias, comunicação automática, comunicação manual, código AT exigido, cópias impressas, tolerância do início do transporte, tipo de operação, exige um documento de transporte, exceção à guia de transporte, guias valorizadas, DL 147/2003, guias nao comunicadas]
+doc_id: DOC-0046
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master b1c81051)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/transporte/emitir-uma-guia-de-transporte, fiscal-core/certificacao/series-documentais, fiscal-core/certificacao/tipos-de-documento, fiscal-core/at-e-saft/ligar-a-at]
+---
+
+## Para que serve?
+
+Os bens que circulam acompanhados de uma guia (Decreto-Lei 147/2003) obrigam a empresa a decidir quatro coisas antes de emitir a primeira: **que tipo de guia** cada operação emite, **em que série** é numerada, **como** é comunicada à Autoridade Tributária e Aduaneira (AT) e **que regras** o fiscaldoo aplica na saída dos bens (código da AT, tolerância do início do transporte, cópias). Este artigo mostra onde se decide cada uma e o que o ecrã recusa. Emitir a guia, passo a passo, está em [Como emitir uma guia de transporte](/fiscal-core/emitir-uma-guia-de-transporte).
+
+## Quando utilizar?
+
+- A empresa vai emitir guias pela primeira vez, ou passa a emitir outro tipo de guia (por exemplo guias de remessa).
+- Quer que a comunicação à AT passe de automática a manual (ou ao contrário).
+- Há operações que não precisam de guia (uso pessoal, amostras…) e quer que o fiscaldoo deixe de as exigir.
+- Não é para emitir uma guia concreta nem para corrigir uma já comunicada.
+
+## Onde encontrar?
+
+- **Definições › Inventário › Documentos de transporte (PT)**: as cinco opções da empresa.
+- **Inventário › Configurar › Gestão de armazém › Tipos de operação**: o tipo de guia e a exigência de guia de cada operação. O menu **Inventário** não tem um item «Configuração»: o caminho é o de **Configurar**, que pode ficar escondido atrás do sinal **+** da barra de menus.
+- **Contabilidade › Configurar › Faturação certificada › Séries fiscais**: a série de cada tipo de guia.
+
+## Antes de começar
+
+- O seu perfil é **Administrador**. Foi com ele que todos os passos foram feitos do princípio ao fim. Os perfis **Contabilista**, **Contabilista certificado**, **Gerência** e **Administrativo** abrem **Definições** com «Sem acesso: Não tem acesso a «Definições»», por isso não chegam aos passos 1 e 5.
+- A empresa tem as credenciais da AT guardadas, para a comunicação automática: [Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). Na demonstração a AT é um simulador: o código que se vê («MOCK-…») é fictício e nada sai da máquina.
+- Para ver o resultado de cada opção é preciso uma entrega com guia emitida. O artigo usa as da demonstração, feitas como em [Como emitir uma guia de transporte](/fiscal-core/emitir-uma-guia-de-transporte).
+
+## Como utilizar
+
+<StepByStep>
+
+1. **Veja os valores por omissão.** Abra **Definições › Inventário** e desça até **Documentos de transporte (PT)**. O bloco tem cinco opções, todas da empresa: **Código AT exigido para validar** (ligada), **Comunicação das guias** (**Automático**), **Guias valorizadas** (desligada), **Cópias impressas** (2) e **Tolerância do início do transporte** (30 minutos). Quando mudar uma, carregue em **Guardar**.
+   ![Definições › Inventário, bloco Documentos de transporte (PT), com as cinco opções e os valores por omissão](/images/fiscal-core/configurar-documentos-de-transporte/01-definicoes-transporte.png)
+2. **Crie a série do tipo de guia que vai emitir.** A demonstração já tem séries ativas de 2026 para **[GT] Guia de transporte (incluindo as globais)** e **[GD] Guia ou nota de devolução**, e nenhuma para os outros tipos. Para emitir, por exemplo, guias de remessa, abra **Séries fiscais**, carregue em **Criar e comunicar**, escreva `D26` em **Identificador da série**, escolha **[GR] Guia de remessa** em **Tipo de documento SAF-T** (escreva «Guia de remessa»: procurar por «[GR]» não encontra nada), deixe **Diário** vazio (as guias não têm diário), marque **Confirmo que estes dados estão corretos e podem ser comunicados** e carregue em **Criar e comunicar**. O resultado diz: «A série “GR D26” foi comunicada à Autoridade Tributária e está ativa, com o código de validação …». Os campos e o resto do percurso estão em [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais).
+3. **Escolha o tipo de guia de cada operação.** Abra **Tipos de operação** e a operação de saída (na demonstração, **Entregas**). Os campos do fiscaldoo são quatro:
+   - **Tipo de documento de transporte**: só aceita os cinco tipos de guia, **[GA] Guia de movimentação de ativos fixos próprios**, **[GC] Guia de consignação**, **[GD] Guia ou nota de devolução**, **[GR] Guia de remessa** e **[GT] Guia de transporte (incluindo as globais)**. Vazio, as entregas dessa operação não se emitem como guias.
+   - **Exige um documento de transporte**: com a opção ligada, a entrega não se valida sem a guia emitida.
+   - **Exceção à guia de transporte**: a operação está fora do regime e nunca exige guia. As 17 escolhas são as do ecrã: **Uso pessoal ou doméstico**, **Bens de retalhistas para consumidores finais que já os adquiriram**, **Ativos fixos tangíveis da própria empresa**, **Produção própria agrícola, silvícola, de aquicultura ou pecuária**, **Amostras, mostruários de viajantes e material de propaganda**, **Filmes e material publicitário para salas de cinema**, **Veículos automóveis com matrícula definitiva**, **Taras e embalagens retornáveis**, **Resíduos urbanos ou hospitalares**, **Bens de solidariedade social (IPSS, campanhas de organizações sem fins lucrativos)**, **Abastecimento de água, saneamento e resíduos do Estado ou do setor empresarial local**, **Artigos sujeitos a impostos especiais de consumo em regime suspensivo**, **Transação intracomunitária**, **Mercadorias em trânsito aduaneiro**, **Mudança de instalações do sujeito passivo (comunicada às direções de finanças)**, **Vendedores ambulantes e fornecedores em regime de isenção (as faturas de aquisição substituem a guia)** e **Outra (é exigido um motivo)**. <span className="fd-pending">Pendente de validação por contabilista certificado: qual destas exceções se aplica a cada operação da empresa; o artigo não responde a essa dúvida de lei.</span>
+   - **Guias valorizadas**: **Como a empresa**, **Valorizada** ou **Sem valor**, para uma operação decidir de outro modo que a empresa.
+   ![Tipo de operação com o Tipo de documento de transporte [GR] Guia de remessa assinalado, Exige um documento de transporte ligado, Exceção vazia, Guias valorizadas Como a empresa e Prefixo da sequência GRD](/images/fiscal-core/configurar-documentos-de-transporte/02-tipo-de-operacao.png)
+4. **Para uma operação nova**, escreva também o **Prefixo da sequência** (por exemplo `GRD`), que é obrigatório: sem ele o ecrã diz «Há campos obrigatórios por preencher». É o nome interno da entrega (`GRD00013`), que não é o número da guia: a guia sai com o da série (`GR D26/1`).
+5. **Decida a comunicação.** Em **Definições**, **Comunicação das guias** tem duas escolhas, **Automático (comunicação automática à AT, quando a guia é emitida)** e **Manual (o utilizador carrega em «Comunicar à AT»)**. Com a automática, ao emitir a guia ela fica **Comunicada**, com **Código AT** e **Comunicada por** «Automática (pelo programa)».
+   ![Bloco Comunicação à Autoridade Tributária de uma guia GR comunicada automaticamente, com o Código AT do simulador](/images/fiscal-core/configurar-documentos-de-transporte/03-guia-comunicada.png)
+   Com a **Manual**, a guia fica **Por comunicar** («Comunique-a à AT antes de o transporte começar.») e a entrega mostra **Comunicar à AT** e **Registar o código da AT à mão**.
+   ![Guia GR D26/3 emitida e por comunicar: «Comunique-a à AT antes de o transporte começar»](/images/fiscal-core/configurar-documentos-de-transporte/04-guia-por-comunicar.png)
+   Carregue em **Comunicar à AT**: a mensagem «Comunicação com a Autoridade Tributária. Aceites: 1, rejeitadas: 0, sem resposta: 0.» confirma e a guia passa a **Comunicada**.
+6. **Confirme as outras quatro opções do bloco**, que mudam o que o ecrã aceita:
+   - **Código AT exigido para validar** desligada: **Validar** deixa de esperar pelo código. A guia fica **Por comunicar (a validação não exige o código AT)** e o ecrã lembra: «A comunicação à AT continua obrigatória (salvo as dispensas do DL 147/2003, art. 5.º, n.os 10 e 11); só a validação deixou de esperar pelo código. Comunique-a à AT.»
+   - **Tolerância do início do transporte**: com 30, uma guia com início 2 horas no passado não se emite (ver «Problemas frequentes»); com 240 emitiu-se.
+   - **Cópias impressas**: 2 deu um PDF com duas páginas (**Original** e **Duplicado**); 3 deu três (**Original**, **Duplicado** e **Triplicado**).
+   - **Guias valorizadas** ligada: a guia emitida leva o valor dos bens, com IVA. Se a entrega vem de uma encomenda de venda, usa o preço, o desconto e os impostos da linha da encomenda (no teste, 2 unidades a 10,00 € com IVA a 23 % deram 20,00 € sem IVA, 4,60 € de IVA e 24,60 € com IVA). Se não vem de nenhuma encomenda, usa o preço de venda do produto e os impostos do produto (no teste, 1 unidade a 7,50 € deu 7,50 € sem IVA, 1,73 € de IVA e 9,23 € com IVA). O valor fica fixo na emissão: alterar o preço depois não muda uma guia já emitida. Um tipo de operação pode forçar **Valorizada** ou **Sem valor**.
+
+</StepByStep>
+
+**Exemplo.** Série `GR D26` criada e ativa; operação **Entregas com guia de remessa** (**Tipo de documento de transporte** **[GR]**, **Exige um documento de transporte** ligado); entrega à `Papelaria Central, Lda` com início do transporte a 02/11/2026 às 06:00: ficou a guia `GR D26/1`, com ATCUD `MKK8GN9S-1`, comunicada à AT ao ser emitida (código do simulador `MOCK-4549C893`).
+
+## Resultado esperado
+
+- A série de cada tipo de guia está **Ativa**, com **Código de validação**; o ATCUD da guia leva esse código (`MKK8GN9S-1`) e o código QR da guia tem o tipo `GR`.
+- Cada operação de saída tem o seu **Tipo de documento de transporte** e a exigência de guia.
+- A comunicação segue a opção da empresa e, em qualquer das duas, a guia só deixa de estar **Por comunicar** quando a AT a aceita.
+- Com **Guias valorizadas** ligada, o PDF da guia mostra os totais sem IVA, de IVA e com IVA.
+- A configuração não gera lançamentos contabilísticos.
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Desligar o código AT não dispensa a comunicação">
+**Código AT exigido para validar** só decide se **Validar** espera pelo código; a comunicação da guia à AT continua obrigatória, e a guia fica **Por comunicar** até a AT a aceitar. Uma guia validada sem código não se imprime com a opção ligada de novo: o pedido do PDF é recusado com «A guia “GR D26/3” não pode ser impressa: não tem código AT. Comunique-a à Autoridade Tributária ou registe o código obtido por telefone ou no Portal…». <span className="fd-pending">Pendente de validação por contabilista certificado: prazo de comunicação, dispensas do DL 147/2003 art. 5.º n.os 10 e 11 e o que fazer quando a comunicação falha.</span>
+</HelpCallout>
+
+- **O que muda e o que não muda para trás.** Alterar uma opção vale para as guias seguintes. Uma guia já emitida não se altera, e a série de um tipo de guia, depois de ativa, tem as regras das outras séries ([Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais)).
+- **Exceção por contacto.** Um cliente cujas entregas estão sempre fora do regime pode ter a **Exceção à guia de transporte** na ficha do contacto: abra **Contactos**, o contacto, o separador **Faturação** e o grupo **Dados fiscais PT**. Entre os perfis, só o **Contabilista certificado** o vê e altera (o **Contabilista** e o **Administrativo** não o veem); o administrador também. As entregas novas desse contacto herdam a exceção e deixam de exigir guia; a exceção do tipo de operação, se existir, tem prioridade. Uma entrega já criada pode ter a exceção alterada na própria entrega, enquanto não estiver emitida. <span className="fd-pending">Pendente de validação por contabilista certificado: que clientes podem ter uma exceção permanente.</span>
+
+{/* Nota interna (DOCS-046 v3-FC3, DOC-0046, master b1c81051, base docs_demo_v3fc3_test, perfil Administrador): todos os caminhos percorridos como Administrador; os outros perfis demo não abrem Definições. O menu Inventário › Configurar › Gestão de armazém › Tipos de operação fica no sinal «+» a 1366 px; as Séries fiscais não precisam de modo programador (V3FC2-06 / BNK-035 #3636 não afeta este artigo). Série GR D26 criada na base; guias GR D26/1 a /3 (GRD00013 a GRD00015) e tipo de operação «Entregas com guia de remessa» (id 33) ficam na base. O simulador devolve «Simulated rejection» em inglês: mensagem do simulador, não da AT. Defeitos: V3FC3-01 (entrega nova: botões só depois de recarregar), V3FC3-03 (pesquisa «[GR]» no tipo de documento da série sem resultados). */}
+
+## Problemas frequentes
+
+### «O tipo de operação … exige um documento de transporte: escolha o tipo de documento de transporte (GT, GR, GA, GC ou GD)…»
+
+- **Sintoma:** ao guardar a operação com **Exige um documento de transporte** ligado e **Tipo de documento de transporte** vazio abre **Erro de Validação**: «O tipo de operação “Armazém Demonstração: Entregas com guia de remessa” exige um documento de transporte: escolha o tipo de documento de transporte (GT, GR, GA, GC ou GD) com que as suas transferências são emitidas.»
+- **O que fazer:** escolha o tipo de guia (passo 3) e guarde.
+
+### «… não pode exigir um documento de transporte e ser, ao mesmo tempo, uma exceção ao regime: escolha uma das duas.»
+
+- **Sintoma:** **Exige um documento de transporte** ligado e uma **Exceção à guia de transporte** escolhida ao mesmo tempo.
+- **O que fazer:** deixe só uma. Uma operação em exceção nunca exige guia.
+
+### «O início do transporte (…) está no passado, além da tolerância de 30 minutos.»
+
+- **Sintoma:** **Emitir guia** › **Confirmar** com início 2 horas no passado abre «A guia de transporte não pode ser emitida: - O início do transporte (01/11/2026 18:30:00) está no passado, além da tolerância de 30 minutos. Indique a data e a hora reais a que os bens saem.»
+- **O que fazer:** corrija o **Início do transporte** para a hora real. Aumentar a **Tolerância do início do transporte** só serve para guias que se emitem mais tarde do que a saída real: <span className="fd-pending">Pendente de validação por contabilista certificado: qual a tolerância aceitável.</span>
+
+### «Comunicação com a Autoridade Tributária. Aceites: 0, rejeitadas: 1, sem resposta: 0.»
+
+- **Sintoma:** **Comunicar à AT** devolve «GR D26/2: A Autoridade Tributária recusou (Simulated rejection). Corrija o que indica e comunique de novo.» A guia fica **Recusada pela AT**, com «Leia o aviso abaixo, corrija o que ele diz e comunique outra vez.» A frase em inglês é a do simulador; a da AT verdadeira diz o motivo.
+- **O que fazer:** corrija o que o aviso diz e carregue de novo em **Comunicar à AT**: a segunda tentativa, aceite, deu «Aceites: 1, rejeitadas: 0, sem resposta: 0.». Se a AT está inacessível: [A comunicação à AT falhou](/troubleshooting/comunicacao-a-at-falhou).
+
+### «… os bens não podem sair antes de a Autoridade Tributária dar o código à guia»
+
+- **Sintoma:** **Validar** uma guia por comunicar, com **Código AT exigido para validar** ligada.
+- **O que fazer:** comunique a guia ou registe o código; os restantes casos estão em [A guia de transporte não tem código da AT](/troubleshooting/guia-sem-codigo-da-at).

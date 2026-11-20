@@ -1,0 +1,128 @@
+---
+id: pagar-as-retencoes
+slug: /accounting-pt/pagar-as-retencoes
+title: Como pagar as retenções na fonte do mês (guia)
+sidebar_label: Pagar as retenções do mês
+sidebar_position: 2
+description: Gerar a guia mensal de retenções de IRS ou IRC, declará-la, registar o pagamento ao Estado com a guia e a data e marcar a guia como paga; o pagamento baixa a conta 242.
+keywords: [pagar retenções, pagar retencoes, guia de retenção na fonte, guia de retencao na fonte, guias de retenções, guia de pagamento ao Estado, retenções de IRS, retencoes de IRS, retenção de IRC, prazo das retenções, dia 20, DUC, retenções na fonte registadas, retenções do período, marcar como paga, Declarada, Rascunho]
+doc_id: DOC-0104
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7a46de91a)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/retencoes/configurar-retencoes-na-fonte, accounting-pt/retencoes/modelo-10]
+---
+
+{/* Nota interna (v3-A1, DOC-0104, risco alto; corrigido em docs-v3acor, NV3A-01 a NV3A-04): validado na base docs_demo_v3acor_test (8211, master f16f4a3e) com o Responsável fiscal (demo.gestor_contabilidade) nas guias e o Contabilista (demo.contabilista) no pagamento. Guia de junho de 2026 (IRS, Rui Matos, FTF/2026/00043 de 14/05, paga a 10/06): 800,00 € / 184,00 €, prazo 20/07/2026; pagamento PBNK1/2026/00042 de 15/07/2026. Guias de março (230,00 €) e de abril (115,00 €) também pagas. Recusas copiadas do ecrã: emitir sem linhas, marcar como paga sem pagamento, guia repetida. Provocados a 01/11: pagamento de 70,00 € a mais (guia com «Declarado e não pago» -70,00 €) e pagamento de 30,00 € à Papelaria Central com «Guia de pagamento ao Estado» (conta para a guia: 284,00 €); os dois foram cancelados com motivo e a guia voltou a 184,00 € / 0,00 €. DEFEITOS DO PRODUTO (não vão para o texto público): ACC-212 (#3620), o pagamento com «Guia de pagamento ao Estado» debita 2211 e não baixa 242, não recusa valor acima do total nem parceiro que não é o Estado; V3A1-01, o botão que declara a guia aparece como «Problema» e devia dizer «Emitir»; V3A1-02, o nome da guia está em inglês («IRS withholding 2026-06»). Quando o ACC-212 entrar em master: tirar o aviso do início, reescrever o «Resultado esperado» (guia paga deixa a 242 a zero), repetir o teste de regressão e rever os problemas «acima do devido» e «outro fornecedor». */}
+
+## Para que serve?
+
+As retenções de IRS ou de IRC que a empresa fez nas faturas dos fornecedores são entregues ao Estado todos os meses. A **guia de retenção** junta as retenções do mês por tipo de rendimento, mostra o total e o prazo, e acompanha-as até ao pagamento: **Rascunho**, **Declarada** e **Paga**.
+
+Pagar a guia é uma ação à parte, no portal das Finanças, onde a empresa obtém a referência de pagamento. A guia do produto confere que o valor pago, registado com o mês certo, cobre o total.
+
+O pagamento ao Estado regista-se no fiscaldoo com a guia e o mês: só um pagamento à Autoridade Tributária, até ao total da guia, conta para ela, e o pagamento baixa a conta das retenções (`242`).
+{/* Nota interna (lote v23-BE, master 7a46de91a): o aviso de que o pagamento não baixava a 242 saiu; o ACC-212 (#3620) está em master e o pagamento debita a 242 (conferido no razão, ver «Resultado esperado»). */}
+
+## Quando utilizar?
+
+- Todos os meses em que a empresa pagou rendimentos sujeitos a retenção (por exemplo honorários de um profissional independente).
+- Quando o prazo se aproxima: a guia mostra uma faixa quando o prazo passou e ela não está paga.
+- Para conferir, antes de entregar o [Modelo 10](/accounting-pt/modelo-10), se cada mês teve guia e pagamento.
+- Não serve para as retenções dos salários (trabalho dependente, categoria A): a guia só soma as retenções das faturas de fornecedores (ver «Notas importantes»).
+
+## Onde encontrar?
+
+- **Contabilidade › Declarar › Retenções na fonte › O que há para fazer com as retenções?**, e em **Listas de apoio** a lista **Guias de retenção na fonte** (as guias abrem-se daqui; o menu não tem entrada própria).
+- **Contabilidade › Declarar › Retenções na fonte › Retenções do período**: o mapa para conferir os valores (**Mês**, **Trimestre** ou **Ano**; **Exportar PDF** e **Exportar**).
+- O pagamento ao Estado regista-se em **Contabilidade › Reconciliar › Bancos e caixa › Pagamentos a fornecedores**.
+
+## Antes de começar
+
+- **Criar e declarar a guia:** o perfil é **Contabilista certificado**. O **Contabilista** abre a lista e as guias, mas a lista dele não tem o botão **Novo**.
+- **Registar o pagamento:** o **Contabilista** (ou o Contabilista certificado) faz-o em **Pagamentos a fornecedores**.
+- As faturas do mês têm de estar confirmadas e pagas ao fornecedor: a guia soma pela **data do pagamento** da fatura. No exemplo, a fatura FTF/2026/00043 (Rui Matos, 14/05/2026, retenção de 184,00 €, paga a 10/06/2026) entra na guia de **junho**, não na de maio. Para configurar a retenção do fornecedor, veja [Como configurar as retenções na fonte](/accounting-pt/configurar-retencoes-na-fonte).
+- Existe o parceiro da Autoridade Tributária da empresa: na demonstração, **Autoridade Tributária e Aduaneira** (o contacto **Autoridade Tributária (demonstração)** não serve para pagar a guia).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Com o perfil **Contabilista certificado**, abra **Declarar › Retenções na fonte › O que há para fazer com as retenções?**, carregue em **Guias de retenção na fonte** e em **Novo**.
+2. Em **Imposto**, escolha **Retenção de IRS** (a outra opção é **Retenção de IRC**). Em **Mês**, escolha o 1.º dia do mês dos pagamentos, aqui `01/06/2026`. O **Prazo** aparece sozinho: 20/07/2026, o dia 20 do mês seguinte (**Dia legal?**). Quando o dia 20 cai num dia não útil, o **Prazo** passa para o dia útil seguinte.
+3. Carregue em **Gerar**. A tabela **Por tipo de rendimento** mostra uma linha por regra de retenção, com **Código de rendimento**, **Beneficiários**, **Documentos**, **Base** e **Valor retido**: no exemplo, **IRS cat. B — atividades profissionais da tabela do art. 151.º**, código `B`, 1 beneficiário, 1 documento, base 800,00 € e valor retido 184,00 €. O **Total a pagar** é 184,00 €. Se faltar uma fatura, confirme-a e o pagamento a fornecedor e carregue em **Gerar** de novo (só é possível enquanto a guia é rascunho). O botão da seta, na linha, abre os documentos dessa linha.
+   ![Guia de IRS de junho de 2026 em rascunho: Total a pagar 184,00 €, Prazo 20/07/2026 e uma linha IRS cat. B com base 800,00 € e valor retido 184,00 €, com o botão Gerar assinalado](/images/accounting-pt/pagar-as-retencoes/01-guia-gerada.png)
+4. Confira os valores com o mapa **Retenções do período** (passo opcional) e carregue no botão azul **Emitir**, que **declara a guia**. A guia passa a **Declarada**, mostra **Declarado e não pago** 184,00 € e ganha o botão **Imprimir** (um PDF «Documento interno sem valor fiscal», com os mesmos valores). O botão **Exportar para folha de cálculo**, que existe desde o rascunho, grava o mesmo quadro em XLSX.
+   {/* Nota interna (V3A1-01; auditoria EE-01, master ce51f2d47, 10/11/2026): o botão diz «Emitir» na Community (cópia da base-mãe, Contabilista certificado) e no Enterprise; captura 01 refeita com «Emitir» e o título «Retenção de IRS 06/2026». Lote v23-BE (master 7a46de91a): capturas 02 a 05 refeitas por clique, com o título «Retenção de IRS 06/2026» e o pagamento à Autoridade Tributária e Aduaneira. */}
+   ![Guia declarada com o botão Marcar como paga assinalado, o estado Declarada, Paga 0,00 € e Declarado e não pago 184,00 €](/images/accounting-pt/pagar-as-retencoes/02-guia-declarada.png)
+   <span className="fd-pending">Pendente de validação por contabilista certificado: prazo (dia 20 do mês seguinte, com o dia não útil a passar para o dia útil seguinte) e as retenções que a guia deve incluir (CIRS, art. 98.º e 101.º; CIRC, art. 94.º; CPPT, art. 20.º).</span>
+5. Pague a referência no portal das Finanças. Se tiver o número da guia de pagamento (1 a 11 algarismos), escreva-o em **Número da guia de pagamento** e grave.
+6. Como Contabilista, abra **Pagamentos a fornecedores** e **Novo**. Mantenha **Tipo do Pagamento** em **Enviar**. Em **Fornecedor**, escolha **Autoridade Tributária e Aduaneira**, o parceiro da Autoridade Tributária da empresa (não o contacto **Autoridade Tributária (demonstração)**, que o fiscaldoo recusa: ver «Problemas frequentes»); em **Valor**, `184,00`; em **Data**, a do pagamento (`15/07/2026`).
+7. Em **Guia de pagamento ao Estado**, escolha **Retenção de IRS** e, em **Período da guia**, o mês das retenções (`01/06/2026`): uma guia atrasada conta no mês a que se refere, não no mês em que se paga. O fiscaldoo recusa um fornecedor que não seja a Autoridade Tributária e um valor acima do que falta pagar da guia (ver «Problemas frequentes»). Confirme que o **Diário** é **Banco** e carregue em **Confirmar**. O pagamento fica **Pago**.
+   ![Pagamento a fornecedor de 184,00 € à Autoridade Tributária e Aduaneira, com a Guia de pagamento ao Estado Retenção de IRS assinalada e o Período da guia 01/06/2026](/images/accounting-pt/pagar-as-retencoes/04-pagamento-da-guia.png)
+8. Volte à guia, com o perfil **Contabilista certificado**, e carregue em **Marcar como paga**. A guia fica **Paga**, com **Paga** 184,00 €, **Declarado e não pago** 0,00 € e **Paga em** 15/07/2026.
+   ![Guia de junho paga: estado Paga, Paga 184,00 €, Declarado e não pago 0,00 € e Paga em 15/07/2026](/images/accounting-pt/pagar-as-retencoes/05-guia-paga.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, os caminhos, a guia e o pagamento são os mesmos (vistos com um utilizador só com o perfil **Contabilista certificado**, para a guia, e outro só com o perfil **Contabilista**, para o pagamento). Muda uma coisa no ecrã: na ficha do pagamento (passo 6) aparece também o botão **Ligar banco**, do Enterprise, para ligar a conta ao banco. Não é preciso para registar o pagamento ao Estado.
+
+{/* Nota interna (lote EE-01, DOCS-073 #4142, DEC-1794, master ce51f2d47, base Enterprise docs_ee_ee01_test, 10/11/2026): guias: lista com Novo para o CC, ficha com Imposto, Mês, Total a pagar, Prazo, Dia legal, Número da guia de pagamento e Paga. Pagamentos a fornecedores › Novo com o Contabilista: Guia de pagamento ao Estado presente; botões Confirmar e Connect Bank (em inglês). O botão da guia diz «Emitir» no Enterprise e na Community (auditoria EE-01, cópia Community em ce51f2d47). */}
+
+## Resultado esperado
+
+- A guia fica **Paga**, com a data do pagamento em **Paga em**, e o separador **Pagamentos** mostra o pagamento ligado.
+- **Gerar**, **Emitir** e **Marcar como paga** não fazem nenhum lançamento: as guias só registam o estado.
+- **O que o pagamento lança** (conferido no razão, com o parceiro Autoridade Tributária e Aduaneira):
+
+  | Conta | Débito | Crédito |
+  |---|---|---|
+  | `242 Retenção de impostos sobre rendimentos` | 184,00 € | |
+  | `120003 Pagamentos Pendentes` | | 184,00 € |
+
+  A retenção que a fatura deixou a crédito na `242` fica saldada por este débito. <span className="fd-pending">Pendente de validação por contabilista certificado: tratamento contabilístico do pagamento da retenção (SNC, conta 242).</span>
+- O banco só baixa quando este pagamento for reconciliado com o extrato ([Como reconciliar os movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios)): até lá, o valor está em `120003 Pagamentos Pendentes`, e aparece como pagamento «em trânsito» nos pendentes de reconciliação, apesar de o diário se chamar **Banco**.
+- Uma guia **Declarada** ou **Paga** já não se apaga nem muda de imposto ou de mês.
+
+## Notas importantes
+
+- **O fiscaldoo confere o fornecedor e o valor do pagamento.** Um pagamento com **Guia de pagamento ao Estado** só se confirma para o parceiro da Autoridade Tributária da empresa e até ao que falta pagar da guia (ver «Problemas frequentes»). A guia soma os pagamentos confirmados com o mesmo imposto e o mesmo mês.
+- **Salários.** As retenções dos salários também estão em `242` (parceiro Autoridade Tributária), mas a guia não as soma: em junho de 2026 a guia tem só a fatura de 800,00 €. O pagamento dessas retenções trata-se nos salários.
+- **Corrigir depois de declarar.** Uma guia declarada não se altera. Uma correção tardia faz-se na guia do mês seguinte, com o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: correção de retenções de meses já entregues.</span>
+- **Prazo passado.** Com o prazo ultrapassado e a guia por pagar, a guia mostra a faixa «O prazo passou e a guia não está paga». A guia de junho de 2026 mostrou-a a 10/11/2026.
+
+## Problemas frequentes
+
+### «A guia … não tem linhas»
+
+- **Sintoma:** ao carregar no botão azul de uma guia sem **Gerar**, «Operação inválida — A guia Retenção de IRC 12/2026 não tem linhas. Carregue primeiro em «Gerar»; se não houve retenções no mês, não é preciso guia.»
+- **O que fazer:** carregue em **Gerar**. Se continua sem linhas (no exemplo, uma guia de IRC de dezembro, ou de IRS de fevereiro de 2026, sem pagamentos a fornecedores nesse mês), não houve retenções pagas nesse mês: não é preciso guia. O rascunho vazio pode ficar na lista ou ser eliminado.
+
+### «Os pagamentos marcados como guia … somam 0,00 €»
+
+- **Sintoma:** ao carregar em **Marcar como paga**, «Operação inválida — Os pagamentos marcados como guia de Retenção de IRS 06/2026 somam 0,00 €, abaixo do total 184,00 €. Registe o pagamento (tipo «Enviar»), preencha «Guia de pagamento ao Estado» e o mês, e tente de novo.»
+  ![Janela Operação inválida: os pagamentos marcados como guia somam 0,00 €, abaixo do total 184,00 €](/images/accounting-pt/pagar-as-retencoes/03-recusa-sem-pagamento.png)
+- **Causa:** não há pagamento confirmado, do tipo **Enviar**, com a guia e o **Período da guia** desta guia, ou o valor é menor do que o total.
+- **O que fazer:** registe o pagamento como nos passos 6 e 7. Dois pagamentos parciais do mesmo mês somam-se.
+
+### «Já existe uma guia para esta empresa, imposto e mês»
+
+- **Sintoma:** ao gravar uma guia repetida, «Erro de Validação — A operação não pode ser concluída: Já existe uma guia para esta empresa, imposto e mês.»
+- **O que fazer:** abra a guia que já existe na lista.
+
+### O pagamento é maior do que o que falta pagar da guia
+
+- **Sintoma:** ao carregar em **Confirmar** num segundo pagamento de 70,00 € à Autoridade Tributária e Aduaneira para a guia de junho, já paga, abre-se a janela **Operação inválida**: «O pagamento de 70,00 € é superior ao que falta pagar da guia Retenção de IRS 06/2026: a guia é de 184,00 € e 184,00 € já estão pagos, por isso podem pagar-se no máximo 0,00 €. O que aconteceu: uma guia nunca se paga acima do seu total. Como corrigir: altere o montante para 0,00 € ou menos; se a diferença for outra coisa (juros, coima), registe-a noutro pagamento sem os campos da guia.»
+- **O que fazer:** corrija o valor. Juros ou coimas registam-se noutro pagamento, sem **Guia de pagamento ao Estado** nem **Período da guia**. O rascunho do pagamento recusado fica gravado: se não precisar dele, elimine-o.
+
+### Pagamento a um fornecedor que não é o Estado
+
+- **Sintoma:** ao carregar em **Confirmar** num pagamento de 30,00 € à Papelaria Central, Lda, com **Guia de pagamento ao Estado** «Retenção de IRS» e **Período da guia** 01/06/2026, abre-se a janela **Erro de Validação**: «O pagamento da guia de uma retenção na fonte faz-se ao Estado, e «*Papelaria Central, Lda*» não é o parceiro da Autoridade Tributária da empresa. O que aconteceu: só um pagamento ao Estado liquida uma guia. Como corrigir: escolha «Autoridade Tributária e Aduaneira» como parceiro do pagamento (ou defina o parceiro da Autoridade Tributária da empresa na ficha da empresa), ou limpe os campos da guia se este pagamento não for uma guia.» O contacto **Autoridade Tributária (demonstração)** da demonstração tem a mesma recusa.
+- **O que fazer:** escolha **Autoridade Tributária e Aduaneira** como fornecedor. Se o pagamento não é uma guia, limpe os dois campos da guia.
+
+{/* Nota interna (lote v23-BE, depois do comboio 188, master 7a46de91a, docs_demo_v23be_test, porta 8504): pedido do Gestor (capturas 02 e 05 com o título antigo). Ao refazer, viu-se que o ACC-212 (#3620, 01/11) já estava em master e o artigo não: o pagamento só se confirma para o parceiro da AT da empresa (Autoridade Tributária e Aduaneira) e até ao que falta da guia, e debita a 242. Guias Retenção de IRS 06/2026 e Retenção de IRC 12/2026 criadas por RPC em rascunho; por clique, com um utilizador só Contabilista certificado: Emitir na IRC sem linhas → recusa citada; Gerar na IRS (1 linha, 800,00 / 184,00), Emitir → Declarada (captura 02); Marcar como paga sem pagamento → recusa citada (captura 03). Com um utilizador só Contabilista, por clique: pagamento de 184,00 € à Autoridade Tributária e Aduaneira, 15/07/2026, Retenção de IRS, 01/06/2026, Banco → Pago (captura 04; razão: 242 D 184,00, 120003 C 184,00, parceiro AT e Aduaneira); 2.º pagamento de 70,00 € → recusa citada (o rascunho foi apagado); 30,00 € à Papelaria Central → recusa citada; Autoridade Tributária (demonstração) recusada por RPC com a mesma mensagem. Marcar como paga → Paga, 184,00, 0,00, Paga em 15/07/2026 (captura 05). A captura 06 (pagamento a mais aceite) saiu. No Enterprise, na auditoria docs-aud-v23be (base EE nova, atualizada com fiscaldoo_ux_kit e l10n_pt_fiscaldoo_demo pela regra de 10/11, utilizador só Contabilista), Pagamentos a fornecedores › Novo mostra Confirmar e Ligar banco: o «Connect Bank» do lote vinha de uma base EE por atualizar. Auditoria docs-aud-v23be (master 7a46de91a, docs_demo_v23beaud_test, porta 8504): repetido por clique com utilizadores só Contabilista certificado e só Contabilista, com guias e pagamento novos da cópia: as três recusas da guia, a recusa dos 70,00 €, da Papelaria Central e da Autoridade Tributária (demonstração), o pagamento PBNK1/2026/00040 (242 D 184,00 €, 120003 C 184,00 € no lançamento) e a guia Paga; os textos batem com o artigo. O passo «Exportar para folha de cálculo», o mapa Retenções do período e o PDF não foram percorridos. */}

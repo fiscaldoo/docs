@@ -1,0 +1,99 @@
+---
+id: comunicar-a-faturacao-mensal
+slug: /fiscal-core/comunicar-a-faturacao-mensal
+title: Como comunicar a faturação mensal à AT
+sidebar_label: Comunicar a faturação do mês
+sidebar_position: 3
+description: Abrir a comunicação mensal do mês, gerar e validar o ficheiro SAF-T, entregá-lo no Portal das Finanças e registar a referência do comprovativo, para o mês ficar como entregue.
+keywords: [comunicação mensal da faturação, comunicacao mensal da faturacao, comunicar faturação, comunicar faturacao, entregar SAF-T, entregar saft, submeter SAF-T, submeter saft, e-fatura, Portal das Finanças, portal das financas, comprovativo, recibo do portal, referência do recibo, registar a submissão, registar a submissao, ficheiro pronto, submetido, prazo SAF-T]
+doc_id: DOC-0053
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master d88933a51; revisto em ab9649f2e)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/at-e-saft/gerar-o-saft, fiscal-core/at-e-saft/corrigir-erros-do-saft]
+---
+
+## Para que serve?
+
+Todos os meses, a faturação do mês anterior comunica-se à Autoridade Tributária e Aduaneira (AT). A **Comunicação mensal (SAF-T)** do fiscaldoo junta num registo por mês o ficheiro, a validação, a lista dos documentos que leva e o comprovativo da entrega no Portal das Finanças. Quando o registo fica **Submetido**, o mês passa a «entregue» no resumo do SAF-T.
+
+O fiscaldoo não entrega o ficheiro por si: a entrega faz-se no Portal das Finanças e depois regista-se aqui.
+
+## Quando utilizar?
+
+- No início de cada mês, para o mês anterior, antes do prazo.
+- Quando **O que há para fazer com o SAF-T?** mostra um ficheiro de faturação **Por gerar** ou por entregar.
+- Para guardar a referência do comprovativo de um mês já entregue.
+
+## Onde encontrar?
+
+**Contabilidade › Declarar › Autoridade Tributária › Comunicação mensal da faturação**
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**. Todos os passos foram feitos com este perfil, até **Submetido**.
+- Os documentos do mês estão emitidos e o ficheiro do mês já se gera sem erros: [Como gerar o ficheiro SAF-T de faturação](/fiscal-core/gerar-o-saft). Este artigo continua esse: o mês do exemplo é setembro de 2026, com as faturas `FT D26/28`, `FT D26/29` e `FT D26/30`.
+- Tem acesso ao Portal das Finanças da empresa, para entregar o ficheiro.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Declarar › Autoridade Tributária › Comunicação mensal da faturação**. A lista tem um registo por mês, com o **Estado**, os **Documentos**, a **Referência do recibo do Portal** e a **Data de submissão**.
+   ![Lista Comunicação mensal (SAF-T) com os meses já submetidos e o botão Novo assinalado](/images/fiscal-core/comunicar-a-faturacao-mensal/01-lista.png)
+2. Carregue em **Novo**. O **Ano** e o **Mês** vêm com o mês corrente: em **Mês**, escolha o mês a comunicar, por exemplo **Setembro**. Carregue em **Guardar**.
+3. Carregue em **Gerar e validar o ficheiro**. O registo passa a **Ficheiro pronto** e mostra a **Exportação SAF-T** criada, a **Validação do ficheiro** (**Gerado**), os **Erros de XSD/integridade** (0) e os **Documentos** (3).
+   ![Comunicação mensal de setembro de 2026 em Ficheiro pronto, com 3 documentos e o botão Registar a submissão assinalado](/images/fiscal-core/comunicar-a-faturacao-mensal/02-ficheiro-pronto.png)
+4. Confira os documentos: **Documentos no ficheiro** lista as faturas que o ficheiro leva (no exemplo, as três de setembro, com 6.452,25 € no total com IVA). Se falta uma fatura que emitiu nesse mês, não entregue: veja «Problemas frequentes».
+5. Carregue em **Descarregar o ficheiro** e guarde o XML.
+6. Entregue o ficheiro no Portal das Finanças e guarde o comprovativo que o Portal devolve. <span className="fd-pending">Pendente de validação no ecrã: a entrega no Portal das Finanças faz-se fora do fiscaldoo e não se pode fazer com a demonstração; o nome da opção no Portal não se viu.</span>
+7. De volta ao registo, em **RECIBO DO PORTAL**, escreva a **Referência do recibo do Portal** (no exemplo `REC-DEMO-2026-09`, fictícia) e escolha a **Data de submissão**: a data do comprovativo do Portal, não a do dia em que regista aqui. **Recibo (PDF)** liga o PDF do comprovativo, se o guardou no fiscaldoo. Carregue em **Guardar**. Se a data é posterior ao prazo do mês, aparece logo uma faixa amarela a dizê-lo (veja «Resultado esperado»).
+8. Carregue em **Registar a submissão**. A janela **Confirmação** pergunta: «Marcar todos os documentos do mês como comunicados? Faça-o só depois de submeter o ficheiro no Portal das Finanças.» Carregue em **Confirmar**.
+   ![Janela Confirmação a perguntar se marca todos os documentos do mês como comunicados](/images/fiscal-core/comunicar-a-faturacao-mensal/03-confirmar-submissao.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- O registo fica **Submetido**, com **Submetido por** (o seu nome) e **Submetido em** (data e hora do registo no fiscaldoo).
+  ![Comunicação mensal de setembro de 2026 em Submetido, com a faixa da entrega fora do prazo, a referência REC-DEMO-2026-09, a data de submissão 29/10/2026, Submetido por e Submetido em](/images/fiscal-core/comunicar-a-faturacao-mensal/04-submetido.png)
+- Atenção à data do exemplo: na demonstração, a **Data de submissão** de setembro é 29/10/2026, depois do prazo desse mês (06/10/2026, veja «Notas importantes»). O fiscaldoo aceita-a, porque regista a entrega como aconteceu, e mostra a faixa «A data de entrega (29/10/2026) é posterior ao prazo deste mês (06/10/2026): a entrega foi feita fora do prazo. Fica registada como aconteceu; confirme com o contabilista certificado se a entrega tardia tem consequências.» A faixa aparece ao guardar a data (passo 7) e fica no registo depois de **Submetido**. Numa empresa real, confira a data contra o prazo antes de carregar em **Registar a submissão**.
+- Em **Contabilidade › Declarar › Ficheiro SAF-T › O que há para fazer com o SAF-T?**, o mês passa a «Entregue»: «O ficheiro de setembro de 2026 foi entregue.»
+- Os documentos do mês ficam marcados como comunicados. Não há lançamento contabilístico.
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Registe só depois de entregar">
+**Registar a submissão** marca todos os documentos do mês como comunicados. Faça-o só com o comprovativo do Portal das Finanças na mão. A comunicação mensal tem prazo: na demonstração, o ficheiro de setembro de 2026 tinha como prazo 6 de outubro de 2026. Fora do prazo, fale com o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo legal da comunicação mensal, regra quando o dia calha num feriado e consequências do atraso.</span>
+</HelpCallout>
+
+- O registo de **Exportação SAF-T (PT)** também tem um botão **Registar submissão** (perfil **Contabilista certificado**), que guarda só o comprovativo nesse ficheiro. Use a comunicação mensal: é ela que muda o resumo do SAF-T. Na demonstração, depois de **Submetido**, o **Estado da submissão** do ficheiro continuou «Não enviado»: não use esse campo para saber se o mês foi entregue.
+  Esse botão abre **Registar a submissão do SAF-T (PT)**, com o **Passo** (**Enviado**, **Aceite** ou **Rejeitado**) e o **Comprovativo da submissão** (no **Rejeitado**, o **Motivo** em vez do comprovativo). Sem o comprovativo ou o motivo, **Registar** responde «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.». Os passos seguem a ordem do ficheiro: num ficheiro ainda **Não enviado**, o **Aceite** é recusado com «Um ficheiro com o estado «Não enviado» não pode passar ao passo «Aceite». Confirme o estado atual do ficheiro e escolha um passo que ele permita.»
+
+  {/* Nota interna (lote v23-AI, DOCS-069 #4052, master 7a3b55244, docs_demo_v23ai_test): por clique com o Gestor de contabilidade da demonstração (perfil Contabilista certificado), num ficheiro gerado por mim para isso (F de outubro de 2026, 0 documentos, exportação 10, que ficou Não enviado): janela do botão, recusa dos campos obrigatórios nos três passos e recusa do Aceite com um PDF qualquer como comprovativo. Nenhum passo ficou registado. Vinha do guia congelado SAF-T/submeter-e-arquivar-o-saf-t.md; as mensagens «Anexe o comprovativo…» e «Indique porque é que…» do guia não se veem pelo ecrã, que recusa antes. */}
+- Para ver mês a mês o que falta comunicar, o prazo e o histórico de cada fatura: [Como comunicar as faturas à AT e ver o histórico](/fiscal-core/comunicar-faturas-a-at). A comunicação das faturas uma a uma, por webservice, precisa das credenciais da AT. <span className="fd-pending">Pendente de validação por contabilista certificado: se a comunicação por webservice dispensa a entrega do ficheiro mensal.</span>
+
+{/* Nota interna (DOCS-020): o Estado da submissão da exportação não acompanha a Comunicação mensal (defeito P-A17 no LOTE_A). Rever a nota quando o cartão entrar. */}
+
+{/* Nota interna (retoma da ronda única, DEC-1535; 31/10/2026, master 27cebe13a, perfil Contabilista Certificado / Gestor fiscal + Responsável fiscal): percurso de setembro refeito por clique até Submetido em duas cópias da base-mãe (docs_demo_ronda2_test e docs_demo_ronda2b_test): lista com 2026-01 a 2026-08 Submetido (captura 01 igual), Novo com Ano 2.026 e Mês Outubro por omissão, Setembro, Gerar e validar o ficheiro: Ficheiro pronto, Gerado, 0 erros, 3 documentos (FT D26/28 a 30, rodapé 5.276,00 € e 6.452,25 €), SAFT-PT_599999993_2026_09_F.xml descarregado; Registar a submissão sem referência: Confirmação e depois Operação inválida com a mensagem citada; referência REC-DEMO-2026-09 e data 29/10/2026: faixa da entrega fora do prazo (UX-082, P-A31 resolvido); Confirmar: Submetido, Submetido por Gestor de contabilidade, Submetido em 31/10/2026. O que há para fazer com o SAF-T?: «O ficheiro de setembro de 2026 foi entregue.» Capturas 02 e 04 refeitas (a 04 com a faixa; o nome da exportação passou a ter a data em DD/MM/AAAA); 03 igual; 05 retirada (outubro dá hoje Ficheiro pronto, 0 erros, 9 documentos). O Ano mostra «2.026» (separador de milhares): defeito de apresentação já visível nas capturas antigas, não tratado aqui. */}
+
+{/* Nota interna (correções finais antes da junção, REC-03, 31/10/2026, master ab9649f2e, base docs_demo_corfin_test, Contabilista Certificado / Gestor fiscal + Responsável fiscal): o SAFT-164 (#3586) tirou o separador de milhares do Ano. Percurso de setembro refeito por clique até Submetido: Novo com Ano 2026 e Mês Outubro, Setembro, Guardar, Gerar e validar o ficheiro (Ficheiro pronto, Gerado, 0 erros, 3 documentos: FT D26/28 a 30, rodapé 5.276,00 € e 6.452,25 €), SAFT-PT_599999993_2026_09_F.xml descarregado, Registar a submissão sem referência (Confirmação e depois a recusa citada), REC-DEMO-2026-09 e 29/10/2026 (faixa da entrega fora do prazo), Confirmar: Submetido por Gestor de contabilidade (demonstração). Capturas 02 e 04 refeitas com «Ano 2026»; o texto não muda. */}
+
+## Problemas frequentes
+
+### «O ficheiro não passou a validação…»
+
+- **Sintoma:** depois de **Gerar e validar o ficheiro**, o registo fica em **Rascunho**, com a **Validação do ficheiro** **Inválido**, o número de **Erros de XSD/integridade** e o aviso «O ficheiro não passou a validação: corrija os erros listados na exportação SAF-T e gere de novo. … Não pode ser submetido até lá.» <span className="fd-pending">Pendente de validação no ecrã: na demonstração de hoje nenhum mês dá um ficheiro inválido (outubro de 2026, que dava 4 erros, dá hoje **Ficheiro pronto** com 0 erros e 9 documentos); o aviso citado é o que o ecrã mostrava a 29/10/2026.</span>
+- **O que fazer:** abra a **Exportação SAF-T** do registo, corrija os erros ([Como corrigir os erros de validação do SAF-T](/fiscal-core/corrigir-erros-do-saft)) e carregue de novo em **Gerar e validar o ficheiro**.
+
+### «Indique a referência do recibo do Portal e a data de submissão…»
+
+- **Sintoma:** ao confirmar **Registar a submissão**: «Indique a referência do recibo do Portal e a data de submissão: os documentos só ficam marcados como comunicados com o comprovativo da submissão.»
+- **O que fazer:** preencha os dois campos do passo 7, guarde e repita o passo 8.
+
+### Falta uma fatura em «Documentos no ficheiro»
+
+- **O que fazer:** confirme a data e o estado da fatura (um rascunho não entra) e a empresa. Os documentos que ficam fora do ficheiro estão em [Como gerar o ficheiro SAF-T de faturação](/fiscal-core/gerar-o-saft), «Notas importantes».

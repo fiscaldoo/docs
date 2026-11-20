@@ -1,0 +1,103 @@
+---
+id: conta-sem-taxonomia
+slug: /troubleshooting/conta-sem-taxonomia
+title: Há contas sem taxonomia e o SAF-T ou a IES não saem
+sidebar_label: Contas sem taxonomia
+description: Porque o SAF-T de contabilidade fica Inválido e o Anexo A da IES é recusado, ou sai com um aviso, quando há uma conta sem taxonomia, como encontrar a conta e o que fazer a seguir.
+keywords: [conta sem taxonomia, contas sem taxonomia, taxonomia em falta, SAF-T inválido, saft invalido, Inválido, Regenerar, Gerar o Anexo A, ainda não se podem gerar, não têm taxonomia mas também não têm saldo nem movimentos, nao se podem gerar, códigos de taxonomia candidatos, codigos de taxonomia candidatos, Balancete equilibrado e taxonomias, IES, SAF-T de contabilidade, Comparar o plano com o SNC]
+doc_id: DOC-0347
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master acd623385)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/plano-de-contas/taxonomias, accounting-pt/declaracoes/saft-de-contabilidade, accounting-pt/declaracoes/ies, troubleshooting/contabilidade-e-iva/lancamento-desequilibrado]
+---
+
+{/* Nota interna (DOCS-046, DOC-0347, v7-TS1): validado na base docs_demo_v7ts1_test (8181), master 584213fd9, com o perfil Contabilista Certificado / Gestor fiscal. A conta 278900 foi criada por RPC, como dado de partida; SAF-T de 2026 e Anexo A de 2025 provocados por clique, primeiro sem movimentos na conta e depois com um lançamento de 100,00 (o SAF-T deu o mesmo erro nos dois casos). ACC-230 (cac2898cf) já está em master: o Sintoma, as Causas e a recusa do Anexo A foram revistos no lote v23-BJ e na auditoria docs-aud-v23bj. */}
+
+## Sintoma
+
+- **SAF-T de contabilidade:** carrega em **Gerar com … documentos**, mas o registo abre em **Inválido**, com **N.º de erros** 1 ou mais. Não há botão **Descarregar ficheiro**: só **Regenerar** e **Exportar erros (XLSX)**.
+- **IES:** com uma conta sem taxonomia que tem algum lançamento, mesmo em rascunho ou com data de outro exercício, ao carregar em **Gerar o Anexo A (Balanço e Demonstração de resultados)** abre-se a janela **Operação inválida** e o anexo não é criado. Se a conta não tem saldo nem movimentos, o anexo é gerado sem ela e fica um **Aviso**.
+
+## Mensagem
+
+Na IES de 2025, com a conta `278900` sem taxonomia e sem movimentos, **Gerar o Anexo A (Balanço e Demonstração de resultados)** gera o anexo (estado **Gerado**, **Contas sem taxonomia válida** 0) e a conversa do anexo regista:
+
+> «1 conta(s) não têm taxonomia mas também não têm saldo nem movimentos, por isso não estão neste anexo: 278900 Devedores e credores diversos. Escolha a taxonomia (ou arquive-as) antes de as usar.»
+
+Em **Executar verificações**, na mesma IES, a linha **Balancete equilibrado e taxonomias** fica em **Aviso**:
+
+> «1 conta(s) não têm taxonomia mas também não têm saldo nem movimentos, por exemplo 278900. Não estão no anexo; escolha a taxonomia ou arquive-as antes de as usar.»
+
+![Verificações da IES de 2025: a linha Balancete equilibrado e taxonomias em Aviso, com a conta 278900 sem taxonomia, sem saldo nem movimentos](/images/troubleshooting/conta-sem-taxonomia/01-ies-aviso-sem-movimentos.png)
+
+Se a conta tiver algum lançamento, mesmo em rascunho ou com data de outro exercício, o Anexo A é recusado, com a mensagem:
+
+> «As demonstrações financeiras de “*Empresa Demonstração, Lda*” ainda não se podem gerar: *1* conta(s) sem taxonomia, o código que põe a conta no Balanço e na Demonstração dos resultados (*278900 Devedores e credores diversos*). Abra cada uma destas contas no plano de contas, escolha a taxonomia e abra a demonstração outra vez.»
+
+Na demonstração, com a `278900` só num lançamento em **rascunho** de 12/11/2026 (por publicar), **Gerar o Anexo A (Balanço e Demonstração de resultados)** na IES de 2025 abriu **Operação inválida** com esta mensagem e o anexo não foi criado.
+
+No SAF-T de contabilidade de 2026, o registo abre com esta faixa:
+
+> «Este ficheiro está marcado como inválido. Se já corrigiu os registos listados abaixo, carregue no botão «Regenerar» acima para voltar a verificar com a versão atual do produto. Este registo fica como histórico; o ficheiro novo é um registo novo.»
+
+![Registo do SAF-T em Inválido, com o modo C — Contabilidade, 1 erro do tipo Formato ou valor inválido e a faixa a pedir para regenerar](/images/troubleshooting/conta-sem-taxonomia/02-saft-invalido.png)
+
+Na lista **Erros**, por baixo, a coluna **Chave** mostra a conta (`278900`) e a coluna **Mensagem** diz:
+
+> «*2* códigos de taxonomia candidatos correspondem ao código SNC desta conta — escolha um na conta (campo “Taxonomia”) antes de gerar»
+
+Numa empresa com a taxonomia de microentidades, ao guardar um lançamento com uma conta que não tem linha nessa taxonomia:
+
+> «A empresa “*Empresa Demonstração, Lda*” usa a Taxonomia de Microentidades (Portaria n.º 302/2016, Anexo III), que não tem linha para a(s) conta(s) *23711*: não podem ser usadas nesta empresa (o SAF-T exige um TaxonomyCode em todas as contas de movimento). Use uma conta que tenha taxonomia ou peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» para rever o plano de contas.» {/* Nota interna (v23-T): texto do master cebcb888d (UX-124); não provocado no ecrã, porque a Empresa Demonstração da base-mãe já não usa a taxonomia de microentidades (o lançamento com a 23711 publicou-se). */}
+
+{/* Nota interna (v16-RESTOS, master 255d77e63): recusa provocada por clique com o Contabilista, em Lançamentos, com o referencial M posto pelo administrador na ficha da empresa, só na cópia, e reposto depois (docs-aud-v16restos). */}
+
+## Causas verificadas
+
+- **A empresa usa a taxonomia de microentidades e a conta não tem linha nela.** O lançamento não grava com essa conta: use outra, ou peça a quem tem o perfil **Contabilista certificado** que reveja o plano de contas.
+- **A conta foi criada pela empresa e o código serve para mais do que uma taxonomia.** A `278900` tem duas candidatas (a corrente e a não corrente). O programa não escolhe por si. Uma conta nova com uma só candidata recebe-a sozinha: é o caso descrito em [taxonomias](/accounting-pt/taxonomias).
+- **Para o SAF-T, uma só conta de movimento chega, mesmo sem movimentos.** O SAF-T deu o mesmo erro antes e depois de haver um lançamento na conta.
+- **Para a IES, só trava a conta que tem algum lançamento, mesmo em rascunho ou de outro exercício.** Sem nenhum, o Anexo A sai sem a conta e fica o aviso; dê-lhe a taxonomia antes de a usar, ou arquive-a se não a vai usar.
+- **Uma empresa nova ou com o referencial acabado de mudar** pode ter muitas contas nesta situação. A mensagem indica o número e [taxonomias](/accounting-pt/taxonomias) diz o que fazer em cada caso.
+
+## O que confirmar
+
+1. Que contas faltam: em **Contabilidade › Configurar › Plano e regras legais › Comparar o plano com o SNC**, guarde a verificação e leia a secção **CONTAS DE MOVIMENTO SEM TAXONOMIA DO SAF-T**. No exemplo, a mensagem da IES e a lista **Erros** do SAF-T apontam a mesma conta. Os passos estão em [taxonomias](/accounting-pt/taxonomias).
+2. Que perfil tem. **Plano de contas** e **Comparar o plano com o SNC** aparecem com o perfil **Contabilista certificado**. O perfil **Contabilista** não os tem no menu **Configurar**, embora a coluna **Quem corrige** do SAF-T diga «O Contabilista (plano de contas)».
+3. Que taxonomia serve. A escolha entre as candidatas é uma decisão contabilística. <span className="fd-pending">Pendente de validação por contabilista certificado: como decidir entre a taxonomia corrente e a não corrente de uma conta a receber ou a pagar.</span>
+
+## Como resolver
+
+**Quem faz:** o perfil Contabilista certificado.
+
+1. Dê a taxonomia a cada conta: **Contabilidade › Configurar › Geral › Plano de contas**, abra a conta, separador **Portugal**, campo **Taxonomia**, e guarde. O passo a passo e as sugestões estão em [taxonomias](/accounting-pt/taxonomias). No exemplo, a `278900` ficou com **S138 - Outras contas a receber e a pagar - Outros devedores e credores - (CORRENTE)**. A lista do campo mostra mais opções do que as duas candidatas da mensagem: no exemplo, as candidatas são a S138 e a S139.
+2. **SAF-T:** abra o registo em **Inválido** e carregue em **Regenerar**. Não precisa de voltar a **Gerar SAF-T**.
+3. **IES:** abra a IES e carregue outra vez em **Gerar o Anexo A (Balanço e Demonstração de resultados)**.
+
+Dar a taxonomia não cria lançamentos: só diz em que rubrica o saldo da conta aparece.
+
+## Resultado esperado
+
+- **SAF-T:** abre um registo novo em **Gerado**, com **N.º de erros** 0 e o botão **Descarregar ficheiro**. O registo **Inválido** fica como histórico. Os avisos desse registo novo são outro assunto: no exemplo são 62, e os que foram lidos dizem que o nome de um lançamento tinha espaços e terminam em «não há nada a fazer». Para o que fazer depois, veja [SAF-T de contabilidade](/accounting-pt/saft-de-contabilidade).
+- **IES:** abre o **Anexo A** em **Gerado**. Para continuar, veja [IES](/accounting-pt/ies).
+
+## Quando contactar o suporte
+
+- **Comparar o plano com o SNC** diz que nenhuma conta está sem taxonomia e a mensagem continua a aparecer.
+- A conta tem taxonomia, o SAF-T regenerado continua em **Inválido** e o erro aponta para a mesma conta.
+- A mensagem aponta centenas de contas numa empresa acabada de mudar de referencial.
+
+## Informação a enviar
+
+- A empresa e o exercício.
+- O texto completo da mensagem, ou o ficheiro de **Exportar erros (XLSX)**.
+- As contas indicadas e a taxonomia de cada uma.
+- O perfil com que entrou.
+
+{/* Nota interna (v23-T, DOC-0347, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}
+
+{/* Nota interna (DOCS-075, lote v23-BJ, master acd623385, docs_demo_v23bj2_test, 12/11/2026): ACC-230 (cac2898cf). Conta 278900 (sem taxonomia, duas candidatas) e IES de 2025 criadas por RPC na cópia; Gerar o Anexo A e Executar verificações por clique com um utilizador só com o perfil Contabilista certificado: anexo Gerado, aviso na conversa do anexo e na verificação Balancete equilibrado e taxonomias. Captura 01 refeita. O SAF-T não foi regerado neste lote (o ACC-230 não lhe mexe). IES não submetida. */}

@@ -1,0 +1,174 @@
+---
+id: corrigir-um-processamento
+slug: /payroll-pt/corrigir-um-processamento
+title: Como corrigir um recibo já processado
+sidebar_label: Corrigir um recibo já processado
+sidebar_position: 7
+description: Corrigir um recibo de vencimento já validado ou pago com um recibo corretivo, acompanhar a correção até ao lançamento e ao pagamento da diferença, e corrigir só o IRS retido.
+keywords: [corrigir recibo, recibo corretivo, corrigir um processamento, correções ao processamento, correcoes ao processamento, alteração retroativa da retribuição, alteracao retroativa da retribuicao, aumento retroativo, retificar recibo, corrigir o IRS retido, recibo já pago, recibo ja pago, DMR de substituição, DMR de substituicao]
+doc_id: DOC-0209
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 9ab7f1cc7)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/processar-e-pagar/pagar-os-salarios, payroll-pt/declarar/dmr]
+---
+
+## Para que serve?
+
+Um recibo de vencimento validado ou pago já não se altera. Quando há um erro (um aumento que devia ter começado mais cedo, um facto registado tarde, o IRS retido a menos), o fiscaldoo cria um **recibo corretivo** com a diferença e abre uma **correção ao processamento**, que diz o que mais tem de ser corrigido: o lançamento contabilístico, o pagamento da diferença e as declarações já entregues.
+
+## Quando utilizar?
+
+- Um aumento produz efeitos num mês já fechado: use **Alteração retroativa da retribuição**.
+- Mudou um facto do período depois de fechar o recibo (contrato, horário ou presenças): use **Retificar**.
+- Só o IRS retido estava errado: use **Corrigir o IRS retido**.
+
+Para um recibo ainda em **Rascunho**, não é preciso nada disto: altere e calcule de novo (ver [Como processar os salários do mês](/payroll-pt/processar-o-mes)).
+
+## Onde encontrar?
+
+- No recibo validado ou pago: **Salários › Processar › Recibos de vencimento** › abrir o recibo › botões **Corrigir o IRS retido** e **Retificar**, e o botão **Ações** (no topo do recibo) › **Criar corretivo**, **Recalcular o que mudou**, **Alteração retroativa da retribuição**, **Confirmar o retrato** e os três registos de entrega.
+- As correções abertas: **Salários › Processar › Correções ao processamento** (só aparece ao **Administrador de Salários**).
+- O pagamento da diferença: **Salários › Pagar › Pagamentos de salários**.
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador (o acesso que acompanha a correção até ao fim). Só com o perfil **Processador de salários**, o recibo pago mostra **Retificar** e, em **Ações**, **Criar corretivo** e **Recalcular o que mudou**, mas não **Corrigir o IRS retido** nem **Alteração retroativa da retribuição**. O Processador também não vê o menu **Correções ao processamento**.
+- Uma correção aberta por **Alteração retroativa da retribuição** não se anula. **Anular** é recusado com «Operação inválida. A correção «Correção de Carla Sofia Mendes (01/09/2026 — 30/09/2026)» não pode ser anulada. O que aconteceu: foi aberta por uma alteração retroativa da retribuição, e a retribuição nova fica no histórico do contrato (um mês fechado nunca é reescrito e a retribuição não se baixa, CT art. 129.º/1-d). Anulá-la deixaria os meses sem o recibo corretivo que paga a diferença. Como resolver: conclua o recibo corretivo e as suas propagações. Se o valor foi digitado por engano, quem tem o acesso extra «Administrador de Salários» usa «Repor o valor anterior» nesta correção.» Se o valor foi escrito por engano, carregue em **Repor o valor anterior** na correção: abre a janela da alteração retroativa, com o aviso «O valor da alteração foi digitado por engano. Os recibos fechados e os recibos corretivos já validados ou pagos não são alterados: prepara-se um novo recibo corretivo com a diferença (negativa, se o valor a mais já foi pago; como o recuperar é decisão do administrador).» Para o aumento em si, ver [Como alterar o salário de um trabalhador](/payroll-pt/alterar-o-salario).
+- Tenha o motivo da correção por escrito (por exemplo, a data do acordo do aumento): o motivo é obrigatório e fica na correção.
+
+## Como utilizar
+
+### Corrigir um aumento que começou num mês já pago
+
+<StepByStep>
+
+1. Abra **Salários › Processar › Recibos de vencimento** e abra o recibo do primeiro mês afetado, por exemplo o de agosto de 2026 de Carla Sofia Mendes (na lista, **ago. 2026**), em **Pago**.
+2. No topo do recibo, carregue em **Ações** e escolha **Alteração retroativa da retribuição**.
+3. Na janela, confirme **Produz efeitos em** (vem com o primeiro dia do recibo, 01/08/2026), escreva a **Nova retribuição mensal** (`1950`) e o **Motivo**. Carregue em **Alterar e preparar o corretivo**. O fiscaldoo cria uma versão do contrato com a retribuição nova e **um recibo corretivo por cada mês fechado a partir dessa data**: no exemplo, agosto e setembro (os dois recibos em **Pago**), e uma correção para cada um, e abre a lista **Recibos corretivos**. Estes passos seguem a de agosto.
+   ![Janela Alteração retroativa da retribuição com Produz efeitos em 01/08/2026, Nova retribuição mensal 1.950 e o motivo, e o botão Alterar e preparar o corretivo assinalado](/images/payroll-pt/corrigir-um-processamento/01-alteracao-retroativa.png)
+4. Abra o recibo corretivo de agosto, em **Rascunho**, com a faixa «Recibo corretivo de: Carla Sofia Mendes (01/08/2026 — 31/08/2026)» e uma linha **Retribuição base** com a diferença (50,00). Carregue em **Calcular**.
+   ![Recibo corretivo calculado de agosto de Carla Sofia Mendes: bruto 50,00 €, descontos 5,50 € e líquido 44,50 €, com o botão Validar assinalado](/images/payroll-pt/corrigir-um-processamento/02-recibo-corretivo.png)
+5. Confira o cálculo em **Como se chegou aos valores**. **Não valide ainda** se a DMR do mês em que o recibo foi pago já foi submetida (é o caso do exemplo: o recibo de agosto foi pago a 31/08/2026 e a DMR de agosto já foi **Submetida**): **Validar** é recusado com «Operação inválida. O recibo corretivo não pode ser validado antes de existir a declaração de substituição. O que aconteceu: o original já foi declarado (DMR de substituição). Como resolver: gere primeiro essas propagações no evento de correção.»
+6. Abra **Salários › Processar › Correções ao processamento** e abra a correção, em **Em curso**. A lista **Propagação** diz, linha a linha, o que falta corrigir e **Porque se aplica**. No fim da ficha, o bloco **O QUE VAI SER CORRIGIDO** resume-o em frases simples: o recibo corrigido (trabalhador e período), «A correção chega a: Lançamento contabilístico, DMR de substituição, Pagamento da diferença.» e, com o recibo corretivo já calculado, «Efeito do recibo corretivo no líquido a pagar: 44,50 €.». Na linha **DMR de substituição** («a DMR do mês do pagamento já foi submetida»), carregue em **Gerar** e depois em **Confirmar**; a linha mostra a DMR de substituição, no exemplo «DMR 2026-08 (Declaração de substituição)» (ver [Corrigir uma DMR já entregue](/payroll-pt/dmr#corrigir-uma-dmr-já-entregue)). Se a DMR do mês ainda não foi submetida, a linha diz «Não aplicável: a DMR ainda não foi submetida: o recibo corretivo entra nela» e este passo não existe.
+7. Volte ao recibo corretivo e carregue em **Validar**. Na correção, linha **Lançamento contabilístico**, carregue em **Gerar** e depois em **Confirmar**; o lançamento só se gera com o recibo corretivo validado («O recibo corretivo ainda não está validado»). Na linha **Pagamento da diferença**, carregue em **Gerar** e depois em **Confirmar**: o pagamento fica **Gerado (num lote)** e o recibo corretivo continua **Validado**.
+8. Abra **Salários › Pagar › Pagamentos de salários** e o pagamento da diferença (44,50 €, **Gerado (num lote)**). Preencha **Data-valor** (a data dada pelo banco) e carregue em **Executar**; sem a data, «Operação inválida. A execução do pagamento de «Carla Sofia Mendes (01/08/2026 — 31/08/2026)» precisa da data-valor dada pelo banco. Como resolver: preencha «Data-valor» e execute de novo.» O pagamento passa a **Executado** e o recibo corretivo a **Pago**. Os restantes pagamentos de salários estão em [Como pagar os salários](/payroll-pt/pagar-os-salarios).
+9. Volte à correção e carregue em **Concluir a correção**. A correção passa a **Concluída**.
+   ![Correção concluída, com a propagação: DMR de substituição confirmada, declaração da Segurança Social não aplicável, lançamento SAL/2026/00005 e pagamento da diferença confirmados](/images/payroll-pt/corrigir-um-processamento/03-correcao-concluida.png)
+
+</StepByStep>
+
+{/* Nota interna (lote v23-R, #3900, master 808f8ca1f, docs_demo_v23r_test): captura 03 refeita (antes mostrava «Administrador (teste)» em Iniciado por). Cenário dos 9 passos recriado na cópia com o administrador, pelas mesmas ações dos botões (integração): recibo de outubro de Carla Sofia Mendes calculado, validado, contabilizado (SAL/2026/00005) e pago com data-valor 01/11/2026; recibo de novembro validado; DMR 2026-11 gerada, validada, submetida e registada como aceite (Registar como aceite: a simulação só parte de Validada); Alteração retroativa para 1.950 desde 01/10/2026 (2 corretivos e 2 correções); Validar antes da DMR de substituição recusado com a mensagem do passo 5; DMR de substituição, lançamento SAL/2026/00006 e pagamento de 44,50 gerados e confirmados; Executar sem data-valor recusado com a mensagem do passo 8; Completo → Concluída. A correção concluída foi aberta no ecrã. O formulário mostra hoje também o botão «Repor o valor anterior» e um bloco «PLANO NO ARRANQUE» com texto técnico (fora da captura; defeito no relatório do lote). */}
+
+{/* Nota interna (lote v23-AC, #3853, PAY-130 em master 97b34fac3, docs_demo_v23ac_test, porta 8482): passos 1 a 6 feitos no ecrã com o Administrador de Salários da demonstração no recibo de agosto de Carla Sofia Mendes (Pago, 1.900,00 €; o último mês da base com a DMR submetida): Alteração retroativa para 1.950 desde 01/08/2026 (2 corretivos e 2 correções), Calcular, Validar recusado com a mensagem do passo 5, Correções ao processamento › a correção de agosto, Em curso. O bloco «PLANO NO ARRANQUE» saiu; no seu lugar, «O QUE VAI SER CORRIGIDO»: «Recibo corrigido: Carla Sofia Mendes, de 01/08/2026 a 31/08/2026.», «A correção chega a: Lançamento contabilístico, DMR de substituição, Pagamento da diferença.», «Efeito do recibo corretivo no líquido a pagar: 44,50 €.» (os mesmos 50,00 € de diferença do exemplo de outubro). As frases da Segurança Social (via e prazo) só aparecem com a declaração da Segurança Social já entregue: não vistas no ecrã. */}
+
+{/* Nota interna (DOCS-022, 3.ª auditoria, NC-60, master ba9c8bd7): defeito P-12 do PAY-066 (#3613): o Processador usa «Alteração retroativa da retribuição» e «Corrigir o IRS retido», e «Anular» a correção não repõe a versão do contrato. Descrito como é hoje; rever «Antes de começar» quando o PAY-066 entrar em master. Revisto na auditoria docs-aud-v23bf (master 9ab7f1cc7): o Processador já não tem Corrigir o IRS retido nem Alteração retroativa, e Anular uma correção aberta por alteração retroativa é recusado. */}
+
+### Corrigir só o IRS retido
+
+<StepByStep>
+
+1. Abra o recibo validado ou pago e carregue em **Corrigir o IRS retido**. Só aparece com o acesso extra **Administrador de Salários**: só com o perfil **Processador de salários**, o recibo validado não tem este botão.
+2. A janela mostra o **IRS retido** do recibo. Escreva o **IRS que era devido** e o **Motivo** e carregue em **Registar a correção**.
+   ![Janela Corrigir o IRS retido do recibo de setembro de Eva Cristina Rocha: IRS retido 17,00, IRS que era devido 29 e o motivo](/images/payroll-pt/corrigir-um-processamento/04-corrigir-o-irs-retido.png)
+
+</StepByStep>
+
+O recibo não muda. Como a janela explica, a diferença é levada pelos recibos seguintes do ano: acrescentada se foi retido a menos, devolvida se foi retido a mais, nunca mais do que cada recibo retém, e nunca depois do último período de retenção do ano. Depois de registar, o botão **Corrigir o IRS retido** desaparece desse recibo e o recibo mostra o aviso «Erro de IRS registado: o IRS retido estava errado em 12,00; os recibos seguintes do ano levam-no (falta corrigir: 12,00). O motivo está no separador IRS.» Com o mesmo valor do retido, a janela recusa: «Operação inválida. O IRS devido é igual ao retido (17,00 €): não há nada a corrigir.»
+
+No exemplo, o recibo de setembro de Eva Cristina Rocha retinha 17,00 € e devia reter 29,00 €. O primeiro recibo seguinte a ser calculado, o de outubro de 2026, retém **17,00 €** (a retenção normal desse mês) **mais 12,00 € de correção = 29,00 €**, e o separador **Segurança Social e IRS** desse recibo, no bloco **Retenção de IRS**, diz «Correção do IRS de Eva Cristina Rocha (01/09/2026 — 30/09/2026) (CIRS art. 98.º n.º 4): 12,00 adicionados.» Na demonstração, o recibo de outubro de Eva ainda não existe: crie-o em **Salários › Processar › Recibos de vencimento** › **Novo** (trabalhador Eva Cristina Rocha, de 01/10/2026 a 31/10/2026) e carregue em **Calcular**. A lista **Acertos de IRS** continua vazia: o acerto não se vê lá, vê-se no recibo que o leva. <span className="fd-pending">Pendente de validação por contabilista certificado: acerto da retenção nos meses seguintes do mesmo ano e o seu efeito na DMR.</span>
+{/* Nota interna (DOCS-022, 3.ª auditoria, NC-60/P-20, master ba9c8bd7): defeito do PAY-066 (#3613): o Processador de Salários vê e usa «Corrigir o IRS retido» e «Retificar». A janela mostra o valor com ponto decimal («17.0»), defeito LOW do mesmo cartão. Já não se vê no master 9ab7f1cc7: «(17,00 €)» (auditoria docs-aud-v23bf). */}
+
+### Corrigir depois de registar um facto em atraso
+
+Se o contrato, o horário ou as presenças do mês mudaram depois de o recibo ter sido fechado, carregue em **Retificar** no recibo, escreva o **Motivo da correção** e carregue em **Preparar o corretivo**. O fiscaldoo compara o período com o que existia ao fechar e prepara o recibo corretivo com a diferença; a partir daí, siga os passos 4 a 9 acima.
+
+**Exemplo.** O aumento de Carla Sofia Mendes, de 1.900,00 € para 1.950,00 €, foi acordado a 20/08/2026 com efeitos desde 01/08/2026. O recibo corretivo de agosto tem:
+
+- **Retribuição base**: 50,00 €;
+- **Segurança Social (trabalhador)**: 11 % de 50,00 € = 5,50 €; a cargo da empresa, 23,75 % = 11,88 €;
+- **IRS retido**: 0,00 €. **Como se chegou aos valores** diz «IRS: tabela I de 2026; remuneração considerada 50,00 €. Taxa 0 %: 50,00 € × 0 % = 0,00 €.…» e «Este recibo corrige um anterior, que tinha retido 248,00 € de IRS.»;
+- **Líquido a pagar**: 44,50 €.
+
+Como o recibo de agosto foi pago a 31/08/2026, o corretivo entra na DMR de substituição de **agosto** (DMR 2026-08), na linha de Carla (1.950,00 € de rendimento, 248,00 € de IRS e 214,50 € de contribuições): depois de carregar em **Gerar** nessa DMR, o **Resumo** passa a 11.126,67 € de rendimentos, 832,00 € de IRS retido e 1.223,93 € de contribuições, e os campos **Diferença: rendimento** e **Diferença: contribuições** mostram 50,00 e 5,50. <span className="fd-pending">Pendente de validação por contabilista certificado: retenção de IRS de uma diferença salarial de um mês anterior calculada só sobre a diferença (50,00 €, taxa 0 %) e não sobre a retribuição do mês corrigida (CIRS art. 99.º-C); mês da DMR em que a diferença é declarada.</span>
+
+O lançamento SAL/2026/00005, publicado com a data de 31/08/2026 (o fim do mês corrigido), tem estas linhas, conferidas no razão:
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| 632 Remunerações do pessoal | 50,00 | |
+| 231290 Remunerações em processamento | | 50,00 |
+| 231290 Remunerações em processamento | 50,00 | |
+| 2312 Ao pessoal | | 44,50 |
+| 245 Contribuições para a Segurança Social | | 5,50 |
+| 635 Encargos sobre remunerações | 11,88 | |
+| 245 Contribuições para a Segurança Social | | 11,88 |
+| **Total** | **111,88** | **111,88** |
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: data do lançamento da correção no mês corrigido (31/08/2026) e não no mês em que a correção é feita; contas 2312/231290 para as remunerações a pagar (ver também [Como contabilizar o processamento dos salários](/payroll-pt/contabilizar-os-salarios)).</span>
+
+## No Enterprise
+
+No Odoo Enterprise, um recibo já processado corrige-se da mesma maneira: com o acesso extra **Administrador de Salários**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
+
+{/* Nota interna (lote EE-06, DOCS-073 #4142, DEC-1794, master ce51f2d47, 10/11/2026): conferido numa cópia Enterprise da demonstração (docs_ee_ee06_test, computador 2) com utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): Administrador de Salários em Salários › Processar › Correções ao processamento, › Recibos de vencimento e Salários › Pagar › Pagamentos de salários. Menus e vistas comparados, perfil a perfil, com uma cópia Community do mesmo master (docs_demo_ee06_test). Ver reports/LOTE_EE-06.md. */}
+
+## Resultado esperado
+
+- O recibo original fica como estava, em **Pago**. O recibo corretivo, com **Tipo de recibo** «Corretivo», entra na lista de recibos do mesmo período e fica **Pago** depois de executado o pagamento da diferença.
+- A correção fica **Concluída** em **Correções ao processamento**, com o **Recibo a corrigir**, o **Recibo corretivo**, a **Revisão** (1 na primeira correção do recibo), quem a iniciou e quando, e o motivo.
+- A diferença aparece em **Salários › Pagar › Pagamentos de salários** com o valor líquido (44,50 € no exemplo), **Gerado (num lote)** e, depois de **Executar** com a **Data-valor**, **Executado**.
+- Há um recibo corretivo por cada mês fechado desde a data de efeito (agosto e setembro no exemplo). Na correção de setembro, a **DMR de substituição** fica «Não aplicável» («a DMR ainda não foi submetida: o recibo corretivo entra nela»), porque a DMR de setembro ainda não foi submetida.
+
+## Notas importantes
+
+- **O que a correção propaga.** A lista **Propagação** tem quatro linhas: **DMR de substituição**, **Declaração de Segurança Social corretiva**, **Lançamento contabilístico** e **Pagamento da diferença**. No exemplo de agosto, a declaração da Segurança Social ficou «Não aplicável» («a declaração de Segurança Social ainda não foi submetida») e a **DMR de substituição** ficou **Pendente** («a DMR do mês do pagamento já foi submetida»), com o botão **Gerar**: depois de **Gerar** e **Confirmar**, a linha indica «DMR 2026-08 (Declaração de substituição)». Se a DMR ainda não foi submetida, a linha diz «Não aplicável: a DMR ainda não foi submetida: o recibo corretivo entra nela». A DMR de substituição prepara-se como a do mês (ver [Como enviar a declaração mensal de remunerações (DMR) à AT](/payroll-pt/dmr)), com **Tipo de declaração (Quadro 6)** › **Declaração de substituição**.
+- **Concluir antes de executar o pagamento.** **Concluir a correção** só pede as linhas da **Propagação** confirmadas: no exemplo, com o pagamento da diferença ainda **Gerado (num lote)**, a correção passou a **Concluída**. O recibo corretivo só passa a **Pago** quando o pagamento é executado (passo 8), por isso confirme o pagamento em **Pagamentos de salários**.
+- **Criar corretivo à mão.** **Ações** › **Criar corretivo** cria um recibo corretivo vazio. Ao carregar em **Calcular**, as linhas acrescentadas à mão são recalculadas a partir dos dados do período: uma linha **Trabalho suplementar** de 4 horas, sem horas registadas no período, voltou a 0,00. Não use esta via para pagar horas ou prémios que não estão registados; registe primeiro o facto e use **Retificar**.
+- **Um mês fechado não aceita factos novos.** Registar trabalho suplementar num dia de um mês já pago é recusado (ver «Problemas frequentes»).
+- **Os comprovativos anuais** só contam o que foi pago. Enquanto o pagamento da diferença não estiver executado, o [comprovativo anual](/payroll-pt/comprovativos-anuais) de Carla não inclui os 50,00 €.
+- **O menu «Ações» do recibo.** Num recibo **Pago**: **Criar corretivo**, **Recalcular o que mudou**, **Alteração retroativa da retribuição**, **Confirmar o retrato** e os registos de entrega (**Entregue por e-mail**, **Entregue no portal**, **Entregue em papel**). Num recibo corretivo **Validado**, o menu tem ainda **Gerar pagamento** e **Anular**, e a barra tem **Pagar** e **Contabilizar**. **Confirmar o retrato** guarda o estado do recibo para comparar numa correção futura.  <span className="fd-pending">Pendente de validação no ecrã: o efeito de **Confirmar o retrato**.</span>
+
+## Problemas frequentes
+
+### «Nada mudou desde que este recibo foi fechado» ao carregar em Retificar
+
+- **Sintoma:** «Operação inválida. Nada mudou desde que este recibo foi fechado. O que aconteceu: o contrato, o horário e as presenças do período estão como estavam. Como resolver: não é preciso fazer nada; para pagar outra coisa crie um recibo corretivo à mão.» Aparece também em **Ações** › **Recalcular o que mudou**.
+- **Causa:** o facto que mudou não está registado no fiscaldoo, ou é um aumento.
+- **O que fazer:** para um aumento, use **Alteração retroativa da retribuição**. Para outro facto, registe-o primeiro e carregue de novo em **Retificar**.
+
+### «Não se pode criar uma presença num período fechado»
+
+- **Sintoma:** ao registar trabalho suplementar num dia de um mês já pago: «Operação inválida. Não se pode criar uma presença num período fechado. O que aconteceu: um recibo validado ou pago de Bruno Miguel Teixeira já cobre o dia 15/09/2026. Como resolver: corrija a presença que existe com a ação «Corrigir» (cria uma presença nova que aponta para a original). A tentativa ficou registada na auditoria.»
+- **Causa:** o mês está fechado pelo recibo validado ou pago.
+- **O que fazer:** siga o «Como resolver» da mensagem e, depois, **Retificar** no recibo do mês.
+
+### «Operação inválida … ainda tem propagações pendentes» ao carregar em Concluir a correção
+
+- **Sintoma:** «Operação inválida. A correção «Correção de Carla Sofia Mendes (01/08/2026 — 31/08/2026)» ainda tem propagações pendentes: Pagamento da diferença. O que aconteceu: uma correção meio propagada deixa as declarações e a contabilidade desencontradas. Como resolver: gere cada uma (ou marque-a não aplicável com o motivo).»
+- **Causa:** falta gerar e confirmar uma linha da **Propagação**, neste caso o pagamento da diferença.
+- **O que fazer:** gere e confirme a linha que a mensagem indica e carregue de novo em **Concluir a correção**.
+{/* Nota interna (DOCS-022, 3.ª auditoria, NC-62, master ba9c8bd7): defeito P-13 do PAY-066 (#3613): «Payment of the difference» em inglês na mensagem de Completo. Já não se vê no master e4dd4ae90 (lote v23-BF): a mensagem diz «Pagamento da diferença». */}
+
+### O recibo corretivo não se valida antes da DMR de substituição
+
+- **Sintoma:** em **Validar**, «Operação inválida. O recibo corretivo não pode ser validado antes de existir a declaração de substituição. …»
+- **Causa:** o recibo original já foi declarado numa DMR submetida.
+- **O que fazer:** na correção, **Gerar** e **Confirmar** a linha **DMR de substituição** e valide depois o recibo corretivo (passos 6 e 7).
+
+### O motivo não fica e a janela não fecha
+
+- **Sintoma:** «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.» em **Retificar** ou em **Alteração retroativa da retribuição**.
+- **Causa:** falta o **Motivo da correção** ou o **Motivo**.
+- **O que fazer:** preencha o campo a vermelho e carregue de novo no botão da janela.
+
+Sem a **Nova retribuição mensal**, a janela **Alteração retroativa da retribuição** recusa com «Operação inválida. A nova retribuição tem de ser superior a zero. O que aconteceu: foi escrito 0. Como resolver: escreva o valor mensal.» Escreva a retribuição mensal nova e carregue de novo em **Alterar e preparar o corretivo**.
+
+{/* Nota interna (DOCS-022, 3.ª auditoria, master ba9c8bd7): D15 persiste na correção concluída («Este registo já está fechado… anule-o ou crie uma correção»), PAY-066 (#3613). */}
+
+{/* Nota interna (lote v23-BE, depois do comboio 188 com o I18N-041 #4146, master 7a46de91a, docs_demo_v23be_test, porta 8504): só o nome do botão. Numa correção minha (criada por RPC sobre o recibo de setembro de 2026 de Carla Sofia Mendes), vista por clique: em Rascunho, Iniciar a correção e Anular; em Em curso, Concluir a correção e Anular (antes «Completo»); anulada no fim. O resto do artigo não foi percorrido. Com o utilizador demo.admsalarios, Iniciar a correção nesse rascunho deu «Sem acesso … Lançamento contabilístico» (ver o relatório do lote); com o administrador passou. */}
+
+{/* Nota interna (lote v23-BF, DOCS-063 #3853, 10/11/2026, master e4dd4ae90, docs_demo_v23bf_test acabada de copiar da base-mãe, porta 8504): a base-mãe já não tem os recibos de outubro e novembro de Carla Sofia Mendes (o último é setembro; a DMR 2026-08 está Submetida e a 2026-09 Validada). Exemplo trocado para o recibo de agosto. Percurso dos 9 passos feito por clique com um utilizador criado na cópia com o perfil Processador de salários e o acesso extra Administrador de Salários: Alteração retroativa para 1.950 desde 01/08/2026 (2 corretivos, agosto e setembro, e 2 correções Em curso; sem valor, a recusa citada em Problemas frequentes); Calcular (50,00 / 5,50 / 44,50); Validar recusado com a mensagem do passo 5; DMR de substituição Gerar e Confirmar (DMR 2026-08 de substituição; Gerar nessa DMR para o Resumo citado); Validar; Lançamento contabilístico Gerar e Confirmar (SAL/2026/00005 de 31/08/2026, linhas conferidas no razão); Concluir a correção com o pagamento pendente recusado com a mensagem de Problemas frequentes; Pagamento da diferença Gerar e Confirmar; Concluir a correção → Concluída antes de executar o pagamento; Executar sem data-valor recusado; Executar com data-valor 10/11/2026 → Executado e corretivo Pago. Não houve «Sem acesso» em nenhum passo: este percurso não passa por Iniciar a correção, o botão do FIX-M205 (comboio 190, ainda fora de master); a correção nasce Em curso. Auditoria docs-aud-v23bf (master 9ab7f1cc7, docs_demo_audv23bf_test acabada de copiar, porta 8504, 10/11/2026): os 9 passos repetidos por clique com um utilizador Processador de salários + Administrador de Salários, com os mesmos números, SAL/2026/00005 e mensagens; Concluir a correção com o pagamento ainda Gerado (num lote) passou a Concluída. «Antes de começar» revisto com um utilizador só Processador de salários (recibo pago de agosto de Diogo Ferreira Lopes: botões Imprimir recibo, Retificar e Ações, com Criar corretivo, Recalcular o que mudou, Confirmar o retrato e os três registos de entrega; menu Processar sem Correções ao processamento) e com o Administrador de Salários (Anular na correção de setembro recusado com a mensagem citada; Repor o valor anterior só aberto e descartado). Eva: Corrigir o IRS retido no recibo de setembro (17,00 → 29) e recibo de outubro criado na cópia (Novo, Calcular): IRS retido 29,00 €. Acertos de IRS vazia. Capturas 01, 02 e 03 refeitas. */}

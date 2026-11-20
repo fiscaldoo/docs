@@ -1,0 +1,84 @@
+---
+id: registar-presencas
+slug: /people/registar-presencas
+title: Como registar presenças (picagem e quiosque)
+sidebar_label: Registar presenças
+sidebar_position: 8
+description: "Registar a entrada e a saída dos trabalhadores no quiosque, ver as presenças e saber o que o produto decide sozinho (tipo de tempo e validação)."
+keywords: [presenças, picagem, quiosque, modo quiosque, entrada e saída, check-in, check-out, horas suplementares, validação de presenças, definições das assiduidades]
+doc_id: DOC-0255
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/ausencias-e-presencas/registar-uma-ausencia, troubleshooting/salarios-e-pessoas/ausencia-sobreposta]
+---
+
+## Para que serve?
+
+Os trabalhadores registam a entrada e a saída no quiosque. O RH vê as presenças e confere o que o produto classificou sozinho: o tipo de tempo e se o registo ficou validado.
+
+## Quando utilizar?
+
+- Quer pôr um ecrã de picagem à entrada da empresa.
+- Quer ver as horas registadas de um trabalhador.
+- Quer perceber porque é que uma presença ficou como horas suplementares.
+
+## Onde encontrar?
+
+- **Pessoas › Tempo de trabalho › Modo quiosque** (o ecrã de picagem).
+- **Pessoas › Tempo de trabalho › Presenças** (a lista dos registos).
+- **Pessoas › Configuração de ausências e assiduidades › Definições das assiduidades** (as regras; só o Administrador).
+
+## Antes de começar
+
+- O seu perfil é **Gestor de RH** para o quiosque e para as presenças.
+- Os trabalhadores existem na lista de trabalhadores da empresa.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Pessoas › Tempo de trabalho › Modo quiosque**. O ecrã mostra a hora e a data, o quadro **Leia o seu cartão** e o botão **Identificar manualmente**. Deixe-o aberto no posto de picagem. Não carregue nas hiperligações do aviso azul (**Read the Documentation**, **Buy an RFID Device**): saem para sites externos.
+2. O trabalhador carrega em **Identificar manualmente** e escolhe o seu nome na lista. O ecrã pergunta «Confirmar check-in para …?» e o botão de entrada regista-a: aparece «Bem-vindo» com a hora de entrada.
+3. À saída, repete o processo: o ecrã pergunta «Confirmar check-out para …?» e despede-se com «Saiu em …», as **Horas hoje** e as **Horas extras**.
+4. Abra **Pessoas › Tempo de trabalho › Presenças**. A lista está agrupada por mês e por trabalhador: abra os grupos para ver cada registo, com **Entrada**, **Saída**, **Horas**, **Tipo** e **Estado**.
+
+</StepByStep>
+
+![Lista de Presenças com um registo de 01/11/2026 de 02:22 a 02:23, de tipo Horas suplementares não recuperáveis - 150%, Validado](/images/people/registar-presencas/01-presenca.png)
+
+## No Enterprise
+
+No Odoo Enterprise, o quiosque e as regras são os mesmos: com o perfil **Gestor de RH**, **Pessoas › Tempo de trabalho › Modo quiosque** abre o mesmo ecrã (**Leia o seu cartão**, **Identificar manualmente**), e o administrador encontra em **Definições das assiduidades** as mesmas opções de **Validação de presenças**. A diferença está na lista do passo 4: **Pessoas › Tempo de trabalho › Presenças** abre na vista **Gantt** do Enterprise, com o dia de hoje e uma linha por trabalhador com as horas registadas contra as do horário (por exemplo «0h / 8h»). Para ver a lista agrupada por mês e por trabalhador, escolha a vista **Lista**, no canto superior direito: tem as mesmas colunas e, a mais, **Tipo de tempo**.
+
+{/* Nota interna (lote EE-11, DOCS-073 #4142, DEC-1794, master 589ecfd27, 12/11/2026): cópia Enterprise docs_ee_ee11_test no portátil (pg_dump da odoo20_ee_test, já em 589ecfd27; -i de hr_payroll, planning, hr_appraisal e hr_recruitment e -u de fiscaldoo_ux_kit e l10n_pt_fiscaldoo_demo; ee_neutralizar antes e construir), porta 8508, guarda de rede ligada; utilizadores criados por RPC na cópia, cada um só com um valor do campo Perfil: ee11_rh: Modo quiosque (mesmos textos nas duas cópias, incluindo «Read the Documentation»/«Buy an RFID Device» do F3-10) e Presenças: no Enterprise abre em Gantt (vistas Gantt e Lista; hr_attendance_gantt), na Lista com o agrupamento «Data: Mês > Trabalhador» e as colunas Trabalhador, Entrada, Saída, Duração da pausa, Horas, Tipo de tempo, Tipo e Estado; no Community só Lista, sem Tipo de tempo. Administrador: Definições das assiduidades com os mesmos blocos nas duas cópias. Não se picou no quiosque do Enterprise (a regra das horas suplementares é do mesmo módulo do fiscaldoo). Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee11_test (master 589ecfd27, porta 8518), com os mesmos utilizadores. Ver reports/LOTE_EE-11.md. */}
+
+## Resultado esperado
+
+- O registo aparece na lista com o **Estado** **Validado**.
+- O produto escolheu o **Tipo** sozinho. Num domingo e feriado (01/11/2026, Dia de Todos os Santos), o registo ficou como **Horas suplementares não recuperáveis - 150%**, com «Respeita o descanso» e a média semanal «Dentro do limite». Isto tem efeito no salário: confirme o tipo antes de fechar o mês.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o enquadramento do trabalho em dia de descanso ou feriado e a taxa de 150 % que o produto aplica a estas horas; o artigo descreve o que o ecrã mostra.</span>
+
+## Notas importantes
+
+- **A validação depende da definição.** Em **Definições das assiduidades › Validação de presenças** escolhe-se entre «Os dias trabalhados são aprovados automaticamente», «exigem aprovação manual» ou «exigem aprovação se fora da tolerância». Na demonstração, o registo ficou **Validado** sem intervenção. O botão **Recusar** da ficha serve para retirar um registo.
+- **O endereço do quiosque.** A página de definições mostra o **URL do quiosque de presenças** e o botão **Gerar novo endereço**. O endereço mostrado pertence à instalação principal e não deve ser copiado de uma base de testes. Quem gera um endereço novo invalida o anterior.
+- **Também se pode picar fora do quiosque** se **Presenças a partir da aplicação** estiver ativa; este caminho não foi percorrido neste lote.
+- **O modo manual não pede senha.** Com **Identificação do trabalhador por PIN** desligada, qualquer pessoa que veja o quiosque pode picar por outra. Se isso for um risco na sua empresa, ative o PIN nas definições.
+- **O ecrã não impede registos a sobrepor-se.** Na demonstração, uma presença de 02:00 a 02:30 criada à mão no mesmo dia e para o mesmo trabalhador de outra de 02:22 a 02:23 guardou-se sem aviso. Confira a lista antes de fechar o mês. Para as ausências no mesmo dia, veja [A ausência ou a presença sobrepõe-se a outro registo do mesmo dia](/troubleshooting/ausencia-sobreposta).
+
+{/* Nota interna (DOCS-040 F3b): textos do quiosque sem tradução: «Hours today», «check-in»/«check-out» nos botões e «On site» (F3-10, LOW). «Statements queued» idem no Crédito de horas. A lista Presenças vazia mostra o convite «Load sample data»: não usar numa base real. */}
+
+## Problemas frequentes
+
+### Pedi uma ausência e o ecrã diz que já existe uma no mesmo dia
+
+Veja [A ausência ou a presença sobrepõe-se a outro registo do mesmo dia](/troubleshooting/ausencia-sobreposta).
+
+### A presença ficou com o tipo errado
+
+Abra o registo em **Presenças** e confira **Tipo de tempo**, **Intervalos do dia** e **Registo legal do tempo de trabalho** antes de fechar o mês.

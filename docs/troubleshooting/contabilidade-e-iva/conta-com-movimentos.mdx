@@ -1,0 +1,130 @@
+---
+id: conta-com-movimentos
+slug: /troubleshooting/conta-com-movimentos
+title: A conta não pode ser alterada ou apagada porque já tem movimentos
+sidebar_label: Conta com movimentos
+description: O que ainda se pode mudar numa conta com lançamentos, porque eliminar e recodificar são recusados e como passar o saldo para outra conta antes de arquivar.
+keywords: [conta com movimentos, conta com lançamentos, conta com lancamentos, não pode ser eliminada, nao pode ser eliminada, não pode ser recodificada, nao pode ser recodificada, Recodificar conta, Alterar tipo de conta, Arquivar, arquivar conta, período já exportado para SAF-T, periodo ja exportado, apagar conta, alterar código da conta, alterar codigo da conta, reclassificar saldo]
+doc_id: DOC-0348
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 255d77e63)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/plano-de-contas/criar-e-alterar-contas, troubleshooting/contabilidade-e-iva/conta-sem-taxonomia, accounting-pt/dia-a-dia/lancamentos-contabilisticos, accounting-pt/declaracoes/saft-de-contabilidade]
+---
+
+{/* Nota interna (DOCS-046, DOC-0348, v7-TS1): validado na base docs_demo_v7ts1_test (8181), master 584213fd9. Por clique, com o perfil Contabilista Certificado / Gestor fiscal: eliminar a 278900 (1 linha), arquivar e desarquivar, mudar o nome, recodificar a 278900 e a 6241 (recusadas pelo SAF-T de 2026 gerado no DOC-0347), Alterar tipo com o mesmo tipo (recusado) e com outro tipo (aceite, ida e volta na 278910), lançamento OD/2026/00106 e arquivo. Com o Contabilista: ficha aberta por ligação, só de leitura e sem botões. Não foi provocada à parte a recusa só por exercício fechado, sem SAF-T: a 6241 tem lançamentos em 2025 e 2026 e a mensagem foi a do SAF-T. As mensagens «Só o Responsável fiscal…» do catálogo também não se viram, porque o Contabilista não chega a ter os botões. O arquivo aceita uma conta com saldo sem avisar: defeito em correção no ACC-244; quando entrar em master, rever o aviso, a linha Arquivar da tabela e a secção de arquivar por engano. Auditoria de 03/11, master 58eeca54d: arquivo com saldo sem aviso, conta fora das linhas, filtro Conta inativas, Desarquivar e recodificação aceite num período por exportar (278930 para 278931). */}
+
+## Sintoma
+
+Abre a ficha de uma conta em **Contabilidade › Configurar › Geral › Plano de contas** e:
+
+- o **Código** e o **Tipo** não se conseguem escrever;
+- **Eliminar** (no menu de ações da ficha) é recusado;
+- **Recodificar conta** (no separador **Portugal**) é recusado.
+
+## Mensagem
+
+Ao eliminar, depois de confirmar **Eliminar** na janela **Adeus, registo!**:
+
+> «A conta *278900 Devedores e credores diversos* tem *1* linha(s) de lançamento e não pode ser eliminada. Arquive-a (a conta fica no histórico e no SAF-T e deixa de poder ser usada). Se a conta tem saldo, passe-o primeiro para a conta certa (lance um movimento que o regularize): uma conta arquivada já não se escolhe nos lançamentos.»
+
+![Janela Operação inválida: a conta 278900 tem 1 linha de lançamento e não pode ser eliminada, com o botão Fechar](/images/troubleshooting/conta-com-movimentos/01-eliminar-recusado.png)
+
+Ao recodificar uma conta com lançamentos num período já exportado:
+
+> «A conta *278900 Devedores e credores diversos* não pode ser recodificada: tem lançamentos em *01/01/2026 – 31/12/2026*, um período já exportado para SAF-T (*Exportação SAF-T (PT) — Empresa Demonstração, Lda — 07/11/2026 20:01:08*). Arquive-a e crie uma conta nova. Se a conta tem saldo, passe-o primeiro para a conta certa (lance um movimento que o regularize): uma conta arquivada já não se escolhe nos lançamentos.»
+
+![Janela Erro de Validação: a conta 278900 não pode ser recodificada porque tem lançamentos num período já exportado para SAF-T](/images/troubleshooting/conta-com-movimentos/02-recodificar-recusado.png)
+
+<HelpCallout type="risco" title="Veja o saldo antes de arquivar">
+As duas mensagens mandam passar o saldo para a conta certa antes de arquivar. Faça-o mesmo: o programa aceita arquivar uma conta com saldo sem avisar: a janela **Confirmação** só pergunta se quer arquivar o registo. Depois disso, o saldo fica na conta e não se pode passar enquanto ela estiver arquivada, porque a conta deixa de aparecer nas linhas de um lançamento. Não arquive uma conta com saldo: passe primeiro o saldo, como em «A conta deixa de ser usada ou o código não se pode mudar», mais abaixo.
+</HelpCallout>
+
+Em **Alterar tipo de conta**, sem escolher um tipo diferente:
+
+> «Escolha um tipo novo, diferente do atual.»
+
+Em **Recodificar conta**, depois de preencher **Código novo** e **Motivo**, ao carregar em **Recodificar**, numa conta com lançamentos só num exercício fechado, sem SAF-T gerado para esse exercício:
+
+> «A conta *432 Edifícios e outras construções* não pode ser recodificada: tem lançamentos até *31/12/2025*, um período já fechado (empresa *Empresa Demonstração, Lda*). Arquive-a e crie uma conta nova. Se a conta tem saldo, passe-o primeiro para a conta certa (lance um movimento que o regularize): uma conta arquivada já não se escolhe nos lançamentos.»
+
+{/* Nota interna (v16-RESTOS, master 255d77e63): recusa só por exercício fechado provocada por clique com o Gestor fiscal, na janela Recodificar conta (docs-aud-v16restos). */}
+
+## Causas verificadas
+
+- **A conta tem lançamentos.** O SAF-T e o histórico apontam para ela, por isso não se elimina e o código e o tipo só mudam pelos botões próprios, que deixam registo.
+- **Os lançamentos estão num exercício já fechado.** Mesmo sem SAF-T gerado, o código fica fixo: arquive a conta e crie uma nova, como a mensagem indica.
+- **O período dos lançamentos já foi exportado para SAF-T.** O código fica fixo, mesmo que a conta tenha só um lançamento nesse período. A janela **Recodificar conta** avisa também que a alteração só é permitida enquanto os lançamentos estão num exercício aberto.
+- **O seu perfil não chega a estes botões.** Com o **Contabilista**, o **Plano de contas** não aparece no menu e a ficha, aberta por ligação, fica só de leitura e sem **Recodificar conta** nem **Alterar tipo de conta**.
+
+## O que confirmar
+
+Veja o que quer mudar. Testado numa conta com lançamentos, com o perfil **Contabilista certificado** (com o perfil **Contabilista**, a ficha da conta abre só para leitura e sem estes botões):
+
+| O que quer mudar | Numa conta com lançamentos |
+|---|---|
+| **Nome da Conta** | Muda-se na ficha. |
+| **Taxonomia** | Muda-se no separador **Portugal** ([taxonomias](/accounting-pt/taxonomias)). |
+| **Tipo** | Muda-se com **Alterar tipo de conta**, com **Motivo**. A janela avisa que isso altera o balanço e a demonstração de resultados retroativamente. |
+| **Código** | Muda-se com **Recodificar conta**, com **Motivo**, se o período não estiver exportado para SAF-T nem fechado. |
+| Eliminar | Não é possível. |
+| Arquivar | Só com o **Saldo** da ficha a 0,00 €. Hoje, o programa também aceita uma conta com saldo, sem avisar, mas o saldo deixa de se poder passar enquanto ela estiver arquivada. |
+
+## Como resolver
+
+**Quem faz:** o perfil Contabilista certificado.
+
+### O código está errado e o período ainda não foi exportado
+
+Use **Recodificar conta**. Os passos estão em [criar e alterar contas](/accounting-pt/criar-e-alterar-contas). Os lançamentos mantêm-se e passam a mostrar o código novo.
+
+### O tipo está errado
+
+No separador **Portugal**, carregue em **Alterar tipo de conta**, escolha o **Tipo novo**, escreva o **Motivo** e carregue em **Alterar tipo**. A ficha regista a mudança (por exemplo, «Passivos Correntes → Ativos Correntes (Tipo)»). <span className="fd-pending">Pendente de validação por contabilista certificado: o efeito de mudar o tipo de uma conta em exercícios já declarados.</span>
+
+### A conta deixa de ser usada ou o código não se pode mudar
+
+A ordem conta: depois de arquivada, a conta deixa de aparecer nas linhas de um lançamento, e o saldo não se pode passar enquanto ela estiver arquivada. O programa não o avisa disto ao arquivar: confirme o **Saldo** na ficha.
+
+1. Crie a conta certa, com a taxonomia ([criar e alterar contas](/accounting-pt/criar-e-alterar-contas)). No exemplo, `278910`, com S138.
+2. Se a conta antiga tiver saldo, passe-o com um [lançamento contabilístico](/accounting-pt/lancamentos-contabilisticos). <span className="fd-pending">Pendente de validação por contabilista certificado: a data e a forma de transferir o saldo entre contas, sobretudo num exercício já declarado.</span>
+3. Abra a conta antiga e, no menu de ações da ficha, carregue em **Arquivar** e confirme na janela **Confirmação**.
+
+No exemplo, com 100,00 € a débito na `278900`, o lançamento `OD/2026/00106` deixou o **Saldo** da conta em 0,00 € antes do arquivo:
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| 278910 Devedores e credores diversos (certa) | 100,00 € | — |
+| 278900 Devedores e credores diversos (antiga) | — | 100,00 € |
+
+<HelpCallout type="risco" title="Uma transferência de saldo muda valores já declarados?">
+Os lançamentos antigos não mudam: ficam na conta arquivada, e a transferência entra só na data em que a publicar. Se o período já foi declarado, decida com o contabilista certificado a data e o tratamento. <span className="fd-pending">Pendente de validação por contabilista certificado: efeito da transferência no SAF-T e na IES dos exercícios já entregues.</span>
+</HelpCallout>
+
+### Arquivou por engano ou com saldo
+
+Em **Plano de contas**, escolha o filtro **Conta inativas** e abra a conta. No menu de ações da ficha, carregue em **Desarquivar**. A conta volta a aparecer nas linhas dos lançamentos. Se tinha saldo, passe-o agora e só depois arquive de novo.
+
+## Resultado esperado
+
+- A conta arquivada deixa de ser oferecida nas linhas: ao escrever `278900`, a lista só mostra as opções de criar. Os lançamentos antigos mantêm-se nela.
+- A conta nova recebe os lançamentos seguintes.
+- Depois de uma recodificação ou mudança de tipo, a ficha da conta guarda quem, quando, o valor anterior e o novo.
+
+## Quando contactar o suporte
+
+- A mensagem de eliminar aparece com 0 linhas de lançamento.
+- A recodificação é recusada e a exportação de SAF-T que a mensagem indica não existe.
+- Precisa de juntar duas contas com lançamentos: não o faça com lançamentos em massa sem falar com o suporte.
+
+## Informação a enviar
+
+- A empresa, o código e o nome da conta.
+- O texto completo da mensagem, copiado do ecrã.
+- O que queria mudar, e porquê.
+- O perfil com que entrou.
+
+{/* Nota interna (v23-T, DOC-0348, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

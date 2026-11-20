@@ -1,0 +1,63 @@
+---
+id: pedido-de-ferias-incompleto
+slug: /troubleshooting/pedido-de-ferias-incompleto
+title: O pedido de férias não tem o tipo, as datas ou o contrato
+sidebar_label: Pedido de férias incompleto
+description: "O que acontece quando falta o tipo, uma das datas ou o calendário de feriados do ano num pedido de férias ou de ausência, e como completar."
+keywords: [pedido incompleto, sem tipo de ausência, falta uma data, data de início anterior, calendário de feriados, ausência a zero dias, férias sem tipo]
+doc_id: DOC-0390
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master acd623385)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/ausencia-recusada, people/ausencias-e-presencas/configurar-ausencias, people/o-meu-espaco/pedir-ferias]
+---
+
+## Sintoma
+
+O pedido guarda-se com zero dias, sem ser do tipo que queria, ou o ecrã recusa-o por falta de uma data ou do calendário de feriados do ano.
+
+## Mensagem
+
+Três casos, vistos no ecrã:
+
+- **Sem tipo (Trabalhador).** Se apagar o tipo, volta o que vem preenchido, **Formação**. Ao guardar, o ecrã não protesta e o pedido fica logo **Aprovado**, com 8:00 horas, na data de hoje.
+- **A data de fim fica vazia (Trabalhador).** Hoje, ao apagar a data de fim, o ecrã mostra «Erro de Acesso Não tem permissão para ver este campo de «Trabalhador»: o seu conteúdo está reservado a um perfil mais específico. […]» em vez da mensagem do problema; o mesmo acontece com datas do ano seguinte. Feche a janela e escolha as duas datas de novo no calendário (veja [Como pedir férias ou outra ausência](/people/pedir-ferias)).
+- **O ano não tem calendário de feriados (Gestor de RH, 14/01/2027).** Ao guardar: «Operação inválida Não existe calendário de feriados para 2027 (Continente) na empresa «Empresa Demonstração, Lda». O que aconteceu: os dias úteis nunca se adivinham sem os feriados do ano. Como resolver: […]». O «Como resolver» depende de quem grava: quem pode criar calendários (o administrador, ou quem tem o acesso extra **Administrador de Salários**) lê «crie o calendário em Salários › Configurar › Empresa › Faltas e feriados › Calendários de feriados e carregue em «Gerar feriados».»; os outros perfis, incluindo o **Gestor de RH**, leem «peça a um utilizador com o acesso extra «Administrador de Salários» (ou ao administrador) que crie o calendário desse ano.» {/* Nota interna (auditoria v23-BH, 12/11/2026, master 2c8d358c0, docs_demo_audbh_test): em master 2c8d358c0 o pedido gravava-se sem esta recusa (regressão do HR-034, RH-046 #4196). As duas variantes do «Como resolver» são do código (pt.payroll.holiday.calendar._calendar_of escolhe-a pelo direito de criar calendários: na cópia, o Gestor de RH, o Processador e o Trabalhador não o têm; o Administrador de Salários tem). Com Férias anuais sem atribuição desse ano, aparece antes «Não tem dias atribuídos para este tipo de ausência.» (visto com o Gestor de RH a 15/12/2025). Lote EE-14 (docs_demo_ee14_test, master acd623385, porta 8526, 12/11/2026): o RH-046 (ba2d2a2ab) está em master; por clique, num pedido novo de Dádiva de sangue para Bruno Miguel Teixeira a 14/01/2027 (sem calendário de 2027 na Empresa Demonstração; nada gravado), o utilizador só com o perfil Gestor de RH leu «… Como resolver: peça a um utilizador com o acesso extra «Administrador de Salários» (ou ao administrador) que crie o calendário desse ano.» e o administrador «… Como resolver: crie o calendário em Salários › Configurar › Empresa › Faltas e feriados › Calendários de feriados e carregue em «Gerar feriados».»; no mesmo ecrã, 28/12/2026 a 31/12/2026 mostrou 4,00 dias (não gravado). Em 15/12/2025 a recusa que aparece primeiro é a do catálogo dos tipos de falta («Não existe o tipo de falta «DADIVA_SANGUE» em vigor em 15/12/2025. …»), por isso o exemplo passou a 2027. */}
+
+## Causas verificadas
+
+- **O tipo foi apagado.** O pedido volta ao tipo por omissão, que não é férias.
+- **A data de fim é anterior à de início.** O pedido não se grava.
+- **Falta o calendário de feriados do ano.** Veja [Como configurar os feriados](/people/feriados).
+- **Pedido em dias sem trabalho.** Um pedido numa data de domingo ou feriado fica com 0 dias.
+
+<span className="fd-pending">Pendente de validação no ecrã: a mensagem de falta de contrato em vigor. Em três tentativas (dia inteiro antes do início do contrato, tipo por horas antes do início do contrato e um trabalhador sem contrato), o pedido guardou-se sem erro, por isso a mensagem não foi vista; e a falta de horas da ausência não foi provocada.</span>
+
+## O que confirmar
+
+1. O **Tipo de tempo** do pedido: tem de ser o tipo de férias da empresa (**Férias anuais**).
+2. As duas datas em **Datas** e os dias que o ecrã mostra por baixo (por exemplo **10,00 dia(s)**).
+3. Em **Calendários de feriados**, se existe o ano do pedido.
+
+## Como resolver
+
+- Sem tipo ou com 0 dias: abra o pedido e, se ainda estiver **Para Aprovar**, escolha **Férias anuais** e as datas. Se ficou **Aprovado** como **Formação**, o pedido tem o botão **Cancelar** e, na roda dentada, **Eliminar**.
+- Data de fim vazia ou anterior à de início: escolha de novo as duas datas no calendário.
+- Sem calendário do ano: peça ao Administrador que o gere.
+
+## Resultado esperado
+
+O pedido mostra o tipo e os dias certos e guarda-se **Para Aprovar**.
+
+{/* Nota interna (DOCS-040 F3b): F3-08 (pedido de 0 dias guarda-se). Falta de contrato: guarda-se sem erro; verificar com o produto se a mensagem de contrato em vigor só vale para outro caso. */}
+
+## Quando contactar o suporte
+
+O ecrã recusa o pedido e as três causas estão certas.
+
+## Informação a enviar
+
+O texto completo da mensagem, o tipo, as datas e o trabalhador.

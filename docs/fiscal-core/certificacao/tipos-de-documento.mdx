@@ -1,0 +1,55 @@
+---
+id: tipos-de-documento
+slug: /fiscal-core/tipos-de-documento
+title: Que tipos de documento certificado existem (FT, FS, FR, NC, ND, GT…)
+sidebar_label: Tipos de documento
+sidebar_position: 9
+description: Os 31 tipos de documento do SAF-T (36 linhas na lista) que o fiscaldoo conhece, para que serve cada um (fatura, fatura simplificada, fatura-recibo, notas, guias, recibos, orçamentos), quais levam ATCUD e assinatura e quais a demonstração emite.
+keywords: [tipos de documento, FT, FS, FR, NC, ND, GT, GR, RG, RC, OR, fatura, fatura simplificada, fatura-recibo, nota de crédito, nota de débito, guia de transporte, recibo, orçamento, orcamento, tipo de documento SAF-T, código do documento, codigo do documento]
+doc_id: DOC-0013
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/certificacao/series-documentais, fiscal-core/faturacao/emitir-uma-fatura-certificada]
+---
+
+Cada documento fiscal tem um tipo de duas letras (FT, NC, GT…), que decide a que parte do SAF-T pertence e se leva ATCUD e assinatura. O fiscaldoo conhece 31 tipos (a lista mostra 36 linhas, porque cinco aparecem em duas tabelas do SAF-T); um tipo só se usa quando existe uma [série](/fiscal-core/series-documentais) desse tipo.
+
+## Onde ver a lista
+
+**Contabilidade › Configurar › Faturação certificada › Tipos de documento**. O Administrador vê o menu sem o modo programador; o perfil **Contabilista certificado** só o vê com o modo programador ativo. A lista não tem botão **Novo**: os tipos vêm com o produto.
+
+![Lista de Tipos de documento SAF-T (PT): código, nome, tabela do SAF-T e as colunas Exige ATCUD, Exige assinatura e É documento de crédito ou correção](/images/fiscal-core/tipos-de-documento/01-lista-de-tipos-de-documento.png)
+
+## Os tipos, por família
+
+A lista tem **36 linhas e 31 códigos distintos**: **CS**, **LD**, **RA**, **RE** e **RP** (setor segurador) aparecem duas vezes, uma nos documentos comerciais (4.1) e outra nos de conferência (4.3). A coluna **Tabela SAF-T** diz a que família cada linha pertence.
+
+| Família (tabela do SAF-T) | Tipos | Para que serve | ATCUD e assinatura |
+|---|---|---|---|
+| **Documentos comerciais a clientes** (4.1) | **FT** Fatura; **FS** Fatura simplificada; **FR** Fatura-recibo; **NC** Nota de crédito; **ND** Nota de débito | Vender e corrigir vendas. A **NC** corrige uma venda para menos ([nota de crédito](/fiscal-core/emitir-uma-nota-de-credito)); a **ND**, para mais. A **FR** é fatura e recibo no mesmo documento | Exigem ambos |
+| Documentos comerciais antigos e de seguros (4.1) | **AA**, **DA**, **TD**, **TV**, **VD** (até 31/12/2012); **CS**, **LD**, **RA**, **RE**, **RP** (setor segurador) | Só para quem os já usava ou é do setor segurador | Não exigem |
+| **Documentos de transporte** (4.2) | **GT** Guia de transporte (incluindo as globais); **GR** Guia de remessa; **GD** Guia ou nota de devolução; **GC** Guia de consignação; **GA** Guia de movimentação de ativos fixos próprios | Acompanhar mercadorias em circulação ([guia de transporte](/fiscal-core/emitir-uma-guia-de-transporte)) | Exigem ambos |
+| **Documentos de conferência** (4.3) | **OR** Orçamento; **PF** Fatura pró-forma; **NE** Nota de encomenda; **FO** Folha de obra; **FC** Fatura de consignação; **CC** Crédito de consignação; **OU** Outros documentos de conferência | Propostas e documentos que não são fatura | Exigem ambos |
+| Documentos de conferência antigos, de mesa e de seguros (4.3) | **DC** Documento de conferência (até 30/06/2017); **CM** Consulta de mesa; **CS**, **LD**, **RA**, **RE**, **RP** (setor segurador) | Só para quem os já usava, para restauração (consulta de mesa) ou para o setor segurador | Não exigem |
+| **Recibos** (pagamentos) (4.4) | **RG** Outros recibos; **RC** Recibo (regime de IVA de caixa) | Provar um pagamento recebido ([recibo](/fiscal-core/emitir-um-recibo)) | Exigem ambos |
+
+As colunas **Exige ATCUD** e **Exige assinatura** são as da lista e estão ligadas nos mesmos tipos. <span className="fd-pending">Pendente de validação por contabilista certificado: que documentos levam ATCUD e assinatura segundo a lei, que aqui só se descreve o que o ecrã mostra.</span>
+
+## O que a demonstração emite
+
+A base de demonstração tem séries de 2026 para **FT**, **FS** (balcão e ponto de venda), **FR**, **NC**, **ND**, **GT**, **GD**, **OR** e **RG**. Os outros tipos existem na lista, mas sem série não se emitem.
+
+## O que convém saber
+
+- O tipo escolhe-se pela **série**, não no documento: a série diz o tipo e o ano, e o tipo diz se leva ATCUD e assinatura. Se não tiver série do tipo de que precisa, peça a quem tem o perfil **Contabilista certificado** que a crie.
+- A coluna **É documento de crédito/correção** está ligada em seis códigos: **NC** (nota de crédito), **GD** (guia ou nota de devolução), **CC** (crédito de consignação), **DA** (devolução de ativos), **TD** (talão de devolução) e **RE** (estorno ou recibo de estorno, nas duas tabelas). Quem filtra por esta coluna recebe estes seis e não só a **NC** e a **GD**. Uma nota de crédito não é uma anulação: veja [anular uma fatura](/fiscal-core/anular-uma-fatura).
+- Uma **FS** (fatura simplificada) só serve quando o IVA é devido em Portugal (nunca numa exportação nem numa venda intracomunitária) e tem limites, comparados com o total com IVA: até 1.000 € quando só há bens, quem vende é retalhista ou vendedor ambulante e o cliente é um particular; até 100 € nos outros casos, incluindo qualquer documento com uma linha de serviço; sem limite para quem está no regime de isenção do art. 53.º (CIVA, art. 40.º, n.º 1).
+- Os tipos antigos (**AA**, **TV**…) valem «até 2012-12-31», como a lista indica: não os use em documentos novos.
+
+{/* Nota interna (DOCS-046 / NV3B-10 a 12, DOC-0013, master f16f4a3e0, base docs_demo_v3bcor_test; as 36 linhas e as colunas foram lidas do ecrã (admin) e por RPC de leitura; 31 códigos distintos. Perfil Responsável fiscal: lista aberta por URL; o menu «Tipos de documento» só aparece ao Administrador e com modo programador (menu para Responsável fiscal no código, não visível no ecrã deste perfil: V3FC-04). Colunas de exige ATCUD/assinatura lidas do ecrã e conferidas por RPC (CM sem; CC com). */}
+
+{/* Nota interna (v23-T, DOC-0013, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

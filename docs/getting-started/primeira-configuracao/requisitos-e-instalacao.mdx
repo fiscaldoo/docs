@@ -1,0 +1,132 @@
+---
+id: requisitos-e-instalacao
+slug: /getting-started/requisitos-e-instalacao
+title: Como instalar o fiscaldoo e que requisitos tem
+sidebar_label: Requisitos e instalação
+sidebar_position: 0
+description: O que o servidor precisa de ter (Odoo 20 Community ou Enterprise, Python, PostgreSQL, bibliotecas e motor de PDF), onde pôr o código do fiscaldoo, que pacote se instala primeiro e o que se junta no Enterprise.
+keywords: [instalar, instalação, instalacao, requisitos, Enterprise, instalar no Enterprise, pacotes de ligação, pontes, requisitos e instalação do fiscaldoo, requisitos e instalacao do fiscaldoo, addons_path, servidor, Python, PostgreSQL, wkhtmltopdf, fiscaldoo · Instalação, ponto de entrada, módulos, modulos]
+doc_id: DOC-0005
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 5228a94bd)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [getting-started/primeira-configuracao/ativar-as-aplicacoes, getting-started/o-fiscaldoo/edicoes-e-versoes-suportadas]
+---
+
+## Para que serve?
+
+Para pôr o fiscaldoo a funcionar num Odoo 20, Community ou Enterprise. A instalação tem duas partes: no servidor, junta-se o código do fiscaldoo às pastas de módulos do Odoo; no Odoo, instala-se um só pacote de entrada, **fiscaldoo · Instalação — Ponto de entrada e pacotes**. Os outros pacotes (faturação certificada, salários, Copiloto…) ligam-se depois nas Definições.
+
+Este artigo é para quem administra o servidor do Odoo: consultor, parceiro ou administrador técnico.
+
+## Quando utilizar?
+
+- Numa base de dados nova, antes de qualquer outro trabalho.
+- Num Odoo 20 Community ou Enterprise que já existe e vai passar a usar o fiscaldoo.
+- Para confirmar se um servidor tem o que o fiscaldoo precisa.
+
+Os passos servem nas duas edições. No Enterprise há mais uma pasta a copiar e alguns pacotes que se juntam sozinhos: veja «No Enterprise», a seguir aos passos. O que muda no Enterprise está em [Edições e versões suportadas](/getting-started/edicoes-e-versoes-suportadas#o-que-muda-no-enterprise). Para passar uma base que já usa o fiscaldoo no Community para o Enterprise, veja [Como passar do Community para o Enterprise](/migration-toolkit/mudar-para-o-enterprise).
+
+## Onde encontrar?
+
+- No servidor: o ficheiro de configuração do Odoo (linha `addons_path`).
+- No Odoo: **Aplicações**, pesquisa `fiscaldoo`, cartão **fiscaldoo · Instalação — Ponto de entrada e pacotes**.
+
+## Antes de começar
+
+O servidor tem de ter:
+
+| Requisito | O que é preciso | Porquê |
+| --- | --- | --- |
+| Odoo | Odoo 20.0, edição Community ou Enterprise | O fiscaldoo é feito para esta versão, nas duas edições. |
+| Python | 3.12 a 3.14 | São as versões que o Odoo 20 aceita. |
+| PostgreSQL | 16 ou mais recente | É a versão mínima do Odoo 20. |
+| Bibliotecas Python | `lxml`, `qrcode`, `xlsxwriter`, `cryptography`, `requests` e `xmlschema`, no mesmo ambiente Python do Odoo | São as que os pacotes do fiscaldoo pedem (assinatura, código QR, SAF-T, exportações para Excel e comunicação com a AT). |
+| Biblioteca de códigos de barras e QR | `rl-renderPM==4.0.3` (`pip install rl-renderPM==4.0.3`), no mesmo ambiente Python do Odoo, e reinício do serviço | O Odoo 20 só a pede para Windows. Sem ela, no Linux, tudo o que desenha um código de barras ou QR em imagem falha com «Ops! Algo correu mal»: o QR de um pagamento a fornecedor, as etiquetas e os códigos de barras dos artigos. O QR da faturação certificada não depende dela. |
+| Motor de PDF | `wkhtmltopdf` instalado no servidor | O pacote da faturação certificada usa o motor de PDF do Odoo baseado no `wkhtmltopdf` para imprimir os documentos. |
+| Código | O fiscaldoo para o Odoo 20 (versão 20.0), com as pastas `addons` e `community`; no Enterprise, também a pasta `enterprise` | As duas primeiras entram nas duas edições. A pasta `enterprise` tem os pacotes de ligação ao Enterprise. |
+| Línguas (só Enterprise) | O inglês ativo ao lado do português | Os Documentos do Enterprise não se instalam numa base só com o português. O pacote de ligação ao Enterprise volta a ativar o inglês quando se instala; a língua de cada utilizador não muda. |
+
+Precisa também de acesso de administrador ao Odoo, para usar **Aplicações**, **Definições** e o modo de programador do passo 5.
+
+<span className="fd-pending">Pendente de validação no ecrã: os requisitos vêm dos ficheiros do Odoo 20 e dos pacotes do fiscaldoo. A instalação num servidor novo não se fez neste lote: a base de demonstração já vem instalada, e a regra do projeto não deixa instalar nada em servidores.</span>
+
+## Como utilizar
+
+<StepByStep>
+
+1. Copie para o servidor as pastas `addons` e `community` do fiscaldoo, versão 20.0. Num Odoo Enterprise, copie também a pasta `enterprise`. Não a copie para um Odoo Community: os pacotes dessa pasta precisam de aplicações do Odoo Enterprise.
+2. No ficheiro de configuração do Odoo, acrescente as pastas à linha `addons_path`, a seguir às pastas do Odoo e com o caminho completo de cada uma. Grave o ficheiro.
+   - Community: `<odoo>/addons,<fiscaldoo>/addons,<fiscaldoo>/community`.
+   - Enterprise: `<odoo-enterprise>,<odoo>/addons,<fiscaldoo>/addons,<fiscaldoo>/community,<fiscaldoo>/enterprise`, em que `<odoo-enterprise>` é a pasta dos módulos do Odoo Enterprise.
+3. Reinicie o serviço do Odoo, para ele ler as pastas novas.
+4. Numa base de dados nova, crie-a com o idioma português de Portugal e o país Portugal, sem dados de demonstração.
+5. Num Odoo que já existia, mande-o ler os pacotes novos. Este passo é de instalação e só o administrador o faz:
+   - abra **Definições** e, no grupo **Ferramentas de desenvolvimento**, carregue em **Ativar o modo de programador**;
+   - abra **Aplicações** e, no menu de cima, carregue em **Atualizar a lista de módulos**;
+   - na janela **Atualização dos Módulos**, carregue em **Atualizar**.
+
+   O modo de programador mostra menus técnicos que o trabalho do dia a dia não usa. No fim da instalação, saia dele: no ícone do inseto, na barra de cima, carregue em **Sair do modo de depuração**. Numa base de dados criada depois do passo 3, a lista já vem com os pacotes do fiscaldoo e este passo não é preciso.
+6. Abra **Aplicações** e escreva `fiscaldoo` na pesquisa. Aparecem os cartões dos pacotes do fiscaldoo.
+7. No cartão **fiscaldoo · Instalação — Ponto de entrada e pacotes**, carregue em **Ativar** (no fundo do cartão, à esquerda de **Saiba mais**; depois de instalado, o cartão só mostra **Saiba mais**). Instale este pacote primeiro e sozinho.
+
+</StepByStep>
+
+<span className="fd-pending">Pendente de validação no ecrã: os passos 1 a 4 não se viram neste lote (o botão **Ativar** do passo 7 viu-se num pacote ainda não instalado), pelo mesmo motivo. Na base de demonstração viu-se o passo 5 até à janela **Atualização dos Módulos** (sem carregar em **Atualizar**) e o passo 6: com o filtro **Aplicações**, a pesquisa `fiscaldoo` mostra 14 cartões, entre eles **fiscaldoo · Instalação — Ponto de entrada e pacotes**, já instalado.</span>
+
+## No Enterprise
+
+Num Odoo Enterprise, os passos são os mesmos e juntam-se três coisas.
+
+<StepByStep>
+
+1. **Instale os pacotes do fiscaldoo como no Community:** primeiro o pacote de entrada (passo 7) e depois, nas **Definições**, os pacotes que a empresa usa.
+2. **Instale as aplicações do Enterprise que a empresa usa,** em **Aplicações**: a contabilidade do Enterprise (`account_accountant`) e, conforme o caso, **Documentos**, **Assinar**, os salários ou as **Subscrições** do Enterprise. Instale a contabilidade do Enterprise antes de ligar, nas **Definições**, os pacotes de contabilidade do fiscaldoo. Enquanto ela não estiver instalada, o bloco **Contabilidade** ainda mostra os diferimentos, as taxas de câmbio e o controlo orçamental do fiscaldoo, e o que se ligar aí tem depois de passar para os do Enterprise, como em [Como passar do Community para o Enterprise](/migration-toolkit/mudar-para-o-enterprise).
+3. **Os pacotes de ligação instalam-se sozinhos.** Cada um instala-se quando a base tem os dois lados, a aplicação do Enterprise e o pacote do fiscaldoo, por exemplo «fiscaldoo · Contabilidade — Alinhamento com a contabilidade do Odoo Enterprise — Enterprise» quando há a contabilidade do Enterprise. Não há nada a fazer.
+4. **Dois pacotes de ligação são opcionais e o administrador instala-os à mão,** só se forem precisos: o que passa para o fiscaldoo os ativos que uma empresa portuguesa já tinha no Enterprise e o que põe a configuração do Copiloto dentro da aplicação de inteligência artificial do Enterprise. Em **Aplicações**, retire o filtro **Aplicações**, pesquise e, no cartão, carregue em **Ativar**. Nesta versão, os dois cartões aparecem em inglês: «fiscaldoo · Migration — Enterprise assets to fiscaldoo assets — Enterprise» e «fiscaldoo · Copilot — Configuration inside the Enterprise AI app — Enterprise». O dos ativos está em [Como migrar os ativos do Enterprise](/migration-toolkit/ativos-do-enterprise).
+
+</StepByStep>
+
+Para confirmar, abra **Aplicações**, retire o filtro **Aplicações** e pesquise `Enterprise`. Entre os cartões que aparecem estão os 15 dos pacotes de ligação, todos começados por «fiscaldoo ·» e com «— Enterprise» no fim do nome: os instalados só mostram **Saiba mais**, e os dois opcionais mostram **Ativar** enquanto não forem instalados.
+
+Nas **Definições**, em **fiscaldoo · Certificação**, o bloco **Contabilidade** não tem os interruptores dos diferimentos, das taxas de câmbio e do controlo orçamental, e diz «No Enterprise, os diferimentos, as taxas de câmbio e os orçamentos são os do Odoo Enterprise (menu Contabilidade); os nossos não se instalam.»
+
+![Bloco Contabilidade do fiscaldoo · Certificação numa base Enterprise, com a frase sobre os diferimentos, as taxas de câmbio e os orçamentos do Odoo Enterprise assinalada](/images/getting-started/requisitos-e-instalacao/01-enterprise-contabilidade.png)
+
+<span className="fd-pending">Pendente de validação no ecrã: a instalação de raiz num servidor Enterprise novo não se fez neste lote, pelo mesmo motivo dos passos 1 a 4. Numa base Enterprise de teste já instalada viu-se, com o administrador: os 15 cartões dos pacotes de ligação, 13 instalados sozinhos; o pacote opcional dos ativos instalado por **Ativar**, com o menu **Passar ativos do Enterprise** a aparecer a seguir; a frase do bloco **Contabilidade**; e «Odoo 20.0+e (Enterprise Edition)» no grupo **Sobre**.</span>
+
+## Resultado esperado
+
+- Na lista da esquerda das **Definições** aparece **fiscaldoo · Certificação**, com um interruptor por pacote. É aí que se escolhe o que instalar a seguir: continue em [Como ativar a faturação e as aplicações do fiscaldoo](/getting-started/ativar-as-aplicacoes).
+- O Odoo fica também em português de Portugal, porque os outros pacotes do fiscaldoo precisam deste idioma.
+- No fim do grupo **Sobre**, nas **Definições**, lê-se «Odoo 20.0 (Community Edition)» ou, no Enterprise, «Odoo 20.0+e (Enterprise Edition)».
+- No Enterprise, os pacotes de ligação ficam instalados ao lado dos do fiscaldoo, como se diz em «No Enterprise».
+
+## Notas importantes
+
+- **Instale o pacote de entrada antes da contabilidade.** Numa base nova com uma só empresa ainda sem país, o pacote de entrada põe a empresa em Portugal e em euros, para a contabilidade instalada a seguir trazer o plano de contas português. Uma empresa que já tem país, uma segunda empresa ou uma contabilidade já instalada não são mexidas. <span className="fd-pending">Pendente de validação no ecrã: comportamento lido no código do pacote de entrada; numa base nova não se pôde ver.</span>
+- **O pacote de demonstração não se instala em clientes.** O `l10n_pt_fiscaldoo_demo` cria uma empresa fictícia com dados de exemplo e chaves de teste. Serve para formação e testes.
+- **Antes de atualizar o fiscaldoo,** faça uma cópia de segurança da base de dados e ensaie a atualização numa cópia.
+
+## Problemas frequentes
+
+### Os pacotes do fiscaldoo não aparecem em Aplicações
+
+- **Causa:** as pastas do fiscaldoo não estão na linha `addons_path`, o Odoo não foi reiniciado depois de gravar o ficheiro, ou, num Odoo que já existia, não se usou **Atualizar a lista de módulos**.
+- **O que fazer:** confirme os caminhos completos das pastas `addons` e `community`, reinicie o Odoo e faça o passo 5: com o modo de programador, **Aplicações** › **Atualizar a lista de módulos** › **Atualizar**. Na pesquisa, retire o filtro **Aplicações** se procura um pacote que não é uma aplicação.
+
+### O Odoo não arranca ou recusa instalar um pacote por falta de uma biblioteca
+
+- **Causa:** falta no ambiente Python do Odoo uma das bibliotecas da tabela de «Antes de começar».
+- **O que fazer:** instale-a no mesmo ambiente Python em que o Odoo corre e reinicie o Odoo.
+
+<span className="fd-pending">Pendente de validação no ecrã: as mensagens destes dois problemas não se provocaram, porque exigiam mexer no servidor.</span>
+
+{/* Nota interna (DOCS-040, lote F2): fontes = README e __manifest__.py do repositório fiscaldoo, ramo 20.0 (f05ec61, master e0bf5245c): pastas addons/community/enterprise, external_dependencies (lxml, qrcode, xlsxwriter, cryptography, requests, xmlschema), l10n_pt_arxi_cert depende de base_report_wkhtmltox; odoo-20.0/odoo/release.py (MIN_PY_VERSION 3.12, MAX_PY_VERSION 3.14, MIN_PG_VERSION 16); fiscaldoo_install/__init__.py (post_init_hook: pt_PT e _propose_portugal). O guia antigo Documentação Cliente/Operação/guia-de-instalacao-e-configuracao-dos-modulos.md usa caminhos antigos (addons_arxi, community/custom_addons) e não serve de fonte. Defeito LOT-F2-07: o cartão em Aplicações diz «um interruptor por pacote do artigo». Correção aud-v2f2 (NF2a-02/03, DEC-1396): passo 5 visto a 30/10 com o admin na 8111 (Definições › Ferramentas de desenvolvimento › Ativar o modo de programador; Aplicações › Atualizar a lista de módulos › janela Atualização dos Módulos, Atualizar/Descartar, descartada; menu do inseto › Sair do modo de depuração); a etiqueta fica «Community e Enterprise» e explica-se no DOC-0002. */}
+
+{/* Nota interna (DOCS-046, #3616, lote v23-J, DEC-1794): saiu «a versão para o Odoo Enterprise ainda não está disponível para clientes»; secção «No Enterprise» nova. Fontes: os 15 __manifest__.py de enterprise/custom_addons (master 5228a94bd; auto_install em lista, exceto l10n_pt_arxi_ee_asset_migration e l10n_pt_fiscaldoo_ee_copilot_app), tools/computador2/dev_run.sh construir-ee (a «cheia» Enterprise = clone da «cheia» Community com os nossos módulos + -i web_enterprise,account_accountant,…; as pontes entram sozinhas), l10n_pt_arxi_ee/models/ee_install.py (inglês ativo), conf da cópia (enterprise-20.0 à frente no addons_path) e test_ux074_enterprise_native.py. No ecrã a 07/11/2026, odoo20_ee_test_dev_v23j (computador 2, porta 8428 por túnel, guarda de rede), com o admin: Aplicações sem filtro + «Enterprise» = 15 pontes (13 instaladas, 2 com Ativar, nomes destas 2 e o do l10n_pt_fiscaldoo_ee_documents em inglês: defeito no relatório do lote); «Enterprise assets» › Ativar instalou o l10n_pt_arxi_ee_asset_migration (registo: User #2 triggered module installation) e o menu Passar ativos do Enterprise abriu; frase UX-074 no bloco Contabilidade (captura 01). */}
+
+{/* Nota interna (lote v23-AK, DOCS-069 #4052, master 7a3b55244, docs_demo_v23ak_test, 08/11/2026): nome do módulo de demonstração conferido na lista de go-live (l10n_pt_fiscaldoo_demo). */}

@@ -1,0 +1,100 @@
+---
+id: adocao-e-licenca-parental-complementar
+slug: /payroll-pt/adocao-e-licenca-parental-complementar
+title: Como registar a licença por adoção e a licença parental complementar
+sidebar_label: Adoção e licença complementar
+sidebar_position: 6
+description: Registar nas ausências a licença por adoção e a licença parental complementar, com o documento de prova, e perceber as recusas do fiscaldoo quando a licença passa o limite da lei ou o aviso de 30 dias não foi cumprido.
+keywords: [licença por adoção, licenca por adocao, adoção, adotante, licença parental complementar, licença parental alargada, filho até seis anos, aviso de 30 dias, art. 44.º, art. 51.º, adoções múltiplas]
+doc_id: DOC-0436
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master cebcb888d)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/faltas-e-licencas/parentalidade, payroll-pt/faltas-e-licencas/faltas, people/ausencias-e-presencas/feriados]
+---
+
+## Para que serve?
+
+A licença por adoção e a licença parental complementar registam-se como ausências. O fiscaldoo confere os limites da lei ao guardar: recusa uma licença por adoção mais longa do que a lei dá e uma licença parental complementar pedida com menos de 30 dias de aviso, e diz como corrigir.
+
+O nascimento de um filho e os pedidos de horário (redução, tempo parcial, horário flexível) estão em [Como tratar licenças parentais e a proteção na parentalidade](/payroll-pt/parentalidade).
+
+## Quando utilizar?
+
+- Um trabalhador vai adotar uma criança com menos de 15 anos e pede a licença por adoção.
+- Um pai ou uma mãe pede a licença parental complementar (por exemplo, três meses de licença alargada) para um filho até seis anos.
+
+## Onde encontrar?
+
+**Salários › Preparar › Ausências e presenças › Ausências** › **Novo**, com o **Tipo de tempo** **Licença por adoção** ou **Licença parental complementar**.
+
+## Antes de começar
+
+- O seu perfil é **Gestor de RH**: cria, aprova e valida a ausência. Provado com um utilizador criado só com esse perfil.
+- Tenha o documento de prova em PDF (por exemplo, a decisão de confiança da criança ou a declaração do trabalhador): estes tipos não se guardam sem ele.
+- Saiba a data de nascimento da criança e o dia em que o trabalhador avisou a empresa.
+- Se a licença passa para o ano seguinte, o calendário de feriados desse ano tem de existir (ver «Problemas frequentes»).
+- Feito a 8 de novembro de 2026 na `Empresa Demonstração, Lda`: licença por adoção de Bruno Miguel Teixeira de 16/11/2026 a 15/03/2027 (120 dias) e licença parental complementar de Fábio Nuno Carvalho.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Com o perfil **Gestor de RH**, abra **Salários › Preparar › Ausências e presenças › Ausências** e carregue em **Novo**.
+2. Em **Trabalhador**, escolha o trabalhador, por exemplo `Bruno Miguel Teixeira`.
+3. Em **Tipo de tempo**, escreva `adoção` e escolha **Licença por adoção** (ou escreva `complementar` e escolha **Licença parental complementar**). Aparece o aviso «É obrigatório juntar um documento que justifique este tipo de ausência.».
+4. Em **Datas**, escolha o primeiro e o último dia, por exemplo 16/11/2026 a 15/03/2027.
+5. Em **Documento de prova**, junte o PDF.
+6. No bloco **Lei portuguesa: comunicação, prova e efeito**, preencha **Comunicada em** (o dia em que o trabalhador avisou) e **Data de nascimento do filho**. Numa adoção de mais de uma criança ao mesmo tempo, preencha também **Filhos a cargo**.
+7. Guarde. A ausência fica **Para Aprovar**; se passar um limite da lei, o fiscaldoo recusa e diz porquê (ver «Problemas frequentes»).
+8. Carregue em **Aprovar** e depois em **Validar**. A ausência fica **Aprovado**.
+   ![Licença por adoção de Bruno Miguel Teixeira aprovada, de 16/11/2026 a 15/03/2027, com 82,00 dias](/images/payroll-pt/adocao-e-licenca-parental-complementar/01-licenca-por-adocao.png)
+
+</StepByStep>
+
+### O que o fiscaldoo confere sozinho
+
+- **Licença por adoção:** a duração em dias de calendário contra o limite da lei para o número de adoções. No exemplo, 120 dias passam; 197 dias (16/11/2026 a 31/05/2027) são recusados porque «para 1 adoção(ões) a lei dá até 150».
+- **Licença parental complementar:** o aviso de 30 dias antes do início. No exemplo, comunicada a 20/11/2026 para começar a 01/12/2026, é recusada, e a mensagem diz o primeiro dia possível (20/12/2026).
+- **Duração mostrada:** o campo **Datas** mostra os dias úteis (82,00 dia(s) no exemplo), mas o limite da lei conta dias de calendário (120).
+
+## O que diz a lei
+
+A adoção e a licença complementar no Código do Trabalho (Lei n.º 7/2009), conferidas a 8 de novembro de 2026 no texto consolidado da Procuradoria-Geral Distrital de Lisboa:
+
+- **Art. 40.º, n.º 1:** a licença parental inicial é de 120 ou 150 dias consecutivos. **N.º 3:** soma mais 30 dias quando cada um dos pais goza em exclusivo 30 dias seguidos (ou dois períodos de 15); como esses 30 dias são do outro, cada um fica com 150 dias no máximo, o limite que o fiscaldoo confere em cada ausência.
+- **Art. 44.º, n.º 1:** na adoção de criança com menos de 15 anos, o candidato a adotante tem direito à licença dos n.os 1 a 3 do art. 40.º. **N.º 3:** em adoções múltiplas, a licença aumenta 30 dias por cada adoção além da primeira.
+- **Art. 51.º, n.º 1:** para assistência a filho ou adotado até seis anos, o pai e a mãe têm direito a uma das modalidades da licença parental complementar (por exemplo, licença alargada de três meses ou tempo parcial de 12 meses a meio tempo). **N.º 2:** pode ser gozada seguida ou em até três períodos. **N.º 5:** o trabalhador informa o empregador por escrito com 30 dias de antecedência, com a modalidade e o início e o fim de cada período.
+
+
+## Resultado esperado
+
+- A licença está **Aprovado**, com o documento de prova junto.
+- Uma licença acima do limite ou sem o aviso de 30 dias não chega a ficar guardada.
+
+## Notas importantes
+
+- **Dispensas para amamentação e aleitação** são um tipo de ausência próprio, **Dispensa para amamentação ou aleitação**, contado em horas: ver [Como registar a dispensa para amamentação ou aleitação](/payroll-pt/dispensas-para-amamentacao-e-aleitacao). As consultas pré-natais e de procriação medicamente assistida também estão nesse artigo.
+
+## Problemas frequentes
+
+### «… não pode ser aceite. O que aconteceu: a licença dura … dias e para 1 adoção(ões) a lei dá até 150 …»
+
+- **Causa:** a licença por adoção é mais longa do que a lei dá. A mensagem completa: «Licença por adoção» de Bruno Miguel Teixeira não pode ser aceite. O que aconteceu: a licença dura 197 dias e para 1 adoção(ões) a lei dá até 150 (art. 44.º/1 e /3 com o art. 40.º/1). Como resolver: encurte-a ou corrija o número de adoções. Corrija os dados indicados e tente de novo.».
+- **O que fazer:** encurte as datas ou, se foram adotadas várias crianças ao mesmo tempo, corrija **Filhos a cargo**.
+
+### «… não pode ser aceite. O que aconteceu: foi comunicado em … e a lei exige 30 dias antes do início (CT art. 51.º/5)…»
+
+- **Causa:** o trabalhador avisou a empresa menos de 30 dias antes do início da licença parental complementar.
+  ![Janela Erro de Validação: a licença parental complementar de Fábio Nuno Carvalho não pode ser aceite; foi comunicada em 20/11/2026 e a lei exige 30 dias antes do início; passe o início para 20/12/2026 ou depois](/images/payroll-pt/adocao-e-licenca-parental-complementar/02-aviso-de-30-dias.png)
+- **O que fazer:** passe o início para a data que a mensagem indica ou, se o aviso foi dado antes, corrija **Comunicada em**.
+
+### «Não existe calendário de feriados para 2027 (Continente) …» ao validar
+
+- **Causa:** a licença passa para um ano que ainda não tem calendário de feriados na empresa.
+- **O que fazer:** peça a quem administra o sistema que gere o calendário do ano seguinte (ver [Como configurar os feriados](/people/feriados)) e valide de novo. Gere-o **antes** de registar licenças que passem para esse ano: com uma licença já registada a passar para 2027, **Gerar feriados** é recusado com «O estado de uma ausência e o que o circuito escreve não se escrevem à mão…», e a licença tem de ser recusada e registada outra vez depois de gerar o calendário.
+
+{/* Nota interna (lote v23-W, #4052 DOCS-069, tema que só a pasta congelada tinha: Salários/licencas-de-adocao-complementar-e-reducao-de-horario-por-parentalidade.md; master cebcb888d, docs_demo_v23w_test, porta 8468). Percorrido por clique com um utilizador só com o Perfil Gestor de RH: adoção de 197 dias recusada; complementar com aviso de 11 dias recusada; adoção de 120 dias guardada, aprovada e validada (depois de gerar o calendário de 2027). O calendário de 2027 foi gerado por RPC (admin) e a primeira adoção recusada por RPC (w.rh), porque Gerar feriados falhou com a ausência já registada: possível defeito no LOTE_V23-W. Diferenças em relação ao guia antigo: os pedidos de redução, tempo parcial e horário flexível já estão no DOC-0198 (parentalidade); as dispensas (amamentação, aleitação, consultas pré-natais, PMA) e a recusa da complementar com filho de mais de seis anos ficam para um sucessor (a dispensa conta horas e não usa o campo Datas). O efeito no recibo de novembro não foi conferido (lote de novembro por criar): o artigo não o descreve. */}

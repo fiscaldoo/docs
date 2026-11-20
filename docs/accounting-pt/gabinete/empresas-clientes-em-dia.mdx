@@ -1,0 +1,80 @@
+---
+id: empresas-clientes-em-dia
+slug: /accounting-pt/empresas-clientes-em-dia
+title: Como ver que empresas clientes estão em dia
+sidebar_label: Empresas clientes em dia
+sidebar_position: 3
+description: Ver, numa só tabela, o IVA, os salários, o fecho e os documentos em falta de cada empresa cliente, e abrir a lista que explica cada célula.
+keywords: [empresas clientes, painel do gabinete, o que está em dia, IVA em atraso, fecho do mês, documentos em falta, gabinete de contabilidade, obrigações fiscais]
+doc_id: DOC-0175
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/gabinete/gabinete-de-contabilidade, accounting-pt/gabinete/nova-empresa-cliente, accounting-pt/declaracoes/calendario-fiscal]
+---
+
+## Para que serve?
+
+O painel **Empresas clientes: o que está em dia?** mostra, numa linha por empresa, o estado do **IVA**, dos **Salários**, do **Fecho** do mês e dos **Documentos em falta**. Serve para saber a que cliente dar atenção primeiro.
+
+## Quando utilizar?
+
+- No início do dia ou da semana, para ver o que está por fazer em cada cliente.
+- Antes dos prazos do IVA, para ver que empresas ainda não entregaram.
+- **Não** o use como prova de que a declaração foi entregue: o painel mostra o estado das obrigações no produto, não a entrega na AT. Para os prazos, veja o [calendário fiscal](/accounting-pt/calendario-fiscal).
+
+## Onde encontrar?
+
+- Com o [Modo gabinete](/accounting-pt/gabinete-de-contabilidade) ligado, o **Contabilista** abre-o **ao iniciar sessão**.
+- Se abrir a Contabilidade pelo menu de aplicações, abre **O que há para fazer?**: o painel está em **Contabilidade › Configurar › Sistema e segurança › Gabinete e empresas clientes › Empresas clientes: o que está em dia?**.
+
+## Antes de começar
+
+- Modo gabinete ligado.
+- O painel só mostra as empresas a que a pessoa tem acesso. O exemplo é o contabilista certificado do gabinete, com três empresas (Empresa Demonstração, Livraria do Bairro e Papelaria Exemplo), a 07/11/2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Inicie sessão. O produto abre o painel (ou, a partir da Contabilidade, **Configurar › Sistema e segurança › Gabinete e empresas clientes › Empresas clientes: o que está em dia?**), com o mês de **Novembro de 2026** escolhido por cima, à direita. Cada linha é uma empresa; a que está aberta tem a marca **Aberta agora** e as outras têm **Abrir esta empresa**.
+   ![Painel com as empresas do exemplo: a Empresa Demonstração com o IVA por fazer e as duas empresas novas com o IVA em dia](/images/accounting-pt/empresas-clientes-em-dia/01-painel.png)
+2. Leia as colunas. No exemplo, a Empresa Demonstração tem **1 ainda por fazer** no IVA, **Sem lote de salários este mês** nos salários, **Mês anterior ainda aberto** no fecho e **3 documentos recebidos**; a Livraria do Bairro e a Papelaria Exemplo, criadas hoje, têm o IVA **Em dia**, **Sem trabalhadores** nos salários, **Ainda sem exercício: abra para o criar** no fecho e **Ainda nada recebido do cliente**. A coluna **Salários** só mostra estes estados a quem também tem acesso aos salários. Com o perfil **Contabilista certificado** sozinho, diz **Sem acesso aos salários** em todas as empresas.
+3. Carregue numa célula para abrir a lista que a explica. A de **1 ainda por fazer** abre as obrigações de IVA da empresa: a Declaração Periódica de IVA (mensal) de setembro de 2026, com prazo a 20/11/2026, a **13 dias**. A de **Mês anterior ainda aberto** abre os períodos (outubro de 2026, 01/10 a 31/10, **Aberto**). A de **3 documentos recebidos** abre os documentos do mês recebidos (no exemplo, um rascunho e duas faturas de fornecedor pagas). A de **Sem lote de salários este mês** abre os lotes de salários da empresa.
+4. Por baixo da tabela, **O que está pendente** lista, para a empresa aberta, as linhas de banco por reconciliar, os rascunhos, as obrigações do mês e os documentos recebidos, cada um com o **Prazo** (**Em atraso** ou **Por fazer**).
+5. Para trabalhar numa empresa, carregue em **Abrir esta empresa**. O produto muda para essa empresa (o seu nome fica no canto superior direito).
+6. Para ver outro mês, escolha-o na lista por cima do painel (de novembro de 2026 a dezembro de 2024). Para encontrar uma empresa, escreva parte do nome em **Filtrar as empresas pelo nome**.
+
+</StepByStep>
+
+## Resultado esperado
+
+- Uma linha por empresa a que tem acesso e uma explicação por célula: abrir a célula mostra os registos que a justificam.
+- Uma empresa nova **não aparece como atrasada nos primeiros 15 dias**. No exemplo, a 07/11/2026, com o mês de **Outubro de 2026** escolhido, as empresas antigas (Empresa Teste Filial e Empresa Teste Portugal) aparecem **Em atraso**, a vermelho, em **Estado** e em **Documentos em falta**, e a Livraria do Bairro e a Papelaria Exemplo, criadas nesse dia, ficam só **Por fazer**, a amarelo.
+  ![Estado Em atraso nas empresas antigas, com o mês de Outubro de 2026](/images/accounting-pt/empresas-clientes-em-dia/02-estado-em-atraso.png)
+  ![Estado Por fazer nas empresas criadas nesse dia, com o mês de Outubro de 2026](/images/accounting-pt/empresas-clientes-em-dia/03-estado-empresas-novas.png)
+
+## Notas importantes
+
+- **Salários** mostra **Sem acesso aos salários** a quem não vê os lotes de salários, como os perfis **Contabilista** e **Contabilista certificado**: o painel não dá acesso a nada que a pessoa não possa já ver. Com o perfil **Processador de salários**, a mesma célula mostra o estado do lote do mês (na demonstração, «Sem lote de salários este mês»).
+- A célula **Estado** de uma empresa recém-criada aparece **Por fazer** enquanto o assistente de configuração não termina.
+- O painel conta o que está registado no produto. Um documento que o cliente ainda não enviou, ou que ainda não foi registado, não conta como recebido.
+
+## Problemas frequentes
+
+### Só vejo uma empresa
+
+- **Causa:** a pessoa só tem acesso a uma empresa (o Contabilista da demonstração vê só a Empresa Demonstração).
+- **O que fazer:** peça ao administrador que lhe atribua as outras empresas.
+
+### O painel não existe no menu
+
+- **Causa:** o Modo gabinete está desligado.
+- **O que fazer:** [ligue-o nas Definições](/accounting-pt/gabinete-de-contabilidade).
+
+{/* Nota interna (DOCS-046, DOC-0175, risco normal): visto em docs_demo_v3a5cor_test (master b1c81051) com demo.gestor_contabilidade (2 empresas: Demonstração e Papelaria Exemplo) e demo.contabilista (1 empresa, 1 linha, mesmo painel). Células abertas pelo clique: IVA (l10n_pt.obligation), Fecho (arxi.fiscal.period), Documentos (account.move). NV3I-01 corrigida: o painel abre ao iniciar sessão; pelo menu de aplicações abre «O que há para fazer?». Regra dos 15 dias provada com o mês de outubro: Filial e Teste Portugal (antigas, vistas com o administrador técnico) «Em atraso»; Livraria Teste e Papelaria (vistas com demo.gestor_contabilidade) «Por fazer». O seletor de mês e o filtro por nome: seletor visto com 24 opções, filtro não escrito no ecrã. */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): Modo gabinete ligado só nesta cópia e desligado no fim: célula Salários com o Contabilista certificado «Sem acesso aos salários» e com o Processador «Sem lote de salários este mês». */}

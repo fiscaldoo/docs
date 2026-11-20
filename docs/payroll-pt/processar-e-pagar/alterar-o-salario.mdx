@@ -1,0 +1,114 @@
+---
+id: alterar-o-salario
+slug: /payroll-pt/alterar-o-salario
+title: Como alterar o salário de um trabalhador
+sidebar_label: Alterar o salário
+sidebar_position: 3
+description: Registar o salário novo numa versão do contrato com a data de efeito, para os recibos desse mês em diante o usarem e o histórico guardar o valor antigo.
+keywords: [alterar salário, alterar salario, aumento salarial, aumento de ordenado, mudar o ordenado, nova retribuição, nova retribuicao, histórico de retribuição, historico de retribuicao, versão do contrato, versao do contrato, irredutibilidade, baixar o salário, baixar o salario]
+doc_id: DOC-0202
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 25deacc94)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/processar-e-pagar/retencao-de-irs, payroll-pt/configurar/salario-minimo]
+---
+
+## Para que serve?
+
+O salário de um trabalhador está no contrato. Quando muda, não se escreve por cima do valor antigo: cria-se uma **versão nova** do contrato com a data a partir da qual o salário novo vale. Os recibos de cada mês usam a versão em vigor nesse mês, e o valor antigo fica no histórico.
+
+## Quando utilizar?
+
+- Um aumento combinado com o trabalhador, a partir do mês seguinte.
+- A atualização anual da tabela salarial do instrumento de regulamentação coletiva aplicável.
+- Uma redução que a lei ou o instrumento coletivo permitem (ver «Notas importantes»).
+
+Não use uma versão nova para um mês cujos recibos já estão validados: esses recibos não mudam. Uma diferença de um mês já processado corrige-se no recibo desse mês.
+
+## Onde encontrar?
+
+**Salários › Preparar › Trabalhadores e contratos › Histórico de retribuição** › abrir a linha do trabalhador › botão **+** ao lado das datas, no topo da ficha
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador. O **Processador de salários** só lê o contrato; a alteração é feita pelos Recursos Humanos ou pelo Administrador de Salários (ver «Problemas frequentes»).
+- Saiba a data de efeito. Escolha o primeiro dia de um mês que ainda não foi processado.
+- A ficha do trabalhador tem preenchido o **Local de trabalho habitual** (separador **Trabalho**). Sem ele, o fiscaldoo recusa a versão nova (ver «Problemas frequentes»).
+- Se entra como Administrador de Salários, escolha antes a empresa certa (**Empresa Demonstração, Lda**) no seletor do canto superior direito.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Preparar › Trabalhadores e contratos › Histórico de retribuição**. Cada linha é uma versão do contrato, com a **Data Efetiva** em que começou a valer.
+2. Abra a linha mais recente do trabalhador. No topo da ficha aparecem as datas das versões (por exemplo **01/01/2026**), com o botão **+** à direita.
+3. Carregue em **+**. Abre-se um calendário: avance para o mês certo e carregue no dia de efeito, por exemplo **1** de novembro de 2026. A versão nova é criada logo e fica escolhida no topo (**01/11/2026**).
+4. Abra o separador **Folha de Salários**. Em **Resumo do contrato**, escreva o valor novo em **Salário**, por exemplo `1700`.
+5. Guarde (o ícone da nuvem, ao lado do nome).
+   ![Ficha do trabalhador na versão de 01/11/2026, separador Folha de Salários, com o Salário de 1.700,00 € assinalado e o botão + no topo](/images/payroll-pt/alterar-o-salario/02-salario-da-nova-versao.png)
+
+</StepByStep>
+
+**Exemplo.** O salário de Bruno Miguel Teixeira passou de 1.650,00 € para 1.700,00 € a partir de 01/11/2026. No lote de novembro, o recibo dele trouxe a linha **Retribuição base** de 1.700,00 € sem nenhum passo a mais, e o resto do recibo foi recalculado com esse valor:
+
+- **Segurança Social (trabalhador)**: 11 % de 1.725,75 € (a base mais 25,75 € de trabalho suplementar já registado) = 189,83 €.
+- **IRS retido**: 108,00 €, com a tabela I de 2026 sobre 1.700,00 € e a redução de novembro que o recibo explica (ver [Como se calcula a retenção de IRS nos salários](/payroll-pt/retencao-de-irs)).
+- **Líquido a receber**: 1.557,07 €.
+
+![Linhas do recibo de novembro de Bruno Miguel Teixeira: Retribuição base 1.700,00 €, Subsídio de alimentação e Trabalho suplementar](/images/payroll-pt/alterar-o-salario/04-recibo-de-novembro.png)
+
+Alterar o salário não gera lançamentos contabilísticos. O valor novo só chega à contabilidade com os recibos do mês.
+
+## No Enterprise
+
+No Odoo Enterprise, este artigo faz-se da mesma maneira: com o acesso extra **Administrador de Salários**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)). No separador **Folha de Salários**, o **Resumo do contrato** e o **Salário** do passo 4 estão no mesmo sítio, e o bloco **Planear** mostra o **Horário de Trabalho** e **Baseado em presenças**, como no Community.
+
+{/* Nota interna (lote EE-06, DOCS-073 #4142, DEC-1794, master ce51f2d47, 10/11/2026): conferido numa cópia Enterprise da demonstração (docs_ee_ee06_test, computador 2) com utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): Administrador de Salários em Salários › Preparar › Trabalhadores e contratos › Histórico de retribuição e no separador Folha de Salários da ficha (Resumo do contrato, Salário; Planear vazio em ce51f2d47: EEA-071 #4148, que entrou no comboio 189; em master 7cd24fcc9 a auditoria docs-aud-ee07 viu o Planear com Horário de Trabalho e Baseado em presenças, no Histórico de retribuição, com o Processador de salários e o acesso Administrador de Salários). Menus e vistas comparados, perfil a perfil, com uma cópia Community do mesmo master (docs_demo_ee06_test). Ver reports/LOTE_EE-06.md. */}
+
+## Resultado esperado
+
+- Em **Histórico de retribuição** aparece uma linha nova do trabalhador com a **Data Efetiva** 01/11/2026. A linha anterior continua lá, com o valor antigo.
+- No topo da ficha, as datas das versões incluem a nova. Carregar numa data mostra o contrato como estava nessa versão.
+- Os recibos de novembro em diante, quando o lote do mês for calculado (ver [Como processar os salários do mês](/payroll-pt/processar-o-mes)), usam o salário novo. Os de outubro e anteriores não mudam.
+
+## Notas importantes
+
+- **O salário não pode baixar sem fundamento.** Um valor inferior ao da versão anterior é recusado (CT art. 129.º, n.º 1, alínea d). Se a lei ou o instrumento coletivo o permitirem, escolha em **Exceção à irredutibilidade** a opção **Disposição do Código do Trabalho** ou **Instrumento de regulamentação coletiva (IRCT)** e indique o artigo ou a cláusula. <span className="fd-pending">Pendente de validação por contabilista certificado ou jurista do trabalho: casos em que a redução é permitida e a prova a guardar.</span>
+- **Subsídio de férias ou de Natal já pago em duodécimos.** Com o recibo de dezembro (ou o final) já validado, um aumento retroativo gera um recibo corretivo com a linha **Subsídio de férias — diferença** ou **Subsídio de Natal — diferença**. Detalhe, conta e exemplo (100,00 € de diferença com o aumento de 2.000,00 € para 2.100,00 €) em [Como pagar os subsídios de férias e de Natal](/payroll-pt/subsidios-de-ferias-e-natal). Visto no ecrã: o aumento a 2.100,00 € desde 01/03/2026, lançado com dezembro já validado, deu os dois corretivos descritos naquele artigo (100,00 € de diferença de ordenado e 100,00 € de **Subsídio de férias — diferença**, ou de **Subsídio de Natal — diferença**), cada um com o aviso «Subsídio já pago em falta» ao confirmar.
+- **Escolha a data com cuidado.** Uma versão criada com a data errada não se apaga nem se arquiva quando o mês já está fechado (ver «Problemas frequentes»).
+- **O salário mínimo** e as reduções a que se aplica estão em [Como atualizar o salário mínimo e aplicar reduções](/payroll-pt/salario-minimo).
+
+## Problemas frequentes
+
+### Ao guardar aparece «O ordenado … é inferior ao da versão anterior do contrato»
+
+- **Mensagem:** «Erro de Validação O ordenado de Bruno Miguel Teixeira a partir de 01/11/2026 é inferior ao da versão anterior do contrato. O que aconteceu: a retribuição não pode ser diminuída, salvo nos casos do Código do Trabalho ou de um instrumento de regulamentação coletiva (CT art. 129.º/1-d). Como resolver: corrija o valor, ou escolha «Exceção à irredutibilidade» e escreva o artigo ou a cláusula que o permite.»
+- **Causa:** o valor escrito em **Salário** é menor do que o da versão anterior. Na demonstração, tanto `900` como `1600` foram recusados (a versão anterior tinha 1.650,00 €).
+- **O que fazer:** carregue em **Fechar** e corrija o valor. Se a redução tiver fundamento legal, preencha **Exceção à irredutibilidade** antes de guardar.
+
+![Janela Erro de Validação: o ordenado a partir de 01/11/2026 é inferior ao da versão anterior do contrato](/images/payroll-pt/alterar-o-salario/03-recusa-salario-inferior.png)
+
+### Ao carregar no dia aparece «A versão de … não foi criada»
+
+- **Mensagem:** «Operação inválida A versão de 01/01/2027 não foi criada. O que aconteceu: o contrato de Bruno Miguel Teixeira não tem Local de trabalho habitual e a versão nova copia-o. Como resolver: preencha o Local de trabalho habitual no contrato, guarde e só depois acrescente a versão.» Aparece logo depois de carregar no dia do calendário, com o aviso «Há campos obrigatórios por preencher».
+- **O que acontece:** a versão não fica criada. As datas do topo da ficha não mudam.
+- **Causa:** a ficha do trabalhador não tem **Local de trabalho habitual** (separador **Trabalho**). Na demonstração, nenhum trabalhador o tinha.
+- **O que fazer:** feche a janela e, no separador **Trabalho**, escolha o local. Se a empresa ainda não tem nenhum, escreva o nome (por exemplo `Escritório de Lisboa`) e carregue em **Criar “Escritório de Lisboa”** (o botão usa aspas inglesas). Depois guarde e carregue outra vez em **+**: a versão fica criada (visto com a de 01/01/2027).
+  ![Campo Local de trabalho habitual com a opção Criar “Escritório de Lisboa”](/images/payroll-pt/alterar-o-salario/05-criar-local-de-trabalho.png)
+
+### Criei uma versão com a data errada e não a consigo apagar
+
+- **Mensagem (Eliminar):** «Operação inválida Um registo fechado não se apaga: 01/10/2026. O que aconteceu: o que foi registado, aprovado, pago ou emitido faz parte do histórico dos salários e nunca é apagado …»
+- **Mensagem (Arquivar):** «Operação inválida Ativo não se pode definir diretamente. …»
+- **Causa:** a versão tem uma data dentro de um mês com recibos validados ou pagos. O fiscaldoo guarda-a no histórico e não deixa apagá-la nem arquivá-la.
+- **O que fazer:** se o salário dessa versão é igual ao anterior, não tem efeito nos recibos e pode ficar. Crie a versão certa com a data certa. Se o valor estiver errado, peça ao **Administrador de Salários** que avalie a correção dos recibos desse mês com o contabilista.
+
+### Com o perfil Processador de salários, o botão + aparece
+
+- **Sintoma:** o **Processador de salários** vê o botão **+** e, ao carregar num dia, a versão é criada. Depois não a consegue apagar nem arquivar: «Operação inválida O Processador de salários só lê o contrato (Ativo). … Como resolver: peça aos Recursos Humanos que registem a alteração como uma versão nova do contrato.»
+- **O que fazer:** não use o **+** com o perfil **Processador de salários**. Peça a alteração ao **Administrador de Salários** ou aos Recursos Humanos.
+
+{/* Nota interna (DOCS-022): defeito D23 do LOTE_C (o «+» do Processador cria versões, incluindo num mês fechado; a dica do botão diz «New Employee Record» em inglês). Rever este problema quando o cartão do defeito entrar em master. Alteração retroativa (Ações › «Alteração retroativa da retribuição» no recibo) fica para o DOC-0209. */}

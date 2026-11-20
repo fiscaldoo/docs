@@ -1,0 +1,10 @@
+{
+  "label": "Contabilidade",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "slug": "/accounting-pt",
+    "title": "Contabilidade",
+    "description": "Plano SNC, lançamentos, IVA, retenções, bancos, ativos, fecho, relatórios e declarações."
+  }
+}

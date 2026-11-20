@@ -1,0 +1,69 @@
+---
+id: perfil-auditor-so-de-leitura
+slug: /troubleshooting/perfil-auditor-so-de-leitura
+title: Aparece «o seu perfil (Auditor) é só de leitura»
+sidebar_label: Perfil Auditor, só de leitura
+sidebar_position: 30
+description: O perfil Auditor / ROC consulta tudo mas nunca cria, altera nem apaga. Se precisa de mudar um dado, peça a quem tem esse perfil; se é auditor, a mensagem está certa.
+keywords: [auditor, ROC, só de leitura, so de leitura, perfil auditor, sem acesso, não tem permissão para alterar, nao tem permissao para alterar, não pode criar contactos, pista de auditoria]
+doc_id: DOC-0416
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master f671d6842)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-permissao, accounting-pt/auditoria/pacote-do-auditor, administration/utilizadores-e-permissoes/perfis-e-permissoes]
+---
+
+## Sintoma
+
+Ao guardar uma alteração, abre-se a janela **Sem acesso** e a alteração não fica gravada. Em **Contactos**, não aparecem os botões **Novo** nem **Ações**.
+
+## Mensagem
+
+Copiada do ecrã, ao alterar o telefone de um contacto e carregar em **Guardar**, com o perfil **Auditor / ROC**. O nome entre aspas muda com o tipo de registo:
+
+> «Não tem permissão para alterar este registo de «*Contacto*». O seu perfil (Auditor) é só de leitura: consulta tudo e nunca cria, altera ou elimina nada.»
+
+![Janela Sem acesso com a frase O seu perfil (Auditor) é só de leitura](/images/troubleshooting/perfil-auditor-so-de-leitura/01-auditor-so-de-leitura.png)
+
+Nada foi alterado. Uma integração que usa um utilizador com este perfil recebe a mesma regra noutras palavras, obtidas por chamada direta, sem clique:
+
+> «Não pode *criar* contactos: o seu perfil (Auditor) é só de leitura. O Auditor / ROC consulta os contactos mas nunca os cria, altera ou apaga, para que a pista de auditoria se mantenha fiável. Se um contacto precisa de mudar, peça a um utilizador com permissões de contabilidade ou vendas que o faça.»
+
+> «Não tem permissão para *criar* «*Artigo*».
+>
+> O seu perfil (Auditor) é só de leitura: consulta tudo e nunca cria, altera ou elimina nada.»
+
+## Causas verificadas
+
+O utilizador tem o perfil **Auditor / ROC**. Este perfil serve para consultar os dados sem os poder mudar, para que o que o auditor viu continue a ser o que lá está. 
+Os campos de uma ficha podem parecer editáveis. A recusa só aparece ao guardar.
+
+## O que confirmar
+
+1. Quem é o utilizador. A frase diz o perfil.
+2. Se a pessoa é mesmo auditor ou se recebeu este perfil por engano: **Definições › Utilizadores e empresas › Utilizadores**, abra o utilizador, separador **Perfil**.
+
+## Como resolver
+
+- **É auditor:** a mensagem está certa. Saia da ficha sem guardar. Se um dado está errado, peça a correção a quem trata desse dado.
+- **Precisa de outro perfil:** um **Administrador** muda-o no separador **Perfil** do utilizador, como em [Como dar a cada utilizador o perfil certo](/administration/perfis-e-permissoes).
+- **É para reunir os documentos de uma auditoria:** veja [Como preparar o pacote para o auditor](/accounting-pt/pacote-do-auditor).
+
+## Resultado esperado
+
+Com outro perfil, a alteração guarda-se. Com o perfil de auditor, a consulta continua a funcionar.
+
+## Quando contactar o suporte
+
+- O utilizador não tem o perfil **Auditor / ROC** e a frase aparece.
+
+Para outras recusas de perfil, veja [Não tenho permissão para fazer esta operação](/troubleshooting/sem-permissao).
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com a frase completa e o nome do ecrã.
+
+{/* Nota interna (DOCS-046, v13-TS): 1.ª frase por clique (Contactos, Guardar). As outras por RPC como demo.auditor (criar contacto, criar artigo), sem clique: o ecrã não tem Novo. ERR-1322 tem outro texto no catálogo e não apareceu. */}

@@ -1,0 +1,72 @@
+---
+id: sem-acesso-a-empresa
+slug: /troubleshooting/sem-acesso-a-empresa
+title: Aparece «Não tem acesso a uma das empresas pedidas.» ou «Sem acesso» num documento de outra empresa
+sidebar_label: Sem acesso à empresa
+sidebar_position: 10
+description: A empresa não está entre as empresas do utilizador; o administrador acrescenta-a no campo Empresas da ficha do utilizador.
+keywords: [acesso a empresas não autorizadas ou inválidas, acesso a empresas nao autorizadas ou invalidas, empresas não autorizadas, empresas nao autorizadas, não tem acesso à empresa, nao tem acesso a empresa, empresa a que não pertence, empresa a que nao pertence, empresas permitidas, acesso à empresa, acesso a empresa, sem acesso, outra empresa, várias empresas, varias empresas, o seu perfil chega para esta área, não tem acesso a uma das empresas pedidas, nao tem acesso a uma das empresas pedidas]
+doc_id: DOC-0420
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 54a9f5f03)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/empresa-nao-selecionada, troubleshooting/acesso-e-dados/sem-permissao, administration/utilizadores-e-permissoes/perfis-e-permissoes]
+---
+
+## Sintoma
+
+Ao abrir um documento recebido por ligação, aparece a janela **Sem acesso**; numa integração, a recusa começa por «Não tem acesso a uma das empresas pedidas.». A empresa nem aparece no seletor de empresas, no canto superior direito. Se só tem uma empresa, o nome dela no canto superior direito não abre lista nenhuma.
+
+## Mensagem
+
+No ecrã, com o perfil **Administrativo** e só a «Empresa Demonstração, Lda» entre as suas empresas, ao abrir por uma ligação uma fatura de outra empresa, a janela **Sem acesso** diz:
+
+> «Não tem acesso a este registo de «*Lançamento contabilístico*». O seu perfil chega para esta área, mas o registo é de uma empresa em que não pode trabalhar. Peça ao administrador que lhe dê acesso a essa empresa ou escolha outra empresa no topo do ecrã.»
+
+A janela é a de [Não tenho permissão para fazer esta operação](/troubleshooting/sem-permissao). Ela própria diz que a causa é a empresa, e não o perfil: mudar o perfil não resolve. Se, além da empresa, lhe falta também o perfil da área, a janela diz «Pode pertencer a outra empresa: confirme a empresa escolhida no topo do ecrã.» e diz com que perfil a área abre: no exemplo, com o perfil **Gestor de RH** (pela integração), «Esta área abre com o perfil «Administrativo» ou «Auditor / ROC».». Se a empresa é sua e só não está marcada no seletor, a janela diz outra coisa: «O seu perfil chega para esta área, mas o registo é de uma empresa a que tem acesso e que não marcou no seletor de empresas, no topo do ecrã. Marque essa empresa aí e tente outra vez.» ([Aparece «…uma empresa em que não trabalha» ou «Pode pertencer a outra empresa»](/troubleshooting/empresa-nao-selecionada)).
+
+Pela integração, com o perfil **Administrativo**, ao pedir dados de uma empresa que não é uma das suas:
+
+> «Não tem acesso a uma das empresas pedidas. O que aconteceu: a ligação ou a escolha de empresas no topo inclui uma empresa em que não trabalha. Como resolver: escolha, no topo do ecrã, uma das suas empresas; se precisa desta, peça ao administrador que a acrescente ao seu utilizador.»
+
+No ecrã, uma ligação que indique só uma empresa que não é sua não dá mensagem: abre na empresa do canto superior direito.
+
+{/* Nota interna (lote v23-M, master dbbb5ac5c, docs_demo_v23m_test): a 1.ª citação provocada no ecrã com um utilizador criado só com o perfil Administrativo (fatura da Empresa Teste Portugal por ligação); a variante do Gestor de RH, a de «Marque essa empresa» (Administrativo com as duas empresas e só a Empresa Demonstração marcada) e a das empresas pedidas, pela integração. */}
+
+## Causas verificadas
+
+- **A empresa não está entre as suas.** Cada utilizador trabalha só nas empresas do campo **Empresas** da sua ficha. Um documento de outra empresa não se abre, mesmo com o perfil certo.
+
+## O que confirmar
+
+1. Abra o seletor de empresas, no canto superior direito. Se a empresa do documento não aparece na lista, não tem acesso a ela. Se o nome da empresa no canto superior direito não abre uma lista, só tem essa empresa: a do documento não é sua.
+2. Se aparece mas não está marcada, o caso é outro: [Aparece «…uma empresa em que não trabalha» ou «Pode pertencer a outra empresa»](/troubleshooting/empresa-nao-selecionada).
+3. Se deve mesmo trabalhar nessa empresa (por exemplo, um gabinete que trata várias empresas clientes).
+
+## Como resolver
+
+O administrador da base de dados acrescenta a empresa ao utilizador:
+
+1. Em **Definições › Utilizadores e empresas › Utilizadores**, abra o utilizador.
+2. No separador **Ajustes avançados**, em **Empresas**, escreva o nome da empresa e escolha-a na lista.
+   ![Campo Empresas dos Ajustes avançados com a Empresa Demonstração, Lda e a Empresa Teste Portugal (COMMUNITY)](/images/troubleshooting/sem-acesso-a-empresa/01-empresas-do-utilizador.png)
+3. Carregue em **Guardar** (ícone da nuvem).
+
+**Quem faz:** o administrador da base de dados (só ele vê as **Definições**).
+
+O perfil vale em todas as empresas do utilizador. Antes de acrescentar uma empresa, confirme que o perfil serve também para ela.
+
+## Resultado esperado
+
+A empresa passa a aparecer no seletor do utilizador. Na demonstração, depois de guardar, a mesma ligação abriu a fatura e a empresa dela ficou também marcada no seletor. O nome no canto superior direito continuou a ser o da primeira empresa, onde nascem os documentos novos. O que isso muda está em [Aparece «…uma empresa em que não trabalha» ou «Pode pertencer a outra empresa»](/troubleshooting/empresa-nao-selecionada).
+
+## Quando contactar o suporte
+
+- A empresa está no campo **Empresas** do utilizador e a janela continua.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com o nome do utilizador, as empresas da ficha dele e o documento que tentou abrir.

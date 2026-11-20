@@ -1,0 +1,122 @@
+---
+id: retencao-na-fonte-com-erro
+slug: /troubleshooting/retencao-na-fonte-com-erro
+title: A retenção na fonte não é calculada ou não entra na guia
+sidebar_label: Retenção não calculada ou fora da guia
+description: Porque uma fatura de fornecedor fica sem retenção, é recusada por estar abaixo do mínimo, ou a retenção não aparece na guia do mês.
+keywords: [retenção não calculada, retencao nao calculada, retenção não entra na guia, guia de retenção vazia, guia sem linhas, inferior ao mínimo legal, inferior ao minimo legal, Retenção por omissão, Gerar guia, não tem taxa de IVA, código de rendimento, taxa de retenção]
+doc_id: DOC-0354
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 8fc9fd337)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/retencoes/configurar-retencoes-na-fonte, accounting-pt/retencoes/pagar-as-retencoes, accounting-pt/retencoes/modelo-10]
+---
+
+## Sintoma
+
+Numa fatura de fornecedor, a coluna **Impostos** vem sem retenção, ou **Confirmar** é recusado. Ou a fatura tem retenção mas, ao carregar em **Gerar** na guia do mês, o total fica em 0,00 € e não aparece linha nenhuma, sem qualquer mensagem.
+
+## Mensagem
+
+Numa fatura de 50,00 € a uma fornecedora com retenção de 23 %, ao carregar em **Confirmar**:
+
+> «A retenção de *11,50 €* em «*Retenção IRS 23% — trabalho independente (art. 151.º)*» é inferior ao mínimo legal de *25,00 €* por retenção (CIRS art. 101.º-B n.º 1 d)), por isso está dispensada. Retire o imposto de retenção da linha e publique de novo.»
+
+![Janela Operação inválida: a retenção de 11,50 € é inferior ao mínimo legal de 25,00 €](/images/troubleshooting/retencao-na-fonte-com-erro/01-abaixo-do-minimo.png)
+
+Se a linha só tiver a retenção, sem IVA:
+
+> «A linha “*Honorários de outubro*” da fatura a *Ana Ferreira* não tem taxa de IVA. Escolha uma taxa de IVA (ou uma taxa de IVA a 0% com motivo de isenção, ou uma taxa «não sujeito»).»
+
+As mensagens desta página foram provocadas na base de demonstração, com um utilizador só com o perfil **Contabilista**. O valor da mensagem é o da linha **Retenção na fonte** do total da fatura. <span className="fd-pending">Pendente de validação por contabilista certificado: o mínimo legal por retenção que a mensagem cita.</span>
+
+Ao confirmar uma fatura com um imposto de retenção cuja percentagem não é a da taxa legal nessa data. Use o imposto que a mensagem indica, ou corrija a data do documento:
+
+> «O imposto «*Retenção IRS 20% — trabalho independente*» retém *20,00*% mas a taxa legal de «*IRS cat. B — atividades profissionais da tabela do art. 151.º*» em *06/11/2026* é *23,00*%. Use o imposto «*Retenção IRS 23% — trabalho independente (art. 151.º)*» (a taxa segue a data do pagamento ou da colocação à disposição do rendimento) ou corrija a data do documento.»
+
+Se não houver taxa carregada para a data do rendimento (na demonstração, 15/03/2000 em **Operações especiais › Data de pagamento/colocação à disposição do rendimento**), a fatura não é recusada: fica **Publicada**, e a nota aparece no histórico do documento:
+
+> «Erro de configuração: não há taxa de retenção carregada para «*IRS cat. B — atividades profissionais da tabela do art. 151.º*» em *15/03/2000*. O documento foi publicado com a taxa do imposto escolhido (*23,00*%) e não foi conferido com a lei. Peça ao contabilista certificado que carregue a taxa desse período com a fonte legal (Contabilidade › Configurar › IVA e retenções › Regras e códigos de retenção na fonte).»
+
+Se a taxa dessa data já foi carregada, mas ainda não foi confirmada com a fonte legal, **Confirmar** é recusado e a fatura fica em **Rascunho**. Na demonstração, com uma taxa de 2027 carregada sem confirmação e a **Data de pagamento/colocação à disposição do rendimento** a 15/01/2027:
+
+> «A taxa de «*IRS cat. B — atividades profissionais da tabela do art. 151.º*» em *15/01/2027* (*Taxa de 2027 carregada sem confirmação*) não foi confirmada com a fonte legal. Confirme-a com o contabilista certificado antes de a usar em documentos.»
+
+Entre parênteses vem a referência legal escrita na taxa.
+
+Com **Data de pagamento/colocação à disposição do rendimento** vazia, a taxa confere-se na data do documento. Numa fatura de fornecedor de 15/03/2015 com o campo vazio, e o período bloqueado até 31/12/2025, o lançamento passou para 31/01/2026, mas a taxa foi conferida a 15/03/2015: a fatura ficou **Publicada** com a nota acima («… em *15/03/2015* …») e com esta outra:
+
+> «A data do documento (*15/03/2015*) está num período bloqueado (até *31/12/2025*); o lançamento ficou com a data contabilística de *31/01/2026*. O documento mantém a sua data.»
+
+Confirme com o contabilista certificado a taxa da data do rendimento.
+
+{/* Nota interna (DOCS-063 req. 46233, lote v23-AC, master 97b34fac3, docs_demo_v23ac_test, porta 8482): taxa por confirmar provocada por clique em Confirmar com um utilizador criado só com o perfil Contabilista. Criados por RPC só na cópia: uma regra legal WHT_IRS_B_ART151 da Empresa Demonstração, Lda, de 01/01/2027, 25 %, sem estado de confirmação, com a referência «Taxa de 2027 carregada sem confirmação»; e o rascunho de 1.000,00 € a Ana Ferreira (conta 6226, IVA 23 % e Retenção IRS 23 %, Data de pagamento/colocação 15/01/2027). A fatura ficou em Rascunho. */}
+
+{/* Nota interna (DOCS-061 req. 46424, lote v23-I, master 5228a94bd, docs_demo_v23i_test): depois do ACC-264, com um utilizador criado só com o perfil Contabilista, rascunhos de 1.000,00 € (6226, IVA 23 % e Retenção IRS 23 %) de 15/03/2015 e 15/03/2000 com o campo vazio, criados por RPC com esse utilizador e confirmados por clique: as duas Publicadas a 31/01/2026, com as duas notas no histórico (taxa em falta na data do documento e período bloqueado). */}
+
+{/* Nota interna (DOCS-061 req. 46119, lote v18-C, master 0289754a8, docs_demo_v18c_test; Contabilista, fatura de fornecedor de 1.000,00 €): não há recusa de taxa em falta ao publicar, por decisão (cc2 ret-07, commit 549269ddb): nota no histórico. Com o campo a 15/03/2000 (escrito por RPC, confirmado por clique): nota acima. Com o campo vazio e fatura de 15/03/2000 ou 15/03/2015: sem data de exigibilidade, a data da taxa é a contabilística, que o bloqueio empurrou para 05/11/2026; passa a 23 % sem nota (defeito menor no relatório do lote). Com o campo vazio e 15/03/2024: recusa dos 25 %. */}
+
+{/* Nota interna (lote v22-H, master d83bdf7ae, docs_demo_v22h_test): as 4 recusas e a nota do histórico provocadas por clique em Confirmar, com um utilizador criado só com o perfil Contabilista; rascunhos das faturas, o imposto de 20 % e a regra de dedução da 6221 a 75 % criados por RPC só na cópia. */}
+
+## Causas verificadas
+
+- **O fornecedor não tem Retenção por omissão.** A coluna **Impostos** vem vazia e nada avisa (na demonstração, a Papelaria Central).
+- **A retenção não substitui o IVA.** Com **Retenção por omissão**, **Impostos** traz só a retenção; o IVA da linha escolhe-se à parte.
+- **A taxa da data do rendimento ainda não está confirmada.** A fatura só se confirma depois de o contabilista certificado confirmar a taxa com a fonte legal.
+- **A retenção é inferior ao mínimo legal.** O fiscaldoo recusa a retenção, que neste caso está dispensada.
+- **A retenção foi retirada da linha de um fornecedor sujeito.** Veja «Confirmar a fatura é recusado» em [Como configurar as retenções na fonte](/accounting-pt/configurar-retencoes-na-fonte).
+- **A fatura está em rascunho ou ainda não foi paga.** A guia só lê faturas **Publicadas** e segue o mês do pagamento, não o da fatura. Uma fatura **Publicada** e por pagar não entra. Na demonstração, um rascunho de 1.000,00 € com retenção não mudou a guia de novembro.
+- **A guia não voltou a ser gerada.** O rascunho só mostra o que existia quando carregou em **Gerar**.
+- **A guia é do imposto errado.** Uma guia de **Retenção de IRC** não mostra retenções de IRS, e o contrário também. Na demonstração, a guia de IRC de novembro ficou em 0,00 €, com a de IRS do mesmo mês em 230,00 €.
+- **A retenção é a que o cliente lhe fez.** Na guia só entram as retenções que a empresa faz aos fornecedores. Na demonstração, uma fatura de cliente de 1.000,00 €, com 230,00 € de retenção feita pelo cliente e já paga, não mudou a guia.
+
+## O que confirmar
+
+1. Na ficha do fornecedor, separador **Vendas e Compras**, a **Retenção por omissão**.
+2. Na fatura, a coluna **Impostos** e o total: uma fatura de 1.000,00 € com IVA de 23 % e retenção de 23 % mostra **IVA 23%** 230,00 €, **Retenção na fonte** -230,00 € e **Total** 1.000,00 €.
+3. O código de rendimento e a taxa da regra, em **Contabilidade › Configurar › IVA e retenções › Regras e códigos de retenção na fonte**. O menu aparece ao perfil **Contabilista certificado**; ao **Contabilista**, não.
+4. Se a fatura está paga, e em que mês.
+
+## Como resolver
+
+### A fatura ficou sem retenção
+
+Se o fornecedor deve ter sempre retenção, preencha a **Retenção por omissão** na ficha: [Como configurar as retenções na fonte](/accounting-pt/configurar-retencoes-na-fonte). Na fatura em rascunho, acrescente a retenção e o IVA em **Impostos**.
+
+**Quem faz:** Contabilista.
+
+### A retenção está abaixo do mínimo
+
+Na linha, retire **Retenção IRS 23%…** de **Impostos**, deixe o IVA e carregue em **Confirmar**. Na demonstração, a fatura de 50,00 € ficou **Publicada** com o total de 61,50 €.
+
+Numa conta com regra de dedução do IVA, a retenção é calculada sobre todo o valor da linha. Na demonstração, uma fatura de 120,00 € numa conta com dedução de 75 % ficou **Publicada** com **Retenção na fonte** -27,60 €, sem recusa.
+
+**Quem faz:** Contabilista.
+
+### A retenção não aparece na guia
+
+1. Registe o pagamento da fatura com o botão **Pagar**.
+2. Em **Contabilidade › Declarar › Retenções na fonte › O que há para fazer com as retenções?**, abra **Guias de retenção na fonte** e a guia do imposto e do mês do pagamento.
+3. Com a guia em rascunho, carregue outra vez em **Gerar**.
+
+Na demonstração, a `FTF/2026/00046` (1.000,00 € com 230,00 € de retenção, de 03/11/2026) deu 0,00 € na guia de novembro enquanto não estava paga. Depois de paga, a mesma guia mostrou **IRS cat. B — atividades profissionais da tabela do art. 151.º**, com base de 1.000,00 € e 230,00 €.
+
+**Quem faz:** Contabilista certificado. O perfil **Contabilista** vê a lista das guias, mas não tem o botão **Novo**. Emitir e pagar a guia: [Como pagar as retenções na fonte do mês](/accounting-pt/pagar-as-retencoes).
+
+## Resultado esperado
+
+A fatura fica **Publicada** com a retenção certa, ou sem ela se estiver dispensada, e a guia do mês do pagamento tem uma linha com a base e o valor. O [Modelo 10](/accounting-pt/modelo-10) e o mapa do Modelo 30 têm as suas próprias recusas, tratadas nesses artigos.
+
+## Quando contactar o suporte
+
+- A fatura está paga, a guia é do imposto e do mês certos, e **Gerar** continua sem a linha.
+- A mensagem indica uma taxa legal diferente da que a regra mostra.
+
+## Informação a enviar
+
+- O número da fatura (por exemplo `FTF/2026/00046`) e o da guia.
+- O texto completo da mensagem, copiado do ecrã.
+- O fornecedor, a data da fatura e a do pagamento.

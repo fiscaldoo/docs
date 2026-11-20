@@ -1,0 +1,86 @@
+---
+id: modelo-10-dos-trabalhadores
+slug: /payroll-pt/modelo-10-dos-trabalhadores
+title: Como preparar os rendimentos dos trabalhadores para o Modelo 10
+sidebar_label: Modelo 10 dos trabalhadores
+sidebar_position: 5
+description: Gerar no fiscaldoo o Modelo 10 do lado dos salários, com os rendimentos de trabalho dependente que a DMR mensal não declarou, conferi-lo com a contabilidade e saber quando um ano sem casos é o resultado certo.
+keywords: [Modelo 10, modelo 10 dos trabalhadores, modelo 10 RH, rendimentos dos trabalhadores, categoria A, trabalho dependente, DMR, retenções do ano, retencoes do ano, declaração anual, declaracao anual, conferir com a contabilidade, conta 242]
+doc_id: DOC-0228
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ba9c8bd7)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/declarar/dmr, payroll-pt/declarar/comprovativos-anuais]
+---
+
+## Para que serve?
+
+Os salários pagos declaram-se todos os meses na [DMR](/payroll-pt/dmr). O Modelo 10 dos trabalhadores apanha, no fim do ano, os rendimentos de trabalho dependente (categoria A) que a DMR mensal não declarou. O fiscaldoo procura-os nos recibos do ano e confere o IRS com a contabilidade.
+
+Numa empresa que entregou todas as DMR, o resultado normal é um Modelo 10 sem nenhum trabalhador. O próprio fiscaldoo o diz: «Um ano sem nada a declarar é um resultado normal.»
+
+## Quando utilizar?
+
+- Em janeiro ou fevereiro, para o ano anterior, depois de entregue a DMR de dezembro.
+
+## Onde encontrar?
+
+**Salários › Declarar › Modelo 10 dos trabalhadores**
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador. O **Processador de salários** não tem este menu.
+- As DMR do ano estão entregues (ver [Como enviar a declaração mensal de remunerações (DMR) à AT](/payroll-pt/dmr)).
+- Tenha à mão o código do serviço de finanças, o NIF do contabilista certificado e o do representante legal.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Declarar › Modelo 10 dos trabalhadores** e carregue em **Novo**.
+2. Em **Ano do rendimento**, escreva o ano (vem o anterior ao de hoje, por exemplo `2025`). A **Empresa** e o **NIF do declarante** vêm preenchidos.
+3. Preencha o **Serviço de Finanças** (quatro algarismos), o **NIF do Contabilista Certificado (Quadro 7)** e o **NIF do declarante / representante legal (Quadro 7)**. O **Facto do justo impedimento** só se preenche numa entrega fora de prazo. **Gerar** funciona mesmo com estes campos por preencher: o que falta só se vê ao validar e entregar. <span className="fd-pending">Pendente de validação por contabilista certificado: quais destes campos são obrigatórios para a declaração.</span>
+4. Carregue em **Gerar**. A declaração passa a **Gerada** e o separador **Beneficiários** mostra, por trabalhador, **NIF do beneficiário**, **Código do rendimento**, **Local**, **Rendimentos** e **IRS retido**. No cimo ficam os totais **Rendimentos** e **IRS retido**.
+   ![Modelo 10 RH 2026 da Empresa Demonstração, Lda, Gerada, com os totais a 0,00 e o separador Beneficiários vazio, e os botões Gerar, Validar e Conferir com a contabilidade](/images/payroll-pt/modelo-10-dos-trabalhadores/01-modelo-10-gerado.png)
+5. Carregue em **Conferir com a contabilidade**. Aparece o bloco **Conferência com a contabilidade (contas 242)**, com o **IRS na contabilidade (242)** e a **Diferença para a contabilidade**. Na demonstração os dois dão 0,00, mesmo com o lote de outubro contabilizado. <span className="fd-pending">Pendente de validação no ecrã: com rendimentos no Modelo 10, o valor lido da conta 242.</span>
+6. Se houver beneficiários, carregue em **Validar**.
+
+</StepByStep>
+
+<span className="fd-pending">Pendente de validação no ecrã: os passos depois de **Validar** (o ficheiro, a submissão e a resposta da AT) não foram vistos, porque a demonstração não tem nenhum rendimento de categoria A fora da DMR: os Modelos 10 de 2025 e de 2026 foram gerados sem beneficiários.</span>
+
+**Exemplo.** Na Empresa Demonstração, Lda, os salários de junho a outubro de 2026 estão pagos, e a DMR de novembro (que declara os salários de outubro, pagos a 01/11/2026) está aceite. O Modelo 10 RH 2026, gerado a 01/11/2026, tem **Rendimentos** 0,00 e **IRS retido** 0,00, sem beneficiários. O de 2025, ano sem salários na empresa, dá o mesmo resultado. Com zero beneficiários, **Validar** é recusado (ver «Problemas frequentes»): um ano sem casos não se entrega.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: rendimentos de categoria A que ficam fora da DMR e vão ao Modelo 10; prazo de entrega do Modelo 10 (fim de fevereiro do ano seguinte, CIRS art. 119.º); se um ano sem beneficiários dispensa mesmo a entrega; rendimentos de outras categorias no Modelo 10 da contabilidade.</span>
+
+Gerar e conferir o Modelo 10 não gera lançamentos contabilísticos.
+
+## Resultado esperado
+
+- O Modelo 10 do ano fica **Gerada**, com os beneficiários e os totais. Numa empresa com as DMR todas entregues, sem beneficiários.
+- Se houver recibos pagos que ainda não estão em nenhuma DMR fechada, o ecrã mostra, em vez de «sem beneficiários», o campo **Recibos a regularizar na DMR** com esses recibos e o que fazer: validar e entregar a DMR desses meses e gerar de novo o Modelo 10. <span className="fd-pending">Pendente de validação no ecrã: esta lista não foi reproduzida nesta base, onde todos os recibos pagos já estão na DMR de novembro; foi vista com 8 recibos de novembro por declarar. O aviso «A DMR de … ainda está por entregar» não apareceu.</span>
+- Na lista, cada ano mostra **Ano do rendimento**, **Empresa**, **Rendimentos**, **IRS retido** e **Estado**.
+
+## Notas importantes
+
+- **Fonte única do IRS do ano.** Os rendimentos e o IRS que cada trabalhador recebe no [comprovativo anual](/payroll-pt/comprovativos-anuais) vêm dos mesmos recibos pagos. O Modelo 10 não os repete: só leva o que a DMR não levou.
+- **O aviso do CAE.** Na demonstração aparece «O CAE 46900 não tem percentagem do volume de negócios. O ficheiro até 2026 escreve-se com ela vazia. Como resolver: preencha a percentagem nas definições da empresa.» O aviso não impede gerar.
+- **Rendimentos que não são salários** (trabalho independente, rendas, juros) declaram-se no Modelo 10 da contabilidade, não neste.
+
+## Problemas frequentes
+
+### «não há beneficiários (um ano sem casos não se submete)» ao carregar em Validar
+
+- **Sintoma:** «Operação inválida. O Modelo 10 «Modelo 10 RH 2026» não está pronto: não há beneficiários (um ano sem casos não se submete). Como resolver: corrija e gere de novo.»
+- **Causa:** todos os rendimentos do ano já foram declarados nas DMR.
+- **O que fazer:** se as DMR do ano estão todas entregues, não há nada a fazer: guarde o Modelo 10 gerado como prova. Se faltar alguma DMR, entregue-a primeiro e carregue de novo em **Gerar**.
+
+### Não tenho o menu Modelo 10 dos trabalhadores
+
+- **Causa:** o seu perfil é **Processador de salários**.
+- **O que fazer:** peça ao **Administrador de Salários** que prepare o Modelo 10.
+
+{/* Nota interna (DOCS-022, 3.ª auditoria, NC-53, master ba9c8bd7): P-19 do PAY-067 (#3614): com DMR por entregar, o Modelo 10 lista os recibos a regularizar mas o aviso «A DMR de … ainda está por entregar» não aparece (a confirmar). D47 substituído por esta descrição. */}

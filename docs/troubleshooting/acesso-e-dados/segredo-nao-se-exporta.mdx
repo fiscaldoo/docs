@@ -1,0 +1,96 @@
+---
+id: segredo-nao-se-exporta
+slug: /troubleshooting/segredo-nao-se-exporta
+title: A palavra-passe ou a chave privada não se exporta nem se escreve diretamente
+sidebar_label: Segredos não se exportam
+sidebar_position: 15
+description: As senhas da AT, as chaves privadas e os segredos do cofre nunca saem numa exportação e só se escrevem no campo próprio, que os cifra.
+keywords: [exportar palavra-passe, exportar senha, exportar chave privada, exportar segredo, segredo do cofre, nunca se exporta, nunca se exportam, só se escreve, so se escreve, escrever diretamente, Tem segredo, ver a palavra-passe, asteriscos, pesquisar segredo, chave privada, palavra-passe do webservice]
+doc_id: DOC-0427
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 255d77e63)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-permissao, administration/seguranca-e-arquivo/cofre-de-credenciais, fiscal-core/at-e-saft/ligar-a-at]
+---
+
+## Sintoma
+
+Quer levar para um ficheiro, ou escrever por uma importação ou integração, uma palavra-passe ou uma chave privada, e:
+
+- ao exportar a lista **Credenciais**, entre os campos disponíveis só encontra **Tem segredo**, que diz se há segredo guardado, mas não o segredo;
+- depois de gravar, o campo **Palavra-passe / segredo** mostra só uma fila de pontos (com o ícone do olho, oito asteriscos);
+- ao importar para o cofre, a coluna do segredo não tem campo para escolher, e a entrada fica sem segredo;
+- um programa ligado por integração recebe uma das mensagens abaixo.
+
+![Janela Exportar dados da lista Credenciais, com a pesquisa segredo a encontrar só o campo Tem segredo](/images/troubleshooting/segredo-nao-se-exporta/02-exportar-so-tem-segredo.png)
+
+## Mensagem
+
+Na ficha de uma credencial do cofre, o ecrã avisa:
+
+> «O segredo é guardado cifrado e nunca mais é mostrado a ninguém. Para o mudar, escreva um novo. O programa usa o guardado por si e cada uso fica registado.»
+
+As mensagens seguintes são uma proteção interna: no ecrã nunca aparecem, porque as janelas de exportação não oferecem estes campos. Só as recebe um programa ligado por integração. Ao pedir estes campos numa exportação:
+
+> «Os segredos do cofre nunca se exportam. Retire o segredo da lista de campos exportados.»
+
+> «A palavra-passe do webservice da AT e a chave privada nunca se exportam. Retire-as da lista de campos a exportar.»
+
+> «A chave privada nunca se exporta. Retire-a da lista de campos a exportar.»
+
+Ao escrever no campo errado, ou ao pesquisar pelo valor:
+
+> «O segredo guardado não pode ser escrito diretamente. Use o campo «Palavra-passe / segredo»: é cifrado ao gravar.»
+
+> «O segredo só se escreve: não pode ser pesquisado nem filtrado por valor. Use o nome ou o responsável da entrada para filtrar.»
+
+> «A palavra-passe do webservice e a chave privada são só de escrita: não se pode pesquisar nem filtrar por elas.»
+
+A primeira mensagem e os asteriscos vêm do ecrã. As outras foram copiadas da base de demonstração em português, tentando a operação por integração.
+
+## Causas verificadas
+
+- **Os segredos guardam-se cifrados.** O valor que escreve no campo próprio é cifrado ao gravar, e o que fica na lista é só a indicação de que existe.
+- **Nenhum perfil os exporta.** A recusa vale também para o administrador. Assim, um ficheiro exportado nunca leva uma palavra-passe.
+
+A **chave pública da AT** não é um segredo e exporta-se normalmente.
+
+## O que confirmar
+
+1. O que precisa mesmo: o valor, ou apenas saber se ele existe. Para saber se existe, exporte ou veja o campo **Tem segredo**.
+2. Se tem acesso: o cofre (**Contabilidade › Configurar › Cofre de credenciais › Credenciais**) só aparece ao administrador e ao perfil **Contabilista certificado** (este só com **Credenciais**). Veja [Não tenho permissão](/troubleshooting/sem-permissao).
+
+## Como resolver
+
+**O que pode fazer sozinho:**
+
+- **Guardar ou trocar um segredo:** abra a credencial, escreva no campo **Palavra-passe / segredo** e grave. Veja [Cofre de credenciais](/administration/cofre-de-credenciais).
+- **Exportar a lista:** use **Exportar** normalmente. O segredo não está entre os campos disponíveis, por isso o ficheiro sai sem ele, só com **Tem segredo**.
+- **Encontrar uma credencial:** pesquise pela **Descrição**, pelo **Nome de utilizador** ou pela **Empresa**. O segredo não se pesquisa.
+
+**O que pede a outra pessoa:**
+
+- **Credenciais da AT:** a palavra-passe do webservice e a chave privada escrevem-se na ligação à AT. Peça ao administrador que siga [Ligar à AT](/fiscal-core/ligar-a-at).
+- **Levar segredos para outro servidor:** não há exportação, e a importação do cofre não traz o segredo. Volte a escrevê-los no destino, a partir da fonte original (o portal ou o ficheiro do certificado). O cofre também não os mostra: ninguém lê um segredo guardado, nem o administrador.
+
+![Ficha de uma credencial do cofre, com o aviso de que o segredo nunca mais é mostrado a ninguém e a palavra-passe em pontos](/images/troubleshooting/segredo-nao-se-exporta/01-segredo-mascarado-no-cofre.png)
+
+## Resultado esperado
+
+A exportação sai sem o campo do segredo. Depois de gravar, o campo mostra uma fila de pontos.
+
+## Quando contactar o suporte
+
+- Ao gravar, aparece «Este servidor não tem chave de cifra para o cofre de credenciais»: veja [O cofre não tem chave de cifra](/troubleshooting/cofre-sem-chave-de-cifra) e, se persistir, contacte o suporte.
+- Um valor de segredo aparece por extenso numa lista, num ficheiro ou numa mensagem. Pare de partilhar esse ficheiro e troque a palavra-passe.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com o menu, os campos que escolheu e a mensagem completa. Nunca envie o próprio segredo.
+
+{/* Nota interna (DOCS-046, lote v16-NOVOS, master 255d77e63): a instância correu com uma chave de cifra de teste só desta cópia. Por clique: ficha do cofre, aviso, asteriscos, janela de exportação (Tem segredo) e, sem chave, a recusa ao gravar. Por RPC em pt_PT com admin: as 6 recusas de exportar, escrever e pesquisar. Menus: faturação e contabilista sem Cofre, gestor_contabilidade com Credenciais. Na auditoria, com a Empresa Demonstração ativa: exportação das Credenciais da AT por clique (sem palavra-passe nem chave privada; há Chave pública e Tem segredos); importação do cofre por clique, com a coluna do segredo sem campo. As 6 recusas não têm caminho por clique. O perfil Administrativo é representado por demo.faturacao. */}
+
+{/* Nota interna (lote v23-Q, #3740 req. 46455, master 808f8ca1f, docs_demo_v23q_test, porta 8452, chave do cofre só na memória da instância): aviso da ficha copiado do ecrã de hoje (SEC-115: sem Revelar segredo); o campo mostra 8 pontos e o ícone do olho mostra 8 asteriscos (auditoria docs-aud-v23q), com o administrador e com o Contabilista certificado; captura 01 refeita com a credencial fictícia «Segurança Social Direta da empresa (fictício)». As recusas de exportar, escrever e pesquisar não foram provocadas de novo. */}

@@ -1,0 +1,84 @@
+---
+id: revisores
+slug: /copilot/revisores
+title: Como pedir ao Copiloto que reveja o fecho do mês ou os salários
+sidebar_label: Rever o fecho ou os salários
+sidebar_position: 3
+description: "Usar o Revisor do fecho e o Revisor de salários para encontrar o que falta ou o que é invulgar, antes de fechar o mês."
+keywords: [revisor do fecho, revisor de salários, revisor de salarios, rever o fecho, rever os salários, rever os salarios, nada de invulgar]
+doc_id: DOC-0293
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master bfedd3b23)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/fecho/fechar-o-mes, payroll-pt/processar-e-pagar/processar-o-mes]
+---
+
+## Para que serve?
+
+Os revisores leem o mês e dizem-lhe, em palavras simples, o que convém olhar antes de fechar. Só leem: não corrigem nem lançam nada.
+
+- O **Revisor do fecho** lê as verificações e as notas do fecho e explica o que falta e porquê.
+- O **Revisor de salários** compara os recibos do mês com os do mês anterior e aponta o invulgar. Não decide nada sobre pessoas.
+
+## Quando utilizar?
+
+- Antes de [fechar o mês](/accounting-pt/fechar-o-mes).
+- Depois de [processar os salários](/payroll-pt/processar-o-mes), antes de os pagar.
+
+## Onde encontrar?
+
+- **Revisor de salários:** **Salários › Preparar › O que há para fazer este mês?**, grupo **Rever com o Copiloto**, ligação **Revisor de salários**. O administrador do sistema tem também **Copiloto › Agentes › Revisor de salários**.
+- O revisor do fecho abre-se em **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**, em **Listas de apoio**.
+
+Também pode escrever `revisor do fecho` ou `revisor de salários` na caixa **Pesquisar menu**, na barra de cima, e carregar em Enter para abrir o agente. Só aparece o que o seu perfil pode abrir: o **Contabilista** encontra o Revisor do fecho, e o **Processador de salários**, o Revisor de salários.
+
+## Antes de começar
+
+- **Revisor do fecho:** o perfil **Contabilista** ou **Contabilista certificado**, e o interruptor **IA - Revisor do fecho**.
+- **Revisor de salários:** o perfil **Processador de salários**, com ou sem o acesso extra **Administrador de Salários** (ou o administrador do sistema), e o interruptor **IA - Revisor de salários**.
+- **Os dois:** em **Copiloto › Controlo › Interruptores**, **Copiloto (interruptor geral da empresa)** e **Ligação à IA (chamadas ao fornecedor de IA)**, e uma [ligação à IA](/copilot/ligar-a-uma-ia) pronta. Com o interruptor desligado, a janela diz «Este agente está desligado…».
+- Feito a 5 de novembro de 2026, na Empresa Demonstração, Lda.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra o revisor. O campo **Mês de** vem com a data de hoje.
+   ![Janela do Revisor do fecho com o campo Mês de e o botão Rever](/images/copilot/revisores/01-revisor-fecho.png)
+2. Em **Mês de**, escolha uma data do mês que quer rever.
+3. Carregue em **Rever**.
+
+</StepByStep>
+
+## Resultado esperado
+
+A janela mostra o **Resultado** e a **Resposta**. Se o Revisor de salários não encontrar nada, diz **Nada de invulgar**:
+
+![Revisor de salários com o resultado Nada de invulgar](/images/copilot/revisores/02-revisor-salarios.png)
+
+<span className="fd-pending">Pendente de validação no ecrã: a resposta quando há algo a apontar. A demonstração é uma base de testes e o fiscaldoo não chama a IA a partir dela.</span>
+
+## Notas importantes
+
+- <span className="fd-pending">Pendente de validação no ecrã: o **Rever** com o perfil **Processador de salários** e uma resposta de IA. Sem nada a apontar, com o perfil **Processador de salários** (com e sem o acesso extra **Administrador de Salários**), o **Rever** deu **Nada de invulgar**, sem chamar a IA.</span>
+- **«Nada de invulgar» não quer dizer que está tudo certo.** A frase diz «no que pode ler»: o revisor só vê o que o perfil de quem pergunta pode ler. A verificação continua a ser sua.
+- **Os dados pessoais seguem as regras da ligação.** Os dados sobre saúde, filiação sindical ou greves só seguem tal como estão com **Autorizar dados pessoais e sensíveis nesta ligação?** ligado, e está desligado por omissão. As credenciais nunca são enviadas. Veja [Privacidade e consentimentos](/copilot/privacidade-e-consentimentos).
+
+## Problemas frequentes
+
+### «A IA não é chamada a partir de um ambiente de teste. Nada foi enviado…»
+
+- **Causa:** carregou em **Rever** numa base de testes.
+- **O que fazer:** use a base de dados de produção. Nas bases de testes a IA só funciona se o administrador do sistema o permitir.
+
+{/* Nota interna (v18-A, master 00c68a6d8, UX-110): pesquisa de menus por clique com Contabilista, Processador de Salários e admin. */}
+{/* Nota interna (v13-COP): Rever por clique nos dois. Salários com admin deu «Nada de invulgar» sem chamar a IA, no mês corrente. Auditoria sobre a829e964b (COP-056): ligações dos painéis vistas com Contabilista, Administração fiscal, Processador e Administrador de Salários; RH sem a ligação. Sem IA real. */}
+
+{/* Nota interna (DOCS-063 #3853, lote v23-S, master cebcb888d, docs_demo_v23s_test, porta 8458): captura 02 refeita com a frase nova do UX-112 («Os motivos médicos, as greves e a filiação sindical não são enviados à IA (os trabalhadores seguem com nomes fictícios) e não decide nada sobre pessoas.»), por clique com um utilizador só com o Perfil Processador de salários, em Salários › Preparar › O que há para fazer este mês? › Rever com o Copiloto › Revisor de salários, no mês corrente (8 de novembro de 2026). Interruptores Copiloto, Ligação à IA e IA - Revisor de salários ligados por RPC só na cópia, sem chave no cofre: em setembro, Rever respondeu «Operação inválida — Não há no cofre nenhuma chave de API deste fornecedor…» e nada foi enviado. Revisor do fecho confirmado em Contabilidade › Fechar › Fechar o mês › Listas de apoio, com o Contabilista. */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): Revisor de salários aberto por clique com um utilizador só Processador (agente desligado na base, por isso «Rever» não se repetiu); Revisor do fecho nos menus do Contabilista e do Contabilista certificado. */}
+
+{/* Nota interna (DOC-0293, DOCS-066 #3947, lote v23-AZ, 10/11/2026, master bfedd3b23, docs_demo_v23az_test, porta 8508, observação da QA7-c): «Processador de Salários» passou a «Processador de salários», o valor do campo Perfil de hoje (lista de valores lida na cópia). Só esse texto mudou. */}

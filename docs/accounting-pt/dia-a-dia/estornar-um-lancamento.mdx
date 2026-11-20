@@ -1,0 +1,93 @@
+---
+id: estornar-um-lancamento
+slug: /accounting-pt/estornar-um-lancamento
+title: Como estornar um lançamento
+sidebar_label: Estornar um lançamento
+sidebar_position: 2
+description: Anular o efeito de um lançamento publicado com outro lançamento igual e de sinal contrário, ligado ao original e com o motivo escrito.
+keywords: [estornar, estorno, estornar lançamento, estornar lancamento, anular lançamento, anular lancamento, corrigir lançamento, corrigir lancamento, lançamento errado, lancamento errado, reverter, reversão, reversao, motivo do estorno, data de reversão, data de reversao, já tem um estorno, ja tem um estorno, estimativa, acréscimo de gastos]
+doc_id: DOC-0066
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/dia-a-dia/lancamentos-contabilisticos, fiscal-core/faturacao/emitir-uma-nota-de-credito]
+---
+
+## Para que serve?
+
+Um lançamento publicado não se apaga. Para desfazer o seu efeito, o Odoo cria um estorno: um lançamento com as mesmas contas e os mesmos valores, com o débito e o crédito trocados. O original e o estorno ficam ligados um ao outro, e o motivo fica escrito na referência do estorno e no histórico dos dois.
+
+## Quando utilizar?
+
+- Um lançamento manual foi publicado com a conta, o valor ou a data errados. Estorne-o e faça depois o lançamento certo.
+- Uma estimativa do fim do mês tem de sair no início do mês seguinte, quando chega a fatura verdadeira (é o exemplo deste artigo).
+- Um lançamento foi publicado em duplicado.
+- **Não** use o estorno para faturas, notas de crédito ou recibos: uma fatura corrige-se com uma [nota de crédito](/fiscal-core/emitir-uma-nota-de-credito) ou anula-se, para manter a numeração e a assinatura.
+
+## Onde encontrar?
+
+Abra o lançamento em **Contabilidade › Lançar › Lançamentos › Lançamentos contabilísticos** e carregue em **Ações › Estornar lançamento**.
+
+![Menu Ações de um lançamento publicado, com Estornar lançamento assinalado e Voltar a rascunho por baixo](/images/accounting-pt/estornar-um-lancamento/01-acoes-do-lancamento.png)
+
+Na lista **Lançamentos contabilísticos** também pode marcar o lançamento à esquerda e escolher **Ações › Estornar lançamento**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**.
+- O lançamento está **Publicada** e ainda não foi estornado.
+- Decida a data do estorno. Tem de ser igual ou posterior à data do original: o estorno entra nos relatórios do mês da sua data. A janela propõe a data de hoje e aceita uma data anterior à do original sem avisar (ver «Problemas frequentes»).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra o lançamento que quer estornar, no exemplo `MISC/2026/00110` («Eletricidade de setembro por faturar», 150,00 € a 30/09/2026, feito em [Como fazer um lançamento contabilístico manual](/accounting-pt/lancamentos-contabilisticos)), e carregue em **Ações › Estornar lançamento**. Abre-se a janela **Estornar lançamento**.
+2. Em **Motivo**, escolha o motivo da lista. Para um lançamento manual, os que servem são **Anulação da operação** (lançamento em duplicado ou sem razão de ser) e **Outro (descrever)**. Os restantes (**Devolução de mercadorias**, **Erro de preço**, **Erro de quantidade ou de artigo**, **Desconto ou abatimento concedido**) são os das notas de crédito.
+3. Se escolheu **Outro (descrever)**, escreva em **Descreva o motivo** o porquê, até 50 carateres, por exemplo `Estorno da estimativa de eletricidade de setembro`. O contador por baixo mostra quantos carateres usou (no exemplo, 49/50).
+4. Confirme o **Diário** (por omissão, o do lançamento original) e escreva a **Data de Reversão**: no exemplo, o primeiro dia do mês seguinte, `01/10/2026`.
+   ![Janela Estornar lançamento com o Motivo Outro (descrever), a descrição com 49/50 carateres, o Diário Operações Diversas, a Data de Reversão 01/10/2026 e o botão Estornar assinalado](/images/accounting-pt/estornar-um-lancamento/02-janela-estornar-lancamento.png)
+5. Carregue em **Estornar**. Abre-se o lançamento de estorno.
+
+</StepByStep>
+
+## Resultado esperado
+
+- Com a **Data de Reversão** de hoje ou anterior, o estorno fica logo **Publicada**, com número: no exemplo `MISC/2026/00111`, de 01/10/2026.
+  ![Estorno MISC/2026/00111 publicado, com a Data 01/10/2026 e a referência que começa por NC de MISC/2026/00110](/images/accounting-pt/estornar-um-lancamento/03-estorno-criado.png)
+- O estorno tem as mesmas linhas do original com os lados trocados: no exemplo, 150,00 € a crédito da `6241 Eletricidade` e a débito da `2722 Credores por acréscimos de gastos`. Setembro fica com a estimativa e outubro começa com o estorno, à espera da fatura verdadeira.
+- A referência do estorno é, no ecrã de hoje, «NC de MISC/2026/00110: Estorno da estimativa de eletricidade de setembro». O «NC de» não quer dizer que se emitiu uma nota de crédito: é só o texto que o Odoo põe em todos os estornos de lançamentos manuais.
+- No estorno, **Lançamento original** abre o lançamento estornado. No original, o histórico regista «Estornado por MISC/2026/00111 (…). Motivo: …», e **Ações** deixa de mostrar **Estornar lançamento**.
+
+{/* Nota interna (DOCS-021, I18N-025 #3437): a referência «NC de …» de um estorno de lançamento manual é um defeito de texto (B1-04); quando o cartão fechar, atualizar a frase do «Resultado esperado» e a captura 03. */}
+
+## Notas importantes
+
+- **Data de Reversão no futuro.** Se escrever uma data posterior a hoje, o estorno fica em **Rascunho**, com a faixa «Este movimento está configurado para ser lançado automaticamente na data contabilística: …». O Odoo tem um trabalho diário que publica estes rascunhos quando a data chega (na demonstração está ativo, uma vez por dia). Até lá o estorno não conta nos relatórios. <span className="fd-pending">Pendente de validação no ecrã: a publicação na data não se pode ver na demonstração, porque o calendário não avança; o trabalho diário que a faz foi confirmado ativo.</span>
+- **Um lançamento só se estorna uma vez.** Para corrigir um estorno errado, estorne primeiro o estorno; só depois o original volta a poder ser estornado.
+- **Voltar a rascunho.** No mesmo menu **Ações** aparece **Voltar a rascunho**. Na demonstração, um lançamento manual publicado voltou a rascunho sem pedir motivo e manteve o número, e esta opção continua no menu do lançamento já estornado. O estorno deixa o erro e a correção à vista, com o motivo; quando houver dúvida sobre qual usar, decida com o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: quando é aceitável voltar a rascunho um lançamento publicado em vez de o estornar.</span>
+- **Faturas e recibos** não se estornam por aqui: ver [Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito) e [Como anular uma fatura](/fiscal-core/anular-uma-fatura).
+
+## Problemas frequentes
+
+### «já tem um estorno e não pode ser estornado outra vez»
+
+- **Sintoma:** janela **Operação inválida** com «O lançamento MISC/2026/00110 (Eletricidade de setembro por faturar) já tem um estorno e não pode ser estornado outra vez. Porquê: Um segundo estorno anularia o primeiro e deixaria as contas erradas. Como resolver: Para corrigir o lançamento, estorne primeiro o estorno (o original poderá então ser estornado de novo) ou lance um lançamento novo com os valores certos.»
+  ![Janela Operação inválida a recusar o segundo estorno do lançamento MISC/2026/00110](/images/accounting-pt/estornar-um-lancamento/04-recusa-segundo-estorno.png)
+- **Causa:** o lançamento já foi estornado. Pela ficha do lançamento a opção já não aparece; pela lista ainda aparece, e o Odoo recusa.
+- **O que fazer:** abra o original e veja no histórico a linha «Estornado por …», que diz o número do estorno. Se o estorno está certo, não há nada a fazer. Se está errado, estorne o estorno e repita.
+
+### O estorno ficou com data anterior à do original
+
+- **Causa:** a janela propõe a data de hoje e aceita qualquer data, mesmo anterior à do original. O estorno anula então, nesse mês, um valor que ainda não existia.
+- **O que fazer:** estorne o estorno (com a mesma data dele) e estorne de novo o original com a data certa. Confira o balancete dos dois meses.
+
+{/* Nota interna (DOCS-021, ACC-202 #3440): a Data de Reversão aceita data anterior à do original sem aviso (P-B1-A); quando o cartão fechar, rever «Antes de começar» e este problema. */}
+
+### O estorno ficou em Rascunho
+
+- **Causa:** a **Data de Reversão** é posterior a hoje.
+- **O que fazer:** nada, se a data está certa: o trabalho diário publica-o nessa data (ver «Notas importantes»).

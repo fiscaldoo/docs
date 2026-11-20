@@ -1,0 +1,130 @@
+---
+id: versoes-sobrepostas-nos-salarios
+slug: /troubleshooting/versoes-sobrepostas-nos-salarios
+title: Duas versões de uma regra ou tabela de salários sobrepõem-se
+sidebar_label: Versões sobrepostas
+description: Duas versões da mesma rubrica, tabela de IRS, mínimo, controlo ou estatuto não podem estar em vigor no mesmo dia. Feche primeiro a anterior.
+keywords: [sobrepõe-se, sobrepoe-se, versões sobrepostas, versoes sobrepostas, vigência, vigencia, válido até, valido ate, dimensão da empresa, mínimo da categoria, método do subsídio de férias, controlo de fecho, dever de informação, tabela de IRS, escalões, trabalhador-estudante, regra de benefício]
+doc_id: DOC-0405
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/configurar/configurar-os-salarios, payroll-pt/configurar/atualizacoes-legais, troubleshooting/salarios-e-pessoas/regra-de-salarios-ja-usada, troubleshooting/salarios-e-pessoas/rubrica-salarial-mal-configurada]
+---
+
+## Sintoma
+
+Em **Salários › Configurar** (ou em **Pessoas › Contratos e saídas**, para o estatuto de trabalhador-estudante), regista uma versão nova de uma regra ou tabela. Ao carregar em **Guardar**, abre-se a janela **Erro de Validação** e o registo fica por guardar.
+
+Se o que recusa é **alterar** uma regra que já começou, o caso é outro: [Não consigo alterar uma regra, taxa ou tabela de salários já usada](/troubleshooting/regra-de-salarios-ja-usada).
+
+## Mensagem
+
+Vistas na Empresa Demonstração, Lda, em novembro de 2026.
+
+**Com o acesso Administrador de Salários**
+
+**Dimensão da empresa** (**Configurar › Empresa**), com uma versão desde 01/01/2026 ainda aberta e uma nova desde 01/06/2026:
+
+> «A dimensão da empresa sobrepõe-se a outro período (*01/01/2026*). O que aconteceu: duas dimensões não podem estar em vigor no mesmo dia. Como resolver: termine o período anterior na véspera do início deste.»
+
+![Janela Erro de Validação: a dimensão da empresa sobrepõe-se a outro período, 01/01/2026](/images/troubleshooting/versoes-sobrepostas-nos-salarios/01-dimensao-da-empresa.png)
+
+**Mínimos das categorias** (**Configurar › Legislação**), com a mesma **Fonte** e o mesmo **Instrumento coletivo**. Uma **Referência legal** diferente não faz dela outra tabela:
+
+> «A categoria «*Profissionais altamente qualificados*» já tem um mínimo da mesma fonte em vigor nesse período (desde *01/01/2026*, *BTE n.º 12/2026*). Versões da mesma fonte não se podem sobrepor, e uma nova publicação não faz dela outro instrumento: feche a anterior («Válido até») e comece a nova no dia seguinte.»
+
+**Regras de benefícios** (**Configurar › Rubricas**), ao abrir a linha e usar **Duplicar**, no menu de três pontos ao lado do título:
+
+> «A regra de benefício «*DEMO_SEGURO*» sobrepõe-se à versão de *01/01/2026*. O que aconteceu: duas versões da mesma regra não podem estar em vigor no mesmo dia. Como resolver: termine a versão anterior no dia anterior ao início desta.»
+
+![Janela Erro de Validação depois de Duplicar: a regra de benefício DEMO_SEGURO sobrepõe-se à versão de 01/01/2026](/images/troubleshooting/versoes-sobrepostas-nos-salarios/05-regra-de-beneficio.png)
+
+No **Estatuto de trabalhador-estudante** (**Pessoas › Contratos e saídas**), para o mesmo trabalhador, de 01/09/2026 a 31/07/2027 e depois de 01/06/2027 a 31/07/2028:
+
+> «*Nome do trabalhador* já tem um estatuto de trabalhador-estudante nestas datas. O que aconteceu: dois anos letivos sobrepõem-se. Como resolver: termine o ano letivo anterior no dia antes de este começar.»
+
+**Com o perfil Administrador**
+
+O Administrador de Salários não tem **Novo** nas **Tabelas de retenção de IRS** e não abre as listas de **Definições › Salários** (veja o ponto 4 de **O que confirmar**).
+
+**Tabelas de retenção de IRS** (**Configurar › Segurança Social e IRS**), com o mesmo território, categoria e tabela, a situação **Abrange: não casado, sem dependentes** marcada, início em 01/07/2026 e os escalões preenchidos:
+
+> «A tabela *I* sobrepõe-se à tabela *I* (desde *01/01/2026*) na situação «*não casado, sem dependentes*»: duas tabelas não podem estar em vigor na mesma data para o mesmo território, categoria de rendimento, deficiência e situação familiar. Feche a «Válida até» da tabela anterior ou altere as datas.»
+
+![Janela Erro de Validação: a tabela I sobrepõe-se à tabela I desde 01/01/2026 na situação não casado, sem dependentes](/images/troubleshooting/versoes-sobrepostas-nos-salarios/06-tabela-de-irs.png)
+
+Numa tabela nova, com duas linhas de escalão acrescentadas sem mudar o **Tipo de limite** nem o **Limite da remuneração mensal (€)**:
+
+> «A tabela *I* tem duas linhas «Até» com o mesmo limite — os escalões têm de ser estritamente crescentes e nunca se sobrepõem.»
+
+Sem nenhuma linha de escalão, a recusa é esta, e não a da sobreposição. Acrescente os escalões primeiro:
+
+> «A tabela *I* está incompleta: tem *0* linha(s) «Até» e *0* linha(s) «Superior a». O que aconteceu: uma tabela de retenção precisa de, pelo menos, um escalão «Até» e de exatamente um escalão final «Superior a», como impresso no despacho; caso contrário há remunerações sem escalão. Como corrigir: acrescente os escalões em falta (ou mantenha a tabela arquivada enquanto a preenche).»
+
+Na **Lista de verificação do dever de informação** (em **Definições › Salários**, **Dever de informação: lista de verificação**), com a alínea `a` e início em 01/07/2026:
+
+> «A alínea «*a*» já tem uma versão em vigor nesse período. O que aconteceu: duas versões da mesma alínea não podem sobrepor-se. Como corrigir: feche a versão anterior no dia anterior ao início da nova.»
+
+Nos **Métodos do subsídio de férias** e nos **Controlos de fecho do lote** (também em **Definições › Salários**). O controlo foi recusado ao usar **Duplicar**, no menu de três pontos:
+
+> «Já existe um método do subsídio de férias da mesma fonte nesse período (desde *01/01/2026*). Como resolver: feche o «Válido até» do anterior ou altere as datas.»
+
+> «O controlo «*NIF do trabalhador*» já tem uma versão em vigor nessas datas (desde *01/01/2026*). O que aconteceu: duas versões do mesmo controlo não se podem sobrepor. Como resolver: termine a outra versão no dia anterior ao início desta.»
+
+As recusas das **versões de uma rubrica** estão em [Não consigo guardar uma rubrica salarial](/troubleshooting/rubrica-salarial-mal-configurada).
+
+## Causas verificadas
+
+- **A versão anterior está aberta.** Sem **Válido até**, uma versão vale para sempre, e qualquer versão nova com início posterior cai dentro dela. Foi o caso de quase todas as mensagens acima.
+- **O início da versão nova cai dentro do período da anterior.** A recusa também aparece com **Válido até** preenchido, se a data for posterior ao início da nova. No trabalhador-estudante, o ano letivo que começa em 01/06/2027 cai dentro do que acaba em 31/07/2027.
+- **Usou Duplicar, no menu de três pontos.** A cópia traz as mesmas datas do original, e o fiscaldoo recusa-a logo, sem lhe dar tempo de mudar a data. Para uma regra de benefício com datas novas, comece por **Novo**.
+
+## O que confirmar
+
+1. Na lista, procure as versões do mesmo registo (a mesma categoria, tabela, alínea, código ou trabalhador) e leia as colunas **Válido desde** e **Válido até**.
+2. A data que a mensagem indica (por exemplo, «desde 01/01/2026») é o início da versão com que a nova choca. Abra essa.
+3. Nas **Tabelas de retenção de IRS**, compare território, categoria de rendimento, pessoa com deficiência e situações marcadas em **Abrange**. Só choca o que coincide em tudo.
+4. Se a mensagem fala de um método do subsídio de férias, de um controlo de fecho de lote ou de uma alínea do dever de informação, a lista não está em **Salários › Configurar**. O **Administrador** abre-a em **Definições › Salários**, com o botão **Abrir a lista** de cada linha, sem modo de programador. O **Administrador de Salários** não tem **Definições**: peça ao **Administrador**.
+
+<HelpCallout type="nota" title="O que esta verificação não vê nos mínimos das categorias">
+A recusa compara a categoria, a **Fonte** e o **Instrumento coletivo**. No exemplo, com a mesma categoria e a **Fonte** **Tabela do instrumento coletivo (IRCT)**, um mínimo de **Contrato coletivo** e outro de **Acordo de empresa** guardaram-se os dois sem aviso, abertos e ao mesmo tempo. Se a tabela nova substitui a anterior e o instrumento é de outro tipo, feche a anterior com **Válido até** mesmo que o fiscaldoo não o peça.
+</HelpCallout>
+
+## Como resolver
+
+No exemplo da **Dimensão da empresa**, a versão de 01/01/2026 tinha 12 trabalhadores e a nova, de 01/06/2026, tem 15.
+
+<StepByStep>
+
+1. Na janela **Erro de Validação**, carregue em **Fechar** e depois em **Descartar todas as alterações** (ícone ao lado de **Guardar**). A versão nova não fica guardada.
+2. Na lista, abra a versão anterior (a de 01/01/2026).
+3. Em **Válido até**, escreva a véspera do início da nova (`31/05/2026`) e carregue em **Guardar**.
+4. Carregue em **Novo**, escreva **Válido desde** `01/06/2026` e **Trabalhadores em média** `15`, e carregue em **Guardar**.
+
+</StepByStep>
+
+Nas restantes listas o caminho é o mesmo. Quando não há versão seguinte, altere as datas da que está a registar.
+
+## Resultado esperado
+
+A lista passa a ter as duas versões seguidas, sem dia em comum nem dia em falta. No exemplo, 01/01/2026 a 31/05/2026 com 12 trabalhadores e 01/06/2026, sem fim, com 15. Em ambas, **Dimensão** é **Pequena empresa (10 a menos de 50)**.
+
+![Lista Dimensão da empresa com duas linhas: 01/06/2026 sem fim e 15 trabalhadores; 01/01/2026 a 31/05/2026 e 12 trabalhadores](/images/troubleshooting/versoes-sobrepostas-nos-salarios/09-duas-versoes-seguidas.png)
+
+## Quando contactar o suporte
+
+- A mensagem indica uma data de início que não encontra em nenhuma versão da lista.
+- Fechou a versão anterior na véspera e a recusa continua.
+- O fiscaldoo não o deixa guardar **Válido até** na versão anterior: veja primeiro [o artigo das regras já usadas](/troubleshooting/regra-de-salarios-ja-usada).
+
+## Informação a enviar
+
+- O texto completo da mensagem e a lista onde apareceu.
+- As datas **Válido desde** e **Válido até** das duas versões.
+- O perfil com que entrou.
+
+{/* Nota interna (DOCS-046, lote v10-C, master f684b47f1, docs_demo_v10c_test, porta 8236): 9 das 11 mensagens por clique (ERR-2766, 2779, 2796, 3052, 3085, 3121, 3134, 3266, 3925). ERR-3495 fica em rubrica-salarial-mal-configurada. ERR-3199 (pacotes legais sobrepostos) tirado do artigo no lote v18-B: um pacote vazio não instala e o ecrã não deixa juntar-lhe registos, por isso um utilizador não chega a ver a recusa. Lote v18-B (master 00c68a6d8, docs_demo_v18b_test, porta 8310): as 9 mensagens e a da tabela incompleta por clique. Modo de programador: na auditoria, o Administrador ligou-o por Definições › Ativar o modo de programador; o Administrador de Salários não tem Definições. Auditoria em master 85c07671a, porta 8238: 6 das 11 por clique. Relatório: reports/LOTE_V10C.md. */}

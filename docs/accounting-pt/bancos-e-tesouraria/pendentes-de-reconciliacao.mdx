@@ -1,0 +1,104 @@
+---
+id: pendentes-de-reconciliacao
+slug: /accounting-pt/pendentes-de-reconciliacao
+title: Como ver o saldo contabilístico e os pendentes de reconciliação
+sidebar_label: Saldo contabilístico e pendentes
+sidebar_position: 3
+description: Gerar o mapa de pendentes de um diário de banco para explicar a diferença entre o saldo do banco e o saldo da contabilidade, e a posição mensal da reconciliação de um ano.
+keywords: [pendentes de reconciliação, pendentes de reconciliacao, mapa de pendentes, saldo bancário, saldo bancario, saldo contabilístico, saldo contabilistico, diferença banco contabilidade, diferenca banco contabilidade, posição mensal de reconciliação, posicao mensal de reconciliacao, em trânsito, em transito, reconciliação bancária, antiguidade dos pendentes]
+doc_id: DOC-0113
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/reconciliar-movimentos-bancarios, accounting-pt/bancos-e-tesouraria/importar-extrato-bancario, accounting-pt/bancos-e-tesouraria/contas-bancarias-e-de-caixa, accounting-pt/bancos-e-tesouraria/movimentos-de-caixa]
+---
+
+## Para que serve?
+
+O saldo que o banco diz e o saldo que a contabilidade tem para a conta do banco raramente são iguais. O **Mapa de pendentes de reconciliação** mostra a diferença e explica-a: do lado do banco, as linhas do extrato ainda por reconciliar; do lado da contabilidade, os movimentos da conta bancária que não têm linha de extrato. A **Posição mensal de reconciliação** mostra o mesmo, mês a mês, num ano.
+
+## Quando utilizar?
+
+- No fim do mês, para ter a justificação da diferença entre o extrato e a conta do banco.
+- Depois de [reconciliar os movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios), para ver o que ficou por tratar.
+- Para saber há quantos dias cada pendente está em aberto.
+- **Não** o use como prova de que o banco está certo: o mapa só vê os extratos que já foram importados ([Como importar o extrato bancário](/accounting-pt/importar-extrato-bancario)).
+
+## Onde encontrar?
+
+- Mapa de pendentes: **Contabilidade › Consultar › Impostos e tesouraria › Pendentes de reconciliação**.
+- Posição mensal: **Contabilidade › Reconciliar › Bancos e caixa › O que há para fazer com os bancos?** e, em **Listas de apoio**, **Posição mensal de reconciliação**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. Com ele faz todos os passos deste artigo, incluindo exportar para PDF (testado com o perfil Contabilista). Para ver o mapa de outra empresa, o utilizador tem de ter acesso a ela (seletor de empresas, no canto superior).
+- O extrato do banco está importado.
+- O exemplo é o diário **Banco** da Empresa Demonstração, Lda, a 07/11/2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Consultar › Impostos e tesouraria › Pendentes de reconciliação**. Abre a janela **Mapa de pendentes de reconciliação**, com **Empresa**, **Diário bancário** e **À data** (hoje).
+   ![Janela Mapa de pendentes de reconciliação, com Empresa, Diário bancário e À data por preencher e o botão Gerar mapa assinalado](/images/accounting-pt/pendentes-de-reconciliacao/01-gerar-mapa-de-pendentes.png)
+2. Em **Diário bancário**, escolha **Banco** e carregue em **Gerar mapa**.
+3. Leia o bloco **Reconciliação**. No exemplo: **Saldo bancário** -39.140,47 €, **Saldo contabilístico** 32.792,03 € e **Diferença (banco - contabilidade)** -71.932,50 €. A diferença explica-se por **Total do lado do banco** 367,50 € e **Total do lado da contabilidade** 72.300,00 €: 367,50 - 72.300,00 + **Não explicado pelas listas** 0,00 = -71.932,50. O ecrã diz-o: «Diferença = total do lado do banco - total do lado da contabilidade + valor não explicado pelas listas». Mais abaixo, no bloco **Com pagamentos em trânsito**, o **Total em trânsito** (-300,00 € no exemplo) soma os pagamentos já lançados que ainda não estão na conta bancária. Somado ao saldo contabilístico dá o **Saldo contabilístico com pagamentos em trânsito** (32.492,03 €), e o banco menos esse saldo é a **Diferença com pagamentos em trânsito** (-71.632,50 €): 367,50 - 72.300,00 - (-300,00) + 0,00 = -71.632,50. Os pagamentos em trânsito não fazem parte da primeira diferença (ver «Notas importantes»).
+   ![Mapa de pendentes do diário Banco a 07/11/2026: saldo bancário, saldo contabilístico, diferença, totais dos dois lados e os separadores Banco, Contabilidade e Em trânsito](/images/accounting-pt/pendentes-de-reconciliacao/02-mapa-de-pendentes.png)
+4. Abra o separador **Banco**: as linhas do extrato ainda por reconciliar, com a **Data**, a **Descrição**, o **Montante**, a **Idade (dias)** e o **Escalão de idade**. No exemplo, duas: a comissão de manutenção de conta (-12,50 €, 56 dias, «31 a 60 dias») e a transferência recebida sem referência (380,00 €, 43 dias).
+5. Abra o separador **Contabilidade**: os movimentos da conta bancária sem linha de extrato (58 no exemplo, mostrados 40 de cada vez, o primeiro de 02/01/2025). Abra **Em trânsito** para os pagamentos que ainda não estão na conta bancária, a que o produto chama «pagamentos pendentes»: no exemplo, um só: o pagamento de 300,00 € à Papelaria Central, Lda (**PBNK1/2026/00040**, de 02/10/2026, -300,00 €). Ficam aqui até serem reconciliados com o extrato.
+   ![Separador Contabilidade do mapa de pendentes, com os movimentos da conta bancária sem linha de extrato e a idade de cada um](/images/accounting-pt/pendentes-de-reconciliacao/03-lado-da-contabilidade.png)
+6. Para guardar, carregue em **Exportar PDF** ou **Exportar XLSX**. **Nova consulta** volta à janela do passo 1.
+7. Para ver o ano inteiro, abra a **Posição mensal de reconciliação**, escolha o **Diário bancário** (**Banco**), confirme o **Ano** (2026) e carregue em **Gerar posição**. A tabela mostra, para cada mês, o **Saldo bancário**, o **Saldo contabilístico**, a **Diferença**, o **Movimento do mês**, as **Linhas do extrato**, quantas estão **Reconciliada**, o **% reconciliado** e os **Pendentes no fim**. No exemplo: 104 linhas do extrato no ano, 102 reconciliadas, 98,1 %; a **Diferença no fim** (-71.932,50 €) é a mesma do mapa.
+   ![Posição mensal de reconciliação do diário Banco em 2026, com os saldos de abertura, as linhas reconciliadas do ano e a tabela mês a mês](/images/accounting-pt/pendentes-de-reconciliacao/04-posicao-mensal.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o mapa de pendentes é o mesmo: **Pendentes de reconciliação** abre a janela **Mapa de pendentes de reconciliação**, com **Empresa**, **Diário bancário**, **À data** e **Gerar mapa** (visto com um utilizador só com o perfil **Contabilista**). A **Posição mensal de reconciliação** continua em **Listas de apoio**, onde o Enterprise acrescenta **Reconciliação bancária** e **Movimentos por reconciliar**. Os movimentos que o mapa lista reconciliam-se no ecrã do Enterprise: veja «No Enterprise» em [Como reconciliar os movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios#no-enterprise).
+
+{/* Nota interna (lote EE-03, DOCS-073 #4142, DEC-1794, master e4dd4ae90, base Enterprise docs_ee_ee03_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0113. Contabilista: Consultar › Impostos e tesouraria › Pendentes de reconciliação abriu a janela com À data 10/11/2026 e o texto «Escolha o diário bancário e a data e gere o mapa…»; o diário Banco tem também o botão Mapa de pendentes. Listas de apoio de O que há para fazer com os bancos? com Posição mensal de reconciliação, Reconciliação bancária e Movimentos por reconciliar. Mapa não gerado na base Enterprise. Ver reports/LOTE_EE-03.md. */}
+
+## Resultado esperado
+
+- O mapa e a posição mensal dão a mesma **Diferença** no fim (-71.932,50 €) e a soma dos dois lados fecha: 367,50 € - 72.300,00 € = -71.932,50 €. Com os pagamentos em trânsito, a conta é outra: 367,50 € - 72.300,00 € - (-300,00 €) = -71.632,50 €, igual ao banco menos o saldo contabilístico com pagamentos em trânsito (-39.140,47 € - 32.492,03 €).
+- O PDF repete o ecrã (conferido na posição mensal: `bank_position_BNK1_2026.pdf`, com o cabeçalho da empresa, o ano, a data de emissão e o utilizador).
+- Este artigo não gera lançamentos: é uma consulta.
+
+## Notas importantes
+
+- **Uma diferença de 72.300,00 € do lado da contabilidade não é erro do mapa.** Na demonstração, a contabilidade tem 58 movimentos lançados diretamente na conta do banco, sem extrato. Numa empresa real, cada um é um movimento a justificar com o extrato ou a corrigir. <span className="fd-pending">Pendente de validação por contabilista certificado: o tratamento contabilístico dos movimentos do lado da contabilidade que o extrato não confirma.</span>
+- **Duas diferenças, duas contas.** A **Diferença (banco - contabilidade)** compara só o que está na conta bancária: é a soma dos dois lados e não inclui os pagamentos em trânsito. A **Diferença com pagamentos em trânsito** acrescenta ao saldo contabilístico os pagamentos já lançados que o banco ainda não debitou. Não misture as duas: o **Total em trânsito** (-300,00 € no exemplo) não entra na primeira diferença (-71.932,50 €).
+  {/* Nota interna (ACC-211, #3619, em master desde o comboio 128): o mapa passou a ter o bloco «Com pagamentos em trânsito» (Saldo contabilístico com pagamentos em trânsito e Diferença com pagamentos em trânsito). Na base do corretor cor5 (cópia da docs_demo_master_test) não há as guias de retenções (PBNK1/2026/00040 a 00042) que a base do corretor anterior tinha: o total em trânsito é -36.972,06 € (32 pagamentos de salários) e não -37.501,06 €. */}
+- **O mapa só vê o que está no Odoo.** Um movimento que o banco fez e que ainda não está num extrato importado não aparece nos pendentes do banco.
+- **A posição de um mês passado mostra o estado de hoje.** Segundo o ecrã, «um mês passado mostra o que está reconciliado hoje», e as linhas ignoradas ou marcadas como duplicadas não contam.
+- **Saldo de abertura.** A posição de 2026 abre com 0,00 € no banco e -78.700,00 € na contabilidade (**Diferença de abertura** 78.700,00 €): o saldo anterior a 2026 não vem de extratos.
+
+## Problemas frequentes
+
+### Um diário bancário sem extrato
+
+- **Sintoma:** para um diário que existe mas ainda não tem extratos nem movimentos (no exemplo, o diário novo **Banco exemplo**, criado como se explica em [Como criar uma conta bancária ou de caixa](/accounting-pt/contas-bancarias-e-de-caixa)), o mapa abre com tudo a 0,00 €, **Data do último extrato** vazia e as três listas vazias.
+  ![Mapa de pendentes do diário Banco exemplo, com saldo bancário, saldo contabilístico e diferença a 0,00 € e as listas vazias](/images/accounting-pt/pendentes-de-reconciliacao/05-diario-sem-extrato.png)
+- **O que significa:** 0,00 € não prova que o banco está certo; só diz que o fiscaldoo não tem nada para comparar. Importe o extrato ([Como importar o extrato bancário](/accounting-pt/importar-extrato-bancario)) e gere o mapa de novo.
+
+### Numa empresa nova a lista não vem vazia
+
+- **O que se vê:** uma empresa nova, sem lançamentos nem extratos (no exemplo, a **Empresa Teste Filial**), já traz o diário **Banco**. Ao abrir o campo **Diário bancário**, a lista oferece **Banco**; não aparece «Sem registos».
+  ![Janela do mapa de pendentes na Empresa Teste Filial, com o campo Diário bancário aberto a oferecer o diário Banco](/images/accounting-pt/pendentes-de-reconciliacao/06-empresa-nova-diario-banco.png)
+- **O que o mapa mostra:** escolha **Banco** e carregue em **Gerar mapa**: saldos e totais a 0,00 € e as três listas vazias, como no diário sem extrato acima. Para ver o mapa de outra empresa, o utilizador tem de ter acesso a ela (visto com o Administrador, mudando a empresa no seletor do canto superior).
+  ![Mapa de pendentes da Empresa Teste Filial, com todos os saldos a 0,00 €](/images/accounting-pt/pendentes-de-reconciliacao/07-empresa-nova-mapa.png)
+- **O que significa:** 0,00 € não prova que o banco está certo: só diz que ainda não há nada para comparar. Importe o extrato ([Como importar o extrato bancário](/accounting-pt/importar-extrato-bancario)) e gere o mapa de novo.
+
+### «Há campos obrigatórios por preencher»
+
+- **Sintoma:** ao carregar em **Gerar mapa** sem escolher o diário, aparece «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** o **Diário bancário** está vazio.
+- **O que fazer:** escolha o diário (**Banco**) e carregue de novo em **Gerar mapa**.
+
+{/* Nota interna (cor5, NV3A2-01, 01/11): refeito no master b1c81051 (comboio 128) com a base docs_demo_cor5_test, perfil Contabilista (Empresa Demonstração) e Administrador (Empresa Teste Filial, que tem o diário Banco BNK1 e 0 lançamentos). Todos os números e capturas foram refeitos nesta base. */}
+
+{/* Nota interna (DOCS-046, lote v23-K, 07/11/2026, master a3603e0f2, base docs_demo_v23k_test na 8434, base-mãe v2): capturas 02, 03, 04 e 05 refeitas e números do mapa e da posição mensal relidos no ecrã a 07/11/2026 com um utilizador só com o perfil Contabilista. Na base-mãe v2 os 32 pagamentos de salários já estão reconciliados (novembro de 2026); em trânsito só fica o pagamento PBNK1/2026/00040 de 300,00 € criado para o artigo de reconciliar terceiros. O diário Banco exemplo foi criado por RPC (administrador). */}

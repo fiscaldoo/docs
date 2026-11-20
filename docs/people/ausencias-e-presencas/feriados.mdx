@@ -1,0 +1,84 @@
+---
+id: feriados
+slug: /people/feriados
+title: Como configurar os feriados
+sidebar_label: Configurar os feriados
+sidebar_position: 7
+description: "Gerar o calendário de feriados do ano, sincronizá-lo com o calendário da empresa e ver como os feriados entram na conta dos dias de ausência."
+keywords: [feriados, calendário de feriados, calendarios de feriados, gerar feriados, feriados da empresa, feriado municipal, carnaval, não existe calendário de feriados, dias úteis]
+doc_id: DOC-0249
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master acd623385)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/ausencias-e-presencas/configurar-ausencias, people/ausencias-e-presencas/registar-uma-ausencia]
+---
+
+## Para que serve?
+
+Os feriados decidem quantos dias úteis tem uma ausência. O produto precisa de um calendário de feriados por ano e por território, e recusa contar dias de um ano que não o tenha.
+
+## Quando utilizar?
+
+- Começa um ano novo e é preciso gerar os feriados.
+- Aparece «Não existe calendário de feriados para …» ao pedir uma ausência.
+- Quer acrescentar um feriado municipal ou um dia que a empresa dá.
+
+## Onde encontrar?
+
+- **Salários › Configurar › Empresa › Faltas e feriados › Calendários de feriados** (o calendário por ano, com os feriados da lei).
+- **Pessoas › Configuração de ausências e assiduidades › Feriados da empresa** (os dias que o calendário de ausências usa, com **Novo** e **Carregar feriados**).
+
+Os dois menus só existem para o **Administrador**. Os calendários são **de cada empresa**: o que vê é o da empresa ativa (canto superior direito). Para os trabalhadores de uma empresa, gere o calendário **nessa** empresa.
+
+## Antes de começar
+
+- O seu perfil é **Administrador**.
+- Sabe o ano, o território (**Continente** na demonstração) e a empresa dos trabalhadores. Na demonstração é a **Empresa Demonstração, Lda**, e a lista só tem 2026: o 2027 gera-se no passo 2.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Configurar › Empresa › Faltas e feriados › Calendários de feriados**. A lista mostra, por ano, **Território**, **Versão**, **Feriados obrigatórios**, **Dos quais em dia útil** e **Tem dias a validar**. Na **Empresa Demonstração, Lda** a lista abre só com 2026, com 13 feriados obrigatórios, 9 em dia útil.
+2. Para um ano novo, carregue em **Novo**, escolha o **Ano** (por exemplo, 2027) e carregue em **Gerar feriados**. O calendário fica com os feriados do ano, a **Referência legal** (CT arts. 234.º-236.º; Lei n.º 7/2009, art. 11.º/4) e uma linha por dia, com **Tipo**, **Fonte** e **Custa um dia útil**. Em 2027 o ecrã mostra 13 feriados obrigatórios, 8 em dia útil, e o **Carnaval** (09/02/2027) como **Facultativo (Carnaval, CT art. 235.º)**.
+3. Para acrescentar um dia, carregue em **Adicionar uma linha** e preencha-o. Um feriado obrigatório não se remove.
+4. Carregue em **Sincronizar com o calendário da empresa**. O ecrã responde, por exemplo: «Calendário do programa sincronizado: 0 criados, 0 movidos, 0 removidos, 0 feriados municipais sem horário desse município, 0 deixados de fora porque o calendário da empresa já tem um feriado nesse dia, vindo de outra origem.»
+
+</StepByStep>
+
+![Calendário de feriados de 2027 da Empresa Demonstração, Lda, com os botões Gerar feriados e Sincronizar com o calendário da empresa](/images/people/feriados/01-calendario-2027.png)
+
+## No Enterprise
+
+No Odoo Enterprise, os feriados configuram-se nos mesmos sítios e da mesma maneira, com o perfil **Administrador**. **Salários › Configurar › Empresa › Faltas e feriados › Calendários de feriados** (com **Gerar feriados**), **Regras de feriados** e **Pessoas › Configuração de ausências e assiduidades › Feriados da empresa** têm as mesmas colunas e os mesmos botões que no Community. Em **Feriados da empresa**, **Carregar feriados** abre a mesma janela «Os dados de feriados não estão disponíveis para 2026 para: …»: use **Gerar feriados**, como no passo 2.
+
+{/* Nota interna (lote EE-11, DOCS-073 #4142, DEC-1794, master 589ecfd27, 12/11/2026): cópia Enterprise docs_ee_ee11_test no portátil (pg_dump da odoo20_ee_test, já em 589ecfd27; -i de hr_payroll, planning, hr_appraisal e hr_recruitment e -u de fiscaldoo_ux_kit e l10n_pt_fiscaldoo_demo; ee_neutralizar antes e construir), porta 8508, guarda de rede ligada; utilizadores criados por RPC na cópia, cada um só com um valor do campo Perfil: administrador (com a Empresa Demonstração, Lda ativa): Calendários de feriados (Nome, Empresa, Ano, Território, Versão, Feriados obrigatórios, Dos quais em dia útil, Tem dias a validar; Novo), Regras de feriados (17 linhas, Nome a Referência legal) e Feriados da empresa (Nome, Período, Tipo de tempo; Novo e Carregar feriados; 13 linhas), iguais nas duas cópias; Carregar feriados com a mesma mensagem nas duas (e a etiqueta «Year» sem tradução, já registada no F3-10). Corpo: os caminhos passam a Salários › Configurar › Empresa › Faltas e feriados (UX-161b, comboio 192, nas duas edições) e Regras de feriados aparece hoje ao administrador nas duas. Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee11_test (master 589ecfd27, porta 8518), com os mesmos utilizadores. Ver reports/LOTE_EE-11.md. */}
+
+## Resultado esperado
+
+- Os feriados do ano aparecem em **Pessoas › Configuração de ausências e assiduidades › Feriados da empresa** (em 2026 são 13: de **Ano Novo**, 01/01/2026, a **Natal**, 25/12/2026).
+- Um pedido de ausência que atravessa um feriado conta menos um dia útil. Exemplo visto no ecrã: **Férias anuais** de 07/12/2026 a 11/12/2026 (segunda a sexta) mostram **4,00 dia(s)**, porque a terça-feira 08/12/2026 é o feriado **Imaculada Conceição**.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a lista de feriados obrigatórios, as datas móveis e a regra do Carnaval e dos feriados municipais; o artigo reproduz o que o produto gera e a referência legal que mostra.</span>
+
+## Notas importantes
+
+- **Sem calendário do ano, não há contas.** Um pedido de ausência num ano sem calendário recusa-se ao gravar com «Operação inválida Não existe calendário de feriados para 2027 (Continente) na empresa «Empresa Demonstração, Lda». O que aconteceu: os dias úteis nunca se adivinham sem os feriados do ano. Como resolver: …». Ao Administrador, a mensagem manda criar o calendário em **Salários › Configurar › Empresa › Faltas e feriados › Calendários de feriados** e carregar em **Gerar feriados**: é o passo 2. Quem faz o pedido sem poder criar calendários (por exemplo, o Gestor de RH ou o Trabalhador) lê «peça a um utilizador com o acesso extra «Administrador de Salários» (ou ao administrador) que crie o calendário desse ano.», e o ano gera-se **na empresa do trabalhador**. Um pedido que acaba a 31/12 não precisa do ano seguinte: o de 28/12/2026 a 31/12/2026 mostra 4 dias e guarda-se sem o calendário de 2027. {/* Nota interna (auditoria v23-BH, 12/11/2026, master 2c8d358c0, docs_demo_audbh_test): em master 2c8d358c0 um pedido com dias de um ano sem calendário gravava-se sem a recusa (regressão do HR-034, RH-046 #4196). Lote EE-14 (docs_demo_ee14_test, master acd623385, porta 8526, 12/11/2026): o RH-046 (ba2d2a2ab) está em master; por clique, num pedido novo de Dádiva de sangue para Bruno Miguel Teixeira a 14/01/2027 (sem calendário de 2027 na Empresa Demonstração; nada gravado), o utilizador só com o perfil Gestor de RH leu «… Como resolver: peça a um utilizador com o acesso extra «Administrador de Salários» (ou ao administrador) que crie o calendário desse ano.» e o administrador «… Como resolver: crie o calendário em Salários › Configurar › Empresa › Faltas e feriados › Calendários de feriados e carregue em «Gerar feriados».»; no mesmo ecrã, 28/12/2026 a 31/12/2026 mostrou 4,00 dias (não gravado). Em 15/12/2025 a recusa que aparece primeiro é a do catálogo dos tipos de falta («Não existe o tipo de falta «DADIVA_SANGUE» em vigor em 15/12/2025. …»), por isso o exemplo passou a 2027. */}
+- **Depois de gerado, o ano, o território e a empresa ficam fixos.** O ecrã diz que, para recomeçar, se peça aos dados legais nacionais que arquivem o calendário.
+- **O botão Carregar feriados** de **Feriados da empresa** não carrega nada na demonstração: abre uma janela com «Os dados de feriados não estão disponíveis para 2026 para: …» e o botão **Adicionar feriados** fica inativo. Use **Gerar feriados**.
+- **Regras de feriados.** **Salários › Configurar › Empresa › Faltas e feriados › Regras de feriados** está sempre no menu do **Administrador**; quem tem só o acesso extra **Administrador de Salários** vê esta entrada apenas em modo programador. A lista mostra as regras de cada feriado (17 na demonstração), com o **Código**, o **Tipo**, o **Território**, **Como se encontra o dia** (data fixa ou dias a contar da Páscoa), a validade e a **Referência legal**. Para gerar o calendário do ano (passo 2) não precisa de as abrir. {/* Nota interna (lote EE-14, master acd623385, 12/11/2026): menus de Salários › Configurar › Empresa › Faltas e feriados pelo load_menus, sem e com modo programador. Cópia Community docs_demo_ee14_test (8526), administrador: Tipos de falta, Calendários de feriados, Instrumentos sobre faltas e Regras de feriados nos dois modos. Cópia Enterprise docs_ee_ee14_test (8524): o administrador igual; um utilizador só com o perfil Processador de salários e o acesso Administrador de Salários vê Tipos de falta e Calendários de feriados e, só em modo programador, também Instrumentos sobre faltas e Regras de feriados. A entrada é das que o fiscaldoo_ux_kit desenha só em modo programador (o administrador vê sempre tudo); por isso o parágrafo diz «modo programador» (verificador estrito test_guides_strict_paths). */}
+
+{/* Nota interna (DOCS-040 F3b, corrigido na ronda F-cor, NF3-02): F3-04 (HR-034, #3607, a caminho de master no comboio 127): hoje um pedido que acaba a 31/12 falha se a empresa do trabalhador não tiver o calendário do ano seguinte; depois do HR-034 o produto deve gerá-lo (o passo 2 continua a servir). A demonstração tem o 2027 na Empresa Teste Portugal e só o 2026 na Empresa Demonstração, Lda; o 2027 desta foi gerado nesta ronda pelo passo 2. Etiqueta «Year» sem tradução na janela Carregar feriados (F3-10). */}
+
+## Problemas frequentes
+
+### Aparece «Não existe calendário de feriados para …»
+
+Falta o calendário desse ano **na empresa do trabalhador**. Mude para essa empresa (canto superior direito), gere-o no passo 2 e repita o pedido.
+
+### O pedido conta mais dias do que esperava
+
+Confirme em **Feriados da empresa** se o feriado do período existe e em **Calendários de feriados** se **Custa um dia útil** está certo; um feriado ao fim de semana não conta.

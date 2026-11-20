@@ -1,0 +1,110 @@
+---
+id: fatura-eletronica-nao-gerada
+slug: /troubleshooting/fatura-eletronica-nao-gerada
+title: A fatura eletrónica não pode ser gerada
+sidebar_label: Fatura eletrónica não gerada
+description: O que significam as recusas ao enviar uma fatura ao FE-AP ou por EDI, como corrigir cada causa e o que o ecrã mostra depois de um envio simulado.
+keywords: [fatura eletrónica, fatura eletronica, não pode ser gerada, CIUS-PT, FE-AP, Enviar ao FE-AP, Enviar por EDI, BR-CIUS-PT-21, IBR-022, método de pagamento, simulado]
+doc_id: DOC-0342
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c2bf63c34)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/faturacao-e-at/fatura-eletronica-documento-nao-aceite, troubleshooting/faturacao-e-at/fatura-eletronica-valores-das-linhas, fiscal-core/faturacao-eletronica/peppol, fiscal-core/faturacao-eletronica/fatura-edi]
+---
+
+## Sintoma
+
+Numa fatura emitida, carregou em **Enviar ao FE-AP** ou em **Enviar por EDI** e abriu-se a janela **Operação inválida**. A fatura não foi enviada.
+
+## Mensagem
+
+Ao carregar em **Enviar ao FE-AP**, com um cliente sem morada:
+
+> «A fatura eletrónica de «FT D26/38» não cumpre a especificação CIUS-PT e não foi enviada:
+> - [BR-CIUS-PT-21] A morada de entrega da fatura (a do cliente ou do local de entrega) não tem rua. Preencha o campo «Rua» no contacto do cliente ou de entrega. (BR-CIUS-PT-21)»
+
+Na mesma janela seguem-se `BR-CIUS-PT-22` (localidade, campo «Cidade») e `BR-CIUS-PT-23` (código postal).
+
+![Janela Operação inválida com as três regras BR-CIUS-PT por cumprir](/images/troubleshooting/fatura-eletronica-nao-gerada/01-nao-cumpre-cius-pt.png)
+
+Ao carregar em **Enviar por EDI**, com o mesmo problema, a primeira frase muda:
+
+> «A fatura EDI de “FT E26/1” não cumpre a especificação CIUS-PT e não foi enviada:»
+
+Numa fatura simplificada ao consumidor final (`FS POS26/1`), a janela junta às regras da morada uma linha que não diz qual é o campo:
+
+> «A fatura eletrónica de «FS POS26/1 (Customer invoice from Loja de demonstração - [...])» não cumpre a especificação CIUS-PT e não foi enviada:
+> - [DT-CIUS-PT-012] DT-CIUS-PT-012: o valor não respeita o formato oficial (DT-CIUS-PT-012).»
+
+![Janela Operação inválida da FS POS26/1 com a regra DT-CIUS-PT-012 e as três regras da morada](/images/troubleshooting/fatura-eletronica-nao-gerada/02-nao-pode-ser-gerada.png)
+
+Um cliente com o NIF gravado sem o prefixo `PT` (por exemplo, `599999888`) já não é recusado: no teste, a fatura ficou **Aceite (simulado)**.
+
+{/* Nota interna (lote v23-C, 06/11/2026, base-mãe v2, master 2bfd78d1a): FT D26/31 à Papelaria Exemplo, Lda (NIF 599999888 gravado sem PT, criada por clique como em Clientes; fatura criada por RPC e confirmada por clique com demo.faturacao), Enviar ao FE-AP com demo.gestor_contabilidade: «Aceite (simulado)», referência MOCK-…. O botão Enviar ao FE-AP não aparece ao perfil Faturação/Administrativo. */}
+
+{/* Nota interna (auditoria v18-C, master 0289754a8, FAT-139): pela leitura do código, DT-CIUS-PT-012 é a referência da encomenda com mais de 20 carateres; não visto no ecrã. */}
+
+Numa fatura sem meio de pagamento:
+
+> «Nada foi enviado ao portal FE-AP, por causa destes documentos:
+> - “FT D26/37” não tem método de pagamento que corresponda a um código da fatura eletrónica ao Estado. Esta fatura já está emitida e assinada, por isso o método de pagamento e a conta bancária já não se podem alterar: emita uma nota de crédito (botão «Nota de crédito» na fatura) e uma fatura nova com os dados de pagamento preenchidos.»
+
+## Causas verificadas
+
+A fatura eletrónica tem regras próprias, que uma fatura normal não tem. Por isso, uma fatura bem emitida pode ser recusada neste passo. As regras oficiais aparecem com o código entre parênteses retos. Este quadro resume as que foram provocadas no ecrã:
+
+| O que a mensagem diz | O que falta, na prática | Onde se corrige |
+|---|---|---|
+| `BR-CIUS-PT-21`, `BR-CIUS-PT-22` e `BR-CIUS-PT-23` | A rua, a localidade e o código postal do cliente ou do local de entrega | Ficha do cliente |
+| `DT-CIUS-PT-012` | Na fatura ao consumidor final, um valor sem o formato oficial; a mensagem não diz qual | A fatura ao consumidor final não se envia |
+| «não tem método de pagamento» | A fatura não tem **Método de Pagamento** nem **Banco destinatário** | Antes de emitir, no separador **Outra Informação**. Numa fatura emitida, nota de crédito e fatura nova |
+| «Linha 2: falta a «Quantidade»» (`IBR-022`) | Uma linha tem quantidade zero | [A fatura eletrónica recusa os valores das linhas](/troubleshooting/fatura-eletronica-valores-das-linhas) |
+
+Se o documento nem sequer devia ir, veja [A fatura eletrónica não se aplica a este documento](/troubleshooting/fatura-eletronica-documento-nao-aceite).
+
+## O que confirmar
+
+1. Abra o cliente da fatura e veja se tem rua, localidade, código postal e NIF.
+2. Abra o separador **Outra Informação** da fatura e veja se tem **Método de Pagamento** ou **Banco destinatário**.
+3. Veja se alguma linha da fatura tem quantidade zero.
+4. Quem envia: o botão **Enviar ao FE-AP** apareceu ao perfil **Contabilista certificado** e ao **Administrador**, e não apareceu ao **Contabilista** nem ao **Administrativo**.
+
+## Como resolver
+
+- **Falta a morada:** preencha a rua, a localidade e o código postal na ficha do cliente e carregue outra vez em **Enviar ao FE-AP**. A fatura não precisa de ser alterada: no teste, a mesma fatura foi aceite depois de corrigida a ficha.
+- **Consumidor final:** não envie esta fatura ao FE-AP. Este envio é para faturas a entidades com NIF.
+- **Falta o meio de pagamento:** numa fatura por emitir, preencha o **Método de Pagamento** ou o **Banco destinatário**, no separador **Outra Informação**. No teste, uma fatura com o **Banco destinatário** preenchido foi aceite sem método de pagamento. Numa fatura já emitida, esses dois campos só se leem: como diz a mensagem, emita uma nota de crédito e uma fatura nova com os dados de pagamento.
+- **Outra causa numa fatura emitida:** a fatura já não se altera, e o ecrã diz «Documento emitido e assinado: já não se altera. Para corrigir, emita uma nota de crédito ou anule-o indicando o motivo.» Veja [Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito).
+
+No caminho **Enviar por EDI**, depois de corrigida a morada, a recusa seguinte pode ser a falta do GLN: «A mensagem INVOIC INVOIC|FT E26/1 não foi enviada: falta o GLN de a empresa …». Veja [Como ligar o EDI e a Saphety](/fiscal-core/ligar-o-edi).
+
+## Resultado esperado
+
+Depois de corrigir, com **Enviar ao FE-AP**:
+
+- aparece o aviso «Fatura eletrónica FE-AP. SIMULADO: nada foi enviado ao FE-AP e o Estado não recebeu nada. Aceites: 1, rejeitados: 0, sem resposta: 0.»;
+- a fatura mostra o estado **Aceite (simulado)**;
+- por baixo do cabeçalho aparece «Envio simulado ao FE-AP (05/11/2026 19:13:24): nada foi enviado e o Estado não recebeu nada. A resposta é dada pelo simulador, não pelo Estado. Referência do simulador: MOCK-5FBC8F94557F.» e a ligação **Histórico FE-AP**.
+
+**O envio ao FE-AP é, aqui, simulado: nada saiu do computador.** O ecrã di-lo no aviso, no estado e na frase. Não trate o estado **Aceite (simulado)** como uma entrega ao portal do Estado.
+
+No envio por Peppol em modo de demonstração, a fatura diz-o expressamente, com a etiqueta **Simulado: nada foi enviado**:
+
+![Barra de botões da fatura com a etiqueta Simulado: nada foi enviado](/images/troubleshooting/fatura-eletronica-nao-gerada/03-simulado-nada-foi-enviado.png)
+
+Os passos desse envio estão em [Como enviar e receber faturas pela rede Peppol](/fiscal-core/peppol).
+
+## Quando contactar o suporte
+
+Se a mensagem citar uma regra `BR-CIUS-PT` que não esteja no quadro das **Causas verificadas** e não souber que campo preencher, [peça suporte](/troubleshooting/como-pedir-suporte).
+
+## Informação a enviar
+
+- O número da fatura.
+- O botão em que carregou.
+- O texto completo da mensagem, com os códigos das regras.
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); FT D26/30 aberta por clique com cada perfil: Enviar ao FE-AP só com o Contabilista certificado */}

@@ -1,0 +1,109 @@
+---
+id: mes-dos-salarios-fechado
+slug: /troubleshooting/mes-dos-salarios-fechado
+title: O mês dos salários já está fechado
+sidebar_label: Mês dos salários fechado
+description: Porque um lote de um mês fechado não se grava, o que é a data de bloqueio da folha, porque não pode passar a data de bloqueio da contabilidade e o que fazer.
+keywords: [mês fechado, mes fechado, este mês já está fechado, este mes ja esta fechado, data de bloqueio da folha, bloqueio dos salários, bloqueio dos salarios, período fechado, periodo fechado, lote de um mês fechado, recibos de um mês fechado, data de bloqueio da contabilidade, fechar o mês dos salários]
+doc_id: DOC-0394
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado, accounting-pt/fecho/datas-de-bloqueio, troubleshooting/salarios-e-pessoas/recibo-validado-nao-se-altera]
+---
+
+## Sintoma
+
+Escolhe um mês antigo no ecrã **O que há para fazer este mês?**, carrega em **Processar** e guarda o lote. Abre-se **Operação inválida** e o lote não chega a ser gravado.
+
+## Mensagem
+
+Visto na Empresa Demonstração, Lda, com a **Data de bloqueio da folha** em 31/12/2025, num lote de dezembro de 2025 (perfil **Processador de salários**, **Novo** em **Salários › Processar › Processar o mês**, **Início do período** 01/12/2025). O ecrã **O que há para fazer este mês?** também deixa escolher um mês fechado e mostra **Processar** com o nome do mês. Ao guardar o lote:
+
+> «O mês deste lote já está fechado (fechado até *31/12/2025*). O que aconteceu: um mês fechado não aceita um lote novo. Como resolver: crie o lote do primeiro mês aberto, ou peça a um utilizador com o acesso extra «Administrador de Salários» que registe uma exceção para corrigir um recibo do mês fechado.»
+
+![Janela Operação inválida: o mês deste lote já está fechado, fechado até 31/12/2025](/images/troubleshooting/mes-dos-salarios-fechado/01-mes-fechado.png)
+
+{/* Nota interna (lote v23-AO, DOCS-069 #4052, master a67618a71, docs_demo_v23ao_test, 09/11/2026): UX-147. Na cópia de hoje a contabilidade está bloqueada até 31/12/2025 e a data de bloqueio da folha não pode passar dessa data; a da folha foi posta em 31/12/2025 por RPC com o administrador (estava vazia). Recusa provocada por clique com um utilizador só com o perfil Processador de salários (Novo, Início do período 01/12/2025, Guardar): o lote não ficou gravado. Captura 01 refeita. Auditoria docs-aud-v23ao (09/11/2026, cópia do master a67618a71 com a contabilidade bloqueada até 31/12/2025): com uma exceção de dezembro de 2025 Ativa, o lote e um recibo novo de dezembro foram recusados por clique ao Processador de salários; a data de bloqueio da folha em 31/01/2026 deu Erro de Validação ao administrador; capturas 02 e 03 refeitas; um utilizador só com o acesso extra Administrador de Salários não tem a entrada Exceções às datas de bloqueio no menu. A subida da contabilidade (Datas de bloqueio) não se refez. */}
+
+A recusa é a mesma com uma exceção **Ativa** para esse mês (na demonstração, de 01/12/2025 a 31/12/2025): a exceção não abre o mês para um lote novo.
+
+## Causas verificadas
+
+- **A empresa tem uma data de bloqueio da folha.** Nenhum lote nem recibo novo de um período que acaba nessa data ou antes se grava. Está em **Definições › Utilizadores e empresas › Empresas**, na ficha da empresa, separador **Contabilidade**, grupo **Salários**, campo **Data de bloqueio da folha**. Na demonstração, com a data em 31/12/2025, dezembro de 2025 e os meses anteriores ficam fechados.
+- **Os recibos já validados de um mês também o fecham para os dados que usaram.** Uma presença, um intervalo de presença ou um feriado da empresa num período com recibos validados ou pagos é recusado com uma mensagem própria. <span className="fd-pending">Pendente de validação no ecrã: estas três recusas não foram provocadas nesta ronda.</span>
+- **A data de bloqueio da folha não passa a da contabilidade.** Na demonstração, a contabilidade está bloqueada até 31/12/2025, por isso a folha não pode ficar bloqueada até 31/01/2026 (veja «Como resolver»).
+
+## O que confirmar
+
+1. O mês do lote, no topo do ecrã **O que há para fazer este mês?**. É mesmo um mês antigo, ou queria o mês atual?
+2. A **Data de bloqueio da folha** da empresa (com o administrador, que tem a aplicação **Definições**: **Utilizadores e empresas › Empresas**, separador **Contabilidade**, grupo **Salários**).
+3. Se o que quer fazer é um recibo novo (um trabalhador esquecido, que vai para um período aberto) ou corrigir um recibo que já existe (recibo corretivo, com exceção auditada). Para corrigir, veja [O recibo já está validado e não se altera](/troubleshooting/recibo-validado-nao-se-altera).
+
+## Como resolver
+
+### Escolheu o mês errado (perfil Processador de salários)
+
+1. Carregue em **Fechar** na mensagem. O lote não ficou gravado: não há nada a apagar.
+2. Volte a **O que há para fazer este mês?**, escolha o primeiro mês aberto e carregue em **Processar**.
+
+### Falta um recibo num mês fechado (perfil Processador de salários)
+
+Um mês fechado não aceita recibos novos, nem com uma exceção. O pagamento de um trabalhador esquecido faz-se num recibo de um período aberto, depois da **Data de bloqueio da folha**.
+
+Na demonstração, com a folha fechada até 31/12/2025 e uma exceção **Ativa** para dezembro, um recibo novo de Bruno Miguel Teixeira de 01/12/2025 a 31/12/2025 (**Salários › Processar › Recibos de vencimento** › **Novo**) foi recusado ao guardar:
+
+> «O período termina em *31/12/2025*, na data de bloqueio da folha (*31/12/2025*) ou antes. O que aconteceu: um período fechado não aceita recibos novos. Como resolver: ponha o pagamento no primeiro período aberto ou corrija um recibo do período com um recibo corretivo e uma exceção auditada.»
+
+![Janela Operação inválida: o período termina em 31/12/2025, na data de bloqueio da folha, e não aceita recibos novos](/images/troubleshooting/mes-dos-salarios-fechado/03-recibo-de-mes-fechado.png)
+
+O mesmo recibo, com um período depois da data de bloqueio (por exemplo novembro de 2026), guarda-se em **Rascunho**.
+
+1. Carregue em **Fechar** na mensagem e descarte o recibo.
+2. Crie o recibo com as datas de um período aberto, depois da **Data de bloqueio da folha**.
+3. Calcule-o e siga o percurso normal do mês ([Como processar os salários do mês](/payroll-pt/processar-o-mes)).
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: em que mês se declaram à AT (DMR) e à Segurança Social os salários de um mês anterior pagos agora, e se o rendimento é de anos anteriores quando o mês esquecido é do ano anterior.</span>
+
+### A exceção para corrigir um recibo que já existe (acesso extra Administrador de Salários)
+
+A exceção auditada abre um mês fechado só para corrigir um recibo que já existe, com um recibo corretivo (veja [O recibo já está validado e não se altera](/troubleshooting/recibo-validado-nao-se-altera)). Só quem tem o acesso extra **Administrador de Salários** a regista.
+
+1. Em **Salários › Configurar › Empresa › Controlos e listas**, procure **Exceções às datas de bloqueio**. **Hoje este menu só aparece com o modo de programador ligado**, e só ao administrador da demonstração: um utilizador com o acesso extra **Administrador de Salários**, sem modo de programador, não o vê.
+2. Carregue em **Novo**, escolha a **Empresa** e preencha **Período de** e **Período até** (por exemplo 01/12/2025 a 31/12/2025) e o motivo, e guarde. A ficha guarda quem autorizou (**Autorizado por**) e tem o campo **Recibo corretivo**; fica **Ativo** até ser usada (**Utilizado**) ou anulada (**Anulado**, com o botão **Anular**).
+
+Na demonstração, a exceção de 01/12/2025 a 31/12/2025 ficou **Ativa** e não deixou gravar nem o lote nem um recibo novo de dezembro de 2025. <span className="fd-pending">Pendente de validação no ecrã: o recibo corretivo de um mês fechado, validado com a exceção. Na demonstração, **Retificar** respondeu «Nada mudou desde que este recibo foi fechado» enquanto o contrato era o mesmo; com uma versão de contrato nova, o corretivo parou numa recusa de dados de IRS da versão criada para o ensaio, e não foi levado até **Validar**.</span>
+
+### Mudar a data de bloqueio da folha (administrador)
+
+A data só avança, e nunca para lá da data de bloqueio da contabilidade. Na demonstração, com a contabilidade bloqueada até 31/12/2025, escrever 31/01/2026 e guardar dá **Erro de Validação**:
+
+> «A data de bloqueio da folha (*31/01/2026*) não pode ser posterior à data de bloqueio da contabilidade (*31/12/2025*). O que aconteceu: fechar a folha de um período que a contabilidade ainda aceita deixaria os lançamentos e os recibos desencontrados. Como resolver: bloqueie primeiro a contabilidade (Contabilidade › Fechar › Contabilidade do mês › Fechar o mês, botão «Datas de bloqueio») até à mesma data e depois defina a data de bloqueio da folha.»
+
+![Janela Erro de Validação: a data de bloqueio da folha de 31/01/2026 não pode passar a data de bloqueio da contabilidade](/images/troubleshooting/mes-dos-salarios-fechado/02-bloqueio-depois-da-contabilidade.png)
+
+Para subir a contabilidade, o administrador abre **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**, carrega em **Datas de bloqueio**, escolhe a data (o seletor de datas é um calendário que se abre ao carregar no campo) e escreve o motivo; ao aplicar, o ecrã diz «Datas de bloqueio guardadas. Data de bloqueio geral subiu para *30/06/2026*. O motivo ficou registado na auditoria.» Com a contabilidade bloqueada até essa data, a folha guarda-se com a mesma data, sem mensagem. A subida da contabilidade pode ser recusada se houver movimentos do extrato bancário por reconciliar no período. As datas de bloqueio da contabilidade explicam-se em [Datas de bloqueio](/accounting-pt/datas-de-bloqueio).
+
+<HelpCallout type="risco" title="Fechar a folha fecha o mês para todos">
+Depois de guardar a data de bloqueio da folha, ninguém cria nem valida recibos desse período. Só um recibo corretivo entra, com uma exceção auditada. Feche a folha só quando os salários do mês estiverem pagos, declarados e contabilizados. <span className="fd-pending">Pendente de validação por contabilista certificado: em que momento do mês fechar a folha.</span>
+</HelpCallout>
+
+## Resultado esperado
+
+- Com o mês certo, **Criar os recibos do mês** cria um recibo por trabalhador e aparece «Recibos criados. *8* recibos criados; *0* trabalhadores já tinham recibo.»
+- Um lote de um mês fechado não fica gravado, por isso não aparece em **Salários › Processar › Processar o mês**.
+
+## Quando contactar o suporte
+
+- A mensagem aparece num mês posterior à **Data de bloqueio da folha**.
+- Precisa de pôr a data de bloqueio da folha para trás.
+- A exceção está **Ativa** para o período e o recibo corretivo desse mês continua a ser recusado.
+
+## Informação a enviar
+
+- A empresa, o mês do lote e a **Data de bloqueio da folha**.
+- O texto completo da mensagem, copiado do ecrã.
+- O perfil com que entrou.

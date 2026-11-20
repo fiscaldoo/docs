@@ -1,0 +1,108 @@
+---
+id: conferir-compras-com-o-efatura
+slug: /accounting-pt/conferir-compras-com-o-efatura
+title: Como conferir as compras com o e-Fatura
+sidebar_label: Conferir as compras com o e-Fatura
+sidebar_position: 3
+description: Comparar a lista de faturas de compra exportada do Portal e-Fatura com as faturas de fornecedor da contabilidade, ver o que falta de cada lado, criar o rascunho da fatura em falta e ler a conferência dos documentos de compra.
+keywords: [conferir compras com o e-fatura, confronto com o e-fatura, faturas de compra em falta, fatura que a AT conhece, e-fatura ficheiro csv, rascunho de fatura de fornecedor, conferência dos documentos de compra, copiloto e-fatura]
+doc_id: DOC-0168
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/compras/importar-faturas-do-efatura, accounting-pt/compras/fatura-de-fornecedor]
+---
+
+## Para que serve?
+
+O **Confronto com o e-Fatura** compara, num só passo, o ficheiro das suas compras que descarregou do Portal e-Fatura com as faturas de fornecedor que tem na contabilidade e diz-lhe quais faltam de cada lado. Para as que a AT conhece e a contabilidade não tem, prepara o rascunho da fatura.
+
+**Nada é enviado à AT:** o fiscaldoo nunca se liga ao Portal das Finanças. Descarregue o ficheiro no Portal e carregue-o aqui.
+
+## Quando utilizar?
+
+- Antes de fechar o IVA, para apanhar as compras que um fornecedor comunicou à AT e que ainda não lançou.
+- No fim do ano, para conferir se tudo o que consta do e-Fatura está na contabilidade (e o contrário).
+- **Não** é o mesmo que importar o ficheiro: [Como importar as faturas do e-Fatura](/accounting-pt/importar-faturas-do-efatura) guarda os documentos do Portal e acompanha cada um até ser lançado. Este confronto é uma comparação rápida, que não fica guardada.
+
+## Onde encontrar?
+
+- **Contabilidade › Reconciliar › Bancos e caixa › Confronto com o e-Fatura**, com o perfil **Contabilista** (ou **Contabilista certificado**).
+- **Auditoria › Conferências › Conferência dos documentos de compra**, com o perfil **Auditor / ROC**, **Contabilista certificado** ou **Gerência**: o relatório que cruza as faturas de fornecedor com os documentos **importados** do e-Fatura (ver o passo 7).
+
+## Antes de começar
+
+- **O Copiloto tem de estar ligado na empresa, com o interruptor «Confronto com o ficheiro do e-Fatura».** Quem os liga é o administrador (ou quem tem o acesso extra **Administração fiscal**), em **Copiloto › Controlo › Interruptores**, escolhida a empresa no canto superior direito: ligue **Copiloto (interruptor geral da empresa)** e **Confronto com o ficheiro do e-Fatura**. Este confronto é «seguro»: só compara dados que já tem e **não usa inteligência artificial**.
+   ![Interruptores do Copiloto da Empresa Demonstração com o interruptor geral e o Confronto com o ficheiro do e-Fatura ligados](/images/accounting-pt/conferir-compras-com-o-efatura/01-interruptores.png)
+- Tem o ficheiro da lista de compras do Portal e-Fatura, em CSV ou XLSX. <span className="fd-pending">Pendente de validação no ecrã: o caminho da exportação no Portal das Finanças e os títulos exatos das colunas do ficheiro de 2026 (a demonstração não liga à AT real; o ficheiro do exemplo foi escrito à mão, com colunas que o ecrã reconhece).</span>
+- O exemplo é a Empresa Demonstração, Lda, com as compras de setembro de 2026. O ficheiro tem 7 faturas, de 02/09/2026 a 28/09/2026, com as colunas **NIF Emitente**, **Nome Emitente**, **Tipo Documento**, **Número Documento**, **Data Documento**, **Valor IVA** e **Total**.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Reconciliar › Bancos e caixa › Confronto com o e-Fatura**. Abre a ficha **Confronto com o ficheiro do e-Fatura**, com o campo **Ficheiro do e-Fatura (CSV ou XLSX)**.
+   ![Ficha do confronto com o campo para escolher o ficheiro e o botão Comparar](/images/accounting-pt/conferir-compras-com-o-efatura/02-escolher-ficheiro.png)
+2. Carregue em **Escolher ficheiro** e escolha o ficheiro.
+3. Carregue em **Comparar**. O ecrã lê o ficheiro e conta: **Ficheiro: 7 faturas de 02/09/2026 a 28/09/2026**; **Nos dois sítios, com o mesmo valor: 4**; **Nos dois sítios, com valores diferentes: 1**; **A AT conhece e a contabilidade não tem: 2**; **A contabilidade tem e a AT não conhece: 1**; e **Ficou de fora 1 fatura de um fornecedor sem NIF português** (a fatura de um fornecedor dos EUA, que a AT não conhece).
+   ![Resultado do confronto: 4 nos dois sítios com o mesmo valor, 1 com valores diferentes, 2 que a AT conhece e a contabilidade não tem, 1 que a contabilidade tem e a AT não conhece](/images/accounting-pt/conferir-compras-com-o-efatura/03-resultado.png)
+4. Leia a tabela. Só aparecem as diferenças:
+   - **A AT conhece-a, a contabilidade não a tem** (a laranja): **FT SC/2026/77** da Serralharia do Cávado, Lda (369,00 €) e **FT PAP/2026/131** da Papelaria Central, Lda (123,00 €). Cada linha tem **Criar o rascunho**.
+   - **Nos dois sítios, com valores diferentes** (a laranja): **FT TEL/912** da Telecom Atlântico, SA, com 120,00 € no ficheiro e 116,85 € em **Total na contabilidade**; a coluna **Diferença (ficheiro menos contabilidade)** mostra 3,15 €. A linha tem **Abrir a fatura**: confira o valor com o fornecedor antes de mexer na fatura.
+   - **A contabilidade tem-na, a AT não a conhece** (a azul): **FT EML/2026/45** da Equipamentos e Mobiliário Lusitano, Lda (246,00 €), com **Abrir a fatura**. Pode ser uma fatura que o fornecedor não comunicou, ou uma fatura sua com o número ou a data diferentes do Portal; peça a confirmação ao fornecedor.
+5. Para uma fatura em falta, carregue em **Criar o rascunho**. Abre o **Rascunho de fatura de fornecedor** com o fornecedor (se o NIF não existir, cria-o: no exemplo, a Serralharia do Cávado, Lda, com o NIF 599990201), a **Referência da Fatura** igual ao número do documento, a **Data da Fatura de Fornecedor** (17/09/2026) e uma só linha, «Total do documento (do ficheiro do e-Fatura; reparta por taxa e conta)», com o total (369,00 €, conta 6228 Outros, **sem imposto**, por isso com 0,00 € de **IVA dedutível**). A conversa regista: «Rascunho preparado pelo Copiloto a partir do ficheiro do e-Fatura: só se conhece o total. Complete os impostos e a conta e confirme-o.»
+   ![Rascunho de fatura de fornecedor criado a partir do confronto: a Serralharia do Cávado, Lda com o NIF PT599990201, a referência FT SC/2026/77, as datas 17/09/2026 e 30/09/2026 e a mensagem do Copiloto na conversa](/images/accounting-pt/conferir-compras-com-o-efatura/04-rascunho.png)
+6. **Complete o rascunho antes de o confirmar:** reparta o valor pela base e pelo IVA (neste exemplo, 300,00 € mais 69,00 €), escolha a conta de gastos certa e confira a **Data Contabilística** (30/09/2026 neste exemplo), que decide o período do IVA. O passo-a-passo está em [Como lançar uma fatura de fornecedor](/accounting-pt/fatura-de-fornecedor). Depois de criado o rascunho, voltar a comparar o mesmo ficheiro dá **Nos dois sítios, com o mesmo valor: 5** e só resta uma fatura em falta (a FT PAP/2026/131). Um rascunho já conta como «nos dois sítios»: o confronto não prova que a fatura foi confirmada.
+7. Para a fotografia do ano inteiro, o relatório **Conferência dos documentos de compra** (**Auditoria › Conferências**) lista cada fatura de fornecedor com **e-Fatura: conferido** ou **e-Fatura: não encontrado no ficheiro importado**. Só conhece o que foi **importado** em **Contabilidade › Lançar › Lançamentos › Importar**, com **Importar ficheiro do e-Fatura** (ver o artigo sobre a importação): no exemplo, o Contabilista importou um ficheiro com as 6 faturas de setembro («6 documento(s) importado(s), 5 já lançado(s), 0 duplicado(s) ignorado(s).»); as de setembro com o mesmo NIF e número ficaram «e-Fatura: conferido» e todas as outras «e-Fatura: não encontrado no ficheiro importado», mesmo as legítimas (a FT EML/2026/45, as dos EUA e as dos outros meses). Este relatório não usa o ficheiro deste confronto.
+   ![Conferência dos documentos de compra, com as faturas de setembro conferidas e as restantes não encontradas no ficheiro importado](/images/accounting-pt/conferir-compras-com-o-efatura/06-conferencia-compras.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, **Contabilidade › Reconciliar › Bancos e caixa › Confronto com o e-Fatura** abre a mesma ficha, com **Ficheiro do e-Fatura (CSV ou XLSX)** e **Comparar** (visto com um utilizador só com o perfil **Contabilista**). **Auditoria › Conferências › Conferência dos documentos de compra** é o mesmo relatório, com a coluna **e-Fatura** (visto com um utilizador só com o perfil **Contabilista certificado**). Os interruptores do Copiloto estão no mesmo sítio, **Copiloto › Controlo › Interruptores** (administrador).
+
+{/* Nota interna (lote EE-04, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee04_test, cópia da odoo20_ee_test com EE_FASE=construir, 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0168. Contabilista: ficha «Confronto com o ficheiro do e-Fatura» com o texto «No Portal e-Fatura, descarregue a lista…» e Escolher ficheiro (Comparar não corrido no Enterprise). Contabilista certificado: /odoo/fiscaldoo-compras-conferencia com Linha, NIF do fornecedor, Documento do fornecedor, Data, Valor líquido, Total, e-Fatura, Observações. Administrador: Interruptores com Ligar o essencial e as 25 linhas. Ver reports/LOTE_EE-04.md. */}
+
+## Resultado esperado
+
+- Uma lista só com as diferenças, uma linha por fatura, e a contagem do que está nos dois sítios.
+- O rascunho de cada fatura em falta, por confirmar. **A fatura só entra na contabilidade quando a confirma.**
+
+## Notas importantes
+
+- **Uma fatura está «nos dois sítios» se tem o mesmo NIF do fornecedor e o mesmo número de documento** (espaços e sinais não contam), ou, na falta de número igual, o mesmo NIF, a mesma data e o mesmo total (tolerância de 0,01 €). **Com o número igual e o total diferente**, a fatura conta em «Nos dois sítios, com valores diferentes» e aparece na tabela com a diferença: no exemplo, a FT TEL/912 vinha no ficheiro com 120,00 € e na contabilidade tem 116,85 €. O confronto mostra a diferença, mas não diz qual dos dois valores está certo: confirme-o com o fornecedor.
+- **Só compara as faturas da contabilidade com data dentro do período do ficheiro** (da data mais antiga à mais recente do ficheiro). Um ficheiro de setembro não deteta o que falta em outubro.
+- **Não conhece faturas de fornecedores estrangeiros** (a AT não as tem): ficam de fora e o ecrã diz quantas. Nem faturas canceladas.
+- **O rascunho guarda só o total:** sem IVA, sem dedução e com a conta 6228. Não o confirme sem completar. <span className="fd-pending">Pendente de validação por contabilista certificado: a dedução do IVA das faturas criadas por este confronto (o ecrã põe 0,00 € de IVA dedutível até as completar).</span>
+- **Notas de crédito.** As notas de crédito de fornecedor que tem na contabilidade entram na comparação como qualquer fatura: se o ficheiro não trouxer uma linha com o mesmo NIF e número, aparecem em «A contabilidade tem-na, a AT não a conhece». O que o ecrã não vê é a situação do documento no Portal (por exemplo, anulado). <span className="fd-pending">Pendente de validação no ecrã: como o confronto trata as linhas do tipo nota de crédito do próprio ficheiro.</span>
+- Quem não pode ligar o Copiloto (por exemplo, o perfil **Contabilista certificado**) recebe a mensagem e não faz o confronto.
+
+## Problemas frequentes
+
+### «O Copiloto está desligado para a empresa»
+
+- **Causa:** o interruptor geral ou o do confronto estão desligados na empresa.
+- **O que fazer:** peça ao administrador que os ligue em **Copiloto › Controlo › Interruptores**. A mensagem do ecrã diz: «O Copiloto está desligado para a empresa “Empresa Demonstração, Lda”. Nada foi feito. Só o administrador pode ligar o Copiloto e este agente: peça ao administrador.»
+
+### «Escolha o ficheiro que descarregou do Portal e-Fatura (CSV ou XLSX)»
+
+- **Causa:** carregou em **Comparar** sem escolher o ficheiro.
+- **O que fazer:** escolha o ficheiro e compare de novo.
+
+### «O ficheiro não tem nenhuma linha de fatura utilizável»
+
+- **Causa:** o ficheiro só tem a linha dos títulos (ou as linhas estão vazias).
+- **O que fazer:** confirme que a lista que descarregou tem faturas de compra.
+
+### «As colunas do ficheiro não foram reconhecidas»
+
+- **Causa:** os títulos das colunas não são os que o ecrã conhece (testado com **Emissor**, **Referência**, **Dia** e **Montante**). O ecrã abre uma janela que diz o formato lido, as colunas do ficheiro e o que falta indicar.
+   ![Janela das colunas não reconhecidas, com as quatro caixas para escrever o título de cada coluna](/images/accounting-pt/conferir-compras-com-o-efatura/05-colunas.png)
+- **O que fazer:** escreva, nas quatro caixas **Coluna do NIF do fornecedor**, **Coluna do número do documento**, **Coluna da data do documento** e **Coluna do total**, o título da coluna do seu ficheiro, carregue em **Guardar** e depois em **Comparar**. No exemplo, com os quatro títulos, o ecrã comparou a linha única do ficheiro («Nos dois sítios: 1»). A mensagem usa nomes técnicos (`supplier_vat`, `document_number`, `document_date`, `total_amount`) para o que falta: são, pela ordem, o NIF, o número, a data e o total.
+
+{/* Nota interna (lote v23-BD, DOCS-064 #3900 req. 46610, master ce51f2d47, docs_demo_v23bd_test, porta 8504): capturas 03, 04 e 06 refeitas porque mostravam sete NIF válidos fora dos exemplos (prefixos 501, 502 e 503), que vinham dos fornecedores da base-mãe antiga (o construtor da demonstração de hoje só dá NIF da faixa 59999) e dos ficheiros de exemplo escritos à mão com eles. Ficheiros refeitos com os NIF dos fornecedores de hoje (599990139, 599990147, 599990058, 599990155, 599990163) e 599990201 para a Serralharia do Cávado, Lda, que não existe na base e o rascunho cria. Por clique: Contabilista (confronto, rascunho FT SC/2026/77, novo confronto, importação de 6 documentos de setembro) e Auditor (conferência). Interruptores do Copiloto ligados por RPC (geral e e-Fatura) pelo administrador. O ecrã mudou desde a 1.ª ronda: conta à parte os documentos com valores diferentes (o defeito V3A5-12 já não se reproduz), diz «Ficou de fora 1 fatura» (V3A5-11 resolvido) e o rascunho já não mostra o diário. */}
+{/* Nota interna (DOCS-046, DOC-0168, risco alto): visto em docs_demo_v3a5_test (master f16f4a3e) com demo.gestor_contabilidade (confronto, rascunho FT SC/2026/77 criado com fornecedor novo, 4 falhas), admin (interruptores da Empresa Demonstração ligados: geral e e-Fatura; os cliques na caixa precisam de força no automatismo) e demo.auditor (conferência de compras, depois de importar 6 documentos de setembro pelo menu Importar: ficheiro efatura_importar_set2026.csv, fictício). Ficheiros de teste fictícios, escritos pelo produtor (NIF 599999985, da faixa de exemplo). Não testado: XLSX; criar rascunho com fornecedor existente (FT PAP/131); notas de crédito (tipo NC); o botão Abrir a fatura. Defeitos: V3A5-10 mensagem das colunas com nomes técnicos e janela titulada «Odoo»; V3A5-11 «Ficaram de fora 1 faturas» (concordância); V3A5-12 total não conferido quando o número coincide. A base ficou com o Copiloto e o e-Fatura LIGADOS na Empresa Demonstração, o FT SC/2026/77 em rascunho e 6 documentos e-Fatura importados. */}

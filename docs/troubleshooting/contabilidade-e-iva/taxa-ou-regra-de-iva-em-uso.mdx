@@ -1,0 +1,94 @@
+---
+id: taxa-ou-regra-de-iva-em-uso
+slug: /troubleshooting/taxa-ou-regra-de-iva-em-uso
+title: Não consigo alterar uma taxa de IVA ou uma regra de dedutibilidade já usada
+sidebar_label: Taxa ou regra de IVA já usada
+description: Porque uma taxa de IVA ou uma regra de dedução usada em documentos publicados não se altera, e como a substituir ou encerrar.
+keywords: [alterar taxa de IVA, taxa usada em documentos publicados, Substituir taxa, substituir taxa de IVA, regra de dedutibilidade, regra de dedução, não pode ser alterada, nao pode ser alterada, não pode ser apagada, Válido até, encerrar regra, nova taxa de IVA]
+doc_id: DOC-0377
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 8fc9fd337)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/iva/configurar-o-iva, accounting-pt/iva/deducao-do-iva]
+---
+
+## Sintoma
+
+Muda a percentagem de um imposto ou de uma regra de dedução do IVA e, ao gravar, abre-se **Operação inválida**. A alteração não fica gravada.
+
+## Mensagem
+
+Ao alterar a percentagem de um imposto, em **Contabilidade › Configurar › Geral › Impostos**:
+
+> «A taxa “*23%*” é usada em documentos publicados — a sua percentagem não pode ser alterada (corromperia o histórico fiscal de documentos já emitidos). Use “Substituir taxa” para criar uma taxa sucessora.»
+
+![Janela Operação inválida: a taxa 23% é usada em documentos publicados](/images/troubleshooting/taxa-ou-regra-de-iva-em-uso/01-taxa-usada-em-documentos.png)
+
+Ao alterar uma regra de dedução já usada:
+
+> «A regra de dedutibilidade “*6221 Trabalhos especializados — 75 %*” é usada em linhas de compra publicadas e não pode ser alterada (*IVA dedutível (%)*). O que aconteceu: alterá-la reescreveria o IVA já deduzido nesses documentos. Como resolver: encerre a regra (campo “Válido até”) e crie uma regra nova com a sua própria vigência.»
+
+![Janela Operação inválida: a regra de dedutibilidade é usada em linhas de compra publicadas](/images/troubleshooting/taxa-ou-regra-de-iva-em-uso/02-regra-usada-em-documentos.png)
+
+Ao eliminar a regra:
+
+> «A regra de dedutibilidade “*6221 Trabalhos especializados — 75 %*” é usada em linhas de compra publicadas e não pode ser apagada. O que aconteceu: a regra é a prova da percentagem deduzida nesses documentos. Como resolver: encerre a regra (campo “Válido até”) e crie uma regra nova com a sua própria vigência.»
+
+Ao encerrar a regra numa data anterior à do último documento:
+
+> «A regra “*6221 Trabalhos especializados — 75 %*” só pode ser encerrada na data da sua última linha publicada ou depois (*06/11/2026*).»
+
+Arquivar uma regra usada (menu ⋮ ao lado do nome, **Arquivar**, e **Arquivar** na janela **Confirmação**) também é recusado, com a primeira mensagem da regra e (*Ativo*) entre parênteses. Todas foram provocadas na base de demonstração, com um utilizador só com o perfil **Contabilista certificado**.
+
+{/* Nota interna (lote v22-H, master d83bdf7ae, docs_demo_v22h_test): as 5 mensagens por clique com um utilizador criado só com o perfil Contabilista certificado; a regra da 6221 a 75 % e a fatura de fornecedor que a usa (FTF/2026/00047 (documento criado por RPC na cópia desse lote; não existe na base-mãe de hoje, lote 99), 06/11/2026) criadas por RPC só na cópia. */}
+
+## Causas verificadas
+
+- **A taxa já está em documentos publicados.** Mudar a percentagem alteraria o histórico fiscal desses documentos.
+- **A regra já foi aplicada a linhas de compra publicadas.** É ela que prova a percentagem deduzida.
+- **A data de fim é anterior ao último documento.** A regra tem de cobrir todos os documentos que a usaram.
+
+## O que confirmar
+
+1. Se a lei mudou mesmo a partir de uma data, ou se foi escolhida a taxa errada num documento. Neste segundo caso, a correção é no documento, não na taxa.
+2. A data a partir da qual a taxa ou a regra nova vale, e a referência legal. <span className="fd-pending">Pendente de validação por contabilista certificado: a percentagem e a data de cada taxa ou regra nova.</span>
+3. O perfil: estas alterações fazem-se com o perfil **Contabilista certificado**. Com o perfil **Contabilista**, **Configurar** não tem **Impostos**, o painel do IVA não tem **Regras de dedução do IVA**, e o imposto, aberto por uma ligação, só se consulta, sem **Substituir taxa…**.
+
+## Como resolver
+
+### Substituir uma taxa de IVA
+
+1. Abra o imposto em **Contabilidade › Configurar › Geral › Impostos** e o separador **Portugal**.
+2. Carregue em **Substituir taxa…**. Abre-se **Substituir taxa de IVA**, com a **Taxa atual**.
+3. Preencha **Nova taxa (%)**, **Válido desde** e **Referência legal**. **URL da fonte (DRE)** é opcional.
+4. Carregue em **Confirmar**.
+
+O ecrã abre a taxa nova. Na demonstração, a taxa de compra de 23 %, substituída por 24 % a partir de 01/01/2027, deu o imposto «24% (a partir de 01/01/2027)», com 24 % em **Percentagem**.
+
+### Encerrar uma regra de dedução
+
+1. Em **Contabilidade › Declarar › IVA › O que há para fazer com o IVA?**, abra **Regras de dedução do IVA** e a regra.
+2. Em **Válido até**, escreva uma data igual ou posterior à da última linha publicada, e grave. Na demonstração, 30/11/2026 foi aceite para uma última linha de 06/11/2026.
+3. Crie a regra nova com **Novo**, com a mesma conta, a sua **Válido desde**, o **IVA dedutível (%)** e a **Referência legal**. Na demonstração, a regra nova da `6221`, a 50 % desde 01/12/2026, foi aceite ao lado da antiga, encerrada a 30/11/2026.
+
+Mais sobre as regras em [Como o fiscaldoo calcula o IVA dedutível](/accounting-pt/deducao-do-iva). Enquanto a regra antiga estiver em vigor, continua a aplicar-se às faturas com data até **Válido até**.
+
+**Quem faz:** Contabilista certificado.
+
+## Resultado esperado
+
+Os documentos publicados ficam como estavam. Os documentos novos usam a taxa ou a regra em vigor na sua data.
+
+## Quando contactar o suporte
+
+- A taxa é recusada sem nunca ter sido usada.
+- O separador **Portugal** de uma taxa de IVA portuguesa não tem **Substituir taxa…** com o perfil **Contabilista certificado**. Com o perfil **Contabilista**, o botão não aparece.
+
+## Informação a enviar
+
+- O nome do imposto ou da regra e a empresa.
+- O texto completo da mensagem, copiado do ecrã.
+- A percentagem pretendida, a data e a referência legal.

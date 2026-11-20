@@ -1,0 +1,181 @@
+---
+id: emitir-uma-fatura-certificada
+slug: /fiscal-core/emitir-uma-fatura-certificada
+title: Como emitir uma fatura certificada
+sidebar_label: Emitir uma fatura
+sidebar_position: 0
+description: Criar a fatura em rascunho, confirmá-la para receber número, ATCUD, código QR e assinatura, e o que fazer quando a data é recusada, é futura, a linha não tem IVA ou o cliente não tem NIF.
+keywords: [fatura, factura, emitir fatura, emitir factura, nova fatura, fatura certificada, faturar, FT, ATCUD, código QR, codigo qr, assinatura, hash, confirmar fatura, imprimir fatura, enviar fatura, documento certificado, data da fatura, data anterior, ordem cronológica, ordem cronologica, data futura, data posterior, Confirmar datas e emitir, série fechada, serie fechada, data de entrega, sem IVA, sem taxa de IVA, não tem taxa de IVA, série para 2027, consumidor final, cliente sem NIF, cliente estrangeiro sem NIF, 0% EU, VIES, NIF por validar, cliente de outro país sem NIF, data de vencimento, cancelar rascunho, operações especiais]
+doc_id: DOC-0022
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/clientes, fiscal-core/faturacao/artigos, fiscal-core/recibos-e-cobrancas/emitir-um-recibo, fiscal-core/faturacao/emitir-uma-nota-de-credito, fiscal-core/faturacao/anular-uma-fatura]
+---
+
+## Para que serve?
+
+A fatura é o documento que se emite quando vende um bem ou presta um serviço. No fiscaldoo, a fatura nasce em rascunho, que ainda se pode alterar. Ao confirmar, recebe o número seguinte da série, o ATCUD (código único do documento), o código QR e a assinatura, e fica certificada: a partir daí já não se altera nem se apaga.
+
+Emitir não é comunicar. Confirmar emite a fatura na hora, mesmo que a empresa ainda não tenha a ligação à Autoridade Tributária e Aduaneira (AT); a comunicação das faturas à AT é um passo à parte. O valor e o IVA da fatura entram na contabilidade e, mais tarde, na [declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva) do período.
+
+## Quando utilizar?
+
+- Vendeu mercadoria ou prestou um serviço a um cliente e o pagamento fica para depois.
+- O cliente pediu fatura com o NIF dele.
+
+Se o cliente paga logo, ao balcão, há documentos próprios (fatura simplificada e fatura-recibo). Para corrigir uma fatura já emitida, use uma [nota de crédito](/fiscal-core/emitir-uma-nota-de-credito).
+
+## Onde encontrar?
+
+**Faturação › Faturar › Faturas de clientes** › **Novo**
+
+## Antes de começar
+
+- O seu perfil é **Administrativo** ou **Contabilista**.
+- O cliente já tem ficha com o NIF certo: [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes). Para um particular de Portugal que não dá NIF, use o cliente **Consumidor final**. Uma ficha sem NIF, de Portugal ou de outro país, faz da fatura uma venda a consumidor final (veja «Notas importantes»).
+- O que vai faturar já existe como artigo: [Como criar um artigo com o IVA e o tipo certos](/fiscal-core/artigos).
+- A empresa tem uma série de faturas ativa para o ano da fatura. Se não sabe, peça ao Contabilista certificado que confirme: [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Faturação › Faturar › Faturas de clientes** e carregue em **Novo**.
+   ![Lista Faturas com o botão Novo assinalado](/images/fiscal-core/emitir-uma-fatura-certificada/01-lista-com-novo.png)
+2. Em **Cliente**, escreva parte do nome e escolha o cliente na lista.
+3. Em **Data da Fatura**, deixe vazio para ficar a data de hoje ao confirmar (o campo mostra «Hoje»), ou carregue no campo e escolha a data no calendário. Normalmente, a data certa é a de hoje. O fiscaldoo recusa uma data anterior à da última fatura já emitida na mesma série, ou de um ano sem série ativa. Uma data posterior a hoje também não deve ser usada: o fiscaldoo avisa e, se a emitir, a série fica fechada a datas até essa (veja «Problemas frequentes»).
+4. Em **Data de Vencimento**, escolha até quando o cliente deve pagar, ou escolha uns **Termos de Pagamento** (por exemplo 30 dias). Sai no PDF e decide quando a fatura passa a vencida; não muda o IVA.
+5. Se os bens foram entregues, ou o serviço foi prestado, num dia diferente do da fatura, abra o separador **Outra Informação** e escolha esse dia em **Data de entrega**. Sai no PDF ao lado da data da fatura: na fatura ao Cliente Alemanha Exemplo GmbH, emitida a 30/10/2026 com a entrega a 28/10/2026, o PDF diz «Data da fatura 30/10/2026», «Data de vencimento 30/10/2026» e «Data de entrega 28/10/2026». Se a entrega é do próprio dia, deixe-o vazio. <span className="fd-pending">Pendente de validação por contabilista certificado: a data da entrega dos bens ou da prestação do serviço é menção obrigatória da fatura quando não coincide com a data de emissão (CIVA, art. 36.º, n.º 5, alínea f)); efeito dessa data no momento em que o IVA é devido e no período em que se declara (CIVA, art. 7.º e art. 8.º).</span>
+6. No separador **Linhas da Fatura**, carregue em **Adicionar uma linha** e, em **Artigo**, escolha o artigo. A linha preenche-se com a descrição, o preço e a taxa de IVA do artigo.
+7. Escreva a **Quantidade** e confirme o **Preço** e os **Impostos**. Repita os passos 6 e 7 para cada linha.
+8. Confira os totais por baixo das linhas: **Valor sem Impostos**, o IVA de cada taxa e o **Total**. Se o cliente é de outro país, a coluna **Impostos** pode já vir trocada (por exemplo **0% EU** em vez de **23%**): veja «Notas importantes».
+   ![Fatura em rascunho para Papelaria Exemplo, Lda com uma linha de 10 Kit de canetas a 10,00 € e IVA 23%, total 123,00 €](/images/fiscal-core/emitir-uma-fatura-certificada/02-fatura-em-rascunho.png)
+9. Carregue em **Confirmar**. A fatura recebe o número, o ATCUD, o código QR e a assinatura. Se, além de **Confirmar**, aparecer o botão **Confirmar datas e emitir**, a data da fatura é posterior a hoje: não carregue nele antes de ler «A data do documento … é posterior à data do sistema» em «Problemas frequentes».
+10. Para entregar a fatura ao cliente, carregue em **Enviar** (por e-mail) ou em **Imprimir**. Depois de confirmar, o PDF vê-se ao lado da fatura (num ecrã largo) ou abre-se no botão **Ver PDF** (num ecrã estreito, no menu dos botões da fatura); a fatura já não tem um separador **PDF**.
+
+</StepByStep>
+
+**Exemplo.** Fatura à Papelaria Exemplo, Lda de 10 `Kit de canetas` a 10,00 € + IVA 23 %: 100,00 € + 23,00 € = 123,00 €. Ao confirmar, ficou `FT D26/31`, com o ATCUD `DEMOFT2026-31`.
+
+### Os outros botões do rascunho
+
+- **Pré-visualizar lançamento** mostra o lançamento contabilístico que a fatura vai criar. Não muda nada.
+- **Cancelar** põe de lado um rascunho que não vai emitir. Não pede confirmação: o rascunho fica com o estado **Anulada**, continua sem número e passa a ter só o botão **Mudar para Rascunho**, que o volta a pôr em rascunho. Este «Anulada» de um rascunho não é a anulação de uma fatura emitida, que tem número e se faz como em [Como anular uma fatura ou outro documento certificado](/fiscal-core/anular-uma-fatura). Depois de confirmada, a fatura já não mostra **Cancelar**: emite-se uma nota de crédito ou anula-se (veja «Notas importantes»).
+- **Deduzir adiantamento** desconta nesta fatura um adiantamento que o cliente já pagou e que já foi faturado. Não é usado neste artigo.
+- **Operações especiais** abre sete campos para casos que não são a venda comum. Numa venda comum fica fechado e os campos ficam como vêm:
+  - **Classificação intracomunitária?** fica vazio; o fiscaldoo preenche-o ao confirmar, pelo país e pelo NIF do cliente e pelo tipo dos artigos. Vazio quer dizer que não é uma operação intracomunitária.
+  - **Forma do documento?** fica em **Fatura**. As outras opções (**Outra forma - art. 40.º n.º 5 do CIVA**, **Outra forma - autorizada nos termos do art. 40.º n.º 6 do CIVA** e **Outra forma, não incluída nas anteriores**) são para vendas documentadas de outra forma, que a declaração periódica de IVA vai declarar à parte a partir de 1 de julho de 2027.
+  - **Tipo de transação SAF-T?** fica em **N — Normal**. Vem do diário e vai para o ficheiro SAF-T; só se muda num lançamento que não é uma venda normal (por exemplo, uma regularização).
+  - **Levantado ou transportado pelo cliente?**, **Venda IOSS (bens importados até 150 EUR)?**, **Operação triangular (intermediário português)?** e **Venda e-Taxfree (com IVA liquidado)?** ficam por marcar.
+
+  <span className="fd-pending">Pendente de validação por contabilista certificado: quando se escolhe uma forma de documento diferente de «Fatura» (CIVA, art. 40.º) e um tipo de transação SAF-T diferente de «N — Normal», e o efeito de cada um na declaração periódica de IVA e no SAF-T.</span>
+
+{/* Nota interna (FAT-125 #3514, PD-V2G-02): «Cancelar» num rascunho mostra «Anulada», a mesma palavra de uma fatura emitida e anulada. Rever o ponto «Cancelar» quando o cartão mudar a palavra. As dicas («?») de «Forma do documento?», «Tipo de transação SAF-T?» e «Classificação intracomunitária?» mostram códigos internos (DPIVA-020, GeneralLedgerEntries/…, VAT-022): por isso o artigo explica os campos por palavras suas, sem citar as dicas. */}
+
+## Resultado esperado
+
+- A fatura passa a **Publicada**, com o número da série no título (`FT D26/31` no exemplo) e a etiqueta **Por pagar**.
+- Por cima aparece «Documento emitido e assinado: já não se altera. Para o corrigir, emita uma nota de crédito.»
+- O quadro **DOCUMENTO CERTIFICADO** mostra a **Série**, o **ATCUD** e o **Hash** (os quatro carateres da assinatura).
+- Os botões passam a ser **Enviar**, **Imprimir**, **Emitir recibo**, **Nota de Crédito**, **Assinar PDF** e **Ações**.
+
+![Fatura FT D26/31 publicada, com o aviso de documento emitido e o quadro Documento certificado com a série FT D26, o ATCUD DEMOFT2026-31 e o hash RCZL](/images/fiscal-core/emitir-uma-fatura-certificada/03-fatura-emitida.png)
+
+- O PDF tem, por baixo do quadro do IVA, `ATCUD:DEMOFT2026-31` e o código QR e, por baixo do código QR, os quatro carateres da assinatura seguidos de «Processado por programa certificado n.º …/AT». Esta frase sai uma só vez, na página do código QR, e não se repete no rodapé de cada página; o ATCUD continua em todas as páginas. Lido com um leitor de QR, o código da `FT D26/31` traz o NIF da empresa (599999993), o NIF do cliente (599999985), o país, o tipo FT, a data 20261029, o número, o ATCUD, a base de 100,00 a 23 %, o IVA de 23,00, o total de 123,00, os quatro carateres da assinatura (RCZL) e o número do certificado. O PDF da fatura fica guardado no momento da emissão (é o ficheiro que o botão **Ver PDF** mostra) e cada impressão devolve esse ficheiro: a 1.ª tal e qual, e da 2.ª em diante com a marca «2.ª via» escrita por cima de cada página, no canto superior direito, acima da linha do tipo, número e ATCUD. Assim a 2.ª via é fiel ao original, mesmo que entretanto outro layout tenha sido posto em uso (Despacho n.º 8632/2014, ponto 2.2.15). Visto numa fatura emitida de propósito (147,60 €, ATCUD `DEMOFT2026-31`): o PDF da 1.ª impressão saiu sem marca e, na 2.ª e na 3.ª, a primeira linha de texto do PDF era «2.ª via», com o ATCUD igual nas três; o contador de impressões da fatura ficou em 3. A leitura foi feita sobre o PDF descarregado do ecrã (**Imprimir**). O modelo, a letra, as cores, o logótipo, o rodapé e a ordem dos blocos do PDF escolhem-se num layout: ver [Como mudar o aspeto das faturas](/fiscal-core/layouts-dos-documentos).
+
+![Parte do PDF da fatura FT D26/31: a linha de 10 Kit de canetas, o quadro do IVA, os totais de 100,00 €, 23,00 € e 123,00 €, o ATCUD DEMOFT2026-31 e o código QR](/images/fiscal-core/emitir-uma-fatura-certificada/06-pdf-atcud-e-codigo-qr.png)
+
+As imagens são da base de demonstração: o ATCUD e o número do certificado são fictícios.
+
+## Vídeo demonstrativo
+
+<VideoTutorial src="/videos/emitir-uma-fatura-certificada.mp4" captions="/videos/emitir-uma-fatura-certificada.vtt" poster="/videos/emitir-uma-fatura-certificada-poster.png" width="1440" height="1140" title="Emitir uma fatura certificada" duration="30 s" />
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Confirmar não se desfaz">
+Depois de carregar em **Confirmar**, a fatura fica certificada: não volta a rascunho, não se altera e não se apaga. Antes de confirmar, confira o cliente, a data, as quantidades, os preços e a coluna **Impostos**. Se depois encontrar um erro, a correção depende do erro: nota de crédito ou de débito, se mudam o valor ou o IVA; anulação, se a operação não aconteceu ou o erro é só de dados (NIF, morada). A tabela está em [Como corrigir uma fatura](/fiscal-core/corrigir-uma-fatura). Veja também [Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito) e [Como anular uma fatura ou outro documento certificado](/fiscal-core/anular-uma-fatura).
+</HelpCallout>
+
+- **O IVA muda sozinho pelo país do cliente.** O fiscaldoo escolhe a posição fiscal pela ficha do cliente. Um cliente de outro país da União Europeia com o NIF válido no VIES passa a **0% EU**; sem NIF, ou com o NIF ainda por validar no VIES, fica com **23%** e um aviso no topo do rascunho. Um cliente de fora da União Europeia passa a **0% EX**. Confira a coluna **Impostos** antes de confirmar. Como validar o NIF, o que cada caso implica e o **Recalcular o IVA** de um rascunho feito antes da validação estão em [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes), «Cliente de outro país: o IVA muda sozinho». Com o NIF ainda não **Válido**, uma fatura com **0% EU** posta à mão mostra uma faixa vermelha e é recusada ao confirmar: veja [O NIF do cliente é inválido ou está em falta](/troubleshooting/nif-invalido).
+- **Cliente de Portugal sem NIF.** Se a ficha de um cliente de Portugal (ou sem país na ficha) não tem NIF, o rascunho avisa no topo, antes de emitir: «O cliente “Cliente Sem NIF Exemplo” não tem número de contribuinte (NIF). Se emitir este documento, é tratado como emitido a consumidor final: a impressão diz “Consumidor final” e o código QR leva o NIF 999999990. O SAF-T declara o cliente com uma identificação própria (um CustomerID próprio, o nome do cliente, o NIF 999999990 e o país). Para identificar o cliente no documento, preencha o NIF na ficha antes de emitir; depois de emitido, um NIF em falta só pode ser acrescentado à ficha, não alterado no documento.»
+  ![Aviso amarelo no topo do rascunho: o cliente Cliente Sem NIF Exemplo não tem NIF e o documento é tratado como emitido a consumidor final](/images/fiscal-core/emitir-uma-fatura-certificada/08-aviso-cliente-sem-nif.png)
+  A fatura emite-se na mesma. Numa fatura emitida a essa ficha (num teste anterior, a `FT D26/33`, que não faz parte da base de demonstração tal como a recebe) saiu com o nome do cliente e «Consumidor final» no PDF, e o SAF-T de outubro ficou **Gerado**, com um aviso para esse cliente e não um erro. Como o aviso do rascunho diz, o SAF-T não declara este cliente como «Consumidor final»: como a fatura leva o nome dele, sai com uma identificação própria, o NIF 999999990, o nome e o país (veja [Como corrigir os erros de validação do SAF-T](/fiscal-core/corrigir-erros-do-saft), «Cliente sem NIF: não é um erro»). O mesmo vale para o cliente de outro país, abaixo. Se o cliente tem NIF, preencha-o na ficha antes de confirmar: depois, a fatura já não o recebe. Para um particular que não dá NIF, escreva `Consumidor` em **Cliente** e escolha **Consumidor final** (NIF 999999990): o PDF diz «Consumidor final» no lugar do NIF, e o código QR e o SAF-T levam o 999999990 (exemplo em [Como vender ao balcão](/fiscal-core/balcao)). <span className="fd-pending">Pendente de validação por contabilista certificado: quando a fatura a consumidor final pode sair sem NIF e quando o cliente o tem de dar.</span>
+- **Cliente de outro país sem NIF.** Com outro **País** na ficha e sem NIF, o rascunho avisa no topo, antes de emitir: «O cliente “Cliente Particular Espanha” (Espanha) não tem número de contribuinte. Se emitir este documento, é tratado como emitido a consumidor final desse país: o código QR leva o NIF 999999990 e o país ES. O SAF-T declara o cliente com uma identificação própria (um CustomerID próprio, o nome do cliente, o NIF 999999990 e o país ES), pelo que o ficheiro continua válido. Se o cliente tem número de contribuinte no seu país, preencha-o na ficha antes de emitir; depois de emitido, um NIF em falta só pode ser acrescentado à ficha, não alterado no documento.» Num cliente de outro país da União Europeia aparece também o aviso da venda à distância, e a fatura leva o IVA português; num de fora da União Europeia (visto com os Estados Unidos), a fatura leva **0% EX**.
+  ![Avisos no topo do rascunho a um cliente de Espanha sem NIF: tratado como consumidor final desse país, com o NIF 999999990 e o país ES, e a venda à distância com o IVA português](/images/fiscal-core/emitir-uma-fatura-certificada/10-aviso-cliente-estrangeiro-sem-nif.png)
+  A fatura emite-se na mesma. Na demonstração, a `FT D26/36` a essa ficha, de 10,00 € + 2,30 € de IVA a 23 % (débito de 12,30 € em 2111 Clientes gerais, crédito de 10,00 € em 711 Mercadorias e de 2,30 € em 2433 IVA - Liquidado), saiu assim, e o SAF-T de faturação de outubro ficou **Gerado**, com um aviso para esse cliente e não um erro. Se o cliente tem número fiscal, preencha-o na ficha antes de confirmar: depois, a fatura já não o recebe. Uma empresa de outro país da União Europeia sem NIF na ficha é tratada como um particular; o que isso implica está em [O SAF-T não é gerado ou fica Inválido](/troubleshooting/saft-com-erros-de-validacao), secção «O cliente é de outro país e não tem NIF». <span className="fd-pending">Pendente de validação por contabilista certificado: venda a um particular de outro país que não dá número fiscal, tratada como venda a consumidor final com o NIF 999999990 e o país do cliente (Portaria n.º 302/2016, anexo I, ponto 2.2.3).</span>
+- **O que a fatura tem de conter e prazo.** O fiscaldoo imprime os dados da empresa e do cliente, a descrição, as quantidades, os preços, as taxas e o IVA, o ATCUD, o código QR e o número do certificado, e a data de entrega quando a preenche (passo 5). A fatura emite-se dentro do prazo legal contado da entrega do bem ou da prestação do serviço (na regra geral do CIVA, art. 36.º n.º 1, até ao 5.º dia útil seguinte). <span className="fd-pending">Pendente de validação por contabilista certificado: menções obrigatórias (CIVA, art. 36.º n.º 5), marcação «Original» e «2.ª via» e prazo de emissão com as exceções.</span>
+- Quando o cliente pagar, emita o recibo a partir da fatura: [Como registar um pagamento recebido e emitir o recibo](/fiscal-core/emitir-um-recibo).
+
+{/* Nota interna (lote 98, FIX-M256 e UX-170, master 73d6a5fed, docs_demo_98_test, porta 9760, 19/11/2026, perfil Administrativo): os avisos do rascunho a um cliente de Portugal e a um de Espanha, ambos sem NIF, vistos por clique em rascunhos criados na cópia por RPC (Cliente Sem NIF Exemplo e Cliente Particular Espanha; não confirmados) e já dizem que o SAF-T declara o cliente com identificação própria (CustomerID, nome, NIF 999999990 e país): o defeito do lote 96 está corrigido. A fatura FS POS26/1 da base (publicada) abre sem o separador PDF (separadores Linhas da Fatura, Outra Informação e Auditoria), com o PDF ao lado em ecrã largo; em ecrã estreito o «Ver PDF» está no menu dos botões. Não confirmado: a 2.ª via a partir do PDF guardado (a sessão não permite confirmar documentos). */}
+
+{/* Nota interna (lote 96, SAFT-178 e CERT-151, master 78c1ec1ac, docs_demo_lote96_test, 18/11/2026): o aviso do rascunho ao Cliente Sem NIF Exemplo, visto de novo por clique com o perfil Administrativo, ainda diz «o SAF-T declara o cliente como "Consumidor final" (NIF 999999990)», mas o SAF-T F de outubro (registo 9) declarou-o como PAR-000014 com o nome e o país PT: defeito do aviso no relatório do lote 96; a frase a seguir à citação explica o ficheiro. */}
+
+{/* Nota interna (DOCS-043 #3531; ronda do fix-vies2 depois do comboio 108, 30/10/2026, master 9d1671e9f, base docs_demo_vies2_test, perfil Faturação): revistos no ecrã o aviso do cliente de Portugal sem NIF (igual) e a FT D26/33 ao Cliente Sem NIF Exemplo, emitida nesta base com o mesmo número (PDF: «Consumidor final» à esquerda, bloco do cliente só com o nome e Portugal, ATCUD DEMOFT2026-33); os dois avisos do rascunho ao Cliente Particular Espanha (iguais), com a captura 10 refeita com os dois avisos (AFV-10); o ponto «O IVA muda sozinho» com a faixa vermelha do VAT-066b. Vêm da ronda anterior (master fe8c5365c, base docs_demo_fixvies_test) e não se repetiram: a FT D26/36 a Cliente Particular Espanha com as linhas e o SAF-T F de outubro Gerado com o aviso (o VAT-066b não mexeu no SAF-T); o SAF-T da FT D26/33 (master 54a9f5f03). O resto do artigo é do master 54a9f5f03. A pergunta ao CC sobre o cliente estrangeiro sem NIF está no SAFT-152 (VALIDAR-CC). */}
+
+{/* Nota interna (ronda única, 31/10/2026, master 27cebe13a, base docs_demo_ronda_test, Faturação): numeração alinhada com o percurso (AS3-04): FT D26/33 Cliente Sem NIF Exemplo, 34 Cliente Alemanha Exemplo GmbH com Data de entrega 28/10/2026 (data da fatura 30/10/2026), 35 Software Berlin GmbH, 36 Cliente Particular Espanha, 37 e 38 Cliente Alemanha, 39 a fatura nova do DOC-0343, 40 a emissão por decisão do Responsável fiscal (DOC-0026) e, por último, FT D26/41 com 06/11/2026 por Confirmar datas e emitir (JSON-RPC com o perfil Faturação, os mesmos métodos dos botões): mensagens de Confirmar (data do sistema 31/10/2026), da fatura seguinte com a data de hoje e com 06/11/2026 copiadas de novo. A FT D26/32 desta base tem a data 30/10/2026. A captura 09 não mudou. */}
+
+## Problemas frequentes
+
+### «… anterior ao último documento já numerado na série …»
+
+- **Sintoma:** ao carregar em **Confirmar** abre-se a janela **Operação inválida**. No exemplo, um rascunho com a **Data da Fatura** 01/10/2026, confirmado antes de emitir a `FT D26/33`, quando a última fatura da série era a `FT D26/32`, de 30/10/2026: «O documento “(ainda sem número)” tem a data 01/10/2026, anterior ao último documento já numerado na série “FT D26” (FT D26/32, datado de 30/10/2026). Uma série certificada numera documentos por ordem cronológica; corrija a data ou use uma data igual ou posterior a 30/10/2026.»
+  ![Janela Operação inválida: o rascunho de 01/10/2026 é anterior à FT D26/32, de 30/10/2026, a última fatura da série FT D26](/images/fiscal-core/emitir-uma-fatura-certificada/04-erro-data-anterior.png)
+- **Causa:** numa série, os números seguem a ordem das datas. A mensagem diz qual é a última fatura da série e a data dela. Há dois casos:
+  - essa data é de hoje ou anterior: já há uma fatura com data mais recente do que a sua;
+  - essa data é posterior a hoje: a última fatura da série foi emitida com data futura (veja o problema seguinte).
+- **O que fazer, se a data da mensagem é de hoje ou anterior:** carregue em **Fechar**, mude a **Data da Fatura** para uma data entre a da mensagem e a de hoje (normalmente, a de hoje) e confirme. Se os bens foram entregues ou o serviço foi prestado antes, não mude a data da fatura para trás: preencha **Outra Informação › Data de entrega** (passo 5). <span className="fd-pending">Pendente de validação por contabilista certificado: diferença entre a data de emissão e a data da operação, e o efeito no período do IVA.</span>
+- **O que fazer, se a data da mensagem é posterior a hoje:** a última fatura da série foi emitida com data futura, e a mensagem já não diz «igual ou posterior»: termina em «… corrija a data ou use uma data posterior a 06/11/2026.» (no exemplo, depois da `FT D26/41` com 06/11/2026). A série não aceita a mesma data: com 06/11/2026 e **Confirmar datas e emitir**, abre-se **Operação inválida**: «O documento “(ainda sem número)” tem a data 06/11/2026, mas o último documento da série “FT D26” (FT D26/41) foi emitido com a data futura 06/11/2026. Depois de um documento com data futura, a série só aceita documentos com data posterior (Despacho 8632/2014, 3.4.2). Dê a este documento uma data posterior a 06/11/2026 ou use outra série.» E uma data posterior seria outra fatura com data futura, com a data de emissão errada. Por isso:
+  - não dê a esta fatura outra data futura só para a série andar;
+  - carregue em **Fechar** e deixe a fatura em rascunho;
+  - peça ao perfil **Contabilista certificado** que decida, com o contabilista certificado da empresa, se espera pelo dia seguinte à data futura ou se a fatura sai noutra série, e o que fazer à fatura com data futura. O pormenor está em [A fatura não pode ter data anterior à do último documento da série](/troubleshooting/data-anterior-ao-ultimo-documento), na parte da série com um documento com data futura.
+
+  <span className="fd-pending">Pendente de validação por contabilista certificado: o que fazer às vendas dos dias em que a série está fechada por um documento com data futura (esperar ou usar outra série) e como se corrige esse documento (Despacho n.º 8632/2014, ponto 3.4.2; data de emissão, CIVA, art. 36.º).</span>
+
+{/* Nota interna (CERT-134 #3508, DEC-1347 e DEC-1361): a DEC-1361 mantém a recusa da data igual a um documento com data futura (só aceita data posterior) até o contabilista certificado responder. Desde o PD-V2D-03 (já em 27cebe13a), quando o último documento da série tem data futura, a mensagem da ordem cronológica diz «use uma data posterior a …»; nos outros casos continua «igual ou posterior». Correção da auditoria única (RU-01, RU-02), 31/10/2026, master 8bbfc8012, base docs_demo_corru_test (cópia da base-mãe, FT D26/32 a 30/10/2026), perfil Faturação: a recusa do rascunho de 01/10/2026 lida no ecrã antes de qualquer emissão, letra a letra, com a captura 04 refeita; o aviso e o Confirmar do rascunho de 06/11/2026 lidos no ecrã, com a captura 09 refeita (data do sistema 31/10/2026); depois de emitir esse rascunho por Confirmar datas e emitir (FT D26/33 nesta base, 06/11/2026), a fatura com a data de hoje recebeu «… (FT D26/33, datado de 06/11/2026). … use uma data posterior a 06/11/2026.» e a de 06/11/2026 a recusa da data futura, iguais às do texto com outro número. O texto mantém os números do percurso da ronda (FT D26/41). */}
+
+### «A data do documento … é posterior à data do sistema …» (data futura)
+
+- **Sintoma:** com uma **Data da Fatura** posterior a hoje (no exemplo, 06/11/2026, num dia 31/10/2026), o rascunho mostra no topo «A data do documento “(ainda sem número)” (06/11/2026) é posterior à data do sistema (31/10/2026). Depois de emitida, a série deste documento fica fechada a documentos com data igual ou anterior a 06/11/2026. Confirme que as datas estão corretas para emitir este documento; a confirmação fica registada com o seu nome.» Os botões passam a **Confirmar datas e emitir**, **Pré-visualizar lançamento**, **Confirmar**, **Cancelar** e **Deduzir adiantamento**, com **Confirmar datas e emitir** e **Confirmar** os dois em destaque.
+  ![Rascunho com data de 06/11/2026: o botão Confirmar datas e emitir ao lado de Confirmar e o aviso de que a série fica fechada a datas iguais ou anteriores a 06/11/2026](/images/fiscal-core/emitir-uma-fatura-certificada/09-aviso-data-futura.png)
+  **Confirmar** não emite: abre **Operação inválida** com «A data do documento “(ainda sem número)” (06/11/2026) é posterior à data do sistema (31/10/2026). Depois de emitida, a série deste documento fica fechada a documentos com data igual ou anterior a 06/11/2026. Confirme que estas datas estão corretas antes de emitir (botão “Confirmar datas e emitir” no documento, ou a ação “Confirmar datas de emissão”): a confirmação fica registada no registo de auditoria com o seu nome. Caso contrário, corrija a data do documento ou a data e a hora do sistema (Despacho 8632/2014, 3.4.2 e 3.4.3).» **Confirmar datas e emitir** emite logo, sem outra pergunta.
+- **Causa:** a data da fatura é posterior à data de hoje. O Despacho n.º 8632/2014, ponto 3.4.2, manda o programa avisar e, depois de emitido um documento com data posterior à atual, não deixar emitir na mesma série um documento com a data atual ou anterior. No fiscaldoo, a série fica fechada a todas as datas até à data futura, inclusive: só aceita uma data posterior. Na demonstração, depois de emitida a `FT D26/41` com 06/11/2026, a fatura seguinte com a data de hoje foi recusada (problema anterior), e com 06/11/2026 também.
+- **O que fazer:** quase sempre, a data está errada. Carregue em **Fechar**, corrija a **Data da Fatura** (ou deixe-a vazia, para ficar a de hoje) e use **Confirmar**. Use **Confirmar datas e emitir** só quando a data futura está mesmo certa e com o acordo do Contabilista certificado: a confirmação fica registada com o seu nome, e até essa data a série não aceita mais faturas. Se a data e a hora do computador estão erradas, peça a quem gere o servidor que as corrija antes de emitir. <span className="fd-pending">Pendente de validação por contabilista certificado: quando uma fatura pode ter data posterior ao dia em que é emitida (CIVA, art. 36.º) e se a série deve recusar também a mesma data, como faz o fiscaldoo, ou só a data atual e anteriores, como diz o ponto 3.4.2 do Despacho n.º 8632/2014.</span>
+
+### «A linha “…” da fatura FT … não tem taxa de IVA»
+
+- **Sintoma:** a linha ficou sem nada na coluna **Impostos** e os totais só têm **Valor sem Impostos** e **Total** (no exemplo, 100,00 € e 100,00 €), sem linha de IVA. Ao carregar em **Confirmar** abre-se **Operação inválida**: «A linha “[KIT-CAN] Kit de canetas” da fatura FT D26/33 não tem taxa de IVA. Escolha uma taxa de IVA (ou uma taxa de IVA a 0% com motivo de isenção, ou uma taxa «não sujeito»).» A fatura fica em rascunho.
+- **O número da mensagem não foi gasto.** A fatura continua sem número: a mensagem mostra o número que ela teria. Na demonstração, a `FT D26/33` foi para a fatura seguinte que se emitiu. Não procure esse número na lista nem o dê como falhado.
+- **Causa:** a taxa da linha foi apagada, ou o artigo não tem taxa de IVA.
+- **O que fazer:** carregue em **Fechar** e, na linha, escolha a taxa em **Impostos**. Numa venda comum, é a taxa do artigo (no exemplo, **23%**); se o artigo vem sem taxa, corrija o artigo: [Como criar um artigo com o IVA e o tipo certos](/fiscal-core/artigos). Escolha uma taxa a 0 % com motivo de isenção, ou uma taxa «não sujeito», só por indicação do contabilista certificado; o que é o motivo de isenção e quem o indica está em [A linha não tem taxa de IVA, ou o imposto a 0 % não se guarda sem motivo de isenção](/troubleshooting/motivo-de-isencao-em-falta). <span className="fd-pending">Pendente de validação por contabilista certificado: quando uma venda leva taxa a 0 % com motivo de isenção ou «não sujeito» (CIVA, art. 9.º a art. 15.º).</span>
+
+{/* Nota interna (FAT-124 #3486, P-E1-02): a recusa da linha sem IVA cita o número seguinte da série (FT D26/33) como se fosse da fatura, que continua em rascunho e sem número. Visto a 30/10/2026 no master 54a9f5f03: a FT D26/33 foi depois para outra fatura. Rever «O número da mensagem não foi gasto» quando o cartão entrar em master. */}
+
+### «Ainda não é possível confirmar … não tem nenhuma série … pronta para 2027»
+
+- **Sintoma:** com uma data de um ano que ainda não tem série, **Confirmar** abre «Ainda não é possível confirmar. Falta uma coisa: O diário «Vendas» não tem nenhuma série do tipo «[FT] Fatura» pronta para 2027.», com o botão **Criar a série em falta**.
+  ![Janela Ainda não é possível confirmar com o aviso da série de 2027 em falta e o botão Criar a série em falta](/images/fiscal-core/emitir-uma-fatura-certificada/05-erro-ano-sem-serie.png)
+- **Causa:** no fiscaldoo, cada ano tem uma série própria, que tem de ser comunicada à AT antes de se usar. <span className="fd-pending">Pendente de validação por contabilista certificado: se a lei obriga a uma série nova por ano ou só a que cada série seja comunicada à AT antes de ser usada (DL n.º 28/2019, art. 35.º).</span>
+- **O que fazer:** se a data está errada, carregue em **Fechar** e corrija-a. Se a data está certa, peça ao Contabilista certificado que crie e comunique a série do ano: [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais).
+
+### «O diário «Vendas» não serve para emitir documentos de venda» (empresa nova)
+
+- **Sintoma:** numa empresa acabada de criar, **Confirmar** abre «Ainda não é possível confirmar. Falta uma coisa: O diário «Vendas» não serve para emitir documentos de venda. Os documentos de venda de uma empresa portuguesa só se emitem num diário com a certificação fiscal ativada. Mude o campo «Diário» para um diário de vendas certificado, ou peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que certifique este.», só com o botão **Fechar**. Não há **Criar a série em falta**.
+  ![Janela Ainda não é possível confirmar com o aviso de que o diário Vendas não serve para emitir documentos de venda](/images/fiscal-core/emitir-uma-fatura-certificada/07-erro-empresa-sem-diario-certificado.png)
+- **Causa:** a empresa ainda não foi preparada para a faturação certificada: não tem diário certificado nem séries. Visto na empresa `Empresa Nova Exemplo, Lda`, criada na demonstração em **Contabilidade › Configurar › Sistema e segurança › Gabinete e empresas clientes › Nova empresa cliente**.
+- **O que fazer:** carregue em **Fechar**. A fatura fica em rascunho. Quem prepara a empresa corre o passo **4. Faturação certificada** do assistente: [Como configurar uma empresa nova com o assistente](/getting-started/configurar-uma-empresa-nova). Depois disso a mesma janela lista o que ainda falta, por exemplo «O diário «Fatura - Sede» tem a série A2026 para 2026, mas ainda não está ativa.», até o Contabilista certificado registar o código de validação e ativar a série: [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais).
+
+### Preciso de corrigir uma fatura que já confirmei
+
+- **Causa:** uma fatura confirmada é um documento certificado e a lei não deixa alterá-lo.
+- **O que fazer:** veja [Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado), que explica o caminho para cada tipo de erro.
+
+### A taxa de IVA da linha não é a que esperava
+
+- **O que fazer:** ainda em rascunho, corrija a taxa em **Impostos** na linha. Se a troca vem do país do cliente, confirme a ficha dele antes ([Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes)). Se vem do artigo, corrija o artigo: [Como criar um artigo com o IVA e o tipo certos](/fiscal-core/artigos). Se a linha ficou sem taxa nenhuma, veja «A linha “…” da fatura FT … não tem taxa de IVA», acima.
+
+{/* Nota interna (DOCS-066 #3947, lote v23-BA, master ce51f2d47, docs_demo_v23ba_test, 10/11/2026, DEF-QA8-c-02): por clique com o administrador, num rascunho criado para isto na Empresa Teste Portugal, cujo diário «Vendas» não tem a certificação ativada: Confirmar abriu a janela citada (captura 07 refeita). O rascunho não conta em nenhum total do artigo. */}

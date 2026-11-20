@@ -1,0 +1,87 @@
+---
+id: declaracao-ss-com-diferencas
+slug: /troubleshooting/declaracao-ss-com-diferencas
+title: A declaração à Segurança Social tem diferenças ou foi recusada
+sidebar_label: Declaração à Segurança Social com diferenças
+description: Como ler a Diferença de uma confirmação da Segurança Social, o que fazer antes de aceitar ou confirmar, porque Aceitar é recusado sem o valor apurado e o que acontece depois do prazo.
+keywords: [declaração à Segurança Social, declaracao a seguranca social, diferenças Segurança Social, diferencas seguranca social, valor apurado pela Segurança Social, valor que declaramos, confirmação da Segurança Social, confirmacao da seguranca social, aceitar os valores, confirmar os nossos valores, não há valor da Segurança Social para aceitar, nao ha valor, prazo para confirmar, DRI]
+doc_id: DOC-0362
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 1c72fdee6)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/declarar/declaracao-a-seguranca-social, troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado, troubleshooting/salarios-e-pessoas/recibo-sem-dados-para-calcular]
+---
+
+## Sintoma
+
+Numa confirmação da Segurança Social (modelo novo de declaração), o **Valor apurado pela Segurança Social** não é igual ao **Valor que declaramos** e a **Diferença** não é zero. Ou **Aceitar os valores da Segurança Social** abre **Operação inválida**.
+
+O caminho normal está em [Como enviar a declaração de remunerações à Segurança Social](/payroll-pt/declaracao-a-seguranca-social). Este artigo parte da confirmação de setembro de 2026 de Hugo Miguel Santos, na Empresa Demonstração, Lda, com o perfil **Processador de salários**.
+
+## Mensagem
+
+**Diferença.** Com **Valor da Segurança Social preenchido** marcado e 1.200,00 € em **Valor apurado pela Segurança Social**, a confirmação mostra **Valor que declaramos** 1.250,00, **Valor do mês anterior** 1.250,00 e **Diferença** 50,00.
+
+![Confirmação de setembro de 2026 por decidir, com o valor que declaramos 1.250,00, o valor apurado 1.200,00 e a diferença 50,00](/images/troubleshooting/declaracao-ss-com-diferencas/01-diferenca.png)
+
+**Aceitar sem o valor apurado.** Com **Valor da Segurança Social preenchido** marcado e o valor vazio, **Aceitar os valores da Segurança Social** dá:
+
+> «Não há valor da Segurança Social para aceitar. O que aconteceu: o valor apurado pela Segurança Social para 2026-09 / Hugo Miguel Santos não foi preenchido, ou é 0,00 ou negativo. Como resolver: preencha-o a partir da plataforma da Segurança Social, ou confirme os seus valores.»
+
+![Janela Operação inválida: não há valor da Segurança Social para aceitar](/images/troubleshooting/declaracao-ss-com-diferencas/02-aceitar-sem-valor.png)
+
+**Prazo passado.** Por cima da confirmação: «O prazo passou: sem confirmação, o silêncio conta como aceitação dos valores da Segurança Social (art. 40.º/8 e 9).» No exemplo, o **Prazo para confirmar** era 20/10/2026.
+
+## Causas verificadas
+
+- **A Segurança Social apurou outro valor.** O valor apurado vem da remuneração que a Segurança Social já tem; o valor que declaramos vem dos recibos validados do mês. Uma diferença quer dizer que um dos dois está errado: um recibo corrigido depois, uma rubrica com a incidência de Segurança Social errada, ou um valor apurado copiado com engano.
+- **Hoje, o valor que declaramos inclui o subsídio de alimentação** que o recibo excluiu da **Base de Segurança Social**. É o caso descrito em [Declaração à Segurança Social](/payroll-pt/declaracao-a-seguranca-social), «Notas importantes». Não o tome como certo sem o comparar com a base do recibo.
+
+{/* Nota interna (DOCS-036): o «Valor que declaramos» soma o subsídio de alimentação que o recibo excluiu da base (defeito no relatório LOTE_C, DOCS-022). Rever esta causa quando estiver corrigido. */}
+- **O valor apurado está vazio, a zero ou negativo.** **Aceitar** é recusado; não há nada para aceitar.
+- **O prazo passou.** A confirmação continua **Por decidir**, mas o aviso diz que valem os valores da Segurança Social.
+- Há recusas que chegam antes da confirmação, ao validar o lote: uma rubrica sujeita a Segurança Social sem código de remuneração, um trabalhador sem enquadramento na Segurança Social no período. <span className="fd-pending">Pendente de validação no ecrã: estas recusas não foram provocadas nesta ronda; na demonstração, as rubricas com valor têm código e os trabalhadores têm regime.</span>
+
+## O que confirmar
+
+1. Na confirmação: **Valor que declaramos**, **Valor do mês anterior**, **Valor apurado pela Segurança Social** e **Diferença**.
+2. No recibo do mesmo trabalhador e mês, separador **Segurança Social e IRS**: a **Base de Segurança Social** e o **Como foi calculado?** (quantas linhas entraram na base e quais ficaram de fora).
+3. Na Segurança Social Direta, o valor que a Segurança Social apurou para esse trabalhador e mês.
+
+## Como resolver
+
+1. Abra **Salários › Preparar › O que há para fazer este mês?** › **Listas de apoio** › **Confirmações da Segurança Social** e a linha do trabalhador.
+2. Marque **Valor da Segurança Social preenchido** e escreva o **Valor apurado pela Segurança Social** que vê na Segurança Social Direta. A **Diferença** calcula-se sozinha.
+3. Compare a diferença com o recibo (passo 2 de «O que confirmar»):
+   - se o valor certo é o da Segurança Social, carregue em **Aceitar os valores da Segurança Social**;
+   - se o valor certo é o da empresa, carregue em **Confirmar os nossos valores** e escreva em **Nota** porquê (no exemplo, a confirmação passou a **Valores nossos confirmados**);
+   - se o recibo está errado, corrija-o primeiro com um recibo corretivo ([O recibo já está validado e não se altera](/troubleshooting/recibo-validado-nao-se-altera)).
+4. Decida o mesmo na Segurança Social Direta. O fiscaldoo não envia nada: guarda o registo do que se decidiu lá.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o que fazer quando a diferença é encontrada depois do prazo para confirmar (CRC, art. 40.º, n.ºs 8 e 9) e como se corrige o valor junto da Segurança Social.</span>
+
+<HelpCallout type="risco" title="A decisão fecha a confirmação">
+Depois de **Aceitar** ou **Confirmar**, a confirmação mostra «Este registo já está fechado (validado, aprovado, pago ou enviado), por isso já não se altera.» Confira o valor antes de carregar no botão.
+</HelpCallout>
+
+{/* Nota interna (DOCS-036, sucessor): em master 1c72fdee6, «Aceitar» com o valor vazio já é recusado («Não há valor da Segurança Social para aceitar»). A nota «Escreva sempre o valor antes de aceitar» de payroll-pt/declarar/declaracao-a-seguranca-social (defeito do LOTE_C) está desatualizada e deve ser revista. */}
+
+## Resultado esperado
+
+- A confirmação fica **Valores da Segurança Social aceites** ou **Valores nossos confirmados**, com o valor apurado, a diferença e a nota.
+- Na lista **Confirmações da Segurança Social**, nenhuma linha do mês fica **Por decidir**.
+
+## Quando contactar o suporte
+
+- A **Diferença** não é igual ao valor que declaramos menos o valor apurado.
+- O **Valor que declaramos** não bate com a **Base de Segurança Social** do recibo por outra razão que não o subsídio de alimentação.
+
+## Informação a enviar
+
+- O trabalhador, a empresa e o mês de referência.
+- Os três valores da confirmação e a base do recibo.
+- O texto da mensagem, copiado do ecrã.
+- O perfil com que entrou.

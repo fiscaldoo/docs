@@ -1,0 +1,160 @@
+---
+id: fechar-o-exercicio
+slug: /accounting-pt/fechar-o-exercicio
+title: Como fechar o exercício (apuramento de resultados)
+sidebar_label: Fechar o exercício
+sidebar_position: 4
+description: Seguir os passos do fecho do exercício no painel (lançamentos publicados, bancos, IVA, imposto sobre o lucro, apuramento do resultado, aprovação das contas, resultados transitados e entrega da IES), simular o resultado antes de fechar e perceber o que bloqueia o fecho.
+keywords: [fechar o exercício, fecho do exercício, encerramento do exercício, apuramento de resultados, apuramento do resultado, resultado líquido, simular o resultado, painel do fecho do exercício, resultados transitados, aprovar as contas, IES, regularizações de fim de exercício, exercício fiscal, iniciar o fecho, fechar o exercicio, fecho do exercicio, encerramento, abrir o novo exercício]
+doc_id: DOC-0133
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7a46de91a)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/fecho/fechar-o-mes, accounting-pt/fecho/simular-o-resultado, accounting-pt/declaracoes/modelo-22, accounting-pt/declaracoes/ies]
+---
+
+{/* Nota interna (DOCS-046, lote v6-P1, DOC-0133, risco alto, video=sim: o vídeo é de outra corrente). Fecho completo de 2026, do princípio ao fim, a 03/11/2026 em docs_demo_v6p1f_test (porta 8166, parada no fim; master 8f78854ec), cópia limpa da base-mãe. Perfil do menu: demo.gestor_contabilidade (Responsável fiscal) até «Preparar a declaração»; Administração fiscal (admin) em aprovar, transferir e registar a submissão. Provado: 4 rascunhos publicados, 2 linhas de banco (6228 e 7888), lote de depreciações, Publicar lançamentos agendados, CMVMC, IVA, estimativa de IRC, apuramento, fecho, aprovação (ata vazia e data de hoje recusadas), transferência (cria o exercício 2027 e ENC/2027/00001), registo da submissão, lançamento recusado depois de fechar, Contabilista sem o menu. NV3R-01 resolvida: o produto já não exige a abertura. O caso «Fechar o exercício mesmo assim» sem a estimativa de IRC foi provado na auditoria de 03/11, em docs_demo_v6p1_test (captura 08). Capturas recortadas a 820 px CSS: os botões da direita de cada linha ficam fora da imagem. Defeitos em reports/LOTE_V6P1.md: data de aprovação futura aceite; «Preparar a declaração» confirma-se sem Modelo 22; referências «Recognition of» e «Deferral of» em inglês. */}
+
+## Para que serve?
+
+O fecho do exercício apura o resultado do ano, passa-o para resultados transitados e fecha o ano para novas alterações. O fiscaldoo reúne tudo num painel, o **Fecho do exercício**, com os passos pela ordem legal e as verificações que as contas devem cumprir.
+
+O fecho é feito uma vez por ano. Os fechos mensais preparam-no: ver [Como fechar a contabilidade do mês](/accounting-pt/fechar-o-mes).
+
+## Quando utilizar?
+
+- No início do ano seguinte, quando o ano terminou e os lançamentos de regularização estão feitos.
+- Durante o ano, só para **simular o resultado** e saber qual o lucro ou prejuízo provável.
+- Não use o fecho para corrigir lançamentos: depois de fechado, o ano recusa-os. Corrija antes de fechar.
+
+## Onde encontrar?
+
+**Contabilidade › Fechar › Fecho do exercício › Painel do fecho do exercício**. O **Contabilista** não vê este menu: o grupo **Fecho do exercício** aparece aos perfis **Contabilista certificado**, **Auditor / ROC** e **Gerência**, e ao administrador.
+
+## Antes de começar
+
+- Até **Preparar a declaração de IRC (Modelo 22)**, o perfil é **Contabilista certificado**. **Aprovar as contas**, **Passar o resultado para resultados transitados** e **Entregar a IES / SAF-T** são só do administrador (ou de quem tem o acesso extra **Administração fiscal**, que nenhum valor do campo **Perfil** dá): com o perfil **Contabilista certificado**, o painel diz «Só o administrador pode fazer este passo.» e não há **Fazer agora** (visto no ecrã em **Aprovar as contas**, no exercício 2025 da demonstração).
+- O exercício anterior está fechado (o painel confirma: **O exercício anterior já está fechado**).
+- O ano terminou. Antes de 31/12, as contas não se aprovam (ver «Problemas frequentes»).
+- Os fechos mensais estão feitos e as retenções pagas ([Como fechar a contabilidade do mês](/accounting-pt/fechar-o-mes)). O IVA por apurar e as linhas do banco por reconciliar aparecem no painel e resolvem-se nos passos abaixo.
+
+## Como utilizar
+
+### Preparar e apurar
+
+<StepByStep>
+
+1. Abra o painel e escolha o **Exercício** (no exemplo, **2026 · Aberto**, de 01/01/2026 a 31/12/2026). O painel diz «O fecho ainda não começou» e tem os botões **Iniciar o fecho**, **Fechar o exercício** (desativado), **Simular o resultado** e **Abrir a ficha do exercício**.
+   ![Painel do fecho do exercício com o exercício de 2026 aberto e os passos do fecho](/images/accounting-pt/fechar-o-exercicio/01-painel-fecho.png)
+2. Para antecipar o resultado sem lançar nada, carregue em **Simular o resultado**. A janela mostra a **Demonstração de resultados provisória**: no exemplo, **Vendas e prestações de serviços** 38.073,00 €, **Gastos com o pessoal** 56.076,97 € e **Resultado antes de impostos** -59.791,84 €. O detalhe está em [Como simular o resultado](/accounting-pt/simular-o-resultado). Carregue em **Cancelar**.
+   ![Janela Simular o resultado com a demonstração de resultados provisória de 2026](/images/accounting-pt/fechar-o-exercicio/02-simular.png)
+3. Carregue em **Iniciar o fecho**. O painel passa a «Falta resolver 6 ponto(s) antes de poder fechar o exercício.», mostra o **Próximo passo** e separa os pontos: **Resolva primeiro** (os dois vermelhos de **O que dizem as contas**) e **Falta fazer** (os quatro passos do fecho que contam).
+   ![Painel com o fecho iniciado, os seis pontos por resolver e o próximo passo](/images/accounting-pt/fechar-o-exercicio/03-fecho-iniciado.png)
+4. Em **O que dizem as contas**, resolva os pontos vermelhos, com **Ver a lista** ao lado de cada um. No exemplo: publique os quatro rascunhos de 2026 (o diferimento da fatura de fornecedor `FTF/2026/00045` e os seus reconhecimentos de outubro a dezembro) e trate as duas linhas do banco, uma comissão de 12,50 € e uma transferência de 380,00 € ([Como reconciliar movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios)). O painel passa a «Falta resolver 4 ponto(s)».
+   ![Painel depois de resolver os lançamentos e o banco: faltam 4 pontos](/images/accounting-pt/fechar-o-exercicio/04-fecho-4-pontos.png)
+5. Carregue em **Confirmar que está feito** no passo **Confirmar que já não há lançamentos por fazer**. O painel passa a «Falta resolver 3 ponto(s)».
+6. Carregue em **Confirmar que está feito** nas **Regularizações de fim de exercício**. Enquanto o sistema vir trabalho por fazer, aparece no painel a caixa «Não foi possível fazer este passo…» com a lista do que falta, e o passo não avança. Resolva o que a lista indicar. No exemplo:
+   - **Depreciações em falta** («Amortizações: Edifício da loja (Porto) - 1 período(s) de depreciação do ano estão planeados mas por processar…»). Carregue em **Ir fazê-lo**, em **Simular** e, vistas as quotas (no exemplo, 6 ativos e 12.511,67 € de quota contabilística), em **Confirmar**. Os lançamentos de meses futuros ficam agendados: em **Abrir a ficha do exercício**, carregue em **Publicar lançamentos agendados**.
+   - **Inventário** («…a proposta de custo das mercadorias vendidas CMVMC de 01/01/2026 a 31/12/2026 ainda está em rascunho: publique-a ou cancele-a.»). Em **Listas de apoio › Custo das mercadorias vendidas**, abra a proposta, carregue em **Lançar** e confirme.
+   Volte ao painel e carregue de novo em **Confirmar que está feito**. O painel passa a «Falta resolver 2 ponto(s)».
+7. Em **IVA todo apurado**, carregue em **Fazer agora**. A janela **Apurar o IVA** mostra o período (01/09/2026 – 31/12/2026), o **IVA dedutível (2432)** de 973,16 €, o **IVA liquidado (2433)** de -1.567,50 € e, em palavras simples, «A pagar ao Estado: 594,34 €». Carregue em **Lançar o apuramento**. Abre-se a página do apuramento, com o lançamento: volte ao painel.
+8. O **Próximo passo** passa a **Estimar o imposto sobre o lucro (IRC)**, que é opcional: não conta nos pontos por resolver. Se quiser fazê-lo, carregue em **Fazer agora**. A janela avisa: «Esta é uma ESTIMATIVA do IRC, não a Modelo 22.» Indique as **Correções fiscais** e as **Tributações autónomas** e carregue em **Confirmar**. No exemplo, com prejuízo e os dois valores a 0,00 €, a estimativa é 0,00 € e não gera lançamento.
+9. Em **Apurar o resultado do exercício**, carregue em **Fazer agora** e, na janela **Apuramento de resultados**, em **Confirmar**. Se não estimou o IRC, a janela avisa: «O IRC ainda não foi estimado: se apurar o resultado agora, o resultado líquido do exercício será o resultado antes de impostos. Estime primeiro o IRC (lança o movimento na 812 / 241) ou salte esse passo indicando o motivo.» O painel não tem botão para saltar o passo: ou estima, ou confirma sabendo disto. Abre-se o lançamento do apuramento: volte ao painel. O estado passa a **Em fecho** e o painel diz «Está tudo pronto: pode fechar o exercício.»
+   ![Painel em fecho, com todos os passos até ao apuramento feitos e o botão Fechar o exercício ativo](/images/accounting-pt/fechar-o-exercicio/05-pronto-para-fechar.png)
+
+</StepByStep>
+
+### Fechar, aprovar e entregar
+
+<StepByStep>
+
+1. Carregue em **Fechar o exercício**. Se o passo do IRC ficou por fazer, aparece primeiro a caixa «Há pontos ainda em aberto. Não impedem o fecho, mas tem de os aceitar:», com esse passo na lista. **Ainda não** deixa-o no painel, onde ainda pode estimar; **Fechar o exercício mesmo assim** continua.
+   ![Caixa Há pontos ainda em aberto, com o passo Estimar o imposto sobre o lucro (IRC) e os botões Fechar o exercício mesmo assim e Ainda não](/images/accounting-pt/fechar-o-exercicio/08-fechar-mesmo-assim.png)
+   Na janela **Fechar exercício fiscal**, leia o aviso: «O fecho sobe a data de bloqueio da empresa até à data de fim do exercício fiscal. Os lançamentos com data até esse dia deixam de poder ser publicados ou alterados.» Escreva o **Motivo**, se quiser (sem ele, o fecho faz-se na mesma), e carregue em **Fechar exercício fiscal**. O painel passa a «Este exercício está fechado.»
+   ![Painel com o exercício de 2026 fechado e o próximo passo Preparar a declaração de IRC](/images/accounting-pt/fechar-o-exercicio/06-exercicio-fechado.png)
+2. Prepare a [declaração de IRC](/accounting-pt/modelo-22) e carregue em **Confirmar que está feito** no passo **Preparar a declaração de IRC (Modelo 22)**. O botão não verifica se a declaração existe: no exemplo, aceitou sem haver um Modelo 22 de 2026.
+3. Com o administrador (ou com o acesso extra **Administração fiscal**), em **Aprovar as contas**, carregue em **Fazer agora**. Preencha a **Data da aprovação** (vem a de hoje) e a **Ata / número**, por exemplo `Ata n.º 12`, e carregue em **Confirmar**. Com o perfil **Contabilista certificado**, o painel diz «Só o administrador pode fazer este passo.» A data do exemplo, 31/03/2027, é posterior à da demonstração: use a data real da ata.
+4. Em **Passar o resultado para resultados transitados**, carregue em **Fazer agora**. Se o exercício seguinte ainda não existir, a janela diz «O exercício seguinte ainda não existe. Será criado de 01/01/2027 a 31/12/2027.» Carregue em **Confirmar**. O lançamento fica com a data da aprovação e o exercício seguinte fica **Aberto**. O painel passa a abrir nesse exercício: para continuar, volte a escolher **2026 · Fechado** em **Exercício**.
+   ![Painel de 2026 com todos os passos feitos até aos resultados transitados e o próximo passo Entregar a IES / SAF-T](/images/accounting-pt/fechar-o-exercicio/07-transferido.png)
+5. Entregue a IES e o SAF-T no Portal das Finanças ([Como preparar e entregar a IES](/accounting-pt/ies)). Depois, em **Entregar a IES / SAF-T**, carregue em **Fazer agora**. O fiscaldoo não entrega nada neste passo, só regista: na janela **Registar submissão**, escreva a **Referência da submissão** e confirme a **Data da submissão**. A janela avisa: «Um exercício submetido nunca pode ser reaberto e nenhuma exceção permite lançamentos nele.» Carregue em **Confirmar**.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o exercício fecha-se no mesmo **Painel do fecho do exercício**, com os mesmos passos, os mesmos botões (**Iniciar o fecho**, **Fechar o exercício**, **Simular o resultado**, **Abrir a ficha do exercício** e **Datas de bloqueio**) e a mesma coluna **O que dizem as contas**. No menu **Fechar** do **Contabilista certificado**, todas as entradas são do fiscaldoo: o apuramento de resultados e o fecho fazem-se pelos passos deste painel.
+
+{/* Nota interna (lote EE-02, DOCS-073 #4142, DEC-1794, master 7a46de91a, base Enterprise docs_ee_ee02_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): Contabilista certificado: painel do exercício 2026 · Aberto, «O fecho ainda não começou.»; Simular o resultado abriu a janela «Isto é uma SIMULAÇÃO: não se lança nada…» com a Demonstração de resultados provisória da cópia. Iniciar o fecho não se carregou: o exercício da cópia ficou como estava. Menu Fechar deste perfil: Apuramento do IVA, Depreciações do mês, Está tudo em ordem?, Fechar o mês e Painel do fecho do exercício. Ver reports/LOTE_EE-02.md. */}
+
+## Resultado esperado
+
+- Na simulação: nenhum lançamento.
+- Depois de **Entregar a IES / SAF-T**: todos os passos ficam feitos e o painel deixa de mostrar o **Próximo passo**.
+- A ficha do exercício guarda a aprovação (no exemplo, 31/03/2027 e `Ata n.º 12`). O campo **Lançamento de abertura** fica vazio: o programa não gera um lançamento de abertura no exercício seguinte.
+- O resultado do ano fica apurado e o exercício fechado. Exemplo, o exercício de 2026 da demonstração, conferido no razão (resultado antes de impostos de -70.098,48 €, ou seja, prejuízo):
+
+  | Lançamento | Data | Linhas |
+  |---|---|---|
+  | **OD/2026/00114** a **00119**, um por ativo (o exemplo do edifício) | 31/12/2026 | Débito 6422 Edifícios e outras construções 3.700,00; Crédito 4382 Edifícios e outras construções 3.700,00. Os outros ativos usam as contas 6424, 6425 e 6433 (a licença do programa, intangível, amortiza-se) |
+  | **OD/2026/00120** CMVMC de 2026 | 31/12/2026 | Débito 321 Mercadorias 480,00; Crédito 611 Mercadorias 480,00 |
+  | **OD/2026/00121** Apuramento de IVA | 31/12/2026 | Crédito 2432 IVA - Dedutível 973,16 e Débito 2435 IVA - Apuramento 973,16; Débito 2433 IVA - Liquidado 1.567,50 e Crédito 2435 1.567,50; Débito 2435 594,34 e Crédito 2436 IVA - A pagar 594,34 |
+  | **APR/2026/00001** «Apuramento de resultados 2026 (1/3)» | 31/12/2026 | Crédito, por conta de gastos: 611 10.620,00; 6221 10.932,87; 6224 3.150,00; 6226 302,47; 6228 12,50; 6241 1.890,00; 6261 8.100,00; 6262 855,00; 632 45.314,67; 635 10.762,30; 6422 3.700,00; 6424 6.125,00; 6425 3.140,00; 6433 1.466,67; 6871 2.500,00. Débito, por conta de rendimentos: 711 30.670,50; 721 7.722,50; 7888 380,00. Débito 811 Resultado antes de impostos 70.098,48 |
+  | **APR/2026/00002** «Apuramento de resultados 2026 (3/3)» | 31/12/2026 | Crédito 811 Resultado antes de impostos 70.098,48; Débito 818 Resultado líquido 70.098,48 |
+  | **ENC/2027/00001** «Transferência do resultado 2026» | 31/03/2027 | Débito 561 Resultados transitados 70.098,48; Crédito 818 Resultado líquido 70.098,48 |
+
+  **Não há lançamento 2/3**: seria o do imposto sobre o lucro estimado, aqui 0,00 €. Com lucro, os lados invertem-se: no apuramento, Débito 811 e Crédito 818 (na demonstração, **APR/2025/00002**, 31.104,16 €); na transferência, Débito 818 e Crédito 561. <span className="fd-pending">Pendente de validação por contabilista certificado: contas e lançamentos do apuramento e da transferência (SNC), abertura do exercício seguinte sem lançamento próprio, estimativa e liquidação do IRC antes do fecho, data da aprovação das contas (no prazo legal) e prazo de entrega da IES.</span>
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Fechar e registar a submissão bloqueiam o ano">
+Depois de **Fechar exercício fiscal**, o ano recusa lançamentos. Depois de **Registar submissão**, o exercício nunca mais pode ser reaberto e nenhuma exceção permite lançamentos nele. Confirme as contas com o contabilista certificado antes destes dois passos.
+</HelpCallout>
+
+- **O sistema não vê tudo.** As regularizações verificam depreciações, diferimentos e inventário. Imparidades e provisões não são vistas pelo sistema: confirma-as o contabilista. Um passo verde não prova que estão feitas.
+- **O IRC estimado entra no resultado.** A declaração é preparada à parte ([Como preparar a declaração de IRC](/accounting-pt/modelo-22)).
+- **O inventário** de fim de ano tem a sua comunicação própria ([Como comunicar o inventário anual à AT](/accounting-pt/inventario-para-a-at)).
+
+## Problemas frequentes
+
+### O botão «Fechar o exercício» está desativado
+
+- **Sintoma:** o botão aparece a cinzento mesmo depois de **Iniciar o fecho**, e o painel diz «Falta resolver 6 ponto(s) antes de poder fechar o exercício.»
+- **Causa:** há verificações a vermelho em **O que dizem as contas** ou passos em **Falta fazer**.
+- **O que fazer:** abra cada verificação com **Ver a lista** e faça os passos indicados, de cima para baixo.
+
+### Não vejo «Fecho do exercício» no menu Fechar
+
+- **Causa:** o seu perfil é **Contabilista**, que só vê o grupo **Contabilidade do mês**.
+- **O que fazer:** peça ao Contabilista certificado que faça o fecho do ano.
+
+### «Confirmar que está feito» não avança nas regularizações
+
+- **Sintoma:** o passo continua por fazer e aparece no painel a caixa «Não foi possível fazer este passo. A etapa 'Regularizações: depreciações, diferimentos, imparidades, provisões, inventário' ainda não pode ser confirmada: o sistema vê trabalho por fazer no exercício…», com uma lista.
+- **Causa:** há depreciações por processar, diferimentos em rascunho ou uma proposta de CMVMC em rascunho.
+- **O que fazer:** resolva cada ponto da lista (passo 6 de «Preparar e apurar») e confirme de novo.
+
+### «As contas de 2026 não podem ser aprovadas antes do fim do exercício (31/12/2026).»
+
+- **Causa:** a **Data da aprovação** é anterior ao fim do exercício. A data que vem na janela é a de hoje, por isso isto acontece quando experimenta antes de o ano acabar.
+- **O que fazer:** escreva a data da ata.
+
+### «Há campos obrigatórios por preencher.»
+
+- **Causa:** falta a **Ata / número** em **Aprovar as contas**, ou a **Referência da submissão** em **Registar submissão**.
+- **O que fazer:** preencha o campo assinalado a vermelho.
+
+### Depois de fechar, não consigo lançar nada no exercício fechado
+
+- **Sintoma:** «O exercício 2025 (01/01/2025 a 31/12/2025) está fechado: não pode criar o lançamento (novo, por gravar) datado de 15/06/2025. Porquê: um exercício fechado fica bloqueado para as contas já aprovadas não mudarem. Como resolver: lance-o num exercício aberto ou, se for mesmo necessário, peça ao administrador uma exceção com motivo (Contabilidade › Fechar › Fecho do exercício › Datas de bloqueio e exceções, com o modo programador ativo).» (visto no ecrã com o perfil **Contabilista**, ao gravar um lançamento manual de 15/06/2025, no exercício 2025, fechado na demonstração)
+- **Causa:** o fecho sobe a data de bloqueio para o fim do exercício.
+- **O que fazer:** lance no exercício seguinte, ou peça a exceção ao administrador, se a submissão ainda não estiver registada.
+
+{/* Nota interna (lote v23-G, DOCS-066, master 5228a94bd, docs_demo_v23g_test): a mensagem do exercício fechado foi provocada de novo pela integração (RPC) com um utilizador só com o perfil Contabilista (muda só o fim do caminho). */}
+{/* Nota interna (lote v23-O, DOCS-066, master dbbb5ac5c, docs_demo_v23o_test): «Só o administrador pode fazer este passo.» visto no painel com um utilizador só com o perfil Contabilista certificado (exercício 2025, Aprovar as contas); a mensagem do exercício fechado vista no ecrã com um utilizador só com o perfil Contabilista. */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AX, 09/11/2026, master 25a465133, docs_demo_v23ax_test, porta 8505): Simular o resultado aberto por clique com um utilizador só com o perfil Contabilista certificado (Painel do fecho do exercício, 2026 · Aberto) e fechado com Cancelar; números do passo 2 e captura 02 refeitos (vendas 38.073,00 €, depreciações 2.060,00 €, resultado -59.791,84 €, iguais à Demonstração de resultados de 2026). O resto do artigo não foi revisto neste lote. */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AY, 10/11/2026, master fa7915ea8, docs_demo_v23ay_test, porta 8505): Simular o resultado aberto de novo por clique com um utilizador só com o perfil Contabilista certificado (Contabilidade › Fechar › Painel do fecho do exercício): 38.073,00 €, 11.100,00 €, 26.127,87 €, 56.076,97 €, 2.060,00 €, 2.500,00 € e -59.791,84 €, iguais aos do v23-AX; Cancelar. O REP-134 não muda a demonstração de resultados. */}

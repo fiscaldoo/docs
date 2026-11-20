@@ -1,0 +1,107 @@
+---
+id: artigos
+slug: /fiscal-core/artigos
+title: Como criar um artigo com o IVA e o tipo certos
+sidebar_label: Criar um artigo
+sidebar_position: 4
+description: Criar um produto ou serviço para faturar, com o preço, a taxa de IVA e o tipo de produto que o SAF-T pede.
+keywords: [13%, 6%, taxa intermédia, taxa reduzida, isenção, isencao, motivo de isenção, retenção, retenções, artigo, artigos, produto, produtos, serviço, servico, criar artigo, novo artigo, criar produto, taxa de IVA, taxa de iva, IVA 23, impostos sobre vendas, tipo de produto do SAF-T, tipo de produto do saft, referência, referencia, mercadorias]
+doc_id: DOC-0027
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 9d1671e9f)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/emitir-uma-fatura-certificada]
+---
+
+## Para que serve?
+
+Cada linha de uma fatura parte de um artigo: um produto que vende ou um serviço que presta. O artigo traz para a linha a descrição, o preço e a taxa de IVA, e diz ao SAF-T de que tipo de produto se trata.
+
+Um artigo bem criado evita escolher o IVA à mão em cada fatura e evita erros no ficheiro SAF-T do mês.
+
+## Quando utilizar?
+
+- Antes de faturar um produto ou serviço pela primeira vez.
+- Quando começa a vender alguma coisa com uma taxa de IVA diferente das que já usa.
+
+## Onde encontrar?
+
+**Faturação › Clientes e artigos › Artigos** › **Novo**
+
+## Antes de começar
+
+- O seu perfil é **Administrativo** ou **Contabilista**.
+- Sabe a taxa de IVA do que vai vender. Se tiver dúvidas (taxa reduzida, intermédia, isenção), confirme-a antes com o contabilista certificado.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Faturação › Clientes e artigos › Artigos** e carregue em **Novo**.
+2. Escreva o nome do artigo como quer que apareça na fatura, por exemplo `Kit de canetas`.
+3. No separador **Informação geral**, em **Tipo de Artigo**, escolha **Mercadorias** para um produto ou **Serviço** para um serviço.
+4. Em **Preço de Vendas**, escreva o preço sem IVA, por exemplo `10,00`.
+5. Em **Impostos sobre vendas**, confirme a taxa. Vem **23%**; ao lado, o ecrã mostra o preço com IVA, por exemplo «(= 12,30 € com impostos)». Para outra taxa, veja «Escolher outra taxa de IVA», abaixo.
+   ![Separador Informação geral com Tipo de Artigo Mercadorias, Preço de Vendas 10,00 € e Impostos sobre vendas 23% assinalado, igual a 12,30 € com impostos](/images/fiscal-core/artigos/01-tipo-preco-e-iva.png)
+6. Mais abaixo, em **Referência**, escreva o código interno do artigo, se usar códigos, por exemplo `KIT-CAN`. A referência aparece entre parênteses retos antes do nome, nas faturas.
+7. Em **Tipo de produto do SAF-T**, escolha **Artigo** para um produto ou **Serviço** para um serviço. Se o deixar vazio, o SAF-T usa **Artigo** para **Mercadorias** e **Serviço** para **Serviço**. As outras três opções nunca se deduzem e escolhem-se à mão: **Outros (ex. portes debitados, adiantamentos recebidos, alienação de ativos)**, **Impostos especiais de consumo (ex. IABA, ISP, IT)** e **Impostos, taxas ou encargos parafiscais**. Num artigo do tipo **Combo**, escolha sempre o tipo.
+   ![Campos Referência KIT-CAN e Tipo de produto do SAF-T com Artigo escolhido](/images/fiscal-core/artigos/02-referencia-e-tipo-saft.png)
+8. Guarde (ícone da nuvem, ao lado do nome).
+
+</StepByStep>
+
+**Exemplo.** O artigo `[KIT-CAN] Kit de canetas`, a 10,00 € com IVA de 23 %, numa fatura de 10 unidades dá 100,00 € + 23,00 € de IVA = 123,00 €.
+
+## Escolher outra taxa de IVA
+
+Ao carregar na caixa **Impostos sobre vendas**, abre-se uma lista que começa pelas taxas de IVA do continente: **23%**, **13%**, **6%**, depois **0%** (com o motivo M07), **0% EU S**, **0% EX S**, **22% MA** e **12% MA**, e **Pesquisar mais…** no fim.
+
+![Lista da caixa Impostos sobre vendas aberta, com 23%, 13% e 6% no topo, as taxas a 0 % com o motivo de isenção, 22% MA, 12% MA e Pesquisar mais…](/images/fiscal-core/artigos/03-lista-impostos.png)
+
+1. Apague a taxa que vem com o × ao lado de **23%**.
+2. Escreva a taxa na caixa, por exemplo `13`, e carregue em **13%** na lista. A caixa passa a **13%** e o preço com IVA atualiza-se, por exemplo «(= 11,30 € com impostos)».
+   ![Impostos sobre vendas com 13% escolhido e o preço com IVA de 11,30 €](/images/fiscal-core/artigos/06-imposto-13.png)
+
+As taxas que não estão no topo (por exemplo as dos Açores, **16% AZ**, **9% AZ**, **4% AZ**) aparecem ao escrever parte do nome, ou em **Pesquisar mais…**. Ao escrever, por exemplo, `Ret`, a lista mostra as retenções na fonte (**Retenção IRS 23% — trabalho independente (art. 151.º)**, **Retenção IRS 16,5% — propriedade intelectual e industrial** e outras). As **Retenção IRS…** e **Retenção IRC…** não são taxas de IVA: não as escolha como IVA do artigo.
+
+Os impostos de venda que se podem escolher são estes. O motivo de isenção vem com o imposto: não se escolhe no artigo.
+
+| Imposto (nome no ecrã) | Para quê | Motivo de isenção que leva |
+|---|---|---|
+| **23%**, **13%**, **6%** | taxas normal, intermédia e reduzida do continente | — |
+| **22% MA**, **12% MA**, **5% MA**, **4% MA** | Madeira | — |
+| **16% AZ**, **9% AZ**, **4% AZ** | Açores | — |
+| **0%** | isenção | M07 — Isento artigo 9.º do CIVA |
+| **0% EU** / **0% EU S** | bens / serviços para um cliente de outro país da UE com o NIF validado no VIES (veja [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes)) | M16 — Isento artigo 14.º do RITI / M40 — IVA - autoliquidação |
+| **0% EX** / **0% EX S** | bens / serviços para um cliente de fora da UE | M05 — Isento artigo 14.º do CIVA / M40 — IVA - autoliquidação |
+| **0% NS**, **0% NS MA**, **0% NS AC** | operação não sujeita | M99 — Não sujeito ou não tributado |
+| **0% AUT …** (sucata, construção, emissões GEE, cortiça, eletricidade) | autoliquidação em setores próprios | M30 a M35 — IVA - autoliquidação |
+
+Os motivos veem-se, para quem tem o perfil **Contabilista certificado**, em **Contabilidade › Configurar › Geral › Impostos**, no separador **Portugal** de cada imposto (**Motivo de isenção**). O perfil **Contabilista** não tem o menu **Impostos**. Num artigo comum, use **23%**, **13%** ou **6%**; as taxas de 0 % aplicam-se sozinhas pela ficha do cliente (veja [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes)) ou decidem-se com o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: que taxa usar em cada tipo de bem ou serviço e quando usar cada isenção.</span>
+
+{/* Nota interna (DOCS-043 #3531, ronda do fix-vies2 depois do comboio 108; 30/10/2026, master 9d1671e9f, base docs_demo_vies2_test, perfil Faturação): passos 1 a 8 feitos de novo por clique em Faturação › Clientes e artigos › Artigos ([KIT-CAN] Kit de canetas, Mercadorias, 10,00, 23% «(= 12,30 € com impostos)», Referência KIT-CAN, Tipo de produto do SAF-T Artigo). AFV-05: a lista de Impostos sobre vendas abre com 23% ; 13% ; 6% ; 0% M07 ; 0% EU S ; 0% EX S ; 22% MA ; 12% MA ; Pesquisar mais…; escrever 13 dá 13% logo; escrever Ret dá as retenções; capturas 03 e 06 refeitas num artigo à parte, descartado sem guardar; a 05 (filtro Doméstico) saiu com os passos do FAT-121. Na linha da fatura, escrever «0% EU» mostra 0% EU S e 0% AUT construção; o 0% EU dos bens só aparece em Pesquisar mais… (FV-10, mantido de propósito pelo VAT-066b). Rascunho com 0% EU e NIF por validar: faixa vermelha e Confirmar recusa (Faturação). Campo à vista: Conta para o limiar das vendas à distância (opções e ajuda lidas no ecrã). Não repetidos nesta ronda: o SAF-T de outubro com o artigo Serviço de montagem sem tipo SAF-T (master d88933a51) e o menu Impostos do perfil Contabilista Certificado / Gestor fiscal (master 54a9f5f03). Ronda AV2 (30/10/2026, mesmo master, base docs_demo_vies3_test, Faturação): [KIT-CAN] criado de novo; Imposto sobre compra visto ao lado de Custo, com 23% e a ajuda «Impostos por omissão usados na compra do artigo» (AV2-09). O VIES saiu de «Problemas frequentes» para o DOC-0026 (AV2-10). */}
+
+## Resultado esperado
+
+- O artigo aparece na lista **Artigos**.
+- Numa fatura nova, ao escolher o artigo, a linha vem com a descrição, o preço e a taxa de IVA do artigo: [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada).
+
+## Notas importantes
+
+- **Tipo de produto do SAF-T** vem vazio num artigo novo. Vazio, não bloqueia o SAF-T de um artigo de **Mercadorias** ou de **Serviço**: o SAF-T de faturação de outubro, gerado na demonstração com uma fatura do artigo `Serviço de montagem` (tipo **Serviço**, sem tipo SAF-T), não acusou erro nesse artigo.
+- Os campos **Regime da margem**, **Combustível líquido (regime dos revendedores)**, **Fornecimento de energia (OSS)** e **Caso especial de IVA** são para regimes especiais de IVA. Num artigo comum, deixe-os vazios.
+- **Conta para o limiar das vendas à distância** vem com **Os bens contam, os serviços não**. Diz que vendas contam para o limite de 10 000 EUR das vendas à distância a consumidores de outros países da União Europeia. As outras opções são **Serviço de telecomunicações, radiodifusão ou eletrónico** e **Não conta**, que a ajuda do campo indica para meios de transporte novos e bens vendidos com montagem ou instalação. Num artigo comum, deixe o que vem. <span className="fd-pending">Pendente de validação por contabilista certificado: que vendas contam para o limiar das vendas à distância (RITI, art. 11.º).</span>
+- **Imposto sobre compra**, ao lado de **Custo**, vem com **23%**. É o IVA que entra por omissão nas faturas de fornecedor deste artigo (a ajuda do campo diz «Impostos por omissão usados na compra do artigo»). Num artigo que só vende, deixe o que vem. Nas compras, veja [Como lançar uma fatura de fornecedor](/accounting-pt/fatura-de-fornecedor).
+- Mudar o preço ou o IVA de um artigo não muda as faturas já emitidas; só as novas.
+
+## Problemas frequentes
+
+### A linha da fatura vem com a taxa de IVA errada
+
+- **Causa:** o artigo tem outra taxa em **Impostos sobre vendas**, ou a ficha do cliente (país, NIF e, num cliente de outro país da UE, a validação no VIES) aplica uma posição fiscal que a troca, por exemplo **0% EU** ou **0% EX**.
+- **O que fazer:**
+  - **Cliente de outro país da UE com o NIF ainda não Válido no VIES:** a taxa **23%** está certa. Não a troque na linha por **0% EU** nem por **0% EU S**. Para a isenção, valide o NIF na ficha do cliente: o que cada estado do VIES faz ao IVA, e o que fazer num rascunho já feito, está em [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes).
+  - **Nos outros casos:** numa fatura em rascunho, corrija a taxa na linha. Para as próximas, corrija o artigo (passo 5). Se a fatura já foi confirmada, já não se altera: corrige-se com uma nota de crédito ([Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito)).

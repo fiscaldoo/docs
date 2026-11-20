@@ -1,0 +1,131 @@
+---
+id: configurar-uma-empresa-nova
+slug: /getting-started/configurar-uma-empresa-nova
+title: Como configurar uma empresa nova com o assistente
+sidebar_label: Configurar uma empresa nova
+sidebar_position: 2
+description: Criar a empresa nova e percorrer o assistente Configurar a empresa (identificação, enquadramento contabilístico, IVA, faturação certificada, bancos, salários), rever o resumo, aplicar e ler a verificação final.
+keywords: [empresa nova, criar empresa, nova empresa cliente, configurar a empresa, configurar empresa, assistente, primeira configuração, primeira configuracao, enquadramento contabilístico, enquadramento contabilistico, SNC-ME, microentidade, séries em rascunho, series em rascunho, modo de formação, modo de formacao, verificação final, verificacao final, gabinete de contabilidade]
+doc_id: DOC-0007
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master c689f7580)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/empresa/dados-da-empresa, fiscal-core/certificacao/series-documentais, fiscal-core/certificacao/preparar-a-faturacao-certificada]
+---
+
+## Para que serve?
+
+O assistente **Configurar a empresa** prepara uma empresa nova numa sequência de passos: quem é a empresa, como faz a contabilidade, o IVA, a faturação certificada, os bancos, os salários e as pessoas. Em cada passo propõe valores e explica porquê, com a referência legal. No fim mostra um resumo do que vai criar e só aplica depois de o confirmar.
+
+O assistente não emite, não numera e não comunica nada à Autoridade Tributária e Aduaneira (AT). As séries ficam em rascunho, à espera do código de validação. Também não cria lançamentos contabilísticos.
+
+## Quando utilizar?
+
+- Quando começa a trabalhar uma empresa nova, por exemplo um cliente novo do gabinete de contabilidade.
+- Quando uma empresa já existe na base de dados mas ainda não emite documentos certificados: com o **Ponto de partida** **Rever a configuração atual**.
+- Quando a empresa vem de outro programa: com o **Ponto de partida** **Vem de outro programa (importação de SAF-T)**.
+
+## Onde encontrar?
+
+- Para criar a empresa: **Contabilidade › Configurar › Sistema e segurança › Gabinete e empresas clientes › Nova empresa cliente**.
+- Para o assistente, já na empresa: **Contabilidade › Configurar › Geral › Configurar a empresa**.
+
+## Antes de começar
+
+- Precisa do perfil de administrador da base de dados. O perfil **Contabilista** não vê o grupo **Sistema e segurança** do menu **Configurar**, e o **Contabilista certificado** vê nele **Estado da localização**, **Estado da certificação**, o **Contabilista certificado** e as cópias de segurança, sem **Nova empresa cliente** (no bloco **Gabinete e empresas clientes**, só do administrador). Todos os passos deste artigo foram feitos com o administrador.
+- Tenha à mão o NIF, a morada, a forma jurídica e os valores do último ano (volume de negócios, total do balanço e número médio de trabalhadores). São os que decidem o enquadramento contabilístico e a periodicidade do IVA.
+- Os dados fiscais que o assistente pergunta são os que estão registados na AT. Confirme-os com o contabilista certificado da empresa.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › Sistema e segurança › Gabinete e empresas clientes › Nova empresa cliente**. Abre-se a janela **Nova empresa cliente**.
+2. Escreva o **Número de contribuinte (NIF)**, o **Nome da empresa**, a **Morada**, o **Código postal** e a **Localidade**, por exemplo `599999985`, `Empresa Nova Exemplo, Lda`, `Rua do Exemplo, 1`, `1000-001` e `Lisboa`. Carregue em **Criar a empresa e começar a configuração** uma só vez. A janela avisa que a empresa fica visível só para si: as outras pessoas recebem acesso no passo 10.
+   ![Janela Nova empresa cliente com o NIF, o nome e a morada preenchidos e o botão Criar a empresa e começar a configuração](/images/getting-started/configurar-uma-empresa-nova/01-nova-empresa-cliente.png)
+3. Espere uns segundos: a janela fica aberta, com o botão desativado, enquanto a empresa é criada. Depois o assistente abre-se sozinho, já na empresa nova (o nome dela aparece no canto superior direito), no passo **1. Identificação**, com o **Ponto de partida** **Empresa nova** e os dados que escreveu. Complete o **CAE**, a **Conservatória do registo comercial**, o **Número de matrícula** e o **Capital social**. **Consultar a empresa no VIES?** vem desmarcada; marcada, o assistente procura a empresa na base de dados de IVA da União Europeia ao carregar em **Seguinte**. <span className="fd-pending">Pendente de validação no ecrã: resposta do VIES (a demonstração não sai para a internet).</span> Carregue em **Seguinte**.
+4. Em **2. Enquadramento contabilístico**, escreva o **Volume de negócios do ano**, o **Total do balanço** e o **Número médio de trabalhadores** do ano indicado em **Ano dos valores**, e escolha a **Forma jurídica** (**Sociedade por quotas (Lda)**, **Sociedade unipessoal por quotas (Unipessoal Lda)**, **Sociedade anónima (SA)**, **Empresário em nome individual**, **Cooperativa**, **Associação ou fundação (sem fins lucrativos)** ou **Outro**). O **Ano dos valores** vem com o ano anterior. O assistente calcula a **Categoria da entidade** e o **Enquadramento sugerido**: com 50.000,00 €, 30.000,00 € e 2 trabalhadores, **Microentidade** e **SNC-ME (microentidades)**. Se a empresa vende ou guarda mercadorias, marque **A empresa tem existências** e escolha o **Método de inventário** que aparece: **Inventário permanente (os movimentos de existências são lançados à medida que acontecem)** ou **Inventário intermitente (as existências são contadas e lançadas no fim do período)**. O método fica na ficha da empresa e decide como o fecho do exercício trata as existências.
+   ![Passo 2 com os valores do ano, a forma jurídica, a categoria Microentidade e o enquadramento sugerido SNC-ME assinalado](/images/getting-started/configurar-uma-empresa-nova/02-enquadramento-contabilistico.png)
+5. Em **Enquadramento contabilístico**, escolha o que a empresa usa: **SNC (regime geral)**, **SNC-PE (pequenas entidades)**, **SNC-ME (microentidades)**, **SNC-ESNL (entidades do setor não lucrativo)**, **IFRS / IAS** ou **Outro**. Se deixar o campo vazio, **Seguinte** aceita o **Enquadramento sugerido**: o campo fica preenchido com ele e o resumo mostra-o como alteração. Confirme o mês em **O exercício termina em** (vem **Dezembro**) e o **Dia em que termina o exercício** (vem **31**). Carregue em **Seguinte**.
+6. Em **3. IVA**, confirme **Onde fica a sede** (**Continente**, **Açores** ou **Madeira**: decide as taxas de IVA), responda a **Os clientes pagam tarde?** e **Operações com autoliquidação?**, e confirme a **Declaração de IVA** (a **Periodicidade sugerida** vem do volume de negócios: **Trimestral** abaixo de 650.000,00 €; como no enquadramento, se a deixar vazia, **Seguinte** aceita a sugerida) e o **Regime de IVA**. Os regimes e o que mudam estão em [Como preencher os dados fiscais da empresa](/administration/dados-da-empresa). Carregue em **Seguinte**.
+7. Em **4. Faturação certificada**, confirme os **Documentos que a empresa emite** (vêm marcados **[FR] Fatura-recibo**, **[FT] Fatura**, **[NC] Nota de crédito**, **[GT] Guia de transporte (incluindo as globais)** e **[RG] Outros recibos**) e as **Séries do ano**. Em **Onde se emitem os recibos**, escolha **Um diário próprio para recibos** ou **Um diário de banco do passo 5**: sem escolha, o resumo não propõe a série dos recibos. **Ligar o modo de formação?** vem marcado e cria também uma série de formação (veja «Notas importantes»). **Credenciais do Portal das Finanças no cofre** vem desmarcada numa empresa nova e o botão **Abrir o cofre de credenciais** abre o cofre: a senha do subutilizador da AT guarda-se lá, nunca no assistente. Não é precisa para criar as séries nem para emitir; é para comunicar com a AT: [Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). A tabela de baixo tem o **Estabelecimento** **Sede**, com o **Código** `A`, que entra no nome das séries. Carregue em **Seguinte**.
+   ![Passo 4 com os documentos que a empresa emite, as séries de 2026, o modo de formação assinalado e as duas opções para os recibos](/images/getting-started/configurar-uma-empresa-nova/03-faturacao-certificada.png)
+8. Nos passos seguintes, preencha o que já sabe e carregue em **Seguinte** (ou em **Ir para o resumo**); o que ficar vazio não muda nada. **5. Bancos**: uma linha por IBAN, com o formato do extrato. **6. Clientes, fornecedores e saldos de abertura** e **7. Ativos**: ficheiros Excel ou CSV (os saldos de abertura ficam em rascunho). **8. Salários: a empresa**, **9. Trabalhadores** e **14. Salários: dimensão da empresa**: dados para os salários.
+   **10. Pessoas e acessos**: o perfil de cada pessoa. **12. Avisos de cobrança** e **13. Condições de pagamento**: as regras de cobrança por omissão (**30 Dias**).
+9. No **Resumo**, leia a tabela **O QUE VAI SER CRIADO E ALTERADO** (colunas **O quê**, **Tipo**, **Agora** e **Depois**). As linhas com **Sugestão (não aplicada)** são tarefas para fazer à mão. Se algo está mal, carregue em **Voltar**.
+   ![Resumo com as linhas a criar e a alterar: valores da categoria, enquadramento, IVA e as séries de 2026 em rascunho](/images/getting-started/configurar-uma-empresa-nova/04-resumo.png)
+10. Carregue em **Aplicar o que o resumo mostra** e, na janela **Confirmação** («Aplicar as alterações do resumo? Nada é validado, numerado nem enviado à AT.»), em **Confirmar**.
+    ![Janela Confirmação com o botão Confirmar assinalado](/images/getting-started/configurar-uma-empresa-nova/05-confirmar-aplicar.png)
+11. O assistente passa a **15. Verificação final**. Carregue em **Verificar tudo agora** e leia o **Semáforo** de cada **Área** (**Autoridade Tributária**, **SAF-T**, **IVA**, **Salários**, **Chave de assinatura**, **Certificado de software**, **Avisos de cobrança**, **Condições de pagamento**), com **O que se encontrou** e **O que fazer**.
+    ![Verificação final com o semáforo das áreas Autoridade Tributária e SAF-T em Não está pronto e IVA em Pronto](/images/getting-started/configurar-uma-empresa-nova/06-verificacao-final.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o assistente é o mesmo (visto com o administrador, com a empresa `599999985` do exemplo): **Nova empresa cliente**, os passos de **1. Identificação** a **14. Salários: dimensão da empresa**, o **Resumo**, a janela **Confirmação** e a **15. Verificação final**, com as mesmas áreas.
+
+Muda o passo **12. Avisos de cobrança**. No Enterprise, os avisos aos clientes em atraso são os **lembretes de faturas** do Enterprise (veja a secção «No Enterprise» de [Como enviar avisos de cobrança aos clientes em atraso](/fiscal-core/avisos-de-cobranca)). Com **Criar os três avisos habituais**, o assistente cria-os como lembretes de faturas da empresa nova, com os mesmos dias. No exemplo, depois de **Aplicar o que o resumo mostra**, a lista **Lembretes de faturas** da empresa nova tinha três lembretes, aos **15**, **30** e **60** dias de atraso, e a área **Avisos de cobrança** da **15. Verificação final** ficou **Pronto**, com «Não falta nada.». Nada é enviado aos clientes: o envio faz-se como no artigo dos avisos de cobrança.
+
+{/* Nota interna (lote EE-13, DOCS-073 #4142, req 46633, DEC-1794, master 7f41ce71b, base Enterprise docs_ee_ee13_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee13_test): DOC-0007. Administrador: Nova empresa cliente (599999985, Empresa Nova Exemplo, Lda, Rua do Exemplo, 1, 1000-001, Lisboa), passo 2 com 50.000,00 €, 30.000,00 €, 2 trabalhadores e Sociedade por quotas (Lda), Seguinte até ao Resumo, Aplicar o que o resumo mostra › Confirmar e Verificar tudo agora; feito igual na cópia Community, com os mesmos passos e as mesmas 14 áreas da verificação. Empresa criada só nas cópias. No Enterprise, Criar os três avisos habituais cria os três níveis do fiscaldoo, que o Enterprise não usa (os menus dos níveis estão escondidos no Enterprise), e a lista Lembretes de faturas da empresa nova fica vazia (vista por clique: «Define reminders and their related actions», em inglês): defeito no relatório. Ver reports/LOTE_EE-13.md. */}
+
+{/* Nota interna (lote EE-15, comboio 197, master c689f7580, 12/11/2026; cópia Enterprise docs_ee_ee15_test (portas 8530/8531, cópia da odoo20_ee_test com ee_neutralizar) e cópia Community docs_demo_ee15_test (porta 8532), utilizadores criados nas cópias só com o perfil indicado): DOC-0007, EEA-090 (eb7a762de, em master). Administrador, Nova empresa cliente por clique (599999985, Empresa Nova Exemplo, Lda), Criar os três avisos habituais no passo 12, Aplicar o que o resumo mostra › Confirmar e Verificar tudo agora: O QUE FOI FEITO com «Avisos de cobrança Feito 1.º aviso aos 15 dias…», área Avisos de cobrança Pronto «Não falta nada.», e Faturação › Receber › Lembretes de faturas na empresa nova com 15, 30 e 60 dias (colunas Dias em Atraso, Momento do lembrete, E-mail, SMS, Atividade, Empresa). Empresa criada só na cópia. Ver reports/LOTE_EE-15.md. */}
+
+## Resultado esperado
+
+- A tabela **O QUE FOI FEITO** tem cada linha do resumo com **Feito**. Na empresa do exemplo: enquadramento **SNC-ME (microentidades)**, **Sociedade por quotas (Lda)**, IVA **Trimestral**, os diários e as séries `A2026` de fatura, fatura-recibo, nota de crédito e guia de transporte, todos em rascunho, e o modo de formação. A série dos recibos só aparece se escolheu **Onde se emitem os recibos?** no passo 7: sem escolha, o resumo tem a linha **Onde se emitem os recibos** com **Sugestão (não aplicada)** («…Volte ao passo 4, escolha uma, e as séries de RG serão propostas.») e não cria série de recibos. A linha **Subutilizador do Portal das Finanças** também fica como sugestão: é feita no Portal das Finanças e no cofre.
+- As áreas que ainda não estão prontas dizem o que falta. Na empresa do exemplo, **Autoridade Tributária**: «Não há dados de acesso para o ambiente de testes da Autoridade Tributária…»; **SAF-T**: problemas que bloqueiam na contabilidade, a começar pelos códigos de taxonomia das contas; **Salários**: os dados da entidade patronal e os trabalhadores.
+- Ainda não se emitem faturas: as séries estão em rascunho. O passo seguinte é comunicar cada série e registar o código de validação: [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais). A lista do que falta para emitir está em [Como preparar a empresa para emitir documentos certificados](/fiscal-core/preparar-a-faturacao-certificada).
+- Para voltar ao assistente depois, escolha a empresa no seletor de empresas, no canto superior direito, e abra **Contabilidade › Configurar › Geral › Configurar a empresa**; numa empresa já aplicada, o botão é **Rever outra vez**.
+
+## Vídeo demonstrativo
+
+O primeiro vídeo mostra os passos 1 e 2 e o início do passo 3: abrir **Nova empresa cliente**, escrever o NIF, o nome e a morada, criar a empresa e ver o assistente abrir-se na empresa nova, no passo **1. Identificação**. Não mostra o resto do passo 3 (**CAE**, conservatória, matrícula, capital social e **Seguinte**) nem os passos 4 a 11.
+
+<VideoTutorial src="/videos/configurar-uma-empresa-nova.mp4" captions="/videos/configurar-uma-empresa-nova.vtt" poster="/videos/configurar-uma-empresa-nova-poster.png" width="1440" height="1140" title="Criar uma empresa nova e abrir o assistente" duration="29 s" />
+
+O segundo vídeo continua na mesma empresa, já no passo **2. Enquadramento contabilístico** do assistente (no passo **1. Identificação**, o **CAE**, a conservatória, a matrícula e o capital social ficaram vazios e carregou-se em **Seguinte**). Mostra os passos 4 a 11: os valores do ano e a **Forma jurídica**, com a **Categoria da entidade** e o **Enquadramento sugerido** (passo 4); **Seguinte** no enquadramento e no IVA, que ficam com o sugerido (passos 5 e 6); os documentos e as séries do passo **4. Faturação certificada** e **Ir para o resumo**, sem preencher os passos 5 a 14 do assistente (passos 7 e 8); o resumo (passo 9); **Aplicar o que o resumo mostra** e **Confirmar** (passo 10); e **Verificar tudo agora**, com o **Semáforo** de cada área (passo 11). Não mostra **A empresa tem existências**, a escolha do enquadramento à mão, **Onde se emitem os recibos** nem os passos 5 a 14 do assistente. Na demonstração, a aplicação e a verificação demoraram cerca de 6 s e 30 s; no vídeo, essas esperas foram cortadas.
+
+<VideoTutorial src="/videos/configurar-uma-empresa-nova-2.mp4" captions="/videos/configurar-uma-empresa-nova-2.vtt" poster="/videos/configurar-uma-empresa-nova-2-poster.png" width="1440" height="1140" title="Aplicar o assistente e verificar a empresa" duration="33 s" />
+
+## Notas importantes
+
+<HelpCallout type="atencao" title="Modo de formação vem ligado">
+**Ligar o modo de formação?** vem marcado no passo 4. Cria um diário e uma série de formação: «Os documentos emitidos aí não são reais, têm numeração própria e nunca vão para a AT.» Serve para treinar. Nunca emita aí uma fatura a um cliente. Desmarque a opção se a empresa não precisa de treino.
+</HelpCallout>
+
+- As propostas do assistente (periodicidade do IVA, enquadramento, isenção do art. 53.º) são sugestões com a regra e a data em que entrou em vigor, na tabela **PORQUE É QUE O ASSISTENTE PROPÕE ISTO**. A escolha é sua, mas o enquadramento e a periodicidade que ficarem vazios passam a ser os sugeridos quando carrega em **Seguinte**: confira-os no resumo. A isenção do art. 53.º nunca se aplica sozinha. <span className="fd-pending">Pendente de validação por contabilista certificado: enquadramento contabilístico e periodicidade do IVA de cada empresa.</span>
+- O assistente nunca dá o perfil que entrega à AT nem o de administração máxima, e não deixa um auditor ter um perfil que altera dados: esses perfis dá-os um administrador ([Como dar a cada utilizador o perfil certo](/administration/perfis-e-permissoes)).
+- O contabilista certificado da empresa indica-se à parte: [Como indicar o contabilista certificado responsável](/administration/contabilista-certificado).
+
+## Problemas frequentes
+
+### «Já existe uma empresa com o NIF…» ao criar a empresa
+
+- **Sintoma:** na janela **Nova empresa cliente**, a janela **Operação inválida** diz: «Já existe uma empresa com o NIF *599999993* nesta base de dados. Não foi criado nada. Peça ao administrador que lhe dê acesso a ela em vez de a criar outra vez.»
+- **Causa:** a empresa já foi criada, por exemplo com um segundo clique em **Criar a empresa e começar a configuração** enquanto a primeira criação ainda corria, ou por outra pessoa.
+- **O que fazer:** carregue em **Fechar** e em **Cancelar**. Escolha a empresa no seletor de empresas e abra **Contabilidade › Configurar › Geral › Configurar a empresa**. Se a empresa não aparece no seletor, peça acesso ao administrador.
+
+### «Escolha o enquadramento contabilístico…» ao carregar em Seguinte
+
+- **Sintoma:** no passo 2, **Seguinte** abre a janela **Operação inválida**: «Escolha o enquadramento contabilístico (ou responda aos valores acima para receber uma sugestão). O SAF-T e as demonstrações dependem dele.»
+- **Causa:** o **Enquadramento contabilístico** está vazio e o assistente não tem sugestão, porque os valores do ano estão a zero. Com valores, **Seguinte** aceita a sugestão e não mostra esta janela.
+- **O que fazer:** carregue em **Fechar** e escolha o **Enquadramento contabilístico** (passo 5 deste artigo), ou escreva os valores do ano para receber a sugestão.
+
+### Seguinte não avança no passo 2 e o Método de inventário fica a vermelho
+
+- **Causa:** marcou **A empresa tem existências** sem escolher o **Método de inventário**. O ecrã não mostra mensagem: só pinta o campo.
+- **O que fazer:** escolha o método ou, se a empresa não tem existências, desmarque a opção.
+
+### A primeira fatura da empresa nova não confirma
+
+- **Causa:** antes do passo 4 a empresa não tem diário certificado; depois dele, as séries estão em rascunho até terem o código de validação.
+- **O que fazer:** veja as mensagens e a saída em [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada), em «Problemas frequentes».
+
+### A verificação final diz «Não está pronto» no SAF-T
+
+- **Sintoma:** na empresa do exemplo, «170 problemas que bloqueiam na contabilidade. O primeiro: 3 códigos de taxonomia candidatos correspondem ao código SNC desta conta — escolha um na conta (campo “Taxonomia”) antes de gerar».
+- **O que fazer:** carregue em **Abrir** nessa linha para ver a lista. A taxonomia de cada conta é uma escolha do contabilista certificado. O ficheiro SAF-T de faturação gera-se à parte: [Como gerar o ficheiro SAF-T de faturação](/fiscal-core/gerar-o-saft). <span className="fd-pending">Pendente de validação por contabilista certificado: taxonomia a escolher nas contas com mais de um código candidato.</span>

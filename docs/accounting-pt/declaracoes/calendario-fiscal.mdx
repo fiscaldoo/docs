@@ -1,0 +1,102 @@
+---
+id: calendario-fiscal
+slug: /accounting-pt/calendario-fiscal
+title: Como acompanhar os prazos das obrigações fiscais
+sidebar_label: Acompanhar os prazos (calendário fiscal)
+sidebar_position: 2
+description: Ver as obrigações fiscais e sociais de cada empresa com o prazo, os dias que faltam e o estado, marcar as cumpridas e anexar o comprovativo.
+keywords: [calendário fiscal, calendario fiscal, prazos, obrigações fiscais, obrigacoes fiscais, datas de entrega, o que há para fazer com as obrigações, o que ha para fazer com as obrigacoes, obrigações atrasadas, obrigacoes atrasadas, comprovativo, tipos de obrigação, tipos de obrigacao, DP IVA prazo, Modelo 22 prazo, IES prazo]
+doc_id: DOC-0158
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master d88933a51; revisto em 8bbfc8012)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/iva/declaracao-periodica-de-iva, accounting-pt/declaracoes/saft-de-contabilidade]
+---
+
+## Para que serve?
+
+O **Calendário fiscal** lista, empresa a empresa, as declarações e os pagamentos com prazo legal (DP IVA, retenções de IRS, Segurança Social, Modelo 22, IES…), com o dia-limite, os dias que faltam e o estado de cada um. Serve para ninguém deixar passar um prazo e para guardar a prova de que cada obrigação foi cumprida. O calendário não entrega nada à AT nem à Segurança Social: a entrega faz-se no portal de cada uma, e aqui marca-se que foi feita.
+
+## Quando utilizar?
+
+- No princípio de cada semana ou mês, para ver o que vence a seguir.
+- Depois de entregar uma declaração ou pagar um imposto, para a marcar como concluída e anexar o comprovativo.
+- Quando o quadro **O que há para fazer com as obrigações?** mostra obrigações atrasadas.
+- Não use o calendário como prova de que a empresa cumpriu tudo: ele só conhece as obrigações que a configuração da empresa gera (ver «Notas importantes»).
+
+## Onde encontrar?
+
+- **Contabilidade › Declarar › Autoridade Tributária › Calendário fiscal**: a lista completa.
+- **Contabilidade › Declarar › Autoridade Tributária › O que há para fazer com as obrigações?**: o resumo do mês, com os quadros **Obrigações pendentes**, **Obrigações em curso**, **Obrigações concluídas** e **Obrigações atrasadas** (um clique abre a lista de cada um).
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** ou **Contabilista certificado**. A **Gerência** vê o calendário e as obrigações, mas não tem os botões **Iniciar** nem **Marcar como concluída**. O perfil **Administrativo** não tem o calendário.
+- As declarações que o contabilista certificado assina (no teste, a DP IVA) só as marca como concluídas o perfil **Contabilista certificado**: o **Contabilista** inicia-as, mas não tem o botão **Marcar como concluída**.
+- As obrigações já existem: o Odoo cria-as a partir dos **Tipos de obrigação** e da configuração da empresa. Se a lista estiver vazia ou faltar um ano, carregue em **Gerar as obrigações** (passo 1).
+- O exemplo é a Empresa Demonstração, Lda a 31/10/2026, com o IVA mensal. No início (capturas dos passos 1 a 3): 74 obrigações em 2026, das quais 21 por concluir. Entre elas já está a 3.ª prestação do pagamento por conta do IRC, de dezembro de 2026, que o calendário cria sozinho (ver «Notas importantes»). No fim do percurso, com a DMR de setembro concluída (passo 5) e os pagamentos por conta calculados no Modelo 22 de 2026 ([Como calcular os pagamentos por conta do IRC](/accounting-pt/pagamentos-por-conta)): 76 obrigações, das quais 22 por concluir (21 − 1 + 2), contadas no ecrã com o filtro **Por concluir**. O cálculo só acrescenta a 1.ª e a 2.ª prestação, porque a 3.ª já estava na lista.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Declarar › Autoridade Tributária › Calendário fiscal**. A lista mostra **Tipo**, **Período**, **Prazo**, **Dias até ao prazo**, **Área** (**Fiscal** ou **Social (salários)**), **Perfil responsável**, **Responsável** e **Estado**, por ordem de prazo, a começar em janeiro. **Gerar as obrigações** cria as que faltam; com todas criadas, responde «Calendário fiscal. Nada a criar: as obrigações das empresas ativas já existem todas.».
+2. Abra **Filtros** e escolha **Por concluir**. Ficam só as obrigações que não estão concluídas (21 no exemplo, antes de concluir a DMR de setembro; 22 no fim do percurso), da mais antiga para a mais recente. As atrasadas aparecem a vermelho, com «Em atraso há 19 dias» no **Estado**; as outras dizem quantos dias faltam («A 10 dias»). Também há os filtros **A vencer em 7 dias**, **A vencer em 30 dias**, **Com o prazo ultrapassado**, **As minhas obrigações**, **Fiscal** e **Social (salários)**.
+   ![Lista do Calendário fiscal com o filtro Por concluir assinalado: a DMR e a confirmação da declaração da Segurança Social de setembro de 2026 a vermelho, com -19 e -11 dias, e a DP IVA mensal de setembro com prazo a 20/11/2026](/images/accounting-pt/calendario-fiscal/01-por-concluir.png)
+3. Abra a obrigação. No exemplo, **Declaração Periódica de IVA (DP IVA) — mensal**, de 01/09/2026 a 30/09/2026, com **Prazo** 20/11/2026, **Referência legal** «CIVA art. 41.º n.º 1 a) e b) (redação do DL 49/2025, em vigor desde 01/07/2025)» e 20 **Dias até ao prazo**. Quando o dia da lei cai num fim de semana, uma faixa azul explica a mudança, por exemplo «O dia da lei (10/10/2026) é um sábado, por isso o prazo passa ao primeiro dia útil seguinte, 12/10/2026 (CPPT art. 20.º n.º 1).».
+   ![Obrigação DP IVA mensal de setembro de 2026, com o botão Iniciar assinalado, o prazo 20/11/2026, a referência legal e 20 dias até ao prazo](/images/accounting-pt/calendario-fiscal/02-obrigacao-dp-iva.png)
+4. Quando começar a preparar a declaração, carregue em **Iniciar**: o estado passa de **Pendente** a **Em curso**. **Abrir a declaração** leva ao ecrã do Odoo onde ela se prepara (para a DP IVA de setembro, abriu **Declarações de IVA (DP IVA)**; ver [Como preparar a declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva)); **Acrescentar tarefa** cria uma tarefa ligada à obrigação.
+5. Depois de entregar no portal, carregue em **Marcar como concluída** (na DP IVA, com o perfil **Contabilista certificado**). O estado passa a **Concluída**, com **Concluída em** e **Concluída por**; se o prazo já tinha passado, fica marcada **Concluída depois do prazo**.
+6. Em **COMPROVATIVO**, carregue em **Escolher ficheiro** no **Comprovativo (PDF)** e escolha o PDF que descarregou do portal; num imposto a pagar, junte também a **Guia de pagamento (PDF)**. O Odoo guarda o ficheiro com a data, quem o anexou e o SHA-256.
+
+</StepByStep>
+
+## Resultado esperado
+
+- A obrigação fica **Concluída**, sai do filtro **Por concluir** e conta em **Obrigações concluídas** do quadro do mês («Cumpridas este mês»). No exemplo, a DMR de setembro de 2026, concluída a 31/10/2026 com o prazo a 12/10/2026, ficou com **Concluída depois do prazo** marcada.
+- Enquanto não houver comprovativo, a ficha mostra «Esta obrigação está concluída mas falta o comprovativo. Descarregue o PDF do Portal e anexe-o abaixo; este calendário nunca se liga ao Portal.», o responsável recebe a atividade «Anexar o comprovativo de …» e a obrigação aparece no filtro **Concluída sem comprovativo**.
+- Se se enganou, **Reabrir** volta a pôr a obrigação por concluir (no teste, a DMR voltou a **Atrasada**). Depois de anexar o **Comprovativo (PDF)**, a faixa do comprovativo desaparece e a ficha mostra o **SHA-256 do comprovativo**, **Comprovativo anexado em** e **Comprovativo anexado por**.
+
+## Notas importantes
+
+- **O que o calendário não vê.** Só tem as obrigações que a configuração da empresa gera. Numa empresa sem **Periodicidade do IVA** (testado a 31/10/2026 na segunda empresa da base, sem atividade) há só o Modelo 22, o Pagamento do IRC, a IES de 2026 e a 3.ª prestação do pagamento por conta do IRC: nem DP IVA, nem retenções, nem SAF-T de contabilidade. O calendário cria sozinho a prestação do pagamento por conta do IRC que ainda não venceu, sem esperar pelo Modelo 22: a 31/10/2026, a 3.ª, com o prazo a 15/12/2026. Cria-a também numa empresa que pode não a dever: as duas empresas de teste da base não têm Modelo 22 de nenhum ano anterior e têm a 3.ª prestação na lista. O primeiro ano de atividade, por exemplo, não tem pagamentos por conta. Só o cálculo no Modelo 22 diz se a prestação é devida e quanto vale ([Como calcular os pagamentos por conta do IRC](/accounting-pt/pagamentos-por-conta)). Antes de pagar ou de marcar como concluída uma prestação que o Modelo 22 não calculou, confirme com o contabilista certificado se a empresa a deve. Confirme com o contabilista certificado a lista de obrigações de cada empresa. <span className="fd-pending">Pendente de validação por contabilista certificado: obrigações declarativas e prazos de cada empresa; quando uma empresa deve os pagamentos por conta do IRC (CIRC, art. 105.º).</span>
+- **Ver o que falta por área.** No menu da pesquisa, em **Favoritos**, **Agenda por área** mostra só o que não está concluído, agrupado por **Área** (**Fiscal** e **Social (salários)**) e, dentro de cada uma, por **Perfil responsável**. A 08/11/2026, com o perfil **Contabilista**: **Fiscal** 15 registos, todos com o perfil **Responsável fiscal**, e **Social (salários)** 15 registos. Junte **As minhas obrigações** ou **Com o prazo ultrapassado** para estreitar.
+- **Marcar não é entregar.** **Marcar como concluída** não comunica nada; **Abrir o Portal das Finanças** só abre o portal no navegador. Marque depois de ter o comprovativo da entrega.
+- **Avisos antes do prazo.** O responsável recebe uma atividade interna alguns dias antes do prazo (o número de dias é do **Tipo de obrigação**); só a recebe por e-mail se escolheu «Por e-mail» nas preferências de notificação.
+- **O «Perfil responsável» não limita quem marca.** No teste, o perfil **Contabilista** concluiu uma DMR com **Perfil responsável** «Processador de salários». Combine na equipa quem marca o quê.
+
+{/* Nota interna (DOCS-021, DOC-0158, defeitos novos B1-31 e B1-32): Responsável das obrigações da demonstração = «Accounting Manager Test» (utilizador de teste nos dados de demonstração); pagamentos por conta de IRC só depois de Calcular no Modelo 22 (B1-32, resolvido pelo CAL-010 no comboio 108: ver a nota seguinte); Marcar como concluída não respeita o Perfil responsável; a DMR concluiu-se com o Contabilista, embora o comentário SEC-028 da vista diga que a DMR é declaração só do CC. DP IVA setembro 2026 ficou «Em curso» (Iniciar no teste). Comprovativo de teste anexado à DMR de setembro. Exemplo: DMR setembro 2026 concluída pelo Contabilista a 29/10/2026 sem comprovativo. Empresa vazia: Empresa Teste Filial (COMMUNITY), 3 obrigações anuais. */}
+
+{/* Nota interna (retoma da ronda única, DEC-1535; 31/10/2026, master 27cebe13a, base docs_demo_ronda2_test, administrador com a Empresa Teste Filial ativa, Periodicidade do IVA vazia e regime normal): Gerar as obrigações respondeu «Calendário fiscal. Nada a criar: as obrigações das empresas ativas já existem todas.» e a lista tem 4 obrigações: Pagamento por conta de IRC - 3.ª prestação (dezembro 2026, prazo 15/12/2026, criada pelo CAL-010 #3456 na atualização), Modelo 22, Pagamento do IRC e IES de 2026. Na Empresa Demonstração, Lda, a mesma 3.ª prestação apareceu (74 obrigações, 21 por concluir na cópia da base-mãe). As contagens do exemplo foram refeitas na correção da auditoria (nota seguinte). */}
+
+{/* Nota interna (correção da auditoria única, RU-05 e RU-06; 31/10/2026, master 8bbfc8012, base docs_demo_corru_test, cópia da base-mãe): contagens refeitas no ecrã com o Gestor de contabilidade (Contabilista Certificado / Gestor fiscal): à partida 74 e 21 por concluir (a 3.ª prestação e a «Segurança Social — confirmação da declaração» de setembro, 20/10/2026, «Em atraso há 11 dias», estão na lista); a DMR de setembro concluída pelo Contabilista (Concluída em 31/10/2026, Concluída depois do prazo) deixa 74 e 20; o Modelo 22 de 2026 criado no ecrã (Declaração de IRC (Modelo 22) › Novo, Exercício 2026; a base-mãe só tinha o de 2025) e Calcular pagamentos por conta deram a 1.ª (31/07/2026, «Em atraso há 92 dias») e a 2.ª (30/09/2026, «Em atraso há 31 dias»): 76 e 22. Capturas 01 e 02 refeitas nesse dia (a 02 mostra agora o Responsável «Gestor de contabilidade (demonstração)» e o botão Marcar como concluída já no estado Pendente). A 3.ª prestação nas empresas sem Modelo 22 anterior (Empresa Teste Portugal e Empresa Teste Filial, vista por RPC só de leitura) é o defeito PD-AUD-RU-02, em pergunta ao contabilista certificado (DEC-1544): rever a nota sobre as prestações quando houver resposta. */}
+
+## Problemas frequentes
+
+### A lista começa em janeiro e não vejo o que vence agora
+
+- **Causa:** a lista abre sem filtro, por ordem de prazo, com as obrigações já entregues primeiro.
+- **O que fazer:** em **Filtros**, escolha **Por concluir** ou **A vencer em 30 dias**.
+
+### Falta uma obrigação que a empresa tem
+
+- **Causa:** a configuração da empresa não a gera (por exemplo, sem **Periodicidade do IVA** não há DP IVA) ou o ano ainda não foi gerado.
+- **O que fazer:** carregue em **Gerar as obrigações**. Se responder «Nada a criar», peça ao Contabilista certificado que confira a configuração da empresa e os **Tipos de obrigação**.
+
+### A obrigação está concluída mas continua a pedir o comprovativo
+
+- **Causa:** foi marcada sem o PDF.
+- **O que fazer:** anexe o **Comprovativo (PDF)** na secção **COMPROVATIVO** (passo 6). A atividade «Anexar o comprovativo de …» marca-se como feita depois.
+
+### «Esta empresa já tem esta obrigação para este período»
+
+- **Sintoma:** ao guardar uma obrigação criada com **Novo**, janela **Erro de Validação**: «A operação não pode ser concluída: Esta empresa já tem esta obrigação para este período: abra a que existe na lista em vez de a criar outra vez.» (no teste, a DP IVA mensal de setembro de 2026, com o perfil **Contabilista**; nada foi gravado).
+- **O que fazer:** feche a janela, descarte a ficha nova e abra a obrigação que já está na lista.
+
+### «Não há regra de prazo em vigor para este período»
+
+- **Sintoma:** numa obrigação nova, a faixa «Não há regra de prazo em vigor para este período, por isso a data não foi preenchida. Preencha o prazo à mão ou crie a regra no tipo de obrigação.» aparece enquanto o **Tipo** e as datas do período não dão um prazo.
+- **O que fazer:** escolha o **Tipo** e o período. Se o prazo continuar vazio, preencha-o à mão ou peça a regra de prazo no **Tipo de obrigação**.

@@ -1,0 +1,78 @@
+---
+id: registo-de-auditoria
+slug: /administration/registo-de-auditoria
+title: Como ver quem exportou, importou ou alterou dados
+sidebar_label: Registo de auditoria
+sidebar_position: 2
+description: Abrir o registo de auditoria, agrupado por tipo de evento, para ver quem fez uma operação sensível, quando e em que empresa.
+keywords: [registo de auditoria, quem alterou, quem exportou, quem importou, auditoria, eventos, pista de auditoria, cofre, apuramento de IVA]
+doc_id: DOC-0318
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master d7b8279e9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/seguranca-e-arquivo/cofre-de-credenciais, administration/seguranca-e-arquivo/copias-de-seguranca]
+---
+
+## Para que serve?
+
+O registo de auditoria guarda as operações sensíveis: quem fez, quando, sobre que registo e em que empresa. Responde a «quem apagou isto?» e «quem abriu aquela credencial do cofre?».
+
+## Quando utilizar?
+
+- Quando um valor mudou e ninguém sabe quem o alterou.
+- Para mostrar a um auditor quem criou ou abriu credenciais do cofre, ou quem fez um apuramento de IVA.
+- Para ver as operações recusadas: **Bloqueado: alteração**.
+
+## Onde encontrar?
+
+**Auditoria › Registos › Registo de auditoria**.
+
+## Antes de começar
+
+O seu perfil é **Contabilista certificado**, **Auditor / ROC** ou **Gerência**, ou é o administrador do sistema: todos têm a aplicação **Auditoria**. Feito a 8 de novembro de 2026, na `Empresa Demonstração, Lda`.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Auditoria › Registos › Registo de auditoria**. A lista abre agrupada por **Tipo de evento**, com o número de registos de cada um.
+2. Carregue num tipo, por exemplo **Apuramento de IVA registado**, para ver as linhas: **Data/hora**, **Evento**, **Modelo auditado**, **ID do registo auditado**, **Utilizador**, **Origem** e **Empresa**.
+3. Para outro tipo, use a pesquisa ou o **Filtros** e **Agrupar por**.
+
+</StepByStep>
+
+## Resultado esperado
+
+A lista mostra os registos da empresa escolhida no canto superior direito. Na demonstração abre com 49 grupos (um por tipo de evento): o número à frente de cada tipo é o dos registos, e o contador do canto superior direito («1-49 / 49») conta os tipos, não os registos. Entre os tipos estão **Apuramento de IVA registado** (8 registos) e **Declaração de IVA criada** (12). As contagens mudam com o uso da base: não as use como valor de referência.
+
+Os tipos só aparecem depois de acontecer pelo menos um evento desse tipo:
+
+- **Bloqueado: alteração** aparece quando o programa recusa uma alteração a um documento certificado, com a mensagem «O documento certificado “…” não pode ser alterado: só são editáveis as notas internas, os anexos, as mensagens e as atividades…». No ecrã, os campos de um documento certificado já vêm bloqueados (na demonstração, a data da fatura `FT D26/30` não se deixa mudar), por isso este tipo pode não aparecer na sua lista.
+- Os tipos do cofre: **Cofre: permissão alterada** (o início do cofre e cada permissão dada ou mudada), **Cofre: segredo criado** (uma credencial guardada), **Cofre: segredo consultado** (cada vez que alguém abre uma credencial; a senha não aparece, nem a quem a abre) e **Cofre: acesso recusado** (cada recusa do cofre: a linha diz quem, quando, a empresa e o ecrã tocado; ao abrir uma credencial sem a permissão **Ver**, e também quando alguém tenta pesquisar as credenciais pelo segredo (em **Filtro personalizado...**) ou ler o segredo com um programa ligado ao fiscaldoo, **Modelo auditado** diz «Entrada do cofre de credenciais» e, ao abrir a linha, **Motivo** diz o que se tentou, por exemplo «Tentativa de pesquisar credenciais pelo segredo»; o segredo nunca fica no registo). A pesquisa pelo segredo é recusada a todos, do administrador a quem não tem nenhuma permissão no cofre, e fica sempre registada. {/* Nota interna (lote v23-AQ, depois do comboio 175 com o SEC-117 v2, master d277b0e80, docs_demo_v23aq_test): as duas linhas provocadas por RPC (Contabilista certificado e administrador) e lidas em Auditoria › Registos › Registo de acessos pelo administrador; ver a nota do cofre-de-credenciais. */} Para ver só estes, use **Auditoria › Registos › Registo de acessos**.
+
+Ao abrir uma linha, a ficha mostra o evento (**Evento**, **Data/hora**, **Utilizador**, **Origem**, **Empresa**), o **REGISTO AUDITADO** (**Modelo auditado** com o nome do ecrã, **Registo (na data do evento)**, **Abrir registo** e **Motivo**) e **VALORES**, com o que mudou ou o que se tentou. Na tentativa de pesquisar o cofre pelo segredo, feita no ecrã por um utilizador com o perfil **Contabilista certificado**, o **Modelo auditado**, o **Motivo** e os **VALORES** estão em linguagem corrente, e a **Origem** diz **RPC**:
+
+![Ficha de uma linha Cofre: acesso recusado: Modelo auditado Entrada do cofre de credenciais, Motivo Tentativa de pesquisar credenciais pelo segredo e, em VALORES, Ecrã: Entrada do cofre de credenciais e Campo: Palavra-passe / segredo](/images/administration/registo-de-auditoria/01-linha-cofre-acesso-recusado.png)
+
+{/* Nota interna (lote v23-AS, depois do comboio 177 com o SEC-120, master d7b8279e9, docs_demo_v23as_test, 09/11/2026): por clique, em Contabilidade › Configurar › Cofre de credenciais › Credenciais, Filtro personalizado..., campo Palavra-passe / segredo, com um utilizador só com o perfil Contabilista certificado, sem nenhuma permissão no cofre, e com o administrador: os dois receberam a mensagem citada. A tentativa do Contabilista certificado ficou em Auditoria › Registos › Registo de acessos (Cofre: acesso recusado), lida por clique com um utilizador só com o perfil Auditor / ROC: Modelo auditado «Entrada do cofre de credenciais», Motivo citado e, em VALORES, «Ecrã: Entrada do cofre de credenciais» e «Campo: Palavra-passe / segredo». A recusa sem linha no registo do lote v23-AQ e o nome técnico no Modelo auditado já não se reproduzem. */}
+
+## Notas importantes
+
+- **O registo mostra o evento, não o conteúdo.** O segredo do cofre nunca aparece aqui, e não há nenhum tipo de evento para «ver a senha»: o cofre não a mostra a ninguém (veja [Como guardar senhas de portais no cofre de credenciais](/administration/cofre-de-credenciais)).
+- **O histórico de um documento impresso** tem outro caminho: no PDF, o **Histórico do documento** (botão **Imprimir** do documento).
+
+## Problemas frequentes
+
+### Não vejo o menu Auditoria
+
+- **Causa:** o seu perfil não tem a aplicação **Auditoria**. O **Contabilista**, o **Administrativo**, o **Processador de salários**, o **Gestor de RH** e o **Trabalhador** não a têm.
+- **O que fazer:** peça ao administrador. Veja também [Perfis e permissões](/administration/perfis-e-permissoes).
+
+{/* Nota interna (lote v23-V2, #3740 req. 46472 e #4052 DOCS-069, master cebcb888d, docs_demo_v23vinv_test, porta 8464): acertado pelo ecrã de hoje depois do SEC-115. Com o administrador na Empresa Demonstração, Lda: Auditoria › Registos tem Pista de auditoria, Registo de auditoria, Registo de acessos e Acessos a dados sensíveis; o Registo de auditoria abriu com 49 grupos (Apuramento de IVA registado 8, Declaração de IVA criada 12, sem «Bloqueado: alteração» até à recusa provocada por RPC: invoice_date da FT D26/30, mensagem citada; o registo 1423 ficou com esse tipo). Cofre iniciado e uma credencial fictícia guardada e aberta: Cofre: permissão alterada 1, segredo criado 1, segredo consultado 2, no Registo de auditoria e no Registo de acessos (3 grupos). Os registos de outra empresa (Empresa Teste Portugal) não entram na lista da Empresa Demonstração. Já não há «segredo revelado» a citar. Perfis com utilizadores criados só com o campo Perfil (DEC-1777): Contabilista certificado e Auditor / ROC veem a aplicação Auditoria e o Registo de auditoria (49 grupos); Contabilista não tem a aplicação. Auditoria docs-aud-v23v2 (mesma cópia, utilizadores novos só com o Perfil): a Gerência também tem a aplicação Auditoria e o Registo de auditoria; Administrativo, Processador de salários, Gestor de RH e Trabalhador não a têm; a data de uma fatura certificada não se edita no ecrã (a recusa só se provoca por fora do ecrã). */}
+
+{/* Nota interna (DOCS-040, lote F4, corrigido na ronda F-cor, NF4-06): visto com demo.gestor_contabilidade no master ba9c8bd7: 58 grupos e 1.169 registos (soma dos grupos); as contagens dependem dos testes feitos na base. A abertura da lista e os totais por tipo foram lidos; as linhas de um tipo e a pesquisa não foram percorridas. Alguns tipos aparecem em inglês («Holiday calendar changed», «Holiday created»): defeito de tradução a reportar ao Gestor. A afirmação sobre o Histórico do documento no PDF vem do mapeamento (FC-BASE-003) e não foi vista. Purgar registos expirados (FC-BASE-039) não existe como menu na demonstração. */}
+
+{/* Nota interna (lote v23-AB, master 97b34fac3, docs_demo_v23ab_test, porta 8480, utilizadores criados só com cada valor do campo Perfil): «Cofre: acesso recusado» visto em Auditoria › Registos › Registo de acessos depois das recusas do cofre (SEC-116). */}

@@ -1,0 +1,161 @@
+---
+id: cessoes-de-salario
+slug: /payroll-pt/cessoes-de-salario
+title: Como processar cessões de salário e entregar aos credores
+sidebar_label: Cessões de salário
+sidebar_position: 3
+description: Registar a parte do salário que um trabalhador cedeu a um terceiro, descontá-la no recibo, pagar ao credor e registar a entrega.
+keywords: [processar, cessões, cessoes, salário, salario, entregar, credores, cessão de salário, cessao de salario, cessionário, cessionario, entregas das cessões de salário, entregas das cessoes de salario, acerto com credores, credores sem contacto, art. 280]
+doc_id: DOC-0219
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/descontos-e-cessoes/penhoras, payroll-pt/descontos-e-cessoes/quotas-sindicais, payroll-pt/configurar/contabilizar-os-salarios, payroll-pt/processar-e-pagar/pagar-os-salarios]
+---
+
+## Para que serve?
+
+Um trabalhador pode ceder a um terceiro parte do salário, por escritura ou contrato. O fiscaldoo guarda essa cessão, desconta o valor em cada recibo e mostra o que falta entregar a quem o recebe. Não envia nada ao credor: o pagamento e o registo da entrega são passos seus.
+
+## Quando utilizar?
+
+- Quando o trabalhador lhe entrega uma escritura ou um contrato em que cede parte da retribuição.
+- Todos os meses, depois de validar os recibos, para pagar ao credor e registar a entrega.
+- Quando a cessão acaba.
+- Não use para uma ordem de um tribunal ou de um agente de execução: isso é uma [penhora](/payroll-pt/penhoras). Nem para um empréstimo da própria empresa: veja [adiantamentos e descontos](/payroll-pt/adiantamentos-e-descontos).
+
+## Onde encontrar?
+
+- Cessões: **Salários › Processar › Cessões de salário e rendimentos em espécie › Cessões de salário**, ou, na ficha do trabalhador, **⋮** › **Cessões de salário**.
+- O que há para entregar: **Salários › Pagar › Entregas das cessões de salário**.
+- Pagar ao credor: **Salários › Pagar › Acerto com credores**.
+- Credores por completar: **Salários › Configurar › Empresa › Controlos e listas › Credores sem contacto**.
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador. O **Processador de salários** vê as cessões, mas não tem **Novo**.
+- Tem a escritura ou o contrato assinado pelo trabalhador, em ficheiro.
+- O trabalhador já tem um recibo calculado: é nele que o fiscaldoo vê quanto se pode ceder.
+- O credor existe em **Contactos**. Se não existir, peça a quem tem o perfil **Contabilista** para o criar em **Contactos**, com **Novo**. Hoje, com o acesso **Administrador de Salários**, a lista não tem **Novo** e o campo da cessão não oferece a criação.
+- A rubrica **Cessão de retribuição** tem modelo de contabilização. Na empresa de demonstração já tem: **Conta a débito** 231290, **Conta a crédito** 2781 e **Parceiro** **Outro terceiro**. Se a sua empresa não o tiver, crie-o como explica [Como contabilizar o processamento](/payroll-pt/contabilizar-os-salarios).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Salários › Processar › Cessões de salário e rendimentos em espécie › Cessões de salário**, carregue em **Novo**. Preencha **Trabalhador**, **Cessionário** (quem recebe), **Escritura ou contrato** (a referência), **Cedido por mês** e **De**. Só preencha **Até** se o contrato tiver fim.
+2. Em **Documento da cedência**, carregue o ficheiro. Em **Contacto do cessionário (contabilidade)**, escolha o credor. Carregue em **Guardar**. A cessão fica em **Rascunho**.
+3. Carregue em **Ativar**. O estado passa a **Ativo** e **Cedido por mês** deixa de se poder alterar.
+   ![Cessão ativa de 150,00 € por mês à Financeira do Norte, S.A., desde 01/11/2026, com o contrato anexado](/images/payroll-pt/cessoes-de-salario/01-cessao-ativa.png)
+4. No recibo do mês, carregue em **Calcular**. A linha **Cessão de retribuição** entra sozinha, nos descontos. Carregue em **Validar**: o valor aparece em **Salários › Pagar › Entregas das cessões de salário**, com o **Estado da entrega** **A entregar**. A lista abre com o filtro **A entregar**.
+   ![Linhas do recibo de novembro: Retribuição base, Subsídio de alimentação e Cessão de retribuição de 150,00 €](/images/payroll-pt/cessoes-de-salario/02-recibo-com-a-cessao.png)
+5. Carregue em **Contabilizar**. O lançamento credita a conta 2781 com o contacto do credor.
+6. Abra **Salários › Pagar › Acerto com credores**. Abre-se uma janela com uma linha por credor, **todas marcadas**. Desmarque em **Pagar** as que não vai pagar agora: o **Líquido a pagar ao trabalhador**, a **Autoridade Tributária** e a **Segurança Social** têm o seu próprio caminho. Confira **Diário de banco ou caixa**, **Data do pagamento** e **Pagar agora**, e carregue em **Registar pagamento**.
+   ![Janela Acerto com credores com quatro linhas, entre elas a entrega de 150,00 € à Financeira do Norte, S.A.](/images/payroll-pt/cessoes-de-salario/03-acerto-com-credores.png)
+7. Em **Salários › Pagar › Entregas das cessões de salário**, clique na linha e preencha **Entregue em** (escreva a data, por exemplo `30/11/2026`) e **Referência da entrega**. Guarde na própria lista. O **Estado da entrega** passa a **Entregue** e, da próxima vez que abrir a lista, a linha já não aparece no filtro **A entregar**: para a ver, retire o filtro.
+   ![Entrega de 150,00 € à Financeira do Norte, S.A. com o Estado da entrega Entregue, Entregue em 30/11/2026 e a referência Transferência de 30/11/2026](/images/payroll-pt/cessoes-de-salario/04-entrega-registada.png)
+8. Quando a cessão acabar, abra-a e carregue em **Terminar a cessão**. O estado passa a **Terminados** e, ao carregar em **Calcular** no recibo seguinte, a linha sai.
+
+</StepByStep>
+
+**Se a cessão não couber no recibo.** A cessão entra até onde a parte penhorável chega, e o que falta não passa para o mês seguinte sozinho. O recibo avisa, e **Como foi calculado?** da linha repete as contas. Num trabalhador cuja retribuição desceu para 1.000,00 €, a cessão de 300,00 € ficou a 0,00:
+
+> «A cessão de retribuição a «*Financeira do Norte, S.A.*» (*300,00 €* por mês) foi descontada só em parte no recibo de *Fábio Nuno Carvalho*: *0,00 €* descontados e *300,00 €* por descontar, porque a parte penhorável (CT art. 280.º), depois das penhoras, já não tem margem. Como resolver: confirme as penhoras e o valor da cessão; o recibo não desconta mais do que a parte penhorável permite.»
+
+**Exemplo.** Na demonstração, Bruno Miguel Teixeira (1.650,00 € de retribuição base) cede 150,00 € por mês à Financeira do Norte, S.A., desde 01/11/2026. O contacto não vem na demonstração: foi criado pelo **Contabilista**, como em «Antes de começar». O último recibo dele, o de setembro de 2026, tinha uma parte penhorável de 344,50 €, por isso a cessão foi aceite. Para ter o recibo de novembro, em **Salários › Processar › Recibos de vencimento** carregue em **Novo**, escolha o **Trabalhador**, escreva o período de `01/11/2026` a `30/11/2026`, guarde e siga os passos 4 e 5. O recibo de novembro de 2026 ficou com:
+
+| Linha | Valor |
+| --- | --- |
+| Retribuição base e subsídio de alimentação | 1.779,15 € |
+| IRS retido | −102,00 € |
+| Segurança Social do trabalhador | −181,50 € |
+| Cessão de retribuição | −150,00 € |
+| **Líquido** | **1.345,65 €** |
+
+Lançamento do recibo, na parte da cessão, conferido no razão:
+
+| Conta | Débito | Crédito | Contacto |
+| --- | --- | --- | --- |
+| 231290 Remunerações em processamento | 150,00 € | | |
+| 2781 Outros devedores e credores (CORRENTE) | | 150,00 € | Financeira do Norte, S.A. |
+
+Pagamento ao credor, depois de **Registar pagamento**:
+
+| Conta | Débito | Crédito | Contacto |
+| --- | --- | --- | --- |
+| 2781 Outros devedores e credores (CORRENTE) | 150,00 € | | Financeira do Norte, S.A. |
+| 120003 Pagamentos Pendentes | | 150,00 € | Financeira do Norte, S.A. |
+
+A linha da conta 2781 do recibo fica saldada com a do pagamento.
+
+## No Enterprise
+
+No Odoo Enterprise, as cessões tratam-se da mesma maneira, com os mesmos menus: com o acesso extra **Administrador de Salários**, a lista tem **Novo** e a ficha **Ativar**; o **Processador de salários** vê a lista sem **Novo**. O perfil **Contabilista** cria o credor em **Contactos**, com **Novo**.
+
+Com a cessão do exemplo, o recibo de novembro de 2026 de Bruno Miguel Teixeira dá o mesmo líquido de 1.345,65 €. **Contabilizar** credita 150,00 € na conta 2781, com o contacto **Financeira do Norte, S.A.**, e a entrega fica **A entregar** em **Entregas das cessões de salário**. A segunda cessão de 5.000,00 € é recusada com os mesmos 296,50 €. **Acerto com credores** abre a mesma janela, com uma linha por credor.
+
+{/* Nota interna (lote EE-09, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 12/11/2026): conferido numa cópia local da base Enterprise (docs_ee_ee09_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Administrador de Salários: lista e Novo (Ativar), Entregas (filtro A entregar), Acerto com credores (janela com as linhas da AT e da Segurança Social da demonstração) e Credores sem contacto por clique; Processador sem Novo; Contabilista com Novo em Contactos. Contacto criado com os direitos do Contabilista; cessão, recusas, recibo, validação e contabilização com os direitos do Administrador de Salários, numa transação desfeita (nada ficou na base): linhas 1.779,15/−102,00/−181,50/−150,00, líquido 1.345,65; 2781 a crédito 150,00 com o contacto; o débito está na linha agregada da conta 231290. O registo do pagamento ao credor não foi refeito no Enterprise. O caminho de Credores sem contacto passou a ter o grupo «Controlos e listas» (o verificador dava 1 erro, nas duas edições). Menus e vistas destes ecrãs comparados, perfil a perfil, com uma cópia da demonstração Community (docs_demo_ee09_test, 2c8d358c0, porta 8524): iguais. Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-09.md. */}
+
+## Resultado esperado
+
+- A cessão está **Ativo**, com o documento anexado.
+- Cada recibo validado acrescenta uma linha em **Entregas das cessões de salário**.
+- Depois do pagamento, o credor sai de **Acerto com credores**, e a linha da entrega mostra a data, a referência e o **Estado da entrega** **Entregue**.
+- Confira o que falta entregar pelo filtro **A entregar**, e as entregas feitas pela coluna **Entregue em**. A lista só mostra as entregas de recibos que não foram anulados.
+
+## Notas importantes
+
+- **O limite.** O trabalhador só pode ceder crédito a retribuição, a título gratuito ou oneroso, «na medida em que o mesmo seja penhorável» (Código do Trabalho, art. 280.º, texto lido na PGDL a 04/11/2026). O cálculo da parte penhorável está em [Como aplicar uma penhora de salário](/payroll-pt/penhoras).
+- **Quando se verifica.** Ao carregar em **Ativar**, com o último recibo do trabalhador, descontando as penhoras ativas e as outras cessões ativas.
+- **As penhoras vêm primeiro.** A cessão só desconta o que as penhoras deixarem. No exemplo, com uma penhora de 344,50 € em dezembro, a linha da cessão ficou a 0,00 €. Confira esta linha sempre que chegar uma penhora. <span className="fd-pending">Pendente de validação no ecrã: o aviso do recibo com o valor que ficou por descontar.</span>
+- **Sem IRS nem Segurança Social.** A linha é um desconto: não muda a base do IRS nem da Segurança Social.
+- **Credores:** a lista **Credores sem contacto** mostra de uma vez as cessões, as penhoras e os sindicatos sem contacto.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: as contas 231290 e 2781 no modelo de contabilização da rubrica; ficar a cessão fora do limite de um sexto do art. 279.º, n.º 3, do Código do Trabalho (o artigo não a refere); e o que ficou por descontar num mês não passar para o seguinte.</span>
+
+## Problemas frequentes
+
+### Ao ativar: «não tem documento»
+
+- **Mensagem:** «A cedência de … não tem documento. O que aconteceu: os salários só deduzem uma cedência que tenha por base a escritura ou contrato assinado pelo trabalhador, para que a dedução possa ser justificada. Como resolver: anexe o documento em «Documento da cedência» e ative de novo.»
+- **O que fazer:** carregue o ficheiro, guarde e carregue de novo em **Ativar**.
+
+### Ao ativar: a cessão é recusada pelo valor
+
+- **Mensagem:** «A cessão de … é recusada: 5.000,00 por mês é mais do que a parte penhorável que resta (296,50). O que aconteceu: o art. 280.º do CT só deixa ceder crédito de retribuição na medida em que seja penhorável; a parte penhorável do último recibo é 446,50, da qual 150,00 já está ocupada por penhoras (máximos mensais) e outras cessões. Como resolver: baixe o valor para 296,50, no máximo.» (No exemplo, uma segunda cessão de Bruno Miguel Teixeira, depois do recibo de novembro e com a cessão de 150,00 € já ativa.)
+- **O que fazer:** fale com o trabalhador. Se o contrato pede mais do que o limite, a empresa só pode descontar até ao valor indicado.
+
+### Ao ativar: «o trabalhador não tem recibos»
+
+- **Mensagem:** «A cessão de … não se pode verificar: o trabalhador não tem recibos. […] Como resolver: calcule primeiro um recibo do trabalhador.»
+- **O que fazer:** calcule um recibo e carregue de novo em **Ativar**.
+
+### Ao guardar: as datas ou o valor são recusados
+
+- **Mensagens:** «A cessão termina antes de começar. Como resolver: corrija «De» ou «Até».» e «A operação não pode ser concluída: O valor cedido tem de ser superior a zero. Como resolver: corrija «Cedido por mês».»
+- **O que fazer:** corrija o campo indicado.
+
+### Ao contabilizar: «não têm contacto de contabilidade»
+
+- **Mensagem:** «Estes credores não têm contacto de contabilidade: … O que aconteceu: o valor retido é devido a um terceiro e o lançamento credita a conta desse terceiro com o seu parceiro; sem ele os credores misturavam-se e não se saldavam um a um. Como resolver: preencha o contacto em cada um […] e contabilize de novo.»
+- **O que fazer:** veja quem falta em **Credores sem contacto**. Abra a cessão em **Salários › Processar › Cessões de salário e rendimentos em espécie › Cessões de salário**, preencha **Contacto do cessionário (contabilidade)**, guarde e contabilize de novo.
+
+### Ao contabilizar: «Contabilização bloqueada»
+
+- **Mensagem:** «Contabilização bloqueada: 1 rubrica(s) com valor não têm modelo de contabilização em 30/11/2026: Cessão de retribuição. […]»
+- **O que fazer:** crie o modelo da rubrica (ver [Antes de começar](#antes-de-começar)) e contabilize de novo.
+
+### A linha da cessão vem a 0,00 €
+
+- **Causa:** as penhoras ativas ocupam a parte penhorável do mês.
+- **O que fazer:** avise o trabalhador e o credor, porque nesse mês não há entrega.
+
+{/* Nota interna (lote v23-AR, #4052, master d277b0e80, docs_demo_v23ar_test, porta 8508, PAY-104b): por clique com demo.admsalarios (acesso Administrador de Salários): cessão de Bruno Miguel Teixeira (1.650,00 €) criada e ativada (parte penhorável do recibo de setembro 344,50 €); recibo de novembro criado, calculado (Retribuição base 1.650,00, Subsídio de alimentação 129,15, Cessão de retribuição 150,00), validado (líquido 1.345,65 €) e contabilizado (SAL/2026/00005: 231290 D 150,00 / 2781 C 150,00 com a Financeira do Norte, S.A., modelo da rubrica já na base-mãe); lista das entregas com a coluna Estado da entrega «A entregar» e o filtro A entregar; Entregue em escrito à mão (30/11/2026) e Referência guardados na lista: «Entregue» (captura 04). Recusas por clique: valor zero, datas trocadas, sem documento e valor acima da parte penhorável (segunda cessão, depois apagada). O contacto Financeira do Norte, S.A. foi criado por RPC (administrador). Passo 6 (Acerto com credores) não refeito neste lote. */}
+{/* Nota interna (DOCS-046, lote v13-PAY2, master cf8052b9e): por clique com Administrador de Salários: 5 recusas da cessão, ativação, recibo, Fim e recalcular; contacto criado com Contabilista; modelo da rubrica criado por clique; acerto e entrega por clique. Penhora de dezembro criada por RPC, só para o caso de falta de parte penhorável. Defeitos no relatório do lote: Abrir registo em Credores sem contacto, erro de acesso no acerto, estado da entrega, 0,00 € sem aviso, contacto sem criação. */}
+
+{/* Nota interna (lote v23-BE, depois do comboio 188 com o I18N-041 #4146, master 7a46de91a, docs_demo_v23be_test, porta 8504): o botão «Fim» passou a «Terminar a cessão». Cessão de Bruno Miguel Teixeira (150,00 €, Financeira do Norte, S.A., 01/11/2026) e o contacto criados por RPC na cópia; Ativar e Terminar a cessão por clique com o Administrador de Salários da demonstração → Terminados; captura 01 refeita. O resto do artigo não foi percorrido. */}
+
+{/* Nota interna (DOCS-075, lote v23-BJ, master 7f41ce71b, docs_demo_v23bj_test): na Empresa Demonstração a conta 120003 chama-se Pagamentos Pendentes e a 2781 Outros devedores e credores (CORRENTE) (lidas por RPC na cópia, sem novo pagamento). */}

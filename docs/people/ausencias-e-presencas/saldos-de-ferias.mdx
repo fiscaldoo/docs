@@ -1,0 +1,95 @@
+---
+id: saldos-de-ferias
+slug: /people/saldos-de-ferias
+title: Como marcar as férias do ano e acompanhar os saldos
+sidebar_label: Marcar as férias e acompanhar os saldos
+sidebar_position: 3
+description: Marcar os períodos de férias de cada trabalhador, ver o mapa de férias e confirmar quantos dias restam e quem ainda não tem 10 dias úteis seguidos.
+keywords: [marcar férias, marcar ferias, mapa de férias, mapa de ferias, saldo de férias, saldo de ferias, saldos de férias, dias de férias, dias restantes, 10 dias úteis seguidos, dez dias uteis seguidos, férias interpoladas, ferias interpoladas, fechar o planeamento do ano, subsídio de férias, subsidio de ferias, prazo do mapa de férias]
+doc_id: DOC-0252
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/ausencias-e-presencas/registar-uma-ausencia, people/ausencias-e-presencas/aprovar-ausencias]
+---
+
+## Para que serve?
+
+Cada período de férias marca-se como uma ausência do tipo **Férias anuais**. O fiscaldoo junta esses períodos no **Mapa de férias**, mostra quantos dias restam a cada trabalhador e avisa quem ainda não tem um período de 10 dias úteis seguidos no ano.
+
+## Quando utilizar?
+
+- No início do ano, para registar as férias acordadas com cada trabalhador e ter o mapa de férias pronto até 15 de abril (ver «Notas importantes»).
+- Quando um trabalhador pergunta quantos dias de férias lhe restam.
+- Antes do fim do ano, para ver quem ainda não gozou um período de 10 dias úteis seguidos.
+
+## Onde encontrar?
+
+- Marcar: **Pessoas › Férias e ausências › Pedidos de ausência** › **Novo**
+- Ver os períodos marcados: **Pessoas › Férias e ausências › Mapa de férias**
+- Ver os dias do ano e a regra dos 10 dias: **Pessoas › Férias e ausências › Saldos de férias**
+
+## Antes de começar
+
+- O seu perfil é **Gestor de RH**.
+- Os dias de férias do ano já estão atribuídos a cada trabalhador: aparecem em **Saldos de férias** (na demonstração, 20 ou 22 dias em 2026). Este artigo não trata a atribuição.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Pessoas › Férias e ausências › Pedidos de ausência** e carregue em **Novo**.
+2. Em **Trabalhador**, escolha o trabalhador, por exemplo **Hugo Miguel Santos**.
+3. Em **Tipo de tempo**, escolha **Férias anuais**. A lista já diz os dias que restam, por exemplo «Férias anuais (20 restante de 20 dias)».
+4. Em **Datas**, escolha o primeiro e o último dia do período, por exemplo 16/11/2026 a 27/11/2026. Por baixo do tipo, a frase «Tem 20 dias disponíveis; depois deste pedido, 10.» mostra o saldo antes e depois.
+   ![Pedido de Hugo Miguel Santos antes de guardar, com Férias anuais (20 restante de 20 dias), a frase Tem 20 dias disponíveis; depois deste pedido, 10. e as datas 16/11/2026 a 27/11/2026, 10,00 dia(s)](/images/people/saldos-de-ferias/01-ferias-marcadas.png)
+5. Se o período tem menos de 10 dias úteis e há acordo com o trabalhador para partir as férias, marque **Interpoladas, acordadas por escrito**, no grupo **LEI PORTUGUESA**. Sem isso, o período curto é recusado (ver «Problemas frequentes»). O acordo não dispensa um período de 10 dias úteis seguidos no ano (ver «Notas importantes»).
+6. Carregue no ícone de guardar (a nuvem ao lado de **Novo**). Com o perfil **Gestor de RH**, as férias ficam logo **Aprovado**. A frase por baixo do tipo passa a «Depois deste pedido ficam-lhe 10 dias.». As férias guardadas saem da lista **Pedidos de ausência**: a partir daqui, veem-se no **Mapa de férias**.
+7. Repita para os outros períodos e para os outros trabalhadores.
+8. Abra **Pessoas › Férias e ausências › Saldos de férias** e confira a coluna **Dez dias úteis seguidos** (ver «Notas importantes»).
+
+</StepByStep>
+
+O grupo **LEI PORTUGUESA** tem ainda, à esquerda, **Férias do ano**, **Transitadas por uma licença**, **Gozadas no ano seguinte**, **Marcadas pelo empregador, sem acordo**, **Alterada pela empresa**, **Dias devolvidos pela doença** e **Dez dias úteis seguidos**. O exemplo deixou-os como vinham.
+
+- **Dez dias úteis seguidos** mostra uma frase a vermelho quando o trabalhador ainda não tem, no ano, nenhum período aprovado de 10 dias úteis seguidos. A frase acaba em «É apenas um alerta, não bloqueia nada.»: o pedido guarda-se na mesma.
+- À direita, **Subsídio**, **Subsídio devido em**, **Subsídio pago** e **Dias pagos** dizem se o subsídio de férias destes dias já é devido, a partir de que dia e quanto já foi pago. O fiscaldoo preenche-os sozinho e não se mudam aqui; o pagamento trata-se nos salários. No exemplo de Hugo: **Devido**, 30/10/2026, 0,00 e 0,00. <span className="fd-pending">Pendente de validação por contabilista certificado: a data de Subsídio devido em, face ao art. 264.º, n.º 3, do Código do Trabalho (salvo acordo escrito em contrário, o subsídio paga-se antes do início das férias e, nas férias interpoladas, na proporção de cada período).</span>
+
+## No Enterprise
+
+No Odoo Enterprise, os saldos leem-se nos mesmos ecrãs, com o perfil **Gestor de RH**: **Mapa de férias** (em lista ou calendário), **Saldos de férias** (com **Fechar o planeamento do ano**) e a coluna **Dez dias úteis seguidos** são os mesmos que no Community. A aplicação **Planeamento** do Enterprise não entra nestas contas.
+
+{/* Nota interna (lote EE-10, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): cópia Enterprise docs_ee_ee10b_test no portátil (pg_dump da odoo20_ee_test, -u dos módulos mudados até master e -i de hr_payroll, planning, hr_appraisal e hr_recruitment), porta 8504, guarda de rede ligada; utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): ee10_rh em Mapa de férias (Lista e Calendário; colunas Trabalhador, Início, Fim, dias, Ano, Estado, Dez dias úteis seguidos), Saldos de férias (Trabalhador, Ano, dias, Dez dias úteis seguidos; botão Fechar o planeamento do ano) e Pedidos de ausência, iguais à cópia Community; o código do fiscaldoo não lê o Planeamento (ver a nota do artigo a-aplicacao-pessoas). Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee10_test (master e4dd4ae90, a do lote EE-10 interrompido) e com o texto do artigo. Ver reports/LOTE_EE-10.md. */}
+
+## Resultado esperado
+
+- **Mapa de férias** agrupa os períodos por trabalhador, com **Início**, **Fim**, **dias**, **Ano**, **Estado** e **Dez dias úteis seguidos**. No exemplo, Hugo Miguel Santos tem 16/11/2026 a 27/11/2026, 10,00 dias, **Aprovado** e **Cumprido**. Há também a vista **Calendário**.
+- **Saldos de férias** mostra, por trabalhador, o **Ano**, os **dias** do ano e **Cumprido** ou **Em falta** na coluna **Dez dias úteis seguidos**.
+- Na ficha do trabalhador, o botão **Férias** mostra os dias que restam: no exemplo, «10 / 20 dias».
+
+![Lista Saldos de férias de 2026 com oito trabalhadores, quatro com Cumprido e quatro com Em falta na coluna Dez dias úteis seguidos](/images/people/saldos-de-ferias/02-saldos-de-ferias.png)
+
+## Notas importantes
+
+- **A coluna «dias» de Saldos de férias não é o que resta.** São os dias atribuídos no ano. O que resta vê-se no botão **Férias** da ficha e na lista do **Tipo de tempo**.
+- **O Mapa de férias só lista quem já tem férias marcadas.** Na demonstração, Diogo, Fábio e Gabriela não aparecem no mapa. Eva Cristina Rocha aparece, com 5 dias interpolados, e continua **Em falta** em **Saldos de férias**. Para saber quem falta, use **Saldos de férias**.
+- **Hoje não confie na mensagem de Fechar o planeamento do ano.** Na demonstração, o botão respondeu «Todos os trabalhadores da lista têm um período de 10 dias úteis seguidos (art. 241.º, n.º 8).» com quatro trabalhadores **Em falta** na mesma lista. Confira a coluna **Dez dias úteis seguidos**, linha a linha.
+- **O acordo não dispensa os 10 dias úteis seguidos.** O Código do Trabalho, art. 241.º, n.º 8, deixa partir as férias em vários períodos, por acordo entre o empregador e o trabalhador, desde que um deles tenha, no mínimo, 10 dias úteis seguidos. Por isso Eva Cristina Rocha, com 5 dias interpolados, continua **Em falta**. A lei fala de acordo, sem dizer que tem de ser escrito: o «por escrito» vem do nome do campo. <span className="fd-pending">Pendente de validação por contabilista certificado: se o acordo de interpolação tem de ser escrito e se o fiscaldoo aplica bem a regra de, mesmo com acordo, haver um período de 10 dias úteis seguidos.</span>
+- **O mapa de férias tem prazo.** O empregador faz o mapa de férias, com o início e o fim dos períodos de cada trabalhador, até 15 de abril de cada ano, e mantém-no afixado nos locais de trabalho entre essa data e 31 de outubro (Código do Trabalho, art. 241.º, n.º 9). <span className="fd-pending">Pendente de validação por contabilista certificado: se a lista Mapa de férias do fiscaldoo serve como o mapa que a lei pede e como se afixa.</span>
+
+{/* Nota interna (DOCS-040): a terceira nota existe por causa do defeito F-04 do reports/LOTE_F.md (mensagem do botão contradiz a lista); retirá-la quando o cartão entrar em master. */}
+
+## Problemas frequentes
+
+### As férias são recusadas por terem menos de 10 dias úteis
+
+- **Sintoma:** ao guardar, a janela **Erro de Validação** diz: «As férias de *Hugo Miguel Santos* de *14/12/2026* a *18/12/2026* têm *5.0* dias úteis, menos do que os 10.0 dias consecutivos de um período (CT art. 241.º/8 (gozo interpolado: no mínimo 10 dias úteis consecutivos)). O que aconteceu: períodos mais curtos são uma interpolação e precisam do acordo do empregador e do trabalhador (art. 241.º/8). Como resolver: assinale «Interpoladas, acordadas por escrito» quando o acordo existir, ou alargue o período.»
+- **Causa:** o período tem menos de 10 dias úteis e **Interpoladas, acordadas por escrito** não está marcado. Os feriados não contam como dias úteis: duas semanas com um feriado também ficam curtas (de 07/12/2026 a 18/12/2026, com o 8 de dezembro, dão 9,00 dia(s)).
+- **O que fazer:** se há acordo com o trabalhador, carregue em **Fechar**, marque **Interpoladas, acordadas por escrito** e guarde: na demonstração, os mesmos 5 dias (14/12/2026 a 18/12/2026, para Eva Cristina Rocha) ficaram **Aprovado**. Se não há acordo, alargue o período até ter 10 dias úteis.
+
+### Aparece que as férias coincidem com outra ausência
+
+Veja «Problemas frequentes» em [Como registar uma ausência de um trabalhador](/people/registar-uma-ausencia).

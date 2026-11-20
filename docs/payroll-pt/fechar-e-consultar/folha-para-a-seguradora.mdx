@@ -1,0 +1,117 @@
+---
+id: folha-para-a-seguradora
+slug: /payroll-pt/folha-para-a-seguradora
+title: Como enviar a folha mensal à seguradora de acidentes de trabalho
+sidebar_label: Folha para a seguradora
+sidebar_position: 3
+description: Gerar no fiscaldoo a folha mensal de retribuições para a seguradora de acidentes de trabalho, ler os avisos, descarregar o ficheiro, registar o envio e criar uma nova revisão quando há correções.
+keywords: [folha para a seguradora, seguro de acidentes de trabalho, folha de salários seguradora, retribuição segura, retribuicao segura, apólice, apolice, folha mensal seguradora, prazo dia 15, acidentes de trabalho, seguradora]
+doc_id: DOC-0238
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/pagar-os-salarios, payroll-pt/processar-e-pagar/alterar-o-salario]
+---
+
+## Para que serve?
+
+O seguro de acidentes de trabalho cobre os trabalhadores que a seguradora conhece e pela retribuição que ela conhece. Todos os meses, a empresa envia à seguradora a lista de quem trabalhou, com a profissão, a situação e o que foi pago. O fiscaldoo prepara essa lista a partir dos recibos do mês, avisa quando falta alguém e gera o ficheiro.
+
+O fiscaldoo não envia nada à seguradora. O ficheiro entrega-se pelo canal que a seguradora indicar; depois regista-se no fiscaldoo que foi enviado.
+
+## Quando utilizar?
+
+- Todos os meses, depois de [pagar os salários](/payroll-pt/pagar-os-salarios).
+- Quando a seguradora recusa ou a empresa descobre um erro numa folha já enviada: cria-se uma nova revisão do mesmo mês.
+
+## Onde encontrar?
+
+**Salários › Fechar e consultar › Mapas de recursos humanos › Folha para a seguradora**
+
+## Antes de começar
+
+- Perfil **Processador de salários**. Foi com este perfil que se fez o percurso inteiro deste artigo (criar, gerar, descarregar, registar o envio e criar uma revisão). {/* Nota interna (DOCS-046): o perfil «Administrativo» da arquitetura não existe como perfil do produto; testado só com o Processador de Salários. */}
+- Os recibos do mês estão validados. A folha só conta recibos fechados.
+- A empresa tem seguradora e apólice configuradas. Na demonstração, a **Seguradora** é «Seguradora Fictícia, SA» e a **Apólice** `DEMO-AT-2026-001`, com prémio fixo.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Fechar e consultar › Mapas de recursos humanos › Folha para a seguradora** e carregue em **Novo**.
+2. Em **Mês dos pagamentos**, escolha o mês (no exemplo, `01/09/2026`; qualquer dia do mês serve, o ecrã guarda o dia 1). O **Enviar até** preenche-se sozinho com o dia 15 do mês seguinte (`15/10/2026`), e a **Seguradora**, a **Apólice** e o **Prémio** vêm da apólice da empresa.
+3. Em **Fim de linha**, deixe **LF (Linux / Mac)** ou escolha **CRLF (Windows)**, conforme a seguradora pedir. Em dúvida, pergunte-lhe: o ficheiro é o mesmo, só muda a forma como cada linha acaba.
+4. Carregue em **Gerar a partir dos recibos**. A lista fica com uma linha por trabalhador: **Profissão**, **Estado**, **Retribuição paga**, **Retribuição declarada à seguradora**, **Parte não segurada (%)**, **Recibos** e **Omitido**. O total aparece em **Retribuição total**.
+   ![Folha de setembro de 2026 em rascunho, com a barra Gerar a partir dos recibos, Descarregar o ficheiro e Registar como enviada, e a lista dos oito trabalhadores com a retribuição total de 11.560,00](/images/payroll-pt/folha-para-a-seguradora/01-folha-gerada.png)
+5. Leia a faixa amarela de avisos, por cima do formulário (ver «Notas importantes» e «Problemas frequentes»). Corrija o que ela indicar e carregue de novo em **Gerar a partir dos recibos**: a lista é refeita.
+6. Carregue em **Descarregar o ficheiro**. Guarda-se um ficheiro de texto com colunas separadas por «;», chamado `folha_seguradora_2026-09_rev1.csv` (ano, mês e revisão), que abre no Excel. Tem a linha de títulos `Trabalhador;Profissão;Estado;Retribuição;Retribuição declarada;Mês` e uma linha por trabalhador, por exemplo `Ana Margarida Pinto;Profissionais qualificados;Normal;2400.00;0.00;2026-09`.
+7. Envie o ficheiro à seguradora, fora do fiscaldoo.
+8. Carregue em **Registar como enviada**. A janela diz «Isto só regista que enviou o ficheiro à seguradora; daqui não se envia nada. Continuar?». Carregue em **Confirmar**. A folha passa a **Enviada** e deixa de se poder alterar.
+   ![Barra da folha enviada, com Descarregar o ficheiro e Nova revisão (correção) assinalado](/images/payroll-pt/folha-para-a-seguradora/02-folha-enviada.png)
+
+</StepByStep>
+
+**Exemplo.** Os salários de setembro de 2026 (8 trabalhadores) dão uma retribuição total de 11.560,00 €: Ana Margarida Pinto 2.400,00, Bruno Miguel Teixeira 1.650,00, Carla Sofia Mendes 1.900,00, Diogo Ferreira Lopes 1.150,00, Eva Cristina Rocha 960,00, Fábio Nuno Carvalho 1.450,00, Gabriela Sousa Reis 800,00 e Hugo Miguel Santos 1.250,00. Todos aparecem com 1 recibo e **Estado** «Normal».
+
+{/* Nota interna (DOCS-046, master 52d1dd3ad): a folha da demonstração sai com «Retribuição declarada à seguradora» a 0,00 em todos os trabalhadores e sem nenhum aviso (defeito V4PAYb-01, ver reports/LOTE_V4_PAY2b.md). A Parte não segurada (%) fica também a 0,00. */}
+
+### Corrigir uma folha já enviada
+
+Uma folha **Enviada** não se altera: o botão **Gerar a partir dos recibos** deixa de aparecer e os trabalhadores ficam fixos.
+
+<StepByStep>
+
+1. Abra a folha **Enviada** do mês e carregue em **Nova revisão (correção)**. Abre-se uma nova folha do mesmo mês, em **Rascunho**, com **Revisão** 2.
+2. Carregue em **Gerar a partir dos recibos**, confira, descarregue o ficheiro (`folha_seguradora_2026-09_rev2.csv`), envie-o à seguradora e carregue em **Registar como enviada**.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, a folha faz-se da mesma maneira, com o perfil **Processador de salários** e o mesmo menu. Ao escolher o **Mês dos pagamentos**, o **Enviar até**, a **Seguradora**, a **Apólice** e o **Prémio** preenchem-se sozinhos. **Gerar a partir dos recibos** faz a lista, mostra a mesma faixa de avisos e acrescenta os botões **Descarregar o ficheiro** e **Registar como enviada**. O ficheiro tem o mesmo nome, por exemplo `folha_seguradora_2026-09_rev1.csv`.
+
+Com os recibos de setembro de 2026, a folha tem 8 trabalhadores e 11.560,00 € de **Retribuição total**, como no exemplo.
+
+{/* Nota interna (lote EE-08, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee08_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8508/8509), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Processador de salários, pelo ecrã: Novo, Mês dos pagamentos 01/09/2026 (Enviar até 15/10/2026, Seguradora Fictícia, SA, apólice DEMO-AT-2026-001, Prémio fixo), Gerar a partir dos recibos (8 linhas, 11.560,00, faixa «8 trabalhador(es) receberam pagamento mas não têm retribuição segura declarada à seguradora…»), Descarregar o ficheiro (folha_seguradora_2026-09_rev1.csv). Registar como enviada não foi carregado: a folha ficou em Rascunho na cópia. Desde o UX-161b (comboio 193), o menu está dentro de Mapas de recursos humanos, no Enterprise e no Community: o caminho de «Onde encontrar?» e do passo 1 foi corrigido. Comparado com uma cópia da demonstração Community (docs_demo_ee08_test, 2c8d358c0, porta 8518). Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-08.md. */}
+
+## Resultado esperado
+
+- A folha do mês fica no estado **Enviada**, e a lista **Folha para a seguradora** mostra o mês, a **Revisão**, o **Enviar até**, o **Estado**, o **Enviado em**, os **Trabalhadores omitidos** e a **Retribuição total**.
+- O ficheiro descarregado tem uma linha por trabalhador da folha.
+- Depois de uma correção, a nova revisão aparece ao lado da anterior, com o mesmo mês.
+
+## Notas importantes
+
+- **Prazo.** A folha envia-se até ao dia 15 do mês seguinte. Passado o dia, a folha mostra «O prazo (dia 15 do mês seguinte) já passou. O que aconteceu: a seguradora pode recusar os trabalhadores que ficaram de fora. Como resolver: envie a folha já.» O ecrã compara com a data de hoje: a folha de setembro mostrou este aviso a 02/11/2026. <span className="fd-pending">Pendente de validação por contabilista certificado: o prazo do dia 15 e a consequência de o falhar dependem da apólice e das condições da seguradora.</span>
+- **O que o ecrã não avisa.** Num teste com a apólice da demonstração, **Retribuição declarada à seguradora** saiu a 0,00 em todos os trabalhadores e a folha não mostrou nenhum aviso: nem de falta de retribuição segura, nem de parte não segurada. Antes de enviar, confira esta coluna: um valor a 0,00 quer dizer que a ficha do trabalhador não tem **Retribuição mensal segura** (separador **Trabalho › Seguro de acidentes de trabalho**) e a seguradora fica sem a retribuição que cobre o trabalhador. Quando a retribuição segura é menor do que a paga, a folha avisa «… receberam mais do que a retribuição declarada à seguradora …» e mostra a **Parte não segurada (%)**. <span className="fd-pending">Pendente de validação no ecrã: preencher a **Retribuição mensal segura** e ver o aviso de parte não segurada. Na ficha da demonstração (contrato confirmado a 01/01/2026) o campo não gravou; a alteração passa por uma nova versão do contrato, como em [Como alterar o salário de um trabalhador](/payroll-pt/alterar-o-salario).</span>
+- **Não envie uma folha de um mês sem recibos validados.** Para novembro de 2026, sem recibos, a folha fica com os 8 trabalhadores como omitidos e a retribuição total a 0,00, e o ecrã deixou-a ser registada como enviada. {/* Nota interna (DOCS-046, master 52d1dd3ad): defeito V4PAYb-02: «Registar como enviada» aceita uma folha em que todos os trabalhadores estão omitidos (total 0,00). */}
+- **Enviar não é garantir cobertura.** Quem fica fora da folha pode não ficar coberto num acidente; quando a retribuição declarada é inferior à paga, a seguradora responde só pela parte declarada e a empresa pela diferença, na proporção (Lei n.º 98/2009, art. 79.º, n.os 4 e 5). <span className="fd-pending">Pendente de validação por contabilista certificado: leitura desta repartição e formato exigido por cada seguradora (o fiscaldoo gera um ficheiro simples com trabalhador, profissão, situação e retribuição).</span>
+
+## Problemas frequentes
+
+### «N trabalhador(es) ativo(s) sem recibo no mês»
+
+- **Sintoma:** depois de **Gerar a partir dos recibos**, a faixa diz, por exemplo: «8 trabalhador(es) ativo(s) sem recibo no mês: Ana Margarida Pinto, Bruno Miguel Teixeira, … O que aconteceu: os trabalhadores deixados de fora da folha não ficam cobertos em caso de acidente. Como resolver: valide os recibos deles e gere a folha outra vez, ou confirme que não estiveram ao serviço.»
+- **Causa:** não há recibos validados nesse mês para esses trabalhadores (no teste, o mês escolhido foi novembro de 2026, ainda sem processamento), ou escolheu o mês errado.
+- **O que fazer:** confirme o **Mês dos pagamentos**. Se faltam recibos, [processe e valide o mês](/payroll-pt/processar-o-mes) e volte a carregar em **Gerar a partir dos recibos**. Se o trabalhador não esteve ao serviço, o aviso mantém-se e a folha fica com ele como **Omitido**.
+
+### O prazo já passou
+
+- **Sintoma:** «O prazo (dia 15 do mês seguinte) já passou. …»
+- **Causa:** a data de hoje é posterior ao **Enviar até**.
+- **O que fazer:** envie a folha o quanto antes. O aviso não impede nem **Descarregar o ficheiro** nem **Registar como enviada**.
+
+### Já enviei e não consigo gerar de novo
+
+- **Sintoma:** numa folha **Enviada** não há o botão **Gerar a partir dos recibos**; só **Descarregar o ficheiro** e **Nova revisão (correção)**. Os campos, como o **Fim de linha**, ficam só de leitura.
+- **Causa:** uma folha enviada fica fixa para o registo.
+- **O que fazer:** use **Nova revisão (correção)** (ver «Corrigir uma folha já enviada»).
+
+### «Já existe uma folha para este mês e revisão»
+
+- **Sintoma:** ao guardar uma folha nova, o ecrã diz «A operação não pode ser concluída: Já existe uma folha para este mês e revisão.» (no teste, com o **Mês dos pagamentos** `15/09/2026`, quando já havia a folha de setembro).
+- **Causa:** a empresa tem uma folha por mês e por revisão. Qualquer dia do mês conta como o mês inteiro.
+- **O que fazer:** descarte a folha nova e abra a que já existe na lista. Para corrigir uma folha enviada, use **Nova revisão (correção)**.

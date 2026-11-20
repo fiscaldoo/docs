@@ -1,0 +1,71 @@
+---
+id: registo-de-prova-nao-se-altera
+slug: /troubleshooting/registo-de-prova-nao-se-altera
+title: "Aparece «não pode ser alterado nem apagado: é a prova»"
+sidebar_label: "«É a prova»"
+sidebar_position: 12
+description: "Ficheiros arquivados, o registo de auditoria, as exportações do SAF-T e os meses comunicados à AT são prova: conservam-se no prazo legal e não se alteram nem se apagam, nem pelo administrador."
+keywords: [é a prova, nao pode ser alterado nem apagado, registo de auditoria, exportação SAF-T imutável, conservação, prazo de conservação, 10 anos, mês submetido, comunicação à AT, apagar, alterar]
+doc_id: DOC-0423
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master b8b799c8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-permissao, troubleshooting/acesso-e-dados/registo-gerido-pelo-sistema]
+---
+
+## Sintoma
+
+Ao alterar ou apagar um registo de auditoria, uma exportação do SAF-T ou um mês já comunicado à AT, o fiscaldoo recusa e diz que o registo é prova ou que tem de se conservar. Nada foi alterado.
+
+## Mensagem
+
+Copiadas da base de demonstração em português, provocadas pela integração (estes registos não têm botão de editar nem de apagar no ecrã):
+
+- Com o **Administrador**, ao alterar um evento do registo de auditoria:
+  > «O registo de auditoria nunca pode ser alterado depois de criado — é a garantia de que a pista de auditoria é fiável (Portaria n.º 363/2010, art. 3.º, alínea d)). Se encontrou um erro num registo, crie um novo evento de auditoria a explicar o que aconteceu; nunca é possível editar o original, para nenhum utilizador.»
+- Com o **Administrador**, ao apagá-lo:
+  > «O registo de auditoria nunca se elimina antes do fim da sua conservação legal (CIVA art. 52.º, CIRC art. 123.º: 10 anos, salvo prazo superior; DL n.º 28/2019, art. 7.º). Não há exceções, nem para administradores técnicos. Depois desse prazo só o administrador o pode purgar, em «Purgar registos expirados», indicando um motivo.»
+- Com o perfil **Contabilista**, ao alterar uma exportação do SAF-T já gerada:
+  > «Uma exportação SAF-T (PT) gerada é imutável — só “Notas” continua editável. Todo o resto fica fixo depois de gerado. Crie uma nova exportação se precisar de um ficheiro diferente.»
+- Com o perfil **Contabilista**, ao apagá-la:
+  > «Esta exportação SAF-T (PT) não pode ser eliminada: documentos fiscalmente relevantes têm de ser conservados durante, pelo menos, 10 anos (criado em 30/10/2026). Mantenha a exportação até ao fim do prazo de conservação.»
+- Com o perfil **Contabilista**, ao apagar um mês já submetido à AT:
+  > «Um mês já submetido é a prova da comunicação: já não pode ser alterado, reaberto nem apagado.»
+
+*(Pendente de validação por contabilista certificado: os prazos de conservação citados, que vêm da mensagem do produto.)*
+
+## Causas verificadas
+
+O fiscaldoo trata como **prova** o que serve para demonstrar à fiscalização o que foi feito: o registo de auditoria, o ficheiro de cada exportação do SAF-T e o mês enviado à AT. Esses registos têm um prazo de conservação; antes do fim, nem o administrador os apaga. Um erro corrige-se com um registo novo, nunca editando o original.
+
+## O que confirmar
+
+1. Se o que quer é corrigir um erro: precisa de uma exportação nova, ou de um evento novo no registo, não de alterar o antigo.
+2. A data de criação, que a mensagem dá, e o prazo.
+
+## Como resolver
+
+- **Exportação do SAF-T errada:** gere outra ([Como gerar o SAF-T](/fiscal-core/gerar-o-saft)) e deixe a antiga como está. O campo **Notas** da exportação continua editável.
+- **Mês da AT submetido:** é prova; um erro de comunicação trata-se como diz [A comunicação à AT falhou](/troubleshooting/comunicacao-a-at-falhou).
+- **Registo de auditoria:** depois do prazo, o administrador purga os registos expirados, indicando um motivo.
+
+**Quem faz:** o contabilista (nova exportação); o administrador (purga, depois do prazo).
+
+## Resultado esperado
+
+A exportação nova aparece na lista, ao lado da antiga, que fica intacta.
+
+## Quando contactar o suporte
+
+- A mensagem aparece depois do fim do prazo de conservação e a purga não está disponível.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com a exportação, o mês ou o evento em causa, a data de criação e a mensagem completa.
+
+{/* Nota interna (DOCS-040): provocadas 5 das 24 mensagens. Pendentes: arquivo digital, anexos arquivados, padrões e execuções da reconciliação (a demonstração não tem registos). */}
+
+{/* Nota interna (v23-T, DOC-0423, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

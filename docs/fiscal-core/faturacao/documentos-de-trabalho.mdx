@@ -1,0 +1,109 @@
+---
+id: documentos-de-trabalho
+slug: /fiscal-core/documentos-de-trabalho
+title: Como emitir orçamentos e outros documentos de conferência
+sidebar_label: Orçamentos e documentos de conferência
+sidebar_position: 8
+description: Emitir um orçamento (ou fatura pró-forma, nota de encomenda…) com número, ATCUD e assinatura, imprimi-lo sem ser fatura e anulá-lo com motivo.
+keywords: [orçamento, orcamento, documento de conferência, documentos de conferencia, documento de trabalho, fatura pró-forma, fatura pro-forma, nota de encomenda, folha de obra, emitir documento, anular documento, ATCUD, Portaria 363/2010]
+doc_id: DOC-0028
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/certificacao/series-documentais, fiscal-core/certificacao/tipos-de-documento, fiscal-core/faturacao/emitir-uma-fatura-certificada]
+---
+
+## Para que serve?
+
+Um orçamento, uma fatura pró-forma ou uma nota de encomenda não é uma fatura, mas pode ser mostrado ao cliente para conferir mercadorias ou serviços. Quando a empresa os usa assim, o documento tem de ter número, ATCUD (código único do documento) e assinatura, como qualquer documento certificado. O botão **Emitir documento** dá-lhe tudo isso e fixa o documento.
+
+O PDF diz «Este documento não serve de fatura».
+
+## Quando utilizar?
+
+- Para enviar um orçamento ao cliente com número e assinatura próprios.
+- Para uma fatura pró-forma ou uma nota de encomenda que o cliente vai conferir.
+- Não o use quando o cliente já aceitou e vai pagar: nesse caso, [emita a fatura certificada](/fiscal-core/emitir-uma-fatura-certificada).
+
+## Onde encontrar?
+
+**Vendas › Ordens › Orçamentos**, no separador **Certificação PT** do orçamento. A lista abre com o filtro **Os meus Orçamentos**: retire-o para ver os orçamentos criados por outras pessoas.
+
+## Antes de começar
+
+- Quem emite: os perfis **Administrativo**, **Contabilista** e **Contabilista certificado**. O Administrador também emite. Só o perfil **Contabilista certificado** e o Administrador anulam um documento emitido: com o perfil **Administrativo** ou **Contabilista** o botão **Anular documento** não aparece.
+- Existe uma série ativa do tipo de documento que vai emitir, para o ano em curso. A demonstração tem série de 2026 para **[OR] Orçamento** e não tem para os outros tipos. As séries criam-se em [Séries fiscais](/fiscal-core/series-documentais) (uma série de um documento de conferência não tem diário).
+- O orçamento tem cliente e pelo menos uma linha.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Vendas › Ordens › Orçamentos** e abra o orçamento (cliente e linhas preenchidos). O exemplo é o `S00002`, de 442,80 €, da Escola de Condução Rota, Lda.
+2. Abra o separador **Certificação PT** e confirme o **Tipo de documento de conferência**. Vem preenchido com **[OR] Orçamento**. A lista oferece sete tipos: **[CC] Crédito de consignação**, **[FC] Fatura de consignação**, **[FO] Folha de obra**, **[NE] Nota de encomenda**, **[OR] Orçamento**, **[OU] Outros documentos de conferência** e **[PF] Fatura pró-forma**. A consulta de mesa (**CM**) não aparece nesta lista.
+3. Carregue em **Emitir documento**.
+   ![Barra de botões do orçamento com Emitir documento assinalado](/images/fiscal-core/documentos-de-trabalho/01-emitir-documento.png)
+4. Confirme no separador **Certificação PT**: o **Número do documento de conferência** (aqui `OR D26/2`; a imagem é de outro orçamento emitido, o `OR D26/1`), a **Série do documento**, o **ATCUD**, o **Estado do documento** (**Normal**) e, em **Assinatura**, os **Carateres da assinatura** e a **Versão da chave de assinatura**.
+   ![Separador Certificação PT de um orçamento emitido: tipo [OR] Orçamento, número, ATCUD, série OR D26, assinatura](/images/fiscal-core/documentos-de-trabalho/03-documento-emitido.png)
+5. Carregue em **Download** para obter o PDF do orçamento.
+   ![PDF do orçamento OR D26/2 com a frase «Este documento não serve de fatura»](/images/fiscal-core/documentos-de-trabalho/06-pdf-orcamento.png)
+
+</StepByStep>
+
+### Passar um orçamento emitido a fatura
+
+1. Quando o cliente aceitar, carregue em **Confirmar**. O orçamento passa a **Ordem de Vendas**, mantém o número `OR D26/2`, o ATCUD e a assinatura, e o **Estado do documento** continua **Normal**.
+2. Carregue em **Criar Fatura**, deixe **Fatura normal** e carregue em **Criar Rascunho**.
+3. Confirme o rascunho. É uma fatura certificada à parte, com número e série próprios (aqui `FT D26/34`, 442,80 €): ver [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada). O documento de conferência continua com o número `OR D26/2` e fica marcado como faturado.
+
+### Anular um documento emitido
+
+1. Com o perfil **Contabilista certificado** (e acesso a **Orçamentos**, ver «Antes de começar»), abra o orçamento emitido e carregue em **Anular documento**.
+2. Escreva o **Motivo** (sem ele, o ecrã diz «Há campos obrigatórios por preencher.») e carregue em **Anular documento**. A janela avisa: «O documento mantém o número, o ATCUD e a assinatura; a anulação e o motivo ficam registados (estado A do SAF-T). Não se pode desfazer.»
+   ![Janela Anular documento com o campo Motivo e o aviso de que não se pode desfazer](/images/fiscal-core/documentos-de-trabalho/05-anular-documento.png)
+3. Confirme que o **Estado do documento** passou a **Anulado** e que a secção **Anulação** tem a data, o utilizador e o motivo. O orçamento fica no estado **Cancelada**.
+
+## Resultado esperado
+
+- O orçamento tem número da série (`OR D26/…`), ATCUD e assinatura, e já não se altera.
+- O PDF mostra o número, o ATCUD e a frase «Este documento não serve de fatura».
+- Um documento anulado mantém o número; o número nunca se reutiliza.
+
+## Notas importantes
+
+<HelpCallout type="atencao" title="Depois de emitido, não se altera">
+Um documento emitido não admite alterações às linhas nem ao cliente: só as mensagens, as atividades e o acompanhamento comercial. Para corrigir, anule o documento (com motivo) e emita outro.
+</HelpCallout>
+
+- Com a opção **Documentos de conferência certificados** ligada na empresa (**Definições › Utilizadores e empresas › Empresas**, separador **Localização PT**; só o Administrador a muda), o orçamento tem de ser emitido antes de impresso ou enviado. Com a opção desligada, como na demonstração, o botão **Emitir documento** existe mas imprimir e enviar não o exigem. <span className="fd-pending">Pendente de validação por contabilista certificado: se a empresa deve ter a opção ligada (Portaria 363/2010, art. 7.º).</span>
+  ![Opção Documentos de conferência certificados na ficha da empresa, separador Localização PT](/images/fiscal-core/documentos-de-trabalho/08-documentos-de-conferencia-certificados.png)
+- Emitir o orçamento não o transforma em fatura nem o confirma: ver «Passar um orçamento emitido a fatura».
+
+## Problemas frequentes
+
+### «não tem uma única série fiscal ativa do tipo [PF] Fatura pró-forma»
+
+- **Sintoma:** ao carregar em **Emitir documento**, o ecrã diz: «A empresa “Empresa Demonstração, Lda” não tem uma única série fiscal ativa do tipo [PF] Fatura pró-forma para o exercício 2026 (encontradas: 0), por isso “S00003 (SIMORD0001)” não pode ser numerado. Um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» tem de criar a série em Contabilidade › Configurar › Faturação certificada › Séries fiscais (…). Nenhuma série é criada automaticamente.»
+- **O que fazer:** no separador **Certificação PT**, escolha um tipo que tenha série (por exemplo **[OR] Orçamento**) ou peça a quem tem o perfil **Contabilista certificado** que crie, comunique e ative a [série](/fiscal-core/series-documentais) desse tipo.
+  ![Mensagem do ecrã: a empresa não tem série fiscal ativa do tipo PF para 2026](/images/fiscal-core/documentos-de-trabalho/02-recusa-sem-serie.png)
+
+### «não pode ser alterado: foi emitido»
+
+- **Sintoma:** ao guardar uma alteração às linhas de um orçamento emitido: «O documento de conferência “OR D26/1” não pode ser alterado: foi emitido e só as mensagens, as atividades e o acompanhamento comercial são editáveis (campo(s) recusado(s): order_line). Para o corrigir, anule o documento registando o motivo e emita um novo; depois de faturado, corrija a fatura.»
+- **O que fazer:** descarte a alteração, anule o documento (se tiver o perfil) e emita um novo.
+  ![Mensagem do ecrã: o documento de conferência OR D26/1 não pode ser alterado porque foi emitido](/images/fiscal-core/documentos-de-trabalho/04-documento-bloqueado.png)
+
+### «ainda não pode ser impresso nem enviado»
+
+- **Sintoma:** com a opção **Documentos de conferência certificados** ligada, **Download** ou **Enviar** num orçamento por emitir dão: «“S00004 (SIMORD0003)” ainda não pode ser impresso nem enviado: esta empresa exige que os orçamentos e as encomendas sejam emitidos primeiro (número, ATCUD e assinatura, Portaria 363/2010 art. 7.º). Carregue em «Emitir documento» e imprima de novo.»
+- **O que fazer:** carregue em **Emitir documento** e imprima de novo.
+  ![Mensagem do ecrã: o orçamento ainda não pode ser impresso nem enviado](/images/fiscal-core/documentos-de-trabalho/07-recusa-imprimir-sem-emitir.png)
+
+{/* Nota interna (DOCS-058 req. 45834, lote v18-C, master 0289754a8, docs_demo_v18c_test): FAT-136: o menu Vendas › Ordens › Orçamentos aparece ao Faturação e ao Gestor de contabilidade sem acesso extra (também ao Contabilista; ao Auditor não). S00002 emitido por clique com o Faturação, sem grupo juntado: OR D26/2, ATCUD DEMOOR2026-2; sem Anular documento nesse perfil. */}
+
+{/* Nota interna (DOCS-046, DOC-0028, master 584213fd9, base docs_demo_v7fc_test): os perfis demo não têm o grupo de vendas e não veem Orçamentos pela barra; na base do lote o Administrador juntou Vendas: Utilizador ao demo.faturacao e ao demo.gestor_contabilidade. Depois disso, percorrido pela barra: Faturação (emitir OR D26/2, PDF, recusas de série e de alteração, Confirmar, Criar Fatura, Confirmar FT D26/34; sem o botão Anular) e Gestor de contabilidade como Responsável fiscal (anular OR D26/3, com motivo vazio provocado). Administrador: opção da empresa, ligada para a recusa de impressão e desligada de novo. Auditoria 03/11, por clique: nem o Gestor nem o Contabilista têm Definições na barra; pela ligação direta à empresa, o Gestor vê a caixa bloqueada e o Contabilista não vê a opção. «não pode ser alterado» provocado por clique com Faturação (quantidade de OR D26/1, Guardar). Sem o grupo de vendas, Faturação e Responsável fiscal só têm Encomendas EDI em Vendas (FAT-136; desde o comboio 193 a entrada chama-se Encomendas recebidas). Utilizador só de vendas não testado: a senha temporária pede troca no primeiro acesso. PDF lido: sem «Shipping Address» (V3FC-07 corrigido). Defeito no relatório: o Responsável fiscal anula mas não tem Orçamentos no menu. Anulado com «Enviar resposta EDI» só nas encomendas EDI. */}
+
+{/* Nota interna (v23-T, DOC-0028, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

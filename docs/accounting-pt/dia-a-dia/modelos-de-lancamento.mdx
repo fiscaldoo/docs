@@ -1,0 +1,83 @@
+---
+id: modelos-de-lancamento
+slug: /accounting-pt/modelos-de-lancamento
+title: Como usar modelos para lançamentos que se repetem
+sidebar_label: Modelos de lançamento
+sidebar_position: 4
+description: Definir uma só vez as linhas de um lançamento recorrente (renda, seguro, empréstimo), aplicá-lo todos os meses com o valor do mês, rever o rascunho e publicá-lo.
+keywords: [modelos de lançamento, lançamento recorrente, lançamentos que se repetem, renda mensal, aplicar modelo, valor base, lançamento em rascunho, resto equilibra o lançamento, percentagem da base, guardar como modelo]
+doc_id: DOC-0065
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master f16f4a3e0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/dia-a-dia/lancamentos-contabilisticos, accounting-pt/dia-a-dia/estornar-um-lancamento]
+---
+
+{/* Nota interna (v3-A1, DOC-0065, risco alto, contabilidade): validado na base docs_demo_v3a1_test (8175) com o Contabilista, a partir do estado vazio real («Sem modelos de lançamento»). Modelo criado: «Renda mensal do escritório», diário Operações Diversas, linha 1 débito 6261 Rendas e alugueres «Percentagem da base» 100, linha 2 crédito 121 Depósitos à ordem «Resto (equilibra o lançamento)». Aplicado com valor base 500,00 € e referência «Renda de novembro de 2026»: rascunho (account.move 602) publicado como OD/2026/00107: D 6261 500,00 / C 121 500,00. Não testado: «Carregar exemplos», o botão «Guardar como modelo» do lançamento, o «Lançamento rápido» (outro artigo do menu), valor fixo e parceiro. A empresa Demonstração não tem IVA nestas linhas. Correção v3a1cor2 (8233): «Carregar exemplos» e «Aplicar» feitos no ecrã com o Contabilista; o modelo com parceiro e valor fixo foi criado e aplicado pelos mesmos métodos do assistente (o exercício 2026 ficou fechado pelo fecho do DOC-0133, por isso o lançamento do teste foi datado de 15/01/2027). */}
+
+## Para que serve?
+
+Há lançamentos que se repetem todos os meses (renda, seguro, prestação de um empréstimo). Em vez de os escrever à mão, define-se um **modelo de lançamento** com as contas e a divisão pelos lados, e aplica-se com o valor do mês: o fiscaldoo cria o lançamento em rascunho, que se confere e se publica.
+
+## Quando utilizar?
+
+- Um lançamento manual igual todos os meses, que não vem de uma fatura.
+- Lançamentos com o mesmo desenho e valores diferentes.
+- Não use o modelo para faturas, que têm o seu próprio documento e IVA: o modelo só cria linhas de lançamento.
+
+## Onde encontrar?
+
+- Definir os modelos: **Contabilidade › Configurar › Geral › Modelos de lançamento**.
+- Aplicar um modelo: o botão **Aplicar** na ficha do modelo, ou **Contabilidade › Lançar › Lançamentos › Aplicar modelo de lançamento**.
+
+## Antes de começar
+
+- O perfil é **Contabilista**.
+- Sabe quais as contas e o lado de cada linha. <span className="fd-pending">Pendente de validação por contabilista certificado: contas a usar em cada tipo de lançamento recorrente (no exemplo, 6261 e 121).</span>
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Modelos de lançamento**. Numa empresa sem modelos, o ecrã diz «Sem modelos de lançamento. Defina uma só vez as linhas de um lançamento recorrente (renda, seguro, empréstimo) e aplique-o com o valor do mês.» e oferece **Novo** e **Carregar exemplos**.
+   ![Lista de modelos de lançamento vazia com os botões Novo e Carregar exemplos](/images/accounting-pt/modelos-de-lancamento/01-modelos-vazio.png)
+2. Carregue em **Novo**. Escreva o **Nome** («Renda mensal do escritório») e o **Diário sugerido** («Operações Diversas»). Em cada linha escolha a **Conta**, o **Sentido** (**Débito** ou **Crédito**), o **Tipo de valor** e o **Valor**. O **Tipo de valor** pode ser **Percentagem da base**, **Valor fixo** ou **Resto (equilibra o lançamento)**. No exemplo: 6261 Rendas e alugueres, **Débito**, **Percentagem da base** 100; e 121 Depósitos à ordem, **Crédito**, **Resto (equilibra o lançamento)**.
+   ![Modelo Renda mensal do escritório com a linha a débito em 6261 e a linha a crédito em 121](/images/accounting-pt/modelos-de-lancamento/02-modelo-renda.png)
+3. Grave. A conversa regista «Modelo de lançamento criado» e a ficha ganha o botão **Aplicar**. **Vezes usado** fica em 0.
+4. Carregue em **Aplicar**. A janela **Aplicar modelo de lançamento** pede o **Modelo**, a **Data**, o **Valor base** e, se quiser, o **Diário**, o **Parceiro** e a **Referência**. Escreva o **Valor base** (500,00 €) e a **Referência** («Renda de novembro de 2026»): a pré-visualização mostra as linhas calculadas, **6261 Rendas e alugueres 500,00** a débito e **121 Depósitos à ordem 500,00** a crédito.
+   ![Janela Aplicar modelo de lançamento com valor base de 500 euros e a pré-visualização das duas linhas](/images/accounting-pt/modelos-de-lancamento/04-aplicar-preenchido.png)
+5. Carregue em **Criar lançamento em rascunho**. Abre o lançamento em **Rascunho**, **Equilibrado** (débitos 500,00 €, créditos 500,00 €), com a nota «Criado a partir do modelo de lançamento «Renda mensal do escritório» com o valor base 500.0.»
+   ![Lançamento em rascunho criado a partir do modelo, equilibrado, com as duas linhas](/images/accounting-pt/modelos-de-lancamento/05-lancamento-rascunho.png)
+6. Confira as contas e os valores e carregue em **Publicar**. O lançamento ganha o número (**OD/2026/00107**) e passa a **Publicada**.
+   ![Lançamento OD/2026/00107 publicado com as linhas da renda](/images/accounting-pt/modelos-de-lancamento/06-lancamento-publicado.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- O lançamento publicado tem as linhas do modelo com o valor do mês: no exemplo, **D 6261 Rendas e alugueres 500,00 €** e **C 121 Depósitos à ordem 500,00 €**, no diário **Operações Diversas**, com o **Tipo de transação SAF-T** «N — Normal».
+- O modelo fica na lista, para o mês seguinte.
+- O modelo não faz lançamentos sozinho: só cria o rascunho quando carrega em **Aplicar**, e o lançamento só conta depois de publicado.
+
+## Notas importantes
+
+- **O rascunho não conta na contabilidade** até ser publicado: confira-o antes.
+- **Parceiro:** cada linha do modelo tem o campo **Parceiro** e a janela **Aplicar** também. O parceiro da janela fica em todas as linhas do lançamento criado (testado com Cloud Services Inc.: as duas linhas ficaram com o parceiro e o lançamento sem parceiro no cabeçalho).
+- **Valor fixo:** uma linha com **Valor fixo** tem sempre o mesmo valor, seja qual for o **Valor base**. Testado com um modelo «Seguro anual com valor fixo» (débito 6263 Seguros, valor fixo 120,00; crédito 111 Caixa, **Resto**): com valor base de 0,01 € e de 300,00 € a pré-visualização dá 120,00 € nos dois lados. O **Resto** equilibra o que sobra.
+- **IVA:** o modelo não tem campo de IVA nem de imposto. As linhas são só contas, sentido e valor, por isso um modelo não calcula IVA: lance o IVA como uma linha a mais, com a conta do IVA e o valor, ou use uma fatura.
+- **Carregar exemplos:** o botão cria três, mesmo que já existam modelos: **Prémio de seguro** (6263 Seguros a débito, 111 Caixa a **Resto**), **Prestação de empréstimo** (25111 Empréstimos bancários 80 %, 6911 Juros de financiamentos obtidos 20 %, 111 Caixa a **Resto**; aplicado com 500,00 € dá 400,00 € e 100,00 € a débito e 500,00 € a crédito) e **Renda mensal** (6261 Rendas e alugueres, 111 Caixa). Confira as contas, que usam a Caixa, antes de os aplicar.
+- **Exercício fechado:** se a data do lançamento cair num exercício já fechado, a janela diz «O exercício 2026 (01/01/2026 a 31/12/2026) está fechado: não pode criar o lançamento… peça ao administrador uma exceção com motivo».
+
+{/* Nota interna (lote v23-Q, #3947, master 808f8ca1f, docs_demo_v23q_test, porta 8452): «peça ao administrador uma exceção» (antes «peça à Administração fiscal uma exceção») provocado no ecrã com um utilizador criado só com o perfil Contabilista (DEC-1777): lançamento de 15/12/2025, Publicar → Operação inválida; a variante «não pode alterar o lançamento» provocada pela integração (Voltar a rascunho do OD/2025/00049; no ecrã, o Contabilista tem Voltar a rascunho no menu Ações do lançamento e recebe a mesma recusa (auditoria docs-aud-v23q)). O resto da mensagem não mudou. */}
+- **Para corrigir um lançamento publicado por engano**, não o apague: [estorne-o](/accounting-pt/estornar-um-lancamento).
+
+## Problemas frequentes
+
+### «O valor base tem de ser superior a zero»
+
+- **Sintoma:** ao carregar em **Criar lançamento em rascunho** com o **Valor base** a 0,00 €, «Operação inválida: O valor base tem de ser superior a zero (é 0.0). Indique o valor a que o modelo se aplica.»
+- **O que fazer:** escreva o **Valor base** e volte a carregar.
+   ![Janela Aplicar modelo de lançamento com o valor base a zero](/images/accounting-pt/modelos-de-lancamento/03-aplicar-modelo.png)

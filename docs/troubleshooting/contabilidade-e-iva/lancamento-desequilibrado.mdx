@@ -1,0 +1,100 @@
+---
+id: lancamento-desequilibrado
+slug: /troubleshooting/lancamento-desequilibrado
+title: O lançamento não está equilibrado
+sidebar_label: Lançamento desequilibrado
+description: Porque o fiscaldoo recusa um lançamento com o débito diferente do crédito, como encontrar a linha que falta ou o valor errado e o que muda num modelo de lançamento.
+keywords: [lançamento não está equilibrado, lancamento nao esta equilibrado, desequilibrado, Diferença de, diferenca de, débito diferente de crédito, debito diferente de credito, Equilibrado, basta um cêntimo, Permanecer aqui, Descartar alterações, modelo não está equilibrado, Resto, Operação inválida]
+doc_id: DOC-0346
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 58eeca54d)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/dia-a-dia/lancamentos-contabilisticos, accounting-pt/auditoria/lancamentos-desequilibrados, accounting-pt/dia-a-dia/modelos-de-lancamento, troubleshooting/contabilidade-e-iva/periodo-bloqueado]
+---
+
+{/* Nota interna (DOCS-063 req. 46233, lote v23-X, 08/11/2026, master cebcb888d, docs_demo_v23x_test): as mensagens de salários e de abertura de saldos do v16-RESTOS. Abertura de saldos: a recusa do balancete desequilibrado está citada, com captura, no DOC-0306 (auditado); aqui só se liga, sem copiar. Na cópia, a migração da demonstração (equilibrada, 5.000,00 contra 5.000,00) passou a Balancete verificado ao carregar em Verificar balancete com o Contabilista certificado, sem mensagem; não se criou outra para a desequilibrar. Salários: as duas recusas de lançamento desequilibrado do módulo de salários (diferença de arredondamento sem conta configurada; corrida por recalcular) vêm do cálculo do lote e não se provocam por clique: não se citam. */}
+{/* Nota interna (DOCS-046, DOC-0346, v7-TS1): validado na base docs_demo_v7ts1_test (8181), master 584213fd9, com o Contabilista. Mensagens provocadas por clique: uma linha só (150,00 contra 0,00), 100,00 contra 90,00, 100,00 contra 99,99, rascunho gravado alterado para 110,00 e 120,00, saída pelo caminho do topo com diferença, modelo de 100 % contra 90 %. Fora de âmbito por não terem sido provocadas: as mensagens de salários e da abertura de saldos, que têm os seus artigos. */}
+
+## Sintoma
+
+Ao carregar em **Publicar** ou no ícone de guardar, abre-se a janela **Operação inválida** e o lançamento não fica gravado com o que escreveu. Antes disso, por cima das linhas e ao fundo delas, a etiqueta vermelha **Diferença de …** já mostrava que os dois lados não batem certo.
+
+![Fundo do lançamento: total de débitos de 100,00 €, total de créditos de 90,00 € e a etiqueta Diferença de 10,00 € assinalada](/images/troubleshooting/lancamento-desequilibrado/01-diferenca-no-rodape.png)
+
+## Mensagem
+
+Com 6241 Eletricidade a débito por 100,00 € e 2722 Credores por acréscimos de gastos a crédito por 90,00 € (perfil **Contabilista**):
+
+> «O lançamento não está equilibrado, por isso não pode ser confirmado: (lançamento novo): Débito *100,00 €* ≠ Crédito *90,00 €* — diferença *10,00 €*. Corrija uma linha (um valor, ou acrescente a linha em falta) para que o total do débito seja igual ao total do crédito. A diferença não é arredondada: basta um cêntimo para bloquear o lançamento.»
+
+![Janela Operação inválida com a mensagem do lançamento desequilibrado, débito de 100,00 € e crédito de 90,00 €, e o botão Fechar](/images/troubleshooting/lancamento-desequilibrado/02-operacao-invalida.png)
+
+A mesma frase aparece nestas situações:
+
+- **Ao guardar**, não só ao publicar. Por isso, um lançamento desequilibrado não fica guardado nem em **Rascunho**. O texto diz «não pode ser confirmado», mas o que falhou foi guardar.
+- **Num rascunho que já estava guardado**, depois de mudar um valor. O texto continua a dizer «(lançamento novo)».
+- **Ao sair do lançamento** com a diferença (pelo caminho no topo, por exemplo). A janela chama-se **Ups!** e tem dois botões: **Permanecer aqui** e **Descartar alterações**.
+
+Num modelo de lançamento, a mensagem é outra. Sai na janela **Erro de Validação**, ao guardar um modelo com 100 % a débito e 90 % a crédito:
+
+> «O modelo «*nome do modelo*» não está equilibrado: débito *100,00* % contra crédito *90,00* %. Iguale os dois lados ou transforme uma linha em «Resto».»
+
+## Causas verificadas
+
+- **Falta uma linha.** Com uma só linha de 150,00 € a débito, a diferença é de 150,00 €.
+- **Um valor está errado**, em qualquer linha. A diferença não é arredondada: 100,00 € contra 99,99 € é recusado com **Diferença de 0,01 €**.
+- **Mudou um valor de um rascunho já guardado** e não acertou a outra linha.
+- **Num modelo, as percentagens dos dois lados não somam o mesmo** e nenhuma linha é **Resto**.
+
+## O que confirmar
+
+1. A etiqueta ao fundo das linhas: o valor de **Diferença de …** é o que falta acertar.
+2. Se esse valor é igual ao de uma linha a mais ou de uma linha que falta (o IVA de uma fatura, por exemplo).
+3. Se dois números têm os algarismos trocados ou uma casa decimal a mais. <span className="fd-pending">Pendente de validação por contabilista certificado: qual das contas fica com a diferença, quando o documento de suporte não a explica.</span>
+
+## Como resolver
+
+### No lançamento (perfil Contabilista ou Contabilista certificado)
+
+1. Na janela **Operação inválida**, carregue em **Fechar**. O que escreveu continua no ecrã.
+2. Corrija o valor da linha errada ou carregue em **Adicionar uma linha**. A linha nova já traz a diferença do lado que falta: com 100,00 € a débito, a linha nova traz 100,00 € a crédito. Falta escolher a **Conta** e confirmar o valor.
+3. Confirme que a etiqueta passou a **Equilibrado**.
+4. Carregue em **Publicar**.
+
+Se quiser desistir das alterações, carregue no ícone de descartar (o **×** ao lado do ícone de guardar) ou, na janela **Ups!**, em **Descartar alterações**. Um lançamento novo perde-se; um rascunho já guardado volta aos valores que tinha.
+
+A etiqueta **Equilibrado** só diz que os totais são iguais. Não diz que as contas estão certas. Um valor negativo, por exemplo, muda de lado sem aviso: escrever −50,00 no débito da 6241 e −50,00 no crédito da 2722 grava a 6241 com 50,00 € a crédito e a 2722 com 50,00 € a débito, com a etiqueta **Equilibrado**. Confira os lados antes de publicar.
+
+### No modelo de lançamento
+
+Iguale as percentagens dos dois lados ou mude uma linha para **Resto**, como pede a mensagem. O passo a passo está em [modelos de lançamento](/accounting-pt/modelos-de-lancamento).
+
+### O lançamento já está publicado
+
+Um lançamento publicado está sempre equilibrado. Se o valor está errado nos dois lados, siga [o lançamento publicado não se altera](/troubleshooting/lancamento-publicado-nao-se-altera).
+
+## Resultado esperado
+
+Com as duas linhas iguais, a etiqueta diz **Equilibrado** e **Publicar** dá número ao lançamento. No exemplo, com os dois lados a 100,00 €, o lançamento ficou **Publicada** como `OD/2026/00104`, com estas linhas:
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| 6241 Eletricidade | 100,00 € | — |
+| 2722 Credores por acréscimos de gastos | — | 100,00 € |
+
+Para procurar lançamentos desequilibrados e saldos anómalos num período, use o [diagnóstico de lançamentos desequilibrados](/accounting-pt/lancamentos-desequilibrados), que só relata e não corrige. Se o lançamento vier de um ficheiro, a mensagem é outra e está em [importar lançamentos](/migration-toolkit/importar-lancamentos). No balancete de abertura da mudança de regime, **Verificar balancete** recusa com outra mensagem, que está em [passar à contabilidade organizada](/migration-toolkit/passar-a-contabilidade-organizada). O lançamento dos salários é feito pelo programa a partir do lote: veja [contabilizar os salários](/payroll-pt/contabilizar-os-salarios).
+
+## Quando contactar o suporte
+
+- A etiqueta diz **Equilibrado** e a mensagem aparece na mesma.
+- O diagnóstico mostra um lançamento publicado desequilibrado: o produto não deixa criá-los no ecrã.
+
+## Informação a enviar
+
+- A empresa, o diário e a data do lançamento.
+- O texto completo da mensagem, copiado do ecrã.
+- As contas e os valores de todas as linhas (uma captura serve).
+- O perfil com que entrou.

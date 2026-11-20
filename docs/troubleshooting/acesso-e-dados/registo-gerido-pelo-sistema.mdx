@@ -1,0 +1,65 @@
+---
+id: registo-gerido-pelo-sistema
+slug: /troubleshooting/registo-gerido-pelo-sistema
+title: Aparece «é preenchido pelo sistema» ou «use o botão…» ao alterar um registo
+sidebar_label: "«Preenchido pelo sistema»"
+sidebar_position: 11
+description: "Há registos e campos que só os botões do processo escrevem (apuramentos de IVA, comunicações, padrões de reconciliação, anexos já ligados): use o botão indicado na mensagem."
+keywords: [é preenchido pelo sistema, preenchido pelo sistema, use o botão, só se criam pela ação, registo fechado, apuramento de IVA, padrão de reconciliação, comunicação à AT, à mão, a mao, botão]
+doc_id: DOC-0422
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master b8b799c8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-permissao, troubleshooting/geral/mensagens-do-sistema]
+---
+
+## Sintoma
+
+Ao criar ou alterar um registo (ou um campo) à mão, o fiscaldoo recusa com uma frase que diz que ele é escrito pelo sistema ou que se faz pelo botão do processo. Nada foi alterado.
+
+## Mensagem
+
+Copiadas da base de demonstração em português, com o perfil **Contabilista**, provocadas pela integração (no ecrã, estes registos não têm botão de criar ou editar):
+
+- Ao criar um apuramento de IVA diretamente:
+  > «Os apuramentos de IVA só se criam pela ação de apuramento (Apuramento do IVA do período).»
+- Ao alterar um apuramento já feito:
+  > «Um apuramento de IVA é um registo fechado: só se altera pelas ações de apuramento e de estorno.»
+- Ao criar um padrão de reconciliação bancária à mão:
+  > «Os padrões confirmados só se criam quando o contabilista lança um movimento à mão.»
+- Ao alterar uma comunicação mensal à AT já submetida:
+  > «Um mês já submetido é a prova da comunicação: já não pode ser alterado, reaberto nem apagado.»
+
+## Causas verificadas
+
+Alguns registos são **o resultado de um processo** e não dados de entrada: o apuramento do IVA, a comunicação mensal, os padrões que a reconciliação aprende, os anexos já ligados a um registo. Cada um só se escreve pelo botão do seu processo, que deixa o rasto de auditoria. Escrevê-los à mão tornaria o rasto falso.
+
+## O que confirmar
+
+1. O que a frase manda usar: o nome do botão ou da ação vem na própria mensagem.
+2. Se o que quer é corrigir um resultado: corrige-se refazendo o processo ou pela ação de estorno, não editando o registo.
+
+## Como resolver
+
+- **Use a ação que a mensagem indica.** Por exemplo, o apuramento do IVA: [Como apurar o IVA do período](/accounting-pt/apuramento-do-iva).
+- **Para corrigir um apuramento**, use a ação de estorno do próprio apuramento e refaça-o.
+- **Para um mês da AT já submetido**, não há alteração: a comunicação é prova.
+
+**Quem faz:** o contabilista.
+
+## Resultado esperado
+
+O registo aparece criado ou corrigido pelo processo, com o rasto de auditoria.
+
+## Quando contactar o suporte
+
+- A ação indicada pela mensagem não existe no seu ecrã, ou falha com outra mensagem.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com o registo e a mensagem completa.
+
+{/* Nota interna (DOCS-040): foram provocadas 4 das 28 mensagens da família; as restantes (anexos, digitalização, SAF-T, fecho do exercício) não, por exigirem registos que a demonstração não tem. Pendente de validação. */}

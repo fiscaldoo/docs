@@ -1,0 +1,135 @@
+---
+id: gerar-o-saft
+slug: /fiscal-core/gerar-o-saft
+title: Como gerar o ficheiro SAF-T de faturação
+sidebar_label: Gerar o SAF-T de faturação
+sidebar_position: 2
+description: Gerar o ficheiro SAF-T de faturação de um mês, ler o resultado (gerado ou inválido) e descarregá-lo para o entregar à AT.
+keywords: [SAF-T, saft, saf-t pt, gerar saf-t, gerar saft, ficheiro SAF-T, ficheiro de faturação, ficheiro de faturacao, SAF-T mensal, SAF-T do mês, saft do mes, xml, modo F, faturação, descarregar SAF-T, SAF-T inválido, saft invalido, erros do SAF-T, avisos do SAF-T, cliente sem NIF, consumidor final, regenerar]
+doc_id: DOC-0052
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master a67618a71)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/at-e-saft/comunicar-a-faturacao-mensal, fiscal-core/at-e-saft/corrigir-erros-do-saft, fiscal-core/faturacao/clientes, fiscal-core/faturacao/artigos]
+---
+
+## Para que serve?
+
+O ficheiro SAF-T de faturação reúne, num ficheiro XML, os documentos de venda e os recibos de um mês, e também as guias de transporte e os documentos de conferência (orçamentos, encomendas, pró-formas) emitidos nesse mês, com os clientes e os artigos que usam. É esse ficheiro que se entrega à Autoridade Tributária e Aduaneira (AT) na comunicação mensal da faturação.
+
+Gerar não é entregar: este artigo cria o ficheiro e confirma que está válido. A entrega é o passo seguinte.
+
+## Quando utilizar?
+
+- No início de cada mês, para o ficheiro do mês anterior.
+- Depois de corrigir os erros de um ficheiro que saiu **Inválido**.
+- Quando o contabilista certificado ou a AT pede o ficheiro de um mês.
+
+## Onde encontrar?
+
+**Contabilidade › Declarar › Ficheiro SAF-T › Gerar SAF-T**
+
+O administrador encontra o mesmo em **Definições › fiscaldoo · Certificação**, no grupo **Configurar a certificação: SAF-T**, linha **Gerar SAF-T (PT)**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**. Foi com este perfil que se fizeram todos os passos, até descarregar o ficheiro.
+- Com o perfil **Contabilista** gera e descarrega o ficheiro (passos 1 a 7), mas o registo não mostra **Registar submissão**: a entrega fica para o perfil **Contabilista certificado**. O perfil **Administrativo** não tem a aplicação **Contabilidade**.
+- Os documentos do mês estão emitidos. Um rascunho não entra no ficheiro.
+- Está a trabalhar na empresa certa: o ficheiro é de uma empresa (campo **Empresa** da janela).
+- A identificação do programa certificado está preenchida, porque vai no cabeçalho do ficheiro. O administrador confere-a em **Contabilidade › Configurar › Geral › Definições**, bloco **Certificação PT**: **Produtor do software**, **Produto de software** e **Versão do software** (em **Identificação do software certificado**), **NIF do produtor do software** e **N.º de certificado do software** (em **Certificado da AT**). Sem os três primeiros ou sem o **NIF do produtor do software**, o ficheiro não se gera (ver «Problemas frequentes»). A identificação é a mesma para todas as empresas da base.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Declarar › Ficheiro SAF-T › Gerar SAF-T**. Abre-se a janela **Gerar SAF-T**, em três passos.
+2. Em **PASSO 1 DE 3: PERÍODO**, confirme que o **Modo** é **F — Faturação**: a janela já abre assim. Não o mude para **C — Contabilidade**, que é outro ficheiro. As outras opções são **I — Contabilidade integrada com a faturação** e **S — Autofaturação**.
+3. Em **Período**, deixe **Mês** (as outras opções são **Trimestre**, **Exercício fiscal** e **Intervalo personalizado**).
+4. Confirme as datas. A janela abre no mês anterior, com a **Data de referência** no dia 1 desse mês. No exemplo, a 31/10/2026: **Data de referência** `01/09/2026`, **Data de início** `01/09/2026` e **Data de fim** `30/09/2026`. Para outro mês, escreva em **Data de referência** um dia desse mês: com `15/08/2026`, as datas passam a `01/08/2026` e `31/08/2026`.
+   ![Passo 1 da janela Gerar SAF-T, com o modo F — Faturação, o período Mês, a data de referência 01/09/2026 e as datas de 01/09/2026 a 30/09/2026](/images/fiscal-core/gerar-o-saft/01-passo-1-periodo.png)
+5. Leia o **PASSO 2 DE 3: VERIFICAÇÕES**. Com o mês ainda aberto, o ecrã avisa: «O período ainda está aberto (data de bloqueio: 31/12/2025): os lançamentos até 30/09/2026 ainda podem mudar depois de gerado este ficheiro. Bloqueie o período quando for definitivo.» O aviso não impede de gerar, e a janela não bloqueia o período.
+6. Em **PASSO 3 DE 3: GERAR O FICHEIRO**, a linha «… documentos deste período vão entrar no ficheiro.» diz quantos documentos o ficheiro vai levar, e a linha de baixo diz quantos são de cada tipo. O botão mostra o mesmo número. Em setembro, na demonstração, a janela diz «3 documentos deste período vão entrar no ficheiro.» e, por baixo, «3 documentos de venda (faturas e notas de crédito)». Num mês com guias, como outubro, a janela diz «14 documentos deste período vão entrar no ficheiro.» e, por baixo, «9 documentos de venda (faturas e notas de crédito), 4 guias de transporte, 1 documentos de conferência (orçamentos, encomendas, pró-formas)», e o ficheiro descarregado tinha esses 14 documentos. Se o mês tem documentos em rascunho, a janela acrescenta uma linha com quantos são e quanto valem, porque não entram no ficheiro: em outubro, com um rascunho de fatura de 01/10/2026, «Estes documentos do período NÃO entram no ficheiro: 1 documentos de venda em rascunho (um rascunho ainda não é um documento): 104,55 €.» Se o rascunho é uma venda que devia entrar, feche a janela, emita a fatura ([Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada)) e volte ao passo 1; se não é, apague-o ou deixe-o, porque não conta. Carregue em **Gerar com … documentos**. A conferência dos totais faz-se nos passos 8 e 9.
+   ![Passo 3 de setembro de 2026 com o aviso de período aberto, a linha «3 documentos deste período vão entrar no ficheiro.», a linha por tipo «3 documentos de venda (faturas e notas de crédito)» e o botão Gerar com 3 documentos assinalado](/images/fiscal-core/gerar-o-saft/02-passo-3-gerar.png)
+7. Abre-se o registo **Exportação SAF-T (PT)**. Se o estado é **Gerado**, carregue em **Descarregar ficheiro**. O navegador guarda o ficheiro `SAFT-PT_599999993_2026_09_F.xml`.
+8. Antes de entregar, confira o ficheiro. Desça até às mensagens do registo: a nota «Totais de controlo de SalesInvoices (conferidos por uma consulta SQL independente): 3 documento(s), TotalDebit 0.00, TotalCredit 5276.00.» diz quantos documentos de venda o ficheiro leva e a soma deles sem IVA: das faturas em **TotalCredit**, das notas de crédito em **TotalDebit**.
+   ![Nota do registo com os totais de controlo: 3 documentos, TotalDebit 0.00 e TotalCredit 5276.00](/images/fiscal-core/gerar-o-saft/04-totais-de-controlo.png)
+9. Compare com o que faturou. Abra **Faturação › Faturar › Faturas de clientes**, retire o filtro **Este mês** e escolha os filtros **Publicada**, **Faturas** e **Data da Fatura › setembro**. A coluna **Sem impostos (moeda da empresa)** já está na lista, e o rodapé dá a soma dela. O número de linhas tem de ser o da nota (3) e a soma tem de ser o **TotalCredit**: no exemplo, 3.941,00 + 1.200,00 + 135,00 = 5.276,00 €. A outra soma do rodapé (6.452,25 €) é a do **Em dívida**, que leva o IVA: não é a que se compara. Faça o mesmo com o filtro **Notas de Crédito** para o **TotalDebit**. Se os números não batem, não entregue: veja «Problemas frequentes».
+   ![Lista de faturas de clientes publicadas em setembro de 2026, com a coluna Sem impostos (moeda da empresa), cujo título aparece cortado em «Sem impostos…», e a soma dela no rodapé assinaladas: 3.941,00, 1.200,00 e 135,00 euros, soma 5.276,00 euros](/images/fiscal-core/gerar-o-saft/05-conferir-total.png)
+
+</StepByStep>
+
+{/* Nota interna (correção da auditoria única, RU-03, 31/10/2026, master 8bbfc8012, base docs_demo_corru_test, Contabilista Certificado / Gestor fiscal): a linha dos rascunhos lida na janela Gerar SAF-T, F de outubro (15/10/2026), com o rascunho de 01/10/2026 a Papelaria Central, Lda (104,55 €) recusado no DOC-0022. Nesta base, sem as faturas da ronda, a janela dizia «8 documentos…» e «3 documentos de venda…, 4 guias de transporte, 1 documentos de conferência…»; os 14 do texto são da ronda, depois das FT D26/33 a /38. Não se gerou o ficheiro. */}
+
+## Resultado esperado
+
+- O registo fica no estado **Gerado**, com o **Nome do ficheiro gerado** (`SAFT-PT_599999993_2026_09_F.xml` no exemplo: NIF da empresa, ano, mês e modo), o **SHA-256 do ficheiro**, **N.º de erros** 0, **N.º de avisos** 0 e o **Estado da submissão** **Não enviado**.
+- **Descarregar ficheiro** guarda o XML no computador. O ficheiro de setembro leva as faturas `FT D26/28`, `FT D26/29` e `FT D26/30`, como a nota de controlo diz.
+- **Registar submissão** é o passo da entrega, explicado em [Como comunicar a faturação do mês à AT](/fiscal-core/comunicar-a-faturacao-mensal). O botão **Submeter (canal simulado)** só existe numa base de dados de teste: numa base de produção não aparece.
+
+![Registo Exportação SAF-T (PT) gerado, com o botão Descarregar ficheiro assinalado, o modo F — Faturação, as datas e o nome do ficheiro](/images/fiscal-core/gerar-o-saft/03-ficheiro-gerado.png)
+
+## Vídeo demonstrativo
+
+O vídeo mostra os passos 1 a 7: abrir **Gerar SAF-T**, escolher o modo **F — Faturação**, deixar **Mês** e escrever a data de referência 15/09/2026, ler o aviso do período aberto, gerar o ficheiro e descarregá-lo. Não mostra a conferência dos totais (passos 8 e 9).
+
+<VideoTutorial src="/videos/gerar-o-saft.mp4" captions="/videos/gerar-o-saft.vtt" poster="/videos/gerar-o-saft-poster.png" width="1440" height="1140" title="Gerar o SAF-T de faturação e descarregá-lo" duration="28 s" />
+
+## Notas importantes
+
+- A janela **Gerar SAF-T** não bloqueia o período: o aviso do passo 5 só lembra que os lançamentos do mês ainda podem mudar.
+- O ficheiro de faturação leva os documentos de venda certificados, os recibos, as guias de transporte e os documentos de conferência da empresa (o passo 3 da janela conta-os por tipo). A nota dos totais de controlo do passo 8 conta só os documentos de venda. Ficam fora os rascunhos, as faturas de fornecedores, os documentos de uma série de formação e os de outra empresa da base de dados. <span className="fd-pending">Pendente de validação por contabilista certificado: lista dos documentos que a lei manda pôr no SAF-T de faturação.</span>
+- O ficheiro é uma fotografia do mês no momento em que se gera. Se depois mudar alguma coisa no mês, gere de novo: cada geração é um registo novo e os antigos ficam como histórico.
+- O ficheiro do mês entrega-se à AT dentro do prazo. Na demonstração, o resumo **O que há para fazer com o SAF-T?** dava como prazo do ficheiro de setembro de 2026 o dia 6 de outubro de 2026. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo legal da comunicação mensal da faturação e regra quando o dia calha num feriado.</span>
+- O **Tipo de produto do SAF-T** de cada artigo e o NIF de cada cliente entram no ficheiro: [Como criar um artigo com o IVA e o tipo certos](/fiscal-core/artigos) e [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes).
+
+## Problemas frequentes
+
+### Falta a identificação do programa
+
+- **Sintoma:** ao carregar em **Gerar com … documentos**, abre-se uma janela: «O quê: ainda não é possível gerar o ficheiro SAF-T. Porquê: falta preencher a identificação do programa (Versão do software). Como: peça ao administrador técnico que a preencha em Contabilidade › Configurar › Geral › Definições › Certificação PT e gere de novo.» Entre parênteses vem o que falta: **Produtor do software**, **Produto de software** ou **Versão do software**. Sem o **NIF do produtor do software**, a janela diz «O quê: ainda não é possível gerar o ficheiro SAF-T. Porquê: falta o NIF do produtor do software. Como: peça ao administrador técnico que o preencha em Contabilidade › Configurar › Geral › Definições › Certificação PT e gere de novo.»
+- **Botões:** com o perfil **Contabilista certificado**, a janela chama-se **Operação inválida** e só tem **Fechar**. Ao administrador técnico, que é quem abre as Definições, chama-se **Aviso** e tem também **Abrir as Definições da Certificação PT**, que abre as Definições no separador **Faturação**.
+- **O que fazer:** peça ao administrador técnico que preencha o que falta no bloco **Certificação PT** e carregue em **Guardar**. Depois gere de novo. Nenhum registo novo fica criado com a recusa.
+
+{/* Nota interna (lote v23-AN, depois do comboio 174 com o UX-146 e o UX-147, master a67618a71, docs_demo_v23an_test): as duas recusas vistas por clique com um utilizador só com o perfil Contabilista certificado (janela Operação inválida, só Fechar), depois de pôr na cópia, por RPC com o administrador, a Versão do software e depois o NIF do produtor em branco (repostos logo a seguir); com o administrador, janela Aviso com Abrir as Definições da Certificação PT, que abriu as Definições no separador Faturação. */}
+
+{/* Nota interna (lote v23-AI, DOCS-069 #4052, master 7a3b55244, docs_demo_v23ai_test): recusa vista por clique com o Gestor de contabilidade da demonstração (perfil Contabilista certificado), modo F de outubro de 2026, depois de pôr a Versão do software em branco na cópia (por RPC, como administrador; reposta a 20.0.1.0.0 logo a seguir). O bloco Certificação PT e os cinco campos vistos por clique com o administrador. Vinha dos guias congelados SAF-T/gerar-o-saf-t.md e SAF-T/gerar-o-saf-t-de-contabilidade.md. */}
+
+### A janela abre uma mensagem de erro e não cria o registo
+
+- **Sintoma:** ao carregar em **Gerar com … documentos**, abre-se **Erro de Validação**, **Aviso** ou **Operação inválida**, e não aparece nenhum registo novo.
+- **O que fazer:** veja a mensagem e a solução em [O SAF-T não é gerado ou fica Inválido](/troubleshooting/saft-com-erros-de-validacao).
+
+### O ficheiro sai «Gerado», com avisos
+
+- **Sintoma:** o registo fica **Gerado**, com **N.º de erros** 0, mas o **N.º de avisos** não é 0 e aparece a lista **Avisos**.
+- **Causa:** o ficheiro saiu válido, mas com dados incompletos ou trocados por valores que o ficheiro aceita, por exemplo um cliente sem NIF ou uma ficha sem morada.
+- **O que fazer:** leia cada aviso antes de entregar. O que significa cada um, quando pede uma correção na ficha ou na fatura, e um exemplo de outubro de 2026, estão em [Como corrigir os erros de validação do SAF-T](/fiscal-core/corrigir-erros-do-saft), secções «Cliente sem NIF: não é um erro» e «Notas importantes». Depois de corrigir uma ficha, carregue em **Regenerar**.
+
+### O ficheiro sai «Inválido», com erros
+
+- **Sintoma:** em vez de **Gerado**, o registo fica **Inválido**, com o botão **Erros** e o número deles, o **N.º de erros**, os **Erros por tipo** (por exemplo «Formato ou valor inválido: 1») e o aviso «Este ficheiro está marcado como inválido. Se já corrigiu os registos listados abaixo, carregue no botão «Regenerar» acima para voltar a verificar com a versão atual do produto. Este registo fica como histórico; o ficheiro novo é um registo novo.». Não há **Descarregar ficheiro**.
+- **Causa:** há documentos ou fichas do mês que a AT não aceitaria. Os erros já vistos, entre eles o do fornecedor sem NIF e em que ficheiros conta, com um exemplo até **Gerado**, estão em [Como corrigir os erros de validação do SAF-T](/fiscal-core/corrigir-erros-do-saft).
+- **O que fazer:** cada linha da lista diz **Quem corrige** e tem o botão **Abrir o registo a corrigir**. Corrija os registos e carregue em **Regenerar**. **Exportar erros (XLSX)** dá a lista numa folha de cálculo, para a entregar a quem corrige. Não entregue um ficheiro **Inválido**.
+
+{/* Nota interna (DOCS-044 #3539, ronda fix-saft2 e correções da auditoria AS2, DEC-1445/1466; 30/10/2026, master 9d1671e9f): o exemplo antigo do cliente de Angola sem NIF (Inválido, 2 erros, referência órfã) saiu: com o SAFT-152 o cliente estrangeiro sem NIF dá Gerado com aviso. Fonte única (AS2-04): o exemplo do F de outubro e as regras do NIF do cliente e do fornecedor vivem só no DOC-0054. A frase do recibo acima da dívida saiu: esse recibo é hoje recusado ao emitir (DOC-0034). O exemplo de setembro (passos 1 a 9) foi conferido na base docs_demo_saft2_test (Gerar com 3 documentos, Gerado, 0 avisos, nota de controlo 3 documentos e TotalCredit 5276.00) e, com o perfil Contabilista Certificado / Gestor fiscal + Responsável fiscal, na docs_demo_saft3_test: a janela abre a 30/10/2026 com a Data de referência 30/09/2026 (captura 01 refeita, AS2-08) e a lista de faturas de setembro mostra a coluna Sem impostos (moeda da empresa) com a soma 5.276,00 € no rodapé (passo 9 e captura 05 refeitos, AS2-02). */}
+
+{/* Nota interna (ronda única, 31/10/2026, master 27cebe13a, base docs_demo_ronda_test, Contabilista): AS3-02 / PD-AS3-01 corrigido pelo SAFT-159 (comboio 113): o F de outubro diz «14 documentos deste período vão entrar no ficheiro.» com a linha por tipo (9 de venda, 4 guias, 1 de conferência) e «Gerar com 14 documentos»; o XML tem 9 faturas, GT D26/1 a 4 e OR D26/1. Com a GD D26/1 do DOC-0054, 17 (5 guias). Setembro (só 3 faturas) não tem guias. */}
+
+{/* Nota interna (retoma da ronda única, DEC-1535; 31/10/2026, master 27cebe13a, base docs_demo_ronda2_test, Contabilista Certificado / Gestor fiscal + Responsável fiscal): captura 02 refeita em setembro (Data de referência escrita 15/09/2026 e Enter: 01/09 a 30/09, «3 documentos deste período vão entrar no ficheiro.», «3 documentos de venda (faturas e notas de crédito)», Gerar com 3 documentos). O F de outubro conferido de novo: 14 documentos, 9 de venda, 4 guias, 1 de conferência. O PD-RU-04 (a 31/10 a janela abria em outubro) foi resolvido pelo SAFT-164 (#3586, master ab9649f2e): ver a nota seguinte. O Escape no campo da data fecha a janela inteira (era por isso que o guião anterior a perdia). */}
+
+{/* Nota interna (correções finais antes da junção, REC-01, 31/10/2026, master ab9649f2e, base docs_demo_corfin_test, Contabilista Certificado / Gestor fiscal + Responsável fiscal): a janela aberta pelo menu a 31/10/2026 mostra F — Faturação, Mês, Data de referência 01/09/2026, Data de início 01/09/2026 e Data de fim 30/09/2026, com «3 documentos deste período vão entrar no ficheiro.» e «Gerar com 3 documentos»; com 15/08/2026 escrito e Enter, 01/08/2026 a 31/08/2026. Captura 01 refeita (mostrava a Data de referência 30/09/2026). Saiu a frase «Não conte com isso no dia 31…». O vídeo (feito a 30/10) mostra a data de referência 15/09/2026 escrita: continua certo. */}
+
+### Uma fatura publicada não aparece no ficheiro, ou o ficheiro sai «Inválido» por uma fatura sem série
+
+- **Sintoma:** o ficheiro sai **Inválido** com «O documento de venda “FT/2026/00005” está lançado mas não tem série/número SAF-T (o seu diário não está certificado) — não pode ser omitido do ficheiro em silêncio. Emita-o num diário certificado ou corrija o diário antes de gerar.» Visto numa empresa de teste da demonstração com faturas antigas num diário não certificado.
+- **Causa:** a fatura foi publicada num diário que não é certificado, por isso não tem série nem ATCUD. O fiscaldoo não a deixa de fora sem avisar.
+- **O que fazer:** não entregue o ficheiro. Fale com o contabilista certificado da empresa e com quem tem o perfil **Contabilista certificado**: o diário tem de ser certificado, ou o documento tratado de outra forma. <span className="fd-pending">Pendente de validação por contabilista certificado: como regularizar uma fatura publicada sem série certificada.</span> Se o número de faturas da nota de controlo não bate com a lista (passo 9) e não houve erro, confirme a empresa e os filtros da lista.
+
+### Gerei o SAF-T e saiu com os lançamentos contabilísticos
+
+- **Causa:** o **Modo** foi mudado para **C — Contabilidade** (a janela abre em **F — Faturação**).
+- **O que fazer:** gere de novo com **F — Faturação** (passo 2). O ficheiro de contabilidade tem o seu próprio uso e prazo.

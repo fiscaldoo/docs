@@ -1,0 +1,139 @@
+---
+id: linhas-de-banco
+slug: /copilot/linhas-de-banco
+title: Como o Copiloto reconcilia sozinho as linhas do banco que são certas
+sidebar_label: Linhas do banco reconciliadas pelo Copiloto
+sidebar_position: 3
+description: "O Copiloto reconcilia, sem IA, as linhas do banco que batem com um documento em aberto sem margem para dúvida e sugere as outras. Onde se vê, como se aceita uma sugestão e como se desfaz."
+keywords: [linhas de banco do copiloto, reconciliar com o copiloto, reconciliação automática, linhas do banco, sugestão do copiloto, desfazer reconciliação, regra de certeza, copiloto banco]
+doc_id: DOC-0290
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/reconciliar-movimentos-bancarios, accounting-pt/bancos-e-tesouraria/reconciliacao-automatica, copilot/configurar/privacidade-e-consentimentos, copilot/configurar/registo-do-copiloto]
+---
+
+## Para que serve?
+
+O Copiloto lê as linhas do banco por reconciliar e compara-as com as faturas em aberto. Quando não há dúvida possível, reconcilia a linha sozinho. Quando há, deixa só uma sugestão, com o motivo, para uma pessoa decidir.
+
+Isto **não usa IA** nem envia nada para fora da empresa: segue uma regra fixa. A linha só é reconciliada sozinha se:
+
+- o valor é exatamente o que falta pagar do documento em aberto, e a data da linha fica a 30 dias ou menos da data de vencimento do documento, antes ou depois (30 dias é o valor por omissão da **Janela de sugestão (dias)** da configuração bancária);
+- a referência do documento (por exemplo «FT D26/30») está na descrição da linha;
+- nenhum outro documento em aberto serve tão bem;
+- não há outra linha do banco igual a esta;
+- e o IBAN da linha não contradiz o do fornecedor.
+
+## Quando utilizar?
+
+- Importou o extrato e quer que as linhas evidentes fiquem reconciliadas sem as tratar uma a uma.
+- Quer ver o que o Copiloto reconciliou ou sugeriu, e porquê.
+- O Copiloto reconciliou uma linha com o documento errado e quer desfazer.
+
+## Onde encontrar?
+
+- Correr o Copiloto: **Contabilidade › Reconciliar › Bancos e caixa › O que há para fazer com os bancos?**, em **Listas de apoio**, **Linhas do banco**. Selecione as linhas e use **Ações › Reconciliar com o Copiloto**.
+- Ver o que ele fez: na mesma página, em **Listas de apoio**, **Linhas de banco do Copiloto**.
+
+## Antes de começar
+
+- O perfil é o **Contabilista**. Todos os passos abaixo foram feitos até ao fim com esse perfil.
+- Em **Copiloto › Controlo › Interruptores** têm de estar ligados o **Copiloto (interruptor geral da empresa)** e **Linhas de banco que se reconciliam sozinhas** (tipo **Decide o utilizador**: vem desligado, porque mexe nas contas). Só a **Administração fiscal** ou o administrador os ligam. Veja [Como ligar ou desligar o Copiloto e controlar os dados enviados](/copilot/privacidade-e-consentimentos).
+- As linhas do banco já estão no fiscaldoo: veja [Como importar um extrato bancário](/accounting-pt/importar-extrato-bancario).
+
+## Como utilizar
+
+### Pedir ao Copiloto que reconcilie
+
+<StepByStep>
+
+1. Abra **Contabilidade › Reconciliar › Bancos e caixa › O que há para fazer com os bancos?** e, em **Listas de apoio**, carregue em **Linhas do banco**. A lista **Linhas bancárias por reconciliar** abre com o filtro **Por reconciliar**.
+2. Selecione as linhas (a caixa no cabeçalho seleciona todas). Se a lista tiver linhas de um diário de caixa, deixe-as de fora: o Copiloto também as reconcilia (veja «Notas importantes»).
+3. Carregue em **Ações** e em **Reconciliar com o Copiloto**.
+   ![Lista Linhas bancárias por reconciliar com 5 linhas selecionadas e o menu Ações aberto em Reconciliar com o Copiloto](/images/copilot/linhas-de-banco/01-reconciliar-com-o-copiloto.png)
+
+</StepByStep>
+
+O Copiloto também corre sozinho uma vez por dia, nas empresas com o interruptor ligado, sobre as linhas que ainda não tratou.
+
+### Ver o resultado e aceitar uma sugestão
+
+<StepByStep>
+
+1. Volte a **O que há para fazer com os bancos?** e, em **Listas de apoio**, carregue em **Linhas de banco do Copiloto**. A lista tem **Data**, **Descrição**, **Valor**, **Copiloto** (**Reconciliada pelo Copiloto**, **Sugerida pelo Copiloto** ou **Desfeita por uma pessoa**), **Item escolhido pelo Copiloto** e **Porque o Copiloto a escolheu**.
+2. Leia o motivo de cada sugestão. Se o documento proposto está certo, carregue em **Aceitar** na linha.
+   ![Linhas de banco do Copiloto: uma linha reconciliada pelo Copiloto, com Desfazer, e duas sugeridas, com Aceitar](/images/copilot/linhas-de-banco/02-linhas-de-banco-do-copiloto.png)
+
+</StepByStep>
+
+Se a sugestão está errada, não carregue em **Aceitar**: reconcilie a linha à mão, como explica [Como reconciliar os movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios).
+
+### Desfazer uma reconciliação do Copiloto
+
+<StepByStep>
+
+1. Em **Linhas de banco do Copiloto**, na linha **Reconciliada pelo Copiloto**, carregue em **Desfazer**. Abre a janela **Desfazer a reconciliação**, com a linha do banco e os **Documentos reconciliados**.
+2. Escreva o **Motivo** e carregue em **Desfazer reconciliação**.
+   ![Janela Desfazer a reconciliação com a linha do banco, os documentos reconciliados e o motivo](/images/copilot/linhas-de-banco/03-desfazer.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- Depois de **Reconciliar com o Copiloto**, uma mensagem resume o que aconteceu. No exemplo, com 5 linhas: «Copiloto. 1 reconciliadas (com certeza), 0 pelas suas regras, 2 sugeridas, 2 sem correspondência.»
+  - **Reconciliada:** a transferência «TRF PAPELARIA CENTRAL LDA FT D26/30», de 4.847,43 €, com a fatura FT D26/30 do mesmo valor. A fatura fica paga.
+  - **Sugeridas:** 143,10 € da Padaria Aurora, com o motivo «O item serve por montante e data, mas nada o prova (sem referência, sem IBAN).», e 123,00 € de um cliente com duas faturas de 123,00 € em aberto, com o motivo «Vários itens em aberto servem; uma pessoa tem de escolher.»
+  - **Sem correspondência:** uma comissão bancária e uma transferência sem referência. Ficam por reconciliar e não aparecem em **Linhas de banco do Copiloto**.
+- O movimento do banco fica lançado assim (conferido no razão, linha de 4.847,43 €):
+
+  | Lançamento | Conta | Débito | Crédito |
+  |---|---|---|---|
+  | Linha do banco | 121 Depósitos à ordem | 4.847,43 | |
+  | | 120001 Conta Transitória | | 4.847,43 |
+  | Reconciliação | 120001 Conta Transitória | 4.847,43 | |
+  | | 2111 Clientes gerais (Papelaria Central) | | 4.847,43 |
+
+- **Aceitar** reconcilia a linha com o documento sugerido: a linha sai de **Linhas de banco do Copiloto** e a fatura fica paga. No exemplo, a FT D26/28 da Padaria Aurora passou a paga.
+- **Desfazer** faz um estorno da reconciliação com a data de hoje (nada é apagado): o débito e o crédito trocam-se nas mesmas contas e a fatura volta a ficar em aberto (na FT D26/30, 4.847,43 € em dívida outra vez). A linha fica **Desfeita por uma pessoa** e volta às **Linhas do banco** por reconciliar.
+  ![Linhas de banco do Copiloto depois de desfazer: a linha da Papelaria Central está Desfeita por uma pessoa](/images/copilot/linhas-de-banco/04-desfeita.png)
+- Cada reconciliação, sugestão, aceitação e desfazer fica em **Copiloto › Controlo › Registo** (veja [Como ver o que o Copiloto fez e o que enviou à IA](/copilot/registo-do-copiloto)).
+
+## Notas importantes
+
+- **Uma linha desfeita nunca mais é reconciliada pelo Copiloto.** Reconcilie-a à mão.
+- **O Copiloto não volta a olhar para uma linha que já tratou.** Uma linha sugerida que não aceitou fica sugerida; correr **Reconciliar com o Copiloto** outra vez não a reavalia.
+- **O IBAN sozinho nunca chega** para reconciliar: com o IBAN e sem a referência do documento, a linha fica só sugerida.
+- **Antes do Copiloto correm as suas regras.** Os modelos de reconciliação marcados como automáticos (veja [Como automatizar a reconciliação bancária](/accounting-pt/reconciliacao-automatica)) correm primeiro; a mensagem conta-os em «pelas suas regras».
+- **Aceitar diz o que fez:** aparece «Copiloto. Sugestão aceite: «*descrição da linha*» foi reconciliada com *documento*. Deixa de aparecer nesta lista; o rasto fica no registo do Copiloto e em «Linhas do banco» surge como reconciliada.». Para voltar a ver a linha, abra **Linhas do banco** e tire o filtro **Por reconciliar**. A aceitação fica também em **Copiloto › Controlo › Registo**.
+- **No mesmo menu Ações há Sugerir classificação (IA).** É outra função, que usa um fornecedor de IA (interruptores **Ligação à IA** e **IA - Classificador**) para propor a conta e o IVA de um movimento. Não é tratada aqui. Com a IA desligada, recusa com a mesma mensagem de «O Copiloto está desligado».
+- **Linhas de caixa:** a volta diária só lê os diários de banco, mas **Reconciliar com o Copiloto** trata todas as linhas selecionadas, também as de um diário de caixa. Se não quer que o Copiloto reconcilie a caixa, não selecione essas linhas.
+
+{/* Nota interna (DOCS-046, 3.ª ronda, master 52d1dd3ad): o mapeamento citava um menu «Linhas de banco do Copiloto» no grupo «Sistema» de Configurar (desde o comboio 193 o grupo chama-se «Sistema e segurança») e «propõe a classificação»; o menu está escondido aí (arxi_ux_kit) e aparece como lista de apoio do painel dos bancos (UX-090). Função COP-007 (regra de certeza, sem IA). A classificação por IA das linhas do banco (COP-012, «Sugerir classificação (IA)») existe e fica para um artigo à parte, que só se valida com IA real. Dados: 3 linhas criadas por RPC (Contabilista) no diário Banco; interruptores ligados pelo administrador no ecrã. V4PPL-16 saiu com o HR-036 (visto com demo.contabilista, DOCS-065, master c643480c2). «Só diários de banco» vem do código (domínio do agente). */}
+
+{/* Nota interna (lote v23-R, #3900, master 808f8ca1f, docs_demo_v23r_test): captura 03 refeita sem «teste» no motivo. Na cópia, o administrador ligou por RPC o interruptor geral e «Linhas de banco que se reconciliam sozinhas»; a linha «TRF PAPELARIA CENTRAL LDA FT D26/30» (22/09/2026, 4.847,43) foi criada por RPC com o Contabilista; no ecrã, com o Contabilista, Reconciliar com o Copiloto deu «Copiloto. 1 reconciliadas (com certeza), 0 pelas suas regras, 0 sugeridas, 0 sem correspondência.», a linha ficou Reconciliada pelo Copiloto com a FT D26/30 e a janela Desfazer foi cancelada depois da captura. Sem IA: esta função não usa fornecedor de IA. */}
+
+## Problemas frequentes
+
+### «O Copiloto está desligado para a empresa…»
+
+- **Sintoma:** **Reconciliar com o Copiloto** diz «O Copiloto está desligado para a empresa “Empresa Demonstração, Lda”. Nada foi feito. Peça ao administrador que o ligue: Copiloto › Controlo › Interruptores.»
+- **Causa:** o interruptor geral ou **Linhas de banco que se reconciliam sozinhas** está desligado.
+- **O que fazer:** peça ao administrador que os ligue em **Copiloto › Controlo › Interruptores**. O **Contabilista** não os pode mudar («Não tem permissão para alterar «Interruptor do Copiloto (empresa e agente)»»).
+
+### «Há campos obrigatórios por preencher» ao desfazer
+
+- **Sintoma:** em **Desfazer a reconciliação**, o botão **Desfazer reconciliação** diz «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** falta o **Motivo**.
+- **O que fazer:** escreva o motivo e carregue outra vez.
+
+### A lista Linhas de banco do Copiloto está vazia
+
+- **Sintoma:** «Ainda não há linhas bancárias tratadas pelo Copiloto. As linhas que ele lê dos extratos aparecem aqui.»
+- **Causa:** o Copiloto ainda não correu, ou não encontrou nenhum documento para as linhas (as linhas sem correspondência não aparecem aqui).
+- **O que fazer:** corra **Reconciliar com o Copiloto** nas **Linhas do banco**, ou espere pela volta diária.
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): mensagem por clique: Reconciliar com o Copiloto numa linha do banco, Copiloto desligado como vem na base, utilizador só Contabilista. */}

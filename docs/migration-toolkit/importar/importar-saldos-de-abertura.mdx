@@ -1,0 +1,145 @@
+---
+id: importar-saldos-de-abertura
+slug: /migration-toolkit/importar-saldos-de-abertura
+title: Como importar os saldos de abertura
+sidebar_label: Saldos de abertura
+description: Carregar o balancete de abertura do programa anterior num único lançamento, verificar o ficheiro antes de gravar e conferir as linhas criadas.
+keywords: [saldos de abertura, balancete de abertura, importar saldos, importar balancete, lançamento de abertura, lancamento de abertura, migração, migracao, csv, xlsx, diário ABR, diario ABR, Importar saldos de abertura]
+doc_id: DOC-0297
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master f16f4a3e0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [migration-toolkit/planear/validar-a-migracao]
+---
+
+{/* Nota interna (DOCS-046 / NV3B-13, 14 e 17, #3616): só o Administrador importa; o MIG-072 está a decidir o que o Responsável fiscal vê e pode fazer na migração: quando entrar, atualizar «Antes de começar». O artigo tem video=sim na arquitetura; o vídeo é de outra corrente (guia do lote: lugar previsto, sem secção «Vídeo demonstrativo» enquanto não existir). Passos 1 a 6 prontos para gravar: ficheiro `saldos_abertura_exemplo.csv` do relatório LOTE_V3_MIG. */}
+
+## Para que serve?
+
+Quando uma empresa passa a trabalhar no Odoo a meio da sua vida, as contas têm de começar com os saldos que tinham no programa anterior: caixa, bancos, clientes, fornecedores, capital. Este assistente lê um ficheiro com uma linha por conta e cria **um único lançamento** no diário **Lançamentos de abertura**, só se o total a débito for igual ao total a crédito.
+
+Nada é gravado enquanto o ficheiro tiver um problema: a verificação lista as linhas erradas e a importação só corre depois de o ficheiro estar certo.
+
+## Quando utilizar?
+
+- Para carregar o balancete final do programa anterior como abertura do primeiro exercício no Odoo.
+- Para carregar as contas de clientes e fornecedores com o saldo de cada parceiro, quando não precisa de reconciliar documento a documento.
+- **Não use** este assistente para os clientes e fornecedores se também vai importar as faturas em aberto: os mesmos saldos ficariam duplicados.
+- **Não use** para criar faturas, notas de crédito ou outros documentos certificados: o assistente só cria um lançamento geral.
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Lançamentos › Importar**, e carregue em **Importar saldos de abertura**.
+
+![Página Importar com os botões de importação, entre eles Importar saldos de abertura](/images/migration-toolkit/importar-saldos-de-abertura/01-menu-importar.png)
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**, ou é o administrador. O **Contabilista** e o **Auditor / ROC** não veem o botão **Importar saldos de abertura**: a permissão «Migração / Importação fiscal» vem com o perfil **Contabilista certificado** (e o administrador tem-na). Com outro perfil, peça ao administrador do sistema que lhe atribua essa permissão. <span className="fd-pending">Pendente de validação por contabilista certificado: quem deve poder importar saldos de abertura.</span>
+- O plano de contas da empresa já tem todas as contas do ficheiro. As contas de clientes e fornecedores (por exemplo `2111` e `2211`) pedem o parceiro; crie-o antes em **Clientes** ou **Fornecedores**.
+- O ficheiro é CSV (vírgula ou ponto e vírgula) ou XLSX, com a primeira linha de cabeçalho: **Conta**, **Débito**, **Crédito** e, se quiser, **Parceiro** (NIF ou nome exato) e **Descrição**. Exemplo, com dados inventados (cada linha da tabela é uma linha do ficheiro; grave com ponto e vírgula entre colunas):
+
+  | Conta | Débito | Crédito | Parceiro | Descrição |
+  |---|---|---|---|---|
+  | `111` | `1500,00` | | | Caixa |
+  | `121` | `20000,00` | | | Depósitos à ordem |
+  | `2111` | `3000,00` | | `PT599999985` | Cliente Alfa, Lda |
+  | `2211` | | `2500,00` | `PT599999969` | Fornecedor Beta, SA |
+  | `511` | | `22000,00` | | Capital subscrito |
+
+- A data de referência fica num período que não está bloqueado. Se houver uma data de bloqueio (por exemplo, exercício fechado até 31/12/2025), use uma data posterior ou peça ao administrador que a altere (ver «Problemas frequentes»).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Importar saldos de abertura**, carregue em **Escolher ficheiro** e escolha o ficheiro. Em **Data de referência**, escreva a data da abertura, por exemplo `01/01/2026`. **Diário de abertura** vem preenchido com o diário de lançamentos de abertura. Em **Modo**, deixe **Criar em rascunho** para rever o lançamento antes de o publicar, ou escolha **Criar e publicar**.
+   ![Janela Importar saldos de abertura com o ficheiro escolhido, a data de referência 01/01/2026 e o botão Verificar assinalado](/images/migration-toolkit/importar-saldos-de-abertura/02-ficheiro-e-data.png)
+2. Carregue em **Verificar**. Nada é gravado neste passo. Se o ficheiro tiver problemas, a janela diz «Foram encontrados *N* problema(s) no ficheiro. Nada foi gravado.», mostra os totais e lista cada erro com o número da linha do ficheiro (a linha 1 é o cabeçalho). Corrija o ficheiro, carregue em **Voltar** e escolha-o outra vez (ver «Problemas frequentes»).
+   ![Verificação com dois erros: saldos desequilibrados e a conta 999999 que não existe, com os totais 24.600,00 e 23.500,00](/images/migration-toolkit/importar-saldos-de-abertura/03-erros-do-ficheiro.png)
+3. Sem erros, a janela diz «5 linhas de abertura, total 24500.00 EUR, com data 01/01/2026. Nada é gravado até carregar em Importar.» e mostra **Contas** 5, **Total a débito** 24.500,00 e **Total a crédito** 24.500,00. Confira estes valores com o balancete do programa anterior e carregue em **Importar**.
+   ![Verificação sem erros: 5 contas, total a débito 24.500,00 e total a crédito 24.500,00, com o botão Importar assinalado](/images/migration-toolkit/importar-saldos-de-abertura/04-verificacao-sem-erros.png)
+4. Na pergunta «O lançamento de abertura vai ser criado. Continuar?», carregue em **Confirmar**. A janela diz «Lançamento de abertura criado (Criar em rascunho) com 5 linhas.» Carregue em **Ver lançamento**.
+   ![Janela com a mensagem Lançamento de abertura criado (Criar em rascunho) com 5 linhas e o botão Ver lançamento assinalado](/images/migration-toolkit/importar-saldos-de-abertura/05-lancamento-criado.png)
+5. Confira as linhas do lançamento com o ficheiro. Em rascunho, o lançamento aparece com a faixa «274 dias desde o fim do mês a que este lançamento respeita (limite do CIRC, art. 123.º, n.º 3). Lance-o ou reveja a sua data; nada é bloqueado.» (o número de dias depende do dia em que importa): é um aviso e não impede nada. Carregue em **Publicar**.
+   ![Lançamento de abertura ABR/2026/00001 no diário Lançamentos de abertura, com as cinco linhas, os totais iguais e o botão Publicar assinalado](/images/migration-toolkit/importar-saldos-de-abertura/06-lancamento-de-abertura.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- Um lançamento no diário **Lançamentos de abertura**, com a data de referência e a referência «Saldos de abertura 01/01/2026», com o estado **Publicada** depois do passo 5. A numeração do exemplo é `ABR/2026/00001`.
+- As linhas criadas são as do ficheiro, conta a conta:
+
+  | Conta | Parceiro | Débito | Crédito |
+  |---|---|---|---|
+  | `111` Caixa | | 1.500,00 € | |
+  | `121` Depósitos à ordem | | 20.000,00 € | |
+  | `2111` Clientes gerais | Cliente Alfa, Lda | 3.000,00 € | |
+  | `2211` Fornecedores gerais | Fornecedor Beta, SA | | 2.500,00 € |
+  | `511` Capital subscrito | | | 22.000,00 € |
+  | **Total** | | **24.500,00 €** | **24.500,00 €** |
+
+- No **Balancete** do ano, o lançamento publicado conta como **Movimentos do período** de 2026: o **Saldo inicial** fica a zero porque a abertura tem data do próprio exercício. Um lançamento em rascunho não aparece no balancete. <span className="fd-pending">Pendente de validação por contabilista certificado: se a abertura deve aparecer como saldo inicial ou como movimento do primeiro exercício.</span>
+- O histórico do lançamento regista «Saldos de abertura importados por *utilizador* do ficheiro «saldos_abertura_exemplo.csv» (5 linhas).» e a importação fica no [registo de importações](/migration-toolkit/validar-a-migracao).
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Um lançamento, sem tipo de abertura próprio">
+O lançamento fica com o tipo de transação SAF-T **N — Normal**. Para o ficheiro SAF-T da contabilidade, confirme com o contabilista certificado se a abertura leva outro tipo. <span className="fd-pending">Pendente de validação por contabilista certificado: tipo de transação SAF-T do lançamento de abertura.</span>
+</HelpCallout>
+
+- É tudo ou nada: com uma só linha errada, nada é gravado.
+- O assistente trata uma célula que comece por `=`, `+`, `-` ou `@` como texto, nunca como fórmula.
+- Os montantes entram sem sinal: o débito e o crédito são colunas separadas e nunca negativas. Uma conta com saldo contrário (por exemplo um cliente credor) vai na coluna **Crédito**.
+
+## Problemas frequentes
+
+### «A data … está num período bloqueado»
+
+- **Sintoma:** ao carregar em **Verificar**, a janela diz «Foram encontrados 1 problema(s) no ficheiro. Nada foi gravado.» e, em **Onde**, «No ficheiro todo»: «A data 31/12/2025 está num período bloqueado (Data de bloqueio geral (31/12/2025)). Não se pode importar nada aí; altere a data ou peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)».» (visto no ecrã com o perfil **Contabilista certificado**, com a **Data de referência** 31/12/2025)
+  ![Verificação com a data 31/12/2025 num período bloqueado, no ficheiro todo](/images/migration-toolkit/importar-saldos-de-abertura/07-data-em-periodo-bloqueado.png)
+- **Causa:** a **Data de referência** cai antes ou na data de bloqueio da empresa. Em **Onde** aparece «No ficheiro todo» porque o erro é da data e não de uma linha do ficheiro.
+- **O que fazer:** escreva uma data posterior à do bloqueio. Se a abertura tem mesmo de ficar nesse período, peça ao administrador que altere a data de bloqueio, que pede um motivo e fica registada. <span className="fd-pending">Pendente de validação por contabilista certificado: alterar uma data de bloqueio para importar uma abertura.</span>
+
+### «Os saldos de abertura não estão equilibrados»
+
+- **Sintoma:** «Os saldos de abertura não estão equilibrados: débito 24600.00, crédito 23500.00, diferença 1100.00. Um lançamento desequilibrado nunca é gravado; corrija os montantes.» A linha da mensagem aparece como linha 0, porque o erro é do ficheiro inteiro.
+- **Causa:** a soma da coluna **Débito** é diferente da soma da coluna **Crédito**.
+- **O que fazer:** some as duas colunas no ficheiro, ache a diferença e corrija o montante ou acrescente a linha em falta (normalmente o capital).
+
+### «A conta … não existe»
+
+- **Sintoma:** «A conta “999999” não existe em *empresa*. Verifique o código no plano de contas.» A linha indicada é a linha do ficheiro. O mesmo vale para um código incompleto como `21`.
+- **O que fazer:** confirme o código no **Plano de contas** e use uma conta que exista; se faltar, crie-a antes.
+
+### «A conta … é de terceiros e precisa de parceiro»
+
+- **Sintoma:** «A conta 2111 é de terceiros e precisa de parceiro (extrato de cliente ou fornecedor e SAF-T). Preencha o parceiro nesta linha.»
+- **O que fazer:** preencha a coluna **Parceiro** com o NIF e, se o parceiro não existir, crie-o primeiro.
+
+### Débito e crédito na mesma linha, ou montante que não é número
+
+- **Sintoma:** «A linha tem débito e crédito ao mesmo tempo. Separe-a em duas linhas.» ou «O montante “abc” não é válido. Use um número positivo (1234.56 ou 1.234,56); o débito e o crédito são colunas separadas, nunca negativas, e não se aceitam texto nem fórmulas.»
+- **O que fazer:** separe a linha em duas, ou escreva o montante só com algarismos.
+
+### «Escolha primeiro um ficheiro CSV ou XLSX.» ou colunas em falta no cabeçalho
+
+- **Sintoma:** com a **Data de referência** preenchida, ao carregar em **Verificar** sem ficheiro escolhido, a janela diz «Escolha primeiro um ficheiro CSV ou XLSX.». Sem a data, o aviso é «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.». Com um ficheiro cujo cabeçalho não tem as colunas do débito e do crédito: «Ao cabeçalho do ficheiro faltam as colunas: Débito, Crédito. Chame às colunas Conta, Débito e Crédito (Parceiro e Descrição são opcionais).»
+- **O que fazer:** escolha o ficheiro em **Escolher ficheiro** e dê à primeira linha os nomes **Conta**, **Débito** e **Crédito** (e, se quiser, **Parceiro** e **Descrição**).
+
+{/* Nota interna (lote v23-AH, DOCS-069 #4052, master 97b34fac3, docs_demo_v23ah_test, porta 8492): as duas mensagens vistas por clique com o administrador na Empresa Teste Portugal, Data de referência 01/01/2026 (nada gravado); o 2.º ficheiro tinha as colunas Conta, Montante e Descrição. Vinham do guia congelado Migração/importar-saldos-de-abertura.md. */}
+
+### «Este mesmo ficheiro já foi importado»
+
+- **Sintoma:** «Este mesmo ficheiro já foi importado em 01/11/2026 12:59:04 por *utilizador*. Importá-lo outra vez duplicaria o lançamento de abertura. Marque «Importar outra vez» só se tiver a certeza.» Com outro ficheiro na mesma data e diário, a janela diz «Já existe um lançamento de abertura importado neste diário e nesta data (…). Importar de novo duplicaria os saldos.» A verificação continua e mostra o resto dos erros.
+- **O que fazer:** se o lançamento anterior estava certo, não importe outra vez. Se estava errado, corrija-o ou anule-o antes de repetir, para não ficar com dois lançamentos de abertura.
+
+### Importar em conjunto com os documentos em aberto
+
+- **Sintoma:** depois de criar um lançamento de saldos, importar as faturas em aberto na mesma data não dá nenhum aviso e duplica as contas `2111` e `2211` (o mesmo acontece pela ordem inversa: saldos depois dos documentos).
+- **Causa:** o produto não impede nem avisa a combinação dos dois assistentes: o aviso de repetição só vale para o mesmo ficheiro ou para a mesma data e diário **no mesmo assistente**.
+- **O que fazer:** escolha um dos dois para clientes e fornecedores, como diz «Quando utilizar?».

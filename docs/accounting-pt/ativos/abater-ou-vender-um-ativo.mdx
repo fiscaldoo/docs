@@ -1,0 +1,137 @@
+---
+id: abater-ou-vender-um-ativo
+slug: /accounting-pt/abater-ou-vender-um-ativo
+title: Como abater ou vender um ativo
+sidebar_label: Abater ou vender um ativo
+sidebar_position: 3
+description: Retirar dos livros um ativo vendido, abatido ou perdido num sinistro, com a mais ou menos-valia contabilística e fiscal e a fatura de venda.
+keywords: [abater ativo, abate, vender ativo, venda de ativo, alienação, alienacao, alienar, alienações e abates, alienacoes e abates, sinistro, mais-valia, mais valia, menos-valia, menos valia, coeficientes monetários, coeficientes monetarios, conta 687, conta 787, data de saída, data de saida, ativo alienado]
+doc_id: DOC-0125
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 3a28c9b91)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/ativos/processar-depreciacoes, accounting-pt/ativos/mapas-fiscais-dos-ativos, fiscal-core/faturacao/emitir-uma-fatura-certificada]
+---
+
+## Para que serve?
+
+Quando um ativo sai da empresa, tem de sair também dos livros: o custo, as depreciações acumuladas e o que ficou por depreciar. O botão **Alienar / Abater** faz esse lançamento, calcula a mais ou menos-valia contabilística e a fiscal e, numa venda, prepara a fatura para o comprador. O ativo fica **Alienado** (ou **Abatido**) e sem meses por depreciar.
+
+## Quando utilizar?
+
+- Vendeu o ativo (**Venda**).
+- O ativo deixou de servir e não tem valor de venda: avariado sem reparação, obsoleto, destruído (**Abate (sem valor de venda)**).
+- O ativo perdeu-se num roubo, incêndio ou acidente (**Sinistro**), com ou sem indemnização do seguro.
+- Não use **Alienar / Abater** para um ativo que só deixou de ser usado por uns tempos: nesse caso mude o estado para **Parado**.
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Terceiros e ativos › Ativos fixos**. Abra o ativo: o botão **Alienar / Abater** está no topo da ficha, enquanto o ativo está **Em uso** ou **Parado**.
+
+![Topo da ficha do ativo AF/00011 com o botão Alienar / Abater assinalado, ao lado de Processar períodos contabilísticos](/images/accounting-pt/abater-ou-vender-um-ativo/01-botao-alienar-abater.png)
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. Com ele faz tudo, incluindo emitir a fatura de venda.
+- Tem a data real da saída e, numa venda, o valor sem IVA e o comprador (nos clientes, com o NIF).
+- O exemplo continua o ativo dos artigos [Como registar um ativo fixo](/accounting-pt/registar-um-ativo) e [Como processar as depreciações do mês](/accounting-pt/processar-depreciacoes): o `AF/00011` «Computador da contabilidade», 1.200,00 €, com as quotas de julho a setembro de 2026 já processadas (99,99 €). É vendido a 29/10/2026 por 900,00 € + IVA.
+- O Odoo processa sozinho as quotas que faltam até ao mês anterior ao da saída: o mês da saída não tem quota, nem uma parte dele. É a regra do Decreto Regulamentar n.º 25/2009, art. 7.º, n.º 2: no ano da venda, do abate ou do fim da vida útil só contam as quotas dos meses até ao mês anterior ao do evento, sem frações de mês. Por isso, sair no dia 1 ou no último dia do mês dá o mesmo resultado. Na demonstração:
+  - os «Telemóveis da equipa comercial» (`AF/00006`, com as quotas processadas até outubro de 2026) deram o mesmo resultado ao **Calcular** um abate a 01/11/2026, a 18/11/2026 e a 30/11/2026: **Valor líquido contabilístico** 800,00 € e **Valor líquido fiscal** 1.300,00 €;
+  - os «Computadores portáteis e servidor» (`AF/00002`, 3.600,00 €, em uso desde 15/09/2025), abatidos a 31/08/2026, ficaram com 1.100,00 € de depreciações: setembro a dezembro de 2025 (400,00 €) e janeiro a julho de 2026 (700,00 €), sem agosto.
+- A depreciação **contabilística** segue a política da empresa e pode ser diferente da quota fiscal. O Odoo aceita fiscalmente o menor dos dois valores de cada ano; a diferença vai ao Modelo 32 e à proposta do Quadro 07 da [declaração de IRC (Modelo 22)](/accounting-pt/modelo-22), e o **Valor líquido fiscal** da saída usa as quotas aceites. No `AF/00006`, as quotas contabilísticas são de 100,00 € por mês e as fiscais de 50,00 €: daí os 800,00 € e 1.300,00 € acima.
+- Se a ficha do ativo mostrar o aviso «Este ativo levou a quota fiscal anual completa no ano de entrada. A regra dos meses até ao mês anterior ao da saída (DR 25/2009, art. 7.º, n.º 2) está escrita para o método dos duodécimos e a lei nada diz sobre o ano de saída deste caso. …», o ativo tem a **Quota anual completa** no ano de entrada (por exemplo, um ativo migrado). O Odoo conta na mesma os meses até ao mês anterior ao da saída, e o contabilista certificado confirma a quota desse ano antes de entregar as declarações. O mesmo aviso aparece na janela **Alienar / Abater**. <span className="fd-pending">Pendente de validação por contabilista certificado: quota do ano da saída de um ativo com a quota anual completa no ano de entrada.</span>
+  {/* Nota interna (lote 97, AST-071 #4345, master 3a28c9b91, docs_demo_lote97_test, porta 8597, 18/11/2026, utilizador só com o perfil Contabilista): AF/00006 Calcular por clique com Abate (sem valor de venda) nas três datas, cancelado sem confirmar. AF/00002 lido por RPC (abate de 31/08/2026 da base, OD/2026/00012). Aviso visto por clique na ficha de uma cópia em rascunho do AF/00008 com Quota anual completa, criada por RPC e apagada (gastou o código AF/00009 nesta cópia). Regra do art. 7.º, n.º 2 confirmada no parecer de 17/11/2026 (ati-11): marca de pendente retirada; a do ativo com quota completa fica, porque o produto diz que a lei não regula o caso. */}
+- Se a empresa deduziu o IVA da compra do ativo, confirme que o valor está na ficha: separador **Quadro fiscal**, campo **IVA deduzido na aquisição** (e **Percentagem de dedução**, se a dedução foi parcial). O Odoo não o vai buscar à fatura de compra; com 0,00 € a janela não mostra a regularização do IVA do passo 5. No `AF/00011` do exemplo está a 0,00 €.
+  ![Separador Quadro fiscal do ativo AF/00017 com IVA deduzido na aquisição de 184,00 € assinalado e Percentagem de dedução 100,00](/images/accounting-pt/abater-ou-vender-um-ativo/04-iva-deduzido-na-ficha.png)
+- Confirme que não há quotas processadas **depois** da data da saída (separador **Plano de depreciação**). Se houver, fale com o contabilista certificado antes: hoje o Odoo aceita essa data e os valores líquidos contabilístico e fiscal deixam de coincidir (ver «Problemas frequentes»).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Na ficha do ativo, carregue em **Alienar / Abater**. Abre-se a janela **Alienar / Abater** com o **Ativo** e a **Data** de hoje.
+2. Em **Operação**, escolha **Venda**, **Abate (sem valor de venda)** ou **Sinistro**. No exemplo, **Venda**.
+3. Em **Data**, confira a data da saída (`29/10/2026`). Use a data em que o ativo saiu de facto: o Odoo aceita hoje uma data futura sem aviso (no teste, 01/03/2027) e calcula com ela as quotas, a mais ou menos-valia e a regularização do IVA. Não registe uma saída que ainda não aconteceu.
+4. Numa venda, escreva o **Valor de venda** sem IVA (`900,00`) e escolha o **Comprador** (**Construções Marão, Lda**). Por baixo do valor está **Intenção de reinvestir**: marque-a só se a empresa vai reinvestir o valor da venda, porque muda a proposta das mais-valias no [Modelo 22](/accounting-pt/modelo-22) (no exemplo, fica por marcar). Aparece **Impostos da venda**: escreva `23` e escolha **23%**. A lista mostra também «Retenção IRS 23% — trabalho independente…», que não é IVA e não serve aqui. Com o comprador, o Odoo prepara a fatura de venda; o campo **Conta do valor de venda** desaparece.
+   - Num abate ou num sinistro, escreva o **Motivo** (por exemplo `Avariado sem reparação`), que é obrigatório.
+   - Num sinistro, preencha também **Indemnização recebida**, **Seguradora**, **N.º da apólice** e **N.º da participação**, se já os tiver.
+5. Se o ativo tem **IVA deduzido na aquisição**, a janela mostra logo o bloco **Regularização de IVA**, com os anos que faltam do período de regularização e o valor:
+   - **IVA a entregar ao Estado**, num abate, num sinistro ou numa venda sem IVA (sem **Impostos da venda**, ou com a **Conta do valor de venda**). Testado com a «Impressora da receção» (`AF/00017`, 800,00 €, 184,00 € de IVA deduzido, em uso desde 02/03/2026), abatida a 29/10/2026: «CIVA art. 24.º: faltam 4 de 5 anos do período de regularização. IVA a entregar: 147.2; IVA a deduzir: 0.0.» e **IVA a entregar ao Estado** 147,20 € (184,00 € × 4 ÷ 5).
+   - **IVA a deduzir**, numa venda com **23%** de um ativo com **Percentagem de dedução** abaixo de 100 (testado com 50 %: 110,40 € a deduzir).
+   - Nada, numa venda com **23%** de um ativo deduzido a 100 %: o bloco desaparece.
+
+   Para o Odoo preparar o lançamento, marque **Criar o lançamento de regularização em rascunho** e escolha a **Contrapartida da regularização**: uma conta de gastos para o IVA a entregar, de rendimentos para o IVA a deduzir, a indicada pelo contabilista certificado (no teste, `6812 Impostos indiretos`). Sem a caixa marcada, **Confirmar** não cria lançamento nenhum nem avisa: a regularização fica por fazer. <span className="fd-pending">Pendente de validação por contabilista certificado: regularização do IVA dos bens do ativo (CIVA, art. 24.º e 25.º), a conta da contrapartida e o campo da declaração periódica que a recebe.</span>
+   ![Janela Alienar / Abater da Impressora da receção com Abate (sem valor de venda), o bloco Regularização de IVA e IVA a entregar ao Estado 147,20 € assinalados, a caixa Criar o lançamento de regularização em rascunho marcada e o campo Contrapartida da regularização](/images/accounting-pt/abater-ou-vender-um-ativo/05-regularizacao-do-iva.png)
+6. Carregue em **Calcular**. Nada fica lançado: a janela mostra o **RESULTADO**, **CONTABILÍSTICO** e **FISCAL**. No exemplo: **Valor líquido contabilístico** 1.100,01 €, **Mais/(menos)-valia contabilística** -200,01 €, **Coeficiente** 1,00, **Valor líquido fiscal** 1.100,01 € e **Mais/(menos)-valia fiscal** -200,01 €.
+   ![Janela Alienar ou abater o ativo com Venda, 29/10/2026, Valor de venda 900,00 €, Comprador Construções Marão, Lda, imposto 23% e o resultado: valor líquido 1.100,01 € e menos-valia de 200,01 €, contabilística e fiscal](/images/accounting-pt/abater-ou-vender-um-ativo/02-calcular-resultado.png)
+7. Confira os valores. Se mudar algum campo, carregue outra vez em **Calcular**. Depois carregue em **Confirmar**.
+8. Numa venda, emita a fatura que ficou em rascunho: em **Contabilidade › Lançar › Vendas e cobranças › Faturas de clientes**, abra o rascunho do comprador (1.107,00 € no exemplo). O rascunho já traz a linha com o artigo «[SERV] Serviço genérico», a descrição «Alienação» seguida do nome do ativo, a **Conta** do ativo (`435 Equipamento administrativo`), o **Preço** da venda e o IVA: confira-a e siga [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada). No exemplo, ficou `FT D26/31`.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, a venda e o abate fazem-se na mesma ficha dos **Ativos fixos**, com os mesmos botões (**Duplicar em série**, **Simular uma alteração**, **Alienar / Abater** e **Dossier do bem (PDF)**). Com o perfil **Contabilista**, a janela **Alienar / Abater** tem a mesma **Operação**, o **Valor de venda**, o **Comprador** e os **Impostos da venda** e, depois de **Calcular**, o **RESULTADO** com as colunas **CONTABILÍSTICO** e **FISCAL**.
+
+{/* Nota interna (lote EE-02, DOCS-073 #4142, DEC-1794, master 7a46de91a, base Enterprise docs_ee_ee02_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): Contabilista, AF/00001 Viatura ligeira de mercadorias: Operação Venda, Valor de venda 15.000,00 €, Calcular deu Valor líquido contabilístico 14.291,66 €, Mais/(menos)-valia contabilística 708,34 €, Coeficiente 1,00 e os mesmos valores fiscais; não se carregou em Confirmar, porque o ativo é da base. No AF/00006, depois de a cópia ter confirmado o lote de novembro, Calcular a 10/11/2026 respondeu «Operação inválida»: «A data 10/11/2026 é anterior à depreciação de 30/11/2026, que já está processada…». Ver reports/LOTE_EE-02.md. */}
+
+## Resultado esperado
+
+- O ativo passa a **Alienado** (ou **Abatido**), com a **Data de saída** preenchida. O histórico da ficha regista «Quadro contabilístico recalculado: 0 período(s) planeado(s); 3 processado(s) mantido(s).», e no separador **O que aconteceu** a lista **EVENTOS** tem a linha da alienação com o lançamento.
+  ![Ficha do AF/00011 no estado Alienado, com a fita Alienado, Custo 1.200,00 €, Já depreciado 99,99 € e Valor líquido 1.100,01 €](/images/accounting-pt/abater-ou-vender-um-ativo/03-ativo-alienado.png)
+- **Venda** (exemplo, conferido no razão), dois lançamentos de 29/10/2026:
+  - o da alienação, `MISC/2026/00124`: `4385` (depreciações acumuladas do equipamento administrativo) a débito 99,99 €, `6871 Alienações` a débito 200,01 € (a menos-valia) e `435 Equipamento administrativo` a crédito 300,00 €;
+  - a fatura `FT D26/31`: `2111 Clientes gerais` a débito 1.107,00 €, `435 Equipamento administrativo` a crédito 900,00 € e `2433 IVA - Liquidado` a crédito 207,00 €.
+
+  A conta `435` fica saldada (300,00 € + 900,00 € = 1.200,00 €).
+- **Abate** (testado num ativo à parte, com o mesmo custo e o mesmo plano): `4385` a débito 99,99 €, `6871 Alienações` a débito 1.100,01 € e `435` a crédito 1.200,00 €. As quotas de julho a setembro que não estavam processadas foram lançadas no mesmo momento, uma por mês, com as datas desses meses.
+- **Regularização do IVA** (abate do `AF/00017`, conferido no razão): além do abate (`MISC/2026/00140`: `4385` a débito 93,31 €, `6871 Alienações` a débito 706,69 € e `435` a crédito 800,00 €), fica um lançamento em **rascunho** de 29/10/2026, «Regularização de IVA (CIVA art. 24.º) - Impressora da receção»: `6812 Impostos indiretos` a débito 147,20 € e `2434 IVA - Regularizações` a crédito 147,20 €. Abre-se pelo contador de movimentos no topo da ficha (**9 movimentos** no exemplo), e o histórico regista «Regularização de IVA proposta (CIVA art. 24.º): 147.2 a entregar ao Estado, faltam 4 de 5 anos.». Publique-o em **Contabilidade › Lançar › Lançamentos › Lançamentos contabilísticos** depois de o contabilista certificado confirmar a conta e o período. <span className="fd-pending">Pendente de validação no ecrã: o rascunho não foi publicado, para não mudar o apuramento do IVA de outubro de 2026 que outros artigos usam.</span>
+- Uma mais-valia vai a crédito da conta de ganhos da categoria (787). Num sinistro, a perda e a indemnização vão para as contas de sinistros da categoria (6872 e 7872), em lançamentos separados. <span className="fd-pending">Pendente de validação no ecrã: o sinistro não foi confirmado, para não retirar mais um ativo do percurso da demonstração; as contas vêm da configuração da categoria.</span>
+
+## Notas importantes
+
+- **Resultado fiscal e coeficiente.** O resultado fiscal usa o custo corrigido pelo **Coeficiente** de desvalorização da moeda (1,00 para bens com menos de dois anos, como no exemplo) e as quotas aceites fiscalmente. A mais ou menos-valia fiscal vai para o mapa de mais-valias e para a declaração de IRC: ver [Como gerar os mapas fiscais dos ativos](/accounting-pt/mapas-fiscais-dos-ativos). <span className="fd-pending">Pendente de validação por contabilista certificado: mais e menos-valias fiscais e coeficientes (CIRC, art. 46.º e 47.º).</span>
+- **IVA da venda e do abate.** A venda de um bem do ativo leva, em regra, IVA à taxa do bem; escolha-o em **Impostos da venda**. A **Conta do valor de venda** (sem comprador) lança o valor sem fatura e sem IVA: use-a só quando o contabilista certificado o indicar, e conta como venda sem IVA para a regularização do passo 5. A regularização só aparece dentro do período de 5 anos (20 nos imóveis) contado do ano de entrada em funcionamento. <span className="fd-pending">Pendente de validação por contabilista certificado: IVA na venda de bens do ativo, incluindo os que não deram direito a dedução (CIVA, art. 9.º, n.º 32).</span>
+- **Conta do abate.** Hoje o abate lança a perda em `6871 Alienações`, a mesma conta da venda. Se a empresa separa os abates numa conta própria, confirme com o contabilista certificado antes de confirmar. <span className="fd-pending">Pendente de validação por contabilista certificado: conta do abate (SNC, 6873).</span>
+- **Não se desfaz com um botão.** Depois de **Confirmar**, a janela não volta atrás; corrigir uma alienação é um estorno dos lançamentos, a decidir com o contabilista certificado.
+
+{/* Nota interna (DOCS-021, DOC-0125, defeitos novos B1-25 a B1-27): IVA deduzido na aquisição é manual (não vem da fatura de compra); Impostos da venda mostra retenções de IRS primeiro; o texto do bloco Regularização de IVA usa ponto decimal (147.2) e a lista «Regularizações de IVA dos ativos» não aparece no menu de nenhum perfil. Data de saída futura aceite sem aviso (observação da 3.ª auditoria). */}
+{/* Nota interna (DOCS-021, DOC-0125): abate em 6871 «Alienações» (defeito novo B1-20, a confirmar pelo CC); EVENTOS mostra «open» e «disposed» nas colunas Antes/Depois (B1-21, I18N); data anterior a quota processada aceite (B1-19). */}
+
+## Problemas frequentes
+
+### «Uma alienação com valor de venda precisa da conta que o recebe…»
+
+- **Sintoma:** ao carregar em **Calcular** aparece «Operação inválida» com «Uma alienação com valor de venda precisa da conta que o recebe (banco ou clientes) ou do comprador para a fatura de venda. Escolha um e tente novamente.»
+- **Causa:** escreveu o **Valor de venda** sem **Comprador** nem **Conta do valor de venda**.
+- **O que fazer:** feche a mensagem com **Fechar**, escolha o comprador e a taxa de IVA e carregue de novo em **Calcular**.
+
+### «Há campos obrigatórios por preencher» num abate
+
+- **Sintoma:** ao carregar em **Calcular** num abate ou num sinistro, aparece «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** o **Motivo** está vazio.
+- **O que fazer:** escreva porque é que o ativo sai dos livros e carregue de novo em **Calcular**.
+
+### Os valores líquidos contabilístico e fiscal são diferentes sem razão
+
+- **Sintoma:** num bem sem diferenças fiscais, o **Valor líquido contabilístico** e o **Valor líquido fiscal** do **Calcular** não coincidem. No teste, um abate com data de 15/09/2026 de um programa com a quota de setembro já processada deu 583,33 € e 600,00 €.
+- **Causa:** a **Data** é anterior a uma quota já processada. O Odoo aceita-a.
+- **O que fazer:** não confirme. Use a data real da saída; se as quotas a mais estão mesmo erradas, fale com o contabilista certificado sobre o estorno delas antes de alienar.
+
+### «O valor de venda não pode ser negativo.»
+
+- **Sintoma:** ao carregar em **Calcular** aparece «Operação inválida» com esta frase.
+- **O que fazer:** escreva o valor sem sinal. Uma venda com prejuízo tem o valor que o comprador paga; a menos-valia é o Odoo que a calcula.
+
+### «A data de saída de … é anterior à entrada em funcionamento …»
+
+- **Sintoma:** «Erro de Validação» com, por exemplo, «A data de saída de “Portátil para a contabilidade” (01/01/2026) é anterior à entrada em funcionamento (01/07/2026). Um ativo não pode sair antes de começar; corrija as datas.»
+- **O que fazer:** corrija a **Data** da saída. Se a data de entrada em funcionamento da ficha é que está errada, fale com o contabilista certificado antes de a mudar, porque muda as quotas já processadas.
+
+### A regularização do IVA não aparece
+
+- **Causa:** o **IVA deduzido na aquisição** da ficha está a 0,00 €, o período de regularização já acabou, ou a venda tem **23%** e o IVA da compra foi deduzido a 100 %.
+- **O que fazer:** no primeiro caso, feche a janela com **Cancelar**, escreva o IVA deduzido no separador **Quadro fiscal** e abra-a de novo. Se o ativo já foi abatido sem a regularização, o lançamento faz-se à mão, com o contabilista certificado.

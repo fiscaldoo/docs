@@ -1,0 +1,124 @@
+---
+id: consultar-historico-migrado
+slug: /migration-toolkit/consultar-historico-migrado
+title: Como consultar o histórico do programa anterior
+sidebar_label: Consultar o histórico migrado
+description: Consultar os lançamentos, os recibos e as guias que vieram do programa anterior, registar como o arquivo é conservado, carregar os recibos e as guias e corrigir sem alterar o original.
+keywords: [histórico migrado, historico migrado, arquivo do sistema anterior, recibos e guias, conservação de documentos, 10 anos, migração, migracao, programa anterior, Histórico migrado, Arquivo do sistema anterior, Recibos e guias do sistema anterior]
+doc_id: DOC-0304
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 8f78854ec)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [migration-toolkit/importar/importar-lancamentos, migration-toolkit/importar/migrar-series-e-documentos-certificados, migration-toolkit/planear/validar-a-migracao]
+---
+
+{/* Nota interna (DOCS-046, #3616): risco alto (conservação legal e migração). Menus conferidos por perfil: Histórico migrado e Arquivo do sistema anterior aparecem ao Contabilista, ao Contabilista certificado e ao Auditor; o Administrativo não os vê. Registar o arquivo e carregar recibos e guias: só o Contabilista certificado (e o Administrador) têm escrita. O carregamento de um SAF-T do sistema anterior NÃO foi provado nesta ronda (falta um SAF-T de teste de recibos e guias); fica «Pendente de validação no ecrã». Defeitos no relatório LOTE_V4_MIG (V4MIG-07). DOCS-053 (master 8f78854ec): o menu Histórico migrado só se desenha com lançamentos migrados na base; depois da 1. O limite do menu depois de reiniciar foi corrigido pelo UX-102 (commit 583a0aea2 em master; retirado do texto a 04/11/2026, não refeito no ecrã). v22-G (DOCS-064, #3900, master d83bdf7ae, base docs_demo_v22g_test, Administrador, Empresa Demonstração): o NIF de exemplo passou a 599999993 (o anterior era válido e podia ser real); arquivo novo e o ficheiro da tabela carregados por clique («Linhas lidas: 6. Acrescentadas: 4. … Inválidas (deixadas de fora): 2.»), ZIP com 3 PDF («Ligados a uma linha: 2. Não ligados: 1.»); captura 06 refeita (mostrava o NIF antigo). Auditoria v22-G (porta 8374, Contabilista certificado por clique): arquivo novo, «Linhas lidas: 6. Acrescentadas: 4. … Inválidas (deixadas de fora): 2.», o mesmo ficheiro outra vez «Acrescentadas: 0. Já carregadas (saltadas): 4», ZIP «PDF recebidos: 3. Ligados a uma linha: 2. Não ligados: 1.»; captura 05 refeita (mostrava a 2.ª carga e a frase antiga «CSV line»). v23-A (DOCS-064, master 8fc9fd337, base docs_demo_v23a_test, Administrador): o cliente passou a 599999985, porque 599999993 é agora o NIF da própria Empresa Demonstração; arquivo novo, CSV e ZIP carregados por clique (6 lidas, 4 acrescentadas, 2 inválidas; 2 PDF ligados, 1 não) e captura 06 refeita. */}
+
+## Para que serve?
+
+Quando uma empresa muda de programa, os documentos dos anos anteriores têm de poder ser consultados durante o prazo legal de conservação, que é de 10 anos. O fiscaldoo guarda esse passado em três sítios, todos só para consulta:
+
+- **Histórico migrado**: os lançamentos contabilísticos do programa anterior, tal como vieram.
+- **Arquivo do sistema anterior**: o registo de como o histórico é conservado (ficheiro importado ou programa antigo mantido acessível) e os ficheiros antigos, como os SAF-T, com a sua impressão digital.
+- **Recibos e guias do sistema anterior**: a lista dos recibos e das guias do programa anterior, com o PDF de cada um quando existe.
+
+Nenhum destes registos cria lançamentos, usa séries ou entra no SAF-T de faturação do novo sistema.
+
+## Quando utilizar?
+
+- Para responder a «qual era o lançamento de …?» ou «onde está o recibo n.º …?» de antes da migração.
+- Para registar, na migração, onde e até quando o histórico do programa anterior é conservado.
+- Para corrigir um valor do histórico sem tocar no original (ver «Corrigir um lançamento do histórico»).
+- **Não use** para trazer lançamentos para o histórico: isso faz-se em [Importar lançamentos](/migration-toolkit/importar-lancamentos), com a opção **Histórico migrado**. Os documentos certificados (faturas, notas de crédito) trazem-se em [Migrar as séries e os documentos certificados](/migration-toolkit/migrar-series-e-documentos-certificados).
+
+## Onde encontrar?
+
+- **Contabilidade › Configurar › Migração e importações › Histórico migrado**. Este menu só aparece quando já há lançamentos migrados na base; nessa altura, o **Contabilista**, o **Contabilista certificado** e o **Auditor / ROC** veem-no.
+- **Contabilidade › Configurar › Outras definições › Arquivo › Arquivo do sistema anterior** e, na mesma pasta, **Recibos e guias do sistema anterior**. As duas entradas estão no menu sem o modo de programador (vistas com o Administrador, o Contabilista certificado, o Contabilista e o Auditor).
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**, **Contabilista certificado** ou **Auditor / ROC** para consultar. O **Administrativo** não vê nenhum dos três menus. Para **registar o arquivo** e **carregar recibos e guias** é preciso o perfil **Contabilista certificado** (ou Administrador); o **Contabilista** e o **Auditor / ROC** só leem. <span className="fd-pending">Pendente de validação por contabilista certificado: quem deve poder registar o arquivo do sistema anterior.</span>
+- O histórico já foi importado com a opção **Histórico migrado** em [Importar lançamentos](/migration-toolkit/importar-lancamentos). Sem nenhum lançamento migrado na base, o menu não aparece a estes perfis.
+- Para carregar recibos e guias, tem um ficheiro CSV com a primeira linha de cabeçalho e as colunas **numero**, **data** e **valor** (obrigatórias) e, se quiser, **tipo**, **atcud**, **nif**, **cliente**, **origem**, **estado** e **hash**; ou um ZIP de PDF com nomes como `RG A_15.pdf`. Exemplo, com dados inventados (cada linha da tabela é uma linha do ficheiro; grave com ponto e vírgula entre colunas):
+
+  | numero | tipo | data | valor | atcud | nif | cliente | origem | estado |
+  |---|---|---|---|---|---|---|---|---|
+  | `RG A 15` | `RG` | `15/03/2025` | `1230,00` | `JJ4KQ7W9-15` | `599999985` | Cliente Alfa, Lda | `FT A 101` | `N` |
+  | `RG A 16` | `RG` | `20/04/2025` | `500,00` | `JJ4KQ7W9-16` | `599999985` | Cliente Alfa, Lda | `FT A 105` | `N` |
+  | `GT A 7` | `GT` | `02/05/2025` | `100,00` | `JJ4KQ7W9-7` | `599999985` | Cliente Alfa, Lda | | `N` |
+
+  Os tipos aceites são **RG** (recibo), **RC** (recibo com IVA de caixa), **GT** (guia de transporte), **GR** (guia de remessa), **GA**, **GC** (consignação) e **GD** (devolução). Sem a coluna **tipo**, o tipo é a primeira palavra do número.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Histórico migrado**. A lista mostra os lançamentos que vieram do programa anterior, com a data, o número `HMIG/…`, o diário **Histórico migrado**, a referência, o parceiro, o total e o estado **Publicada**. Pesquise por data, referência ou conta como em qualquer lista de lançamentos. Se estiver vazia, não há nenhum nesta empresa.
+   ![Lista Histórico migrado com dois lançamentos de 2025, números HMIG/2025/00001 e 00002](/images/migration-toolkit/consultar-historico-migrado/01-lista-historico.png)
+2. Abra um lançamento para ver as linhas, as notas e os anexos. Só há dois botões, **Guardar como modelo** e **Ações** (com **PDF da fatura** e **Partilhar**): não há **Repor em rascunho**, **Anular** nem **Eliminar**, para nenhum perfil.
+   ![Lançamento HMIG/2025/00001 publicado, sem botões para repor em rascunho nem anular](/images/migration-toolkit/consultar-historico-migrado/02-lancamento-historico.png)
+3. Para registar como o histórico é conservado, abra **Arquivo do sistema anterior** e carregue em **Novo**. Preencha o **Sistema anterior** (o nome do programa), o **Período de** e o **Período até**, e escolha **Como é conservado**: **Ficheiro importado para este sistema** ou **Sistema anterior mantido acessível**. Com a segunda, preencha também **Acessível até** e **Quem o guarda e como aceder**; sem eles, ao guardar, lê-se «Quando o sistema anterior é mantido acessível, diga até quando fica disponível, quem o guarda e como se abre. Sem isso ninguém encontraria o histórico numa inspeção.» Guarde. O campo **Conservar até** calcula-se sozinho: com o período a acabar em 31/12/2025, ficou 31/12/2035. Sem o período, não deixa guardar («Há campos obrigatórios por preencher.»). Anexe em **SAF-T e ficheiros antigos** os SAF-T do programa anterior: cada um recebe uma impressão digital (SHA-256) e não se apaga antes do prazo.
+   ![Arquivo do sistema anterior guardado, com os botões Recibos e guias, Cargas e Carregar recibos e guias](/images/migration-toolkit/consultar-historico-migrado/03-arquivo.png)
+4. Para trazer recibos e guias, carregue em **Carregar recibos e guias**. Em **O que carregar**, escolha **Ficheiro CSV**, escolha o ficheiro e carregue em **Carregar**. As outras duas escolhas são **SAF-T do sistema anterior** e **Só ficheiros PDF**.
+   ![Janela Carregar recibos e guias com Ficheiro CSV escolhido e o botão Carregar assinalado](/images/migration-toolkit/consultar-historico-migrado/04-carregar.png)
+5. A janela relata a carga: «Linhas lidas: 6. Acrescentadas: 4. Já carregadas (saltadas): 0. … Inválidas (deixadas de fora): 2.» e lista cada linha inválida e os números repetidos. Carregue em **Abrir a carga** para ver o que entrou. Nada é corrigido: o que o programa anterior tinha, fica como estava. Se o mesmo ficheiro for carregado outra vez, as 4 linhas ficam «Já carregadas (saltadas): 4» e nada se duplica.
+   ![Resultado da carga: 6 linhas lidas, 4 acrescentadas, 2 inválidas, e o botão Abrir a carga assinalado](/images/migration-toolkit/consultar-historico-migrado/05-carga-feita.png)
+6. Para ligar os PDF, repita o passo 4 com **Só ficheiros PDF** e um ZIP com ficheiros nomeados pelo tipo e número (`RG A_15.pdf`). Na demonstração, um ZIP com 3 PDF deu «PDF recebidos: 3. Ligados a uma linha: 2. Não ligados: 1. GT A_99.pdf: nenhuma linha com este tipo e número».
+7. Abra **Recibos e guias do sistema anterior** para consultar: tipo, número, ATCUD, data, NIF e nome do cliente, valor, PDF, e as marcas **Número repetido** e **ATCUD repetido**. Os filtros separam recibos, guias, repetidos e sem PDF.
+   ![Lista Recibos e guias do sistema anterior com os quatro documentos carregados e os PDF ligados a dois recibos](/images/migration-toolkit/consultar-historico-migrado/06-recibos-e-guias.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- Os lançamentos do histórico consultam-se a qualquer altura e ficam exatamente como vieram. Cada um tem o número `HMIG/AAAA/nnnnn`, o diário **Histórico migrado** e não é um documento certificado: não leva ATCUD novo nem assinatura nova e não entra no SAF-T de faturação (só na contabilidade).
+- O arquivo tem a data limite de conservação (10 anos depois do fim do período) e a lista dos ficheiros antigos com a sua impressão digital.
+- Na demonstração, a carga do CSV deixou 4 documentos (2 recibos e 2 guias) e os dois recibos ficaram com PDF. As duas guias `GT A 7` ficaram marcadas como **Número repetido**, sem alteração: «Números repetidos (o mesmo tipo e número de outra linha; todas ficam, nenhuma foi corrigida)».
+- O que o carregamento de um SAF-T deixa na lista <span className="fd-pending">Pendente de validação no ecrã: o carregamento de um SAF-T do sistema anterior (leitura de Payments e MovementOfGoods e verificação do esquema) não foi provado nesta demonstração por falta de um SAF-T de teste.</span>
+
+## Corrigir um lançamento do histórico
+
+O lançamento do histórico não se altera, não se repõe em rascunho, não se anula e não se elimina, nem pelo Administrador. Quem tentar por outra via recebe, por exemplo: «O lançamento HMIG/2025/00001 (SEG-2025-06) não pode voltar a rascunho. Faz parte do histórico migrado do programa anterior e fica exatamente como veio, para todos os utilizadores, administradores incluídos (conservação legal de 10 anos, CIVA art. 52.º). Para o corrigir, estorne-o ou lance uma regularização nova; o original mantém-se.» A mesma frase diz «não pode ser anulado» ou «não pode ser alterado». Ao eliminar: «O documento “HMIG/2025/00001 (SEG-2025-06)” tem de ser conservado até 31/12/2035 …».
+
+O que a mensagem pede (estornar) faz-se pela importação: em [Importar lançamentos](/migration-toolkit/importar-lancamentos), com as colunas **Estorno de** (`HMIG/2025/00001`) e **Motivo do estorno** (por exemplo `price_error`), com a data do estorno num período aberto. Na demonstração, o ficheiro criou um lançamento novo em rascunho de 240,00 € e o original ficou intacto. Em alternativa, lance uma regularização nova com a data de hoje. <span className="fd-pending">Pendente de validação por contabilista certificado: o motivo de estorno SAF-T a usar para corrigir um lançamento de histórico.</span>
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Importe o histórico antes de bloquear o período">
+O histórico migrado só entra num período que não esteja bloqueado: na demonstração, uma data de 2025 com o bloqueio a 31/12/2025 foi recusada mesmo com a opção marcada. Importe-o antes de bloquear os anos a que pertence (ver [Datas de bloqueio](/accounting-pt/datas-de-bloqueio)).
+</HelpCallout>
+
+- Este arquivo é só consulta. Não substitui a cópia do SAF-T e dos PDF originais, que o contabilista certificado deve conservar durante o prazo legal.
+- **Sem permissão:** o Administrativo não encontra os menus. O Contabilista e o Auditor só têm leitura nestes registos (conferido nas permissões, não no ecrã com esses perfis).
+
+## Problemas frequentes
+
+### Não vejo o menu Histórico migrado
+
+- **Causa:** a base ainda não tem lançamentos migrados, ou o seu perfil não é um dos três que o veem (**Contabilista**, **Contabilista certificado** e **Auditor / ROC**).
+- **O que fazer:** importe o histórico em [Importar lançamentos](/migration-toolkit/importar-lancamentos).
+
+### A lista do Histórico migrado está vazia
+
+- **Sintoma:** não aparece nenhum lançamento.
+- **Causa:** os lançamentos migrados estão noutra empresa (a lista respeita a empresa ativa), ou esta empresa ainda não importou nenhum com a opção **Histórico migrado**.
+- **O que fazer:** confirme a empresa no canto superior direito e, se for caso disso, importe o histórico em [Importar lançamentos](/migration-toolkit/importar-lancamentos).
+
+### «Há campos obrigatórios por preencher»
+
+- **Sintoma:** ao guardar um **Arquivo do sistema anterior**, o ecrã diz «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.» e assinala **Período de** e **Período até**.
+- **O que fazer:** preencha as duas datas, que determinam o **Conservar até**.
+
+### Linhas inválidas na carga de recibos e guias
+
+- **Sintoma:** «Inválidas (deixadas de fora): 2» com «linha 5 (CSV line 6): o valor «abc» não é um número» e «linha 6 (CSV line 7): o tipo «XX» não é um recibo nem uma guia». O número entre parênteses é a linha do ficheiro, contando o cabeçalho.
+- **O que fazer:** corrija essas linhas num ficheiro novo, só com elas, e carregue-o: as que já entraram ficam «Já carregadas (saltadas)».
+
+### PDF «não ligado»
+
+- **Sintoma:** «Não ligados: 1. GT A_99.pdf: nenhuma linha com este tipo e número».
+- **O que fazer:** confira o nome do PDF com o tipo e o número da lista de recibos e guias (`GT A_7.pdf` para a guia `GT A 7`).

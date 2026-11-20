@@ -1,0 +1,111 @@
+---
+id: serie-ativa-em-falta-ou-repetida
+slug: /troubleshooting/serie-ativa-em-falta-ou-repetida
+title: Não há uma série ativa para este documento, ou há mais do que uma
+sidebar_label: Série ativa em falta ou repetida
+description: O que fazer quando a fatura não se confirma por falta de série ativa para o ano, e quando uma série nova não se ativa porque já existe outra ativa do mesmo tipo.
+keywords: [série em falta, serie em falta, não tem nenhuma série, nao tem nenhuma serie, série do ano, serie do ano, série de 2027, serie de 2027, Criar a série em falta, criar a serie em falta, Ainda não é possível confirmar, ainda nao e possivel confirmar, já tem uma série ativa, ja tem uma serie ativa, duas séries ativas, segunda série, ativar série, ativar serie, Termine ou cancele-a, série nova não ativa, novo ano, ano novo, faturar em janeiro]
+doc_id: DOC-0333
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master d88933a51)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/certificacao/series-documentais, troubleshooting/faturacao-e-at/serie-sem-codigo-de-validacao, fiscal-core/faturacao/emitir-uma-fatura-certificada]
+---
+
+## Sintoma
+
+Acontece uma de duas coisas:
+
+- **Falta a série.** Ao carregar em **Confirmar** numa fatura, abre-se a janela **Ainda não é possível confirmar** e a fatura fica em **Rascunho**. É típico das primeiras faturas de um ano novo.
+- **Há série a mais.** Numa série nova, ao carregar em **Ativar** e depois em **Confirmar**, abre-se **Erro de Validação** e a série fica em **Rascunho**.
+
+## Mensagem
+
+Numa fatura com data de 2027, numa empresa que só tem séries de 2026 (perfil **Administrativo**):
+
+> «Ainda não é possível confirmar
+> Falta uma coisa:
+> O diário «*Vendas*» não tem nenhuma série do tipo «*[FT] Fatura*» pronta para *2027*.
+> Cada documento é numerado por uma série comunicada à Autoridade Tributária; sem ela não é possível dar-lhe número.
+> Crie e ative uma série do tipo «*[FT] Fatura*» para *2027*: o botão abaixo abre o formulário já preenchido.»
+
+A janela tem os botões **Criar a série em falta** e **Fechar**.
+
+![Janela Ainda não é possível confirmar: o diário Vendas não tem nenhuma série do tipo [FT] Fatura pronta para 2027, com o botão Criar a série em falta](/images/troubleshooting/serie-ativa-em-falta-ou-repetida/01-ano-sem-serie.png)
+
+Ao ativar uma segunda série de faturas para 2026 no mesmo diário (perfil **Contabilista certificado**):
+
+> «O diário “*Vendas*” já tem uma série ativa para *[FT] Fatura* em *2026* (“*FT D26*”). Termine ou cancele-a antes de ativar outra.»
+
+![Janela Erro de Validação: o diário Vendas já tem uma série ativa para [FT] Fatura em 2026, FT D26](/images/troubleshooting/serie-ativa-em-falta-ou-repetida/02-segunda-serie-ativa.png)
+
+Nos documentos que não têm diário (guias de transporte, orçamentos), a regra é por empresa:
+
+> «A empresa “*Empresa Demonstração, Lda*” já tem uma série ativa para *[GT] Guia de transporte (incluindo as globais)* em *2026* (“*GT D26*”). Termine-a ou cancele-a antes de ativar outra.»
+
+As três mensagens foram provocadas na base de demonstração.
+
+## Causas verificadas
+
+- **Cada série serve um só ano.** O ano da série é o **Exercício** da ficha. Uma fatura de 2027 precisa de uma série de 2027, ativa, no diário da fatura. Ter as séries de 2026 ativas não chega.
+- **A série do ano existe mas não está ativa.** Se a série foi criada mas ainda não tem código de validação, a mensagem é outra: veja [A série não tem código de validação da AT](/troubleshooting/serie-sem-codigo-de-validacao).
+- **Só pode haver uma série ativa por diário, tipo de documento e ano.** Para as guias e os orçamentos, que não têm diário, a regra é uma por empresa, tipo e ano. O fiscaldoo recusa ativar a segunda, mesmo que já tenha código de validação.
+
+## O que confirmar
+
+1. A **Data da Fatura**: se o ano está errado (por exemplo 2027 em vez de 2026), a solução é corrigir a data, não criar uma série.
+2. O **Diário** da fatura: a série tem de ser desse diário. Na lista de diários da fatura, o diário das faturas aparece como **Vendas**.
+3. Em **Contabilidade › Configurar › Faturação certificada › Séries fiscais**, as colunas **Ano** e **Estado da série** (só o perfil **Contabilista certificado** e o administrador veem este menu).
+4. No caso da série a mais: porque quer uma segunda série no mesmo ano. Se é para um ponto de venda, um armazém ou outro canal, a série nova vai num diário próprio, não no mesmo.
+
+## Como resolver
+
+### Falta a série do ano (perfil Administrativo ou Contabilista)
+
+1. Carregue em **Fechar**. A fatura fica em **Rascunho**, com tudo o que escreveu.
+2. Se a data estava errada, corrija a **Data da Fatura** e carregue em **Confirmar**.
+3. Se a data está certa, peça ao Contabilista certificado que crie e comunique a série do ano. Com o perfil **Administrativo**, o botão **Criar a série em falta** abre a janela **Sem acesso**: «Não tem permissão para criar «Série de documentos fiscais». O seu perfil só consulta «Série de documentos fiscais»: não cria, altera nem elimina nada aí. Quem faz: «Contabilista certificado (assina, fecha períodos)». Quem atribui o perfil: o administrador do sistema (Definições › Utilizadores e empresas › Utilizadores). Peça-lhe o perfil de que precisa, ou peça a um utilizador com esse perfil que o faça.»
+
+{/* Nota interna (lote v23-M, master dbbb5ac5c, docs_demo_v23m_test): a janela «Sem acesso» do passo 3 foi provocada no ecrã com um utilizador criado só com o perfil Administrativo (fatura de 04/01/2027, Confirmar, Criar a série em falta); texto citado letra a letra. */}
+
+### Falta a série do ano (perfil Contabilista certificado)
+
+1. Na mesma janela, carregue em **Criar a série em falta**. Abre-se uma série nova em **Rascunho**, já com o **Tipo de documento SAF-T** (**[FT] Fatura**), o **Diário** (**Vendas**), o **Exercício** (`2027`) e a **Data prevista de início** (`01/01/2027`). O **Identificador da série** vem vazio.
+2. Escreva o identificador, guarde, comunique a série à AT e ative-a: [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais).
+3. Volte à fatura e carregue em **Confirmar**.
+
+Crie as séries do ano seguinte antes de 1 de janeiro: assim a primeira fatura do ano não fica parada.
+
+### Há uma série ativa a mais (perfil Contabilista certificado)
+
+Na maior parte dos casos, a série nova não é precisa: continue a usar a série ativa e deixe a nova em **Rascunho**. Se a série nova já foi comunicada à AT (tem código de validação), a AT tem-na registada e por usar. No fiscaldoo, uma série em **Rascunho** com código tem, em **Ações**, só **Cancelar**, que não comunica nada à AT; **Anular na AT** só aparece nas **Ações** de uma série ativa. <span className="fd-pending">Pendente de validação por contabilista certificado: série comunicada à AT por engano e nunca usada: deixá-la em rascunho no fiscaldoo, ou anulá-la na AT.</span>
+
+Uma série com código de validação já não se apaga: ao eliminá-la, o fiscaldoo responde «A série “*FT X26*” não pode ser eliminada. Porquê: Já não é um rascunho por usar (tem código de validação ou foi ativada), e o seu histórico tem de ser mantido. Como resolver: Cancele antes a série.»
+
+Se a série nova é para outro canal, crie-a num diário próprio. Se a série antiga deixou mesmo de ser usada, feche-a com **Ações › Finalizar na AT** e só depois ative a nova. Finalizar não se desfaz e comunica à AT o último número usado: leia antes o aviso «Terminar uma série não se desfaz» em [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais).
+
+<HelpCallout type="risco" title="Não termine a série que está a usar">
+Terminar ou finalizar a série ativa só para abrir lugar a outra acaba a numeração dessa série para sempre. **Terminar** e **Cancelar** só mexem no fiscaldoo: para a AT a série continua ativa. Decida com o contabilista certificado antes de fechar uma série a meio do ano. <span className="fd-pending">Pendente de validação por contabilista certificado: quando se justifica fechar uma série a meio do ano e abrir outra.</span>
+</HelpCallout>
+
+## Resultado esperado
+
+- A série do ano fica **Ativa** na lista **Séries fiscais** e a janela **Ainda não é possível confirmar** deixa de aparecer. Na demonstração, a série `FT D27` foi criada com **Criar a série em falta**, comunicada (ao simulador da AT) e ficou **Ativa**.
+- Se a fatura tem data de um ano que ainda não começou (no exemplo, 04/01/2027 em outubro de 2026), o **Confirmar** passa a pedir que confirme a data futura: veja [A fatura não pode ter data anterior à do último documento da série](/troubleshooting/data-anterior-ao-ultimo-documento). Espere pelo dia, ou emita com **Confirmar datas e emitir** se a data é mesmo a certa.
+- No caso da série a mais, continua a haver uma só série ativa por diário, tipo e ano.
+
+## Quando contactar o suporte
+
+- A mensagem diz que não há série, mas a lista **Séries fiscais** mostra uma série **Ativa** desse tipo, desse ano e desse diário.
+- O botão **Criar a série em falta** não aparece ao Contabilista certificado.
+- A AT aceitou a série nova, mas o fiscaldoo não a ativa e não há outra ativa no mesmo diário.
+
+## Informação a enviar
+
+- A empresa, o diário e o ano da fatura.
+- O texto completo da mensagem, copiado do ecrã.
+- A lista das séries do mesmo tipo, com o **Ano** e o **Estado da série** (uma captura da lista serve).
+- O perfil com que entrou.

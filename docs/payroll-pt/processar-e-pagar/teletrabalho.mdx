@@ -1,0 +1,141 @@
+---
+id: teletrabalho
+slug: /payroll-pt/teletrabalho
+title: Como registar um acordo de teletrabalho e a compensação das despesas
+sidebar_label: Teletrabalho
+sidebar_position: 20
+description: Registar o acordo de teletrabalho, os dias em teletrabalho e a compensação das despesas no recibo, com a parte isenta até ao limite legal.
+keywords: [registar, acordo, teletrabalho, compensação, compensacao, despesas, acordos de teletrabalho, Portaria 292-A/2023, art. 166, art. 168, limite diário, limite diario]
+doc_id: DOC-0208
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master acd623385)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/configurar/rubricas-salariais, payroll-pt/tempo-de-trabalho/verificar-presencas]
+---
+
+## Para que serve?
+
+Guarda o acordo de teletrabalho e os prazos dele e calcula a compensação das despesas no recibo. Até ao limite legal por dia, a compensação fica sem IRS e sem Segurança Social. O que passar esse limite é tributado.
+
+## Quando utilizar?
+
+- Quando a empresa e o trabalhador assinam um acordo de teletrabalho.
+- Todos os meses, para marcar os dias em teletrabalho e pôr a compensação no recibo.
+- Quando o acordo acaba, para escrever a comunicação de cessação, a denúncia ou a não renovação.
+- Não use este acordo para deslocações em serviço: essas têm um [mapa próprio](/people/deslocacoes).
+
+## Onde encontrar?
+
+- Acordos: **Pessoas › Tempo de trabalho › Acordos de teletrabalho**. Na ficha do trabalhador, também em **⋮** › **Acordos de teletrabalho**.
+- Dias em teletrabalho: no acordo, botão **Marcar os dias de teletrabalho**.
+- Presenças: **Salários › Preparar › Ausências e presenças › Presenças** (a lista que as mensagens indicam; entra no menu com o primeiro acordo de teletrabalho da empresa) e, para conferir um período, **Salários › Preparar › Ausências e presenças › Verificar presenças**.
+- Rubrica: **Salários › Configurar › Rubricas › Rubricas salariais**.
+
+## Antes de começar
+
+- Para criar o acordo e a rubrica, o seu perfil é **Gestor de RH**, ou tem o acesso extra **Administrador de Salários**.
+- Para marcar os dias, o seu perfil é **Processador de salários**, com ou sem o acesso extra **Administrador de Salários**.
+- As presenças dos dias em teletrabalho já estão registadas por quem gere as presenças. A janela de marcar não as cria.
+- Tem o acordo assinado à mão: a data, e onde está guardado.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra os acordos e carregue em **Novo**. Sem acordos, a lista diz «Aqui aparecem os acordos de teletrabalho; cria-se um com «Novo», escolhendo o trabalhador.»
+2. Escolha primeiro o **Trabalhador**. **Versão de contrato** preenche-se sozinha, e a lista só mostra as versões desse trabalhador. Sem trabalhador, a lista diz «Sem registos».
+3. Em **Regime**, escolha **Permanente** ou **Alternado com trabalho presencial**. Preencha o **Local habitual de trabalho**, o horário, o **Equipamento propriedade de** e os **Contactos presenciais**.
+4. Em **Duração**, escolha **Sem termo** ou **A termo**. Preencha **Início** e, a termo, o fim do primeiro período, no máximo seis meses depois.
+5. Preencha **Acordo escrito de** e **Prova do acordo escrito**.
+6. Em **Compensação de despesas**, escolha **Valor diário fixado no acordo (art. 168.º/3)** e preencha **Compensação por dia**, ou **Comparação com o último mês presencial (art. 168.º/4)**. Se o valor vier de um IRCT negocial, marque **Valor resultante de IRCT negocial?**. Carregue em **Guardar**.
+   ![Acordo a termo de 01/11/2026 a 30/04/2027, alternado, com o aviso de renovação e a compensação de 1,50 € por dia](/images/payroll-pt/teletrabalho/01-acordo-de-teletrabalho.png)
+7. Carregue em **Marcar os dias de teletrabalho**. Confira **De** e **Até** e carregue em **Marcar os dias**. Aparece, por exemplo, «4 presença(s) marcada(s) como teletrabalho.» A compensação conta só estes dias.
+8. Se a empresa ainda não tem a rubrica, crie-a como em [Como criar e configurar uma rubrica salarial](/payroll-pt/rubricas-salariais). Em **Origem da quantidade**, escolha **Compensação de teletrabalho (CT art. 168.º)**.
+9. No recibo do mês, ainda por validar, carregue em **Calcular**. A linha **Compensação de teletrabalho** entra sozinha.
+   ![Recibo com a Retribuição base, a Compensação de teletrabalho de 3 dias e 4,50 € e o Subsídio de alimentação](/images/payroll-pt/teletrabalho/02-recibo-com-a-compensacao.png)
+
+</StepByStep>
+
+**Exemplo.** Um acordo com 1,50 € por dia, com o equipamento do trabalhador, e 3 dias completos em teletrabalho em novembro de 2026:
+
+| Parte | Conta | Valor |
+| --- | --- | --- |
+| Compensação | 3 × 1,50 € | 4,50 € |
+| Sem IRS e sem Segurança Social | 3 × 1,00 € | 3,00 € |
+| Tributada (excedente) | 3 × 0,50 € | 1,50 € |
+
+**Como foi calculado?** diz: «Deste valor, 3,00 € está dentro do limite legal (sem IRS e sem Segurança Social) e 1,50 € é o excedente, que é tributado.»
+
+**Se o equipamento for da empresa.** Com **Entidade empregadora** em **Equipamento propriedade de**, o mesmo recibo fica com 1,50 € sem IRS e sem Segurança Social (3 × 0,50 €) e 3,00 € tributados.
+
+**Se um dia não for completo.** Com um 4.º dia de 3 horas marcado como **Teletrabalho**, a compensação sobe para 6,00 €, mas a parte isenta fica nos 3,00 €: os 3,00 € restantes são tributados.
+
+## No Enterprise
+
+No Odoo Enterprise, o acordo, a marcação dos dias e a rubrica fazem-se da mesma maneira, com os mesmos perfis e os mesmos menus. O acordo do exemplo mostra os mesmos prazos (30/04/2027, 15/04/2027 e 30/11/2026) e o mesmo aviso de renovação.
+
+As presenças registam-se como no Community. Com três dias completos de presença em novembro, **Marcar os dias** responde «3 presença(s) marcada(s) como teletrabalho.». Com a rubrica do passo 8, o recibo de novembro de 2026 tem a **Compensação de teletrabalho** de 4,50 €: 3,00 € sem IRS e sem Segurança Social e 1,50 € tributados. Com **Entidade empregadora** em **Equipamento propriedade de**, a parte isenta passa para 1,50 €. <span className="fd-pending">Pendente de validação no ecrã do Enterprise: a marcação dos três dias e as linhas do recibo.</span>
+
+{/* Nota interna (lote EE-09, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 12/11/2026): conferido numa cópia local da base Enterprise (docs_ee_ee09_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Gestor de RH: lista vazia com a mesma frase e Novo com os mesmos campos (descartado). Acordo a termo de Carla Sofia Mendes de 01/11/2026 a 30/04/2027 (alternado, 1,50 € por dia), recusa dos 9 meses, janela de marcar sem presenças (mesma mensagem), três presenças de 8 horas (03 a 05/11/2026), Marcar os dias com o Processador, rubrica COMPTELE copiada da do subsídio de alimentação com a origem Compensação de teletrabalho, e recibo calculado com o Administrador de Salários, tudo numa transação desfeita. Uma presença de 9 horas sem motivo é recusada como trabalho suplementar (regra do fiscaldoo, não do Enterprise). No Enterprise, procurar o trabalhador pelo nome na barra de pesquisa da lista Fichas dos trabalhadores abre «Erro de Acesso» (campo reservado ao grupo «Folha de Salários / Assistant») e a lista não filtra, com os três perfis de salários; no Community filtra: defeito no relatório do lote. O ⋮ da ficha tem as mesmas entradas do Community e «Salary Increase» (EEA-083). Menus e vistas destes ecrãs comparados, perfil a perfil, com uma cópia da demonstração Community (docs_demo_ee09_test, 2c8d358c0, porta 8524): iguais. Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-09.md. */}
+
+## Resultado esperado
+
+- O acordo mostra sozinho **Termina em**, o último dia para declarar a não renovação e **Qualquer das partes pode denunciar até**. No exemplo: 30/04/2027, 15/04/2027 e 30/11/2026.
+- Um aviso no acordo diz: «Renova-se em 01/05/2027, salvo se a não renovação for declarada por escrito até 15/04/2027 (art. 167.º/2).»
+- O recibo mostra a linha, e **Como foi calculado?** separa a parte isenta do excedente.
+
+## Notas importantes
+
+- **O aviso no painel do mês.** Em **Salários** (o painel **O que há para fazer este mês?**), o cartão **Teletrabalho sem respostas** conta os acordos que ainda não dizem quem fornece a eletricidade, a Internet e o equipamento: «O acordo não diz quem fornece a eletricidade, a Internet ou o equipamento: enquanto não o disser, a parte da compensação do que não está respondido não fica isenta.» (Portaria n.º 292-A/2023, art. 3.º, n.º 1). Só entram os acordos que estiveram em vigor em algum dia do mês escolhido, de trabalhadores com contrato nesse mês: um acordo que começa e acaba dentro do mês aparece, e o de quem já saiu da empresa deixa de aparecer. No exemplo, um acordo sem tipo de fornecimento preenchido, de Carla Sofia Mendes e com início a 03/11/2026, dá **1** em novembro de 2026 e o cartão não existe em outubro de 2026. Visto no ecrã com o perfil **Processador de salários**.
+  ![Cartão Teletrabalho sem respostas do painel de novembro de 2026, com o número 1 e a frase sobre a eletricidade, a Internet e o equipamento](/images/payroll-pt/teletrabalho/02-cartao-teletrabalho-sem-respostas.png)
+  <span className="fd-pending">Pendente de validação no ecrã: o acordo que acaba dentro do mês e o de um trabalhador que já saiu (só se provou o acordo que começa no mês e a ausência do cartão no mês anterior).</span>
+- **Limite.** A Portaria n.º 292-A/2023, art. 2.º, fixa até 1,00 € por dia: internet 0,40 €, computador ou equipamento equivalente 0,50 € e eletricidade 0,10 €. O limite sobe 50 % quando a compensação resulta de IRCT negocial. Só se aplica aos dias completos de teletrabalho efetivamente prestado, com acordo escrito (art. 4.º). O fiscaldoo indica como fonte o CT art. 168.º/2-6 e esta Portaria, lidos a 09/10/2026.
+- **Quem é dono do equipamento.** O limite só se aplica ao que a empresa não disponibiliza ao trabalhador (Portaria, art. 3.º). Com **Entidade empregadora**, o fiscaldoo tira os 0,50 € do computador e o limite do dia fica em 0,50 €. Se a empresa pagar a Internet ou a eletricidade, ou fornecer só parte do equipamento, confirme a parte isenta com o contabilista: o acordo não tem campo para isso.
+- **Outros prazos.** A termo: seis meses, renovável, com declaração até 15 dias antes do fim. Sem termo: a comunicação produz efeito ao 60.º dia. Nos primeiros 30 dias, qualquer parte pode denunciar. Código do Trabalho, arts. 166.º a 169.º.
+- **Sem dias marcados, a linha fica a zero**, e o recibo avisa: ver «Problemas frequentes».
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: os limites de 2026, a categoria e o código de Segurança Social da rubrica, e o limite quando a empresa fornece só parte do equipamento.</span>
+
+## Problemas frequentes
+
+### O acordo a termo é recusado
+
+- **Mensagem:** «O primeiro período do acordo de teletrabalho de … vai de 01/11/2026 a 31/07/2027, mais do que os 6 meses que a lei permite (CT art. 167.º/2). Como resolver: encurte o termo, ou registe um acordo sem termo.»
+- **Causa:** o primeiro período passa os seis meses.
+- **O que fazer:** corrija a data ou mude para **Sem termo**.
+
+### Não guarda: campos a vermelho
+
+- **Mensagem:** «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** falta **Versão de contrato**, **Regime** ou **Início**.
+- **O que fazer:** preencha-os.
+
+### O acordo avisa que falta a prova escrita
+
+- **Mensagem:** «Sem prova do acordo escrito (art. 166.º/5): guarde o acordo assinado ou a cláusula do contrato.»
+- **Causa:** **Prova do acordo escrito** está vazia. O acordo guarda-se à mesma.
+- **O que fazer:** escreva onde está o documento assinado.
+
+### O recibo avisa que não há rubrica
+
+- **Mensagem:** «… tem um acordo de teletrabalho em vigor e não há nenhuma rubrica em vigor para a compensação: a compensação das despesas (CT art. 168.º) ficaria por pagar. Como corrigir: crie a rubrica em Salários › Configurar › Rubricas › Rubricas salariais com a origem «Compensação de teletrabalho (CT art. 168.º)» e calcule outra vez.»
+- **O que fazer:** faça o passo 8 e carregue de novo em **Calcular**.
+
+### A compensação do recibo está a zero
+
+- **Mensagem:** «Não há nenhum dia de teletrabalho registado para … no período, por isso a compensação é 0,00 €. Como corrigir: marque os dias teletrabalhados com o botão «Marcar os dias de teletrabalho» no acordo de teletrabalho do trabalhador (as presenças estão em Salários › Preparar › Ausências e presenças › Presenças) e calcule outra vez.»
+- **Causa:** nenhuma presença do mês está marcada como **Teletrabalho**.
+- **O que fazer:** marque os dias como no passo 7 e carregue em **Calcular**.
+
+### A janela de marcar diz que não há presenças
+
+- **Mensagem:** «Não há presenças de … entre 01/11/2026 e 30/11/2026, e esta janela não as cria. Como corrigir: peça a quem gere as presenças que registe as presenças dos dias teletrabalhados (Salários › Preparar › Ausências e presenças › Presenças) e marque depois os dias.»
+- **O que fazer:** peça o registo a quem gere as presenças e volte a marcar os dias. A lista **Presenças** da mensagem mostra as presenças que já existem.
+
+{/* Nota interna (lote EE-14, PAY-142 e59ceaf30 em master acd623385, docs_demo_ee14_test, porta 8526, 12/11/2026): acordo alternado de Carla Sofia Mendes desde 01/11/2026 (1,50 € por dia) criado por RPC com um utilizador só com o perfil Gestor de RH; com um utilizador só com o perfil Processador de salários, por clique, Marcar os dias de teletrabalho › Marcar os dias (01/11/2026 a 30/11/2026, sem presenças): «Operação inválida Não há presenças de Carla Sofia Mendes entre 01/11/2026 e 30/11/2026, e esta janela não as cria. Como corrigir: peça a quem gere as presenças que registe as presenças dos dias teletrabalhados (Salários › Preparar › Ausências e presenças › Presenças) e marque depois os dias.». O caminho é lido do próprio menu (PAY-142) e hoje existe: o Processador vê, em Ausências e presenças, Presenças (lista com Novo) e Verificar presenças. O aviso do recibo a zero usa o mesmo caminho (não provocado neste lote). */}
+{/* Nota interna (DOCS-046, lote v15-REV, master 255d77e63): acordo, janela de marcar, recibos e os 2 avisos por clique (Administrador de Salários). Presenças e rubrica COMPTELE criadas por RPC (a rubrica copiada da do abono, sem código de Segurança Social). Valores do equipamento e do dia de 3 horas lidos em Como foi calculado?. Mensagem com caminho inexistente: defeito no relatório do lote. */}
+
+{/* Nota interna (lote 99, FIX-M249, master 73d6a5fed, docs_demo_99_test, porta 9784, 19/11/2026): acordo de teletrabalho da Carla Sofia Mendes criado por RPC na cópia (regime permanente, sem prazo, início 03/11/2026, compensação por comparação com o último mês presencial; fica na base para o auditor) e cartão visto com demo.salarios no painel O que há para fazer este mês?: 1 em novembro, ausente em outubro. A captura está recortada à zona do cartão. */}

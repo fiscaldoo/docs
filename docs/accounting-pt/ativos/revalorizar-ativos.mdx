@@ -1,0 +1,106 @@
+---
+id: revalorizar-ativos
+slug: /accounting-pt/revalorizar-ativos
+title: Como revalorizar ativos
+sidebar_label: Revalorizar ativos
+description: Revalorizar uma classe de ativos fixos tangíveis, ver antes o efeito no capital próprio e nos rácios, confirmar o lançamento e propor o imposto diferido.
+keywords: [revalorizar ativos, revalorização, revalorizacao, revalorizações, revalorizacoes, mapa de revalorizações, mapa de revalorizacoes, excedente de revalorização, excedente de revalorizacao, 58, NCRF 7, imposto diferido, simulação, simulacao, rácios, racios]
+doc_id: DOC-0126
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c60255305)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/ativos/mapas-fiscais-dos-ativos, accounting-pt/ativos/abater-ou-vender-um-ativo]
+---
+
+{/* Nota interna (v13-ACC, DOC-0126): base docs_demo_v13acc_test, porta 8254, master 56504fe86. Percorrido por clique com o perfil Contabilista, classe Equipamento de transporte, Viatura ligeira de mercadorias, 30/09/2026. Lançamento OD/2026/00140 lido: 434 débito 1.939,58; 5811 crédito 1.939,58. Imposto diferido em rascunho: 5812 débito 329,73; 2742 crédito 329,73 (taxa de 17 %: reversão esperada 31/12/2029, lida no registo pelo auditor; derramas a confirmar pelo contabilista certificado). A conta 58x da categoria foi definida por clique com o perfil Gestor de contabilidade. O Mapa de revalorizações só existe em modo de programador e o UX-106 (comboio 154) não lhe dá caminho: fica fora do artigo até haver caminho, com o defeito no relatório. */}
+
+## Para que serve?
+
+Revalorizar é passar a mostrar um ativo pelo valor que tem hoje, em vez de o valor de compra menos as depreciações. O produto mostra primeiro o efeito no balanço e, só depois de confirmar, faz o lançamento.
+
+A revalorização aplica-se a toda a classe (a categoria) de ativos fixos tangíveis: os ativos em uso dessa categoria são revalorizados em conjunto (NCRF 7). O ecrã avisa também que não é aceite fiscalmente. <span className="fd-pending">Pendente de validação por contabilista certificado: tratamento contabilístico e fiscal.</span>
+
+## Quando utilizar?
+
+- Quando a empresa adota o modelo de revalorização e uma avaliação mostra outro valor para uma classe de ativos.
+- Quando quer ver o efeito na autonomia financeira antes de decidir.
+- Não use para ativos intangíveis: a janela só trata ativos fixos tangíveis. Não use para um ativo que perdeu valor por uma causa própria: isso é uma imparidade, registada à parte.
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Terceiros e ativos › O que há para fazer com os ativos?** › **Listas de apoio** › **Revalorizações**.
+
+As revalorizações de um ativo também se veem na ficha dele: **Contabilidade › Lançar › Terceiros e ativos › Ativos fixos**, separador **O que aconteceu**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**.
+- A categoria tem a conta de excedente de revalorização (58x). Defina-a em **Contabilidade › Configurar › Bancos e ativos › Categorias de ativos**, com o perfil **Contabilista certificado**. A escolha da conta é do contabilista certificado.
+- As depreciações dos ativos da categoria estão processadas até à data da revalorização. Veja o [fecho do mês](/accounting-pt/fechar-o-mes).
+- Tem a avaliação com o novo valor de cada ativo.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Revalorizações** e carregue em **Revalorizar uma classe de ativos**.
+2. Em **Categoria**, escolha a classe, por exemplo **Equipamento de transporte**. Em **Data**, escolha a data da revalorização, por exemplo `30/09/2026`.
+3. Em **Justificação**, escreva o motivo, por exemplo `Avaliação independente de 30/09/2026.`.
+4. Carregue em **Carregar ativos**. Aparece uma linha por cada ativo em uso, com a **Quantia escriturada**.
+5. Em cada linha, escreva o **Valor revalorizado**, por exemplo `21.335,41`.
+6. Carregue em **Calcular**. Ainda não se lança nada. Em **Resultado** vê a **Variação total**, o **Total a excedente (58x)** e o **Total a resultados**. Em **Simulação: impacto no capital próprio e nos rácios** vê o ativo, o passivo, o capital próprio, a autonomia financeira e o passivo sobre o capital próprio, antes e depois.
+   ![Resultado com a variação de 1.939,58 € no excedente e a simulação com o ativo total, o passivo e o capital próprio antes e depois](/images/accounting-pt/revalorizar-ativos/01-simulacao.png)
+7. Carregue em **Confirmar**. Abre-se a lista **Revalorizações**, com a linha nova.
+8. Na linha, carregue em **Propor imposto diferido**. Abre-se um lançamento em rascunho. Confira-o com o contabilista certificado e publique-o.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, as revalorizações são as do fiscaldoo, sobre os ativos fixos do fiscaldoo (visto com um utilizador só com o perfil **Contabilista**): **Revalorizações** e **Mapa de revalorizações** estão nas **Listas de apoio** de **O que há para fazer com os ativos?**, e **Revalorizar uma classe de ativos** abre a mesma janela **Revalorizar classe de ativos**, com a faixa da NCRF 7, a **Categoria**, a **Data**, a **Justificação** obrigatória e o botão **Cancelar**; **Carregar ativos** aparece depois de escolher a **Categoria**. Com **Equipamento de transporte** e a data 30/09/2026, **Carregar ativos** trouxe a **Viatura ligeira de mercadorias** com a **Quantia escriturada** e o botão **Calcular**.
+
+{/* Nota interna (lote EE-05, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee05_test (cópia da odoo20_ee_test com EE_FASE=construir), 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0126. Contabilista: Revalorizações (lista vazia, com Revalorizar uma classe de ativos), Mapa de revalorizações (pivô, vazio). Janela: Carregar ativos sem Justificação deixa o campo a vermelho; com Avaliação independente de 30/09/2026., carregou Viatura ligeira de mercadorias 19.395,83 € (Valor revalorizado 19.395,83 €, Variação 0,00 €) e apareceu Calcular. Não se carregou em Calcular nem em Confirmar na base Enterprise (nada criado). Os ativos do Enterprise (account_asset) estão instalados mas não aparecem no menu deste perfil. Ver reports/LOTE_EE-05.md. */}
+
+## Resultado esperado
+
+A lista mostra a linha com a variação, o excedente, o lançamento contabilístico e o **Imposto diferido sobre o excedente**.
+
+![Lista Revalorizações com a viatura, aumento de 19.395,83 € para 21.335,41 € e 1.939,58 € no excedente](/images/accounting-pt/revalorizar-ativos/02-lista-revalorizacoes.png)
+
+No exemplo, o aumento de 1.939,58 € gera este lançamento, publicado ao confirmar:
+
+| Conta | Débito | Crédito |
+|---|---:|---:|
+| 434 Equipamento de transporte | 1.939,58 € | |
+| 5811 Antes de imposto sobre o rendimento | | 1.939,58 € |
+
+**Propor imposto diferido** gera este lançamento, em rascunho:
+
+| Conta | Débito | Crédito |
+|---|---:|---:|
+| 5812 Impostos diferidos | 329,73 € | |
+| 2742 Passivos por impostos diferidos | | 329,73 € |
+
+O imposto diferido usa a taxa geral de IRC prevista para o ano em que a diferença se reverte, não a da data da revalorização: 19 % em 2026, 18 % em 2027 e 17 % a partir de 2028 (CIRC, art. 87.º, e Lei 64/2025). No exemplo, a reversão esperada é 31/12/2029, por isso 17 %. Sem data indicada no ativo, o produto usa o fim da depreciação. Pode vê-las nas colunas opcionais **Reversão esperada** e **Taxa de IRC (%)**. A taxa não inclui derrama municipal nem estadual.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a taxa sem derramas, e as contas do exemplo (a 5811 é das reavaliações por diploma legal; numa avaliação livre, o contabilista pode preferir a 5891, com o imposto diferido na 5892 Impostos diferidos).</span>
+
+## Notas importantes
+
+- A simulação conta o que está lançado até à data. O imposto diferido não entra nestes rácios.
+- O imposto diferido fica em rascunho até alguém o publicar. Não se liberta sozinho quando o excedente é usado ou o ativo é abatido: esse lançamento faz-se à mão.
+- Depois de proposto, a linha mostra **Atualizar imposto diferido** em vez de **Propor imposto diferido**. <span className="fd-pending">Pendente de validação no ecrã: o botão foi visto, sem o usar.</span>
+- Depois de uma revalorização a descer, a ficha do ativo mostra no topo a faixa amarela **Possível imparidade**. É só um aviso: não lança nada, a decisão é do contabilista. Por exemplo, baixar a viatura de 19.395,83 € para 17.500,00 €, sem excedente anterior e com a **Conta de diminuição de revalorização** da categoria na 6554, lança 1.895,83 € a débito da 6554 e a crédito da 434, e a faixa diz que a descida foi para resultados.
+  ![Faixa Possível imparidade na ficha da viatura: a última revalorização baixou o valor em 1.895,83 € e foi para resultados](/images/accounting-pt/revalorizar-ativos/03-faixa-possivel-imparidade.png)
+- Para ver o que foi revalorizado, abra **Contabilidade › Lançar › Terceiros e ativos › O que há para fazer com os ativos?** e carregue em **Mapa de revalorizações**. Também pode usar esta lista ou a ficha do ativo.
+
+## Problemas frequentes
+
+**«Processe os períodos contabilísticos de “*Telemóveis da equipa comercial*” até *04/11/2026* antes da revalorização: a quantia escriturada depende deles.»** Faltam depreciações do ativo indicado. Processe-as em **Contabilidade › Fechar › Contabilidade do mês › Depreciações do mês**, ou escolha uma data até onde já estão processadas.
+
+**«A categoria “*Equipamento de transporte*” precisa de conta de excedente de revalorização (58x) antes de a revalorização ser lançada. …»** Aparece ao carregar em **Confirmar**, e o ecrã já o avisa em **Calcular**. Peça ao **Contabilista certificado** que defina a conta em **Categorias de ativos**.
+
+**«Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»** Aparece em **Carregar ativos** quando falta a **Justificação**. Escreva-a e carregue de novo.

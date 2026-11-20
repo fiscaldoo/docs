@@ -1,0 +1,125 @@
+---
+id: subscricoes
+slug: /fiscal-core/subscricoes
+title: Como faturar subscrições com cobrança automática
+sidebar_label: Subscrições
+sidebar_position: 10
+description: Criar uma subscrição (avença) que emite a fatura de cada período e prepara a cobrança por referência Multibanco, MB WAY, débito direto ou cartão guardado, e perceber o que o ecrã recusa.
+keywords: [subscrição, subscricao, avença, avenca, fatura recorrente, cobrança automática, cobranca automatica, Multibanco, MB WAY, débito direto, SEPA, cartão guardado, faturar agora, pausar subscrição]
+doc_id: DOC-0032
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 58eeca54d)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/emitir-uma-fatura-certificada, fiscal-core/recibos-e-cobrancas/mandatos-de-debito-direto, fiscal-core/certificacao/documentos-de-formacao]
+---
+
+## Para que serve?
+
+Uma subscrição (ou avença) emite a mesma fatura a um cliente em cada período, por exemplo todos os meses, e prepara a cobrança pelo meio que escolher: **Referência Multibanco**, **MB WAY**, **Débito direto SEPA** ou **Cartão guardado**. Cada fatura emitida é uma fatura certificada normal, com número, ATCUD e assinatura.
+
+## Quando utilizar?
+
+- Para avenças mensais de serviços, rendas e quotas.
+- Para um serviço com valor fixo e período regular (semanas, meses ou anos).
+- Não o use para uma venda única: emita a [fatura certificada](/fiscal-core/emitir-uma-fatura-certificada) diretamente.
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Vendas e cobranças › Subscrições**. A lista mostra, para cada subscrição, o **Valor por período**, a **Cobrança**, a **Próxima fatura**, o **Estado** e a coluna **Atenção**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** ou **Contabilista certificado**. **Gerência**, **Auditor / ROC** e **Faturação** não criam subscrições.
+- Existe a série fiscal ativa das faturas (ver [criar e comunicar uma série](/fiscal-core/series-documentais)).
+- O cliente existe. Para cobrar por **Débito direto SEPA**, o cliente tem de ter um [mandato de débito direto](/fiscal-core/mandatos-de-debito-direto) ativo. Para **Referência Multibanco**, **MB WAY** e **Cartão guardado**, a empresa tem de ter um prestador de pagamentos configurado: a demonstração tem **Eupago** e **ifthenpay**.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Subscrições** e carregue em **Novo**.
+2. Em **Cliente**, escolha o cliente. O **Início** vem com a data de hoje, **Faturar a cada** com 1 **Meses** e **Cobrança** com **Referência Multibanco**. Em **Prestador**, escolha **Eupago** ou **ifthenpay**.
+3. No separador **Linhas**, carregue em **Adicionar uma linha**, escolha o **Produto** (por exemplo, 1 unidade de 85,00 € com IVA 23 %). O **Valor por período** passa a 104,55 €.
+4. Carregue em **Guardar**: a subscrição ganha o número `SUB/…` e fica em **Rascunho**.
+5. Carregue em **Ativar**. A subscrição fica **Ativa** e a **Próxima fatura** mostra a data do início.
+6. Para emitir já a primeira fatura, carregue em **Faturar agora**. A **Próxima fatura** passa a um período depois (de 03/11/2026 para 03/12/2026) e aparece o botão **Faturas**, com 1.
+   ![Subscrição SUB/00002 ativa: cliente, início 03/11/2026, próxima fatura 03/12/2026, faturar a cada 1 mês, cobrança Referência Multibanco, prestador Eupago e a linha de 104,55 €](/images/fiscal-core/subscricoes/02-subscricao-ativa.png)
+7. Carregue em **Faturas** para ver a fatura emitida: `FT D26/35`, de 104,55 €, **Por pagar**.
+   ![Lista Faturas da subscrição com a fatura emitida de 104,55 €, por pagar](/images/fiscal-core/subscricoes/03-fatura-da-subscricao.png)
+
+</StepByStep>
+
+### Pausar ou cancelar
+
+- **Pausar** passa a subscrição a **Em pausa**, sem emitir faturas e sem o botão **Faturar agora**; a **Próxima fatura** mantém-se. **Ativar** retoma.
+- **Cancelar** pergunta «Cancelar esta subscrição? Não serão emitidas mais faturas.»; com **Confirmar**, a subscrição passa a **Cancelada**, sem botões, e não se reativa. As faturas já emitidas não mudam: para as corrigir, ver [Como corrigir uma fatura](/fiscal-core/corrigir-uma-fatura).
+
+## Resultado esperado
+
+- A subscrição está **Ativa**, com a **Próxima fatura** no período seguinte.
+- Cada fatura emitida é do diário **Vendas**, mesmo que a empresa tenha um diário de formação à frente dele, e tem o valor da linha e o IVA.
+- Na contabilidade, a `FT D26/35` lançou: **2111** a débito 104,55 €; **711** a crédito 85,00 €; **2433** a crédito 19,55 € (a **2433** é o IVA liquidado a 23 %). A conta de rendimento vem do artigo: a **711** é a de vendas de mercadorias, por isso, numa avença de serviços, use um artigo de serviço, ligado a uma conta de prestações de serviços (**72**). <span className="fd-pending">Pendente de validação por contabilista certificado: conta de rendimento dos serviços faturados por subscrição.</span>
+- Com **Referência Multibanco**, o histórico da fatura regista a entidade, a referência e o valor (na demonstração, um prestador simulado), e diz que a transação está pendente.
+- A fatura é emitida mas **não está paga**: a subscrição prepara a cobrança, e o pagamento só fica registado quando o prestador o confirmar. <span className="fd-pending">Pendente de validação no ecrã: cobrança concluída, porque a demonstração não tem ligação real aos prestadores.</span>
+- Na data da **Próxima fatura**, uma tarefa diária emite a fatura e prepara a cobrança, sem ninguém carregar em **Faturar agora**. Limite de hoje: se essa emissão falhar, nada avisa no ecrã (ver «A linha … não tem taxa de IVA»), por isso confirme em **Faturas** que a fatura do período saiu.
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Cada fatura é um documento fiscal verdadeiro">
+Uma fatura emitida pela subscrição entra na numeração fiscal e no SAF-T como qualquer outra e não se apaga: corrige-se com [nota de crédito](/fiscal-core/emitir-uma-nota-de-credito). Confirme o **Valor por período**, o IVA das linhas e o cliente antes de **Ativar** e de **Faturar agora**. <span className="fd-pending">Pendente de validação por contabilista certificado: tratamento do IVA e das faturas de avenças em períodos que atravessam meses ou anos.</span>
+</HelpCallout>
+
+- **Cartão guardado.** Só com o prestador **ifthenpay**. A subscrição ativa-se sem autorização do cliente, mas **Faturar agora** emite a fatura na mesma e a cobrança falha: registe primeiro a autorização no separador **Autorização do cartão** (botão **Registar a autorização**). Ver «A cobrança falhou» mais abaixo. <span className="fd-pending">Pendente de validação no ecrã: cobrança por cartão concluída, porque a demonstração não tem cartões.</span>
+- **Débito direto.** A fatura é emitida e entra num [lote de débito direto](/fiscal-core/debitos-diretos-lotes) em rascunho, e o histórico diz qual. **Banco para o débito direto** é a conta que recebe os débitos; vazio, usa o único banco da empresa com IBAN. O cliente só é debitado quando o lote seguir para o banco.
+- Na edição Enterprise, o módulo ponte com as subscrições do Enterprise não faz parte deste artigo. <span className="fd-pending">Pendente de validação no ecrã: edição Enterprise.</span>
+
+## Problemas frequentes
+
+### «A subscrição não tem linhas»
+
+- **Sintoma:** ao carregar em **Ativar** sem nenhuma linha: «A subscrição não tem linhas, por isso não há nada a faturar. Acrescente pelo menos uma linha.»
+- **O que fazer:** acrescente a linha no separador **Linhas**, como no passo 3, e carregue de novo em **Ativar**.
+
+### «Escolha o prestador de pagamentos (eupago ou ifthenpay)»
+
+- **Sintoma:** ao carregar em **Ativar** com **Cobrança** em **Referência Multibanco**, **MB WAY** ou **Cartão guardado** e **Prestador** vazio: «Escolha o prestador de pagamentos (eupago ou ifthenpay) desta subscrição. É necessário para cobrar por Referência Multibanco.»
+- **O que fazer:** escolha o **Prestador** e carregue de novo em **Ativar**.
+  ![Mensagem do ecrã: escolha o prestador de pagamentos desta subscrição](/images/fiscal-core/subscricoes/01-sem-prestador.png)
+
+### «Preencha o telemóvel MB WAY do cliente»
+
+- **Sintoma:** com **MB WAY**, ao carregar em **Ativar** sem telemóvel: «Preencha o telemóvel MB WAY do cliente. Sem ele o pedido de pagamento não pode ser enviado.»
+- **O que fazer:** escreva o telemóvel no campo que aparece com **MB WAY** escolhido. Se escrever `123`, ao guardar: «O telemóvel MB WAY tem de ter 9 algarismos e começar por 9. Corrija o número e grave de novo.»
+- **Limite de hoje:** esta recusa só existe em **Ativar**. Numa subscrição já **Ativa**, mudar **Cobrança** para **MB WAY** sem telemóvel é aceite ao guardar, sem aviso, e a subscrição continua **Ativa**. Se mudar o meio de cobrança, confirme que o telemóvel está preenchido.
+  ![Mensagem do ecrã: preencha o telemóvel MB WAY do cliente](/images/fiscal-core/subscricoes/04-mb-way-sem-telemovel.png)
+
+### «A data do documento … é posterior à data do sistema»
+
+- **Sintoma:** ao carregar em **Faturar agora** numa subscrição cuja **Próxima fatura** ainda não chegou: «A data do documento “(ainda sem número)” (03/12/2026) é posterior à data do sistema (03/11/2026). Depois de emitida, a série deste documento fica fechada a documentos com data igual ou anterior a 03/12/2026.…»
+- **O que fazer:** normalmente, não fature ainda: o período seguinte sai na data da **Próxima fatura**. Emitir já fecharia a série a documentos anteriores a essa data.
+
+### «A linha … não tem taxa de IVA»
+
+- **Sintoma:** ao carregar em **Faturar agora**: «A linha “[DEMO015] Manutenção mensal” da fatura a Escola de Condução Rota, Lda não tem taxa de IVA. Escolha uma taxa de IVA (ou uma taxa de IVA a 0% com motivo de isenção, ou uma taxa «não sujeito»).»
+- **O que fazer:** escolha a taxa em **Impostos**, no separador **Linhas**. **Ativar** não verifica isto. Na emissão pela tarefa diária, a subscrição fica **Ativa** e **Em ordem**, sem fatura e sem aviso no ecrã: confirme o IVA de todas as linhas antes de **Ativar**.
+
+### «Eupago não regista cartões para cobranças futuras»
+
+- **Sintoma:** ao carregar em **Ativar** com **Cartão guardado** e o prestador **Eupago**: «Eupago não regista cartões para cobranças futuras, por isso a subscrição não pode ser cobrada por cartão guardado com ele. Escolha o ifthenpay para o cartão guardado, ou cobre por MB WAY, débito direto ou referência Multibanco com este prestador.»
+- **O que fazer:** mude o **Prestador** para **ifthenpay** ou mude a **Cobrança**.
+
+### A cobrança falhou
+
+- **Sintoma:** a fatura foi emitida, o histórico diz «A cobrança de FT D26/36 falhou (tentativa 1): Registe a autorização do cliente para a cobrança recorrente com cartão antes do primeiro pagamento…» e o separador **Cobranças falhadas** mostra **Fatura em nova tentativa**, **Tentativas falhadas** e **Próxima tentativa** (05/11/2026, dois dias depois).
+- **O que fazer:** resolva a causa que o histórico indica. A fatura continua válida e por pagar: não volte a faturar o mesmo período. Segundo a ajuda do ecrã, **Tentativas** é quantas vezes a cobrança se repete antes de o responsável ser avisado; a repetição corre numa tarefa diária, na data da **Próxima tentativa**. <span className="fd-pending">Pendente de validação no ecrã: repetição da cobrança, porque não correu (a data da próxima tentativa era futura).</span>
+
+### «não tem mandato SDD ativo»
+
+- **Sintoma:** com **Débito direto SEPA**, ao carregar em **Ativar**: «Clínica Dentária Sorriso, SA não tem mandato SDD ativo: crie e ative um antes de o incluir num lote de débito direto.»
+- **O que fazer:** registe e ative o [mandato de débito direto](/fiscal-core/mandatos-de-debito-direto) do cliente e carregue de novo em **Ativar**: com o mandato ativo, a subscrição passa a **Ativa**.
+  ![Mensagem do ecrã: o cliente não tem mandato SDD ativo](/images/fiscal-core/subscricoes/05-debito-direto-sem-mandato.png)
+
+{/* Nota interna (DOCS-046, DOC-0032, v7-FC2, master 584213fd9, base docs_demo_v7fc2_test, perfil Contabilista): SUB/00002 é a do artigo (FT D26/35; 2111/711/2433 conferidas na base); SUB/00003 cartão com ifthenpay, cobrança falhada, FT D26/36, cancelada; SUB/00004 recusas MB WAY e débito direto, cancelada; SUB/00005 débito direto com RUM/00001, ativa; SUB/00006 ativada e faturada pela tarefa diária acionada à mão pelo Administrador. Diário de formação à frente (sequência 1, reposta): fatura em Vendas (FAT-128). NV3F-09 e 10 tratadas. */}

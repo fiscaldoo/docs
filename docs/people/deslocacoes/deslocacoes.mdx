@@ -1,0 +1,121 @@
+---
+id: deslocacoes
+slug: /people/deslocacoes
+title: Como validar deslocações e ajudas de custo
+sidebar_label: Validar deslocações e ajudas de custo
+sidebar_position: 1
+description: Conferir e aprovar as deslocações que os trabalhadores submetem, ler a parte isenta e tributável e acompanhar o total no ecrã Visão fiscal.
+keywords: [validar deslocações, validar deslocacoes, ajudas de custo, aprovar deslocação, aprovar deslocacao, visão fiscal, visao fiscal, tributação autónoma, tributacao autonoma, mapa de deslocação, mapa de deslocacao, quilómetros, quilometros]
+doc_id: DOC-0260
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/o-meu-espaco/registar-uma-deslocacao, people/deslocacoes/mapas-mensais-de-deslocacoes]
+---
+
+## Para que serve?
+
+Quando um trabalhador submete uma deslocação, os Recursos Humanos conferem os dados e aprovam-na. Só a deslocação aprovada conta para o mês, para o recibo de vencimento e para o ecrã **Visão fiscal**, que soma o que já foi pago e mostra o que falta corrigir.
+
+## Quando utilizar?
+
+- Há deslocações no estado **Contas prestadas** à espera de decisão.
+- Uma deslocação foi registada por engano e tem de ser anulada.
+- Quer saber quanto se pagou em ajudas de custo no ano ou num trimestre.
+
+## Onde encontrar?
+
+- A lista das deslocações: **Salários › Preparar › Tempo de trabalho › Mapas de deslocação**.
+- O total do ano: **Pessoas › Tempo de trabalho › Deslocações › Visão fiscal**.
+
+## Antes de começar
+
+- O perfil é o **Gestor de RH**. Os passos foram feitos até ao fim com um utilizador só com esse perfil.
+- O **Processador de salários** abre a mesma lista e vê o botão **Aprovar**, mas não aprova: recebe a mensagem que está em «Problemas frequentes». No menu **Pessoas › Tempo de trabalho** tem **Visão da Gerência** no lugar de **Requisições de viaturas**.
+- A **Gerência** não tem **Deslocações** em **Pessoas**: acompanha as deslocações em **Direção › Pessoas › Deslocações**. O **Contabilista** não tem a aplicação **Pessoas**.
+- O trabalhador tem de ter submetido a viagem: veja [Como registar uma deslocação e pedir as ajudas de custo](/people/registar-uma-deslocacao).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Preparar › Tempo de trabalho › Mapas de deslocação**. As colunas são **Trabalhador**, **Primeiro dia da viagem**, **Último dia da viagem**, **Local de destino**, **Montante diário**, **Quilómetros (ida e volta)**, **Total pago**, **Tributável (acima dos limites)**, **Estado** e **Elementos em falta**. No fim da lista vêm os totais: contam as linhas em **Rascunho**, mas não as **Anulado**, que ficam com 0,00 em **Total pago**.
+   ![Lista Mapas de deslocação com três viagens (Lisboa e Porto em Contas prestadas, Braga em Rascunho), o total de 158,83 no fim e a linha do Porto contornada](/images/people/deslocacoes/02-lista-de-deslocacoes.png)
+2. Abra a deslocação que está em **Contas prestadas** (no exemplo, a do Porto).
+3. Confira, por esta ordem, os grupos **VIAGEM** (datas, **Local de partida**, destino e **Motivo da viagem**), **HORAS E MONTANTE** (**Hora de saída**, **Hora de regresso**, **Tempo de permanência (horas)**, **Montante diário**, **Distância ao domicílio necessário (km)**, **A deslocação implica alojamento** e **Faturada a um cliente**; por baixo, o que o Odoo calcula: **Tipo de deslocação**, **Fração sugerida da ajuda de custo diária**, **Distância**, **Acima do limite de dias**, **Completo** e **Elementos em falta**), **TRANSPORTE E AJUDA DE CUSTO** (o **Transporte**, a **Matrícula** e os **Quilómetros (ida e volta)**) e **CLIENTES VISITADOS (POR ORDEM)**. Se faltar algum elemento, a coluna **Elementos em falta** da lista di-lo. Os comprovativos (bilhetes, faturas) estão no fim da ficha, em **DOCUMENTOS DE SUPORTE**.
+4. Leia **VALORES ISENTOS E TRIBUTÁVEIS**: **Ajuda de custo paga**, **Ajuda de custo isenta**, **Quilómetros pagos**, **Quilómetros isentos**, **Total pago**, **Isento (até aos limites)** e **Tributável (acima dos limites)**. Por baixo, o ecrã escreve o valor por dia e por quilómetro e a lei em que se apoia.
+5. Carregue em **Aprovar**. O estado passa a **Aprovado**, sem mensagem.
+   - Para recusar, carregue em **Anular**: abre-se a janela **Cancelar um mapa de deslocações**, com o **Motivo**. Escreva-o (por exemplo «Viagem registada em duplicado») e carregue em **Cancelar o mapa**. A deslocação fica **Anulado** e deixa de ter botões. O **Anular** também aparece numa deslocação em **Rascunho** e numa já **Aprovado**. Numa aprovada, a janela avisa antes do **Motivo**: «Este mapa de deslocação está aprovado. Anulá-lo mantém o registo e o motivo, mas a deslocação deixa de contar: sai dos mapas mensais e da visão fiscal, e a ajuda de custo de um recibo ainda não validado perde a isenção (é tributada por inteiro) quando o recibo for recalculado. Nada se lança nem se estorna aqui na contabilidade. Um mapa que sustenta um recibo validado não pode ser anulado.»
+6. Abra **Pessoas › Tempo de trabalho › Deslocações › Visão fiscal** e escolha o **Ano 2026** (ou um trimestre) para ver o total.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, as deslocações registam-se e acompanham-se nos mesmos ecrãs. Com o **Gestor de RH**, **Salários › Preparar › Tempo de trabalho › Mapas de deslocação** tem as mesmas colunas e **Pessoas › Tempo de trabalho › Deslocações › Visão fiscal** o mesmo resumo do ano. Com a **Gerência**, **Direção › Pessoas › Deslocações** abre a **Visão da Gerência das deslocações**, com **Calcular** e **Ficheiro anual (Excel)**.
+
+{/* Nota interna (lote EE-10, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): cópia Enterprise docs_ee_ee10b_test no portátil (pg_dump da odoo20_ee_test, -u dos módulos mudados até master e -i de hr_payroll, planning, hr_appraisal e hr_recruitment), porta 8504, guarda de rede ligada; utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): ee10_rh em Mapas de deslocação (colunas de Trabalhador a Elementos em falta, iguais à cópia Community) e Visão fiscal («Deslocações e ajudas de custo: Ano 2026», Pago em deslocações, Mapas completos); ee10_ger em Direção › Pessoas › Deslocações (Calcular, Ficheiro anual (Excel), colunas iguais). Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee10_test (master e4dd4ae90, a do lote EE-10 interrompido) e com o texto do artigo. Ver reports/LOTE_EE-10.md. */}
+
+## Resultado esperado
+
+- A deslocação fica **Aprovado**. Em **PRESTAÇÃO DE CONTAS E APROVAÇÃO** ficam **Contas prestadas em**, **Aprovado por** (o utilizador que aprovou), **Aprovado em** e **Conservar até** (31/12/2036 no exemplo).
+
+  ![Final da deslocação do Porto aprovada: 65,89 de ajuda de custo e 60,00 de quilómetros, 125,89 pagos e isentos, a base legal por baixo, e as datas de aprovação e de conservação](/images/people/deslocacoes/03-deslocacao-aprovada.png)
+
+- Na **Visão fiscal**, com duas viagens aprovadas (125,89 € no Porto, com o cliente Construções Marão, Lda, e 16,47 € em Lisboa, sem cliente) e a de Braga anulada: **Pago em deslocações** 142,36 € («2 deslocação(ões), 0,00 € acima dos limites (tributado no recibo de vencimento)»), **Mapas completos** 100 %, **Tributação autónoma (dos recibos de vencimento validados)** 0,00 € e **Deslocações a faturar a clientes** 125,89 €, com «Faturá-las evita 6,29 € de tributação autónoma».
+
+  ![Visão fiscal do ano 2026: 142,36 € pagos em 2 deslocações, mapas completos a 100 %, tributação autónoma a 0,00 € e 125,89 € a faturar a clientes](/images/people/deslocacoes/01-visao-fiscal.png)
+
+- Aprovar não gera lançamentos contabilísticos: o valor segue para o recibo de vencimento do trabalhador.
+
+## Notas importantes
+
+- <span className="fd-pending">Pendente de validação por contabilista certificado: os 65,89 € por dia e os 0,40 € por quilómetro, a divisão entre isento e tributável e a tributação autónoma de 5 % vêm do produto; o ecrã escreve «a confirmar pelo contabilista certificado» por baixo dos valores e a **Visão fiscal** diz que são «Estimativas para a gestão, com as regras do CIRC guardadas no produto».</span>
+- **Pago em deslocações** conta só as deslocações aprovadas. Com a de Braga ainda em **Rascunho**, o valor continuou em 142,36 € e 2 deslocações.
+- **Uma deslocação por aprovar pesa nos outros quadros.** Com a de Braga (16,47 €, cliente Padaria Aurora, Lda) em **Rascunho**: **Mapas completos** desceu para 67 %, com «16,47 € em risco: sem um mapa completo e aprovado a despesa não é dedutível no IRC»; a lista **Mapas a corrigir** mostrou-a com «Ainda não aprovado». **Deslocações a faturar a clientes** conta só as deslocações aprovadas. Aprove-a ou anule-a.
+- A **Tributação autónoma** conta só os recibos de vencimento validados: os 142,36 € aparecem como «ainda por receber» enquanto o recibo não estiver validado.
+- **A empresa prevê prejuízo**, no topo da **Visão fiscal**, sobe a taxa de 5 % para 15 %: no exemplo, «Faturá-las evita 6,29 € de tributação autónoma» passou a 18,88 €. Marque-a só quando o contabilista certificado confirmar o prejuízo do ano. <span className="fd-pending">Pendente de validação por contabilista certificado: o agravamento da tributação autónoma num período com prejuízo fiscal (CIRC, art. 88.º/14).</span>
+- **Vista detalhada** abre o cálculo por período: carregue em **Calcular** para ver **Mapas de deslocação**, **Mapas conformes**, **Mapas a corrigir**, **Valor em risco no IRC** e a lista **A faturar a clientes**.
+
+{/* Nota interna (DOCS-046, lote v22-A, master d83bdf7ae, base docs_demo_v22a_test): reescrito. A antiga entrada Deslocações da app Pessoas já não aparece (a lista é a dos Mapas de deslocação, nos Salários). Feito por clique com utilizadores criados por RPC só com um perfil (DEC-1777): Gestor de RH (lista, Aprovar, Anular, Visão fiscal), Processador de salários (recusa ao Aprovar), Gerência e Contabilista (menus). Viagens criadas por RPC com o Trabalhador da demonstração pelo método do registo rápido (Porto 150 km 100 %, Lisboa 25 %, Braga em rascunho). O HR-035 tornou falsa a nota antiga «Não use Pago em deslocações». «A faturar a clientes» conta a viagem em Rascunho: ver o relatório. Uma deslocação Aprovado continua com o botão Anular; o efeito não foi provado. Lançamentos: 0 criados depois das aprovações (conferido por RPC). Não testado: aprovação pela chefia direta, tetos mensais, recibo de vencimento. */}
+
+## Problemas frequentes
+
+### «Não pode aprovar esta deslocação»
+
+- **Sintoma:** ao carregar em **Aprovar**, a janela **Operação inválida** diz: «Não pode aprovar esta deslocação. O que aconteceu: é aprovada pela chefia direta do trabalhador, pelos recursos humanos ou por um utilizador com o acesso extra «Administrador de Salários», e nunca por quem fez a deslocação. Como resolver: peça a um deles que a aprove.» {/* Nota interna (lote v23-AS, depois do comboio 177 com o PAY-134, master d7b8279e9, docs_demo_v23as_test, 09/11/2026): mensagem vista por clique em Aprovar com um utilizador só com o perfil Processador de salários, num mapa de deslocação do Trabalhador da demonstração (criado e com as contas prestadas por RPC com esse Trabalhador, na cópia). */}
+- **Causa:** o seu perfil não aprova deslocações (por exemplo, **Processador de salários**), ou a deslocação é sua.
+- **O que fazer:** peça a aprovação ao **Gestor de RH** ou à chefia direta do trabalhador.
+
+### As datas da viagem estão trocadas
+
+- **Sintoma:** ao escrever um **Último dia da viagem** anterior ao **Primeiro dia da viagem**, abre-se **Datas da deslocação**: «O regresso tem de ser no mesmo dia ou depois da partida. Como resolver: corrija o primeiro ou o último dia da deslocação.» Se guardar assim, o **Erro de Validação** diz, por exemplo: «A viagem de Ana Margarida Pinto termina (09/11/2026) antes de começar (10/11/2026). Como corrigir: corrija o primeiro ou o último dia.»
+- **O que fazer:** corrija um dos dois dias e guarde de novo. Nada fica gravado enquanto as datas estiverem trocadas.
+
+{/* Nota interna (lote v23-AI, DOCS-069 #4052, master 7a3b55244, docs_demo_v23ai_test): as duas mensagens vistas por clique com o Gestor de RH da demonstração, num mapa novo (Novo, Ana Margarida Pinto, 10/11/2026 a 09/11/2026), descartado sem gravar (0 mapas na cópia antes e depois). Os campos dos grupos VIAGEM, HORAS E MONTANTE, PRESTAÇÃO DE CONTAS E APROVAÇÃO e DOCUMENTOS DE SUPORTE lidos no mesmo formulário. As recusas do montante negativo e da hora fora de 00:00–23:59 não foram provocadas. Vinha do guia congelado Salários/mapa-de-deslocacao-e-ajudas-de-custo.md. */}
+
+### «Há campos obrigatórios por preencher» ao anular
+
+- **Sintoma:** na janela **Cancelar um mapa de deslocações**, **Cancelar o mapa** responde «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **O que fazer:** escreva o **Motivo** e carregue outra vez em **Cancelar o mapa**.
+
+### Não vejo a lista das deslocações
+
+- **Sintoma:** em **Pessoas** não há **Deslocações**, ou em **Salários** não há **Mapas de deslocação**.
+- **Causa:** a lista é do **Gestor de RH** e do **Processador de salários**. A **Gerência** tem só **Direção › Pessoas › Deslocações**; o **Contabilista** não tem a aplicação **Pessoas**.
+- **O que fazer:** peça a quem administra os utilizadores que lhe dê o perfil, ou peça a quem o tem que aprove.
+
+### A viagem aprovada ainda não aparece no mapa do mês
+
+- **Sintoma:** aprovou a viagem e o mapa mensal do mês não a mostra.
+- **Causa:** o mapa do mês não se cria sozinho: só existe depois de alguém dos Recursos Humanos carregar em **Gerar os mapas do mês anterior**.
+- **O que fazer:** veja [Como gerar os mapas mensais de deslocações](/people/mapas-mensais-de-deslocacoes), onde está o caso da viagem aprovada depois de o mapa estar gerado.
+
+{/* Nota interna (DOCS-063 #3853, lote v23-N, master dbbb5ac5c, docs_demo_v23n_test, porta 8442): RH-028: os caminhos passam a Pessoas › Tempo de trabalho › Deslocações (visto com utilizadores só com o Perfil Gestor de RH e só com Processador de salários; o Processador tem Visão da Gerência e não Requisições de viaturas). «A faturar» só com aprovadas vem do bilhete rh_028: a base-mãe v2 não tem deslocações (Visão fiscal a zeros), e o aviso do Anular numa aprovada e as datas no formato local ficam por ver. */}
+
+{/* Nota interna (DOCS-063 #3853, lote v23-S, master cebcb888d, docs_demo_v23s_test, porta 8458): RH-028 visto no ecrã. Três deslocações submetidas por clique pelo Trabalhador (Porto 06/11 com Construções Marão, Lda; Braga 05/11 com Padaria Aurora, Lda; Lisboa 04/11) e aprovadas ou anuladas por um utilizador só com o Perfil Gestor de RH. Com as duas com cliente em Contas prestadas, «Deslocações a faturar a clientes» ficou 0,00 €; aprovada a do Porto, 76,47 €. Aviso do Anular copiado da janela numa aprovada (Braga). Lista Mapas de deslocação: Braga anulada com 0,00 em Total pago e total 92,94 (Rascunho 16,47 + Aprovado 76,47). Datas locais nos nomes («Eva Cristina Rocha — 06/11/2026 — 06/11/2026») e na Visão fiscal («06/11/2026 · Porto»). As capturas 01 a 03 são do exemplo anterior (mesmos números do texto) e continuam certas. */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): menu Pessoas › Tempo de trabalho › Deslocações nos menus do Gestor de RH e do Processador de salários. */}

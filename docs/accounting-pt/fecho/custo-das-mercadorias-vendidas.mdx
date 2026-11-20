@@ -1,0 +1,106 @@
+---
+id: custo-das-mercadorias-vendidas
+slug: /accounting-pt/custo-das-mercadorias-vendidas
+title: Como apurar o custo das mercadorias vendidas (CMVMC)
+sidebar_label: Custo das mercadorias vendidas (CMVMC)
+sidebar_position: 4
+description: Calcular e lançar o custo das mercadorias vendidas e das matérias consumidas (CMVMC) do período pelo método do inventário intermitente, com o estorno do lançamento quando se cancela.
+keywords: [CMVMC, custo das mercadorias vendidas, custo das mercadorias vendidas e das matérias consumidas, inventário intermitente, inventario intermitente, existências finais, existencias finais, conta 61, conta 32, variação da produção, apuramento do CMVMC]
+doc_id: DOC-0137
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master bfedd3b23)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/fecho/simular-o-resultado, accounting-pt/relatorios/demonstracao-de-resultados, accounting-pt/relatorios/diario-e-razao]
+---
+
+## Para que serve?
+
+Quando a empresa trabalha com inventário intermitente, o custo das mercadorias vendidas só se conhece no fim, com as existências finais. No exemplo, as faturas de fornecedores põem as compras diretamente na conta 61 durante o ano. O produto calcula essa **proposta de CMVMC** do período, mostra as linhas do lançamento e, quando a lança, regista as existências finais (conta 32) em contrapartida da conta 61. Cada proposta fica guardada, com o estado, quem lançou e quando.
+
+## Quando utilizar?
+
+- No fim do período (normalmente no fim do exercício), depois de lançadas as compras e as devoluções do período.
+- Antes de [simular o resultado](/accounting-pt/simular-o-resultado) ou de apurar o exercício, para o custo das mercadorias vendidas ser o correto.
+- **Não** a use se a empresa trabalha com inventário permanente: aí o custo vem do movimento de stock.
+
+## Onde encontrar?
+
+**Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**, em **Listas de apoio**, **Custo das mercadorias vendidas**. A lista chama-se **CMVMC (inventário intermitente)**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. A **Gerência** e o **Auditor / ROC** também abrem a lista.
+- As compras do período e as existências finais (stock valorizado) estão lançadas.
+- O exemplo é o exercício de 2026 da Empresa Demonstração, Lda: a conta **611 Mercadorias** tem 11.100,00 € a débito e as existências em stock valem 480,00 €.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês** e, em **Listas de apoio**, **Custo das mercadorias vendidas**. A lista mostra cada proposta com o período, o **CMVMC (61)**, a **Variação da produção (73)** e o estado (**Rascunho**, **Lançado** ou **Cancelado**).
+2. Carregue em **Novo**. Escreva o **Início do período** (`01/01/2026`) e o **Fim do período** (`31/12/2026`). O **Diário** vem preenchido (**Operações Diversas**).
+3. Carregue em **Calcular**. A ficha mostra o **CMVMC (61)** e a **Variação da produção (73)**, e uma linha para cada tipo de inventário: neste exemplo, **M - Mercadorias**, natureza **Existências finais**, conta **321 Mercadorias**, contrapartida **611 Mercadorias**, montante 480,00 €. O **CMVMC (61)** aparece como -480,00 €: é o valor que o lançamento retira ao custo, porque as existências finais não são gasto do ano.
+   ![Proposta de CMVMC de 2026, com a tabela só nas colunas Conta, Contrapartida e Montante: CMVMC (61) de -480,00 euros, variação da produção de 0,00 euros e a linha da 321 para a 611](/images/accounting-pt/custo-das-mercadorias-vendidas/01-proposta.png)
+4. Reveja as linhas. Se faltar algo (compras, devoluções, stock), corrija os lançamentos e carregue outra vez em **Calcular**: o cálculo repete-se e fica o rasto no histórico da ficha.
+5. Carregue em **Lançar** e, na pergunta «O lançamento do CMVMC será feito no último dia do período. Continuar?», em **Confirmar**. O estado passa a **Lançado** e a ficha mostra o lançamento (no exemplo, OD/2026/00104), quem lançou e quando. Já não aparece o botão **Calcular**.
+6. Se for preciso desfazer, carregue em **Cancelar** e confirme a pergunta «Cancelar uma proposta lançada cria o lançamento de estorno. Continuar?». O estado passa a **Cancelado** e a ficha mostra o **Lançamento de estorno** (no exemplo, OD/2026/00105). O lançamento original não se apaga. Numa proposta em **Rascunho**, a pergunta é a mesma, mas não há lançamento nem estorno.
+
+</StepByStep>
+
+## Resultado esperado
+
+- Um lançamento no último dia do período, no diário **Operações Diversas**, com **débito de 480,00 € na 321 Mercadorias** (existências finais) e **crédito de 480,00 € na 611 Mercadorias**. No **Razão** de 2026, a 321 passa a ter o saldo de 480,00 € a débito (saldo inicial 0,00 €, lançamento OD/2026/00104 de 31/12/2026, descrição «Closing stock - M») e a 611 fica com 11.100,00 € a débito, 480,00 € a crédito e saldo de 10.620,00 €.
+  ![Razão da conta 321 em 2026, só com as colunas Linha, Descrição, Débito e Saldo: o lançamento OD/2026/00104 de 480,00 euros a débito](/images/accounting-pt/custo-das-mercadorias-vendidas/02-razao-321.png)
+- O custo das mercadorias vendidas e das matérias consumidas do exercício passa a ser 10.620,00 €: existências iniciais (0,00 €) mais compras (11.100,00 €) menos existências finais (480,00 €). É o que a [demonstração de resultados](/accounting-pt/demonstracao-de-resultados) mostra em **Custo das mercadorias vendidas e das matérias consumidas** (-10.620,00 €, em vez de -11.100,00 €), e o **Resultado líquido do período** melhora os mesmos 480,00 € (de -59.791,84 € para -59.311,84 €).
+- As propostas canceladas ficam na lista, com o lançamento e o estorno.
+
+## Notas importantes
+
+- **A conta 61 inclui as compras.** O produto só lança as existências finais; as compras já estão na 61 pelas faturas de fornecedores. O sinal negativo de **CMVMC (61)** quer dizer «reduz o custo».
+- **Existências iniciais do razão.** O lançamento salda o que o razão tem na 32 no início do período, não a valorização do programa. Se divergirem, a ficha avisa (ver abaixo). Verifique o fecho do período anterior.
+- **Estorno em vez de apagar.** Cancelar uma proposta lançada não apaga nada: cria o lançamento de estorno, para o rasto de auditoria. Depois de cancelada, faça uma nova proposta para o mesmo período.
+- **Variação da produção (73).** Mostra a variação das existências de produtos acabados e em curso (crédito da 73 se positiva). No exemplo é 0,00 €, porque a empresa só vende mercadorias. <span className="fd-pending">Pendente de validação por contabilista certificado: tratamento das existências de produtos e do método de valorização no CMVMC, e se as compras devem passar pela conta 31 (Compras) antes da 61 (a lista de **Alterações do método de valorização** não tem registos na demonstração).</span>
+- **Datas.** O lançamento fica no último dia do período, mesmo que seja uma data futura, e o ecrã recusa-o se esse dia estiver bloqueado (ver «Problemas frequentes» e as [datas de bloqueio](/accounting-pt/datas-de-bloqueio)).
+- **Períodos parciais: confira antes de lançar.** Hoje, a proposta de só uma parte do ano pode sair com um valor errado: de 01/01 a 31/08/2026, o **CMVMC (61)** dá +10.020,00 €, quando o ano inteiro dá -480,00 €. Use a proposta do ano inteiro.
+- **Uma proposta de cada vez.** Enquanto houver uma proposta em **Rascunho** ou **Lançado** num período, o ecrã não calcula outra que se sobreponha: o custo seria lançado duas vezes.
+- Para uma estimativa, sem lançar, use as existências finais da [simulação do resultado](/accounting-pt/simular-o-resultado).
+
+## Problemas frequentes
+
+### «Já existe uma proposta de CMVMC «…» (Rascunho) que se sobrepõe a este período na empresa «…». Lançar o custo duas vezes duplicá-lo-ia. Abra essa proposta ou cancele-a primeiro.»
+
+- **Causa:** carregou em **Calcular** numa proposta nova cujo período se cruza com outra (mensagem **Erro de Validação**). Na demonstração já há uma proposta de 2026 em **Rascunho**. Uma proposta **Cancelado** não conta.
+- **O que fazer:** carregue em **Fechar**, abra a proposta que já existe na lista e continue nela; ou cancele-a e faça uma nova.
+
+### «O período termina em 30/06/2026, que está bloqueado (data de bloqueio 30/06/2026). O lançamento do CMVMC ficaria datado num período fechado. Peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» uma exceção ao bloqueio ou desbloqueie primeiro o período.»
+
+- **Causa:** o último dia do período está numa data bloqueada (mensagem **Operação inválida**, depois de confirmar **Lançar**). Nada é lançado e a proposta continua em **Rascunho**.
+- **O que fazer:** peça a exceção a quem tem o perfil **Contabilista certificado**, como diz a mensagem ([datas de bloqueio](/accounting-pt/datas-de-bloqueio)), ou lance a proposta num período aberto.
+  ![Mensagem Operação inválida ao lançar uma proposta que termina numa data bloqueada](/images/accounting-pt/custo-das-mercadorias-vendidas/04-recusa-datas-de-bloqueio.png)
+
+### «O início do período (31/12/2026) é posterior ao fim (01/01/2026). Troque as datas para o início vir primeiro.»
+
+- **Causa:** o período tem o início depois do fim (mensagem **Erro de Validação**).
+- **O que fazer:** carregue em **Fechar** e troque as datas.
+
+### «Tipo M: as existências iniciais no razão (0,00 €) diferem da valorização do programa no início do período (480,00 €). A proposta usa o razão, que é o que o lançamento salda. Verifique o fecho anterior.»
+
+- **Causa:** no período seguinte (2027, no exemplo) o stock valorizado no início é 480,00 €, mas a conta 321 ainda não o tem, porque a proposta de 2026 não foi lançada (ou foi cancelada).
+- **O que fazer:** lance primeiro o CMVMC do período anterior. Enquanto isso não acontece, a proposta de 2027 calcula o mesmo -480,00 € e mostra este aviso.
+  ![Proposta de CMVMC de 2027 com o aviso de que as existências iniciais do razão diferem da valorização do programa](/images/accounting-pt/custo-das-mercadorias-vendidas/03-aviso-existencias-iniciais.png)
+
+### Não vejo o botão «Lançar»
+
+- **Causa:** a proposta não tem linhas (período sem existências), já foi lançada ou foi cancelada.
+- **O que fazer:** carregue em **Calcular** e confirme que aparece uma linha. Uma proposta **Lançado** só admite **Cancelar**.
+
+{/* Nota interna (DOCS-046, DOC-0137): visto em docs_demo_v6a4_test (master 8f78854ec) com o Contabilista. Fluxo no ecrã: Calcular, Lançar (OD/2026/00104), razão 321/611 e DR conferidos, Cancelar (estorno OD/2026/00105). Recusas no ecrã: sobreposição (estado já em português, «Rascunho»), datas trocadas, bloqueio. PROVA DO BLOQUEIO: a data global da empresa foi avançada de 31/12/2025 para 31/08/2026 (proposta 01/01 a 31/08/2026) e o produto não a deixa recuar diretamente, por isso a base do lote ficou com o bloqueio a 31/08/2026. Por 31/12/2026 foi recusado: há 2 linhas de extrato por reconciliar em setembro; a primeira tentativa não bloqueou e lançou a proposta (OD/2026/00106), logo cancelada (estorno 00107). A base fica com a proposta de 2026 em Rascunho e as outras canceladas; saldo líquido zero, DR igual à de partida. Gerência e Auditor têm a lista no hub; não exercidos além disso. Não testado: segundo tipo de inventário, alterações do método de valorização (sem dados), inventário permanente. Defeitos no relatório: «Closing stock - M» e «Standard Price» em inglês, data 2026-08-31 na recusa. */}
+
+{/* Nota interna (lote v23-AB, master 97b34fac3, docs_demo_v23ab_test, porta 8480, utilizadores criados só com cada valor do campo Perfil): recusa do bloqueio e captura 04 na cópia limpa docs_demo_v23ab2_test com um utilizador só Contabilista: a proposta da base-mãe de 2026 foi cancelada (rascunho, sem lançamento) por RPC, a minha proposta de 01/06/2026 a 30/06/2026 calculou 480,00 € (M - Mercadorias) por clique e a data de bloqueio passou a 30/06/2026 por RPC, com motivo; Lançar e depois Confirmar deu a recusa citada e a proposta ficou em Rascunho. O produto não deixa recuar a data de bloqueio: essa cópia ficou bloqueada a 30/06/2026. */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AX, 09/11/2026, master 25a465133, docs_demo_v23ax_test): resultado líquido de 2026 (-59.791,84 €) e custo das mercadorias vendidas (-11.100,00 €) lidos na Demonstração de resultados da cópia limpa; o valor depois soma os 480,00 € das existências finais (o lançamento não foi repetido neste lote). */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AY, 10/11/2026, master fa7915ea8, docs_demo_v23ay_test, porta 8505): ponto de partida relido na DR com um utilizador só com o perfil Contabilista: CMVMC -11.100,00 € e resultado líquido -59.791,84 €, iguais aos do v23-AX. O REP-134 não muda a demonstração de resultados. */}

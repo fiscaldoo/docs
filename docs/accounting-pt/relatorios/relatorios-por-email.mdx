@@ -1,0 +1,90 @@
+---
+id: relatorios-por-email
+slug: /accounting-pt/relatorios-por-email
+title: Como receber um relatório por e-mail automaticamente
+sidebar_label: Relatório por e-mail
+description: Agendar um relatório, como o balancete, para ser preparado todos os meses ou trimestres e enviado por e-mail em PDF.
+keywords: [relatório por e-mail, relatorio por e-mail, e-mails de relatórios agendados, e-mails de relatorios agendados, agendar relatório, agendar relatorio, balancete por e-mail, envio automático, envio automatico, preparar o e-mail agora]
+doc_id: DOC-0150
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/usar-os-relatorios, accounting-pt/relatorios/balancete]
+---
+
+{/* Nota interna (v13-ACC2, DOC-0150): base docs_demo_v13acc2_test, porta 8262, master f671d6842. Por clique com Gestor de contabilidade; ecrã aberto por ligação direta (o menu só aparece em modo de programador, confirmado com o administrador e sem modo de programador: defeito no relatório LOTE_V13ACC2). 3 mensagens e a confirmação por clique. Mensagem mail.mail 38 lida por RPC: estado na fila, com 1 anexo. A base não tem servidor de correio e a guarda de rede está ligada: nada saiu, nem foi usado o capturador local. A corrida diária não foi corrida à mão. */}
+
+## Para que serve?
+
+Agenda um relatório para ser preparado sozinho, todos os meses ou todos os trimestres, e enviado por e-mail em PDF. Serve, por exemplo, para a gerência receber o balancete do mês anterior sem ter de o pedir.
+
+## Quando utilizar?
+
+- Quando alguém precisa do mesmo relatório todos os meses.
+- Quando quer ter a certeza de que o mapa segue numa data certa.
+- Para um envio único, use **Exportar PDF** no próprio relatório: veja [como usar os relatórios](/accounting-pt/usar-os-relatorios).
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Início › O que há para fazer? › Personalizar e agendar relatórios › E-mails de relatórios agendados**.
+
+Esta entrada não aparece na lista do menu **Configurar**. Para a abrir, escreva `e-mails de relatórios` na caixa **Pesquisar menu**, na barra de cima.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**, **Contabilista certificado** ou administrador. O **Auditor / ROC** só consulta.
+- A empresa tem um servidor de correio configurado. Sem ele, os e-mails não saem.
+- O utilizador em **Executa como** tem acesso à empresa.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **E-mails de relatórios agendados** e carregue em **Novo**.
+2. Em **Nome**, escreva o que o identifica, por exemplo «Balancete mensal para a gerência».
+3. Em **Relatório**, confirme o mapa. Abre com o balancete.
+4. Em **Periodicidade**, escolha **Mensal** ou **Trimestral**.
+5. Em **Dia do mês**, escolha um dia de 1 a 28. Abre com 5.
+6. Confirme **Próximo envio**. Abre com a data do próximo envio calculada.
+7. Em **Destinatários internos**, escolha os utilizadores, ou escreva os endereços em **Outros endereços**, separados por vírgulas.
+8. Guarde.
+   ![Agendamento Balancete mensal para a gerência, com o relatório, quem o executa, a periodicidade e o dia do mês](/images/accounting-pt/relatorios-por-email/01-agendamento.png)
+9. Para experimentar já, carregue em **Preparar o e-mail agora**. Na pergunta «O e-mail do período anterior é agora preparado na fila de saída. Continuar?», confirme.
+
+</StepByStep>
+
+## Resultado esperado
+
+A ficha mostra, na parte de baixo, **Último envio**, **Último resultado** e o assunto.
+
+![Último envio de 05/11/2026, com o resultado Na fila e o assunto Balancete de 01/10/2026 a 31/10/2026 - Empresa Demonstração, Lda](/images/accounting-pt/relatorios-por-email/02-ultimo-envio.png)
+
+No exemplo, em novembro o e-mail leva o balancete de outubro em PDF, com o nome `Empresa_Demonstracao_Lda_Balancete_2026-10-01_2026-10-31.pdf`: **Na fila** quer dizer que a mensagem foi criada e aguarda o servidor de correio. <span className="fd-pending">Pendente de validação no ecrã: a entrega da mensagem. A demonstração não tem servidor de correio, de propósito, e nada foi enviado.</span>
+
+## O que vai no e-mail
+
+- **O período é sempre o anterior completo:** o mês anterior, ou o trimestre anterior, à data do envio. Não escolhe as datas.
+- **Só lançamentos publicados.** Os rascunhos nunca entram.
+- **Uma só empresa em cada agendamento.** Os números de empresas diferentes não se misturam. Para outra empresa, crie outro agendamento.
+- **Com as permissões de quem o executa.** O relatório é feito em nome do utilizador em **Executa como**.
+
+## Notas importantes
+
+- Um PDF com números da empresa vai por e-mail: confirme os endereços. Os destinatários não precisam de ter acesso ao fiscaldoo.
+- Se marcar **Usar as opções guardadas**, o mapa segue com as opções que o utilizador guardou no relatório, exceto o período e os rascunhos. Veja [como usar os relatórios](/accounting-pt/usar-os-relatorios).
+- Para parar os envios, desligue **Ativo**. O histórico mantém-se.
+
+## Problemas frequentes
+
+**«Um envio agendado precisa de pelo menos um destinatário: escolha um destinatário interno ou escreva um endereço.»** Preencha **Destinatários internos** ou **Outros endereços**.
+
+**«Um dos endereços não é válido: gerencia@. Corrija-o (por exemplo nome@empresa.pt) e grave de novo.»** Corrija o endereço indicado.
+
+**«O dia do mês tem de estar entre 1 e 28, para que o envio exista em todos os meses. Altere-o e grave de novo.»** Escolha um dia até 28.
+
+**O resultado fica em Na fila e o e-mail não chega.** Falta o servidor de correio, ou ainda não correu. Peça ao administrador para o confirmar.
+
+**O envio não saiu na data.** A preparação corre uma vez por dia, por isso pode sair umas horas depois. Se quiser já, carregue em **Preparar o e-mail agora**.

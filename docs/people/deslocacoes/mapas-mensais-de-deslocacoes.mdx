@@ -1,0 +1,79 @@
+---
+id: mapas-mensais-de-deslocacoes
+slug: /people/mapas-mensais-de-deslocacoes
+title: Como gerar os mapas mensais de deslocações
+sidebar_label: Gerar os mapas mensais
+sidebar_position: 2
+description: Gerar os mapas do mês anterior, enviá-los aos trabalhadores e acompanhar quem já os aceitou.
+keywords: [mapas mensais, gerar mapas, deslocações do mês, deslocacoes do mes, enviar ao trabalhador, aceite pelo trabalhador, mapa mensal de deslocações]
+doc_id: DOC-0261
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master cebcb888d)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/deslocacoes/deslocacoes, people/o-meu-espaco/registar-uma-deslocacao]
+---
+
+## Para que serve?
+
+No fim do mês, as deslocações aprovadas de cada trabalhador juntam-se num mapa. O trabalhador confere-o e aceita-o; fica o registo de quem aceitou e quando.
+
+## Quando utilizar?
+
+- O mês acabou e as deslocações dele já estão aprovadas.
+- Quer saber que trabalhadores já aceitaram o mapa e quais ainda não.
+
+## Onde encontrar?
+
+**Pessoas › Tempo de trabalho › Deslocações › Gerar os mapas do mês anterior** e **Pessoas › Tempo de trabalho › Deslocações › Mapas mensais**.
+
+## Antes de começar
+
+- O perfil é o do **Gestor de RH**. Um utilizador só com o perfil **Processador de salários** também tem **Mapas mensais** e **Gerar os mapas do mês anterior**. Com a **Gerência**, o menu **Tempo de trabalho** não aparece.
+- As deslocações do mês têm de estar aprovadas: veja [Como validar deslocações e ajudas de custo](/people/deslocacoes). O trabalhador aceita o mapa com o seu perfil, em **O meu espaço**.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Pessoas › Tempo de trabalho › Deslocações › Mapas mensais**. Se ainda não há mapas, a lista diz «Ainda não há mapas mensais de deslocações» e «As deslocações de um trabalhador num mês juntam-se num mapa que o trabalhador confirma. Gere os mapas do mês anterior para começar.»
+2. Abra **Pessoas › Tempo de trabalho › Deslocações › Gerar os mapas do mês anterior**. A janela **Gerar os mapas do mês anterior** pede confirmação: «Vai ser criado o mapa mensal de deslocações do mês anterior para cada trabalhador com deslocações aprovadas que ainda não estão num mapa. Os mapas que já existem ficam como estão e nada é enviado aos trabalhadores: eles confirmam cada mapa depois. Só os recursos humanos e os Salários o podem fazer.» Carregue em **Confirmar** (**Cancelar** fecha sem gerar nada). Abre a lista «Mapas de *ano-mês*» (por exemplo «Mapas de 2026-10») com uma linha por trabalhador: **Trabalhador**, **Mês**, **Mapa complementar**, **Deslocações**, **Quilómetros**, **Isento (até aos limites)**, **Tributável (acima dos limites)** e **Estado**, que começa em **Aberto**. Sem deslocações aprovadas no mês anterior, a lista fica vazia.
+3. Abra o mapa. No topo estão **Deslocações**, **Dias de deslocação**, **Quilómetros**, **Total pago**, **Isento (até aos limites)** e **Tributável (acima dos limites)**. Por baixo, a lista **Deslocações** tem uma linha por viagem aprovada, com o seu **Total pago**. Confira que a soma das linhas é o **Total pago** do topo.
+4. Carregue em **Enviar ao trabalhador**. O estado passa a **Enviado ao trabalhador** e o ecrã preenche **Enviado em**. Aparecem os botões **Reabrir** e **Aceitar**: o **Aceitar** é do trabalhador.
+5. O trabalhador abre **O meu espaço › Deslocações e despesas › Os meus mapas mensais de deslocações**, abre o mapa (estado **Enviado ao trabalhador**) e carrega em **Aceitar**. O botão desaparece e o mapa fica com **Aceite por** e **Aceite em**.
+6. Volte a **Mapas mensais** e confirme que o **Estado** é **Aceite pelo trabalhador**.
+   ![Lista Mapas mensais com o mapa de outubro de um trabalhador: mapa complementar 0, 2 deslocações, 150 km, 142,36 isento, 0,00 tributável, no estado Aceite pelo trabalhador](/images/people/mapas-mensais-de-deslocacoes/01-mapa-aceite.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+O mapa fica **Aceite pelo trabalhador**, com **Aceite por** e **Aceite em** preenchidos, e deixa de ter botões. No exemplo: 2 deslocações em 2 dias, 150 km, 142,36 de **Total pago**, todo **Isento (até aos limites)**, e 0,00 **Tributável (acima dos limites)**. O total confere com a soma das deslocações (125,89 + 16,47).
+
+## Notas importantes
+
+- Gerar os mapas outra vez não duplica nada: abre a mesma lista. Só acrescenta uma linha quando um trabalhador tem viagens do mês aprovadas depois de o mapa dele ter sido enviado: é outro mapa do mesmo mês, com **Mapa complementar** 1 (veja o último problema frequente). O ecrã gera sempre o **mês anterior** ao de hoje; não há escolha de mês neste botão.
+- Depois de gerado, o mapa de outubro do exemplo ficou com as 2 viagens aprovadas; uma viagem anulada e outra em rascunho, registadas a seguir, não o alteraram (voltar a gerar mostrou a mesma linha, com 2 deslocações). Uma viagem aprovada depois de o mapa estar gerado é caso à parte: ver o último problema frequente.
+- O mapa não aparece em **Documentos por confirmar** do trabalhador: está só em **Os meus mapas mensais de deslocações**.
+
+{/* Nota interna (DOCS-046, master 52d1dd3ad): Aceitar também aparece ao Gestor de RH com o mapa enviado; não foi carregado. */}
+
+{/* Nota interna (lote v21-EE, 05/11/2026, master 02a978ea9, base docs_demo_v21ee_test, Gestor de RH): passo 2 refeito com a confirmação do UX-097 (texto copiado da janela) e a coluna nova «Mapa complementar» (HR-035); na demonstração não há deslocações aprovadas e a lista «Mapas de 2026-10» ficou vazia. Os passos 3 a 6 ficaram para o lote v23-X. O menu Deslocações já não tem a entrada «Deslocações» (tem Nova deslocação, Mês de deslocações, Mapas mensais, Gerar os mapas do mês anterior, Visão fiscal e Requisições de viaturas): conferir as ligações ao DOC-0260. */}
+
+{/* Nota interna (DOCS-046, lote v23-X, 08/11/2026, master cebcb888d, base docs_demo_v23x_test): passos 1 a 6 por clique. Duas viagens de outubro de 2026 da trabalhadora da demonstração (Porto, 150 km, 100 %, 125,89; Lisboa, 25 %, 16,47: as do DOC-0260) registadas e aprovadas por RPC com um utilizador só com o perfil Gestor de RH, na cópia. Por clique: lista vazia, Gerar com Confirmar, mapa Aberto com as 2 linhas, Enviar ao trabalhador (Gestor de RH), lista vazia do trabalhador antes do envio, Aceitar (Trabalhador da demonstração) e a lista com Aceite pelo trabalhador (captura 01 refeita). O mapa aceite não tem botões, por isso a recusa antiga do Reabrir já não se vê. Menus por perfil com um utilizador criado só com esse valor do campo Perfil (DEC-1777): Gestor de RH e Processador de salários com as duas entradas; Gerência sem Tempo de trabalho; Contabilista sem Pessoas. */}
+
+## Problemas frequentes
+
+### O trabalhador não vê o mapa
+
+- **Sintoma:** em **Os meus mapas mensais de deslocações** a lista diz «Não tem mapas mensais de deslocações. Quando um mês termina, o mapa das suas deslocações é-lhe enviado aqui para o verificar e aceitar.»
+- **Causa:** o mapa ainda está **Aberto**: só depois de **Enviar ao trabalhador** é que ele o vê.
+- **O que fazer:** abra o mapa em **Mapas mensais** e carregue em **Enviar ao trabalhador**.
+
+### A viagem foi aprovada depois de o mapa estar gerado
+
+- **Sintoma:** aprovou uma viagem do mês e ela não aparece no mapa mensal desse mês.
+- **Causa:** o mapa só junta as viagens aprovadas até ao momento em que é **Enviado ao trabalhador**.
+- **O que fazer:** se o mapa está **Aberto**, a viagem entra quando o enviar. Se está **Enviado ao trabalhador** (ainda não aceite), abra-o, carregue em **Reabrir** e depois em **Enviar ao trabalhador**: o total passa a incluir a viagem. Se o trabalhador já o **Aceitou**, o mapa já não tem botões e fica como está. Sendo o mapa do mês anterior, carregue outra vez em **Gerar os mapas do mês anterior**: a lista ganha uma linha do mesmo trabalhador e do mesmo mês, com **Mapa complementar** 1, no estado **Aberto** e só com as viagens que faltavam. Envie-o ao trabalhador como o primeiro.

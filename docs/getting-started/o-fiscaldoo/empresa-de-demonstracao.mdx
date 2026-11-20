@@ -1,0 +1,114 @@
+---
+id: empresa-de-demonstracao
+slug: /getting-started/empresa-de-demonstracao
+title: Como explorar o fiscaldoo com a empresa de demonstração
+sidebar_label: Empresa de demonstração
+sidebar_position: 3
+description: O que tem a Empresa Demonstração, Lda, como entrar com um utilizador de cada perfil para a explorar sem tocar em dados reais, e o que nunca fazer com ela.
+keywords: [empresa de demonstração, empresa de demonstracao, demonstração, demonstracao, demo, dados fictícios, dados ficticios, base de testes, experimentar, formação, formacao, utilizadores de demonstração]
+doc_id: DOC-0003
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [getting-started/usar-o-odoo/ecra-inicial-por-perfil, administration/utilizadores-e-permissoes/perfis-e-permissoes, management/painel-da-direcao]
+---
+
+## Para que serve?
+
+A **Empresa Demonstração, Lda** é uma empresa fictícia, com faturas, compras, bancos e salários inventados, numa base de dados de testes. Serve para ver o fiscaldoo a funcionar e para aprender, sem medo de estragar dados reais: nada do que faz lá chega à AT nem a clientes.
+
+## Quando utilizar?
+
+- Para aprender a usar o fiscaldoo, ou para dar formação a uma pessoa nova, sem tocar nos dados da sua empresa.
+- Para experimentar um procedimento antes de o fazer na sua empresa, por exemplo emitir uma nota de crédito ou gerar uma declaração.
+- Para ver o que cada perfil vê ao entrar, antes de dar acesso a um colega.
+
+## Onde encontrar?
+
+- A **Empresa Demonstração, Lda** está numa base de dados de testes, separada da base da sua empresa. O endereço e o utilizador são dados pelo administrador.
+- Depois de entrar, o nome da empresa em uso aparece no canto superior direito.
+- O administrador encontra o módulo em **Aplicações**, sem o filtro **Aplicações**: **fiscaldoo · Instalação — Empresa de demonstração**.
+
+## O que tem a demonstração
+
+Na base de demonstração usada para este artigo (2 de novembro de 2026), a Empresa Demonstração, Lda tem:
+- 40 faturas de clientes emitidas em 2026 (de janeiro a novembro), 1 nota de crédito e 45 faturas de fornecedores;
+- 9 trabalhadores, com salários processados (veja [Quanto custa cada trabalhador à empresa](/management/custos-com-pessoas));
+- contas bancárias, o Balanço e a Demonstração de resultados de 2026, o calendário fiscal e as declarações;
+- séries de faturação de teste (por exemplo, a fatura **FT D26/33**, com o ATCUD `DEMOFT2026-33`) e uma chave de assinatura de teste.
+
+Os documentos têm ATCUD começado por «DEMO»: não são documentos fiscais válidos.
+
+## Antes de começar
+
+- Precisa de uma base de dados de testes com a demonstração instalada. Quem a instala é o administrador do sistema ou o parceiro fiscaldoo: na lista de **Aplicações**, sem o filtro **Aplicações**, o módulo chama-se **fiscaldoo · Instalação — Empresa de demonstração**.
+- A demonstração só se instala numa base de testes com «test» no nome (por exemplo `formacao_test`): é esse nome que permite criar a chave de assinatura de teste e que faz o fiscaldoo usar o simulador da AT. Nunca a peça numa base de clientes: cria uma empresa fictícia, com documentos e chaves de teste que não são válidos para a AT. Por isso este artigo não dá os passos da instalação.
+- O administrador define a senha do utilizador de demonstração que vai usar (abaixo) e dá-lha.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Entre na base de testes com um dos utilizadores de demonstração, conforme o que quer ver:
+
+   | Utilizador | Para ver |
+   | --- | --- |
+   | Gerência (demonstração) | o [Painel da Direção](/management/painel-da-direcao) e os números da empresa |
+   | Contabilista (demonstração) | a contabilidade, por exemplo o [Balanço](/accounting-pt/balanco) |
+   | Gestor de contabilidade (demonstração) | o mesmo, com o perfil **Contabilista certificado** |
+   | Faturação (demonstração) | as faturas de clientes |
+   | Salários (demonstração) | os salários |
+   | Administrador de Salários (demonstração) | os salários e o menu **Configurar** dos salários: não tem valor no campo **Perfil**, tem o acesso extra **Administrador de Salários** |
+   | RH (demonstração) | os trabalhadores |
+   | Auditor (demonstração) | a consulta de auditoria |
+   | Tesouraria (demonstração) | os bancos, os pagamentos e a previsão de tesouraria, na **Contabilidade** |
+   | Trabalhador (demonstração) | o O meu espaço de um trabalhador |
+
+2. Confirme no canto superior direito que está na **Empresa Demonstração, Lda**. Os utilizadores de demonstração só têm esta empresa.
+3. Se entrar como administrador, a base abre noutra empresa (**Empresa Teste Portugal**, no exemplo): carregue no nome da empresa, no canto superior direito, e escolha **Empresa Demonstração, Lda**.
+   ![Lista de empresas aberta no canto superior direito, com Empresa Teste Portugal marcada e as opções Empresa Teste Filial e Empresa Demonstração, Lda](/images/getting-started/empresa-de-demonstracao/01-escolher-a-empresa.png)
+4. Explore os menus do seu perfil. Para saber o que cada perfil vê ao entrar, veja [O ecrã inicial de cada perfil](/getting-started/ecra-inicial-por-perfil).
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, a demonstração é a mesma (visto com o administrador numa base Enterprise de testes com a demonstração instalada). O módulo **fiscaldoo · Instalação — Empresa de demonstração** aparece em **Aplicações**, sem o filtro **Aplicações**. A base tem as mesmas três empresas (**Empresa Teste Portugal**, **Empresa Teste Filial** e **Empresa Demonstração, Lda**), o administrador entra na **Empresa Teste Portugal** e cada perfil abre no seu ecrã (veja [O que aparece no ecrã inicial de cada perfil](/getting-started/ecra-inicial-por-perfil#no-enterprise)).
+
+{/* Nota interna (lote EE-13, DOCS-073 #4142, req 46633, DEC-1794, master 7f41ce71b, base Enterprise docs_ee_ee13_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee13_test): DOC-0003. A arquitetura marca a demonstração «Só Community»: o módulo está instalado na odoo20_ee_test e aparece em Aplicações nas duas cópias. Na base Enterprise de referência faltam o utilizador Tesouraria (demonstração) (só o cria a instalação da demonstração, ACC-214 de 01/11, depois de a base Enterprise ter sido construída) e uma fatura FS POS26/1; tem mais uma fatura FT do que a Community. Por isso o texto não diz «os mesmos utilizadores». A instalação da demonstração no Enterprise não foi repetida. Ver reports/LOTE_EE-13.md. */}
+
+## Resultado esperado
+
+Vê os menus e os dados do perfil escolhido, com os números da Empresa Demonstração, Lda. Pode emitir faturas, processar salários ou gerar declarações: tudo fica na base de testes.
+
+## Notas importantes
+
+- **A comunicação com a AT é simulada.** Numa base de testes, o fiscaldoo usa um simulador da AT: as comunicações «respondem», mas nada sai para a AT.
+- **Os e-mails não chegam a ninguém.** Os clientes, fornecedores e utilizadores da demonstração têm endereços inventados (terminados em `.invalid`), e a base de demonstração não tem correio de saída configurado: o [resumo de segunda-feira](/management/resumo-de-segunda-feira), por exemplo, fica na fila com erro. Se o administrador configurar o correio de saída e der um endereço real a um utilizador, os e-mails para esse endereço saem.
+- **Não use a demonstração para decidir sobre a sua empresa.** Os números são inventados; o Balanço de 2026, por exemplo, tem prejuízo e a linha **Caixa e depósitos bancários** negativa.
+- **O que fizer fica na base.** Uma fatura emitida na demonstração não se apaga, como numa base real. Se várias pessoas usarem a mesma base, os números mudam: peça ao administrador uma cópia nova quando precisar de começar do zero.
+
+## Problemas frequentes
+
+### A base abre noutra empresa
+
+- **Causa:** entrou com um utilizador que tem mais de uma empresa, por exemplo o administrador. A base abre na empresa dele (no exemplo, **Empresa Teste Portugal**).
+- **O que fazer:** carregue no nome da empresa, no canto superior direito, e escolha **Empresa Demonstração, Lda** (passo 3).
+
+### «Palavra-passe/sessão errados» ao entrar
+
+- **Causa:** a senha não é a deste utilizador de demonstração, ou o administrador ainda não a definiu.
+- **O que fazer:** peça ao administrador que defina a senha do utilizador de demonstração que vai usar. **Redefinir Palavra-passe** não ajuda: os endereços da demonstração são inventados e o e-mail não chega.
+
+### O módulo da demonstração não aparece em Aplicações
+
+- **Causa:** a lista de **Aplicações** abre com o filtro **Aplicações**, que esconde os módulos que não são aplicações, como o da demonstração.
+- **O que fazer:** tire o filtro **Aplicações** da pesquisa e escreva `Demonstração`.
+
+{/* Nota interna (DOCS-049, 03/11/2026, master 436524736, base docs_demo_fix049_test): revisto depois do UX-099. V5ADM-09 corrigido no produto: a demonstração só se instala com «test» no nome da base (já não aceita «demo»), como o artigo diz; a recusa continua NÃO provada no ecrã (só se provoca numa base sem «test», que o produto trata como real). Visto no ecrã com o administrador: entra na Empresa Teste Portugal; em Aplicações, sem o filtro, aparece fiscaldoo · Instalação — Empresa de demonstração. Contagens por RPC iguais (40 faturas de clientes, 1 nota de crédito, 45 faturas de fornecedores, 9 trabalhadores). O resumo dizia «para ver o artigo a funcionar» nesta base (cópia antiga: a atualização não refaz a tradução do cartão do módulo); a tradução de master diz «para ver o produto a funcionar». */}
+{/* Nota interna (DOCS-046, lote v5-ADM, 02/11/2026, master 6fb7ee1d4, base docs_demo_v5adm_test): risco normal. Contagens por RPC com o administrador (account.move publicados da empresa 4; hr.employee). Utilizadores e nomes lidos por RPC; seletor de empresas e módulo em Aplicações (sem o filtro, pesquisa «Demonstração») vistos no ecrã com o administrador. NÃO provado no ecrã: a instalação do módulo numa base nova e a recusa numa base sem «test»/«demo» no nome. A recusa só se provoca numa base sem «test» no nome, que o produto trata como base real (AT real): proibido neste trabalho. A instalação numa base de testes nova exige instalar o produto inteiro; o artigo remete-a para o administrador/parceiro e não dá os passos. A descrição do módulo em Aplicações diz «para ver o artigo a funcionar» (tradução de «product» por «artigo»): defeito V5ADM-05. Edição: o módulo está em community/custom_addons; o mapeamento diz «Só Community». */}
+
+{/* Nota interna (lote v23-AK, DOCS-069 #4052, master 7a3b55244, docs_demo_v23ak_test): a lista de go-live mostra 10 utilizadores demo.*; entraram na tabela demo.admsalarios (Perfil vazio, Ajustes avançados › Salários PT — Processar e administrar salários = Administrador de Salários; aplicações Salários, Pessoas, Despesas…; Salários › Configurar visível, ausente com um utilizador só com o perfil Processador de salários) e demo.tesouraria (Perfil vazio; Contabilidade com Reconciliar › Bancos e caixa e Consultar › Previsão de tesouraria). Os dois só têm a Empresa Demonstração, Lda. */}

@@ -1,0 +1,111 @@
+---
+id: descanso-e-contacto-fora-do-horario
+slug: /payroll-pt/descanso-e-contacto-fora-do-horario
+title: Como ver se o trabalhador teve o descanso e registar um contacto fora do horário
+sidebar_label: Descanso e contacto fora do horário
+sidebar_position: 11
+description: Ler, em cada presença, se o trabalhador teve o intervalo, o descanso entre dois dias e o descanso da semana que a lei manda, e registar com o fundamento um contacto feito no período de descanso.
+keywords: [descanso, intervalo de descanso, intervalo de almoço, descanso diário, onze horas, 11 horas, descanso semanal, 35 horas, contacto fora do horário, contactar no descanso, direito a desligar, força maior, não respeita o descanso, art. 199.º-A, art. 213.º, art. 214.º, art. 232.º]
+doc_id: DOC-0442
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 97b34fac3)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/ausencias-e-presencas/registar-presencas, payroll-pt/tempo-de-trabalho/horario-de-trabalho, payroll-pt/tempo-de-trabalho/verificar-presencas]
+---
+
+## Para que serve?
+
+Cada presença tem o bloco **Descanso e média semanal**. O fiscaldoo confere sozinho se o trabalhador teve o intervalo de descanso no dia, as horas de descanso desde o dia anterior e o descanso da semana, e escreve o motivo quando a lei não foi cumprida. O fiscaldoo não impede a presença: mostra o problema e guarda a prova.
+
+Também é aí que fica registado um contacto feito ao trabalhador no período de descanso, com quem, quando e porquê.
+
+O registo das entradas e saídas está em [Como registar presenças (picagem e quiosque)](/people/registar-presencas).
+
+## Quando utilizar?
+
+- Quer saber se um dia de trabalho respeitou o intervalo e o descanso.
+- Um encarregado ligou a um trabalhador fora do horário e é preciso deixar isso registado.
+
+## Onde encontrar?
+
+**Pessoas › Tempo de trabalho › Presenças**, abrindo a presença do dia. O bloco **Descanso e média semanal** está no fim da ficha.
+
+## Antes de começar
+
+- O seu perfil é **Gestor de RH**. Provado com um utilizador criado só com esse perfil.
+- A presença tem entrada e saída. Os intervalos do dia estão em **Intervalos do dia**, na mesma ficha.
+- Feito a 8 de novembro de 2026 na `Empresa Demonstração, Lda`, com presenças de Bruno Miguel Teixeira (16/11/2026 das 08:00 às 14:00; 17/11/2026 das 08:30 às 17:00 com intervalo das 12:30 às 13:00; 18/11/2026 das 03:00 às 07:00) e de Hugo Miguel Santos (todos os dias de 22/11/2026 a 30/11/2026, das 08:00 às 12:00).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Pessoas › Tempo de trabalho › Presenças** e abra a presença do dia, por exemplo a de Bruno Miguel Teixeira de 16/11/2026.
+2. Desça até ao bloco **Descanso e média semanal** e leia **Descanso**: «Respeita o descanso» ou «Não respeita o descanso». Quando não respeita, **O que quebra o descanso** diz o motivo e o artigo da lei.
+   ![Bloco Descanso e média semanal da presença de 16/11/2026: Não respeita o descanso, porque trabalha 6 horas consecutivas sem intervalo e o limite é 5 (art. 213.º)](/images/payroll-pt/descanso-e-contacto-fora-do-horario/01-intervalo-em-falta.png)
+3. Se a empresa contactou o trabalhador no descanso antes deste dia de trabalho, ligue **Contactado durante o descanso**. Aparecem **Contacto por força maior** e **Contacto: fundamento**.
+4. Em **Contacto: fundamento**, escreva quem contactou, quando e porquê, por exemplo `Chamada do encarregado às 23:00 por uma inundação no armazém`. Sem este texto a presença não se guarda.
+5. Se foi um caso de força maior, ligue **Contacto por força maior**.
+6. Guarde.
+   ![Presença de 18/11/2026 com Contactado durante o descanso e Contacto por força maior ligados e o fundamento escrito; o motivo que fica é só o do descanso diário de 10 horas](/images/payroll-pt/descanso-e-contacto-fora-do-horario/02-contacto-por-forca-maior.png)
+
+</StepByStep>
+
+### O que o fiscaldoo confere sozinho
+
+| O que confere | Quando diz «Não respeita o descanso» | Exemplo do ecrã |
+|---|---|---|
+| Intervalo de descanso (art. 213.º) | Mais de 5 horas seguidas sem intervalo | 16/11, das 08:00 às 14:00: «Trabalha 6.0 horas consecutivas sem intervalo de descanso; o limite é 5.0 (art. 213.º).» |
+| Duração do intervalo (art. 213.º, n.º 1) | O intervalo dura menos de 1 hora ou mais de 2 | 17/11, intervalo de 30 minutos: «O intervalo de descanso dura 0.5 horas; a lei pede entre 1.0 e 2.0 horas (art. 213.º/1).» |
+| Descanso diário (art. 214.º) | Menos de 11 horas desde o fim do dia de trabalho anterior | 18/11, às 03:00, depois de sair às 17:00: «Só 10.0 horas de descanso desde o tempo de trabalho anterior; o mínimo é 11.0 (art. 214.º).» |
+| Descanso semanal (arts. 232.º e 233.º) | Na semana de segunda a domingo, nenhum descanso de 35 horas seguidas (24 + 11) | Hugo Miguel Santos, todos os dias de 22/11 a 30/11: «Sem descanso semanal na semana de 23/11/2026: o maior descanso é de 20.0 horas e a lei exige 35.0 em continuidade (arts. 232.º e 233.º).» |
+| Contacto no descanso (art. 199.º-A) | **Contactado durante o descanso** ligado sem **Contacto por força maior** | 18/11, com o contacto e sem força maior: «O trabalhador foi contactado no período de descanso sem força maior (art. 199.º-A).» |
+
+O bloco mostra ainda **Maior período sem intervalo (horas)**, **Descanso anterior (horas)** (0 quando não há trabalho noutro dia antes), **Média semanal (horas)** e **Média semanal de 48 horas** («Dentro do limite» ou «Acima do limite»), que divide as horas trabalhadas no período de referência pelas suas semanas, sem os dias de férias (art. 211.º).
+
+**Exceção ao descanso** serve para os casos do art. 214.º, n.º 2 (cargo de administração ou de direção isento de horário, trabalho suplementar por força maior ou para reparar ou prevenir um prejuízo grave, período de trabalho repartido ao longo do dia, atividade contínua com descanso compensatório previsto no contrato coletivo). Nos dois primeiros casos, a lei pede ainda um descanso que permita a recuperação do trabalhador (n.º 3). Ligada na presença de 18/11, o motivo das 10 horas desaparece e o **Descanso** passa a «Respeita o descanso». Escreva a razão na **Nota** do **Registo legal do tempo de trabalho**, na mesma ficha.
+
+## O que diz a lei
+
+Código do Trabalho (Lei n.º 7/2009), na versão em vigor:
+
+- **Art. 213.º, n.º 1:** o dia de trabalho é interrompido por um intervalo de descanso de uma a duas horas, de modo que o trabalhador não faça mais de cinco horas seguidas (seis, se o dia de trabalho for de mais de 10 horas). Um contrato coletivo pode permitir até seis horas seguidas e outro intervalo (n.º 2), nunca mais de seis (n.º 5).
+- **Art. 214.º, n.º 1:** pelo menos onze horas seguidas de descanso entre dois dias de trabalho. O n.º 2 tem as exceções.
+- **Arts. 232.º, n.º 1, e 233.º, n.º 1:** pelo menos um dia de descanso por semana, gozado seguido das onze horas do descanso diário.
+- **Art. 199.º-A:** o empregador abstém-se de contactar o trabalhador no período de descanso, salvo força maior (n.º 1); tratar pior quem exerce este direito é discriminação (n.º 2); a violação do n.º 1 é contraordenação grave (n.º 3). Artigo aditado pela Lei n.º 83/2021, de 6 de dezembro.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o que conta como força maior para o contacto e as exceções do art. 214.º, n.º 2, numa empresa concreta.</span>
+
+## Resultado esperado
+
+- Cada presença diz se respeita o descanso e, se não, porquê.
+- O contacto fica registado com o fundamento e, se for o caso, com a força maior.
+
+## Notas importantes
+
+- **O descanso diário e o semanal comparam a presença com as outras do mesmo trabalhador.** Se faltar na lista um dia em que ele trabalhou, o resultado fica errado.
+- **Por agora, os números do motivo aparecem com ponto** («6.0 horas», «5.0»), ao contrário dos campos do bloco («6,00»). É o mesmo valor.
+
+## Problemas frequentes
+
+### «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+
+- **Causa:** **Contactado durante o descanso** está ligado e **Contacto: fundamento** está vazio (fica a vermelho).
+- **O que fazer:** escreva quem contactou, quando e porquê, ou desligue **Contactado durante o descanso** se foi engano.
+
+### «A força maior é um fundamento do contacto no período de descanso. …»
+
+![Janela Erro de Validação: A força maior é um fundamento do contacto no período de descanso. Como resolver: marque Contactado durante o descanso ou limpe Contacto por força maior.](/images/payroll-pt/descanso-e-contacto-fora-do-horario/03-forca-maior-sem-contacto.png)
+
+- **Causa:** desligou **Contactado durante o descanso** e **Contacto por força maior** ficou ligado (o campo deixa de se ver, mas o valor fica). A mensagem completa: «A força maior é um fundamento do contacto no período de descanso. Como resolver: marque «Contactado durante o descanso» ou limpe «Contacto por força maior».»
+- **O que fazer:** feche a janela e descarte as alterações (botão × ao lado de guardar, «Descartar todas as alterações»), ou volte a ligar **Contactado durante o descanso** e desligue **Contacto por força maior** antes de o desligar.
+
+### A presença diz «Não respeita o descanso» e o dia foi de força maior
+
+- **Causa:** o fiscaldoo não sabe sozinho que o dia teve uma das exceções da lei.
+- **O que fazer:** ligue **Exceção ao descanso** e escreva a razão na **Nota**.
+
+{/* Nota interna (lote v23-AD, #4052 DOCS-069, guia Salários/intervalos-descanso-e-contacto-fora-do-horario.md da pasta congelada). master 97b34fac3, docs_demo_v23ad_test, porta 8484. Utilizador ad.rh só com o Perfil Gestor de RH. Presenças criadas por RPC como ad.rh (o campo Entrada/Saída abre um seletor que a ferramenta não preenche): Bruno ids 1, 5, 7; Hugo ids 9 a 17 (sábado e domingos com «Porque há suplementar» = Acréscimo temporário, porque o fiscaldoo recusa suplementar sem motivo). Por clique: as presenças 1, 7 e 12 abertas e o bloco lido; na 7, Contactado ligado e guardar recusado («Há campos obrigatórios…», o fundamento é obrigatório na vista, por isso a mensagem do servidor «O contacto no período de descanso não tem fundamento…» não se alcança no ecrã); fundamento escrito e guardado (motivo do art. 199.º-A acrescentado), força maior ligada e guardada (motivo sai), Contactado desligado e guardar recusado com a mensagem da força maior (captura 03), Descartar. Exceção ao descanso conferida por RPC na 7 (Respeita o descanso) e reposta. Não provocado: «Acima do limite» da média de 48 horas (precisa de mais de 800 horas no período de referência de 4 meses). Defeito: números com ponto nos motivos (LOTE_V23-AD). */}

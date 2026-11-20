@@ -1,0 +1,125 @@
+---
+id: configurar-seguranca-social
+slug: /payroll-pt/configurar-seguranca-social
+title: Como configurar as taxas e os regimes da Segurança Social
+sidebar_label: Taxas e regimes da Segurança Social
+description: Conferir as taxas e os regimes da Segurança Social, registar uma taxa nova, escolher o regime de cada contrato e ver onde estas escolhas aparecem no recibo e nas contas.
+keywords: [taxas da segurança social, regimes da segurança social, TSU, códigos de remuneração da segurança social, códigos DMR, seguranca social, taxas da seguranca social, regimes da seguranca social, codigos dmr]
+doc_id: DOC-0181
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/declarar/declaracao-a-seguranca-social, payroll-pt/configurar/contabilizar-os-salarios, payroll-pt/configurar/rubricas-salariais]
+---
+
+## Para que serve?
+
+Cada recibo calcula a Segurança Social com a taxa do regime do contrato, em vigor na data do recibo. O fiscaldoo já traz os regimes, as taxas e os códigos das declarações. Na maior parte das empresas, a configuração é conferir estas tabelas e escolher o regime certo em cada contrato.
+
+## Quando utilizar?
+
+- Ao preparar os salários de uma empresa nova: confira as tabelas com o contabilista certificado.
+- Quando um diploma muda uma taxa: registe a taxa nova a partir da data em que a lei a põe em vigor.
+- Quando um contrato muda de enquadramento, por exemplo um trabalhador que passa a gerente: registe uma versão nova do contrato.
+
+## Onde encontrar?
+
+- **Salários › Configurar › Segurança Social e IRS › Regimes da Segurança Social**
+- **Salários › Configurar › Segurança Social e IRS › Taxas da Segurança Social (TSU)**
+- **Salários › Configurar › Segurança Social e IRS › Códigos DMR**
+- **Salários › Configurar › Segurança Social e IRS › Códigos de remuneração da Segurança Social**
+- **Salários › Preparar › Trabalhadores e contratos › Contratos**, para o regime de cada trabalhador
+
+## Antes de começar
+
+- Para **consultar**, precisa do acesso extra **Administrador de Salários**: vê as quatro listas, mas não tem **Novo** nem pode alterar.
+- Para **registar uma taxa**, entra com um **administrador do sistema**, ou com um utilizador que tenha também o acesso extra **Dados legais nacionais**: com ele, a lista **Taxas da Segurança Social (TSU)** já tem **Novo**. Nenhum valor do campo **Perfil** traz este acesso; o administrador dá-o em **Ajustes avançados**, e a demonstração não o dá a ninguém.
+- Tem à mão o diploma que publica a taxa: a **Referência legal** é obrigatória.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Configurar › Segurança Social e IRS › Regimes da Segurança Social**. A demonstração traz cinco: **GERAL**, **JOVENS_FERIAS**, **MCD**, **MOE_GERENCIA** e **MOE_RESTANTES**.
+2. Abra **Salários › Configurar › Segurança Social e IRS › Taxas da Segurança Social (TSU)** e confira uma linha por regime: **Válido desde**, **Taxa do trabalhador (%)**, **Taxa da entidade patronal (%)** e **Tipo de base**. A **Taxa total (%)** é a soma das duas e não se escreve.
+   ![Lista das taxas da Segurança Social, uma linha por regime, com as datas, as percentagens e a referência legal](/images/payroll-pt/configurar-seguranca-social/01-taxas-por-regime.png)
+3. Abra uma linha para ver a base. Em **Tipo de base**, as opções são **Remuneração efetiva** e **Base convencional/nocional**. Em **Origem da base mínima** e **Origem da base máxima**, são **Valor fixo** e **Múltiplo do IAS**.
+   ![Ficha da taxa do regime geral: trabalhador 11,000 %, entidade patronal 23,750 %, total 34,750 %](/images/payroll-pt/configurar-seguranca-social/02-taxa-do-regime-geral.png)
+4. Se a lei mudou a taxa, abra a linha em vigor e preencha **Válido até** com o último dia da taxa antiga, por exemplo `31/12/2026`. Guarde.
+5. Carregue em **Novo**. Escolha o **Regime** e escreva **Válido desde** (`01/01/2027`), **Versão** (`2027`), as duas taxas e a **Referência legal**. Escolha o **Tipo de base** e as duas origens. Guarde. A lista passa a ter as duas linhas, e cada recibo usa a da sua data.
+6. Abra **Salários › Preparar › Trabalhadores e contratos › Contratos** e abra o contrato. No bloco **Segurança Social**, confira **Regime de Segurança Social** e **Tipo de beneficiário**. O bloco mostra também **Classe contabilística** (na demonstração, **Pessoal**).
+   ![Bloco Segurança Social do contrato, com o regime geral e o tipo de beneficiário Trabalhador](/images/payroll-pt/configurar-seguranca-social/03-regime-no-contrato.png)
+7. Abra **Salários › Configurar › Segurança Social e IRS › Códigos de remuneração da Segurança Social** e carregue no grupo do modelo de declaração para ver os 17 códigos, e **Salários › Configurar › Segurança Social e IRS › Códigos DMR** para ver os 40. Estas listas só se consultam. O código de cada rubrica escolhe-se na versão da rubrica (ver [Como criar e configurar uma rubrica salarial](/payroll-pt/rubricas-salariais)).
+
+</StepByStep>
+
+**Exemplo com contas.** O recibo de setembro de 2026 de Ana Margarida Pinto tem 2.400,00 € de base. No recibo, **Como se chegou aos valores** diz:
+
+> Segurança Social: 11 % de 2.400,00 € = 264,00 €; a cargo da empresa 23,75 % = 570,00 €.
+
+O lote de setembro, com 8 recibos, gerou o lançamento `SAL/2026/00004`. A parte da Segurança Social, conferida no razão, é a soma dos 8 recibos. A base total é de 11.560,00 € e a parte da empresa arredonda recibo a recibo, por isso dá 2.745,52 € e não 2.745,50 €:
+
+| Conta | Débito | Crédito |
+|---|---:|---:|
+| 245 Contribuições para a Segurança Social, a parte do trabalhador, retirada ao que lhe é devido | | 1.271,60 € |
+| 635 Encargos sobre remunerações, a parte da empresa | 2.745,52 € | |
+| 245 Contribuições para a Segurança Social, a parte da empresa | | 2.745,52 € |
+
+Configurar taxas e regimes não gera lançamentos: estas linhas nascem ao contabilizar o lote (ver [Como contabilizar o processamento dos salários](/payroll-pt/contabilizar-os-salarios)).
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: as taxas e as bases de cada regime, e o regime a dar a cada trabalhador.</span>
+
+## No Enterprise
+
+No Odoo Enterprise, as taxas, os regimes e os códigos da Segurança Social consultam-se e registam-se nos mesmos ecrãs de **Salários › Configurar › Segurança Social e IRS**. Com o acesso extra **Administrador de Salários**, a lista **Taxas da Segurança Social (TSU)** abre sem **Novo**; com o acesso **Dados legais nacionais** acrescentado, o **Novo** aparece, como no Community.
+
+{/* Nota interna (lote EE-07, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee07b_test: cópia da odoo20_ee_test com a aplicação de salários do Enterprise (hr_payroll) instalada e o código de master; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado: Processador de salários com o acesso Administrador de Salários (TSU sem Novo) e com os acessos Administrador de Salários e Dados legais nacionais (TSU com Novo). Caminhos do artigo conferidos com o verificador do test_doc_paths na mesma cópia (0 erros). Ver reports/LOTE_EE-07.md. */}
+
+## Resultado esperado
+
+- Cada regime tem uma taxa em vigor em cada data de recibo.
+- O recibo mostra a taxa usada em **Como se chegou aos valores**.
+- A declaração à Segurança Social e o lançamento usam os valores do recibo (ver [Como enviar a declaração de remunerações à Segurança Social](/payroll-pt/declaracao-a-seguranca-social)).
+
+![Secção Como se chegou aos valores no recibo, com a linha da Segurança Social](/images/payroll-pt/configurar-seguranca-social/04-explicacao-no-recibo.png)
+
+## Notas importantes
+
+- **Uma taxa em vigor não se reescreve.** A partir da data em que começa, as percentagens ficam fixas, para os recibos antigos e os corretivos continuarem a dar o mesmo. Uma taxa com data futura ainda se pode corrigir ou apagar.
+- **Os regimes não são iguais.** Na demonstração, **MCD** e **JOVENS_FERIAS** têm 26,100 % só a cargo da empresa e base convencional. **MOE_RESTANTES** tem 9,300 % e 20,300 %, e **MOE_GERENCIA** tem as percentagens do regime geral.
+- **Isenções.** O campo **Isenções** é só uma nota de texto: não altera o cálculo. Os incentivos à contratação registam-se no contrato, em **Incentivos da Segurança Social**.
+- **Lista vazia não é configuração em falta.** Um trabalhador sem regime é assinalado no recibo (ver «Problemas frequentes»); a lista de taxas não o mostra.
+
+## Problemas frequentes
+
+### «A(s) taxa(s) de «GERAL» já está(ão) em vigor»
+
+- **Mensagem:** «A(s) taxa(s) de «GERAL» já está(ão) em vigor (vigência iniciada em 2026-01-01). O que aconteceu: uma taxa já em vigor é imutável — o seu histórico nunca é reescrito. Como corrigir: crie uma nova taxa com uma nova data de início e feche a «Vigente até» desta.»
+- **O que fazer:** siga os passos 4 e 5. No ecrã, «Vigente até» é o campo **Válido até**.
+
+### «O regime «GERAL» já tem uma taxa em vigor nesse período»
+
+- **Mensagem:** «O regime «GERAL» já tem uma taxa em vigor nesse período (desde 01/01/2026). Feche a «Vigente até» da taxa anterior ou altere as datas.»
+- **Causa:** carregou em **Novo** sem fechar a taxa anterior.
+- **O que fazer:** faça primeiro o passo 4.
+
+### «A taxa de «GERAL» … só pode ser fechada a partir de hoje»
+
+- **Mensagem:** «A taxa de «GERAL» (desde 01/01/2026) já está em vigor e a sua vigência só pode ser fechada a partir de hoje. O que aconteceu: definir «Válido até» no passado (ou alterar uma que já terminou) reescreveria os períodos já processados. Como corrigir: use a data de hoje ou posterior e registe uma nova taxa para o novo período.»
+- **O que fazer:** use a data de hoje ou uma data futura. Se a mudança da lei já começou há meses, fale com o contabilista certificado antes de processar: os recibos desses meses corrigem-se com recibos corretivos.
+
+### «O contrato de … já está em vigor e Regime de Segurança Social não pode ser alterado»
+
+- **Mensagem:** «O contrato de Diogo Ferreira Lopes (versão de 2026-02-01) já está em vigor e Regime de Segurança Social não pode ser alterado. O que aconteceu: a classificação, o enquadramento na Segurança Social e o horário de um contrato já aplicado nunca são reescritos …»
+- **O que fazer:** registe uma versão nova do contrato, a começar no dia da mudança (ver [Como registar um contrato de trabalho](/people/contrato-de-trabalho)).
+
+### O recibo diz que a Segurança Social não foi calculada
+
+- **Causa:** o recibo não tem regime. O aviso diz que uma declaração ou um lançamento não podem usar um recibo sem contribuições, e o fecho do lote assinala-o.
+- **O que fazer:** corrija o regime e calcule o recibo de novo. <span className="fd-pending">Pendente de validação no ecrã: este aviso, porque todos os contratos da demonstração têm regime.</span>
+{/* Nota interna (DOCS-046): o aviso «Segurança Social não calculada» e o desencontro entre tipo de beneficiário e regime foram lidos das regras: na base todos os contratos têm regime e a escrita no contrato com data futura foi recusada por outra guarda. Criação da taxa de 2027 percorrida com admin e desfeita (apagada, taxa de 2026 reaberta). */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): Novo na lista TSU visto com Processador + Administrador de Salários + Dados legais nacionais; sem Dados legais nacionais (Contabilista + Administrador de Salários) não há Novo. */}

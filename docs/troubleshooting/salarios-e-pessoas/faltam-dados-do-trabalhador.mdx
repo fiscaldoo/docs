@@ -1,0 +1,160 @@
+---
+id: faltam-dados-do-trabalhador
+slug: /troubleshooting/faltam-dados-do-trabalhador
+title: "Faltam dados obrigatórios do trabalhador (NISS, NIF, IBAN, contrato)"
+sidebar_label: Faltam dados do trabalhador
+description: Onde se preenche cada dado que o recibo e o pagamento exigem (NISS, NIF, categoria profissional, IBAN, tipo de contrato) e o que quer dizer cada recusa.
+keywords: [faltam dados do trabalhador, dados obrigatórios, dados obrigatorios, NISS, NISS inválido, NISS invalido, número da Segurança Social, numero da seguranca social, NIF inválido, NIF invalido, dígito de controlo, digito de controlo, IBAN, sem IBAN, conta bancária, conta bancaria, categoria profissional, local de trabalho habitual, tipo de contrato, recibo não pode ser validado, recibo nao pode ser validado, ficha do empregador]
+doc_id: DOC-0361
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 8a4c14b63)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/trabalhadores/criar-um-trabalhador, people/trabalhadores/contrato-de-trabalho, troubleshooting/salarios-e-pessoas/recibo-sem-dados-para-calcular, payroll-pt/declarar/relatorio-unico]
+---
+
+## Sintoma
+
+A ficha do trabalhador não se guarda, **Validar** recusa o recibo ou **Gerar pagamento** não cria o pagamento. A mensagem diz que dado falta ou está errado.
+
+## Mensagem
+
+As mensagens foram provocadas com o acesso **Administrador de Salários**, com um trabalhador novo criado só com o nome.
+
+**Campos a vermelho na ficha**, em **Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores** › **Novo**. O **Nome do Trabalhador** é obrigatório. Enquanto a empresa não tiver nenhum local de trabalho, também o **Local de trabalho habitual**, no separador **Trabalho**. Depois de criado o primeiro local, as fichas novas já o trazem preenchido:
+
+> «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+
+**NISS com o número de dígitos errado**, ao guardar a ficha:
+
+> «O número da Segurança Social «123» de «Novo Colaborador» não é válido. O que aconteceu: um NISS tem exatamente 11 dígitos. Como corrigir: corrija o número (só dígitos).»
+
+![Janela Erro de Validação: o NISS tem de ter 11 dígitos](/images/troubleshooting/faltam-dados-do-trabalhador/01-niss-invalido.png)
+
+**NIF com o último algarismo errado**, ao guardar a ficha:
+
+> «O NIF «123456780» não é válido. Porquê: o último algarismo (dígito de controlo) não corresponde aos outros oito. Como resolver: Confira o número no cartão de cidadão ou no documento de identificação fiscal e escreva-o de novo.»
+
+![Janela Erro de Validação: o último algarismo do NIF não corresponde aos outros oito](/images/troubleshooting/faltam-dados-do-trabalhador/02-nif-invalido.png)
+
+**Sem contrato**, ao carregar em **Calcular** no recibo de 01/11/2026 a 30/11/2026. O trabalhador tem nome e local de trabalho, mas a **Data de admissão**, no topo da ficha, está vazia:
+
+> «Novo Colaborador 3 não tem contrato. O que aconteceu: o trabalhador nunca teve contrato, por isso não há enquadramento de retribuição nem de Segurança Social para calcular. Como resolver: abra a ficha do trabalhador (Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores) e preencha o Tipo de contrato (separador Trabalho, bloco «Contrato português»), a Data de admissão (no topo, até ao período) e o Salário (separador Folha de Salários), ou não inclua este trabalhador no lote.»
+
+![Janela Operação inválida: o trabalhador nunca teve contrato, por isso o recibo não se calcula](/images/troubleshooting/faltam-dados-do-trabalhador/03-sem-contrato.png)
+
+**Faltam 3 elementos e o NIF**, ao carregar em **Validar** no recibo de um trabalhador criado só com o nome. Como **Calcular** foi recusado, o recibo não tem nenhuma linha. A janela mostra as duas mensagens seguidas:
+
+> «O recibo «Novo Colaborador (01/11/2026 — 30/11/2026)» não pode ser validado: faltam 3 elemento(s) obrigatório(s) do documento de retribuição — (3) número da Segurança Social do trabalhador (NISS); (4) categoria profissional; (5) retribuição base e demais prestações (nenhuma linha). O que aconteceu: o Código do Trabalho (art. 276.º/3) fixa o conteúdo que o trabalhador deve receber com o pagamento. Como corrigir: preencha o que falta (o NISS e a categoria profissional na ficha do trabalhador, o NIF na ficha da empresa) e valide outra vez. O recibo «Novo Colaborador (01/11/2026 — 30/11/2026)» não pode ser validado: o trabalhador não tem NIF. O que aconteceu: a declaração mensal de remunerações (DMR) leva o NIF de 9 dígitos do beneficiário e é recusada sem ele. Como corrigir: preencha o NIF na ficha do trabalhador («NIF») e valide outra vez.»
+
+**Faltam 2 elementos e o NIF**, ao carregar em **Validar** quando o trabalhador já tem contrato e o recibo já foi calculado, mas faltam o NISS, a categoria e o NIF:
+
+> «O recibo «Novo Colaborador 2 (01/11/2026 — 30/11/2026)» não pode ser validado: faltam 2 elemento(s) obrigatório(s) do documento de retribuição — (3) número da Segurança Social do trabalhador (NISS); (4) categoria profissional. … O recibo «Novo Colaborador 2 (01/11/2026 — 30/11/2026)» não pode ser validado: o trabalhador não tem NIF. …»
+
+![Janela Operação inválida: faltam o NISS, a categoria profissional e o NIF para validar o recibo](/images/troubleshooting/faltam-dados-do-trabalhador/04-faltam-elementos.png)
+
+**Só falta o NIF**, ao carregar em **Validar**, depois de preencher o NISS e a categoria: fica só a segunda mensagem.
+
+**O mesmo NIF em dois trabalhadores**, ao guardar a ficha (no exemplo, escreveu-se em «Novo Colaborador 2» o NIF de uma colega que já tem ficha):
+
+> «O número de contribuinte (NIF) «399999906» de «Novo Colaborador 2» já é o de «Ana Margarida Pinto». O que aconteceu: dois trabalhadores da mesma empresa não podem ter o mesmo NIF, porque as declarações (DMR, Segurança Social) contariam a mesma pessoa duas vezes. Como resolver: corrija o número ou arquive o trabalhador repetido.»
+
+**IRS por calcular**, ao carregar em **Validar**, sem **Estado civil (IRS)** preenchido:
+
+> «O recibo «Novo Colaborador (01/11/2026 — 30/11/2026)» não pode ser validado: o IRS não foi calculado. O que aconteceu: o recibo não tem tabela de retenção nem «sem retenção» declarado, e a retenção na fonte é devida (CIRS art. 99.º); depois de validado, o recibo fica bloqueado. Como resolver: preencha a situação de IRS do trabalhador (estado civil e dependentes) e calcule outra vez, ou assinale «Sem retenção de IRS (declarado expressamente)» com o motivo e a referência legal.»
+
+**Contrato sem salário**, ao carregar em **Calcular**, com a **Data de admissão** preenchida e o **Salário** a zero:
+
+> «A retribuição base de Novo Colaborador para 01/11/2026 a 30/11/2026 é 0,00 €. O que aconteceu: a linha base do recibo ficou a zero, pelo que o recibo seria calculado e pago sem retribuição. Como resolver: preencha a retribuição mensal no contrato do trabalhador (uma versão nova a partir do dia em que se aplica) e calcule de novo; se o trabalhador realmente não é pago neste período, registe a suspensão do contrato em Ausências (um pedido aprovado do tipo «Suspensão do contrato») para o período todo.»
+
+**Sem IBAN**, em **Ações › Gerar pagamento** no recibo validado (o botão **Ações** ao lado de **Retificar**, não o da roda dentada):
+
+> «Novo Colaborador 2 não tem IBAN válido. O que aconteceu: uma transferência bancária precisa do IBAN do trabalhador, por isso não foi ordenado nenhum pagamento. Como resolver: preencha uma conta bancária válida na ficha do trabalhador e ordene o pagamento de novo.»
+
+![Janela Operação inválida: o trabalhador não tem IBAN válido](/images/troubleshooting/faltam-dados-do-trabalhador/05-sem-iban.png)
+
+**IBAN com os dígitos de controlo errados**, ao guardar a conta bancária:
+
+> «O IBAN “PT50003500000000000000000” é inválido (dígitos de controlo do NIB português). Verifique o número no seu extrato bancário.»
+
+**Alterar o contrato depois de um recibo validado**, ao guardar a ficha:
+
+> «Esta versão do contrato de Novo Colaborador não se pode alterar (Tipo de contrato). O que aconteceu: cobre um mês com recibo validado ou pago, e o que foi pago nunca se reescreve. Como resolver: registe uma versão NOVA do contrato a começar no dia em que a alteração se aplica (botão «+» do histórico do contrato e preencha aí o campo); os meses anteriores mantêm o que usaram. A tentativa ficou registada na auditoria.»
+
+**Termo certo sem data de termo**, ao guardar a ficha:
+
+> «Art. 141.º/1-e): «Termo certo» exige uma data de termo. Preencha «Data de termo», ou altere o tipo.»
+
+Depois de preencher a **Data de termo**, ao guardar de novo:
+
+> «Art. 147.º/1-c): um contrato «Termo certo» sem código nem texto de justificação é considerado SEM TERMO por lei — este produto nunca o reclassifica silenciosamente. Preencha «Código de justificação» e «Justificação» (art. 141.º/3: os factos concretos, relacionados expressamente com o termo), ou altere o tipo para «Sem termo».»
+
+**Anular um recibo com o pagamento gerado**, em **Anular recibo**, na roda dentada:
+
+> «O recibo «Novo Colaborador (01/11/2026 — 30/11/2026)» não pode ser anulado: tem um pagamento que está gerado (num lote). O que aconteceu: o pagamento continuaria a seguir no ficheiro de transferências de um recibo que já não existe. Como resolver: rejeite o pagamento, com o motivo (ou anule-o na Contabilidade), e anule o recibo outra vez.»
+
+**A falta não é do trabalhador, é da empresa.** Numa empresa sem ficha do empregador, **Validar** deu:
+
+> «Os dados do empregador de «Empresa Nova, Lda» estão incompletos em 30/11/2026: falta a ficha do empregador. O que aconteceu: o seguro de acidentes de trabalho é uma obrigação legal (CT art. 106.º/3-j) e o documento de pagamento e as declarações assentam na ficha do empregador. Como corrigir: preencha Salários › Configurar › Empresa › Ficha do empregador.»
+
+## Causas verificadas
+
+- **Os dados não foram preenchidos ao criar o trabalhador.** A ficha guarda-se sem NIF, sem NISS, sem categoria, sem contrato e sem IBAN. A falta só aparece mais tarde, em **Calcular**, em **Validar** ou em **Gerar pagamento**.
+- **O trabalhador ainda não tem contrato.** O NISS e a categoria não chegam: sem **Data de admissão** na ficha, **Calcular** recusa e o recibo fica sem linhas.
+- **O número foi mal escrito.** O NISS tem de ter 11 dígitos e o NIF tem de ter o dígito de controlo certo. Um NISS com 11 dígitos é aceite sem mais verificação, por isso um número inventado passa. Dois trabalhadores da mesma empresa não podem ter o mesmo NIF.
+- **A empresa não tem locais de trabalho.** Enquanto não houver nenhum, a lista do **Local de trabalho habitual** está vazia e só oferece **Criar**.
+- **O contrato já foi usado num recibo validado.** O tipo de contrato deixa de se poder mudar nessa versão.
+- **A situação de IRS está por preencher.** Sem **Estado civil (IRS)** no separador **Folha de Salários**, o recibo fica com o aviso «IRS por calcular», sem IRS retido, e **Validar** recusa. No exemplo, o recibo mostra 1.019,15 € de líquido sem IRS, e 1.002,15 €, com 17,00 € de IRS, depois de preencher.
+- **O pagamento já foi gerado.** Enquanto estiver num lote, o recibo não se anula.
+
+## O que confirmar
+
+Na ficha do trabalhador, em **Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores**:
+
+| Dado | Onde está |
+|---|---|
+| **Número de identificação fiscal (NIF)**, **Número da Segurança Social (NISS)**, **Categoria profissional** e **Data de admissão** | no topo da ficha |
+| **Local de trabalho habitual**, **Tipo de contrato**, **Data de início** (a mesma data que **Data de admissão**) e **Data de termo** | separador **Trabalho**, o contrato no bloco **Contrato português** |
+| **Salário**, **Horário de Trabalho**, **Residência fiscal** e **Estado civil (IRS)** | separador **Folha de Salários** |
+| **Contas bancárias** (IBAN) | separador **Pessoal** |
+
+A lista **Salários › Preparar › Trabalhadores e contratos › Contratos** mostra quem já tem contrato: um trabalhador só aparece lá depois de ter a **Data de admissão** preenchida na ficha. Esta lista é só para consultar: não tem o botão **Novo**.
+
+A lista **Salários › Preparar › Trabalhadores e contratos › Trabalhadores com NIF por corrigir** só mostra quem veio do software anterior sem NIF ou NISS válido. Um trabalhador criado à mão sem NIF não aparece lá, por isso uma lista vazia não prova que as fichas estão completas.
+
+## Como resolver
+
+**O que pode fazer sozinho, com o acesso Administrador de Salários:**
+
+1. **Contrato.** Abra a ficha do trabalhador, como a mensagem indica. No separador **Trabalho**, bloco **Contrato português**, escolha o **Tipo de contrato**. No topo da ficha, preencha a **Data de admissão**, até ao primeiro dia do recibo. No separador **Folha de Salários**, preencha o **Salário**. Guarde. O trabalhador passa a aparecer em **Salários › Preparar › Trabalhadores e contratos › Contratos**. No exemplo, com **Sem termo**, 01/01/2026 e 1.000,00 €, o mesmo recibo calculou-se ao carregar outra vez em **Calcular**: não foi preciso criar um recibo novo.
+2. **NISS, NIF e categoria.** Corrija-os na ficha e guarde. Depois, no recibo, carregue em **Validar**. Se o recibo ainda não tem linhas, carregue primeiro em **Calcular**. Na ficha, preencha também o **Estado civil (IRS)**, no separador **Folha de Salários**, e carregue em **Calcular** antes de **Validar**: no exemplo, com **Não casado**, o aviso «IRS por calcular» desapareceu e o recibo passou a **Validado** com 17,00 € de IRS.
+3. **IBAN.** No separador **Pessoal**, em **Contas bancárias**, escreva o IBAN, escolha **Criar e editar…**, confirme o número e carregue em **Guardar**. Guarde a ficha e repita **Ações › Gerar pagamento**. No exemplo, a recusa desapareceu.
+4. **Local de trabalho.** Escreva o nome do local no campo e escolha **Criar**.
+5. **Contrato com recibo validado.** Registe uma versão nova do contrato a começar no dia em que a alteração se aplica, como diz a mensagem. Se o recibo validado estiver errado e ainda não tiver efeitos, a alternativa é **Anular recibo**, na roda dentada, com o motivo: no exemplo, esta recusa desapareceu. Se o pagamento já foi gerado, abra-o primeiro em **Salários › Pagar › Pagamentos de salários**, carregue em **Rejeitar**, escreva o motivo e **Confirmar**: no exemplo, o recibo anulou-se a seguir. Confirme primeiro com o contabilista certificado se pode anular o recibo.
+
+**O que pede a outra pessoa:**
+
+- **A ficha do empregador:** a quem configura os salários da empresa, em **Salários › Configurar › Empresa › Ficha do empregador**.
+
+Se a recusa vier de uma declaração, siga [A DMR foi rejeitada](/troubleshooting/dmr-rejeitada). Se o recibo nem chega a calcular, siga [O recibo não é calculado](/troubleshooting/recibo-sem-dados-para-calcular).
+
+## Resultado esperado
+
+- A ficha guarda-se sem janela de erro.
+- **Calcular** deixa de recusar e o recibo fica com linhas.
+- O trabalhador aparece em **Salários › Preparar › Trabalhadores e contratos › Contratos**.
+- O recibo passa a **Validado**, sem o aviso «IRS por calcular», e **Gerar pagamento** deixa de dar a recusa do IBAN.
+
+## Quando contactar o suporte
+
+- O número está certo no documento de identificação e continua a ser recusado.
+- O IBAN está na ficha e **Gerar pagamento** continua a dizer que não há IBAN válido.
+- O trabalhador já aparece em **Salários › Preparar › Trabalhadores e contratos › Contratos** e **Calcular** continua a dizer que ele nunca teve contrato.
+
+## Informação a enviar
+
+- O trabalhador, a empresa e as datas do recibo. Não envie o NIF, o NISS nem o IBAN por escrito sem que lhos peçam.
+- O texto completo da mensagem, copiado do ecrã.
+- O perfil com que entrou.

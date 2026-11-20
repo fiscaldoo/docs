@@ -1,0 +1,85 @@
+---
+id: assinar-o-pdf-da-fatura
+slug: /fiscal-core/assinar-o-pdf-da-fatura
+title: Como assinar digitalmente o PDF da fatura
+sidebar_label: Assinar o PDF da fatura
+sidebar_position: 9
+description: Escolher o fornecedor da assinatura do PDF, assinar o PDF de uma fatura emitida antes de a enviar por email e perceber o que o ecrã diz quando não há fornecedor ou o fornecedor não está disponível.
+keywords: [assinar PDF, assinatura digital, assinatura qualificada, fatura eletrónica, fatura eletronica, PDF assinado, Multicert, DL 28/2019, enviar fatura por email, assinar pdf da fatura]
+doc_id: DOC-0029
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master a67618a71)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/emitir-uma-fatura-certificada, fiscal-core/certificacao/integridade-dos-documentos]
+---
+
+## Para que serve?
+
+Uma fatura enviada por e-mail ao cliente em PDF é uma fatura eletrónica. O PDF assinado digitalmente garante ao cliente que o ficheiro é autêntico. O botão **Assinar PDF** guarda na fatura uma cópia assinada do PDF, ao lado do original, que não se altera.
+
+O ecrã cita a lei: «DL 28/2019, art. 12.º». <span className="fd-pending">Pendente de validação por contabilista certificado: quando a assinatura qualificada é obrigatória e quando outro meio de garantir a autenticidade chega.</span>
+
+## Quando utilizar?
+
+- Antes de enviar por e-mail o PDF de uma fatura ou nota de crédito emitida.
+- Quando a fatura mostra o aviso «O PDF desta fatura não tem assinatura qualificada».
+- Não o use para corrigir uma fatura: o PDF assinado é uma cópia, o documento certificado não muda.
+
+## Onde encontrar?
+
+- Fornecedor da assinatura: **Contabilidade › Configurar › Geral › Definições**, secção **Certificação PT**, campo **Assinatura da fatura eletrónica**.
+- Botão: na fatura emitida, em **Faturação › Faturar › Faturas de clientes**.
+
+## Antes de começar
+
+- Para escolher o fornecedor, é o administrador técnico: só ele abre as Definições. Cada empresa tem o seu.
+- Para assinar, o seu perfil é **Administrativo**: foi com ele que o botão foi usado neste artigo.
+- A fatura está emitida (**Publicada**) e é de uma empresa portuguesa. Não precisa de anexar o PDF: o fiscaldoo assina o PDF da própria fatura.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Como administrador técnico, abra **Contabilidade › Configurar › Geral › Definições** (abre no separador **Faturação**) e, na secção **Certificação PT**, abra o campo **Assinatura da fatura eletrónica**. Escolha **Simulado (testes)** ou **Multicert (assinatura qualificada)** e carregue em **Guardar**.
+   ![Campo Assinatura da fatura eletrónica com as opções Simulado (testes) e Multicert (assinatura qualificada)](/images/fiscal-core/assinar-o-pdf-da-fatura/01-fornecedor-de-assinatura.png)
+2. Abra a fatura emitida. Enquanto não tem um PDF assinado aceite, a fatura mostra o aviso «O PDF desta fatura não tem assinatura qualificada: enviado por email, a sua autenticidade não fica garantida (DL 28/2019, art. 12.º). Use «Assinar PDF» antes de o enviar.» e o botão **Assinar PDF**.
+   ![Fatura emitida com o botão Assinar PDF assinalado e o aviso de que o PDF não tem assinatura qualificada](/images/fiscal-core/assinar-o-pdf-da-fatura/04-assinar-pdf.png)
+3. Carregue em **Assinar PDF**. O ecrã atualiza-se sem mostrar nenhuma mensagem: o aviso e o botão desaparecem.
+4. Confirme nos anexos da fatura: há um ficheiro com o nome do PDF e «(assinado)» (no exemplo, `FT_D26_30.pdf (assinado)`).
+
+</StepByStep>
+
+## Resultado esperado
+
+- A fatura fica com o anexo «… (assinado)», com a assinatura aceite.
+- O número, o ATCUD e a assinatura do documento certificado não mudam.
+- O PDF assinado aceite não se altera nem se apaga: é prova do que foi enviado ao cliente.
+
+## Notas importantes
+
+<HelpCallout type="atencao" title="Na demonstração só o fornecedor simulado funciona">
+**Simulado (testes)** assina como teste: nenhuma assinatura real é feita. **Multicert (assinatura qualificada)** é a opção para a assinatura real, mas numa base de teste está bloqueada (ver «Problemas frequentes»). <span className="fd-pending">Pendente de validação no ecrã: a mensagem de **Multicert** numa base de produção, que só se vê fora de uma base de teste; o código da versão atual indica que a ligação a este fornecedor ainda não está entregue.</span> Confirme com o seu fornecedor do fiscaldoo antes de contar com a assinatura qualificada.
+</HelpCallout>
+
+- Um PDF não se assina duas vezes.
+
+## Problemas frequentes
+
+### «Não está escolhido nenhum fornecedor de assinatura»
+
+- **Sintoma:** ao carregar em **Assinar PDF**: «Não está escolhido nenhum fornecedor de assinatura para Empresa Demonstração, Lda, por isso o PDF não pode ser assinado. (…) Peça ao administrador técnico que escolha o fornecedor em Contabilidade › Configurar › Geral › Definições › Certificação PT.»
+- **O que fazer:** peça ao administrador técnico que faça o passo 1.
+  ![Mensagem do ecrã: não está escolhido nenhum fornecedor de assinatura](/images/fiscal-core/assinar-o-pdf-da-fatura/02-sem-fornecedor.png)
+
+### «O fornecedor real de assinatura (Multicert) está bloqueado numa base de teste»
+
+- **Sintoma:** com **Multicert** escolhido, numa base de teste: «O fornecedor real de assinatura (Multicert) está bloqueado numa base de teste: nada real sai de um ambiente de teste. Escolha o fornecedor simulado para experimentar o fluxo.»
+- **O que fazer:** numa base de teste, escolha **Simulado (testes)**.
+  ![Mensagem do ecrã: o fornecedor real Multicert está bloqueado numa base de teste](/images/fiscal-core/assinar-o-pdf-da-fatura/03-multicert-nao-disponivel.png)
+
+{/* Nota interna (DOCS-065, lote v19-DEF, master c643480c2): revisto com demo.faturacao, FT D26/33 e FT D26/30, fornecedor simulado (posto por RPC com o administrador): Assinar PDF sem mensagem de erro e sem anexar antes; em ambas ficou um só anexo «… (assinado)» (conferido por RPC). V3FC-08 e V3FC-09 saíram com o FAT-128. */}
+
+{/* Nota interna (lote v23-AN, depois do comboio 174 com o UX-147, master a67618a71, docs_demo_v23an_test): fatura FT D26/31 criada e emitida por RPC com o utilizador da demonstração do perfil Administrativo, só para provocar a recusa (sem fornecedor escolhido); Assinar PDF por clique deu Operação inválida com a frase nova, captura 02 refeita. Com o administrador, Contabilidade › Configurar › Geral › Definições abriu no separador Faturação, com o campo Assinatura da fatura eletrónica na secção Certificação PT. */}

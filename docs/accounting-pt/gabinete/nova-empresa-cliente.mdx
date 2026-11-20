@@ -1,0 +1,90 @@
+---
+id: nova-empresa-cliente
+slug: /accounting-pt/nova-empresa-cliente
+title: Como criar a empresa de um novo cliente do gabinete
+sidebar_label: Criar a empresa de um cliente
+sidebar_position: 2
+description: Criar a empresa de um cliente novo com o NIF, o nome e a morada, e continuar para o assistente de configuração.
+keywords: [nova empresa cliente, criar empresa, novo cliente, gabinete de contabilidade, NIF, assistente de configuração, empresa nova]
+doc_id: DOC-0174
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/gabinete/gabinete-de-contabilidade, accounting-pt/gabinete/empresas-clientes-em-dia, getting-started/primeira-configuracao/configurar-uma-empresa-nova]
+---
+
+## Para que serve?
+
+Cria a empresa de um cliente novo na mesma base do gabinete, sem passar pelas Definições. Escreve o NIF, o nome e a morada; o resto (IVA, séries, bancos, salários) pergunta-o o assistente de configuração nos passos seguintes.
+
+## Quando utilizar?
+
+- Quando o gabinete aceita um cliente novo e vai tratar da contabilidade dele nesta base.
+- **Não** crie outra vez uma empresa que já existe: o ecrã recusa um NIF repetido (ver «Problemas frequentes»).
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Sistema e segurança › Gabinete e empresas clientes › Nova empresa cliente**. O menu só aparece ao **Contabilista certificado** com o [Modo gabinete](/accounting-pt/gabinete-de-contabilidade) ligado; o administrador técnico vê-o sempre. O perfil **Contabilista** não o vê.
+
+## Antes de começar
+
+- Perfil: **Contabilista certificado**.
+- Tenha à mão o cartão da empresa: o NIF tem de ser válido.
+- O exemplo cria a «Papelaria Exemplo, Lda» (NIF de exemplo 599999896).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › Sistema e segurança › Gabinete e empresas clientes › Nova empresa cliente**. A janela diz que «A empresa fica visível só para si».
+   ![Janela Nova empresa cliente vazia](/images/accounting-pt/nova-empresa-cliente/01-janela-vazia.png)
+2. Escreva o **Número de contribuinte (NIF)** e o **Nome da empresa**. A **Morada**, o **Código postal** e a **Localidade** são opcionais e podem ficar para o assistente.
+   ![Janela preenchida com NIF, nome e morada](/images/accounting-pt/nova-empresa-cliente/02-preenchida.png)
+3. Carregue em **Criar a empresa e começar a configuração** e **espere**: a janela diz que demora alguns segundos. Na demonstração levou mais de 10 segundos; não carregue outra vez.
+4. O assistente abre sozinho na empresa nova, no passo **1. Identificação**, com o ponto de partida **Empresa nova**. Continue com o [assistente de configuração da empresa](/getting-started/configurar-uma-empresa-nova).
+   ![Assistente de configuração aberto na empresa nova](/images/accounting-pt/nova-empresa-cliente/05-assistente.png)
+5. No canto superior direito, o **seletor de empresas** passa a mostrar a empresa nova ao lado das outras a que tem acesso.
+   ![Seletor de empresas com a empresa nova](/images/accounting-pt/nova-empresa-cliente/04-seletor.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- A empresa fica criada em Portugal e em euros, com o NIF no formato «PT» + 9 algarismos, e visível **só para quem a criou**: as outras pessoas do gabinete não ganham acesso. Para as outras pessoas a verem, o administrador atribui-lhes a empresa nas Definições.
+- No painel das [empresas clientes](/accounting-pt/empresas-clientes-em-dia) a empresa nova aparece com «Ainda sem exercício: abra para o criar» em **Fecho**.
+- Nada mais fica configurado: sem séries, sem bancos e sem IVA até concluir o assistente.
+
+## Notas importantes
+
+- A empresa criada **não** é comunicada à AT nem a ninguém: a criação é só dentro da base.
+- O NIF é conferido pelo último algarismo; não prova que a empresa existe. Confira-o sempre com o cartão da empresa.
+
+## Problemas frequentes
+
+### «Este NIF não é válido: o último algarismo não corresponde aos outros oito»
+
+- **Causa:** o último algarismo não bate com os outros oito.
+- **O que fazer:** corrija-o com o cartão da empresa. A mensagem aparece logo por baixo do campo.
+  ![NIF inválido com a mensagem por baixo do campo](/images/accounting-pt/nova-empresa-cliente/03-nif-invalido.png)
+
+### «Já existe uma empresa com o NIF … nesta base de dados. Não foi criado nada.»
+
+- **Causa:** o NIF já pertence a uma empresa da base (na demonstração, o NIF 599999993 da Empresa Demonstração, Lda). A quem já tem acesso a essa empresa, a janela diz antes: «A empresa com o NIF 599999993 já foi criada e está na sua lista. Não foi criada mais nenhuma. Escolha-a no seletor de empresas, no topo, ao lado dos menus.»
+- **O que fazer:** não a crie outra vez. Peça ao administrador que lhe dê acesso a ela.
+
+### «Há campos obrigatórios por preencher»
+
+- **Causa:** o NIF ou o nome estão vazios.
+- **O que fazer:** preencha os campos assinalados a vermelho.
+
+### O menu «Nova empresa cliente» não aparece
+
+- **Causa:** o perfil não é de Contabilista certificado, ou o Modo gabinete está desligado. Com o perfil Contabilista o menu não existe (testado).
+- **O que fazer:** peça a quem tem o perfil **Contabilista certificado** que crie a empresa, ou ligue o modo ([Como configurar o gabinete](/accounting-pt/gabinete-de-contabilidade)).
+
+{/* Nota interna (DOCS-046, DOC-0174, risco normal): visto em docs_demo_v3a5_test (master f16f4a3e) com demo.gestor_contabilidade (responsável fiscal + contabilista certificado) e demo.contabilista (sem menu). Criadas na base as empresas «Papelaria Exemplo, Lda» (hoje 599999896) e uma 2.ª empresa (hoje 599999969), só com acesso do responsável fiscal; a 2.ª serviu para confirmar que o assistente abre ao fim de ~25 s. Perfis do ecrã: o grupo chama-se Fiscal Manager/Certified Accountant; o nome do perfil no seletor de perfis não foi confirmado. «Contabilista certificado» segundo a mensagem do código («Only a Certified Accountant, a Fiscal Manager or the Fiscal Administration…»); o texto PT dessa recusa não foi provocado (o Contabilista nem vê o menu). Lote v23-C (06/11/2026, base-mãe v2, master 2bfd78d1a): a Papelaria passou para 599999896, livre na mãe, porque o 599999985 é o da «Empresa Nova Exemplo, Lda» de Configurar uma empresa nova e de Ligar a AT; captura 02 refeita com demo.gestor_contabilidade e empresa criada por clique (PT599999896). */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AZ, 10/11/2026, master bfedd3b23, docs_demo_v23az_test, porta 8508, observação da QA7-c): tirado o nome antigo «responsável fiscal» (linhas 30, 34 e 86). Na cópia, com o Modo gabinete desligado: o utilizador só Contabilista certificado não tem o menu Nova empresa cliente (o grupo do menu é o do Contabilista certificado; o Modo gabinete esconde-o) e o administrador tem-no. O assistente não foi refeito neste lote. */}

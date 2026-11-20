@@ -1,0 +1,92 @@
+---
+id: extrato-nao-importa
+slug: /troubleshooting/extrato-nao-importa
+title: O extrato bancário não importa
+sidebar_label: Extrato não importa
+description: As causas por que Rever o ficheiro recusa um extrato bancário (MT940 ou OFX inválido, saldos que não batem, CSV sem colunas reconhecidas, conta, período ou ficheiro já importado) e o que fazer em cada uma.
+keywords: [extrato não importa, extrato nao importa, importar extrato, extrato bancário, extrato bancario, MT940 inválido, MT940 invalido, OFX inválido, OFX invalido, saldo final, saldos não batem certo, saldos nao batem certo, CSV, modelo de importação, modelo de importacao, cabeçalho, cabecalho, Norma 43, ficheiro do banco]
+doc_id: DOC-0355
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7281543f)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/importar-extrato-bancario, troubleshooting/contabilidade-e-iva/periodo-bloqueado]
+---
+
+## Sintoma
+
+Em **Importar extrato bancário**, depois de escolher o **Diário bancário** e o **Ficheiro**, **Rever o ficheiro** abre **Operação inválida** e não passa ao ecrã de revisão. Nada é importado.
+
+O caminho normal está em [Como importar o extrato bancário](/accounting-pt/importar-extrato-bancario). Os exemplos foram feitos com o perfil **Contabilista**, no diário **Banco** da Empresa Demonstração, Lda (IBAN `PT50 9999 0000 1234 5678 9012 2`), com ficheiros de ensaio de 31/10/2026.
+
+## Mensagem
+
+**MT940 sem saldo final** (ficheiro sem a linha `:62F:`):
+
+> «Ficheiro MT940 inválido: extrato n.º 1 não tem saldo final (:62F:).»
+
+![Janela Operação inválida: ficheiro MT940 inválido, o extrato n.º 1 não tem saldo final](/images/troubleshooting/extrato-nao-importa/01-mt940-sem-saldo-final.png)
+
+**MT940 com saldos que não batem** (saldo inicial 31.102,59 €, um movimento de -12,50 € e saldo final 31.102,59 €):
+
+> «Ficheiro MT940 inválido: os saldos do extrato DEMO2026103102/00002/001/2026-10-31 não batem certo: saldo inicial 31.102,59 + movimentos -12,50 = 31.090,09, mas o saldo final é 31.102,59.»
+
+![Janela Operação inválida: os saldos do extrato MT940 não batem certo](/images/troubleshooting/extrato-nao-importa/02-mt940-saldos-nao-batem.png)
+
+**OFX sem saldo final** (ficheiro sem o bloco `LEDGERBAL`):
+
+> «Ficheiro OFX inválido: o extrato 1 não tem saldo final (LEDGERBAL); sem ele o extrato não pode ser conferido. Peça ao banco um ficheiro que inclua o saldo.»
+
+![Janela Operação inválida: ficheiro OFX sem saldo final](/images/troubleshooting/extrato-nao-importa/03-ofx-sem-saldo.png)
+
+**CSV com títulos de colunas que o fiscaldoo não reconhece** (colunas «Referencia», «Texto» e «Valor EUR»):
+
+> «Modelo Genérico PT - CSV (deteção automática): Não foi reconhecida nenhuma linha de cabeçalho nas primeiras 30 linhas (separadores tentados: ;, ,, TAB, |). São precisas uma coluna com a data do movimento e uma com o montante (ou débito e crédito), com os títulos habituais (p. ex. Data Mov., Descrição, Débito, Crédito, Montante, Saldo). Ajuste os títulos das colunas do ficheiro ou crie um modelo com o assistente (Contabilidade › Reconciliar › Bancos e caixa, painel «O que há para fazer com os bancos?», ligação «Modelos de importação de extratos»).»
+
+![Janela Operação inválida: o modelo genérico de CSV não reconheceu nenhuma linha de cabeçalho](/images/troubleshooting/extrato-nao-importa/04-csv-sem-cabecalho.png)
+
+## Causas verificadas
+
+- **O ficheiro está incompleto ou estragado.** Falta um saldo, um campo obrigatório ou um movimento é ilegível. Acontece com ficheiros editados à mão, cortados ao copiar ou exportados com uma opção errada no site do banco. O fiscaldoo confere o ficheiro inteiro antes de importar: não entra metade.
+- **Os saldos do ficheiro não batem com os movimentos.** O saldo inicial mais os movimentos tem de dar o saldo final. Se não dá, falta ou sobra um movimento no ficheiro.
+- **O CSV não tem títulos de colunas reconhecidos.** Sem **Modelo de importação**, o fiscaldoo usa o **Genérico PT - CSV (deteção automática)**, que procura uma coluna de data e uma de montante (ou débito e crédito) pelos títulos habituais. Um CSV com «Data», «Descricao» e «Montante» foi reconhecido e chegou à revisão com «Importar 1 movimento»; um com «Referencia», «Texto» e «Valor EUR» foi recusado.
+- **A conta, o período ou o ficheiro não servem**: o ficheiro é de outra conta, tem movimentos num período bloqueado, ou já foi importado. Estes três casos estão em [Importar o extrato bancário, Problemas frequentes](/accounting-pt/importar-extrato-bancario), com a mensagem de cada um.
+
+<span className="fd-pending">Pendente de validação no ecrã: as recusas de um ficheiro Norma 43, QIF ou Excel, de um modelo de importação com formato de data errado e de uma moeda diferente da do diário não foram provocadas nesta ronda.</span>
+
+## O que confirmar
+
+1. O formato do ficheiro (MT940, Norma 43, CAMT.053, OFX, QIF, CSV ou Excel) e se foi descarregado do site do banco sem ser aberto e gravado noutro programa.
+2. No extrato em PDF do banco, o saldo inicial, o saldo final e o número de movimentos do período.
+3. Para um CSV, os títulos da primeira linha: tem de haver uma coluna de data e uma de montante (ou débito e crédito).
+
+## Como resolver
+
+1. **Ficheiro estragado ou sem saldos:** descarregue de novo o extrato do site do banco, no mesmo formato, e não o abra nem grave noutro programa antes de importar. Se o banco não põe o saldo no ficheiro, escolha outro formato (por exemplo, CAMT.053 ou MT940).
+2. **Saldos que não batem:** compare o ficheiro com o extrato em PDF. Descarregue o período inteiro, sem filtros de data ou de tipo de movimento.
+3. **CSV sem colunas reconhecidas:** use um CSV com os títulos que o banco dá («Data Mov.», «Descrição», «Débito», «Crédito», «Montante», «Saldo»), ou crie o modelo do banco em **Contabilidade › Reconciliar › Bancos e caixa › O que há para fazer com os bancos?** › **Listas de apoio** › **Modelos de importação de extratos** (o caminho que a mensagem indica; aberto na demonstração com o perfil **Contabilista**) e escolha-o em **Modelo de importação**.
+4. Volte a **Importar extrato** e carregue em **Rever o ficheiro**.
+
+<HelpCallout type="risco" title="Não corrija o ficheiro do banco à mão">
+Um saldo ou um movimento mudado à mão faz o saldo do banco no fiscaldoo deixar de conferir com o banco. Peça ao banco o ficheiro certo.
+</HelpCallout>
+
+
+## Resultado esperado
+
+- **Rever o ficheiro** abre o ecrã de revisão, com o formato detetado, a conta, os saldos e as linhas a importar. Siga [Como importar o extrato bancário](/accounting-pt/importar-extrato-bancario) a partir do passo 5.
+- Nada fica importado enquanto a recusa se mantém: o fiscaldoo não cria extratos parciais.
+
+## Quando contactar o suporte
+
+- O ficheiro veio do banco sem alterações, os saldos batem com o PDF e a recusa continua.
+- O formato do seu banco não está na lista de formatos aceites.
+
+## Informação a enviar
+
+- O nome do banco, o formato e o nome do ficheiro (sem o enviar, se tiver dados de clientes).
+- O texto completo da mensagem, copiado do ecrã.
+- O diário bancário escolhido.
+- O perfil com que entrou.

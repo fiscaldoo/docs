@@ -1,0 +1,128 @@
+---
+id: reavaliacao-cambial
+slug: /accounting-pt/reavaliacao-cambial
+title: Como fazer a reavaliação cambial no fim do mês
+sidebar_label: Reavaliação cambial
+sidebar_position: 7
+description: Importar as taxas de câmbio, ver a folha de reavaliação, lançar o ajuste das diferenças cambiais não realizadas de clientes, fornecedores e bancos em moeda estrangeira e o seu estorno no dia 1 do mês seguinte, e consultar a lista de diferenças.
+keywords: [reavaliação cambial, diferenças cambiais, diferenças de câmbio não realizadas, moeda estrangeira, taxa de câmbio, BCE, USD, fim do mês, fecho do mês, NCRF 23, ganhos e perdas cambiais, estorno, folha de reavaliação]
+doc_id: DOC-0120
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/fecho/fechar-o-mes, accounting-pt/fecho/datas-de-bloqueio]
+---
+
+## Para que serve?
+
+Quando a empresa tem faturas de clientes ou de fornecedores, ou contas bancárias, em moeda estrangeira (por exemplo dólares), o valor em euros que está na contabilidade é o do dia em que o documento foi lançado. No fim do mês esses saldos valem outro valor, ao câmbio desse dia. A **reavaliação cambial** calcula a diferença de cada saldo em aberto, lança-a como ganho ou perda **não realizados** e estorna esse lançamento no primeiro dia do mês seguinte, para que o mês seguinte recomece dos valores históricos e a diferença verdadeira só apareça quando o saldo for pago ou recebido.
+
+## Quando utilizar?
+
+- No fecho de cada mês (ou do ano), se a empresa tem saldos em aberto ou bancos em moeda estrangeira.
+- Para ver, sem lançar nada, quanto valem hoje esses saldos ao câmbio mais recente (a **folha de reavaliação** e a lista **Diferenças cambiais não realizadas**).
+- **Não** serve para registar a diferença de câmbio de um pagamento já feito: essa nasce no próprio pagamento.
+
+## Onde encontrar?
+
+- Importar taxas: **Definições › Contabilidade › Importar taxas do BCE › Abrir** (Administrador).
+- Lançar o ajuste: **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**, grupo **Listas de apoio**, ligação **Reavaliação cambial**.
+- Histórico: no mesmo grupo, ligação **Histórico das reavaliações cambiais**.
+- Folha de reavaliação: no mesmo grupo, ligação **Folha de reavaliação cambial**. A lista de diferenças está em **Contabilidade › Consultar › Impostos e tesouraria › Diferenças cambiais não realizadas**. As taxas gravadas veem-se em **Taxas de câmbio**, no mesmo menu (só o administrador tem esta entrada na barra).
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** (lança o ajuste e vê tudo). O **Contabilista certificado** também. O **Auditor / ROC** consulta as folhas e o histórico, mas o ecrã recusa-lhe o assistente: «O seu perfil (Auditor) é só de leitura». O **Administrativo** não tem acesso («Não tem acesso a «Reavaliação cambial lançada». Quem faz: «Contabilista (opera)» ou «Auditor / ROC». […]»).
+- A moeda estrangeira tem de estar ativa (o USD está na demonstração) e a empresa tem de ter taxas para ela. Só o Administrador importa o ficheiro de taxas; os restantes perfis veem as taxas gravadas.
+- O exemplo é a Empresa Demonstração, Lda, em outubro de 2026, com taxas **fictícias** de um ficheiro no formato do BCE (não são taxas reais). Há três faturas de fornecedor em dólares (800,00 $, 1.500,00 $ e 615,00 $), uma caixa em dólares (1.060,00 $) e, depois do fecho, uma fatura de cliente de 1.000,00 $ datada de 01/11/2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Definições › Contabilidade**, carregue em **Abrir** na linha **Importar taxas do BCE**. O fiscaldoo não descarrega nada da internet: o ficheiro é o que guardou da página do BCE.
+   ![Linha Importar taxas do BCE nas definições, com o botão Abrir](/images/accounting-pt/reavaliacao-cambial/01-importar-taxas-definicoes.png)
+2. Escolha o ficheiro em **Ficheiro do BCE (XML)** e carregue em **Importar**. A opção **Substituir taxas que já existem com valor diferente?** fica desligada, por omissão.
+   ![Assistente Importar taxas do BCE com o ficheiro escolhido](/images/accounting-pt/reavaliacao-cambial/02-assistente-importar-taxas.png)
+3. O ecrã mostra o resultado: «4 criadas, 0 atualizadas, 0 inalteradas, 0 mantidas com valor diferente; 0 moedas ignoradas (não ativas).» Com um segundo ficheiro, o mesmo ecrã disse «1 criadas, 0 atualizadas, 1 inalteradas, 1 mantidas com valor diferente; 1 moedas ignoradas (não ativas).»: um dia igual não se duplica, um dia com valor diferente fica como estava (a não ser que ligue a substituição) e uma moeda não ativa (no exemplo, o CHF) é ignorada. **Abrir o registo** mostra o registo da importação.
+   ![Resultado da importação com as contagens de taxas criadas, inalteradas e mantidas](/images/accounting-pt/reavaliacao-cambial/03-resultado-da-importacao.png)
+4. Para ver os valores sem lançar nada, abra **Fechar o mês** e, em **Listas de apoio**, carregue em **Folha de reavaliação cambial**. Escolha a **Data de fecho** (por omissão é hoje), deixe **Clientes**, **Fornecedores** e **Banco** ligados e carregue em **Calcular**. Com 31/10/2026, a folha mostra «1 EUR = 1.090000 USD (30/10/2026)»: a taxa usada é a última com data igual ou anterior à data de fecho. Cada linha tem o saldo em dólares, o valor contabilístico, a taxa histórica, a taxa de fecho, o valor reavaliado e a diferença. Diferenças favoráveis 7,88 €, desfavoráveis -31,39 €, líquida -23,51 €. Os botões **XLSX** e **PDF** exportam a folha (o XLSX descarregou-se). Se o ajuste dessa data já estiver lançado, a folha avisa «A reavaliação desta data de fecho já foi lançada…» e deixa de oferecer **Lançar a reavaliação**.
+   ![Folha de reavaliação cambial a 31/10/2026 com as taxas, os totais e as quatro linhas em aberto](/images/accounting-pt/reavaliacao-cambial/04-folha-de-reavaliacao.png)
+5. Para lançar, em **Fechar o mês**, grupo **Listas de apoio**, carregue em **Reavaliação cambial**. O assistente propõe a **Data de fecho** do mês anterior (31/10/2026), **Estornar no mês seguinte?** ligado com **Data da reversão** 01/11/2026, e o **Diário** «Diferença de Câmbio». Pode excluir **Clientes**, **Fornecedores** ou **Banco**, **Contas excluídas**, e limitar a **Moedas** ou **Parceiros**. Carregue em **Pré-visualizar**.
+   ![Assistente Reavaliação cambial com a data de fecho, a reversão e o diário](/images/accounting-pt/reavaliacao-cambial/05-assistente-de-reavaliacao.png)
+6. A pré-visualização mostra as taxas, as diferenças e a tabela com os saldos em aberto: a caixa em dólares (-18,17 €), as faturas de fornecedor FTF/2026/00039 (-13,22 €), FTF/2026/00040 (0,00 €) e FTF/2026/00046 (7,88 €). A fatura de cliente de 01/11/2026 não entra, porque é posterior à data de fecho. A lupa de cada linha abre o documento. Pode **Alterar parâmetros** ou **Cancelar**.
+   ![Pré-visualização da reavaliação com os saldos, as taxas e as diferenças](/images/accounting-pt/reavaliacao-cambial/06-previsao.png)
+7. Carregue em **Lançar o ajuste** e confirme na pergunta «Lançar o ajuste e criar a respetiva reversão?».
+   ![Pergunta de confirmação do lançamento do ajuste e do estorno](/images/accounting-pt/reavaliacao-cambial/07-confirmar.png)
+8. O ecrã passa a mostrar a ficha da reavaliação: **Lançada por**, a **Data de fecho** 31/10/2026, o **Lançamento de ajuste** EXCH/2026/00001, o **Lançamento de reversão** EXCH/2026/00002 («Publicada», porque 01/11/2026 já passou), **Itens ajustados** 3 (a linha com diferença 0,00 € não conta), **Total de ganhos** 7,88 € e **Total de perdas** 31,39 €. **Abrir os lançamentos** mostra os dois.
+   ![Ficha da reavaliação de 31/10/2026 com os lançamentos de ajuste e de reversão](/images/accounting-pt/reavaliacao-cambial/08-ficha-da-reavaliacao.png)
+9. **Histórico das reavaliações cambiais** lista todas as reavaliações lançadas (só consulta), com os totais e o estado do estorno.
+   ![Histórico com a reavaliação de 31/10/2026 lançada e a reversão publicada](/images/accounting-pt/reavaliacao-cambial/09-historico.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, a reavaliação é a do próprio Enterprise e não a deste artigo (visto com um utilizador só com o perfil **Contabilista**):
+
+- Em **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**, nas **Listas de apoio**, a ligação é **Reavaliação de moedas**. Abre o relatório **Ganhos/perdas de moeda não realizados** no fim do mês anterior (no exemplo, **A 31/10/2026**) e mostra, por moeda e por conta, o **Saldo em moeda estrangeira**, o **Saldo na taxa de operação**, o **Saldo na taxa atual** e os **Ajustes**. Não há **Reavaliação cambial**, **Folha de reavaliação cambial** nem **Histórico das reavaliações cambiais**.
+- **Entrada de Ajuste** abre a janela **Criar um ajuste**, com o **Diário**, a **Conta de Gastos**, a **Conta de rendimentos**, a **Data**, a **Data da Reversão** (o dia seguinte) e a pré-visualização das linhas: uma por conta e por moeda. Se o **Diário** e as contas vierem vazios, escolha-os (no exemplo, o diário **Diferença de Câmbio**, a **6887 Diferenças de câmbio desfavoráveis** e a **7887 Diferenças de câmbio favoráveis**, as contas do «Resultado esperado»): a empresa fica com eles para a vez seguinte.
+- **Criar Registo** publica o ajuste na **Data** e a reversão na **Data da Reversão**. Nas contas de clientes e de fornecedores, o lançamento tem uma linha por cliente ou fornecedor, com o terceiro, e o total é o da pré-visualização. No exemplo, o ajuste de 31/10/2026, no diário **Diferença de Câmbio**, credita 32,76 € na **2211 Fornecedores gerais**, com o fornecedor **Cloud Services Inc.**, e debita 32,76 € na **6887**; a reversão de 01/11/2026 faz o contrário. Depois, o relatório mostra os **Ajustes** a 0,00 €.
+- As taxas tratam-se como diz «No Enterprise» em [Como importar as taxas de câmbio do BCE](/accounting-pt/taxas-de-cambio#no-enterprise).
+
+{/* Nota interna (lote EE-03, DOCS-073 #4142, DEC-1794, master e4dd4ae90, base Enterprise docs_ee_ee03_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0120. Contabilista: Reavaliação de moedas a 31/10/2026 com USD (1 EUR = 1.08 USD), 2211 Fornecedores gerais $ -2.300,00, -2.096,87 €, -2.129,63 €, ajuste -32,76 €; Entrada de Ajuste propôs C 2211 32,76 € («Provisão para USD») e D 6887 32,76 €, Data 31/10/2026 e Data da Reversão 01/11/2026; Criar Registo deu a recusa citada e nada ficou lançado. A opção «Exchange Rates» do relatório está em inglês. O módulo de câmbios do fiscaldoo não se instala no Enterprise. Ver reports/LOTE_EE-03.md. Auditoria EE-03 (11/11/2026, master 7cd24fcc9, comboio 192 com o EEA-073 #4157, cópia Enterprise docs_ee_audee03_test da odoo20_ee_test, utilizadores só com o perfil indicado): Contabilista: o relatório a 31/10/2026 dá os mesmos valores (USD, 2211, ajuste -32,76 €); na cópia, o Diário e as duas contas vinham vazios e foram escolhidos (Diferença de Câmbio, 6887, 7887); Criar Registo publicou o ajuste de 31/10/2026 (C 2211 32,76 com o fornecedor Cloud Services Inc., D 6887 32,76) e a reversão de 01/11/2026; depois, Ajustes 0,00 €. A pré-visualização da janela continua sem o terceiro (uma linha por conta e moeda); a divisão por terceiro faz-se ao criar. «Exchange Rates» continua em inglês. Ver reports/AUDITORIA_EE-03.md. */}
+
+## Resultado esperado
+
+- Lançamento de ajuste EXCH/2026/00001, datado de 31/10/2026, no diário **Diferença de Câmbio**, conferido no razão:
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| 111001 Caixa (dólares) | | 18,17 |
+| 2211 Fornecedores gerais (FTF/2026/00039) | | 13,22 |
+| 2211 Fornecedores gerais (FTF/2026/00046) | 7,88 | |
+| 6887 Diferenças de câmbio desfavoráveis | 13,22 + 18,17 | |
+| 7887 Diferenças de câmbio favoráveis | | 7,88 |
+
+- O estorno EXCH/2026/00002, a 01/11/2026, tem as mesmas linhas com débitos e créditos trocados, e as linhas dos fornecedores ficam reconciliadas com as do ajuste, de modo que nada fica em aberto nos parceiros. Os dois lançamentos fecham a zero (39,27 € de cada lado).
+- Uma diferença **favorável** é um ganho e uma **desfavorável** uma perda, ambas levadas a resultados do período. A conta depende da natureza do saldo: caixa, depósitos à ordem, clientes e fornecedores usam 7887 (favoráveis) e 6887 (desfavoráveis), como neste exemplo; outros depósitos usam 7861 e 6863; financiamentos obtidos usam 793 e 6921. Se a conta da natureza não existir no plano, usa as contas de câmbio da empresa.
+- A lista **Diferenças cambiais não realizadas** mostra, por mês ou ano, as mesmas diferenças por linha (Clientes, Fornecedores, Contas bancárias) com o valor de balanço, o reavaliado e a diferença. Em outubro de 2026: Fornecedores -2.668,97 € contra -2.674,31 € reavaliado (-5,34 €) e Contas bancárias 990,65 € contra 972,48 € (-18,17 €); em novembro de 2026, ao câmbio de 02/11/2026 (1,06), entra também o cliente de 1.000,00 $. Esta lista vê só o que está em aberto: não substitui a folha nem o razão.
+  ![Lista de diferenças cambiais não realizadas de outubro de 2026 por clientes, fornecedores e bancos](/images/accounting-pt/reavaliacao-cambial/11-diferencas-nao-realizadas.png)
+- <span className="fd-pending">Pendente de validação por contabilista certificado: o tratamento fiscal do ganho ou da perda não realizados e a prática do estorno. O ecrã refere a NCRF 23 mas este artigo não confirma os parágrafos.</span>
+
+## Notas importantes
+
+<HelpCallout type="atencao" title="Cada data de fecho lança-se uma só vez">
+Repetir a reavaliação para a mesma data, moedas e parceiros é recusado. Se tiver de a refazer, estorne primeiro o lançamento de ajuste e o respetivo estorno na contabilidade. Para ajustar outras moedas ou parceiros no mesmo dia, escolha-os nos parâmetros.
+</HelpCallout>
+
+- A taxa de fecho é a última com data igual ou anterior à data de fecho: importe as taxas antes de calcular. Sem nenhuma taxa até à data, a pré-visualização fica a 0,00 € sem mensagem (provado com 30/06/2026).
+- Documentos de depois da data de fecho não entram (a fatura de 01/11/2026 ficou de fora do ajuste de 31/10/2026).
+- Uma moeda com taxas só se vê se estiver **ativa**.
+
+## Problemas frequentes
+
+### «A reavaliação cambial de 31/10/2026 já foi lançada…»
+
+- **Sintoma:** ao carregar em **Pré-visualizar** para uma data já lançada: «Operação inválida. A reavaliação cambial de 31/10/2026 já foi lançada (Reavaliação cambial 31/10/2026, lançamento EXCH/2026/00001) para as mesmas moedas e parceiros. Não se lança duas vezes: se tiver de ser refeita, estorne primeiro esse lançamento e o seu estorno na contabilidade. Para ajustar outras moedas ou parceiros no mesmo dia, escolha-os nos parâmetros.»
+- **O que fazer:** só repita se estornou o lançamento e o seu estorno; senão escolha outras moedas ou parceiros.
+  ![Mensagem de que a reavaliação desta data já foi lançada](/images/accounting-pt/reavaliacao-cambial/10-erro-repetir.png)
+
+### A pré-visualização aparece a zero
+
+- **Causa:** não há saldos em moeda estrangeira em aberto nessa data (testado com 15/07/2026, antes de qualquer documento em dólares: «Diferenças favoráveis 0,00 € / desfavoráveis 0,00 €» e a tabela vazia, sem mensagem). Escolha a data do fecho do mês e confirme em **Taxas de câmbio** que a moeda tem taxa.
+
+### «A data de fecho … ainda não chegou»
+
+- Escolher uma data de fecho futura é recusado («A data de fecho … ainda não chegou»): use até hoje.
+
+### Não consigo lançar a reavaliação
+
+- **Causa:** só o Contabilista e o Contabilista certificado lançam. O Auditor / ROC lê tudo mas o ecrã recusa-lhe o assistente; o Administrativo não tem acesso.
+
+{/* Nota interna (DOCS-046 v4-FC4, DOC-0120, master 52d1dd3ad, base docs_demo_v4fc4_test; Contabilista para a folha, o assistente, o histórico e a lista; Administrador para a importação de taxas; Gestor de contabilidade, Auditor e Faturação conferidos por RPC: o Gestor cria o assistente, o Auditor é recusado, a Faturação não tem acesso). Dados: ficheiros de taxas FICTÍCIOS (USD 1,07 a 1,09 e 1,06), faturas FT D26/34 (cliente, 1.000 $, 01/11/2026) e FTF/2026/00046 (615 $, 15/10/2026); o resto (FTF/39, FTF/40, caixa USD) já estava na demonstração. Lançamento EXCH/2026/00001 e estorno EXCH/2026/00002 conferidos linha a linha no razão (debe = haver = 39,27 €). NÃO percorrido: estorno com data futura (rascunho lançado no dia), período fechado, excluir contas/moedas/parceiros, abrir o XLSX e o PDF (o XLSX descarregou-se, fx_revaluation_20261102.xlsx), «Lançar a reavaliação» a partir da folha, cancelar o ajuste, empresa vazia, GBP. Defeitos: V4FC4-06 (baixo): a tabela da folha de reavaliação e da pré-visualização corta a coluna «Diferença» abaixo de ~1300 px de largura; V4FC4-07 (baixo): a pré-visualização de uma data sem saldos fica a zero sem mensagem; (a falta de taxa NÃO foi provada) V4FC4-08 (informativo): a pergunta de confirmação «Lançar o ajuste e criar a respetiva reversão?» está em inglês; o menu «Importar taxas do BCE» só em modo programador, a importação está só em Definições, onde o Gestor de contabilidade não entra. Faturas certificadas: a série FT D26 não aceita data anterior à do último documento (por isso a fatura de cliente é de 01/11/2026). */}
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); recusa do Administrativo vista por clique, ao abrir a ligação do Histórico das reavaliações cambiais. Visto também: Contabilidade › Fechar › Contabilidade do mês › Reavaliação cambial e Contabilidade › Consultar › Impostos e tesouraria › Folha de reavaliação cambial só aparecem com o modo de programador, mesmo ao administrador, e o «Onde encontrar» não o diz (reportado; o verificador do test_doc_paths aponta a Folha): fica para o lote seguinte */}

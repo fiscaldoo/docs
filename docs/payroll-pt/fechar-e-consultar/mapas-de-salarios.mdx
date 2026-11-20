@@ -1,0 +1,94 @@
+---
+id: mapas-de-salarios
+slug: /payroll-pt/mapas-de-salarios
+title: Que mapas de salários existem e onde estão
+sidebar_label: Mapas de salários
+sidebar_position: 1
+description: Ver a lista de todos os mapas e relatórios dos salários, a natureza de cada um, se já estão disponíveis, em que menu se abrem e que perfis os veem.
+keywords: [mapas de salários, mapas de salarios, relatórios de salários, relatorios de salarios, inventário dos mapas, inventario dos mapas, onde está o mapa, mapa de retenção de IRS, quotas sindicais, folha para a seguradora, exportar para XLSX]
+doc_id: DOC-0235
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/declarar/dmr, payroll-pt/declarar/declaracao-a-seguranca-social, payroll-pt/descontos-e-cessoes/penhoras, payroll-pt/tempo-de-trabalho/trabalho-suplementar]
+---
+
+## Para que serve?
+
+Responde a uma pergunta: «que mapas e relatórios dos salários existem, para que servem e já posso abri-los?». O ecrã **Mapas e relatórios de salários** é uma lista de 19 mapas. Cada linha diz o código, o nome, a **Natureza**, se está **Disponível**, em que menu se abre e que perfis o veem.
+
+É uma lista de consulta: não cria nem calcula nada. Para ver os valores de um mapa, abra o menu que a ficha indica.
+
+## Quando utilizar?
+
+- Procura um mapa (por exemplo o das penhoras ou a folha para a seguradora) e não sabe em que menu está.
+- Quer saber se um mapa que a lei ou o contabilista pedem já existe no fiscaldoo.
+- Quer guardar a lista dos mapas para uma reunião ou para a auditoria.
+
+Não serve para consultar os números de um mapa (para isso abra o próprio mapa) nem para os dados de saúde de um trabalhador: as baixas, os acidentes e as greves não estão nesta lista e veem-se só na ficha de cada trabalhador.
+
+## Onde encontrar?
+
+**Salários › Fechar e consultar › Mapas e relatórios de salários**.
+
+## Antes de começar
+
+- O seu perfil é **Processador de salários**: vê a lista e faz todos os passos. A janela de «Sem acesso» indica também o **Contabilista certificado** e o **Auditor / ROC**, mas entre os perfis só o **Processador de salários** tem o menu. O perfil **Gestor de RH** não vê este menu.
+- Não é preciso ter processado nenhum mês: a lista é a mesma em qualquer empresa.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Fechar e consultar › Mapas e relatórios de salários**. A lista abre agrupada por **Natureza**, com quatro grupos: **Legal** (6), **Imposto** (4), **Operacional** (5) e **Contabilidade** (4).
+2. Carregue no nome de cada grupo para ver os mapas dele. Cada linha tem **Código**, **Mapa ou relatório**, **Natureza**, **Disponível** e **Aberto a**.
+   ![Lista Mapas e relatórios de salários com os grupos Legal e Imposto abertos; a linha REP-003 está esbatida e sem visto em Disponível](/images/payroll-pt/mapas-de-salarios/01-inventario-por-natureza.png)
+3. Leia a linha: uma linha com o visto em **Disponível** já tem menu. Uma linha **esbatida** e sem visto ainda não existe como mapa (na demonstração, REP-003, REP-007, REP-010 e REP-012).
+4. Carregue numa linha para abrir a ficha. O campo **Menu** diz o caminho que abre o mapa, por exemplo «Salários/Preparar/Descontos e empréstimos/Quotas sindicais a entregar» para as quotas sindicais, e **Aberto a** lista os perfis que o veem.
+   ![Ficha do mapa REP-015 Quotas sindicais: natureza Operacional, disponível, menu e perfis que o abrem](/images/payroll-pt/mapas-de-salarios/02-ficha-de-um-mapa.png)
+5. Para guardar a lista, marque a caixa do cabeçalho (seleciona as linhas) e carregue em **Exportar para XLSX**. Descarrega-se o ficheiro `Mapas de salários.xlsx`.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, a lista **Mapas e relatórios de salários** é a mesma, com o perfil **Processador de salários**: 19 mapas, 15 com visto em **Disponível**, nos grupos **Legal** (6), **Imposto** (4), **Operacional** (5) e **Contabilidade** (4), com as mesmas colunas, o mesmo campo **Menu** na ficha de cada mapa e o botão **Exportar para XLSX**.
+
+Os relatórios da aplicação **Folha de Salários** do Enterprise não fazem parte desta lista. Numa empresa portuguesa, essa aplicação fica escondida a todos, também ao administrador (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
+
+{/* Nota interna (lote EE-08, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee08_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8508/8509), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Processador de salários na lista (grupos Legal 6, Imposto 4, Operacional 5, Contabilidade 4; REP-003, REP-007, REP-010 e REP-012 sem menu); fichas REP-015 (Menu «Salários/Preparar/Descontos e empréstimos/Quotas sindicais a entregar») e REP-018 (Menu «Salários/Fechar e consultar/Mapas de recursos humanos/Folha para a seguradora»); Gestor de RH sem o menu. Desde o UX-161b (comboio 193), a Folha para a seguradora está dentro de Mapas de recursos humanos, no Enterprise e no Community: a linha da tabela foi corrigida. Comparado com uma cópia da demonstração Community (docs_demo_ee08_test, 2c8d358c0, porta 8518). Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-08.md. */}
+
+## Resultado esperado
+
+- A lista tem 19 mapas, 15 deles com visto em **Disponível**.
+- A **Natureza** diz para que serve o mapa: **Legal** (a lei exige), **Imposto** (alimenta uma declaração às Finanças ou à Segurança Social), **Operacional** (a equipa usa-o todos os meses) ou **Contabilidade** (liga os salários à contabilidade). <span className="fd-pending">Pendente de validação por contabilista certificado: a classificação de cada mapa como «Legal» ou «Imposto» é a do produto, não uma opinião sobre a obrigação.</span>
+- O ficheiro **Exportar para XLSX** tem 20 linhas (o cabeçalho e os 19 mapas), com as mesmas colunas do ecrã (**Código**, **Mapa ou relatório**, **Natureza**, **Disponível** com «Sim» ou «Ainda não» e **Aberto a**) e sem fórmulas.
+- A lista não gera lançamentos contabilísticos nem altera dados.
+
+Os mapas que a demonstração tem hoje, por natureza:
+
+| Natureza | Mapas disponíveis (menu) |
+|---|---|
+| Legal | Mapa e saldos de férias (**Preparar › Ausências e presenças › Saldos de férias**); Trabalho suplementar (**Preparar › Tempo de trabalho › Trabalho suplementar**; a ficha deste mapa indica «Salários/Preparar/Registar trabalho suplementar», um caminho que a barra de menus não mostra); Ausências (**Preparar › Ausências e presenças › Pedidos de ausência**); Penhoras (**Preparar › Descontos e empréstimos › Penhoras**); Folha para a seguradora (**Fechar e consultar › Mapas de recursos humanos › Folha para a seguradora**); Prova documental de créditos laborais (**Fechar e consultar › Mapas de recursos humanos › Prova documental dos créditos laborais**) |
+| Imposto | Remunerações declaradas à Segurança Social (**Declarar › Declaração mensal à Segurança Social (DRI)**); Declaração mensal de remunerações, DMR (**Declarar › Declaração mensal de remunerações (DMR)**); Ajudas de custo e deslocações (**Preparar › Tempo de trabalho › Mapas de deslocação**). Ainda sem menu: Mapa de retenção de IRS por trabalhador e período |
+| Operacional | Recibos e folha de salários do mês (**Processar › Recibos de vencimento**); Lote de salários (**Processar › Processar o mês**); Pagamentos e transferências bancárias (**Pagar › Pagamentos de salários**); Quotas sindicais (**Preparar › Descontos e empréstimos › Quotas sindicais a entregar**). Ainda sem menu: Líquido a pagar do mês |
+| Contabilidade | Custo total da empresa (**Fechar e consultar › Custo total da empresa**); Reconciliação dos salários (**Fechar e consultar › Reconciliação dos salários**). Ainda sem menu: Provisões para férias e subsídios de férias e de Natal; Custos por departamento e por trabalhador |
+
+Para os valores a declarar, abra [a DMR](/payroll-pt/dmr) e [a declaração mensal à Segurança Social](/payroll-pt/declaracao-a-seguranca-social). Para o fecho do mês, ver [Como processar os salários do mês](/payroll-pt/processar-o-mes).
+
+## Notas importantes
+
+- **«Disponível» é lido do menu.** Se o mapa tem menu, aparece disponível; ninguém o marca à mão. A lista diz que o menu existe, não que o seu perfil o vê: confira a coluna **Aberto a**.
+- **A lista não vê o que não está lá.** Um mapa que a empresa precise e que o produto não tem (por exemplo uma lista pedida por um contrato coletivo) não aparece: a lista só mostra os 19 que o produto conhece.
+- **Os perfis da coluna «Aberto a» são os do menu.** Para dar acesso a um mapa, peça o perfil ao administrador do sistema; esta lista não dá acessos.
+
+## Problemas frequentes
+
+### «Sem acesso» ao abrir a lista
+
+- **Sintoma:** abre-se a janela **Sem acesso** com «Não tem acesso a «Inventário de mapas e relatórios de salários (PT)». Quem faz: «Contabilista certificado (assina, fecha períodos)», «Processador de salários» ou «Auditor / ROC».» e a indicação de quem atribui o perfil (o administrador do sistema, em **Definições › Utilizadores e empresas › Utilizadores**).
+- **Causa:** o seu utilizador não tem nenhum desses perfis. Sem eles, o menu não aparece (é o caso do perfil **Gestor de RH**); a janela surge se a lista for aberta por outro caminho, por exemplo uma ligação guardada.
+- **O que fazer:** peça o perfil ao administrador do sistema, ou peça a um dos perfis que a mensagem indica que lhe dê a informação de que precisa.

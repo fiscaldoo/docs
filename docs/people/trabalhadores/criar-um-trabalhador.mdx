@@ -1,0 +1,146 @@
+---
+id: criar-um-trabalhador
+slug: /people/criar-um-trabalhador
+title: Como criar a ficha de um trabalhador
+sidebar_label: Criar a ficha de um trabalhador
+sidebar_position: 1
+description: Registar um trabalhador novo com o NIF, o NISS, a data de admissão, o local de trabalho, a conta bancária e os dados da declaração de IRS, antes do contrato e do primeiro recibo.
+keywords: [criar trabalhador, ficha do trabalhador, novo trabalhador, novo colaborador, colaborador, funcionário, funcionario, admissão, admissao, data de admissão, NIF do trabalhador, NISS, número da segurança social, numero da seguranca social, IBAN do trabalhador, declaração de IRS, declaracao de irs, local de trabalho habitual, linha da vida]
+doc_id: DOC-0240
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/processar-o-mes]
+---
+
+## Para que serve?
+
+A ficha do trabalhador junta o que os salários, as declarações e as ausências vão buscar: o nome, o NIF, o número da Segurança Social (NISS), a data de admissão, o local de trabalho, a conta para onde se transfere o vencimento e os dados que a pessoa declarou para a retenção de IRS. Sem ela não há contrato, nem recibo, nem pedido de férias.
+
+Criar a ficha não gera lançamentos contabilísticos nem comunica nada à Segurança Social ou à Autoridade Tributária e Aduaneira (AT). O contrato regista-se a seguir, na mesma ficha.
+
+## Quando utilizar?
+
+- Vai admitir uma pessoa e quer processar o primeiro vencimento.
+- Está a passar para o fiscaldoo os trabalhadores que já tinha noutro programa.
+- Um trabalhador vai começar a pedir férias ou a ver os recibos em **O meu espaço**: precisa da ficha antes.
+
+Não crie uma ficha nova para um trabalhador que já existe e mudou de função, de horário ou de salário: essa alteração regista-se no contrato dele.
+
+## Onde encontrar?
+
+**Pessoas › Trabalhadores › Trabalhadores** › **Novo**
+
+A mesma ficha abre em **Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores**.
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador, ou é o administrador. Com o perfil **Processador de salários**, com ou sem esse acesso, o menu **Pessoas › Trabalhadores › Trabalhadores** não aparece: abra a ficha em **Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores**.
+- Com o perfil **Gestor de RH**, sem esse acesso, a ficha guarda-se, mas não tem o **Número da Segurança Social (NISS)** (passo 4) nem o separador **Folha de Salários** (passo 10). Com o perfil **Processador de salários**, sem o acesso, a ficha guarda-se, mas a **Data de admissão** (passo 6) e o resto do contrato aparecem só para leitura: quem os preenche é o Gestor de RH ou quem tem o acesso extra **Administrador de Salários**. A **DECLARAÇÃO DE IRS** (passo 10) também fica só para leitura: só quem tem o acesso extra **Administrador de Salários** a regista, porque um erro nesses dados passa para todos os recibos seguintes e para as declarações. {/* Nota interna (lote v23-AN, depois do comboio 174 com o RH-036, master a67618a71, docs_demo_v23an_test): com um utilizador só com o perfil Processador de salários, aberto por Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores › Novo, a Data de admissão, o grupo CONTRATO PORTUGUÊS e os seguintes do separador Trabalho, o resumo do contrato e a DECLARAÇÃO DE IRS da Folha de Salários vieram só de leitura; a ficha Rui Almeida Sousa (NIF 599999993, NISS, categoria e local Sede) guardou-se sem mensagem do contrato. No menu Pessoas › Trabalhadores esse perfil só tem Documentos dos trabalhadores, Diretório e Pedidos dos trabalhadores. A recusa «só lê o contrato» fica só para importação ou chamada por código (bilhete do RH-036), que não se provou no ecrã. */}
+  {/* Nota interna (lote v23-AL, DOCS-069 #4052, master 7a3b55244, docs_demo_v23al_test): visto por clique com um utilizador só com cada valor do Perfil (DEC-1777): Gestor de RH guardou a ficha com nome, NIF, categoria, data de admissão e local (sem NISS nem Folha de Salários); Processador de salários recusado ao guardar com a data de admissão; Processador de salários com o acesso Administrador de Salários fez os passos 1 a 8, 10 e 11 por Salários › Preparar › Fichas dos trabalhadores e a Linha da vida mostrou «02/11/2026 Admissão» e «0 das 6,58 horas» (o passo 9, IBAN, não foi refeito). A mensagem antiga da classe contabilística já não aparece ao Gestor de RH. */}
+- A empresa ativa (canto superior direito) é a do trabalhador: a ficha e o local de trabalho ficam nessa empresa.
+- A empresa tem pelo menos um local de trabalho. Na demonstração, a «Empresa Demonstração, Lda» não tinha nenhum e foi preciso criá-lo: com o perfil de administrador, abra **Pessoas › Configurar › Trabalhador › Locais de trabalho**, carregue em **Novo**, escreva o nome em **Localização de Trabalho** (por exemplo `Sede`) e guarde.
+
+![Formulário do local de trabalho com o nome Sede, o endereço Empresa Demonstração, Lda e o tipo Escritório](/images/people/criar-um-trabalhador/01-local-de-trabalho-sede.png)
+
+- Tem à mão o NIF e o NISS do trabalhador, o IBAN e a declaração que ele lhe entregou para a retenção de IRS (situação familiar e dependentes).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Pessoas › Trabalhadores › Trabalhadores** e carregue em **Novo**.
+2. Escreva o nome completo no campo do topo, por exemplo `Inês Rodrigues Costa`.
+3. Em **Número de identificação fiscal (NIF)**, escreva os 9 algarismos, sem `PT`. O NIF é conferido pelo dígito de controlo quando guarda.
+4. Em **Número da Segurança Social (NISS)**, escreva os 11 algarismos.
+5. Em **Categoria profissional**, escolha uma das oito: **Quadros superiores**, **Quadros médios**, **Encarregados, contramestres, mestres e chefes de equipa**, **Profissionais altamente qualificados**, **Profissionais qualificados**, **Profissionais semiqualificados (especializados)**, **Profissionais não qualificados (indiferenciados)** ou **Praticantes e aprendizes**.
+6. Em **Data de admissão**, escreva o primeiro dia de trabalho, por exemplo `02/11/2026`.
+   ![Topo da ficha de Inês Rodrigues Costa com o NIF tapado, o NISS, a categoria Profissionais qualificados e a data de admissão 02/11/2026](/images/people/criar-um-trabalhador/02-identificacao-do-trabalhador.png)
+7. No separador **Trabalho**, em **Local de trabalho habitual**, escolha o local (no exemplo, **Sede**). É o único campo obrigatório além do nome. Preencha também **Departamento**, **Cargo** e **Gestor**, se os usar.
+8. Carregue no ícone de guardar (a nuvem ao lado de **Novo**).
+9. No separador **Pessoal**, em **Contas bancárias**, escreva o IBAN completo (começa por `PT50` numa conta portuguesa) e escolha **Criar e editar…**. Na janela **Criar Contas bancárias**, confirme o **Número da Conta** e carregue em **Guardar**. O IBAN é conferido pelos dígitos de controlo do NIB. Guarde a ficha. A conta aparece numa etiqueta, com o número escondido salvo o princípio e o fim (no exemplo, `PT*************************14 3`), e com o interruptor «Untrusted» ao lado (texto do Odoo ainda por traduzir), que este procedimento não usa. Enquanto a ficha não tem conta, o topo diz «Pago por transferência bancária, mas falta a conta bancária ou o IBAN não é válido. Preencha um IBAN válido em «Contas bancárias» (separador Pessoal) antes do ficheiro de pagamento.»; o aviso sai quando guarda a ficha com a conta.
+   ![Campo Contas bancárias com a conta escondida PT, asteriscos e 14 3 no fim, e o interruptor Untrusted](/images/people/criar-um-trabalhador/03-conta-bancaria.png)
+   {/* Nota interna (lote v23-AM, DOCS-069 #4052, master 8d5d6c606, docs_demo_v23am_test): passo 9 refeito por clique com um utilizador só com o Perfil Processador de salários e o acesso extra Administrador de Salários (DEC-1777), na ficha nova Marta Ribeiro Lopes aberta por Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores: aviso do topo depois do 1.º Guardar, Criar e editar…, janela Criar Contas bancárias (Número da Conta, BIC/SWIFT, Código de instituição financeira (COPE), Titular da conta, Conta bancária de confiança), Guardar, ficha guardada e aviso desaparecido; a etiqueta mostra o IBAN escondido. A mensagem do IBAN inválido (Problemas frequentes) foi provocada na mesma ficha, com PT50000000000000000000000, e é igual. Captura 03 nova. */}
+10. No separador **Folha de Salários**, no grupo **DECLARAÇÃO DE IRS**, registe o que o trabalhador declarou: **Residência fiscal** (**Portugal Continental**, **Açores**, **Madeira** ou **Não residente**), **Estado civil (IRS)** (**Não casado**, **Casado, dois titulares** ou **Casado, único titular**), **Dependentes**, **União de facto**, **Declaração «casado, único titular»** e **Data da declaração do trabalhador**.
+    ![Grupo Declaração de IRS com a residência Portugal Continental, o estado civil Não casado, 0 dependentes e a data da declaração 02/11/2026](/images/people/criar-um-trabalhador/04-declaracao-de-irs.png)
+11. Guarde outra vez.
+
+</StepByStep>
+
+Os outros campos do separador **Trabalho** (grupos **CONTRATO PORTUGUÊS**, **SEGURANÇA SOCIAL**, **TEMPO DE TRABALHO**, **SEGURO DE ACIDENTES DE TRABALHO**) e o resumo do contrato na **Folha de Salários** são do contrato, que se regista a seguir.
+
+## No Enterprise
+
+No Odoo Enterprise, a ficha cria-se pelos mesmos caminhos, com os mesmos passos e os mesmos campos obrigatórios. Foi vista com o perfil **Processador de salários** com o acesso extra **Administrador de Salários**, em **Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores**, e com o **Gestor de RH**, em **Pessoas › Trabalhadores › Trabalhadores**. A ficha traz a mais campos e botões das aplicações do Enterprise, que este procedimento não usa:
+
+- no separador **Pessoal**, **Idioma do recibo de vencimento**, dos salários do Enterprise, e o grupo **PLANEAMENTO** (**Funções**, **Função por omissão**), da aplicação **Planeamento**;
+- no separador **Trabalho**, **Data da Próxima Avaliação**, da aplicação **Avaliações**. Numa ficha nova já vem preenchida, seis meses depois do dia de hoje;
+- no topo da ficha, o botão **Metas** e, com o **Gestor de RH**, também **Documentos** e o botão das avaliações.
+
+Os salários do Enterprise têm um campo próprio de não residente. Numa empresa portuguesa, esse campo fica escondido: a residência que conta para a retenção de IRS é a **Residência fiscal** do grupo **DECLARAÇÃO DE IRS** (passo 10).
+
+{/* Nota interna (lote EE-10, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): cópia Enterprise docs_ee_ee10b_test no portátil (pg_dump da odoo20_ee_test, -u dos módulos mudados até master e -i de hr_payroll, planning, hr_appraisal e hr_recruitment), porta 8504, guarda de rede ligada; utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): ficha nova e ficha de Bruno Miguel Teixeira com ee10_adms (separadores Trabalho, Folha de Salários, Pessoal, Currículo, Linha da vida; botões Metas e Exportar dados pessoais) e com ee10_rh (Trabalho, Pessoal, Currículo, Formação, Linha da vida; botões Documentos, Appraisals New, Metas, Férias, Pedidos de ausência, Exportar dados pessoais); is_non_resident com invisible=l10n_pt_ee_pt_company (EEA-074, comboio 192) não aparece na Folha de Salários; Data da Próxima Avaliação 11/05/2027 numa ficha nova a 11/11/2026; o rótulo «Appraisals New» é defeito de tradução (relatório). Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee10_test (master e4dd4ae90, a do lote EE-10 interrompido) e com o texto do artigo. Ver reports/LOTE_EE-10.md. */}
+
+## Resultado esperado
+
+- A ficha fica guardada e aparece na lista **Trabalhadores**.
+- O separador **Linha da vida** mostra a categoria profissional e a linha «02/11/2026 Admissão». Mostra também as horas de formação que a lei exige no ano; numa admissão a meio do ano são proporcionais (no exemplo, «0 das 6,58 horas»).
+- No separador **Folha de Salários**, o resumo do contrato já mostra um **Novo contrato** com a data de admissão e **Salário** a 0,00 €: falta registar o contrato antes do primeiro recibo.
+
+![Separador Linha da vida com a categoria Profissionais qualificados e a admissão a 02/11/2026](/images/people/criar-um-trabalhador/05-linha-da-vida.png)
+
+{/* Nota interna (DOCS-034): vídeo previsto (video=sim, corrente DOCS-006): criar a ficha da Inês Rodrigues Costa, do «Novo» até à «Linha da vida». Entra como secção «Vídeo demonstrativo» depois de «Resultado esperado» quando existir; o defeito D1 do relatório LOTE_D (perfil Gestor de RH não guarda a ficha) já não se reproduz (auditoria docs-aud-v23al, master 8d5d6c606); gravar com o acesso extra Administrador de Salários, que faz todos os passos. */}
+
+## Notas importantes
+
+- **Os dados de IRS decidem a retenção.** O estado civil, os dependentes e a residência fiscal escolhem a tabela de retenção na fonte do recibo. Registe o que o trabalhador declarou por escrito e a data dessa declaração; sem declaração, fale com o contabilista certificado antes do primeiro recibo. <span className="fd-pending">Pendente de validação por contabilista certificado: tabela aplicada sem declaração do trabalhador.</span>
+- **A admissão comunica-se à Segurança Social antes de o trabalho começar.** O fiscaldoo não o faz ao guardar a ficha. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo da comunicação de admissão (Código Contributivo).</span>
+- **O NISS não é conferido ao guardar.** Na demonstração foi aceite um NISS com o último algarismo errado. Confira-o com o documento da Segurança Social.
+
+{/* Nota interna (DOCS-034): retirar a última nota quando o defeito D4 (NISS sem dígito de controlo) do relatório LOTE_D entrarem em master. */}
+
+## Problemas frequentes
+
+### A Data de admissão e o contrato aparecem só para leitura
+
+- **Sintoma:** com o perfil **Processador de salários**, não se escreve na **Data de admissão**, nos campos do contrato do separador **Trabalho** (do grupo **CONTRATO PORTUGUÊS** para baixo) nem no resumo do contrato e na **DECLARAÇÃO DE IRS** do separador **Folha de Salários**. A ficha guarda-se sem eles.
+- **Causa:** a data de admissão é o início do contrato, e o perfil **Processador de salários**, sem o acesso extra **Administrador de Salários**, só lê o contrato. Também só lê a declaração de IRS: um erro nela passa para todos os recibos seguintes e para as declarações, por isso só quem tem esse acesso extra a regista.
+- **O que fazer:** guarde a ficha. Peça a data de admissão e o contrato ao Gestor de RH ou a quem tem o acesso extra **Administrador de Salários**. A declaração de IRS, peça-a só a quem tem esse acesso extra.
+
+### A ficha não guarda por causa do NIF
+
+- **Sintoma:** ao guardar: «O número de contribuinte (NIF) «…» de «…» já é o de «…». O que aconteceu: dois trabalhadores da mesma empresa não podem ter o mesmo NIF, porque as declarações (DMR, Segurança Social) contariam a mesma pessoa duas vezes. Como resolver: corrija o número ou arquive o trabalhador repetido.»
+- **Causa:** o NIF já está na ficha de outro trabalhador da mesma empresa.
+- **O que fazer:** procure o NIF na lista **Trabalhadores**. Se a ficha é do mesmo trabalhador, use-a; se o NIF estava errado, corrija-o.
+
+### O Local de trabalho habitual diz «Sem registos»
+
+- **Sintoma:** ao escrever no campo, a lista mostra «Sem registos» e não há opção para criar.
+- **Causa:** a empresa ativa não tem locais de trabalho. Os de outra empresa não aparecem.
+- **O que fazer:** peça ao administrador que crie o local em **Pessoas › Configurar › Trabalhador › Locais de trabalho** (ver «Antes de começar»). Sem local, a ficha não guarda: «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+
+### O NIF é recusado
+
+- **Sintoma:** ao guardar, a janela **Erro de Validação**: «O NIF «246813570» não é válido. Porquê: o último algarismo (dígito de controlo) não corresponde aos outros oito. Como resolver: Confira o número no cartão de cidadão ou no documento de identificação fiscal e escreva-o de novo.» A ficha não fica guardada.
+- **Causa:** um algarismo está trocado.
+- **O que fazer:** confira o número no cartão de cidadão ou noutro documento do trabalhador e escreva-o de novo.
+
+{/* Nota interna (DOCS-044 #3539, ronda fix-saft2; 30/10/2026, master 9d1671e9f, base docs_demo_saft2_test, administrador, Empresa Demonstração, Lda com o local Sede): mensagem do NIF inválido copiada do ecrã do trabalhador (ficha nova com o NIF 246813570 e o local de trabalho preenchido; a ficha não se guardou). O resto do artigo é do master 54a9f5f03. */}
+
+{/* Nota interna (retoma da ronda única, DEC-1535; 31/10/2026, master 27cebe13a, base docs_demo_ronda2_test): refeito no ecrã do trabalhador com o administrador e a Empresa Demonstração, Lda ativa: local Sede criado em Locais de trabalho (a morada sugerida foi a da empresa), ficha nova Inês Rodrigues Costa com o NIF 246813570 e o local Sede, Guardar: janela Erro de Validação com a mensagem citada, palavra por palavra; a ficha não se guardou. O resto do artigo não se refez nesta retoma. */}
+
+### A Linha da vida diz «Ainda não há nada na linha da vida»
+
+- **Sintoma:** o separador **Linha da vida** diz «Ainda não há nada na linha da vida: registe o contrato do trabalhador.»
+- **O que fazer:** preencha o contrato no separador **Trabalho** (ver [Contrato de trabalho](/people/contrato-de-trabalho)); a admissão aparece depois.
+
+{/* Nota interna (lote v23-AH, DOCS-069 #4052, master 97b34fac3, docs_demo_v23ah_test): frase vista por clique com o Processador de Salários da demonstração na ficha de um trabalhador sem contrato. Vinha do guia congelado Salários/linha-da-vida-do-trabalhador.md. */}
+
+### O IBAN é recusado
+
+- **Sintoma:** na janela da conta bancária: «O IBAN “PT50000000000000000000000” é inválido (dígitos de controlo do NIB português). Verifique o número no seu extrato bancário.»
+- **Causa:** os dois últimos algarismos (controlo do NIB) não batem com o resto do número.
+- **O que fazer:** peça ao trabalhador o comprovativo do IBAN emitido pelo banco e copie-o de lá.

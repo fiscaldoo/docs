@@ -1,0 +1,88 @@
+---
+id: ambientes-de-teste-e-producao
+slug: /administration/ambientes-de-teste-e-producao
+title: Como separar o ambiente de testes do de produção
+sidebar_label: Ambientes de testes e de produção
+description: "O que muda numa base de testes, o que nunca sai dela, como reconhecer o ambiente e o que decide para onde segue um envio à AT."
+keywords: [ambiente de testes, ambiente de produção, ambiente de producao, base de testes, credenciais da AT, usado para envio, simulador, separar ambientes]
+doc_id: DOC-0324
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 255d77e63)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [migration-toolkit/planear/planear-a-migracao]
+---
+
+{/* Nota interna (DOCS-046, lote v13-PPL): Credenciais da AT percorridas com admin na base de testes: lista, ficha, opções do Ambiente e uma ficha nova, que começa em Teste. As mensagens da secção «Mensagens de recusa» NÃO foram provocadas: provocá-las é tentar um envio à AT de produção, o que o brief proíbe. Vêm do guia Operação/ambientes-de-teste-e-producao.md. Ver LOTE_V13PPL. */}
+
+## Para que serve?
+
+Explica a diferença entre a base onde se experimenta e a base onde a empresa trabalha a sério, e o que garante que **nada do que se faz em teste chega à Autoridade Tributária (AT), aos bancos ou aos clientes**. Serve para formar pessoas, experimentar uma versão nova ou reproduzir um problema sem risco.
+
+## Quando utilizar?
+
+- Vai formar alguém ou experimentar uma versão nova.
+- Quer ter a certeza de em que ambiente está antes de fazer um envio.
+- Vai passar a empresa para produção.
+
+## Onde encontrar?
+
+Não há um menu para isto. O ambiente vê-se:
+
+- no **nome da base de dados**: uma base de testes tem «test» no nome;
+- em **Contabilidade › Configurar › Faturação certificada › Credenciais da AT**, na coluna **Ambiente**, para os envios à AT.
+
+## Antes de começar
+
+O menu **Credenciais da AT** só aparece a quem tem esse direito. Foi percorrido com o perfil **Administrador**. O **Contabilista certificado** não tem este menu. Se não souber o nome da base de dados, pergunte ao suporte técnico.
+
+## O que muda numa base de testes
+
+| | Base de testes | Base de produção |
+|---|---|---|
+| **Nome da base de dados** | Tem «test» | Não tem «test» |
+| **Dados** | Inventados | Reais |
+| **Comunicação à AT** | Só o simulador local, com as mensagens dos manuais da AT | A que o responsável ligar de propósito |
+| **Rede** | Só a própria máquina: o resto é bloqueado antes de sair | Normal |
+| **Correio, bancos, SIBS, pagamentos** | Nunca | Se estiverem ligados |
+| **Chaves de assinatura** | Só as de teste, que não servem para documentos reais | As de produção |
+| **Valor fiscal dos documentos** | Nenhum | Total: corrigem-se com nota de crédito, e não se apagam |
+
+A separação está **no servidor**, e não só no ecrã: ninguém a contorna por engano, nem com um clique. Pendente de validação no ecrã: na demonstração só se viu o simulador da AT; as outras linhas vêm do guia de operação.
+
+## O que decide para onde segue um envio à AT
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › Faturação certificada › Credenciais da AT**. Cada linha tem **Empresa**, **Ambiente**, **Utilizador do webservice**, **Usado para envio** e **Válido até**.
+   ![Lista Credenciais da AT com uma linha da empresa de demonstração, no Ambiente Teste, com validade até 31/10/2031 e o utilizador tapado](/images/administration/ambientes-de-teste-e-producao/01-credenciais.png)
+2. Abra a ficha. O campo **Ambiente** tem duas opções: **Teste** e **Produção**. Uma ficha nova começa sempre em **Teste**.
+3. Só o **Ambiente** e a marca **Usado para envio** decidem para onde segue um envio. Com as credenciais de teste, a ficha oferece **Testar a ligação (simulador)** e **Ver a prontidão**.
+
+</StepByStep>
+
+## Passar para produção
+
+É uma operação da base de produção, com o suporte técnico. Na ficha de **Credenciais da AT**: escolha **Produção**, escreva o **Utilizador do webservice** e a **Palavra-passe do webservice**, carregue o certificado que a AT enviou e marque **Usado para envio**. Um conjunto por empresa e por ambiente. Depois de gravados, os segredos aparecem tapados e só se podem substituir.
+
+Este caminho não foi feito até ao fim na demonstração, porque exigiria credenciais reais. Pendente de validação no ecrã.
+
+## Notas importantes
+
+- **Nunca copie dados reais para uma base de testes** sem os neutralizar antes (nomes, NIF, contactos, IBAN).
+- **Para reproduzir um problema**, restaure uma cópia numa base nova com «test» no nome. Para o planeamento de cópias e ensaios, veja [Como preparar a migração de outro programa para o fiscaldoo](/migration-toolkit/planear-a-migracao).
+- **Uma base de testes nunca recebe a chave de assinatura de produção.**
+- **Resultados simulados.** Em teste, os resultados aparecem como simulados, por exemplo **Aceite (simulado)**, com o **Ambiente** **Teste**.
+- **O que este artigo não cobre.** Um servidor de testes ligado aos endereços de testes da AT é uma operação do suporte técnico, e não uma configuração do utilizador.
+
+## Problemas frequentes
+
+### Mensagens de recusa
+
+Estas mensagens são o isolamento a funcionar. Pendente de validação no ecrã: não foram provocadas na demonstração, porque seria tentar um envio à AT de produção.
+
+- **«O ambiente de produção da Autoridade Tributária não é permitido numa base de dados de teste. Não foi enviado nada. Escolha as credenciais de teste da empresa …»:** escolha as credenciais de teste, ou faça o envio real na base de produção.
+- **«A empresa … ainda não escolheu o ambiente da AT. Assinale «Usado para envio» nas credenciais de teste ou de produção …»:** abra **Credenciais da AT**, escolha o conjunto e marque **Usado para envio**.
+- **«As credenciais partilhadas são de outro ambiente (teste ou produção).»:** use o conjunto do ambiente da empresa. Não reutilize as de produção em teste.

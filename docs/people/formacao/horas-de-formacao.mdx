@@ -1,0 +1,79 @@
+---
+id: horas-de-formacao
+slug: /people/horas-de-formacao
+title: Como acompanhar as horas de formação obrigatórias do ano
+sidebar_label: Horas de formação do ano
+sidebar_position: 3
+description: "Ver quantas horas de formação cada trabalhador já teve no ano, contra o mínimo legal de 40 horas."
+keywords: [horas de formação, 40 horas, formação contínua, mínimo anual, verificação anual, painel de formação, visão da direção, trabalhadores formados, 10 por cento]
+doc_id: DOC-0258
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/formacao/registar-formacao]
+---
+
+## Para que serve?
+
+Mostra, por trabalhador, as horas de formação do ano contra o mínimo legal de 40 horas (Código do Trabalho, art. 131.º/2) e quem está abaixo. Mostra também a regra dos 10 % de trabalhadores formados por ano.
+
+## Quando utilizar?
+
+- Quer saber quem ainda não tem as 40 horas.
+- Vai planear formação para o resto do ano.
+- Precisa dos números para a gerência.
+
+## Onde encontrar?
+
+**Pessoas › Formação › Horas e crédito de horas › Horas de formação do ano**, e os painéis **Pessoas › Formação › Configuração e painéis › Painel de formação** e **Visão da direção**.
+
+## Antes de começar
+
+- O seu perfil é **Gestor de RH**. Os perfis **Processador de salários** e **Gerência** veem o **Painel de formação** e a **Visão da direção**.
+- Há ações de formação registadas ([Como registar uma ação de formação e as presenças](/people/registar-formacao)).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Pessoas › Formação › Horas e crédito de horas › Horas de formação do ano**. Escolha o **Ano** e carregue em **Verificar o ano**.
+2. Leia o aviso do topo, por exemplo «9 trabalhador(es) têm menos horas de formação do que o mínimo legal.».
+3. Em **O ano em resumo** confira o **Mínimo anual (horas)** (40,00), os **Trabalhadores no ano**, os **Trabalhadores abaixo do mínimo**, os **Trabalhadores com formação (%)** (22,22, contra a **Percentagem mínima de trabalhadores** de 10,00) e as **Horas dadas** (19,00).
+4. Na tabela, veja por trabalhador o **Mínimo do ano**, as **Horas dadas** e as **Horas em falta**.
+
+</StepByStep>
+
+![Aviso de que 9 trabalhadores têm menos horas de formação do que o mínimo legal](/images/people/horas-de-formacao/01-aviso-minimo.png)
+
+## No Enterprise
+
+No Odoo Enterprise, as horas acompanham-se nos mesmos ecrãs, com o perfil **Gestor de RH**: **Horas de formação do ano** (com **Verificar o ano**, **Ver os participantes** e **Descarregar Excel**), o **Painel de formação** e a **Visão da direção** têm os mesmos blocos e as mesmas contas, incluindo o mínimo de 40,00 horas proporcional para quem não esteve o ano todo e a regra dos 10 %. O **Processador de salários** e a **Gerência** têm os mesmos menus de formação que no Community.
+
+{/* Nota interna (lote EE-11, DOCS-073 #4142, DEC-1794, master 589ecfd27, 12/11/2026): cópia Enterprise docs_ee_ee11_test no portátil (pg_dump da odoo20_ee_test, já em 589ecfd27; -i de hr_payroll, planning, hr_appraisal e hr_recruitment e -u de fiscaldoo_ux_kit e l10n_pt_fiscaldoo_demo; ee_neutralizar antes e construir), porta 8508, guarda de rede ligada; utilizadores criados por RPC na cópia, cada um só com um valor do campo Perfil: ee11_rh: Verificar o ano (aviso «9 trabalhador(es) têm menos horas de formação do que o mínimo legal.», O ANO EM RESUMO, mínimos proporcionais 36,60, 33,53 e 33,21), Painel de formação (Horas dadas, Trabalhadores com 40 h, Ações por validar, Assinaturas em falta, A expirar em 90 dias, Mais longe do mínimo) e Visão da direção (Regra dos 10 % formados por ano, Formação obrigatória). A cópia Enterprise não tinha ações de formação antes das deste lote, por isso os números diferem dos do artigo. Menus de ee11_proc e ee11_ger iguais nas duas cópias. Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee11_test (master 589ecfd27, porta 8518), com os mesmos utilizadores. Ver reports/LOTE_EE-11.md. */}
+
+## Resultado esperado
+
+A tabela tem uma linha por trabalhador. No exemplo, Eva Cristina Rocha tem 12,00 horas (8 + 4) e 28,00 em falta, e Hugo Miguel Santos 7,00 horas (4 + 3) e 26,21 em falta. O **Painel de formação** diz o mesmo («*Hugo Miguel Santos* 7 / 40 h»).
+
+## Notas importantes
+
+- **O mínimo é proporcional quando o trabalhador não esteve o ano todo.** A tabela dá, por exemplo, 36,60 e 33,53 horas de mínimo a trabalhadores admitidos durante o ano. <span className="fd-pending">Pendente de validação por contabilista certificado: o cálculo do mínimo proporcional (CT art. 131.º/2).</span>
+- **O plano individual de cada trabalhador.** Numa ação de **Pessoas › Formação › Dia a dia › Ações de formação**, o botão **Planos individuais** abre os **Planos individuais de formação**: em **Novo**, escolha o **Trabalhador**, o **Ano** e as **Horas previstas**. As **Horas realizadas** e o **Progresso (%)** calculam-se sozinhos.
+- **As horas contam mesmo com assinaturas em falta.** Uma lista sem faltas não prova que as ações estão validadas.
+- Os botões **Ver os participantes** e **Descarregar Excel** estão no mesmo ecrã. <span className="fd-pending">Pendente de validação no ecrã: o ficheiro Excel não foi aberto neste lote.</span>
+- Quem não chega às 40 horas passa a ter crédito de horas: o crédito de horas vê-se em **Pessoas › Formação › Horas e crédito de horas › Crédito de horas** ([Como gerir o crédito de horas de formação](/people/credito-de-horas-de-formacao)).
+
+## Problemas frequentes
+
+### Só os Recursos Humanos, os Salários e a Gerência veem os painéis de formação
+
+Com outro perfil, a mensagem é «Só os Recursos Humanos, os Salários e a Gerência veem os painéis de formação. Como resolver: peça acesso ao administrador.».
+
+### O trabalhador deu formação e as horas não aparecem
+
+Confirme que a ação está registada com o trabalhador **Presente** (ou **Parcial** com horas): quem **Faltou** fica com 0,00 horas.
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Salários passou a Processador de salários e o Recursos Humanos a Gestor de RH; menus lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador): Painel de formação e Visão da direção aparecem ao Gestor de RH, ao Processador de salários, à Gerência e ao administrador */}

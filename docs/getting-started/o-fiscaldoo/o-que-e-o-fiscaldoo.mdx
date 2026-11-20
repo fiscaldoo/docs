@@ -1,0 +1,80 @@
+---
+id: o-que-e-o-fiscaldoo
+slug: /getting-started/o-que-e-o-fiscaldoo
+title: O que é o fiscaldoo e a quem se destina
+sidebar_label: O que é o fiscaldoo
+description: O fiscaldoo é a localização portuguesa do Odoo 20. Junta a faturação certificada, a contabilidade, os salários e a gestão de pessoas, para empresas e gabinetes em Portugal.
+keywords: [fiscaldoo, o que é, o que e, a quem se destina, localização portuguesa, localizacao portuguesa, Odoo, programa certificado, certificação, certificacao, 2790, áreas, areas, aplicações, aplicacoes]
+doc_id: DOC-0001
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 3a28c9b91)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [getting-started/o-fiscaldoo/edicoes-e-versoes-suportadas, getting-started/primeira-configuracao/requisitos-e-instalacao, administration/utilizadores-e-permissoes/perfis-e-permissoes]
+---
+
+{/* Nota interna (DOCS-046, #3616, lote v12-P2): corrige NV3P-03, NV3P-11 e NV3P-15 (aud-v3ppl). Cada linha da tabela corresponde a menus abertos na docs_demo_v12p2_test, master a060fe441. Certificado n.º 2790: memória do projeto e DEC-992; o número não é constante de código (DEC-766) e regista-se por empresa; na demonstração o PDF sai com o número de teste. */}
+
+O fiscaldoo é a localização portuguesa do Odoo 20, nas edições Community e Enterprise. Junta ao Odoo a faturação certificada, a contabilidade, os salários e a gestão de pessoas para quem trabalha em Portugal, no mesmo programa e com os menus em português.
+
+## O que acrescenta ao Odoo
+
+Cada linha é uma aplicação do menu principal. O que cada pessoa vê depende do seu perfil.
+
+| Aplicação | Para que serve | Exemplos de menus |
+| --- | --- | --- |
+| **Faturação** | Emitir documentos certificados e receber. | **Faturar › Faturas de clientes**, **Faturar › Guias de transporte**, **Receber › Recibos e pagamentos recebidos** |
+| **Contabilidade** | Contabilidade no plano português (SNC), IVA, SAF-T e configuração fiscal. | **Declarar › Ficheiro SAF-T › Gerar SAF-T**, **Configurar › Faturação certificada › Séries fiscais** |
+| **Salários** | Preparar, processar, pagar e declarar os salários. | **Processar › Processar o mês**, **Declarar › Declaração mensal de remunerações (DMR)** |
+| **Pessoas** | Trabalhadores, contratos, férias e ausências. | **Pessoas › Trabalhadores › Trabalhadores**, **Pessoas › Férias e ausências › Mapa de férias** |
+| **O meu espaço** | O que cada trabalhador consulta e pede. | **Recibos e documentos › O meu recibo**, **Ausências e presenças › Pedir férias** |
+| **Direção** | Números da empresa para quem gere, em linguagem corrente. | **Início › Painel da Direção**, **Clientes e vendas › Quem me deve** |
+| **Auditoria** | Registos e verificação da integridade. | **Registos › Registo de auditoria**, **Integridade › Autodiagnóstico da certificação** |
+| **Copiloto** | Assistente com inteligência artificial, que só usa uma IA externa se a empresa a ligar. | **Ligações às IAs › Ligações**, **Controlo › Chamadas à IA** |
+
+Numa base Enterprise, o administrador vê estas aplicações e as do Enterprise, como **Subscrições**, **Documentos** e **Assinar**. Onde o Enterprise já tem uma aplicação para a mesma tarefa, usa-se a dele: as subscrições em vez das avenças do fiscaldoo, os lembretes de pagamento, a reconciliação bancária e as assinaturas. O que muda está em [Edições e versões suportadas](/getting-started/edicoes-e-versoes-suportadas#o-que-muda-no-enterprise).
+
+Para trazer dados de outro programa, os menus estão em **Contabilidade › Configurar › Migração e importações**, por exemplo **Importar ficheiro SAF-T**, **Migração de documentos certificados** e **Saldos de abertura por terceiro**, e, para os salários, em **Salários › Configurar › Migração**.
+
+## A certificação
+
+O fiscaldoo é um programa de faturação certificado pela Autoridade Tributária e Aduaneira (AT), com o n.º 2790.
+
+- O número fica registado no programa, por empresa, e sai no rodapé de cada documento: «Processado por programa certificado n.º …/AT». Numa base de testes, sai um número de teste.
+- Sem o certificado, a chave de assinatura e as séries, a empresa não emite documentos certificados. O estado vê-se em **Contabilidade › Configurar › Sistema e segurança › Estado da certificação**, que diz o que falta a cada empresa.
+- O que é preciso fazer está em [Preparar a faturação certificada](/fiscal-core/preparar-a-faturacao-certificada).
+
+## A quem se destina
+
+- **Empresas em Portugal** que querem faturar, fazer a contabilidade e tratar os salários e as pessoas no mesmo programa.
+- **Gabinetes de contabilidade** que tratam várias empresas no mesmo programa, escolhendo a empresa no topo do ecrã.
+- **Consultores e parceiros Odoo** que instalam e configuram a localização, e as equipas de suporte que a acompanham.
+
+## O que cada pessoa vê
+
+O menu de aplicações muda com o perfil. Na empresa de demonstração, sem contar com **Contactos**, **Discussões**, **Calendário** e assinaturas:
+
+| Perfil | Aplicações que vê |
+| --- | --- |
+| **Trabalhador** | **O meu espaço** |
+| **Administrativo** | **Vendas**, **Ponto de venda**, **Faturação**, **Despesas**, **Ausência**, **EDI**, **Painéis** |
+| **Contabilista** | **Contabilidade**, **Vendas**, **Ponto de venda**, **Faturação**, **Copiloto**, **Despesas**, **Ausência**, **EDI**, **Painéis** |
+| **Contabilista certificado** | as do **Contabilista** e **Auditoria** |
+| **Gestor de RH** | **Salários**, **Pessoas**, **Despesas** |
+| **Processador de salários** | **Salários**, **Pessoas**, **Despesas** |
+| **Auditor / ROC** | **Contabilidade**, **Faturação**, **Copiloto**, **Auditoria**, **EDI** |
+| **Gerência** | **Direção**, **Contabilidade**, **Salários**, **Pessoas**, **Faturação**, **Copiloto**, **Auditoria**, **EDI** |
+
+O administrador do sistema vê todas as aplicações, incluindo **Definições**. A lista dos perfis está em [Perfis e permissões](/administration/perfis-e-permissoes).
+
+## O que o fiscaldoo não faz
+
+- **Emitir não é comunicar.** Emitir um documento não o comunica à AT. A comunicação é um passo à parte e precisa das credenciais da empresa. Com o ambiente em **Teste**, nada chega ao ambiente real da AT.
+- **Não decide por si.** O fiscaldoo calcula e preenche o que a lei e os dados permitem. As decisões fiscais e a entrega das declarações continuam a ser da empresa e do seu contabilista certificado.
+- **Só existe para o Odoo 20.** Instala-se nas edições Community e Enterprise; no Enterprise juntam-se os pacotes de ligação ao Enterprise. Veja [Edições e versões suportadas](/getting-started/edicoes-e-versoes-suportadas).
+
+Antes de instalar, veja [Requisitos e instalação](/getting-started/requisitos-e-instalacao).
+
+{/* Nota interna (DOCS-046, #3616, lote v23-J, DEC-1794): a frase «a versão para a edição Enterprise ainda não está disponível para clientes» saiu; o fiscaldoo existe no Community e no Enterprise (mesmos pacotes e, no Enterprise, as 15 pontes de enterprise/custom_addons, master 5228a94bd). Aplicações e menus da tabela não foram revistos neste lote (continuam os da v12-P2); na base Enterprise, o admin tem também Subscrições, Documentos, Assinar e Código de Barras (load_menus, 07/11). Base Enterprise de teste: odoo20_ee_test_dev_v23j (ver LOTE_V23-J). */}

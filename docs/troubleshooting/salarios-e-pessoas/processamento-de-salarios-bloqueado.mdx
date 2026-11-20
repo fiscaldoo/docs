@@ -1,0 +1,79 @@
+---
+id: processamento-de-salarios-bloqueado
+slug: /troubleshooting/processamento-de-salarios-bloqueado
+title: Não consigo processar os salários do mês
+sidebar_label: Processamento dos salários bloqueado
+description: Ponto de partida quando os salários do mês param. Descubra em que passo do lote está o problema e siga para o artigo de cada causa.
+keywords: [não consigo processar os salários, nao consigo processar os salarios, salários bloqueados, salarios bloqueados, processamento de salários, processamento salarial, lote de salários, lote de salarios, o que há para fazer este mês, bloqueado, operação inválida, operacao invalida, recibos do mês, recibos do mes]
+doc_id: DOC-0364
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7281543f)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/processar-o-mes, troubleshooting/salarios-e-pessoas/recibo-validado-nao-se-altera, troubleshooting/salarios-e-pessoas/mes-dos-salarios-fechado, troubleshooting/salarios-e-pessoas/lote-ou-recibo-no-passo-errado, troubleshooting/salarios-e-pessoas/recibo-nao-e-contabilizado, troubleshooting/salarios-e-pessoas/pagamento-dos-salarios-recusado]
+---
+
+## Sintoma
+
+Os salários do mês param a meio: um botão do lote abre **Operação inválida**, um aviso por cima do lote diz «(Bloqueia o fecho)», ou um passo do ecrã **O que há para fazer este mês?** fica **A fazer** e não avança.
+
+## Mensagem
+
+Não há uma mensagem única. Cada passo tem as suas, e todas seguem o mesmo formato: o que falhou, «O que aconteceu:» e «Como resolver:» (ou «Como corrigir:»). Leia a parte «Como resolver»: diz quase sempre o botão ou o menu certo.
+
+O ecrã **O que há para fazer este mês?** (ao abrir **Salários**) mostra os 8 passos do mês, cada um com o estado (**Feito**, **A fazer** ou **Bloqueado**). Um mês sem lote mostra «Este mês ainda não tem lote.» no passo 3 e os passos 4 a 8 **Bloqueado**, cada um com o que falta («Calcule primeiro os recibos.», «Valide primeiro o lote.», «Pague primeiro os salários.»).
+
+No outubro de 2026 da demonstração, depois de pago e **Fechar** o lote, os passos 1 a 5, 7 e 8 estavam **Feito** e o passo 6 **A fazer**, com «Declarações por entregar: 1.». O topo do ecrã diz: «O mês está fechado, mas ainda há declarações por entregar: 1.». Confira sempre o passo 6 antes de dar o mês por terminado.
+
+## Causas verificadas
+
+Procure o passo em que parou e siga o artigo dessa causa:
+
+- **Criar os recibos do mês**: «Este mês já está fechado (fechado até …).» Veja [O mês dos salários já está fechado](/troubleshooting/mes-dos-salarios-fechado).
+- **Calcular** num lote sem recibos: «O lote … não tem recibos.» Veja [Como processar os salários do mês](/payroll-pt/processar-o-mes), «Problemas frequentes».
+- **Ações › Eliminar** ou **Fechar** no lote: «Só um lote em rascunho pode ser apagado.» ou «O lote … não pode ser fechado: …» Veja [O lote ou o recibo não está no estado certo para este passo](/troubleshooting/lote-ou-recibo-no-passo-errado).
+- Mudar, apagar ou anular um recibo validado ou pago: «Recibo de vencimento já validado: já não se altera.» Veja [O recibo já está validado e não se altera](/troubleshooting/recibo-validado-nao-se-altera).
+- **Contabilizar**: «Contabilização bloqueada: … não têm modelo de contabilização …» Veja [O recibo não é contabilizado](/troubleshooting/recibo-nao-e-contabilizado).
+- **Ficheiro de transferências**: «Não há pagamentos para pôr num ficheiro.» ou «Ainda não é possível fazer o ficheiro de transferências. O que aconteceu: 8 recibos não estão contabilizados… São eles: …». **Marcar como pago**: a janela de confirmação e a recusa «não pode ser marcado como pago: o banco executou 0,00 € de …». **Repor para Validado** recusado. Veja [Não consigo pagar os salários ou gerar o ficheiro de transferências](/troubleshooting/pagamento-dos-salarios-recusado).
+- Passo 6, **Entregar as declarações**: mensagens da DMR ou da declaração à Segurança Social. Veja [DMR](/payroll-pt/dmr) e [Declaração à Segurança Social](/payroll-pt/declaracao-a-seguranca-social), «Problemas frequentes».
+
+- **Calcular** recusado por um dado em falta (horário, tabela de IRS, regime de Segurança Social): [O recibo não é calculado: falta o horário, a tabela de IRS ou outro dado](/troubleshooting/recibo-sem-dados-para-calcular).
+- **Calcular** recusado num ano novo (calendário de feriados ou tabelas legais do ano): [Falta uma tabela legal em vigor nessa data](/troubleshooting/tabelas-legais-em-falta).
+- A DMR rejeitada pelo Portal das Finanças: [A DMR foi rejeitada ou não pode ser gerada](/troubleshooting/dmr-rejeitada). Diferenças na confirmação da Segurança Social: [A declaração à Segurança Social tem diferenças ou foi recusada](/troubleshooting/declaracao-ss-com-diferencas).
+
+Há ainda causas com artigo próprio por escrever: ausências recusadas, descontos, recibos corretivos, cessações e subsídios. Até lá, a mensagem do ecrã diz o que corrigir.
+
+
+## O que confirmar
+
+1. A empresa no canto superior direito. Cada empresa tem os seus lotes; uma empresa sem trabalhadores mostra os contadores a 0.
+2. O mês no topo de **O que há para fazer este mês?**. A lista tem os últimos 24 meses, até ao mês atual.
+3. O estado do lote em **Salários › Processar › Processar o mês**.
+4. O seu perfil. O **Processador de salários** processa, valida e regista o pagamento (**Banco executou**, **Marcar como pago**) e faz o ficheiro de transferências de um lote contabilizado. O **Administrador de Salários** também contabiliza, repõe um lote **Pago** para **Validado** (**Repor para Validado**) e configura (**Salários › Configurar**).
+
+
+## Como resolver
+
+1. Abra o lote do mês e leia a mensagem ou o aviso por cima dele.
+2. Encontre a linha na tabela acima e siga o artigo.
+3. Corrija sempre na origem (contrato, ausência, configuração) e repita o passo do lote. Um recibo validado não se corrige no próprio recibo.
+4. Quando o passo exigir outro perfil (por exemplo **Contabilizar**), peça-o a quem o tem e diga o lote e a mensagem.
+
+## Resultado esperado
+
+- O lote segue **Rascunho**, **Calculado**, **Validado**, **Pago** e **Fechado**.
+- No ecrã do mês, o passo resolvido passa a **Feito**.
+
+## Quando contactar o suporte
+
+- A mensagem não diz «Como resolver», ou o que diz não existe no seu ecrã.
+- Corrigiu o que a mensagem pedia e a recusa repete-se.
+- O passo fica **A fazer** com o lote já no estado seguinte.
+
+## Informação a enviar
+
+- A empresa, o mês e o nome do lote.
+- O passo em que parou e o texto completo da mensagem, copiado do ecrã.
+- O perfil com que entrou.

@@ -1,0 +1,80 @@
+---
+id: validar-a-migracao
+slug: /migration-toolkit/validar-a-migracao
+title: Como confirmar que a migração ficou certa
+sidebar_label: Validar a migração
+description: Conferir no registo de importações o que entrou, e comparar o balancete do Odoo com o do programa anterior, depois de importar os saldos e os documentos em aberto.
+keywords: [validar a migração, validar migracao, confirmar migração, registo de importações, registo de importacoes, balancete, saldos de abertura, conferir importação, conferir importacao, SHA-256, migração certa]
+doc_id: DOC-0295
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ba9c8bd76)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [migration-toolkit/importar/importar-saldos-de-abertura]
+---
+
+## Para que serve?
+
+Depois de cada importação, o registo de importações diz quem importou, quando, que ficheiro e quantos registos entraram. Com ele e com o balancete, confirma que o que está no Odoo é o que saiu do programa anterior, antes de começar a trabalhar em cima dos saldos.
+
+## Quando utilizar?
+
+- Logo a seguir a importar os [saldos de abertura](/migration-toolkit/importar-saldos-de-abertura) ou os documentos em aberto.
+- Quando alguém pergunta «este ficheiro já foi importado?» ou «quem importou isto?».
+- Antes de dar a migração por terminada e de publicar o primeiro mês de movimentos.
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Migração e importações › Registo de importações de dados** e, para o balancete, **Contabilidade › Consultar › Livros e balancetes › Balancete**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**, ou é o administrador: com o perfil **Contabilista**, o menu **Migração e importações** não aparece (o balancete continua disponível).
+- O registo mostra só a empresa em que está a trabalhar. Se migrou mais de uma empresa, mude de empresa e abra o registo outra vez.
+- Tem à mão o balancete do programa anterior à mesma data.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Registo de importações de dados**. Cada importação é uma linha, com **Data/hora**, **Utilizador**, **Tipo de importação**, **Modelo de destino**, **Ficheiro**, **Registos criados**, **Registos rejeitados**, **Estado** e **Empresa**. Confirme que o **Estado** é **Concluída** e que o ficheiro é o que esperava.
+   ![Registo de importações de dados com uma linha: documentos pendentes de parceiros, ficheiro documentos_em_aberto_exemplo.csv, 3 registos criados, 0 rejeitados, estado Concluída](/images/migration-toolkit/validar-a-migracao/01-registo-de-importacoes.png)
+2. Abra a linha. A ficha mostra a empresa, o tipo, o estado, o ficheiro, o **SHA-256 do ficheiro**, os **Registos criados**, os **Registos rejeitados** e a **Nota**, por exemplo «Importação de documentos pendentes (01/01/2026)». O SHA-256 identifica o conteúdo exato do ficheiro: dois ficheiros com o mesmo nome e conteúdos diferentes têm SHA-256 diferentes.
+   ![Ficha do registo de importação com o utilizador, a empresa, o tipo, o estado, o nome do ficheiro e o SHA-256](/images/migration-toolkit/validar-a-migracao/02-ficha-do-registo.png)
+3. Abra o lançamento criado e confirme que está **Publicada**. Um lançamento em rascunho não conta no balancete.
+4. Abra **Balancete**, escolha **Ano** e o ano da abertura, e compare cada classe com o balancete do programa anterior. A mensagem **Débitos = créditos** junto ao título tem de aparecer. Com a abertura datada no primeiro dia do exercício, os valores importados aparecem em **Movimentos do período**, não em **Saldo inicial**, que fica a zero.
+   ![Balancete de 2026 com as classes 2 e 5 e o total de movimentos 3.000,00 € a débito, depois de importar os documentos em aberto](/images/migration-toolkit/validar-a-migracao/03-balancete-depois-da-importacao.png)
+5. Se um total não bate, volte ao ficheiro de origem, calcule a diferença por conta e corrija a causa (ver «Problemas frequentes»).
+
+</StepByStep>
+
+## Resultado esperado
+
+- Todas as importações têm o estado **Concluída**, com **Registos rejeitados** a 0.
+- Cada total do balancete do Odoo é igual ao do programa anterior à mesma data.
+- Cada lançamento de abertura está **Publicada**.
+
+## Notas importantes
+
+- **Registos criados** conta os documentos importados, não os lançamentos: o ficheiro de exemplo com 3 documentos em aberto dá **Registos criados** 3, e os 3 documentos ficam num só lançamento de abertura.
+- O registo só mostra importações que correram. Uma verificação que falhou («Foram encontrados *N* problema(s) no ficheiro. Nada foi gravado.») não deixa linha: se o ficheiro nunca passou da verificação, não há nada no registo.
+- O registo não vê o que foi lançado à mão depois da importação. Para isso use o balancete.
+
+## Problemas frequentes
+
+### O balancete aparece vazio, ou sem a abertura
+
+- **Causa:** o lançamento de abertura está em **Rascunho**, ou a empresa selecionada não é a que importou.
+- **O que fazer:** abra o lançamento e carregue em **Publicar**; confirme a empresa no canto superior direito.
+
+### Não vejo o menu «Migração e importações»
+
+- **Causa:** o perfil **Contabilista** não o tem.
+- **O que fazer:** peça a quem tem o perfil **Contabilista certificado**, ou ao administrador.
+
+### O mesmo ficheiro aparece importado duas vezes
+
+- **Causa:** a importação foi repetida depois do aviso «Este mesmo ficheiro já foi importado em …». O registo tem uma linha por importação: duas linhas com o mesmo **SHA-256 do ficheiro** são o mesmo ficheiro importado duas vezes.
+- **O que fazer:** abra os dois lançamentos e trate o duplicado antes de continuar; os saldos estariam a dobrar.

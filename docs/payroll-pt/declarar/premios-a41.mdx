@@ -1,0 +1,96 @@
+---
+id: premios-a41
+slug: /payroll-pt/premios-a41
+title: Como reclassificar prémios na DMR (código A41)
+sidebar_label: Reclassificar prémios (A41)
+sidebar_position: 9
+description: Depois de saber o aumento salarial do ano, registe a condição dos prémios e passe a parte isenta para o código A41 da DMR, numa declaração de substituição.
+keywords: [reclassificar, prémios, premios, dmr, código a41, codigo a41, reclassificar prémios, condições de prémios, condicoes de premios, natureza do prémio, art. 19.º-B]
+doc_id: DOC-0225
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master a67618a71)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/declarar/dmr, payroll-pt/declarar/dmr-de-substituicao, payroll-pt/processar-e-pagar/premios-e-pagamentos-variaveis]
+---
+
+## Para que serve?
+
+Um prémio voluntário paga-se durante o ano como rendimento normal, no código **A** da declaração mensal de remunerações (DMR). Só mais tarde se sabe se o aumento salarial da empresa dá direito à isenção. Esta tarefa regista esse aumento e passa a parte isenta para o código **A41**, numa declaração de substituição de cada mês já entregue.
+
+## Quando utilizar?
+
+- Já pagou prémios voluntários no ano e a DMR desses meses está entregue.
+- Já apurou os dois aumentos médios e tem a prova.
+
+## Onde encontrar?
+
+- **Salários › Preparar › O que há para fazer este mês? › Listas de apoio › Reclassificar prémios (código A41)**.
+- **Salários › Configurar › Rubricas › Condições de prémios**.
+
+## Antes de começar
+
+- **Acesso:** o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador. Com ele prepara e valida a DMR, mas não a submete: depois de **Validar**, não tem botão para submeter. Quem submete tem o acesso extra **Submissor de declarações**.
+- **O prémio tem de estar marcado como voluntário.** Em **Salários › Configurar › Rubricas › Rubricas salariais**, a versão da rubrica tem o campo **Natureza do prémio**: escolha **Voluntário e não regular (isenção do OE)**. Sem essa marca, o prémio não entra na reclassificação. <span className="fd-pending">Pendente de validação no ecrã: este caso.</span> Uma versão já começada não se altera: feche-a com **Válido até** e crie outra a começar no dia seguinte.
+- **O recibo tem de estar pago.** O mês da DMR é o do pagamento: um recibo de outubro pago a 5 de novembro entra na DMR de novembro.
+- **A DMR desse mês tem de estar submetida.** Sem ela, não se cria substituição para esse mês.
+
+## Como utilizar
+
+1. Abra **Condições de prémios** e carregue em **Novo**.
+2. Preencha **Ano dos prémios**, **Apurado em**, **Prova** e os dois aumentos: **Aumento da retribuição base anual média (%)** e **Aumento dos trabalhadores até à média (%)**.
+3. Confira os valores antes de guardar. Pode corrigir os aumentos enquanto nenhum prémio tiver sido reclassificado, preenchendo **Motivo da correção**: fica em **Histórico de correções**. Depois de reclassificar, os valores já não se alteram.
+4. Guarde. **Aumento mínimo usado (%)** e **Condição cumprida** preenchem-se sozinhos. Em 2026, o mínimo mostrado é 4,60 %: com 5 % nos dois aumentos, a condição fica cumprida; com 2 %, não.
+   ![Condição dos prémios de 2026 guardada, com o aumento mínimo de 4,60 % e a condição cumprida](/images/payroll-pt/premios-a41/02-condicao-cumprida.png)
+5. Abra **Reclassificar prémios (código A41)**, confirme o **Ano dos prémios** e carregue em **Reclassificar**.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: as condições da isenção (Estatuto dos Benefícios Fiscais, art. 19.º-B, como indica o ecrã), o limite de 6 % da retribuição base anual, o mínimo de 4,60 % e o regime depois de 2026.</span>
+
+## Resultado esperado
+
+A janela fica aberta e diz, por exemplo: «1 prémio(s) reclassificado(s); declarações de substituição: 1; meses sem DMR entregue (a primeira já levará o código A41): -.»
+
+Em **Salários › Declarar › Declaração mensal de remunerações (DMR)** aparece a **Declaração de substituição** do mês, no estado **Gerada**. No exemplo, o prémio de 1.000,00 € ficou numa linha **A41** e os totais não mudaram. Por isso, a declaração avisa: «Esta declaração não tem diferenças face à que substitui. Verifique o recibo corretivo ou confirme-a de propósito.» Confira a linha **A41**, carregue em **Confirmar sem diferenças** e depois em **Validar**. Veja [Como substituir uma DMR já entregue](/payroll-pt/dmr-de-substituicao).
+
+## Notas importantes
+
+- Nada disto comunica com a AT: o ficheiro da substituição entrega-se no Portal das Finanças, como em [Como enviar a declaração mensal de remunerações (DMR) à AT](/payroll-pt/dmr).
+- Quem só prepara ou consulta as declarações não vê este ecrã. <span className="fd-pending">Pendente de validação no ecrã: vem da configuração do menu.</span>
+
+## Problemas frequentes
+
+**Carreguei outra vez em Reclassificar.** Os prémios já passados não contam de novo. O ecrã responde:
+
+> «0 prémio(s) reclassificado(s); declarações de substituição: 0; meses sem DMR entregue (a primeira já levará o código A41): -. Não foi criada nenhuma declaração de substituição. O que aconteceu: não há DMR entregue para os meses destes prémios, ou não havia prémios a mover. Como resolver: nada a fazer agora; entregue a DMR desses meses e ela já levará o A41.»
+
+**O aumento não está registado ou fica abaixo do mínimo.** O ecrã responde o mesmo nos dois casos:
+
+> «O aumento que condiciona a isenção dos prémios de 2026 não está registado ou não atinge o mínimo. O que aconteceu: os prémios só são isentos se a retribuição base anual média e a dos trabalhadores até à média subirem pelo menos o mínimo (EBF art. 19.º-B). Como resolver: registe o aumento em «Condições de prémios», com a prova, e reclassifique.»
+
+![Recusa de Reclassificar sem o aumento registado](/images/payroll-pt/premios-a41/01-sem-condicao.png)
+
+**O ano não tem regime em vigor.** Com 2027:
+
+> «A isenção dos prémios não tem versão em vigor em 2027. O que aconteceu: o regime é temporário (OE 2025 e 2026; 2027 está por acompanhar) e um prémio de um ano sem ele é rendimento normal. Como resolver: não há nada a reclassificar; se uma lei nova o prolongar, registe primeiro os seus parâmetros.»
+
+**Enganei-me no aumento e já guardei.** Se ainda não reclassificou, altere o valor, preencha **Motivo da correção** e guarde. Sem motivo, o ecrã recusa:
+
+> «Uma correção da condição de 2026 precisa do seu motivo. O que aconteceu: os valores decidem a isenção dos prémios e a alteração deixa rasto (Aumento da retribuição base anual média (%)). Como resolver: preencha «Motivo da correção» e grave de novo.»
+
+Depois de reclassificar, os valores ficam só de leitura e o ecrã mostra:
+
+> «Já foram reclassificados prémios (A41) com esta condição, por isso os seus valores são o que as declarações de substituição indicam e já não se alteram. A menção e a nota ainda se podem editar. Para corrigir os valores, peça a um utilizador com o acesso extra «Administrador de Salários» uma nova declaração de substituição.»
+
+![Condição dos prémios depois de reclassificar: valores só de leitura, com o motivo e o histórico da correção](/images/payroll-pt/premios-a41/03-depois-de-reclassificar.png)
+
+Um segundo registo do mesmo ano é sempre recusado:
+
+> «A operação não pode ser concluída: Já existe uma condição para esta empresa e ano. Como resolver: edite esse registo.»
+
+Depois de reclassificar, só se alteram **Mencionado na declaração de rendimentos**, **Menção feita em** e **Nota**.
+
+{/* Nota interna (DOCS-046, v13-RESTO): por clique: 2 recusas do assistente, condição a 2 % e a 5 %, registo fechado e 2.º registo. Por RPC, como Administrador de Salários: nova versão da rubrica DEMO_GRATIFICACAO, pagamento variável, lote e DMR gerada e validada; a submissão pelo admin, porque nenhum utilizador demo é Submissor. action_submit só regista: nada foi entregue. Defeitos: _base_month (pt_payroll_bonus.py:160) e condição sem correção; ver reports/LOTE_V13-RESTO.md. Auditoria 05/11, master 00c68a6d8 (PAY-107), por clique com Administrador de Salários: correção com e sem motivo, 2.º registo, Reclassificar (duas vezes), linha A41, Confirmar sem diferenças, Validar e aviso depois de reclassificar. */}
+
+{/* Nota interna (DOCS-063 #3853, lote v23-AP, 09/11/2026, master a67618a71, docs_demo_v23ap_test, porta 8512): mensagem do UX-147 depois de reclassificar, vista por clique. Por RPC como administrador, só na cópia: versão da rubrica DEMO_GRATIFICACAO de 01/10/2026 com a Natureza do prémio voluntária (a de 01/01/2026 fechada a 30/09/2026), gratificação de 1.000,00 € de Bruno Miguel Teixeira e lote novo «Salários de outubro de 2026» criado, calculado, validado e pago (recibo pago a 09/11/2026); nenhuma DMR gerada nem submetida. Por clique com o utilizador com o acesso extra Administrador de Salários: condição de 2026 com 5 % e 5 %, correção para 5,50 % com «Valor mal escrito», Reclassificar pelo painel O que há para fazer este mês? › Listas de apoio («1 prémio(s) reclassificado(s); declarações de substituição: 0; meses sem DMR entregue (a primeira já levará o código A41): 11.» e o texto de nada a fazer agora), e a faixa da condição fechada (captura 03 refeita). */}

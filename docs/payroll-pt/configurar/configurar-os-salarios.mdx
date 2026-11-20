@@ -1,0 +1,156 @@
+---
+id: configurar-os-salarios
+slug: /payroll-pt/configurar-os-salarios
+title: Como configurar os salários da empresa
+sidebar_label: Configurar os salários da empresa
+sidebar_position: 1
+description: Criar a ficha do empregador e a dimensão da empresa e rever as definições de salários (valor diário, IRS, controlos ao validar e recibo) antes do primeiro processamento.
+keywords: [configurar salários, configurar salarios, definições de salários, definicoes de salarios, ficha do empregador, dimensão da empresa, dimensao da empresa, divisor da retribuição diária, divisor da retribuicao diaria, mês incompleto, mes incompleto, seguro de acidentes de trabalho, apólice, apolice, controlos ao validar, salário mínimo ao validar, salario minimo ao validar, perfil de IRS em falta]
+doc_id: DOC-0177
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 25deacc94)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/configurar/salario-minimo, payroll-pt/tempo-de-trabalho/trabalho-suplementar]
+---
+
+## Para que serve?
+
+Antes do primeiro mês de salários, cada empresa precisa de três registos: a **ficha do empregador** (os dados que vão para as declarações e o seguro de acidentes de trabalho), a **dimensão da empresa** (micro, pequena, média ou grande) e as **definições de salários**, onde a empresa escolhe como se calcula o valor diário, o que acontece a um trabalhador sem perfil de IRS e que controlos impedem validar um recibo.
+
+Estas escolhas valem para todos os recibos da empresa. Configurar não gera lançamentos contabilísticos: os lançamentos só nascem quando os recibos são contabilizados.
+
+## Quando utilizar?
+
+- Ao começar a processar salários numa empresa nova no fiscaldoo.
+- Em janeiro, para registar a dimensão do ano (a média de trabalhadores do ano anterior).
+- Quando muda a seguradora ou a apólice de acidentes de trabalho, ou a empresa passa a ter um instrumento de regulamentação coletiva.
+- Quando o contabilista certificado decide uma das escolhas que o fiscaldoo deixa à empresa (lista em [Para o contabilista](#para-o-contabilista)).
+
+Não use este artigo para o valor do salário mínimo: está em [Como atualizar o salário mínimo e aplicar reduções](/payroll-pt/salario-minimo).
+
+## Onde encontrar?
+
+**Salários › Configurar › Empresa**, com três entradas: **Definições de salários**, **Ficha do empregador** e **Dimensão da empresa**.
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador. O menu **Configurar** não aparece ao **Processador de salários**.
+- Confirme a empresa ativa no canto superior direito: cada empresa tem a sua ficha, a sua dimensão e as suas definições. Na demonstração, o **Administrador de Salários** abre em **Empresa Teste Portugal**: escolha **Empresa Demonstração, Lda** para ver as fichas deste artigo.
+- Tenha à mão a apólice de acidentes de trabalho (seguradora, número e data de fim) e o número médio de trabalhadores do ano anterior.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Configurar › Empresa › Ficha do empregador**. Numa empresa sem ficha, a lista diz «Aqui aparecem os dados do empregador usados nas declarações; criam-se com «Novo», um por empresa.» Carregue em **Novo**.
+2. Preencha **Válido desde** e o **Número de Segurança Social do empregador**. O **Número de identificação fiscal (NIF/NIPC)** e o **CAE** vêm da empresa e não se editam na ficha: o NIF (PT599999993 na demonstração) e o CAE (46900) mudam-se nos dados da própria empresa. Deixe **NIPC da Segurança Social (DMR)** vazio até ter o número das instruções oficiais da declaração mensal de remunerações: o fiscaldoo nunca o presume. A **Base legal** da ficha é só de leitura.
+3. Em **Acidentes de trabalho e acordos**, escolha a **Seguradora (acidentes de trabalho)**, escreva o **Número da apólice (acidentes de trabalho)** e a **Apólice válida até**. Em **Prémio do seguro**, escolha **Prémio fixo** ou **Prémio variável** (no variável, a seguradora cobra sobre os salários do mês e a empresa envia-lhe a folha mensal). **Abrangida pelo regime de acidentes em serviço** vem marcada: desmarque-a só se a empresa não estiver abrangida. <span className="fd-pending">Pendente de validação por contabilista certificado: quando se desmarca **Abrangida pelo regime de acidentes em serviço**, e a **FGCT (art. 106.º/3-m)** (referência do Fundo de Garantia de Compensação do Trabalho): quando e como se preenche.</span> Preencha o **Instrumento de regulamentação coletiva aplicável (IRCT)** e as **Partes que o assinaram**, se houver. Guarde.
+   ![Ficha do empregador, secção do seguro de acidentes de trabalho: seguradora, número da apólice, apólice válida até 31/12/2026 assinalada e prémio fixo](/images/payroll-pt/configurar-os-salarios/01-ficha-do-empregador-seguro.png)
+4. Abra **Salários › Configurar › Empresa › Dimensão da empresa** e carregue em **Novo**.
+5. Escreva **Válido desde** (por exemplo `01/01/2026`) e, em **Trabalhadores em média**, o número médio de trabalhadores do ano civil anterior (no ano de início de atividade, os trabalhadores nesse dia). A **Dimensão** preenche-se sozinha: com `8` fica **Microempresa (menos de 10 trabalhadores)**; com `60`, **Média empresa (50 a menos de 250)**.
+6. Em **Origem do número de trabalhadores**, diga de onde vem o número (por exemplo `Média de 2025 (Relatório Único)`) e guarde.
+   ![Dimensão da empresa de 2026: 8 trabalhadores em média e a dimensão Microempresa assinalada](/images/payroll-pt/configurar-os-salarios/02-dimensao-da-empresa.png)
+7. Abra **Salários › Configurar › Empresa › Definições de salários** e carregue na linha da empresa. A linha já existe em todas as empresas, mesmo antes do primeiro salário.
+8. No topo, confirme o valor diário e o mês incompleto:
+   - **Regime de declaração de Segurança Social ativo**: **Regime antigo (ficheiro DR mensal)** ou **Regime novo (Segurança Social Direta / RRT)**. Decide como se faz a [declaração à Segurança Social](/payroll-pt/declaracao-a-seguranca-social).
+   - **Método por omissão para mês incompleto** (admissão, saída ou suspensão a meio do mês): **30 dias fixos (prática por omissão)** ou **Dias de calendário reais do mês**.
+   - **Modo de pagamento por omissão do subsídio de férias (SF)**: **Antes do início do período de férias (regra legal por omissão)** ou **Juntamente com a retribuição mensal (acordo escrito)**.
+   - **Divisor da retribuição diária**: `30` por omissão. Uma retribuição de 1.500,00 € dá 50,00 € por dia.
+   ![Definições de salários: regime da Segurança Social, mês incompleto, subsídio de férias e o divisor da retribuição diária 30 assinalado](/images/payroll-pt/configurar-os-salarios/03-definicoes-valor-diario.png)
+9. Em **Trabalhador sem perfil de IRS**, escolha **Nada se presume: não se calcula IRS enquanto não existir o perfil de IRS do trabalhador** (o recibo fica sem IRS e não se contabiliza) ou **Reter como «não casado, sem dependentes» (tabela I) e avisar no recibo**. Em **Arredondamento da retenção de IRS**, a omissão é **Cada retenção isoladamente (a mensal e a de cada subsídio)**.
+10. Reveja os controlos que impedem validar um recibo. Por omissão estão todos ligados:
+    - **Exigir o enquadramento da Segurança Social para calcular**: sem regime e tipo de beneficiário no contrato, o recibo não se calcula.
+    - **Verificar o salário mínimo ao validar um recibo**: um recibo abaixo do salário mínimo aplicável não se valida.
+    - **Piso do instrumento coletivo**: **Bloquear a validação** ou **Só alertar (o mínimo legal continua a bloquear)**.
+    - **Ficha do empregador obrigatória**: o recibo só se valida com a apólice de acidentes de trabalho em vigor.
+    - **Exigir o código de Segurança Social de toda a rubrica com valor para fechar um recibo** e **Controlar os descontos (CT art. 279.º) ao calcular e validar**.
+    ![Definições de salários: controlos do enquadramento da Segurança Social, do salário mínimo, do piso do instrumento coletivo e da ficha do empregador, este assinalado](/images/payroll-pt/configurar-os-salarios/04-definicoes-controlos.png)
+11. Em **Recibo: informação além do mínimo legal (boa prática)**, marque o que quer imprimir a mais no recibo: **Recibo: mostrar o custo para a entidade empregadora**, **Recibo: mostrar os totais do ano**, **Recibo: mostrar o saldo de férias** (o único marcado por omissão) e **Recibo: juntar a explicação do cálculo**.
+12. Guarde as definições.
+
+</StepByStep>
+
+## No Enterprise
+
+Os passos são os mesmos no Odoo Enterprise, com o mesmo acesso extra **Administrador de Salários**. Muda o seguinte:
+
+- **Uma só aplicação de salários.** Numa empresa portuguesa, a lista de aplicações mostra só a **Salários** do fiscaldoo. A aplicação de salários do próprio Enterprise fica escondida a todos, também ao administrador, para o mesmo recibo nunca ser calculado duas vezes, com regras diferentes. Os menus deste artigo, em **Salários › Configurar › Empresa**, são os mesmos que no Community.
+- **Dois separadores nas Definições.** Nas **Definições**, o administrador vê o separador **Salários**, com o bloco **Salários (PT)** do fiscaldoo, e o separador **Folha de Salários**, que é o dos salários do Enterprise (por exemplo, **Criar pagamento SEPA**; parte dos textos aparece em inglês). O que este artigo configura está em **Salários › Configurar › Empresa**, não nesse separador.
+- **Empresas fora de Portugal.** Num grupo com empresas de outros países, essas empresas fazem os recibos nos salários do Enterprise, sem as regras portuguesas. <span className="fd-pending">Pendente de validação no ecrã: a demonstração Enterprise só tem empresas portuguesas, por isso não se viu uma empresa de outro país.</span>
+
+{/* Nota interna (lote EE-06, DOCS-073 #4142, DEC-1794, master ce51f2d47, 10/11/2026): conferido numa cópia Enterprise da demonstração (docs_ee_ee06_test, computador 2) com utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): acesso extra Administrador de Salários nas três entradas de Salários › Configurar › Empresa; administrador: só a aplicação Salários do fiscaldoo nas três empresas (portuguesas) e, nas Definições, os separadores Salários (bloco Salários (PT)) e Folha de Salários (o do Enterprise). Menus e vistas comparados, perfil a perfil, com uma cópia Community do mesmo master (docs_demo_ee06_test). Ver reports/LOTE_EE-06.md. */}
+
+## Resultado esperado
+
+- **Ficha do empregador** e **Dimensão da empresa** têm uma linha cada, com a data de início. Depois de guardada e em uso, a ficha mostra «Este registo já está em uso, por isso já não se altera. Para o mudar, feche o período (preencha «Válido até») e registe um novo com a data de início.»: só continuam editáveis **Válido até** e **NIPC da Segurança Social (DMR)**. A dimensão mostra ainda o texto antigo «Este registo já está fechado (validado, aprovado, pago ou enviado), por isso já não se altera. …», e nela só continuam editáveis **Válido até** (enquanto estiver vazio) e a **Origem do número de trabalhadores**.
+- As **Definições de salários** guardam sem mensagem. Como dizem as ajudas dos campos, as escolhas só chegam aos recibos calculados depois; os recibos já validados não mudam.
+- Nenhum lançamento contabilístico é criado.
+
+## Notas importantes
+
+- **Mudar um dado fechado faz-se por períodos.** Uma dimensão ou uma ficha nova começa no dia seguinte ao fim da anterior: preencha **Válido até** na antiga e crie a nova com **Novo**. Em janeiro, registe a dimensão do ano novo da mesma forma. A ficha não tem botão «Nova versão» (só **Duplicar** e **Eliminar**, na engrenagem), e **Eliminar** uma ficha que já começou é recusado: «Operação inválida. Os dados do empregador que já começaram não podem ser eliminados: registe uma nova versão.»
+- **A dimensão conta para o trabalho suplementar.** O limite anual de horas extra de cada trabalhador depende da dimensão em vigor (175 horas numa microempresa). Sem dimensão registada, o contador diz «A dimensão da empresa não está registada (Salários › Configurar › Empresa › Dimensão da empresa), por isso o limite não pode ser aplicado.» Ver [Como registar e pagar trabalho suplementar](/payroll-pt/trabalho-suplementar).
+- **A escolha da secção Contabilidade**, **Lançar os salários** (**Por trabalhador** ou **Agregado por lote**, o valor das empresas novas), decide-se com o contabilista certificado: muda o detalhe do lançamento, não os totais por conta. Ver [Como contabilizar o processamento dos salários](/payroll-pt/contabilizar-os-salarios).
+- Os campos **DMR: horas antes do reenvio simulado** e **DMR: máximo de tentativas simuladas** só mexem no simulador da comunicação com a AT; não alteram nenhum recibo.
+
+{/* Nota interna (DOCS-022, 3.ª auditoria, NC-67, master ba9c8bd7): defeito P-15 do PAY-066 (#3613): a mensagem da ficha duplicada manda usar «Nova versão», botão que não existe no ecrã. */}
+
+## Problemas frequentes
+
+### Ao guardar aparece «Há campos obrigatórios por preencher»
+
+- **Sintoma:** «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** falta **Válido desde** (na ficha ou na dimensão).
+- **O que fazer:** escreva a data de início e guarde de novo.
+
+### A dimensão da empresa sobrepõe-se a outro período
+
+- **Sintoma:** «A dimensão da empresa sobrepõe-se a outro período (01/01/2026). O que aconteceu: duas dimensões não podem estar em vigor no mesmo dia. Como resolver: termine o período anterior na véspera do início deste.»
+- **Causa:** a dimensão anterior não tem **Válido até**, ou acaba depois do início da nova.
+- **O que fazer:** feche a janela, carregue em **Descartar**, abra a dimensão anterior e preencha **Válido até** com a véspera; depois crie a nova. Atenção: **Válido até**, depois de guardado, já não se altera.
+
+### «A empresa já tem dados do empregador para estas datas» ao guardar uma ficha nova
+
+- **Sintoma:** «Erro de Validação. A empresa já tem dados do empregador para estas datas (desde 01/01/2026). Como corrigir: use «Nova versão» ou feche o «Válido até» da anterior.»
+- **Causa:** a ficha anterior não tem **Válido até** ou acaba depois do início da nova.
+- **O que fazer:** carregue em **Fechar** e descarte a ficha nova; abra a anterior, preencha **Válido até** com a véspera e crie a nova. Não há botão «Nova versão», apesar da mensagem.
+
+### O divisor não aceita zero
+
+- **Sintoma:** «O divisor da retribuição diária tem de ser um número positivo.»
+- **O que fazer:** escreva um número maior do que zero (`30` por omissão).
+
+### A dimensão (e os tipos de falta) diz que «já está fechado» e não tem botões para anular
+
+- **Sintoma:** «Este registo já está fechado (validado, aprovado, pago ou enviado), por isso já não se altera. Para corrigir, use as ações do documento: anule-o ou crie uma correção.» O registo não tem botões de anular nem de correção. A ficha do empregador já diz o texto certo (ver «Resultado esperado»).
+- **Causa:** a dimensão e a ficha não se alteram depois de guardadas, para os recibos já feitos continuarem a ter os dados com que foram calculados. A mensagem é a dos documentos e não diz como se corrige um registo destes.
+- **O que fazer:** termine o registo em **Válido até** e crie outro com **Novo** (ver as Notas importantes).
+
+{/* Nota interna (DOCS-022, 3.ª auditoria, NC-67, master ba9c8bd7): a mensagem genérica «já está fechado … anule-o ou crie uma correção» persiste na Dimensão da empresa e nos Tipos de falta (D15, PAY-066 #3613); na ficha do empregador já foi corrigida. */}
+
+## Para o contabilista
+
+Escolhas das **Definições de salários** que a lei não fixa ou que o próprio fiscaldoo marca para validar. Ficam registadas quando mudam e só chegam aos recibos calculados depois. <span className="fd-pending">Pendente de validação por contabilista certificado: a opção a usar em cada uma destas escolhas.</span>
+
+| Definição | Opções no ecrã (a primeira é a da demonstração) |
+|---|---|
+| **Fração do ano de antiguidade** (compensação por cessação, aviso prévio) | **Meses completos sobre 12 (os dias do mês incompleto não contam)** · **Dias sobre 365** |
+| **Compensação de termo certo (política)** (contratos iniciados antes de 01/05/2023) | vazia · **Os 24 dias sobre toda a duração do contrato** · **Os 24 dias só para o serviço desde 2023-05-01** |
+| **Anos de antiguidade para a exclusão de IRS** | **Uma fração de ano conta como um ano** · **Anos e a fração proporcional** |
+| **RMMG dos limites da compensação** | **Último dia do contrato** · **Data da comunicação** |
+| **Subsídio numa suspensão** | **Aplicar a regra da Segurança Social (prestação compensatória)** · **Não calcular até haver decisão** · **O empregador paga tudo** |
+| **Base do limite de um sexto** (descontos do CT art. 279.º) | **Retribuição mensal ilíquida (por omissão)** · **Retribuição mensal líquida (depois de IRS e Segurança Social)** |
+| **Descontos acima do limite** | **Adiar: o excedente transita para os recibos seguintes (nunca é perdoado)** · **Bloquear: um recibo cujos descontos excedam o limite não pode ser validado** |
+| **Despesa compensada sem mapa de deslocação** | **Tributar: …** · **Bloquear: …** |
+| **Ordem das penhoras** · **Conflito entre penhoras** | **Pela data da notificação (CPC art. 794.º/1)** · **Alimentos antes das dívidas comuns (interpretação)**; **Alertar no recibo** · **Recusar a validação até o agente decidir** |
+| **Escolha do empregador para o trabalho em feriado** | **Descanso compensatório de metade das horas** · **Acréscimo de 50 % da retribuição** |
+| **Pagar 2 horas quando o registo do suplementar não é visado (art. 231.º)** | desligado · ligado |
+| **Descontar o aviso em falta no recibo final** | desligado · ligado |
+
+Mais duas escolhas ao lado dos regimes: **Novo modelo de declaração desde?** e **Origem do método da antiguidade?**, que o ecrã mostra sem valor na demonstração. <span className="fd-pending">Pendente de validação por contabilista certificado: o que escrever nestes dois campos.</span>
+
+Os outros campos do formulário: **Rever recibos que variem mais de (%)** (20 %, para a lista de diferenças a rever antes de fechar), **Obrigações de transparência salarial** (desligado: hoje não altera nenhum recibo), **Horas perdidas por dia de descanso ou feriado da extensão**, **O processador de salários aprova férias e ausências**, **Alertar quando a base mensal atinge (€)**, **A empresa não está obrigada a encerrar nos feriados obrigatórios (art. 236.º/1)**, os quatro campos do acréscimo de férias e subsídios (**Método do acréscimo**, **Arredondamento do acréscimo**, **Acrescer as contribuições da entidade patronal**, **Taxa do seguro de acidentes de trabalho sobre os subsídios (%)**) e os parceiros **Segurança Social (parceiro)** e **Autoridade Tributária (parceiro)** usados nos lançamentos.
+

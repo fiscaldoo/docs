@@ -1,0 +1,92 @@
+---
+id: pedir-ferias
+slug: /people/pedir-ferias
+title: Como pedir férias ou outra ausência
+sidebar_label: Pedir férias ou outra ausência
+sidebar_position: 3
+description: "Pedir férias ou outra ausência no O meu espaço, ver os dias que restam e acompanhar a decisão do RH."
+keywords: [pedir férias, pedir ferias, pedir ausência, pedir ausencia, férias anuais, ferias anuais, o meu espaço, o meu espaco, saldo de férias, as minhas ausências, as minhas ausencias, pedido de férias, Para Aprovar]
+doc_id: DOC-0265
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/ausencias-e-presencas/aprovar-ausencias, troubleshooting/salarios-e-pessoas/ausencia-recusada]
+---
+
+## Para que serve?
+
+O trabalhador pede as férias, ou outra ausência, no **O meu espaço**, sem passar pelo RH para as registar. O pedido fica **Para Aprovar** até o RH decidir, e o trabalhador vê a decisão na mesma lista.
+
+## Quando utilizar?
+
+- Quer marcar as férias do ano.
+- Vai faltar um dia e quer deixar o pedido feito.
+- Quer ver quantos dias de férias ainda tem.
+
+Se o que precisa é de mais dias de férias, e não de marcar dias que já tem, este caminho não serve: o botão **Novo Pedido** do calendário **Pedir férias** abre a janela **Nova atribuição de dias**, que pede dias novos.
+
+## Onde encontrar?
+
+**O meu espaço › Ausências e presenças › As minhas ausências** › **Novo**. O calendário do ano, com os feriados e o saldo, está em **O meu espaço › Ausências e presenças › Pedir férias**.
+
+## Antes de começar
+
+- O seu perfil é **Trabalhador**, com a ficha ligada ao seu utilizador. Só tem o menu **O meu espaço**.
+- Tem de saber as datas. O pedido de férias só se guarda se houver dias disponíveis (ver «Problemas frequentes»).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **O meu espaço › Ausências e presenças › Pedir férias**. O cartão verde mostra o que tem, por exemplo **22 Férias anuais**, **Validade 31/12/2026**.
+2. Abra **O meu espaço › Ausências e presenças › As minhas ausências** e carregue em **Novo**.
+3. Em **Tipo de tempo**, apague o que lá está, escreva `Férias` e escolha **Férias anuais** (a lista mostra também o saldo, por exemplo «22 restante de 22 dias»). O tipo que vem preenchido é **Formação**: se não o mudar, o pedido não conta como férias.
+4. Em **Datas**, carregue na primeira data e escolha, no calendário, o primeiro e o último dia, por exemplo 09/11/2026 e 20/11/2026. Por baixo aparecem **10,00 dia(s)** e, junto ao tipo, «Tem *22* dias disponíveis; depois deste pedido, *12*.».
+5. Carregue no ícone de guardar (a nuvem ao lado de **Novo**). O estado fica **Para Aprovar**.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o trabalhador pede as férias da mesma maneira. O perfil **Trabalhador** continua só com **O meu espaço**: **As minhas ausências** (com **Novo** e o mesmo formulário) e **Pedir férias** (o cartão com os dias de **Férias anuais** e a **Validade**, e o calendário do ano) são os mesmos que no Community. O pedido segue para aprovação como no Community (ver [Como aprovar pedidos de férias e de ausência](/people/aprovar-ausencias#no-enterprise)).
+
+{/* Nota interna (lote EE-10, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): cópia Enterprise docs_ee_ee10b_test no portátil (pg_dump da odoo20_ee_test, -u dos módulos mudados até master e -i de hr_payroll, planning, hr_appraisal e hr_recruitment), porta 8504, guarda de rede ligada; utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): ee10_trab (ligado à ficha de Bruno Miguel Teixeira): lista de aplicações só com O meu espaço; As minhas ausências (Lista, Kanban, Atividade; Novo com os mesmos rótulos da cópia Community); Pedir férias com o cartão «12 Férias anuais Validade 31/12/2026» e o calendário; o pedido de 16/11 a 27/11/2026 foi criado por RPC com este utilizador e aprovado pela Gerência por clique (ver aprovar-ausencias). Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee10_test (master e4dd4ae90, a do lote EE-10 interrompido) e com o texto do artigo. Ver reports/LOTE_EE-10.md. */}
+
+## Resultado esperado
+
+- O pedido está em **Para Aprovar** e, nas atividades do pedido, aparece «Aprovação de Ausência» atribuída à **Gerência**.
+- Enquanto não houver um período aprovado de 10 dias úteis seguidos no ano, o pedido mostra um alerta a vermelho: «*Nome do trabalhador* não tem nenhum período aprovado de 10 dias úteis seguidos em 2026 (o mais longo tem 0). […] É apenas um alerta, não bloqueia nada.».
+- Nas **Férias anuais**, a Gerência aprova e o pedido passa a **Segunda Aprovação**; quando o Gestor de RH carrega em **Validar**, passa a **Aprovado**. Em **As minhas ausências** vê-se a linha com o tipo, as datas, a duração e o estado.
+
+![Pedido de Férias anuais de 09/11/2026 a 20/11/2026, com 10 dias, no estado Aprovado](/images/people/pedir-ferias/01-pedido-aprovado.png)
+
+## Notas importantes
+
+- **Quem decide é a Gerência ou o Gestor de RH** (veja [Como aprovar pedidos de férias e de ausência](/people/aprovar-ausencias)). O trabalhador não tem os botões **Aprovar** nem **Recusar** e os passos do estado não se alteram à mão (ver [Não consigo aprovar, recusar ou fazer avançar a ausência](/troubleshooting/ausencia-nao-avanca)).
+- **Os pedidos por aprovar contam para os dias disponíveis.** Depois de marcar 10, 2 e 5 dias, o cartão de **Pedir férias** passa de 22 para «5 Férias anuais» e, num pedido novo de 6 dias, a frase diz «Tem *5* dias disponíveis; depois deste pedido, *-1*.» e o ecrã mostra, a vermelho, «Apenas *5.0* dia(s) disponível(is)». Hoje o mesmo texto fica num pedido já aprovado, mesmo estando certo.
+- A formação a que o RH o inscreve também aparece em **As minhas ausências**, com o tipo **Formação** e o estado **Aprovado**.
+
+{/* Nota interna (DOCS-040 F3): F3-02 (o aviso «Apenas N dia(s) disponível(is)» fica num pedido já aprovado); F3-03 («New Allocation Request» sem tradução no menu Novo de Pedir férias); o vídeo (video=sim) ficou por fazer neste lote: lugar previsto como a amostra. */}
+
+## Problemas frequentes
+
+### Aparece «Erro de Validação … não tem uma atribuição válida para o tipo de ausência Férias anuais»
+
+Os dias do pedido são mais do que os que tem. Veja [A ausência tem mais dias do que os permitidos](/troubleshooting/ausencia-com-dias-a-mais).
+
+### Aparece «Já tem uma ausência marcada que coincide com este período»
+
+Veja [A ausência ou a presença sobrepõe-se a outro registo do mesmo dia](/troubleshooting/ausencia-sobreposta).
+
+### Aparece «Erro de Acesso» ao escolher as datas
+
+Com datas do ano seguinte (por exemplo de 04/01/2027 a 08/01/2027, num pedido feito em novembro de 2026), ou ao apagar a data de fim, o ecrã mostra «Erro de Acesso Não tem permissão para ver este campo de «Trabalhador»: o seu conteúdo está reservado a um perfil mais específico. […]» e as datas não mudam. Feche a janela e escolha as duas datas de novo no calendário. Para férias do ano seguinte, peça ao Gestor de RH que registe o pedido por si (veja [Como registar uma ausência de um trabalhador](/people/registar-uma-ausencia)).
+
+{/* Nota interna (auditoria v20-B, master 0289754a8): defeito reportado ao Gestor (o onchange do pedido lê hr.employee.country_id com o Trabalhador). Retirar esta secção quando o pedido do ano seguinte funcionar. */}
+
+### O pedido não passa de Para Aprovar
+
+Veja [Não consigo aprovar, recusar ou fazer avançar a ausência](/troubleshooting/ausencia-nao-avanca).

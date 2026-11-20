@@ -1,0 +1,183 @@
+---
+id: dispensas-para-amamentacao-e-aleitacao
+slug: /payroll-pt/dispensas-para-amamentacao-e-aleitacao
+title: Como registar a dispensa para amamentação ou aleitação
+sidebar_label: Dispensas para amamentação e aleitação
+sidebar_position: 10
+description: Registar em horas a dispensa para amamentação ou aleitação, com o motivo e o atestado médico nos dados médicos, perceber as recusas do fiscaldoo (mais de duas horas por dia, aviso de 10 dias, depois do primeiro aniversário do filho) e a recusa da licença parental complementar para um filho com mais de seis anos.
+keywords: [dispensa para amamentação, dispensa para amamentacao, aleitação, aleitacao, amamentar, horas de amamentação, amamentação depois do primeiro ano, atestado de amamentação, atestado médico, motivo da dispensa, dados médicos, ver ausência médica, filho faz um ano, art. 47.º, art. 48.º, consulta pré-natal, procriação medicamente assistida, PMA, licença parental complementar, filho com mais de seis anos]
+doc_id: DOC-0441
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 107d9ed57)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/faltas-e-licencas/parentalidade, payroll-pt/faltas-e-licencas/faltas]
+---
+
+## Para que serve?
+
+A dispensa para amamentação ou aleitação regista-se como uma ausência contada em **horas**. Ao guardar, o fiscaldoo confere o que a lei dá por dia e o aviso prévio, e recusa o pedido que passa esses limites, com a explicação e a correção.
+
+O nascimento de um filho e as licenças parentais estão em [Como tratar licenças parentais e a proteção na parentalidade](/payroll-pt/parentalidade).
+
+## Quando utilizar?
+
+- Uma trabalhadora que amamenta pede para sair mais cedo ou entrar mais tarde.
+- Um pai ou uma mãe pede a dispensa para aleitação de um filho com menos de um ano.
+- Uma mãe continua a amamentar depois de o filho fazer um ano e entrega o atestado médico.
+
+## Onde encontrar?
+
+**Salários › Preparar › Ausências e presenças › Ausências** › **Novo**, com o **Tipo de tempo** **Dispensa para amamentação ou aleitação**.
+
+## Antes de começar
+
+- O seu perfil é **Gestor de RH**: cria, aprova e valida a dispensa. Provado com um utilizador criado só com esse perfil.
+- Saiba a data de nascimento do filho e o dia em que o trabalhador avisou a empresa.
+- Feito a 8 de novembro de 2026 na `Empresa Demonstração, Lda`: dispensas de Ana Margarida Pinto (horário de 8 horas por dia) a 23/11/2026, das 09:00 às 10:00 e das 14:00 às 15:00, comunicadas a 02/11/2026, filho nascido a 10/05/2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Com o perfil **Gestor de RH**, abra **Salários › Preparar › Ausências e presenças › Ausências** e carregue em **Novo**.
+2. Em **Trabalhador**, escolha o trabalhador, por exemplo `Ana Margarida Pinto`.
+3. Em **Tipo de tempo**, escreva `amamenta` e escolha **Dispensa para amamentação ou aleitação**. O campo **Datas** passa a pedir o dia e as horas.
+4. Em **Datas**, carregue no início e no fim e escolha o dia e as horas de um período, por exemplo 23/11/2026 das 14:00 às 15:00. Por baixo aparece o total do pedido; no exemplo, já guardado, `1h`.
+   ![Dispensa para amamentação ou aleitação de Ana Margarida Pinto a 23/11/2026, das 14:00 às 15:00, com o total 1h](/images/payroll-pt/dispensas-para-amamentacao-e-aleitacao/01-dispensa-de-uma-hora.png)
+5. Mais abaixo, preencha **Comunicada em** e **Data de nascimento do filho**. Se tem gémeos, ponha o número em **Filhos a cargo**. Sem o acesso **Ver ausência médica**, não vê o **Motivo da dispensa**: quem tem o acesso escolhe-o (secção seguinte).
+6. Guarde. A dispensa fica **Para Aprovar**; se passa um limite, o fiscaldoo recusa e diz porquê (ver «Problemas frequentes»).
+7. Carregue em **Aprovar** e depois em **Validar**. A dispensa fica **Aprovado**.
+8. Registe o outro período do dia da mesma forma, por exemplo das 09:00 às 10:00.
+
+</StepByStep>
+
+### O que o fiscaldoo confere sozinho
+
+- **Períodos de uma hora:** cada pedido é um período de 60 minutos no máximo. Um único período de 2 horas é recusado, salvo se assinalar **Outro regime acordado com o empregador**, no separador **Lei portuguesa: comunicação, prova e efeito** da dispensa pedida por horas. Com o acordo assinalado, as 2 horas seguidas gravam.
+- **Horas por dia:** num horário completo, até 120 minutos por dia com um filho. No exemplo, 3 horas seguidas (180 minutos) são recusadas, com ou sem o acordo, e os dois períodos de uma hora passam. A mensagem cita o art. 47.º, n.os 3 a 5, que também tratam dos gémeos e do tempo parcial. Com o acordo assinalado, a recusa explica que o acordo só muda a repartição dos períodos e que o total do dia continua a ser de 120 minutos. O total do dia soma todos os pedidos da trabalhadora nesse dia com o mesmo tipo de tempo, menos os recusados e os cancelados: com os dois períodos de uma hora já pedidos a 23/11/2026, um terceiro pedido de uma hora nesse dia é recusado (ver «Problemas frequentes»), e o mesmo pedido a 24/11/2026 guarda-se.
+- **Pedidos de vários dias:** um pedido que vai de um dia a outro conta dia a dia. As horas de cada dia vêm do horário da trabalhadora e dos feriados, e somam-se aos outros pedidos desse dia; o fim de semana não conta. O fiscaldoo recusa o primeiro dia que passa o limite e diz qual. No exemplo, de 24/11/2026 às 17:00 a 26/11/2026 às 18:00 é recusado por causa de 25/11/2026, que ficaria com 480 minutos; de 27/11/2026 às 17:00 a 29/11/2026 às 18:00 guarda-se, porque a sexta-feira conta 60 minutos e o sábado e o domingo não contam. {/* Nota interna (lote v23-AS, depois dos comboios 176 e 177 com o RH-039 e o RH-041, master d7b8279e9, docs_demo_v23as_test, 09/11/2026): com um utilizador só com o perfil Gestor de RH, por clique (datas e horas escritas no campo Datas e confirmadas com Enter, Comunicada em 02/11/2026 e Data de nascimento do filho 10/05/2026): 23/11/2026 das 09:00 às 10:00 e das 14:00 às 15:00 guardados; das 16:00 às 17:00 recusado com «o limite de 23/11/2026 já está todo usado…»; 24/11/2026 das 09:00 às 10:00 guardado e das 14:00 às 16:00 com o acordo recusado («peça até 60 minutos»); 25/11/2026 das 09:00 às 12:00 recusado sem e com o acordo (as duas mensagens citadas); 24/11/2026 17:00 a 26/11/2026 18:00 recusado por 25/11/2026 (captura 03); 30/11/2026 das 14:00 às 16:00 em dois períodos guardados e 27/11/2026 17:00 a 30/11/2026 10:00 recusado com «o limite de 30/11/2026 já está todo usado…»; 27/11/2026 17:00 a 29/11/2026 18:00 guardado. O fim noutro dia repõe a hora do início a 09:00: escreve-se o início de novo depois do fim. */}
+- **Aviso de 10 dias:** **Comunicada em** tem de ser pelo menos 10 dias antes do primeiro dia. Comunicada a 12/11/2026 para 17/11/2026, é recusada, e a mensagem dá o primeiro dia possível (22/11/2026).
+
+### Motivo da dispensa e atestado depois do primeiro ano
+
+A dispensa para amamentação ou aleitação tem dados médicos: o **Motivo da dispensa** (amamentação ou aleitação) e o **Atestado médico da necessidade de assistência**. Com eles, o fiscaldoo confere sozinho as duas regras que dependem do primeiro aniversário do filho:
+
+- a **aleitação** acaba na véspera do primeiro aniversário;
+- a **amamentação** pode continuar depois dele, mas só com atestado médico.
+
+Os campos estão por baixo de **Data de nascimento do filho**.
+
+- O seu perfil é **Gestor de RH** e tem também o acesso **Ver ausência médica**. Sem esse acesso, os campos **Motivo da dispensa**, **Gravidez ou ciclo de tratamentos**, **Atestado médico da necessidade de assistência** e **Doença prolongada em fase terminal** não aparecem na ausência. Provado com dois utilizadores só com o perfil Gestor de RH, um com o acesso e outro sem ele.
+- Feito a 8 de novembro de 2026 na `Empresa Demonstração, Lda`, numa dispensa de Ana Margarida Pinto a 18/01/2027, das 09:00 às 10:00, comunicada a 28/12/2026.
+
+<StepByStep>
+
+1. Abra **Salários › Preparar › Ausências e presenças › Ausências** e abra a dispensa (ou crie-a com **Novo** e o **Tipo de tempo** **Dispensa para amamentação ou aleitação**).
+2. Em **Data de nascimento do filho**, escreva a data, por exemplo `01/03/2026`.
+3. Em **Motivo da dispensa**, escolha **Amamentação (art. 47.º/1)** ou **Aleitação (art. 47.º/2)**.
+4. Se é amamentação e a dispensa passa o primeiro aniversário do filho, ligue **Atestado médico da necessidade de assistência** quando a trabalhadora entregar o atestado.
+   ![Dados da dispensa: Data de nascimento do filho 01/03/2026, Motivo da dispensa Aleitação (art. 47.º/2), Gravidez ou ciclo de tratamentos vazio e Atestado médico da necessidade de assistência desligado](/images/payroll-pt/motivo-da-dispensa-e-atestado-de-amamentacao/01-motivo-e-atestado.png)
+5. Guarde. Se a dispensa passa o que a lei permite, o fiscaldoo recusa e diz porquê (ver «Problemas frequentes»).
+
+</StepByStep>
+
+No exemplo, a aleitação de 18/01/2027 para um filho nascido a 01/03/2026 grava: o filho só faz um ano a 01/03/2027. Um filho nascido antes de 2026 também serve: a aleitação de 27/11/2026, das 09:00 às 10:00, para um filho nascido a 15/12/2025, grava.
+
+## O que diz a lei
+
+As dispensas no Código do Trabalho (Lei n.º 7/2009), conferidas a 8 de novembro de 2026 no texto consolidado publicado pela Procuradoria-Geral Distrital de Lisboa. *Pendente de validação por contabilista certificado*:
+
+- **Art. 47.º:** a mãe que amamenta tem dispensa enquanto amamentar; se a criança não é amamentada e ambos os progenitores trabalham, a mãe, o pai ou ambos, por decisão conjunta, têm dispensa para aleitação até o filho fazer um ano. A dispensa é gozada em dois períodos por dia, de uma hora no máximo cada, salvo outro acordo com o empregador; há mais 30 minutos por cada gémeo além do primeiro; em tempo parcial, reduz-se na proporção, com um mínimo de 30 minutos.
+- **Art. 48.º:** a trabalhadora que amamenta (n.º 1) ou o progenitor que aleita (n.º 2) avisa o empregador com 10 dias de antecedência. Depois do primeiro ano de vida do filho, a amamentação prova-se com atestado médico. Na aleitação, o progenitor entrega o documento da decisão conjunta, diz que dispensa goza o outro progenitor e prova que este trabalha. O fiscaldoo não confere estes documentos: guarde-os no processo do trabalhador.
+- **Art. 51.º, n.º 1:** a licença parental complementar é para filho até seis anos.
+- **Art. 65.º, n.º 2:** estas dispensas não retiram direitos e contam como prestação efetiva de trabalho.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o arquivo dos documentos do art. 48.º, n.º 2, e o tratamento do atestado como dado de saúde.</span>
+
+## Resultado esperado
+
+- A dispensa está **Aprovado**, com as horas do dia.
+- Um pedido acima das horas da lei ou sem o aviso de 10 dias não chega a ficar guardado.
+- A dispensa grava com o motivo e, se for o caso, com o atestado.
+- Uma aleitação depois do primeiro aniversário, ou uma amamentação depois dele sem atestado, não chega a ficar guardada.
+
+## Notas importantes
+
+- **Dois períodos por dia.** Sem outro acordo com o empregador, a lei dá dois períodos de uma hora no máximo cada: registe um pedido por período, como no exemplo. Se o acordo existe, assinale **Outro regime acordado com o empregador** e guarde o acordo no processo do trabalhador.
+- **Quem não tem o acesso médico não vê o motivo nem o atestado**, mas o fiscaldoo continua a aplicar as regras com os dados que lá estão, e a recusa não diz o motivo. No exemplo, numa aleitação de 21/12/2026, o Gestor de RH sem o acesso pôs a data de nascimento a 01/12/2025 e recebeu «… O que aconteceu: a dispensa vai até 21/12/2026 e os dados registados neste pedido só a sustentam até 30/11/2026. Como resolver: termine-a em 30/11/2026, ou peça a quem tem o acesso «Ver ausência médica» que complete os dados. …». A frase é a mesma na amamentação e na aleitação. Com o acesso, a mesma mudança dá a mensagem completa, com o art. 47.º/2 (ver «Problemas frequentes»).
+- **Consultas pré-natais e procriação medicamente assistida (arts. 46.º e 46.º-A):** o tipo existe. Ao Gestor de RH sem o acesso aparece com um nome neutro, «Falta justificada — protegida por lei», seguido de uma letra; quem tem o acesso **Ver ausência médica** vê **Dispensa para consulta pré-natal ou de procriação medicamente assistida**. Pela lei (art. 65.º, n.º 2), estas dispensas contam como prestação efetiva de trabalho. *Pendente de validação por contabilista certificado: o efeito desta dispensa no recibo.*
+
+## Problemas frequentes
+
+### «… foi pedido um único período de 120 minutos e a lei dá, a cada período, até 60 minutos …»
+
+- **Causa:** um só pedido com mais de uma hora, sem **Outro regime acordado com o empregador**. A mensagem completa: «Dispensa para amamentação ou aleitação» de Ana Margarida Pinto não pode ser aceite. O que aconteceu: foi pedido um único período de 120 minutos e a lei dá, a cada período, até 60 minutos, em dois períodos por dia, salvo se outro regime for acordado com o empregador (art. 47.º/3 e /6 do Código do Trabalho). Como resolver: registe pedidos de até 60 minutos cada (até 120 minutos ao todo no dia) ou assinale «Outro regime acordado com o empregador», se ficou acordado. Corrija os dados indicados e tente de novo.».
+- **O que fazer:** divida o pedido em dois períodos de uma hora ou, se há acordo com o empregador, assinale o campo.
+
+### «… não pode ser aceite. O que aconteceu: pediram-se 180 minutos em … e a lei dá 120 …»
+
+- **Causa:** o pedido passa as horas que a lei dá nesse dia. A mensagem completa: «Dispensa para amamentação ou aleitação» de Ana Margarida Pinto não pode ser aceite. O que aconteceu: pediram-se 180 minutos em 25/11/2026 e a lei dá 120 (art. 47.º/3 a /5 do Código do Trabalho). Como resolver: peça até 120 minutos ou combine outro regime com o empregador. Corrija os dados indicados e tente de novo.».
+- **Num pedido de vários dias,** a mensagem diz o primeiro dia que passa o limite. No exemplo, de 24/11/2026 às 17:00 a 26/11/2026 às 18:00:
+  ![Janela Erro de Validação: pediram-se 480 minutos em 25/11/2026 e a lei dá 120, art. 47.º/3 a /5 do Código do Trabalho](/images/payroll-pt/dispensas-para-amamentacao-e-aleitacao/03-varios-dias-recusado.png)
+- **O que fazer:** reduza as horas desse dia (num pedido de vários dias, divida-o num pedido por dia) ou, com gémeos, corrija **Filhos a cargo**.
+
+### «… O regime acordado com o empregador só muda a repartição dos períodos …»
+
+- **Causa:** o pedido passa as horas do dia com **Outro regime acordado com o empregador** assinalado. A mensagem completa: «Dispensa para amamentação ou aleitação» de Ana Margarida Pinto não pode ser aceite. O que aconteceu: pediram-se 180 minutos em 25/11/2026. O regime acordado com o empregador só muda a repartição dos períodos: o total do dia continua a ser de 120 minutos (art. 47.º/3 a /5 do Código do Trabalho). Como resolver: peça até 120 minutos ao todo nesse dia; o regime acordado já permite gozá-los num só bloco. Corrija os dados indicados e tente de novo.».
+- **O que fazer:** peça até 120 minutos nesse dia, num bloco ou em vários. O acordo não aumenta o total do dia.
+
+### «… o limite de … já está todo usado …»
+
+- **Causa:** a trabalhadora já tem nesse dia outros pedidos do mesmo tipo que ocupam todo o tempo que a lei dá. A mensagem completa: «Dispensa para amamentação ou aleitação» de Ana Margarida Pinto não pode ser aceite. O que aconteceu: o limite de 23/11/2026 já está todo usado: outros pedidos da trabalhadora já ocupam 120 minutos e a lei dá 120 minutos por dia (art. 47.º/3 a /5 do Código do Trabalho). Como resolver: escolha outro dia ou altere um dos pedidos que já existem nesse dia. Corrija os dados indicados e tente de novo.». Num pedido de vários dias, a mensagem é a mesma, com o dia que está completo (no exemplo, de 27/11/2026 às 17:00 a 30/11/2026 às 10:00, com 120 minutos já pedidos a 30/11/2026: «o limite de 30/11/2026 já está todo usado…»).
+- **O que fazer:** passe o pedido para outro dia ou altere um dos pedidos que já existem nesse dia. Com gémeos, corrija **Filhos a cargo**. Um pedido recusado ou cancelado deixa de contar.
+
+### «… já estão pedidos … noutros pedidos da trabalhadora, este acrescenta …»
+
+- **Causa:** o dia ainda tem tempo livre, mas menos do que este pedido. A mensagem completa: «Dispensa para amamentação ou aleitação» de Ana Margarida Pinto não pode ser aceite. O que aconteceu: já estão pedidos 60 minutos em 24/11/2026 noutros pedidos da trabalhadora, este acrescenta 120 e a lei dá 120 minutos por dia (art. 47.º/3 a /5 do Código do Trabalho). Como resolver: peça até 60 minutos nesse dia ou passe este pedido para outro dia. Corrija os dados indicados e tente de novo.».
+- **É uma só mensagem.** Mesmo quando o pedido também passa de um período de uma hora, o fiscaldoo não junta a recusa do período («… até 120 minutos ao todo no dia»): diz só o que ainda se pode pedir nesse dia. Sem **Outro regime acordado com o empregador**, nunca propõe mais do que um período: com 30 minutos já pedidos a 25/11/2026 e um pedido novo de 120, diz «peça até 60 minutos nesse dia», embora restem 90. Com o acordo assinalado, diz tudo o que resta: «peça até 90 minutos nesse dia».
+- **O que fazer:** peça só os minutos que a mensagem diz, ou passe o pedido para outro dia. {/* Nota interna (lote v23-AQ, depois do comboio 175 com o RH-038, master d277b0e80, docs_demo_v23aq_test): na sessão de um utilizador só com o perfil Gestor de RH, por RPC (o campo Datas da ficha nova não se preenche com a ferramenta do lote): dois períodos de 1 h de Ana Margarida Pinto a 23/11/2026 (09:00 e 14:00, comunicados a 02/11/2026) guardados; o 3.º de 1 h nesse dia recusado com a mensagem citada; 1 h a 24/11/2026 guardada; um bloco de 2 h a 25/11/2026 sem o acordo recusado com o «Como resolver» novo (citado na secção acima); 2 h a 26/11/2026 com Outro regime acordado guardadas. Mensagens lidas com o Gestor de RH sem o acesso Ver ausência médica. */}
+
+### «… foi comunicado em … e a lei exige 10 dias antes do início (CT art. 48.º) …»
+
+- **Causa:** o trabalhador avisou a empresa menos de 10 dias antes. A mensagem diz o primeiro dia possível: «… Como resolver: passe o início para 22/11/2026 ou depois, ou registe a comunicação anterior.».
+- **O que fazer:** comece no dia indicado ou, se o aviso foi dado antes, corrija **Comunicada em**.
+
+### «Licença parental complementar» … «o filho tem mais de seis anos …»
+
+![Janela Erro de Validação: a licença parental complementar de Fábio Nuno Carvalho não pode ser aceite porque o filho tem mais de seis anos em 08/11/2026, art. 51.º/1 do Código do Trabalho](/images/payroll-pt/dispensas-para-amamentacao-e-aleitacao/02-complementar-filho-com-mais-de-seis-anos.png)
+
+- **Causa:** na ausência **Licença parental complementar**, a **Data de nascimento do filho** dá mais de seis anos no início da licença. No exemplo, filho nascido a 10/01/2019.
+- **O que fazer:** confirme a data de nascimento. Se está certa, a licença complementar já não é devida.
+- **Sem data de nascimento,** a mensagem é outra: «… O que aconteceu: a licença complementar é para filho até seis anos e falta a data de nascimento. Como resolver: preencha «Data de nascimento do filho».…».
+
+### «… O que aconteceu: a dispensa de amamentação vai até … e o filho faz um ano a …; depois do primeiro ano de vida a mãe tem de apresentar atestado médico …»
+
+![Janela Erro de Validação: a dispensa de amamentação vai até 18/01/2027 e o filho faz um ano a 10/01/2027; depois do primeiro ano a mãe tem de apresentar atestado médico (art. 47.º/1 e art. 48.º/1)](/images/payroll-pt/motivo-da-dispensa-e-atestado-de-amamentacao/02-amamentacao-sem-atestado.png)
+
+- **Causa:** o motivo é **Amamentação (art. 47.º/1)**, a dispensa é depois do primeiro aniversário e **Atestado médico da necessidade de assistência** está desligado. A mensagem completa: «Dispensa para amamentação ou aleitação» de Ana Margarida Pinto não pode ser aceite. O que aconteceu: a dispensa de amamentação vai até 18/01/2027 e o filho faz um ano a 10/01/2027; depois do primeiro ano de vida a mãe tem de apresentar atestado médico (art. 47.º/1 e art. 48.º/1 do Código do Trabalho: a dispensa dura enquanto durar a amamentação, com atestado médico depois do primeiro ano). Como resolver: registe o atestado nos dados médicos do pedido («Atestado médico da necessidade de assistência») ou termine a dispensa a 09/01/2027. Corrija os dados indicados e tente de novo.
+- **O que fazer:** com o atestado entregue, ligue **Atestado médico da necessidade de assistência**. Sem atestado, a dispensa termina na véspera do aniversário.
+
+### «… O que aconteceu: a dispensa vai até … e o filho faz um ano em … (art. 47.º/2). …»
+
+![Janela Erro de Validação: a dispensa vai até 18/01/2027 e o filho faz um ano em 10/01/2027 (art. 47.º/2); termine-a em 09/01/2027](/images/payroll-pt/motivo-da-dispensa-e-atestado-de-amamentacao/03-aleitacao-depois-do-primeiro-ano.png)
+
+- **Causa:** o motivo é **Aleitação (art. 47.º/2)** e a dispensa é depois do primeiro aniversário. A mensagem completa: «Dispensa para amamentação ou aleitação» de Ana Margarida Pinto não pode ser aceite. O que aconteceu: a dispensa vai até 18/01/2027 e o filho faz um ano em 10/01/2027 (art. 47.º/2). Como resolver: termine-a em 09/01/2027. Corrija os dados indicados e tente de novo.
+- **O que fazer:** termine a dispensa no dia que a mensagem indica. O atestado não prolonga a aleitação.
+
+### «… a dispensa para aleitação dura até o filho fazer um ano e falta a data de nascimento. …»
+
+- **Causa:** o motivo é **Aleitação (art. 47.º/2)** e **Data de nascimento do filho** está vazia. A mensagem continua: «Como resolver: preencha «Data de nascimento do filho». Corrija os dados indicados e tente de novo.»
+- **O que fazer:** escreva a data de nascimento.
+
+{/* Nota interna (lote v23-AN, depois do comboio 174 com o RH-037, master a67618a71, docs_demo_v23an_test): o defeito D1 do LOTE_V23-AM já não se reproduz. Com um utilizador só com o perfil Gestor de RH, sem o acesso Ver ausência médica: dispensa de Ana Margarida Pinto a 23/11/2026, das 14:00 às 15:00, comunicada a 02/11/2026, criada por RPC com esse utilizador (o seletor de horas não se preenche pela ferramenta); por clique, Data de nascimento do filho 10/05/2026 e guardar: sem mensagem, fica Para Aprovar e a data mantém-se depois de recarregar; o Motivo da dispensa não aparece. Retirados o problema «Ops! Algo correu mal…» e a frase do passo 5. */}
+
+{/* Nota interna (lote v23-AA, #4052 DOCS-069, dispensas do guia Salários/licencas-de-adocao-complementar-e-reducao-de-horario-por-parentalidade.md que o DOC-0436 do v23-W deixou de fora; o DOC-0436 não está em main, por isso o artigo é próprio). master 97b34fac3, docs_demo_v23aa_test, porta 8478. Utilizador só com o Perfil Gestor de RH (aa.rh). Por clique: formulário novo com o tipo e os campos; complementar nova de Fábio Nuno Carvalho com o PDF e filho de 10/01/2019 recusada (mensagem e captura); sem data de nascimento, a outra mensagem; dispensa de Ana de 16/11/2026 aberta, Aprovar e Validar até Aprovado. Por RPC como aa.rh (o campo Datas abre um seletor que a ferramenta não preenche): dispensa de 3 h recusada, de 2 h guardada (id 10), de Diogo comunicada a 12/11 recusada (aviso), complementar de Fábio de 14 a 31/12/2026 (id 12, Para Aprovar). O tipo DISP_PRENATAL_PMA existe em pt.payroll.absence.type mas não há hr.work.entry.type com esse código: defeito no LOTE_V23-AA. O motivo (amamentação/aleitação) e o atestado são do perfil médico e não foram provados. */}
+
+{/* Nota interna (lote v23-AD, #4052 DOCS-069): o pedido era acrescentar ao DOC-0441 (dispensas-para-amamentacao-e-aleitacao, lote v23-AA), que não está em main 15bab98; por isso é um artigo à parte, a juntar ao DOC-0441 (ou a ligar dele) quando o v23-AA entrar. master 97b34fac3, docs_demo_v23ad_test, porta 8484. Utilizadores ad.rh (só Gestor de RH) e ad.rhmed (Gestor de RH + Ver ausência médica, grupo 116), criados por RPC; a lista de campos da ausência foi lida no navegador com os dois. Dispensa id 17 criada por RPC como ad.rhmed (o campo Datas abre um seletor de horas que a ferramenta não preenche): Amamentação, filho de 10/01/2026, 18/01/2027 09:00–10:00, comunicada a 28/12/2026, com atestado; sem atestado a criação por RPC foi recusada com a mesma mensagem. Por clique, cada uma descartada a seguir: atestado desligado (mensagem e captura 02), Aleitação (mensagem e captura 03), Aleitação sem data de nascimento (mensagem), nascimento a 02/11/2025 (mensagem do parâmetro: defeito, FAMLEAVE_FORMULA_MAX_MONTHS só desde 01/01/2026 e lido na data de nascimento, ver LOTE_V23-AD). No fim, por clique: Aleitação, filho de 01/03/2026, sem atestado, gravada (fica Para Aprovar). Com ad.rh (sem o acesso), nascimento mudado para 01/01/2026: recusa da aleitação, que cita o art. 47.º/2 e assim deixa saber o motivo a quem não o vê (defeito baixo, a confirmar com o encarregado da proteção de dados; LOTE_V23-AD). Descartado. Junto ao DOC-0441 na integração docs-integra-60 (lote 60). */}
+
+{/* Nota interna (lote v23-AM, DOCS-069 #4052 e DOCS-066 #3947, master 8d5d6c606, docs_demo_v23am_test, porta 8502): comboio 173 (RH-034, RH-035). Pela sessão de perfil.rh (o seletor de horas não se preenche pela ferramenta): 2 h seguidas sem acordo recusadas (mensagem nova), 2 h com acordo gravadas (id 27, campo visto por clique no separador da lei), 3 h recusadas com e sem acordo; data de nascimento posta por clique numa dispensa sem motivo: «Ops! Algo correu mal» (defeito D1); recusa neutra ao mudar a data de nascimento da aleitação 19. Pela sessão de perfil.rhmed: aleitação de 27/11/2026 para filho de 15/12/2025 gravada (id 17); a mesma mudança da 19 dá a mensagem completa; dispensa pré-natal 16 com o nome real na lista, que perfil.rh lê com o nome neutro. */}
+
+{/* Nota interna (lote v23-AU, depois do comboio 181 com o RH-042, master 09afad64d, docs_demo_v23au_test, porta 8504): com um utilizador criado por RPC só com o perfil Gestor de RH (sem Ver ausência médica), por RPC (o seletor de horas não se preenche pela ferramenta): Ana Margarida Pinto, 60 min a 24/11/2026 (09:00–10:00) guardados e um pedido de 120 min nesse dia (14:00–16:00) sem acordo recusado com uma só mensagem, a citada nesta secção; 30 min a 25/11/2026 guardados e 120 min recusados com «peça até 60 minutos» sem acordo e «peça até 90 minutos» com Outro regime acordado com o empregador, cada um uma só mensagem. Comunicada em 02/11/2026. */}

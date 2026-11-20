@@ -1,0 +1,84 @@
+---
+id: ler-documentos
+slug: /copilot/ler-documentos
+title: Como ler uma fatura ou outro documento com o Copiloto
+sidebar_label: Ler um documento com IA
+sidebar_position: 1
+description: O Copiloto lê uma fatura de fornecedor sem código QR, um recibo ou um contrato e prepara um rascunho de fatura de fornecedor; confira o que ele assinala, escolha o IVA e só depois lance.
+keywords: [ler documento, ler fatura, ler um documento com IA, leitor de documentos, IA, OCR, ocr, PDF, fotografia, talão, talao, fatura estrangeira, fatura sem QR, rascunho de fatura de fornecedor, correções do leitor, correcoes do leitor, copiloto]
+doc_id: DOC-0287
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master b605851c7)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/compras/fatura-de-fornecedor, copilot/configurar/privacidade-e-consentimentos]
+---
+
+## Para que serve?
+
+O leitor de documentos poupa a escrita de uma fatura de fornecedor que não tem o código QR da AT: uma fatura estrangeira, antiga ou um talão. O Copiloto lê o documento, prepara um rascunho de fatura de fornecedor e diz o que não conseguiu confirmar. Nada é lançado: quem lança é a pessoa, depois de conferir.
+
+## Quando utilizar?
+
+- Recebeu uma fatura de fornecedor sem código QR (estrangeira, antiga, talão de caixa), um recibo ou um contrato.
+- Não use o leitor numa fatura com o código QR da AT: essa lê-se pelo código QR, sem IA, como diz a própria janela.
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Compras › Ler um documento com IA**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**.
+- O Copiloto, a **Ligação à IA** e o agente **IA - Leitor de documentos** estão ligados e há um limite mensal de gasto acima de zero: veja [Como ligar ou desligar o Copiloto](/copilot/privacidade-e-consentimentos).
+- O fornecedor já existe com o NIF. O leitor nunca cria fornecedores: sem fornecedor, faz o rascunho sem linhas.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Lançar › Compras › Ler um documento com IA**.
+2. Em **Fornecedor (se o conhece)**, escolha o fornecedor, por exemplo **Papelaria Exemplo, Lda**.
+3. Em **Ou cole o texto do documento**, cole o texto da fatura. Também pode anexar o PDF ou a fotografia em **Documentos (PDF ou imagem)**: o ficheiro fica na janela, com o nome e o tipo (por exemplo, `fatura-ft-2026-45.pdf PDF`). <span className="fd-pending">Pendente de validação no ecrã: a leitura de um PDF ou de uma fotografia anexados. Na demonstração, o PDF anexou-se sem erro, mas o Copiloto está desligado e uma base de testes nunca chama a IA, por isso o rascunho não se pôde ler a partir do ficheiro.</span>
+   ![Janela Ler um documento com IA com o fornecedor Papelaria Exemplo, Lda, o texto da fatura FT 2026/45 colado e o botão Ler o documento](/images/copilot/ler-documentos/01-janela-ler-um-documento.png)
+4. Carregue em **Ler o documento**. Abre-se a **Fatura de fornecedor em rascunho**, com a referência do documento (no exemplo, `FT 2026/45`).
+5. Leia a caixa **Rascunho lido pela IA**. Cada ponto de **Por favor confirme** é um valor que o leitor não confirmou.
+   ![Caixa Rascunho lido pela IA com os pontos a confirmar: total do IVA, IVA das duas linhas e total do documento de 122.26](/images/copilot/ler-documentos/02-rascunho-lido-pela-ia.png)
+6. Em cada linha, carregue em **Impostos** e escolha o IVA do documento. O leitor não o escolhe quando a empresa tem vários impostos de compra com a mesma taxa. Ao escrever `23`, a lista mostra **23%**, **23% AUT UE**, **23% EX SServiços**, **23% AUT sucata**, **23% AUT construção**, **23% AUT emissões GEE**, **Retenção IRS 23% — trabalho independente (art. 151.º)** e outras. Numa compra a um fornecedor português com IVA de 23% na fatura, como a do exemplo, escolha **23%**. As outras são para casos especiais (autoliquidação, serviços do estrangeiro, retenção na fonte): veja «Quando há retenção na fonte ou autoliquidação» em [Como lançar uma fatura de fornecedor](/accounting-pt/fatura-de-fornecedor) antes de escolher uma delas.
+7. Confira a **Conta** de cada linha. Numa linha sem artigo, o rascunho fica com a conta por omissão do diário **Compras** (no exemplo, `6228 Outros`), que não é a do papel e do toner. Para a mudar, carregue na **Conta** da linha, escreva `6233` e escolha **6233 Materiais / Material de escritório**; faça o mesmo nas outras linhas. Confirme depois que o **Total** é igual ao do documento: no exemplo, 99,40 € + IVA 22,86 € = 122,26 €.
+   ![Linhas da fatura com a conta 6233 Material de escritório assinalada nas duas linhas, o IVA 23% escolhido e os totais 99,40 €, IVA 22,86 € e 122,26 €](/images/copilot/ler-documentos/03-linhas-com-o-iva-escolhido.png)
+
+</StepByStep>
+
+Para lançar, siga [Como lançar uma fatura de fornecedor](/accounting-pt/fatura-de-fornecedor) a partir do rascunho.
+
+## Resultado esperado
+
+Uma fatura de fornecedor em **Rascunho**, com o fornecedor, a referência, as datas da fatura e do vencimento, as linhas do documento com a conta certa (no exemplo, `6233 Material de escritório`) e o IVA escolhido (**23%**), e o total igual ao do papel (122,26 €). Ainda não há lançamento contabilístico nem IVA dedutível registado: isso só acontece ao confirmar a fatura.
+
+## Notas importantes
+
+- Os números da caixa **Rascunho lido pela IA** aparecem com ponto decimal (`122.26`); os da fatura, com vírgula.
+- O leitor envia o texto do documento ao fornecedor de IA da empresa. Os dados pessoais seguem com valores fictícios, salvo se a empresa os autorizou nessa ligação.
+- **Copiloto › Agentes › Correções do leitor** guarda, por fornecedor, o que corrige num rascunho, para o leitor aprender. <span className="fd-pending">Pendente de validação no ecrã: depois de escolher o IVA nas duas linhas, a lista ficou «Ainda sem correções»; falta saber que correções guarda e quando.</span>
+
+{/* Nota interna (correção R2, ND2-R02, 29/10/2026): captura 03 refeita com o Contabilista no rascunho FT 2026/45 (8095) sem gravar nada; para o nome da conta caber inteiro, a coluna Conta foi alargada pelo separador do cabeçalho e as colunas opcionais Categoria de despesa, Unidade, Dedutível e IVA dedutível foram escondidas (botão das colunas, só no navegador da captura). Histórico: correção V2, ND2-06 e ND2-07: a conta proposta vem do default_account_id do diário Compras (6228 Outros); no rascunho FT 2026/45 da 8095 as duas linhas foram mudadas por clique para 6233 e a captura 03 refeita; lista dos «23%» copiada do ecrã com o Contabilista. V2D-06 (anexar dava «Ops! Algo correu mal…») já não acontece no master d277b0e80 (lote v23-AR, perfil Contabilista, 8508): o PDF anexa-se e a janela recusa só com «O leitor está desligado…», por o Copiloto estar desligado na demonstração; a leitura do ficheiro fica pendente (base de testes: a IA nunca é chamada; o docs_base.sh não liga o simulador). A leitura de PDF chegado por e-mail tem o cartão COP-065 aberto: não descrita aqui. Vídeo previsto (video=sim, corrente DOCS-006): gravar só depois do V2D-06, com o PDF sintético. */}
+
+## Problemas frequentes
+
+### Ao carregar em «Ler o documento»: «O leitor está desligado…»
+
+- **Mensagem:** na janela **Operação inválida**, «O leitor está desligado. Só o administrador pode ligar o Copiloto, a ligação à IA e «IA - Leitor de documentos» e definir a chave de IA. Peça ao administrador: faz-se em Copiloto › Controlo › Interruptores.» A mesma frase aparece no topo da janela, logo ao abri-la.
+- **O que fazer:** peça ao administrador que ligue o Copiloto, a ligação à IA e o agente, como explicado em [Como ligar ou desligar o Copiloto](/copilot/privacidade-e-consentimentos). Até lá, lance a fatura à mão.
+
+### O rascunho vem sem fornecedor e sem linhas
+
+- **Mensagem na caixa:** «NIF do fornecedor: … não há um fornecedor único com este NIF na sua empresa: escolha ou crie o fornecedor manualmente (o leitor nunca cria fornecedores)».
+- **O que fazer:** crie o fornecedor com o NIF, apague o rascunho e leia o documento de novo, com o fornecedor escolhido em **Fornecedor (se o conhece)**.
+
+### A janela diz que o limite mensal seria ultrapassado
+
+- **Mensagem:** «O limite mensal de gasto com IA da empresa … seria ultrapassado: … Nada foi enviado.»
+- **O que fazer:** peça ao administrador que aumente o limite, como explicado em [Como ligar ou desligar o Copiloto](/copilot/privacidade-e-consentimentos).

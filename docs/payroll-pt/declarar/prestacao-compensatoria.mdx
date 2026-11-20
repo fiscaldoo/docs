@@ -1,0 +1,94 @@
+---
+id: prestacao-compensatoria
+slug: /payroll-pt/prestacao-compensatoria
+title: Como preparar o pedido da prestação compensatória dos subsídios (RP 5003)
+sidebar_label: Prestação compensatória
+sidebar_position: 30
+description: "Calcular o valor que o trabalhador pode pedir à Segurança Social pelos subsídios não pagos num impedimento de 30 dias ou mais, e até quando."
+keywords: [prestação compensatória, prestacao compensatoria, subsídios, subsidios, RP 5003, 5003, licença parental]
+doc_id: DOC-0231
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/declarar/declaracao-a-seguranca-social, payroll-pt/declarar/rotatividade-excessiva]
+---
+
+## Para que serve?
+
+Quando um impedimento de 30 dias ou mais foi pago pela Segurança Social, o trabalhador pode pedir-lhe uma prestação pela parte do subsídio que a empresa não pagou. Este ecrã calcula o valor e o período do pedido.
+
+**A empresa não declara nada aqui.** O ecrã avisa: «Nada é enviado nem lançado.» O pedido é do trabalhador, e não há linha no recibo.
+
+## Quando utilizar?
+
+- Quando um trabalhador regressa de um impedimento longo e pergunta o que pode pedir.
+- No início do ano, para o período de pedidos que abre em janeiro.
+
+## Onde encontrar?
+
+**Salários › Preparar › O que há para fazer este mês?** › **Listas de apoio** › **Prestação compensatória (RP 5003)**.
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador. O perfil Contabilista não tem a aplicação **Salários**.
+- A ausência está aprovada, e é de um tipo que a Segurança Social paga. Numa baixa, **Proteção da Segurança Social ou seguro** tem de estar preenchida, ou a aprovação é recusada. Se mudar a Proteção numa ausência já classificada, ela volta a **Para aprovar**, e é preciso aprová-la de novo.
+- Tem o valor dos dois subsídios como se fossem pagos por inteiro.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra o ecrã e escolha o **Trabalhador**.
+2. Confirme o **Ano dos subsídios**. O ecrã traz o ano anterior, mas nunca um ano anterior a 2026, porque as regras só existem desde então: em 2026 traz 2026.
+3. Preencha **Subsídio de férias do ano** e **Subsídio de Natal do ano**.
+4. Numa licença para assistência a filho com deficiência ou doença crónica, marque **Assistência a filho com deficiência ou doença crónica**. Com a caixa marcada, o total fica limitado a 1.074,26 € em 2026 (2 vezes o IAS de 537,13 €). Uma licença deste tipo de 05/01/2026 a 12/06/2026 (159 dias), com subsídios de 3.200,00 €, dá 1.115,18 € sem a caixa e 1.074,26 € com ela. Hoje, a linha da tabela fica em 1.115,18 € e o total em 1.074,26 €, porque o limite só entra no total. <span className="fd-pending">Pendente de validação no ecrã: esta diferença entre a linha e o total está em revisão. O limite da lei é o de **Prestação a pedir à Segurança Social**; não indique o valor da linha ao trabalhador.</span>
+5. Leia **Prestação a pedir à Segurança Social**, **Período para pedir** e o detalhe por subsídio.
+   ![Prestação de 100,82 € por uma licença parental de 46 dias, com pedido de 01/01/2027 a 30/06/2027](/images/payroll-pt/prestacao-compensatoria/01-prestacao-a-pedir.png)
+
+</StepByStep>
+
+**Exemplo.** Licença parental de 01/10/2026 a 15/11/2026 (46 dias), com subsídios de 1.000,00 €, em 2026:
+
+| Passo | Cálculo | Valor |
+| --- | --- | --- |
+| Parte não paga do subsídio de Natal | 1.000,00 € × 46 ÷ 365 | 126,03 € |
+| Prestação, a 80 % | 126,03 € × 80 % | **100,82 €** |
+
+O subsídio de férias não entra neste caso: na licença parental, quem o paga é a empresa, como diz o Guia Prático da Segurança Social. O pedido é de 01/01/2027 a 30/06/2027.
+
+## No Enterprise
+
+No Odoo Enterprise, o ecrã é o mesmo, com o acesso extra **Administrador de Salários**, e abre-se pelo mesmo painel. Com uma licença parental aprovada de 01/10/2026 a 15/11/2026 e subsídios de 1.000,00 €, a **Prestação a pedir à Segurança Social** é de 100,82 €, e o **Período para pedir** vai de 01/01/2027 a 30/06/2027. Na baixa de 45 dias, as duas linhas a 60 % (81,00 € cada) e o aviso para confirmar a do subsídio de férias são os mesmos. <span className="fd-pending">Pendente de validação no ecrã do Enterprise: os valores da licença parental e da baixa de 45 dias.</span>
+
+Sem impedimento no ano, o ecrã diz «Nada a pedir: neste ano não há impedimento de 30 dias ou mais pago pela Segurança Social.». Os anos 2025 e 1990 dão as mesmas mensagens.
+
+{/* Nota interna (lote EE-09, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 12/11/2026): conferido numa cópia local da base Enterprise (docs_ee_ee09_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Administrador de Salários: painel › Prestação compensatória (RP 5003), Bruno Miguel Teixeira com subsídios de 1.000,00 €: «Nada a pedir…» e período lidos no ecrã (descartado). Licença parental de Ana Margarida Pinto e baixa de 45 dias de Bruno Miguel Teixeira aprovadas, e os extratos (2026, 2025 e 1990), com os direitos do Administrador de Salários numa transação desfeita: 100,82 € (Natal, 46 dias, 80 %) e 162,00 € (81,00 + 81,00, 60 %, com o aviso). Menus e vistas destes ecrãs comparados, perfil a perfil, com uma cópia da demonstração Community (docs_demo_ee09_test, 2c8d358c0, porta 8524): iguais. Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-09.md. */}
+
+## Resultado esperado
+
+Fica a saber o valor, a percentagem e as datas a indicar ao trabalhador. Nada muda no recibo nem na contabilidade.
+
+## Notas importantes
+
+### Base legal
+
+Decreto-Lei n.º 28/2004 (doença) e Decreto-Lei n.º 91/2009 (parentalidade), como os indica o Guia Prático da Segurança Social «Prestações Compensatórias dos Subsídios de Férias, Natal ou outros semelhantes». O guia dá 60 % em doença com subsídio, 80 % em parentalidade, o máximo de 2 IAS na assistência a filho com deficiência ou doença crónica e o prazo: 6 meses a contar de 1 de janeiro do ano seguinte ou, quando aplicável, do fim do contrato. O ecrã só mostra o primeiro destes dois prazos.
+
+**Pendente de validação por contabilista certificado:** o texto dos dois decretos-lei, que aqui não foi relido, só o guia.
+
+## Problemas frequentes
+
+| O ecrã diz | O que fazer |
+| --- | --- |
+| «Nada a pedir: neste ano não há impedimento de 30 dias ou mais pago pela Segurança Social.» | Confirme que a ausência está aprovada e tem 30 dias ou mais no ano. Numa baixa de 20 dias, esta resposta é a certa: o contrato não se suspende. Num acidente de trabalho também: quem paga é o seguro. |
+| «O ano 1990 não é válido para os subsídios.» | Escreva um ano entre 2000 e 2100. |
+| «A prestação não se pode calcular para 2025. O que aconteceu: as regras da prestação compensatória (percentagens, limite e prazo) só estão em vigor a partir de 2026 e nada foi assumido para anos anteriores. Como corrigir: escolha o ano 2026 ou um posterior em «Ano dos subsídios».» | Escolha 2026 ou um ano seguinte. |
+
+**Doença.** Numa baixa aprovada de 45 dias, com subsídios de 1.095,00 €, o ecrã mostra uma linha por subsídio, na **Situação** **Doença**, a 60 %: 81,00 € cada, 162,00 € no total. Por baixo da tabela, um aviso pede para confirmar: «Confirme a linha do subsídio de férias com o seu contabilista certificado antes de a pedir.»
+
+![Prestação de 162,00 € numa baixa de 45 dias, com as duas linhas a 60 % e o aviso para confirmar a linha do subsídio de férias](/images/payroll-pt/prestacao-compensatoria/02-aviso-da-baixa.png)
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o Guia Prático diz que, numa baixa que começa e acaba no mesmo ano, a empresa paga o subsídio de férias e a Segurança Social só paga a prestação do subsídio de Natal. Não indique ao trabalhador a linha do subsídio de férias sem a confirmar.</span>

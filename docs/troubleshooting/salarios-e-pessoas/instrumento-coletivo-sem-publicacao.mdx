@@ -1,0 +1,71 @@
+---
+id: instrumento-coletivo-sem-publicacao
+slug: /troubleshooting/instrumento-coletivo-sem-publicacao
+title: O instrumento coletivo ou a lei não tem publicação ou referência legal
+sidebar_label: Instrumento ou lei sem publicação
+sidebar_position: 42
+description: Um instrumento de regulamentação coletiva não se guarda sem a publicação e a data, e uma lei não entra em vigor antes de publicada. O que preencher para o ecrã aceitar.
+keywords: [instrumento coletivo, IRCT, publicação, publicacao, BTE, referência legal, referencia legal, lei, em vigor, antes de ser publicada, campos obrigatórios, versões do código do trabalho]
+doc_id: DOC-0406
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 25deacc94)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/configurar/contrato-coletivo, payroll-pt/configurar/atualizacoes-legais]
+---
+
+## Sintoma
+
+Ao guardar um instrumento de regulamentação coletiva (IRCT), os campos ficam a vermelho e nada é guardado. Ao guardar uma versão do Código do Trabalho, abre-se a janela **Erro de Validação**.
+
+## Mensagem
+
+Copiadas do ecrã com o administrador do sistema; a do instrumento também com o perfil **Gestor de RH**. As partes em itálico mudam de caso para caso.
+
+- Em **Salários › Preparar › Trabalhadores e contratos › Instrumentos de regulamentação coletiva**, ao guardar sem a publicação, num aviso no canto do ecrã:
+  > «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+
+  ![Instrumento novo com Publicação (BTE) e Publicado em a vermelho e os outros campos obrigatórios preenchidos](/images/troubleshooting/instrumento-coletivo-sem-publicacao/01-campos-da-publicacao-a-vermelho.png)
+
+- Em **Salários › Configurar › Legislação › Versões do Código do Trabalho**, ao guardar com as datas trocadas:
+  > «Uma lei não pode entrar em vigor (*01/10/2026*) antes de ser publicada (*10/10/2026*). Como corrigir: corrija as datas.»
+
+  ![Janela Erro de Validação: uma lei não pode entrar em vigor a 01/10/2026 antes de ser publicada a 10/10/2026](/images/troubleshooting/instrumento-coletivo-sem-publicacao/02-lei-em-vigor-antes-da-publicacao.png)
+
+## Causas verificadas
+
+- **Falta a publicação do instrumento.** O formulário pede sempre **Instrumento**, **Código**, **Tipo de instrumento**, **Empresa**, **Publicação (BTE)**, **Publicado em** e **Em vigor desde**. Um IRCT só produz efeitos depois de publicado. <span className="fd-pending">Pendente de validação por contabilista certificado: a aplicação ao caso concreto de cada instrumento.</span>
+- **A lei entra em vigor antes da publicação.** A data em **Em vigor desde** é anterior à de **Publicado em**.
+
+## O que confirmar
+
+1. No Boletim do Trabalho e Emprego (BTE), o número e a data da publicação do instrumento.
+2. No Diário da República, as datas da lei.
+
+## Como resolver
+
+Quem faz: um **Administrador**.
+
+1. No instrumento, preencha **Publicação (BTE)** e **Publicado em** com os dados do BTE. Não escreva uma referência provisória.
+2. Na lei, corrija **Publicado em** ou **Em vigor desde**, conforme o diploma.
+3. Carregue em **Guardar**.
+
+Se o instrumento ainda não foi publicado, não o registe: aguarde a publicação.
+
+## Resultado esperado
+
+O registo guarda-se, sem campos a vermelho. Veja o seguinte passo em [Como aplicar o contrato coletivo (tabelas, mínimos e diuturnidades)](/payroll-pt/contrato-coletivo) ou em [Como o fiscaldoo atualiza a legislação laboral e fiscal](/payroll-pt/atualizacoes-legais).
+
+## Quando contactar o suporte
+
+- Os dados estão preenchidos e o aviso continua, sem nenhum campo a vermelho.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com a frase completa e a referência da publicação.
+
+{/* Nota interna (DOCS-046, v13-TS): 2 frases por clique. ERR-2830 («não tem publicação») não se provoca por clique: o formulário trava antes, com os campos a vermelho, e por isso não se cita. Não provocadas nem citadas: ERR-2794, 2834, 3500, 3512, 3597, 3701, 3449 e 2591 (mínimos, revisões, regras, cessação, concorrência). Registos não gravados. */}
+
+{/* Nota interna (DOCS-005 #3400, lote CAP-01, 10/11/2026, master ce51f2d47, docs_demo_cap01_test, porta 8504): por clique com o administrador do sistema. Instrumento novo «Contrato coletivo do comércio retalhista» (CCT-COM, Empresa Demonstração, em vigor desde 01/01/2026) sem publicação: Guardar dá o aviso citado e só Publicação (BTE) e Publicado em ficam a vermelho (captura 01). Versão nova do Código do Trabalho publicada a 10/10/2026 e em vigor a 01/10/2026: Erro de Validação citado (captura 02). Nenhum dos dois foi guardado (alterações descartadas). Os sete campos obrigatórios do instrumento conferem com o ecrã. */}

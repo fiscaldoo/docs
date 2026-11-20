@@ -1,0 +1,144 @@
+---
+id: taxas-e-isencoes-de-iva
+slug: /accounting-pt/taxas-e-isencoes-de-iva
+title: Como escolher a taxa de IVA certa e saber que motivo de isenção sai
+sidebar_label: Taxas e isenções de IVA
+description: De onde vem a taxa de IVA de cada linha (artigo, verba das listas do IVA, ficha do cliente, região), como conferi-la antes de emitir, que taxa leva um cliente dos Açores ou da Madeira e que motivo de isenção sai, incluindo a isenção intracomunitária, que exige o NIF válido no VIES.
+keywords: [taxa de IVA, taxa de iva, escolher taxa, taxa reduzida, taxa intermédia, taxa intermedia, 6%, 13%, 23%, verba, verbas das listas do IVA, lista I, lista II, categoria, Aplicar as taxas sugeridas, caso especial de IVA, motivo de isenção, motivo de isencao, isenção, isencao, 0% EU, isenção intracomunitária, isencao intracomunitaria, VIES, NIF válido no VIES, nif valido no vies, M16, M07, M05, autoliquidação, autoliquidacao, cliente da UE, RITI art. 14, Açores, Acores, Madeira, taxas regionais, IVA Açores, IVA Madeira, 4% MA, 12% MA, 22% MA, 4% AZ, 9% AZ, 16% AZ, posição fiscal regional, posicao fiscal regional]
+doc_id: DOC-0086
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master fe8c5365c; VIES e Região fiscal revistos em 9d1671e9f, mensagens do VIES em 27cebe13a)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/artigos, fiscal-core/faturacao/clientes, troubleshooting/faturacao-e-at/motivo-de-isencao-em-falta, accounting-pt/iva/configurar-o-iva]
+---
+
+## Para que serve?
+
+A taxa de IVA de cada linha decide o IVA da fatura e, quando é uma taxa a 0 %, o motivo de isenção que sai no documento e no SAF-T. O fiscaldoo põe a taxa sozinho: vem do artigo, a ficha do cliente pode trocá-la (cliente de outro país) e a verba das listas do IVA da categoria do artigo sugere a taxa reduzida ou intermédia. Nos Açores e na Madeira há taxas próprias. Este artigo mostra onde cada uma se vê e o que conferir antes de emitir.
+
+Escolher a taxa não cria lançamentos. Os lançamentos nascem quando a fatura é emitida (ver «Resultado esperado»).
+
+## Quando utilizar?
+
+- Ao criar um artigo de uma natureza que pode ter taxa reduzida ou intermédia (por exemplo pão, carne, peixe).
+- Antes de emitir uma fatura a um cliente de outro país da União Europeia.
+- Antes de faturar a um cliente dos Açores ou da Madeira, ou quando a empresa tem sede numa região autónoma.
+- Quando uma venda é isenta e precisa de saber que motivo de isenção sai na fatura.
+- **Não** escolha a taxa **0% EU** para um cliente português: o fiscaldoo recusa a fatura (ver «Problemas frequentes»).
+
+## Onde encontrar?
+
+- **A taxa de cada linha:** coluna **Impostos** da fatura em rascunho, em **Faturação › Faturar › Faturas de clientes**.
+- **A taxa do artigo:** campo **Impostos sobre vendas** do artigo, em **Faturação › Clientes e artigos › Artigos**.
+- **A verba das listas do IVA:** na categoria do artigo, em **Inventário › Configurar › Artigos › Categorias** (administrador). Num ecrã mais estreito, o **Configurar** fica escondido no botão **+** do fim da barra de menus.
+- **As opções regionais da empresa:** ficha da empresa, separador **Localização PT** (administrador).
+- **A lista dos impostos:** **Contabilidade › Configurar › Geral › Impostos**, com as colunas **Nome do Imposto**, **Aplica-se a** (vendas ou compras), **Imposto**, **Taxa ou enquadramento**, **Região**, **Texto na fatura** (o que sai impresso) e **Ativo** (quem trabalha em mais de uma empresa vê também a coluna **Empresa**). As taxas de IVA e as retenções na fonte de Portugal já lá estão, por região: só se cria um imposto novo para uma taxa que não esteja na lista.
+
+{/* Nota interna (lote v23-AI, DOCS-069 #4052, master 7a3b55244, docs_demo_v23ai_test): lista aberta por clique com o Gestor de contabilidade da demonstração (perfil Contabilista certificado): 101 impostos com o filtro Venda ou Compras (80 na primeira página; conferido pela auditoria docs-aud-v23ai), colunas copiadas do ecrã. Vinha do guia congelado Início rápido/primeiros-passos-numa-empresa-nova.md. */}
+
+## Antes de começar
+
+- Perfis: **Administrativo** para o artigo e a fatura; administrador para a categoria e para a ficha da empresa (o perfil **Administrativo** não tem a aplicação **Inventário**).
+- O cliente tem o país e o NIF certos. Num cliente de outro país da União Europeia, o NIF está **Válido** no VIES antes de fazer a fatura: [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes).
+- A **Região fiscal** da empresa está certo ([Como configurar o IVA da empresa](/accounting-pt/configurar-o-iva)).
+
+## Como utilizar
+
+<StepByStep>
+
+1. **Verba da categoria (administrador).** Abra **Inventário › Configurar › Artigos › Categorias** e a categoria dos artigos, por exemplo `Padaria`. No grupo **IVA PELA NATUREZA DO BEM (PORTUGAL)**, em **Verba das listas do IVA**, escreva parte do nome da verba, por exemplo `Pão`, e escolha-a. O **Tipo de taxa de IVA** passa a **Reduzida**. Carregue no ícone de guardar.
+   ![Categoria Padaria com a Verba das listas do IVA Pão e o Tipo de taxa de IVA Reduzida](/images/accounting-pt/taxas-e-isencoes-de-iva/01-categoria-com-verba.png)
+   A ficha da categoria tem ainda **Taxa reduzida de IVA (OSS)**, **Tipo de autoliquidação**, **Afeta operações isentas (afetação real)** e **Natureza da inversão do sujeito passivo (DP IVA 06-A)**. Servem para o balcão único (OSS), a autoliquidação e a dedução do IVA: numa categoria de vendas comuns, deixe-os vazios, salvo indicação do contabilista certificado. A autoliquidação nas compras está em [Como lançar uma fatura de fornecedor](/accounting-pt/fatura-de-fornecedor).
+2. **Artigo (Faturação).** Abra o artigo em **Faturação › Clientes e artigos › Artigos** e escolha a **Categoria**, por exemplo **Padaria**. Se o imposto do artigo não for o da verba, aparece um aviso: «A natureza deste produto indica a taxa de IVA reduzida, mas o imposto de venda é 23%. É apenas um aviso: confirme a verba ou o caso especial e, se o imposto estiver certo, mantenha-o.»
+   ![Artigo com Impostos sobre vendas 23%, o aviso amarelo da taxa de IVA reduzida indicada pela natureza do produto e, por baixo do aviso, o botão Aplicar as taxas sugeridas assinalado](/images/accounting-pt/taxas-e-isencoes-de-iva/02-artigo-taxa-sugerida.png)
+3. Carregue em **Aplicar as taxas sugeridas**. Enquanto o aviso amarelo está à vista, o botão fica por baixo do aviso; sem o aviso, fica ao lado de **Caso especial de IVA**. Em **Impostos sobre vendas** e em **Imposto sobre compra**, o **23%** passa a **6%**, e o aviso desaparece. O imposto de compra é o que entra por omissão nas faturas de fornecedor deste artigo e conta no IVA dedutível: se o fornecedor fatura com outra taxa, corrija-o à mão. Guarde o artigo.
+   {/* Nota interna (junção do B2c, AB2c3-02, PD-AUD3-01): com o aviso da verba à vista, a coluna da direita da ficha do artigo desliza (Faturação, 1366 px): o rótulo Caso especial de IVA fica ao lado do aviso e a lista e o botão ficam por baixo do aviso, ao lado de Custo; sem o aviso, tudo volta ao lugar. Por isso saiu a captura 03 (linha arrumada, só visível sem o aviso). Visto de novo a 30/10/2026 na docs_demo_juntab2c_test (master fe8c5365c): o botão mudou 23% → 6% nos dois campos. Defeito para o Gestor (UX/VAT). */}
+4. **Fatura (Faturação).** Na fatura em rascunho, confira a coluna **Impostos** de cada linha. Vem do artigo e muda sozinha com o cliente: a um cliente de outro país da União Europeia com o NIF **Válido** no VIES entra **0% EU** (bens) ou **0% EU S** (serviços), e a um cliente de fora da União Europeia entra **0% EX**. A tabela completa está em [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes), e os impostos e os seus motivos em [Como criar um artigo com o IVA e o tipo certos](/fiscal-core/artigos). Um cliente dos Açores ou da Madeira tem secção própria, mais abaixo.
+5. Se o cliente é de outro país da União Europeia e o NIF não está **Válido** no VIES, a linha fica com a taxa portuguesa (na demonstração, **6%**) e a fatura mostra um aviso amarelo por cima. É a taxa certa enquanto o NIF não estiver válido. Se a venda é isenta, valide primeiro o NIF e só depois confirme: os passos estão em [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes), secções «Validar o NIF no VIES: os quatro estados» e «Rascunho feito antes da validação». Não ponha a isenção à mão: ver «Notas importantes».
+6. Numa venda isenta, deixe a taxa a 0 % que o caso pede. O motivo de isenção vem com a taxa e não se escolhe na fatura: a **0% EU** leva o M16, e no PDF sai o texto do motivo, «Isento artigo 14.º do RITI», por baixo do quadro do IVA. Os outros motivos, por exemplo o M07 (isenção do art. 9.º do CIVA) e o M05 (exportação, art. 14.º do CIVA), estão na tabela de [Como criar um artigo com o IVA e o tipo certos](/fiscal-core/artigos), secção «Escolher outra taxa de IVA». Se a linha não tem motivo, veja [A linha não tem taxa de IVA, ou o imposto a 0 % não se guarda sem motivo de isenção](/troubleshooting/motivo-de-isencao-em-falta).
+7. Carregue em **Confirmar** para emitir a fatura.
+
+</StepByStep>
+
+**Caso especial de IVA** tem quatro opções, que servem só para avisar (a taxa continua a ser escolha sua): **Serviço por via eletrónica (art. 18.º n.º 7)**, **Bens em segunda mão, objetos de arte, de coleção e antiguidades (art. 18.º n.º 10)**, **Bens compostos (art. 18.º n.º 4)** e **Locação financeira (art. 18.º n.º 5)**. Num artigo comum, deixe-o vazio.
+
+## Resultado esperado
+
+A fatura fica **Publicada** com a taxa que conferiu. Na demonstração, com uma linha de pão a 100,00 € (o **Pão de forma** do passo 2 na fatura à Bodega; na fatura à Software Berlin, o **Pão de forma 500 g (cx. 20)**, um artigo que a demonstração já tinha, também a **6%**):
+
+| Cliente | Taxa da linha | Lançamento (conferido no razão) |
+|---|---|---|
+| **Bodega Sol Ibérica SL** (Espanha, NIF **Válido** no VIES) | **0% EU**, que entrou sozinha, com a posição **Intra-comunitário (UE)** e sem aviso | 2111 (clientes) D 100,00 · 711 (vendas) C 100,00, sem linha de IVA |
+| **Software Berlin GmbH** (Alemanha, NIF por validar) | **6%** (IVA português), com o aviso do VIES | 2111 (clientes) D 106,00 · 711 (vendas) C 100,00 · 2433 (IVA liquidado) C 6,00 |
+
+O PDF da fatura à Bodega mostra **IVA 0%** na linha e, por baixo do quadro do IVA, «(1) Isento artigo 14.º do RITI».
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Não emita 0% EU com o NIF por validar no VIES">
+A isenção intracomunitária só vale com o NIF do cliente válido no VIES (RITI, art. 14.º, n.º 1, alínea a)). A AT só a aceita com esse NIF válido (ficha doutrinária 15604): sem ele, a venda é tributada em Portugal. Por isso, com a opção **A isenção intracomunitária exige verificação VIES válida**, que vem ligada ([Como configurar o IVA da empresa](/accounting-pt/configurar-o-iva)), o fiscaldoo recusa confirmar uma fatura com **0% EU** ou **0% EU S** a um cliente cujo NIF não está **Válido** no VIES. A mensagem está em «Problemas frequentes». O que acontece em cada estado do VIES, e com a opção desligada, está em [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes), secções «A isenção posta à mão: uma faixa por estado» e «A opção da empresa».
+
+Só por decisão do contabilista certificado é que uma fatura assim se emite, pelo perfil **Contabilista certificado**: veja a secção «A decisão do Contabilista certificado» do mesmo artigo. A fatura entra no campo 7 da declaração periódica e na declaração recapitulativa como as outras ([De onde vem cada campo da DP IVA](/accounting-pt/campos-da-declaracao-de-iva)). <span className="fd-pending">Pendente de validação por contabilista certificado: condições da isenção intracomunitária (RITI, art. 14.º), quando se pode emitir com o NIF por validar e o que fazer a uma fatura já emitida assim.</span>
+</HelpCallout>
+
+{/* Nota interna (DOCS-043, revisão no master fe8c5365c, base docs_demo_b2cnova_test; VAT-063, VAT-065 e VAT-066 em master): refeitos a categoria Padaria (administrador), o artigo Pão de forma (Faturação: aviso igual, Aplicar as taxas sugeridas 23% → 6%), a FT D26/33 (Faturação; o autocompletar escolheu o artigo da demonstração [DEMO001] Pão de forma 500 g (cx. 20), também a 6%, mesmos valores; aviso nacional novo copiado; histórico copiado), a recusa da 0% EU à Software Berlin pela Faturação (mensagem copiada), a FT D26/34 emitida pelo Responsável fiscal com motivo (histórico copiado), a FT D26/35 à Bodega (0% EU sozinho, sem aviso, PDF «(1) Isento artigo 14.º do RITI») e a recusa da 0% EU S a cliente português. Lançamentos lidos com o Contabilista Certificado / Gestor fiscal: FT D26/33 2111 D 106 / 711 C 100 / 2433 C 6; FT D26/34 e FT D26/35 2111 D 100 / 711 C 100. Resolvidos em master: PD-V2H-03 (aviso com a taxa na linha), PD-V2H-04 (o aviso já não convida a escolher a posição à mão), PD-V2H-05 (histórico novo), B2c-07 (histórico diz «por validar no VIES») e B2c-08 (sem «not_checked»). Ronda do fix-vies2 (30/10/2026, master 9d1671e9f com o VAT-065b/066b, base docs_demo_vies2_test): lista «A refazer depois do VAT-066b» do B2c feita no ecrã: uma só faixa por estado (vermelha de recusa; amarela depois do motivo; vermelha de risco no documento emitido), caixa do motivo por baixo da faixa vermelha, só para o Responsável fiscal; Validar VIES → Recalcular o IVA → 0% EU e Intra-comunitário (UE) (FT D26/38 do DOC-0026); 0% EU dos bens só em Pesquisar mais… ou pela posição + Recalcular (FV-10 mantido de propósito); recusa com o VIES indisponível provada (cenário unknown, Software Berlin GmbH); mensagens das recusas copiadas de novo (FAT-127: «A fatura a "…"»). Fonte única: os passos do Responsável fiscal e as capturas das faixas estão no DOC-0026; a FT D26/34 desta caixa saiu do texto (número usado no DOC-0022 e no DOC-0026 para outras faturas). O resto do artigo não foi reaberto. Ronda AV2 (30/10/2026, mesmo master, base docs_demo_vies3_test): números de fatura tirados do texto (AV2-11: a FT D26/33 e a FT D26/35 desta nota designam outras faturas no DOC-0022 e no DOC-0335; os da tabela são da base docs_demo_b2cnova_test); repetições do VIES trocadas por ligações ao DOC-0026 e ao DOC-0335 (AV2-10), com a frase «que só ele vê» (AV2-03); «Território fiscal» → «Região fiscal», visto nas Definições e na janela Configuração fiscal PT (FV2-05). */}
+
+- **A verba só sugere.** A taxa do artigo nunca muda sozinha: muda quando carrega em **Aplicar as taxas sugeridas** ou escolhe outra em **Impostos sobre vendas**. Um artigo antigo de uma categoria a que acabou de dar uma verba fica com a taxa que tinha até o abrir e aplicar. <span className="fd-pending">Pendente de validação por contabilista certificado: verba das listas I e II que se aplica a cada bem.</span>
+- **Histórico de uma venda à UE com IVA português.** Numa fatura emitida assim (na demonstração, a fatura à Software Berlin da tabela acima), o histórico diz: «A venda é para outro Estado-Membro mas nenhuma linha usa o imposto isento intracomunitário (motivo M16), por isso não entra no campo 7 da declaração de IVA nem na declaração recapitulativa. A isenção exige um NIF válido no VIES: carregue em «Validar VIES» no cliente e, se o NIF for válido, carregue em «Recalcular o IVA» no rascunho antes de o emitir.» Com o NIF por validar, a taxa portuguesa é a certa. Numa fatura já emitida, o «Recalcular o IVA» já não se aplica: corrige-se com nota de crédito.
+- **Autoliquidação nas compras** (construção civil, sucatas e outros casos): trata-se na fatura de fornecedor, em [Como lançar uma fatura de fornecedor](/accounting-pt/fatura-de-fornecedor). As taxas **0% AUT …** de venda e os seus motivos estão na tabela de [Como criar um artigo com o IVA e o tipo certos](/fiscal-core/artigos).
+- **Uma fatura emitida com a taxa errada** não se altera: corrige-se com nota de crédito e fatura nova ([Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito)).
+
+## Clientes e empresas dos Açores e da Madeira
+
+As regiões autónomas têm taxas próprias, fixadas pelas assembleias regionais (CIVA, art. 18.º, n.º 3):
+
+| Região | Reduzida | Intermédia | Normal | Nome no ecrã |
+|---|---|---|---|---|
+| Continente | 6 % | 13 % | 23 % | **6%**, **13%**, **23%** |
+| Açores | 4 % | 9 % | 16 % | **4% AZ**, **9% AZ**, **16% AZ** |
+| Madeira | 4 % (desde 1/10/2024) | 12 % | 22 % | **4% MA**, **12% MA**, **22% MA** |
+
+As taxas do continente estão no CIVA (art. 18.º, n.º 1). As das regiões vêm do Decreto Legislativo Regional n.º 15-A/2021/A (Açores, desde 1/7/2021) e do Decreto Legislativo Regional n.º 6/2024/M (taxa reduzida da Madeira). O quadro da AT que as junta é o do Ofício Circulado n.º 25045/2024. A lista de impostos tem ainda **5% MA**, a taxa reduzida da Madeira até 30/09/2024: não a use numa fatura de hoje.
+
+**Cliente com morada nos Açores ou na Madeira.** Por omissão, a fatura vem com a posição **Portugal** e a taxa do continente: na demonstração, o Pão de forma a um cliente do Funchal entrou com **6%**. Para aplicar a taxa da região, escolha a posição numa fatura nova, em **Outra Informação › Posição Fiscal** (**Portugal — Açores** ou **Portugal — Madeira**), antes de pôr as linhas. Na demonstração, o mesmo artigo entrou então com **4% MA** (Madeira) e **4% AZ** (Açores). Confira sempre a coluna **Impostos** antes de confirmar. Quem decide se a venda leva a taxa da região é o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: que taxa leva a venda de bens de uma empresa do continente a um cliente dos Açores ou da Madeira, e quando se considera a operação feita na região.</span>
+
+**As duas opções da ficha da empresa (administrador).** Estão no separador **Localização PT**, no grupo **POSIÇÕES FISCAIS REGIONAIS (AÇORES/MADEIRA)**, e vêm desligadas:
+
+![Grupo POSIÇÕES FISCAIS REGIONAIS da ficha da empresa com as caixas Aplicar posição fiscal regional pela região do parceiro (bens) e Usar taxas regionais por omissão (região da própria empresa), ambas desmarcadas](/images/accounting-pt/taxas-e-isencoes-de-iva/04-posicoes-regionais.png)
+
+{/* Nota interna (junção do B2c, AB2c3-01): captura 04 refeita a 30/10/2026 com o administrador na docs_demo_juntab2c_test (master fe8c5365c); o título do grupo já não tem o código interno «VAT-006». */}
+
+- **Aplicar posição fiscal regional pela região do parceiro (bens):** ligada, a posição regional entra sozinha pelo código postal do cliente. Na demonstração, com ela ligada, a fatura ao cliente do Funchal veio com **Portugal — Madeira** e **4% MA**. A ajuda do ecrã pede que confirme com o contabilista certificado antes de a ligar. Escolher a posição à mão funciona sempre, com a opção ligada ou desligada.
+- **Usar taxas regionais por omissão (região da própria empresa):** para uma empresa cuja **Região fiscal** é Açores ou Madeira. Segundo a ajuda do ecrã, ao ligá-la a taxa por omissão da empresa passa a ser a taxa normal da região, e as linhas de documentos já existentes não mudam. Desligá-la não repõe a taxa anterior, que se corrige à mão. A ajuda também pede a confirmação do contabilista certificado.
+
+**Encomendas de venda: mudar o armazém.** Com **Aplicar posição fiscal regional pela região do parceiro (bens)** ligada, o IVA dos bens de uma encomenda de venda segue a região de onde os bens saem. Se, no separador **Outra Informação**, mudar o **Armazém** para um de outra região, o IVA das linhas de bens ainda por faturar refaz-se sozinho e aparece uma faixa amarela no topo. A base de demonstração não traz este exemplo: para o reproduzir, crie um armazém «Armazém Funchal» cujo contacto tenha a morada 9000-001 Funchal, e uma encomenda à Construções Marão, Lda, de 2 unidades de «Material de escritório (kit)» (a `S00006` da captura), com o **Armazém Demonstração** (Continente). Ao mudar o **Armazém** para o do Funchal: «Os bens passam a sair da região Madeira (era Continente), por isso o IVA deles segue a taxa dessa região. As linhas ainda não faturadas foram atualizadas; as já faturadas ou com o imposto escolhido à mão mantêm-se: confirme-as.» A linha passou de **23%** a **22% MA** e o total de 209,10 € a 207,40 €. O mesmo vale se mudar a morada do armazém. As linhas já faturadas, as de imposto escolhido à mão e os documentos já emitidos não mudam: confirme o imposto antes de faturar.
+![Faixa amarela no topo da encomenda: os bens passam a sair da região Madeira (era Continente), por isso o IVA deles segue a taxa dessa região](/images/accounting-pt/taxas-e-isencoes-de-iva/05-faixa-armazem-regional.png)
+
+As encomendas **bloqueadas**, **canceladas** e **emitidas** não refazem o IVA quando o armazém (ou a morada dele) muda: a morada grava sempre e a encomenda fica como está. Se o armazém ou a morada mudou enquanto a encomenda estava cancelada, ao carregar em **Definir como Orçamento** o IVA dos bens por faturar refaz-se, com uma nota no histórico: «IVA dos bens refeito: os bens passam a sair da região Continente (era Madeira). Atualizadas: [DEMO005] Material de escritório (kit)». No exemplo, a `S00005` (uma segunda encomenda igual, criada do mesmo modo), cancelada com o armazém do Funchal (22% MA), manteve a taxa depois de a morada do armazém passar para o Porto, e voltou a 23% ao ser definida como orçamento. <span className="fd-pending">Pendente de validação no ecrã: o mesmo ao **Desbloquear** uma encomenda bloqueada; a sessão de produção não podia confirmar encomendas.</span>
+![Histórico da encomenda: de Cancelada a Orçamento, 207,40 € para 209,10 €, e a nota IVA dos bens refeito](/images/accounting-pt/taxas-e-isencoes-de-iva/06-nota-iva-dos-bens-refeito.png)
+
+{/* Nota interna (lote 98, FIX-M264, FIX-M281 e FIX-M287, master 73d6a5fed, docs_demo_98_test, perfil Administrativo): na cópia, a opção regional da empresa ligada pelo administrador (RPC), o «Armazém Funchal» (morada 9000-001 Funchal) e as encomendas S00005 e S00006 criadas por RPC e alteradas por clique. S00006: faixa e 22% MA ao gravar; S00005: Cancelar (janela de confirmação) e Definir como Orçamento. Não visto: Desbloquear, encomendas emitidas e linhas já faturadas (exigem confirmar). */}
+
+{/* Nota interna (corretor do B2c, 30/10/2026, master 54a9f5f03, NB2c-11): taxas confirmadas no CIVA art. 18.º (Portal das Finanças, n.º 3 na redação da Lei 12/2022) e no Ofício Circulado 25045/2024 da AT (6/12/2024: Açores 4/9/16 pelo DLR 15-A/2021/A; Madeira 4 % desde 1/10/2024 pelo DLR 6/2024/M, 12/22 desde 1/4/2012). Os orçamentos regionais de 2026 não foram lidos. Visto no ecrã (Faturação): Cliente Teste Épsilon (Madeira) com a posição Portugal e 6%; Portugal — Madeira à mão → 4% MA; Cliente Teste Delta (Açores) com Portugal — Açores à mão → 4% AZ; opção «Aplicar posição fiscal regional…» ligada por momentos na Empresa Demonstração → Portugal — Madeira e 4% MA sozinhos; rascunhos eliminados e opção desligada. A segunda opção não foi ligada: desligá-la não repõe a taxa por omissão. Defeito para o Gestor: «5% MA» continua ativa e escolhível. Revisão no master fe8c5365c (Faturação): Épsilon com Portugal e 6%; Portugal — Madeira escolhida antes das linhas → 4% MA; Delta com Portugal — Açores antes das linhas → 4% AZ; a lista da linha continua a mostrar 22% MA, 12% MA, 5% MA e 4% MA (o FAT-121 não a mudou); com a posição escolhida depois das linhas, a linha fica a 6%. As opções da ficha da empresa não foram ligadas de novo. A pergunta da taxa continente → regiões já está na lista do contabilista certificado (DEC-1397). */}
+
+## Problemas frequentes
+
+### «Operação inválida»: o NIF ainda não foi validado no VIES
+
+- **Mensagem:** «A fatura (ainda sem número) tem a isenção intracomunitária (0 % EU) para o cliente “Software Berlin GmbH”, mas o NIF ainda não foi validado no VIES. …». Com o serviço do VIES indisponível, com um NIF que o VIES deu como inválido, com um NIF sem o código do país ou com um cliente sem **País**, a mensagem muda: todas estão em [O NIF do cliente é inválido ou está em falta](/troubleshooting/nif-invalido).
+- **Causa:** a linha tem **0% EU** ou **0% EU S** e o NIF do cliente não está **Válido** no VIES (ver «Notas importantes»).
+- **O que fazer:** carregue em **Fechar** e siga «O que fazer» em [O NIF do cliente é inválido ou está em falta](/troubleshooting/nif-invalido).
+
+### «Operação inválida»: o cliente não está estabelecido noutro Estado-Membro
+
+- **Mensagem:** «A fatura (ainda sem número) usa uma taxa de isenção intracomunitária, mas o cliente “Papelaria Exemplo, Lda” não está estabelecido noutro Estado-Membro da UE (país: Portugal). A isenção (RITI art. 14.º) só vale para um cliente de outro Estado-Membro com NIF válido. Como resolver: escolha a taxa certa (para um cliente português, a taxa normal ou reduzida de IVA) ou corrija o país do cliente.»
+- **Causa:** escolheu uma taxa intracomunitária numa linha de uma fatura a um cliente português (ou de fora da União Europeia); na demonstração, a **0% EU S**, que é a que a lista de impostos da linha mostra. Antes de confirmar, o rascunho já mostra uma faixa vermelha: «Esta fatura tem a isenção intracomunitária (0 % EU), mas o cliente não está estabelecido noutro Estado-Membro da UE (é de Portugal ou de um país fora da UE), por isso não pode ser confirmada, nem sequer com um motivo de um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)». …» (faixa e janela vistas no ecrã com o perfil **Administrativo**, numa fatura à Clínica Dentária Sorriso, SA)
+- **O que fazer:** carregue em **Fechar**, troque a taxa da linha (por exemplo **6%** ou **23%**) e carregue em **Confirmar**. Se o país do cliente está errado, corrija-o na ficha do cliente.
+
+### A linha de um cliente da UE vem com IVA português
+
+- **Causa:** o NIF do cliente não está validado no VIES (o aviso por cima da fatura di-lo).
+- **O que fazer:** valide o NIF na ficha do cliente. Os passos, e o que fazer num rascunho feito antes da validação, estão em [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes), secções «Validar o NIF no VIES: os quatro estados» e «Rascunho feito antes da validação». Com o NIF por validar, não ponha a isenção à mão: fale com o contabilista certificado.

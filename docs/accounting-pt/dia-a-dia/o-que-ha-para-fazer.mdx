@@ -1,0 +1,71 @@
+---
+id: o-que-ha-para-fazer
+slug: /accounting-pt/o-que-ha-para-fazer
+title: "Por onde começar o dia: o ecrã «O que há para fazer?»"
+sidebar_label: O que há para fazer?
+sidebar_position: 1
+description: Abrir o ecrã inicial da contabilidade, ler os cartões do que está pendente (faturas, bancos, vencimentos, obrigações fiscais) e os quadros do mês, e saltar de cada cartão para a lista a tratar.
+keywords: [o que há para fazer, ecrã inicial, painel da contabilidade, início do dia, pendentes, faturas vencidas, movimentos do banco por reconciliar, próximas obrigações fiscais, resultado do mês, IVA do mês, dinheiro nos bancos]
+doc_id: DOC-0063
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master f16f4a3e0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/fecho/fechar-o-mes, accounting-pt/declaracoes/calendario-fiscal, accounting-pt/bancos-e-tesouraria/reconciliar-movimentos-bancarios]
+---
+
+{/* Nota interna (v3-A1, DOC-0063, risco normal): feito uma vez no ecrã com o Contabilista na base docs_demo_v3a1_test (8175), a 01/11/2026. Cartões e quadros lidos do ecrã; abertos os cartões «Faturas de clientes vencidas» (6 faturas, 6.834,13 €) e «Próximas obrigações fiscais» (8 obrigações, 2 atrasadas) e o botão «Nova fatura de fornecedor». O seletor do mês não foi verificado com resultado (a página não mostrou texto após a mudança). Perfil Administrativo não testado. Os valores mudam com os testes de outros artigos do lote. */}
+
+## Para que serve?
+
+É o ecrã com que se abre a contabilidade: diz, num só sítio, o que está por fazer hoje (faturas por lançar, movimentos do banco por reconciliar, faturas vencidas, obrigações fiscais) e como vai o mês (resultado, vendas e compras, IVA, bancos). Cada cartão leva à lista que tem de tratar.
+
+## Quando utilizar?
+
+- No início do dia, para decidir por onde começar.
+- Antes de [fechar o mês](/accounting-pt/fechar-o-mes), para ver o que falta.
+- Não serve para analisar contas ao pormenor: para isso use os relatórios.
+
+## Onde encontrar?
+
+- **Contabilidade › Lançar › Início › O que há para fazer?**
+
+## Antes de começar
+
+- O perfil é **Contabilista**. O **Administrativo** abre o ecrã **reduzido**: só tem o menu **Início**, sem **Nova fatura de fornecedor**, sem bancos nem obrigações, e vê os cartões **Faturas em rascunho** e **Faturas de clientes vencidas**. O seletor do mês lista 25 meses.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **O que há para fazer?**. O topo mostra a data, a empresa, o seletor do mês (**Novembro de 2026**) e três atalhos: **Nova fatura de cliente**, **Nova fatura de fornecedor** e **Carregar fatura (PDF, foto ou QR)**.
+2. Leia os cartões: **Faturas em rascunho**, **Faturas de fornecedor por lançar**, **Movimentos do banco por reconciliar**, **Faturas de clientes vencidas**, **Faturas de fornecedor vencidas**, **Dinheiro nos bancos** e **Próximas obrigações fiscais**. Um cartão com «Nada por fazer» está em dia; um número a vermelho precisa de atenção (no exemplo, «Os clientes devem 6.834,13 € já depois do prazo» e «8 … 2 com o prazo ultrapassado»).
+   ![Ecrã O que há para fazer com os cartões de faturas vencidas, bancos e obrigações fiscais](/images/accounting-pt/o-que-ha-para-fazer/01-o-que-ha-para-fazer.png)
+3. Carregue num cartão para abrir a lista: **Faturas de clientes vencidas** abre as faturas em atraso com o **Vencimento**, o **Total**, o valor **Em dívida** e o **Estado** («Em atraso há 2 dias»); **Próximas obrigações fiscais** abre a lista de obrigações com o **Prazo**, os **Dias até ao prazo**, o **Perfil responsável** e o **Estado**. O caminho de volta mostra «O que há para fazer?» no topo.
+4. Mais abaixo, os quadros **Lucros e prejuízos**, **Vendas e compras**, **IVA do mês**, **Bancos e caixa (no fim do mês)**, **Clientes e fornecedores (no fim do mês)** e **Obrigações fiscais do mês** comparam o mês com o mês anterior e com o mesmo mês do ano anterior. O **IVA do mês** mostra o IVA a pagar e o próximo prazo («20/11/2026 (setembro 2026)»).
+
+</StepByStep>
+
+## Resultado esperado
+
+- Sabe o que tratar primeiro e abre cada lista com um clique.
+- O ecrã só consulta: não faz lançamentos nem comunica nada à AT.
+
+## Notas importantes
+
+- **Os valores são da empresa em que está.** Mude de empresa no canto superior direito se trabalha com mais do que uma.
+- **O resultado do mês e do ano** vêm dos lançamentos publicados: uma fatura em rascunho ainda não conta.
+
+## Problemas frequentes
+
+### Não vejo os bancos, as obrigações fiscais ou o botão «Nova fatura de fornecedor»
+
+- **O que confirmar:** o seu perfil. O **Administrativo** abre o ecrã reduzido: só tem o menu **Início**, sem **Nova fatura de fornecedor**, sem bancos nem obrigações.
+- **O que fazer:** se precisa destes cartões, peça ao administrador da empresa o perfil **Contabilista**.
+
+### O resultado do mês não inclui uma fatura que já registei
+
+- **O que confirmar:** se a fatura ainda está em rascunho. O resultado do mês e do ano vêm só dos lançamentos publicados.
+- **O que fazer:** abra o cartão **Faturas em rascunho**, confirme e publique a fatura.

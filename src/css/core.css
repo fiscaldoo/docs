@@ -1,0 +1,118 @@
+/* fiscaldoo — identidade visual partilhada. ÚNICA fonte de verdade para tokens,
+   tipografia base, botões, navegação e rodapé — carregada pelo site público, pelo
+   portal de cliente e pelo backoffice de administração. Nunca copiar estas regras
+   para outro ficheiro: isso é exactamente o que causou a deriva anterior (três
+   stylesheets "inspiradas" umas nas outras, cada vez mais diferentes). Cada serviço
+   tem o seu próprio ficheiro pequeno só com o que é específico dele (tabelas,
+   formulários, cartões de preço, etc.) — nunca tokens, nunca botões, nunca nav. */
+:root{
+  color-scheme: light;
+  --ink:#0A0B0E; --ink-soft:#15171C; --paper:#FFFFFF; --surface:#FAFAFB;
+  --blue:#2E5CFF; --blue-deep:#1A3FD6; --blue-soft:#EAEFFF;
+  --green:#15C47E; --green-soft:#E6FBF2;
+  --red:#D23B3B; --red-soft:#FDEBEB;
+  --amber:#B6790A; --amber-soft:#FBF0DC;
+  --line:#E7E8EC; --line-strong:#D3D5DC; --line-on-dark:rgba(255,255,255,.14);
+  --text:#0A0B0E; --text-muted:#5B5F6B; --text-on-dark:#F5F6F8; --text-on-dark-muted:#9AA0AE;
+  --radius:10px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--paper); color:var(--text); font-family:"Instrument Sans",system-ui,sans-serif;
+  font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:"Instrument Sans",system-ui,sans-serif; font-weight:700; line-height:1.1; letter-spacing:-.02em; margin:0; text-wrap:balance;}
+em{font-style:normal; color:var(--blue)}
+code,.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+a{color:inherit}
+img,svg{max-width:100%}
+.wrap{max-width:1160px; margin:0 auto; padding:0 1.6rem}
+
+/* nav — mesma estrutura em todos os serviços: marca + hiperligações + botão de acção */
+nav.top{position:sticky; top:0; z-index:40; background:rgba(255,255,255,.86); backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:1.1rem; padding-bottom:1.1rem; max-width:1160px}
+.brand{font-family:"Instrument Sans",sans-serif; font-weight:800; font-size:1.3rem; display:flex; align-items:center; gap:.5rem; text-decoration:none; color:var(--text); letter-spacing:-.02em}
+.brand .dot{width:9px;height:9px;border-radius:2px;background:var(--blue)}
+.brand .tag{font-family:"JetBrains Mono",monospace; font-size:.64rem; font-weight:600; color:var(--text-muted); border:1px solid var(--line); border-radius:999px; padding:.2rem .6rem; letter-spacing:.03em; margin-left:.3rem}
+.navlinks{display:flex; align-items:center; gap:2rem; font-size:.92rem; font-weight:600; flex-wrap:wrap}
+.navlinks a{text-decoration:none; color:var(--text-muted)}
+.navlinks a:hover{color:var(--text)}
+/* Esconder/mostrar em ecrãs pequenos é decisão de cada serviço (um site de marketing
+   pode esconder um menu secundário em mobile; um portal onde .navlinks É a forma de
+   entrar/sair nunca o pode esconder) — nunca decidir isso aqui. */
+
+/* nav em ecrãs pequenos — a marca e a acção nunca se sobrepõem nem transbordam */
+@media (max-width:640px){
+  nav.top .wrap{flex-wrap:wrap; row-gap:.6rem; padding-top:.9rem; padding-bottom:.9rem}
+  .navlinks{gap:1.1rem; font-size:.86rem}
+}
+
+/* botões — uma única taxonomia em todo o produto: primary / danger / ghost / ghost-dark.
+   2026-10-25, pedido explícito ("mete os inputs e os botões todos à mm altura"): a
+   altura de um .btn normal e de um input/select/textarea é fixada por ``height``, nunca
+   deixada ao cálculo de padding+line-height (varia por fonte/motor de render) — assim um
+   botão ao lado de um campo na mesma linha, em qualquer serviço, fica sempre à mesma
+   altura sem cada serviço ter de ajustar isto à parte (ver nota em input/select/textarea
+   abaixo). */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:.5rem; font-weight:700; font-size:.92rem;
+  height:2.9rem; padding:0 1.3rem; border-radius:8px; text-decoration:none; border:1.5px solid transparent; cursor:pointer;
+  font-family:inherit; transition:transform .12s ease, box-shadow .12s ease;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn.small{height:2.2rem; padding:0 .9rem; font-size:.8rem}
+.btn.primary{background:var(--blue); color:#fff; box-shadow:0 1px 0 rgba(0,0,0,.05)}
+.btn.primary:hover{box-shadow:0 10px 24px -8px rgba(46,92,255,.5)}
+.btn.danger{background:var(--red); color:#fff}
+.btn.danger:hover{box-shadow:0 10px 24px -8px rgba(210,59,59,.45)}
+.btn.ghost{border-color:var(--line); color:var(--text); background:transparent}
+.btn.ghost:hover{border-color:var(--text); transform:none}
+.btn.ghost-dark{border-color:var(--line-on-dark); color:var(--text-on-dark)}
+.btn.ghost-dark:hover{border-color:#fff; background:#fff; color:var(--ink)}
+.btn:disabled{opacity:.45; cursor:not-allowed; pointer-events:none}
+/* Mesmo aspecto para um <a class="btn"> "desactivado" por JS (ex.: navegação de
+   mês que não pode avançar para o futuro) -- :disabled só existe em controlos de
+   formulário, uma hiperligação usa aria-disabled em vez disso. */
+.btn[aria-disabled="true"]{opacity:.45; cursor:not-allowed; pointer-events:none}
+
+/* campos de formulário — mesmo aspecto em qualquer input/select/textarea do produto,
+   da calculadora do site ao login ao backoffice. Um serviço só define .field-group
+   quando precisar de um layout de rótulo+campo próprio — nunca a aparência do campo
+   em si, isso fica só aqui. ``height`` igual ao de .btn (ver acima) por fixar o número,
+   não o padding -- garante que um botão normal ao lado de um campo fica sempre à mesma
+   altura, em qualquer navegador/fonte. textarea é a única excepção (altura cresce com o
+   conteúdo), por isso usa min-height em vez de height fixo. */
+input, select, textarea{
+  font:inherit; font-size:.92rem; height:2.9rem; padding:0 .85rem; border:1.5px solid var(--line);
+  border-radius:8px; background:var(--paper); color:var(--text); font-family:"Instrument Sans",system-ui,sans-serif;
+}
+textarea{height:auto; min-height:2.9rem; padding:.68rem .85rem}
+input::placeholder, textarea::placeholder{color:var(--text-muted); opacity:1}
+input:focus, select:focus, textarea:focus{outline:none; border-color:var(--blue)}
+input[type=number]{font-family:"JetBrains Mono",monospace}
+label{font-size:.86rem; font-weight:700; color:var(--text)}
+.hint{font-size:.8rem; color:var(--text-muted); font-weight:500}
+
+/* rodapé — mesma estrutura em todo o produto */
+footer{border-top:1px solid var(--line); padding:3rem 0 2.4rem; font-size:.85rem; color:var(--text-muted)}
+footer .wrap{display:flex; justify-content:space-between; gap:2rem; flex-wrap:wrap}
+footer .legal{max-width:52ch; line-height:1.6}
+footer a{text-decoration:none; color:var(--text-muted)}
+footer a:hover{color:var(--text)}
+footer .cols{display:flex; gap:3rem}
+footer .col a{display:block; margin-bottom:.5rem}
+footer .brand{margin-bottom:.8rem}
+
+/* alertas — mesma linguagem visual em qualquer formulário do produto */
+.alert{border-radius:8px; padding:.85rem 1.05rem; font-size:.86rem; margin-bottom:1.1rem; font-weight:500}
+.alert.error{background:var(--red-soft); color:#8A2323}
+.alert.warn{background:var(--amber-soft); color:#7A5308}
+.alert.ok{background:var(--green-soft); color:#0E7A4F}
+
+/* pills de estado — mesma linguagem visual em qualquer tabela do produto */
+.pill{display:inline-flex; align-items:center; gap:.4rem; font-size:.76rem; font-weight:700; padding:.2rem .65rem; border-radius:999px}
+.pill .d{width:7px;height:7px;border-radius:50%}
+.pill.good{background:var(--green-soft); color:#0E7A4F} .pill.good .d{background:var(--green)}
+.pill.crit{background:var(--red-soft); color:#8A2323} .pill.crit .d{background:var(--red)}
+.pill.warn{background:var(--amber-soft); color:#7A5308} .pill.warn .d{background:var(--amber)}

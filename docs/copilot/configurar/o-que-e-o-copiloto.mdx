@@ -1,0 +1,58 @@
+---
+id: o-que-e-o-copiloto
+slug: /copilot/o-que-e-o-copiloto
+title: O que é o Copiloto e o que pode fazer
+sidebar_label: O que é o Copiloto
+sidebar_position: 0
+description: "O Copiloto é o assistente do fiscaldoo: a ajuda passo a passo funciona sempre; o que usa inteligência artificial fica desligado até a empresa o ligar."
+keywords: [copiloto, assistente, inteligência artificial, inteligencia artificial, IA, ajudante, interruptores, fornecedor de IA, o que é o copiloto, o que e o copiloto]
+doc_id: DOC-0279
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master 7b476ad71)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [copilot/configurar/ligar-a-uma-ia, copilot/usar/janela-de-ajuda, copilot/configurar/privacidade-e-consentimentos]
+---
+
+O Copiloto é o assistente do fiscaldoo. Responde a dúvidas sobre o produto e, com a inteligência artificial (IA) ligada, ajuda a ler documentos, a escrever textos e a perguntar aos números da empresa. Tudo o que o Copiloto propõe fica por confirmar: é a pessoa que decide.
+
+## O que funciona sem IA
+
+A **janela do Copiloto**, no ícone **Copiloto** da barra de cima, abre com a **Ajuda passo a passo**. Responde pesquisando os guias do produto e os menus, sem enviar nada para fora. Veja [Como tirar dúvidas na janela do Copiloto](/copilot/janela-de-ajuda).
+
+Também sem IA, o Copiloto tem automatismos que seguem regras fixas. Cada um tem o seu interruptor em **Copiloto › Controlo › Interruptores**, com o que faz escrito na coluna **O que faz** (visto a 08/11/2026 com o perfil **Contabilista certificado**):
+
+- **Faturas de fornecedor pelo código QR** (**Seguro**): «Lê o código QR de uma fatura de fornecedor e prepara a fatura em rascunho. Nunca a confirma.» Veja [Como lançar uma fatura de compra lendo o código QR](/accounting-pt/ler-o-qr-da-fatura).
+- **Confronto com o ficheiro do e-Fatura** (**Seguro**): «Compara a sua contabilidade com o ficheiro do e-Fatura que carregar e prepara rascunhos do que falta. Nada é enviado à Autoridade Tributária.»
+- **Linhas de banco que se reconciliam sozinhas** (**Decide o utilizador**): «Reconcilia sozinho as linhas do banco que são certas. Mexe nas contas, por isso fica desligado até decidir.»
+- **Fecho do mês preparado sozinho** (**Seguro**): «Prepara o fecho do mês e lista o que falta. Nunca fecha o mês.»
+- **Lote de salários do mês preparado sozinho** (**Seguro**): «Prepara o lote de salários do mês em rascunho. A validação fica consigo.»
+- **Resumo semanal, anomalias e pedidos de documentos** (**Decide o utilizador**): «Resumo semanal, anomalias e pedidos de documentos ao cliente. Os pedidos só saem quando os confirmar, por isso fica desligado até decidir.»
+
+## O que precisa de IA
+
+**Perguntar aos números**, **Abrir uma lista**, **Criar um relatório**, **Escrever um texto** e **Importar faturas de fornecedor** precisam de uma IA ligada. Sem ela, a janela diz «A conversa com a IA está desligada para si nesta empresa» e indica quem a pode ligar.
+
+## Quem decide
+
+- **Desligado por omissão.** Em **Copiloto › Controlo › Interruptores**, cada função tem um interruptor. As do tipo **Para fora** enviam texto a um fornecedor externo de IA e ficam desligadas «até a empresa decidir». As do tipo **Seguro** não enviam nada para fora. As do tipo **Decide o utilizador** ficam também desligadas por omissão (no ecrã, os 25 interruptores estão todos desligados).
+- **O fornecedor é escolha da empresa.** Há seis na lista **Fornecedores de IA**: AMÁLIA (no seu próprio servidor), Anthropic, DeepSeek, Mistral, OpenAI e Z.ai. A empresa usa a sua própria chave e o fornecedor fatura-lhe a utilização. Veja [Como ligar o Copiloto a um fornecedor de IA](/copilot/ligar-a-uma-ia).
+- **Consentimentos.** Os fornecedores que precisam do consentimento do cliente (a Z.ai e a DeepSeek; a coluna **Precisa do consentimento do cliente** em **Fornecedores de IA** diz quais) ficam desligados até a empresa dar o consentimento expresso. Os dados pessoais e sensíveis só seguem numa ligação onde a empresa o autorizou: é uma opção de cada ligação, desligada por omissão. A Anthropic e a OpenAI também têm servidores fora da UE (nos Estados Unidos): o **País dos servidores** de cada fornecedor aparece no ecrã.
+- **Tudo fica registado.** O **Registo**, as **Chamadas à IA** e o que o Copiloto leu estão em **Copiloto › Controlo**: veja [Como ver o que o Copiloto fez e o que enviou à IA](/copilot/registo-do-copiloto).
+
+## No Enterprise
+
+No Odoo Enterprise, o Copiloto é o mesmo: a janela no ícone **Copiloto** da barra de cima, os mesmos interruptores, os mesmos seis fornecedores e os mesmos registos (visto com o administrador e com utilizadores só com o perfil **Contabilista** e só com o perfil **Contabilista certificado**). Muda o seguinte:
+
+- **Onde se configura.** A aplicação **Copiloto** está na lista de aplicações, como no Community, mesmo com a aplicação **IA** do Enterprise instalada. Só muda de lugar se o administrador instalar também, em **Aplicações**, o módulo **fiscaldoo · Copiloto — Configuração dentro da app de IA do Enterprise — Enterprise**, que não se instala sozinho; a aplicação **IA** precisa da extensão pgvector do PostgreSQL, no servidor da base de dados. Com esse módulo, a aplicação **Copiloto** deixa de aparecer e os seus quatro grupos (**Agentes**, **Instruções**, **Ligações às IAs** e **Controlo**) passam para **IA › Configurar**, ao lado das entradas da própria aplicação **IA**. Por exemplo, **Copiloto › Controlo › Interruptores** passa a ser **IA › Configurar › Controlo › Interruptores**. As mensagens do Copiloto mostram o caminho do menu que existe: com o módulo, o aviso do topo da janela diz «… O administrador (ou quem tem o acesso extra «Administração fiscal») liga-o em IA › Configurar › Ligações às IAs › Ligações (fornecedor e chave).»; sem ele, o mesmo aviso diz **Copiloto › Ligações às IAs › Ligações**. Na **Ajuda passo a passo**, os passos e os **Outros resultados** citam os caminhos de **IA › Configurar**, por exemplo **IA › Configurar › Controlo › Interruptores**. Só os resumos dos artigos, em **Na documentação**, citam o texto do site, com o caminho do Community: se um deles indicar um caminho que começa em **Copiloto ›**, procure a mesma entrada em **IA › Configurar**. Se o administrador desinstalar o módulo, em **Aplicações**, a aplicação **Copiloto** volta com os seus grupos, a aplicação **IA** fica só com as suas próprias entradas, e o aviso e a **Ajuda passo a passo** voltam a citar **Copiloto ›**. Cada perfil continua a ver as mesmas entradas: o **Contabilista** vê **Fornecedores de IA**, mas não **Ligações** nem o grupo **Instruções**.
+- **A IA do próprio Enterprise.** A aplicação **IA** e a **Digitalização de documento** das **Definições** são do Odoo Enterprise e funcionam à parte do Copiloto: os interruptores, as ligações e os consentimentos do Copiloto não as controlam. Veja [Como ligar ou desligar o Copiloto e controlar os dados enviados](/copilot/privacidade-e-consentimentos#no-enterprise).
+
+{/* Nota interna (lote EE-13, DOCS-073 #4142, req 46633, DEC-1794, master 7f41ce71b, base Enterprise docs_ee_ee13_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee13_test): DOC-0279. Sem a aplicação IA (estado da odoo20_ee_test): aplicação Copiloto com Agentes, Instruções, Ligações às IAs e Controlo (administrador); Contabilista e Contabilista certificado com Agentes (Redator, Sugestões das regras, Correções do leitor), Ligações às IAs (Fornecedores de IA) e Controlo (7 entradas). Depois, na cópia, -i ai_agentic e da ponte l10n_pt_fiscaldoo_ee_copilot_app (auto_install desligado: o administrador instala-a; o ai_agentic precisa da extensão pgvector do PostgreSQL, LIM-EEA018-01) e ee_neutralizar: a aplicação Copiloto desaparece; IA › Configurar tem os grupos Agentes, Instruções, Ligações às IAs e Controlo com as mesmas entradas, ao lado de Agentes, Skills, Tools e Default Prompts do Enterprise (em inglês: EEA-072); o Contabilista tem as mesmas entradas que antes, mais Skills. A janela do Copiloto não foi aberta com a aplicação IA instalada. Nenhuma IA chamada. Ver reports/LOTE_EE-13.md. */}
+
+{/* Nota interna (lote EE-15, comboio 197, master c689f7580, 12/11/2026; cópia Enterprise docs_ee_ee15_test (portas 8530/8531, cópia da odoo20_ee_test com ee_neutralizar) e cópia Community docs_demo_ee15_test (porta 8532), utilizadores criados nas cópias só com o perfil indicado): DOC-0279, EEA-091 (0dfcc9667, em master). Utilizador só com o perfil Contabilista, janela do Copiloto por clique antes e depois de instalar ai_agentic e l10n_pt_fiscaldoo_ee_copilot_app (ee_neutralizar antes e construir): aviso do topo com Copiloto › Ligações às IAs › Ligações e depois com IA › Configurar › Ligações às IAs › Ligações; Ajuda passo a passo com «Onde ligo o Copiloto?»: Outros resultados com IA › Configurar › Controlo › Interruptores e › Lidos pelo Copiloto; os passos tirados dos artigos dizem Copiloto › Controlo › Interruptores (texto do site, válido no Community). Ver reports/LOTE_EE-15.md. */}
+
+{/* Nota interna (lote EE-16, comboios 198 e 199, master 7b476ad71, 13/11/2026; cópia Enterprise docs_ee_ee16_test (portas 8524/8525, cópia da odoo20_ee_test com ee_neutralizar) e cópia Community docs_demo_ee16_test (porta 8526), utilizadores criados nas cópias só com o perfil indicado): DOC-0279, COP-070 (94ed8e913) e EEA-093 (8c3f7ae57), em master. Utilizador só com o perfil Contabilista, janela do Copiloto por clique, com ai_agentic e a ponte l10n_pt_fiscaldoo_ee_copilot_app instaladas na cópia (pgvector criado só na cópia; ee_neutralizar antes e construir): aviso com IA › Configurar › Ligações às IAs › Ligações; Ajuda passo a passo, «Onde ligo o Copiloto?» e «Interruptores do Copiloto»: os passos dizem «Abra IA › Configurar › Controlo › Interruptores» e Outros resultados IA › Configurar › Controlo › Interruptores e › Lidos pelo Copiloto; o resumo do artigo em «Na documentação» continua «Ligar e desligar: Copiloto › Controlo › Interruptores.» (texto do site). Depois, o administrador desinstalou a ponte por clique (Aplicações, ficha do módulo, Desinstalar, janela «Desinstalar módulo», Desinstalar): o Contabilista voltou a ter a aplicação Copiloto (Agentes: Redator, Sugestões das regras, Correções do leitor; Ligações às IAs: Fornecedores de IA; Controlo: 7 entradas) e IA só com Agentes e Configurar › Skills (menus lidos da sessão do utilizador); o aviso e a Ajuda passo a passo voltaram a Copiloto › … (Abra Copiloto › Controlo › Interruptores). A cópia fica sem a ponte. Ver reports/LOTE_EE-16.md. */}
+
+{/* Nota interna (DOCS-040, lote F4): conceito, risco normal. Visto no ecrã com admin (menus e interruptores; Fornecedores de IA com 6 linhas) e com Administrativo (janela, estado desligado). Sem IA real nem simulador: o produto não tem simulador em execução (só nos testes), por isso nada que exija resposta da IA foi mostrado. A passagem sobre dados sensíveis vem da DEC-1250 e do rótulo «Autorizar dados pessoais e sensíveis nesta ligação?», visto no formulário. */}

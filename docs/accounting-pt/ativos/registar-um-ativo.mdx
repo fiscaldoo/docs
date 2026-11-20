@@ -1,0 +1,123 @@
+---
+id: registar-um-ativo
+slug: /accounting-pt/registar-um-ativo
+title: Como registar um ativo fixo
+sidebar_label: Registar um ativo fixo
+sidebar_position: 1
+description: Criar a ficha de um ativo fixo com a categoria, as datas, o valor, a vida útil e a taxa do DR 25/2009, e pô-lo em uso para o Odoo gerar o plano de depreciação contabilístico e fiscal.
+keywords: [ativo fixo, ativos fixos, registar ativo, criar ativo, ficha do ativo, imobilizado, ativo fixo tangível, ativo fixo tangivel, depreciação, depreciacao, amortização, amortizacao, vida útil, vida util, DR 25/2009, taxa fiscal, quota máxima, quota maxima, pôr em uso, por em uso, plano de depreciação, plano de depreciacao, duodécimos, duodecimos]
+doc_id: DOC-0121
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/ativos/processar-depreciacoes, accounting-pt/compras/fatura-de-fornecedor]
+---
+
+## Para que serve?
+
+A ficha do ativo guarda tudo o que é preciso para repartir o custo de um bem que a empresa vai usar mais de um ano: o custo, a data em que começou a funcionar, a vida útil e a taxa fiscal do Decreto Regulamentar n.º 25/2009. Quando o põe em uso, o Odoo calcula o plano contabilístico e o fiscal.
+
+No SNC, os ativos fixos tangíveis (equipamento, viaturas, edifícios) **depreciam-se** e os intangíveis (por exemplo programas de computador) **amortizam-se**. O Odoo usa a palavra «depreciação» nos dois casos; para um intangível, leia «amortização».
+
+## Quando utilizar?
+
+- Comprou um equipamento, uma viatura, mobiliário ou um programa que vai usar mais de um ano.
+- Um bem começou a funcionar e ainda não tem ficha.
+- **Não** use para compras de consumo corrente (material de escritório, pequenas reparações): essas vão para gastos na [fatura de fornecedor](/accounting-pt/fatura-de-fornecedor).
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Terceiros e ativos › Ativos fixos**. A lista **Ativos Fixos** abre com o filtro **Em uso**.
+
+![Menu Lançar da Contabilidade, com Ativos fixos assinalado no grupo Terceiros e ativos](/images/accounting-pt/registar-um-ativo/01-menu-ativos-fixos.png)
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**.
+- A fatura de compra já está lançada (ver [Como lançar uma fatura de fornecedor](/accounting-pt/fatura-de-fornecedor)), com a compra na conta do ativo. Tem à mão o fornecedor, a data de aquisição, a data em que o bem começou a ser usado e o custo.
+- O custo é o valor sem o IVA que a empresa deduz. O IVA que **não** é dedutível (por exemplo o de uma viatura ligeira de passageiros) faz parte do custo do bem. <span className="fd-pending">Pendente de validação por contabilista certificado: IVA não dedutível no custo de aquisição (NCRF 7 e CIVA, art. 21.º).</span>
+- Sabe a vida útil e o código da taxa do DR 25/2009. Se não sabe, pergunte ao contabilista certificado.
+- A categoria do ativo existe (na demonstração: **Edifícios e outras construções**, **Equipamento administrativo**, **Equipamento de transporte** e **Programas de computador**). A categoria traz as contas do ativo, das depreciações (ou amortizações) acumuladas e do gasto.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Na lista **Ativos Fixos**, carregue em **Novo**. A ficha abre em **Em preparação**, no separador **Geral**.
+2. Escreva o **Nome**, por exemplo `Computador da contabilidade`, e escolha a **Categoria**, por exemplo **Equipamento administrativo**. Depois de escrever o nome e passar ao campo seguinte, aparece por cima da ficha a faixa «Sugestão a partir da descrição: · [II-2240] Computadores», com **Usar a sugestão**. É o código da taxa do DR 25/2009 que o fiscaldoo propõe a partir do nome: **Usar a sugestão** escolhe-o no separador **Quadro fiscal** (passo 6), e a **Taxa fiscal (%)** passa a 33,3300. Use-a só se o código é o do bem; se não é, ignore a faixa e escolha o código no passo 6.
+3. Escolha o **Fornecedor** e escreva a **Data de aquisição** e a **Data de início de utilização**, no exemplo `01/07/2026` as duas. Se quiser ligar a ficha à compra, escolha-a em **Fatura de origem**. Deixe **Condição** em **Novo**.
+4. Em **Processamento**, escolha **Mensal** ou **Anual** (vem **Anual**):
+   - **Mensal** cria uma quota por mês, e as depreciações entram no balancete de cada mês quando processar o mês. É o que serve a uma empresa que fecha as contas todos os meses, e é a escolha do exemplo e do artigo seguinte;
+   - **Anual** cria uma só quota por ano, com data de 31/12: os balancetes intercalares não mostram a depreciação do bem até ao fim do ano.
+
+   ![Separador Geral com o Nome Computador da contabilidade, a Categoria Equipamento administrativo, o Processamento Mensal, o Fornecedor e as datas de aquisição e de início de utilização 01/07/2026](/images/accounting-pt/registar-um-ativo/02-separador-geral.png)
+5. Abra o separador **Quadro contabilístico**. Em **Valor de aquisição**, escreva `1.200,00`. Em **Vida útil contabilística (anos)**, escreva `3`. O **Método contabilístico** vem como **Linha reta** e a **Proporção contabilística no ano de entrada** como **Duodécimos (meses de utilização)**. Em **Contas da categoria** aparecem as contas que a categoria traz: no exemplo `435`, `4385` e `6425 Equipamento administrativo`.
+   ![Separador Quadro contabilístico com Valor de aquisição 1.200,00 €, Custo total 1.200,00 €, Método Linha reta, Duodécimos, Vida útil 3 e as contas da categoria](/images/accounting-pt/registar-um-ativo/03-quadro-contabilistico.png)
+6. Abra o separador **Quadro fiscal**. Em **Taxa DR 25/2009**, escreva parte do nome do bem e escolha o código, por exemplo **[II-2240] Computadores**. Se carregou em **Usar a sugestão** no passo 2, o código já está escolhido: confirme-o. A **Taxa fiscal (%)** passa a 33,3300 e, mais abaixo, aparecem a **Quota máxima anual** (399,96 €), a **Quota mínima anual** (199,98 €) e os **Meses de utilização no ano de entrada** (6). No mesmo separador estão **IVA não dedutível** e o grupo **Reduzido valor** (ver «Notas importantes»).
+   ![Separador Quadro fiscal com a Base da vida fiscal Taxa do DR 25/2009, a Taxa [II-2240] Computadores e a Taxa fiscal 33,3300](/images/accounting-pt/registar-um-ativo/04-quadro-fiscal-taxa.png)
+7. Carregue em **Pôr em uso**.
+   ![Botão Pôr em uso assinalado, com o estado Em preparação](/images/accounting-pt/registar-um-ativo/05-botao-por-em-uso.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o caminho, a lista **Ativos fixos** (com o filtro **Em uso**) e a ficha são os mesmos, com **Pôr em uso** (visto com um utilizador só com o perfil **Contabilista**). Os ativos do próprio Enterprise não têm menu numa empresa que usa os ativos fixos do fiscaldoo. Se a empresa já tinha ativos no Enterprise antes do fiscaldoo, veja [Como migrar os ativos do Enterprise](/migration-toolkit/ativos-do-enterprise).
+
+{/* Nota interna (lote EE-01, DOCS-073 #4142, DEC-1794, master ce51f2d47, base Enterprise docs_ee_ee01_test, 10/11/2026): menu do Contabilista na cópia: Lançar › Terceiros e ativos tem Ativos fixos (fiscaldoo), Empréstimos e Análise de empréstimos (Enterprise), sem o menu de ativos do Enterprise. Ficha nova: Nome, Categoria, Condição, Processamento, Fornecedor, Fatura de origem, Data de aquisição, Data de início de utilização. Em Linhas de lançamento, Ações › Criar Ativo (Enterprise) numa linha da conta 113 respondeu em inglês «Account 113 Caixa do ponto de venda cannot be used to create an asset. The account must be of the Fixed Asset type.»; não se provou numa conta de ativo. */}
+
+## Resultado esperado
+
+- O ativo passa a **Em uso** e recebe o código seguinte da série de ativos da empresa, com **Custo** e **Valor líquido** de 1.200,00 €. Na demonstração tal como a recebe, o código é `AF/00009`; as imagens deste percurso (aqui e nos artigos seguintes) mostram `AF/00011`, de uma cópia que já tinha mais dois ativos.
+- No separador **Plano de depreciação** aparecem as quotas **Planeado**, uma por mês: 33,33 € de 31/07/2026 a 30/06/2029 (36 meses, com os cêntimos acertados nas últimas), e as quotas fiscais, também mensais.
+  ![Ativo AF/00011 Em uso, com Custo e Valor líquido de 1.200,00 € e o Plano de depreciação com quotas mensais de 33,33 € a partir de 31/07/2026, todas Planeado](/images/accounting-pt/registar-um-ativo/06-ativo-em-uso-com-plano.png)
+- Nada foi lançado ainda: as quotas de julho, agosto e setembro entram na contabilidade quando esses meses forem processados, no artigo seguinte, [Como processar as depreciações do mês](/accounting-pt/processar-depreciacoes).
+
+## Vídeo demonstrativo
+
+O primeiro vídeo mostra os passos 1 a 4: **Novo**, o nome `Computador da contabilidade`, a categoria **Equipamento administrativo**, as datas de aquisição e de início de utilização (01/07/2026) e o processamento **Mensal**. No fim guarda a ficha, que fica **Em preparação**. O **Fornecedor** fica vazio.
+
+<VideoTutorial src="/videos/registar-um-ativo-1.mp4" captions="/videos/registar-um-ativo-1.vtt" poster="/videos/registar-um-ativo-1-poster.png" width="1440" height="1140" title="Registar um ativo: nome, categoria e datas" duration="30 s" />
+
+O segundo vídeo mostra os passos 5 a 7. Começa na ficha já guardada depois do passo 4, com o nome, a categoria, as datas e o processamento **Mensal**.
+
+<VideoTutorial src="/videos/registar-um-ativo.mp4" captions="/videos/registar-um-ativo.vtt" poster="/videos/registar-um-ativo-poster.png" width="1440" height="1140" title="Registar um ativo: valores, taxa fiscal e pôr em uso" duration="30 s" />
+
+## Notas importantes
+
+- **Quota contabilística e quota fiscal.** No exemplo, a quota contabilística de um ano (400,00 €) é maior do que a quota máxima fiscal (399,96 €, 33,33 % de 1.200,00 €). O separador **Contabilidade e imposto** mostra, por fim de exercício, **Quota contabilística**, **Quota fiscal máxima**, **Quota aceite** e **Quota não aceite**. A quota não aceite é um gasto que o IRC não aceita: acresce ao lucro tributável na declaração de IRC (Modelo 22). <span className="fd-pending">Pendente de validação por contabilista certificado: tratamento da quota não aceite (quadro 07 do Modelo 22) e taxa do DR 25/2009 aplicável a cada bem.</span>
+- **Bens de reduzido valor.** O DR 25/2009 deixa depreciar num só ano um bem de valor unitário até 1.000 €, salvo se fizer parte de um conjunto. O exemplo (1.200,00 €) fica acima desse valor e segue o plano normal. Para um bem abaixo, veja no **Quadro fiscal** o grupo **Reduzido valor** (**Parte de um conjunto?**, **Reduzido valor proposto?**, **Reduzido valor (confirmado)?**) e decida com o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: aplicação do limite de 1.000 € (DR 25/2009, art. 19.º).</span>
+- **Programas de computador.** São ativos intangíveis: amortizam-se, e as contas da categoria devem ser as dos intangíveis. Confira-as em **Contas da categoria** antes de pôr em uso. <span className="fd-pending">Pendente de validação por contabilista certificado: contas e taxa de amortização dos programas de computador.</span>
+- **Ativo em uso.** Depois de **Pôr em uso**, a ficha passa a ter os botões **Processar períodos contabilísticos** e **Alienar / Abater**. Confira as datas, o valor e o **Processamento** antes de pôr em uso.
+
+## Problemas frequentes
+
+### «Porque não é depreciado: O ativo está em preparação: ainda não entrou em funcionamento.»
+
+- **Causa:** o ativo ainda não foi posto em uso.
+- **O que fazer:** confira os dados e carregue em **Pôr em uso**.
+
+### A Taxa DR 25/2009 não aparece ao escrever o número
+
+- **Causa:** a pesquisa é pelo nome do bem.
+- **O que fazer:** escreva parte do nome, por exemplo `computador`, e escolha o código na lista.
+
+### As quotas do plano têm todas a data de 31/12
+
+- **Causa:** o **Processamento** ficou em **Anual**, o valor que vem por omissão.
+- **O que fazer:** se a empresa fecha as contas todos os meses, o ativo devia estar em **Mensal**. Confira o **Processamento** antes de **Pôr em uso**; num ativo já em uso, fale com o contabilista certificado.
+
+### «O valor residual (…) do ativo … tem de ser inferior ao valor de aquisição (…)…»
+
+- **Mensagem:** por exemplo, «O valor residual (2.000,00 €) do ativo “Empilhador elétrico” tem de ser inferior ao valor de aquisição (1.000,00 €): caso contrário não haveria nada a depreciar. Reduza o valor residual (ou preencha o valor de aquisição) e grave novamente.»
+- **O que fazer:** baixe o **Valor residual** para menos do que o **Valor de aquisição**, ou preencha o valor de aquisição, e guarde.
+
+### «Os valores do ativo … não podem ser negativos…»
+
+- **Mensagem:** «Os valores do ativo “Empilhador elétrico” não podem ser negativos: o valor de aquisição, os custos atribuíveis e o valor residual são montantes a depreciar, e um valor negativo inverteria a depreciação. Corrija o valor (uma devolução é um documento à parte) e grave novamente.»
+- **O que fazer:** escreva o valor sem sinal. Uma devolução ao fornecedor regista-se à parte, com a nota de crédito do fornecedor.
+
+{/* Nota interna (DOCS-075, lote v23-BJ, master 7f41ce71b, docs_demo_v23bj_test): a série AF/ da Empresa Demonstração tem o próximo número 9 (lido por RPC na cópia). As capturas do percurso (registar, processar, abater) com AF/00011 ficam para refazer num lote que possa pôr ativos em uso e processar meses. */}

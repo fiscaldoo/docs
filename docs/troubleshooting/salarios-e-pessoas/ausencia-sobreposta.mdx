@@ -1,0 +1,59 @@
+---
+id: ausencia-sobreposta
+slug: /troubleshooting/ausencia-sobreposta
+title: A ausência ou a presença sobrepõe-se a outro registo do mesmo dia
+sidebar_label: Ausência sobreposta
+description: "O pedido de ausência não se guarda porque o trabalhador já tem outra ausência nesses dias; como ver a outra e corrigir as datas."
+keywords: [ausência sobreposta, ausencia sobreposta, já tem uma ausência marcada, coincide com este período, ausência no mesmo dia, erro de validação]
+doc_id: DOC-0385
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 25a465133)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/ausencia-recusada, people/ausencias-e-presencas/registar-uma-ausencia]
+---
+
+## Sintoma
+
+Ao guardar um pedido de ausência, a janela **Erro de Validação** não deixa guardar e o pedido fica por registar.
+
+## Mensagem
+
+Com o perfil **Trabalhador**, no **O meu espaço**:
+
+> «Já tem uma ausência marcada que coincide com este período: de *09/11/2026* até *20/11/2026* - *Aprovado*»
+
+Com o perfil **Gestor de RH**, ao registar por outra pessoa, a frase começa por «Um trabalhador já tem uma ausência marcada…» e cita o nome. O fim da mensagem diz o estado da outra ausência (**Para Aprovar** ou **Aprovado**).
+
+![Janela Erro de Validação com a mensagem de que já existe uma ausência marcada de 09/11/2026 até 20/11/2026](/images/troubleshooting/ausencia-sobreposta/01-aviso-ausencia-sobreposta.png)
+
+## Causas verificadas
+
+- **Outra ausência ocupa algum dos dias.** No exemplo, uma **Falta injustificada** a 12/11/2026 coincidia com umas **Férias anuais** de 09/11/2026 a 20/11/2026. O Odoo não deixa duas ausências no mesmo dia, nem quando a primeira ainda está **Para Aprovar**.
+- **Presenças.** Foi testado, no ecrã **Presenças** (Gestor de RH), criar à mão uma presença de 01/11/2026 de 02:00 a 02:30 para um trabalhador que já tinha outra de 02:22 a 02:23: guardou-se sem mensagem. Não se conseguiu, por isso, provocar a recusa de uma sobreposição com presenças; não conte com ela. As outras mensagens de sobreposição do produto (intervalos da mesma presença, férias durante uma licença) não foram provocadas neste lote.
+
+## O que confirmar
+
+1. A data e o estado que a mensagem cita.
+2. Se a outra ausência está certa. Em **Pessoas › Férias e ausências › Pedidos de ausência** (Gestor de RH), escreva o nome do trabalhador na pesquisa. A lista mostra também as **Férias anuais**, que se veem ainda em **Pessoas › Férias e ausências › Mapa de férias**.
+
+## Como resolver
+
+- **Faz o próprio trabalhador:** carregue em **Fechar** e mude as datas do pedido para dias livres.
+- **Pede ao Gestor de RH:** se a outra ausência está errada, o RH corrige-a primeiro (ou recusa-a) e só depois se regista a nova.
+
+## Resultado esperado
+
+O pedido guarda-se e fica **Para Aprovar** (ou **Aprovado**, conforme o tipo).
+
+## Quando contactar o suporte
+
+A mensagem aparece e não há outra ausência nesses dias, em nenhum estado.
+
+## Informação a enviar
+
+O nome do trabalhador, as datas do pedido, o tipo de tempo e o texto completo da mensagem.
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): Pedidos de ausência com um utilizador só Gestor de RH: a lista tem Férias anuais; Mapa de férias visível ao Gestor de RH. */}

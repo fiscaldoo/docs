@@ -1,0 +1,85 @@
+---
+id: fatura-edi
+slug: /fiscal-core/fatura-edi
+title: Como enviar uma fatura por EDI
+sidebar_label: Fatura por EDI
+sidebar_position: 4
+description: Emitir a fatura do retalhista na série EDI e enviá-la por EDI, com as referências da encomenda e da guia, sem mudar a fatura certificada.
+keywords: [fatura EDI, fatura por EDI, enviar por EDI, INVOIC, fatura eletrónica, CIUS-PT, série EDI, Faturas EDI, retalhista, Saphety, painel EDI]
+doc_id: DOC-0060
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 3a28c9b91)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao-eletronica/encomendas-edi, fiscal-core/faturacao-eletronica/aviso-de-expedicao]
+---
+
+<HelpCallout type="risco" title="Nesta versão, só a conta de testes da Saphety">
+O fiscaldoo só liga ao ambiente de testes da Saphety (veja [Como ligar o EDI e a Saphety](/fiscal-core/ligar-o-edi)): uma fatura «Aceite» foi aceite por esse ambiente e não chegou ao retalhista. Envie-lhe a fatura pela via habitual (por exemplo, o PDF por e-mail).
+</HelpCallout>
+
+## Para que serve?
+
+Envia ao retalhista, por EDI, a fatura já emitida, no formato eletrónico português (CIUS-PT), com a referência da encomenda dele, a guia de transporte e os GLN do comprador e da loja de entrega. A fatura certificada não muda: o número, o ATCUD, a assinatura e os totais ficam iguais.
+
+## Quando utilizar?
+
+- O retalhista troca EDI consigo ([Como ligar o EDI e a Saphety](/fiscal-core/ligar-o-edi)) e a mercadoria da encomenda já seguiu ([Como enviar o aviso de expedição a partir da guia](/fiscal-core/aviso-de-expedicao)).
+- Também serve para a nota de crédito ao mesmo cliente.
+
+## Onde encontrar?
+
+**Faturação › Faturar › Faturas de clientes** (ou **Notas de crédito de clientes**), abra o documento emitido: botão **Enviar por EDI**.
+
+## Antes de começar
+
+- O seu perfil é **Administrativo**. Os passos 1 a 5 foram feitos com um utilizador só com este perfil.
+- Os perfis **Administrativo**, **Contabilista** e **Contabilista certificado** têm a aplicação **EDI**, com **Painel**, **Mensagens**, **Divergências de receção**, **Receber mensagens** e **Comunicações externas**.
+- A empresa tem uma série de faturas marcada como **série de faturação eletrónica (EDI)**. Na demonstração é a **Faturas EDI (FTE)**, que dá números `FT E26/…`. O botão **Enviar por EDI** só aparece numa fatura emitida nessa série.
+- O cliente tem NIF, **EAN/GLN** e o EDI ativo.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Na encomenda já confirmada (**Vendas › Ordens › Encomendas recebidas**, no exemplo a `S00004`), carregue em **Criar Fatura**, deixe **Fatura normal** e carregue em **Criar Rascunho**. Abre-se o rascunho de fatura com a referência da encomenda («Rascunho de fatura (SIMORD0003)»).
+2. Se o fechou, encontra-o em **Faturação › Faturar › Faturas de clientes**: a lista abre com o filtro **Este mês e rascunhos sem data**, que mostra o rascunho ainda sem data de fatura.
+3. Em **Diário**, troque **Vendas** pela série EDI, **Faturas EDI (FTE)**, e grave.
+4. Carregue em **Confirmar**. A fatura fica **Publicada**, com o número da série EDI (no exemplo, `FT E26/1`).
+5. Carregue em **Enviar por EDI**. Aparece a mensagem «Fatura EDI. Aceites: 1, à espera ou recusados: 0. Veja o detalhe no painel EDI.». Ao abrir a fatura outra vez, o botão desapareceu e, à direita da barra dos botões, está o estado **Aceite**.
+   <Screenshot src="/images/fiscal-core/fatura-edi/01-fatura-enviada-aceite.png" alt="Fatura FT E26/1 (SIMORD0003) depois do envio, com os botões Enviar, Imprimir, Emitir recibo, Nota de Crédito, Assinar PDF e Ações e o estado EDI Aceite" align="end" />
+
+</StepByStep>
+
+## Resultado esperado
+
+- A fatura `FT E26/1` do Retalhista Exemplo (EDI), de 08/11/2026, com o **Total** de 35,61 € (33,60 € + IVA 6 % de 2,01 €) e o ATCUD `DEMOFT2026EDI-1`, ficou com o estado EDI **Aceite**.
+- Em **EDI › Mensagens** ficou a linha **Enviada**, `INVOIC|FT E26/1`, **Aceite**.
+- O ficheiro enviado leva a referência da encomenda do retalhista (`SIMORD0003`) e a nossa (`S00004`), o GLN do retalhista (`5609999000012`) e o da loja de entrega (`5609999000036`), as linhas com o código de barras de cada artigo e o ATCUD. Se a mercadoria seguiu com uma guia de transporte, leva também o número da guia; no exemplo, a encomenda foi faturada sem guia.
+- A fatura certificada é a mesma: o EDI só a transmite.
+
+<HelpCallout type="risco" title="A fatura enviada por EDI conta como original?">
+<span className="fd-pending">Pendente de validação por contabilista certificado: se a fatura enviada por EDI é a fatura original para o cliente (faturação eletrónica, DL 28/2019, art. 12.º), e se o PDF continua a ter de ser enviado.</span>
+</HelpCallout>
+
+## Notas importantes
+
+- **Uma fatura aceite nunca se envia outra vez.** Depois de **Aceite**, o botão deixa de aparecer.
+- **Nada sai sem estar certo.** O fiscaldoo valida o ficheiro antes de o enviar; um ficheiro inválido nunca chega ao operador e o motivo aparece em **EDI › Painel**.
+- **Não emita a fatura duas vezes** para a reenviar. Se o envio falhou, corrija o motivo e carregue outra vez em **Enviar por EDI**.
+- Na demonstração, a fatura foi aceite pelo simulador do operador, não pela Saphety real. O formato que cada retalhista aceita confirma-se com a Saphety.
+
+{/* Nota interna (DOCS-046, lote v5-FC, 2.ª ronda, master 6fb7ee1d4): rascunho criado com o admin a partir da S00004 (a Faturação recebia «Sem acesso» em Criar Fatura: V5FC-12; já não recebe). auditoria v20-A, master 0289754a8, porta 8328: passos 1 a 5 por clique com um utilizador só com o perfil Faturação (Usar os preços do retalhista, Confirmar, Criar Fatura, Criar Rascunho, diário Faturas EDI (FTE), Confirmar, Enviar por EDI → FT E26/1, Aceite). Diário Faturas EDI (FTE), Confirmar e Enviar por EDI com demo.faturacao → FT E26/1, INVOIC aceite pelo simulador; ficheiro conferido por RPC (OrderReference SIMORD0003/S00004, DespatchDocumentReference GT D26/5, GLN 5609999000012 e 5609999000036, CIUS-PT 2.1.1). As recusas (rascunho, série não EDI, sem NIF) não se provocam no ecrã: o botão só aparece em faturas publicadas na série EDI de clientes EDI. */}
+
+## Problemas frequentes
+
+### Não vejo o botão «Enviar por EDI»
+
+- **Causa:** a fatura ainda está em rascunho, foi emitida numa série que não é EDI (por exemplo **Vendas**), o cliente não tem o EDI ativo, ou a fatura já foi aceite.
+- **O que fazer:** confirme o **Diário** e o estado. Uma fatura já emitida na série errada não muda de série. Se a série errada for um erro formal (o Ofício-Circulado 25120/2026 dá como exemplos o NIF, a morada e a descrição), anula-se a fatura e emite-se outra na série EDI ([Como corrigir uma fatura](/fiscal-core/corrigir-uma-fatura)). <span className="fd-pending">Pendente de validação por contabilista certificado: se a série errada é um erro formal para este efeito.</span>
+
+{/* Nota interna (lote v23-AB, master 97b34fac3, docs_demo_v23ab_test, porta 8480, utilizadores criados só com cada valor do campo Perfil): passos 1 a 5 por clique com um utilizador só Administrativo: a S00004 (SIMORD0003) foi confirmada antes por RPC pelo administrador (Manter os nossos preços); FT E26/1 de 08/11/2026, 35,61 €, ATCUD DEMOFT2026EDI-1, «Fatura EDI. Aceites: 1…» lido no envio da FT E26/2 (S00003), estado Aceite; o ficheiro enviado (JSON) leva SIMORD0003, S00004, os dois GLN e o ATCUD, e nenhuma guia; captura 01 refeita. */}
+
+{/* Nota interna (DOCS-075, lote v23-BJ, master 7f41ce71b): a mensagem do passo 5 diz agora «painel da Troca de documentos» (UX-163, c8e2cded1, pt_PT.po do l10n_pt_fiscaldoo_edi_docs). Não reenviada na cópia: este lote não envia documentos; o resto do texto é o do lote v23-AB. */}

@@ -1,0 +1,144 @@
+---
+id: reconciliar-salarios-com-a-contabilidade
+slug: /payroll-pt/reconciliar-salarios-com-a-contabilidade
+title: Como conferir o custo dos salários com a contabilidade
+sidebar_label: Conferir com a contabilidade
+sidebar_position: 5
+description: Comparar os recibos do mês com a contabilidade, os pagamentos e a DMR e o custo total com o saldo das contas 63, encontrar o documento que explica cada diferença e corrigi-lo.
+keywords: [conferir, custo, salários, salarios, contabilidade, custo dos salários vs contas 63x, custo dos salarios vs contas 63x, reconciliação dos salários, reconciliacao dos salarios, diferenças a rever, diferencas a rever, contas 63, conta 632, conta 635, recibo sem lançamento, recibo sem lancamento]
+doc_id: DOC-0234
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/configurar/contabilizar-os-salarios, payroll-pt/processar-e-pagar/pagar-os-salarios, payroll-pt/declarar/dmr]
+---
+
+## Para que serve?
+
+Confirma que os recibos do mês e a contabilidade dizem o mesmo. Se não disserem, mostra o valor da diferença e, na maior parte dos casos, o documento que a provoca.
+
+Há dois mapas, porque respondem a perguntas diferentes e são abertos por perfis diferentes:
+
+- **Reconciliação dos salários**: o líquido, o IRS e as contribuições dos recibos contra a contabilidade, os pagamentos e a DMR, com os documentos que explicam cada diferença.
+- **Custo dos salários vs contas 63x**: o custo total dos recibos contra o saldo das contas de gastos com o pessoal (632 e 635 no exemplo).
+
+## Quando utilizar?
+
+- Todos os meses, depois de [contabilizar os salários](/payroll-pt/contabilizar-os-salarios) e de [os pagar](/payroll-pt/pagar-os-salarios).
+- Antes de fechar o mês na contabilidade ou de preparar um mapa para a gerência.
+- Quando a conta 632 ou a 635 mostra um valor que não reconhece.
+- Não serve para ver variações de um trabalhador de um mês para o outro: para isso, veja [Como comparar os salários com o mês anterior](/payroll-pt/comparar-com-o-mes-anterior).
+
+## Onde encontrar?
+
+- **Salários › Fechar e consultar › Reconciliação dos salários**.
+- **Direção › Pessoas › Custo dos salários vs contas 63x** (Gerência). O administrador do sistema vê-o também em **Salários › Fechar e consultar › Controlo e inventário**.
+
+## Antes de começar
+
+- **Reconciliação dos salários:** o seu perfil é **Processador de salários**.
+- **Custo dos salários vs contas 63x:** o seu perfil é **Gerência**. O **Processador de salários** não tem este menu.
+- O perfil **Contabilista** não vê nenhum dos dois mapas: não tem a aplicação **Salários** nem o menu **Direção**. Peça o valor a quem tem o perfil certo, ou peça o perfil ao administrador. O estorno de um lançamento (passo 7) é que é feito pelo Contabilista.
+- O lote do mês está **Validado** e **contabilizado**. Com um lote só **Calculado**, o mapa mostra «0 recibos no mês» (visto em novembro de 2026).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Com o perfil **Processador de salários**, abra **Salários › Fechar e consultar › Reconciliação dos salários**. Abre no mês anterior ao atual (a 03/11/2026, o **Ano** 2026 e o **Mês** 10).
+2. Para ver outro mês, carregue em **Mês anterior** ou **Mês seguinte**, ou escolha o **Mês** e carregue em **Comparar**. Nada se altera neste ecrã.
+3. Leia a frase por cima da tabela, por exemplo «8 recibos no mês; 2 de 8 comparações com diferença; 9 documentos explicam-nas.» As linhas a verde estão certas e as linhas a vermelho têm diferença.
+   ![Reconciliação de outubro de 2026 com duas comparações a vermelho: pagamentos e IRS a pagar da conta](/images/payroll-pt/reconciliar-salarios-com-a-contabilidade/01-reconciliacao-de-outubro.png)
+4. Em **Documentos que explicam as diferenças**, leia o **Motivo**, o **Recibo** ou o **Lançamento contabilístico** e o **Valor** de cada linha. Trate-a como diz a tabela «O que fazer a cada motivo», abaixo.
+5. Para guardar o mapa, carregue em **Exportar para XLSX**. O ficheiro chama-se, neste exemplo, «Reconciliação dos salários 2026-10.xlsx».
+6. Com o perfil **Gerência**, abra **Direção › Pessoas › Custo dos salários vs contas 63x**. Carregue em **Mês** e escolha **Outubro de 2026**. Carregue na seta **▸** de **Custo total dos recibos** para o ver por departamento e na seta de **Saldo das contas 63x** para o ver por conta.
+   ![Custo dos salários vs contas 63x de outubro de 2026: custo por departamento, saldo por conta e diferença de -150,00 €](/images/payroll-pt/reconciliar-salarios-com-a-contabilidade/02-custo-vs-contas-63x.png)
+7. Se a causa for um lançamento manual errado, peça ao **Contabilista** que o estorne: abra o lançamento em **Contabilidade**, carregue em **Ações › Estornar lançamento**, escolha o **Motivo** na lista e mude a **Data de Reversão** para um dia do mesmo mês (31/10/2026 no exemplo). O **Diário** vem preenchido com **Operações Diversas**. Sem **Motivo**, **Estornar** não avança. A data vem com o dia de hoje: se a mantiver, a diferença do mês fica por corrigir.
+8. Volte a abrir os dois mapas e confirme que a diferença desapareceu.
+
+</StepByStep>
+
+### O que fazer a cada motivo
+
+| Motivo no ecrã | O que quer dizer | O que fazer |
+|---|---|---|
+| **Recibo sem lançamento publicado na contabilidade** | O lote foi validado, mas não contabilizado. | [Contabilize](/payroll-pt/contabilizar-os-salarios) o lote. |
+| **Pagamento não cobre o líquido** | Falta pagar o recibo, ou o pagamento foi inferior ao líquido. | [Pague os salários](/payroll-pt/pagar-os-salarios). Antes de pagar, esta diferença é normal. |
+| **Lançamento na conta do IRS que não vem de um recibo** | Alguém lançou à mão na conta 242. | Confirme o lançamento com o Contabilista. Se estiver errado, estorne-o. |
+
+{/* Nota interna (DOCS-046): só estes 3 motivos foram provocados no ecrã. «Recibo fora da DMR», «Recibo fora da declaração à Segurança Social» e «Pagamento de um recibo anulado» existem no produto mas não foram provocados neste lote: exigem DMR gerada com um recibo em falta, modelo antigo e recibo anulado depois de pago. */}
+
+**Exemplo.** Na **Empresa Demonstração, Lda**, o lote de outubro de 2026 (8 recibos) gerou o lançamento SAL/2026/00005, conferido no razão:
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| 632 Remunerações do pessoal | 12.528,63 € | |
+| 635 Encargos sobre remunerações | 2.745,52 € | |
+| 231290 Remunerações em processamento | 12.528,63 € | 12.528,63 € |
+| 2312 Ao pessoal (líquido a pagar) | | 10.382,03 € |
+| 242 Retenção de impostos sobre rendimentos | | 875,00 € |
+| 245 Contribuições para a Segurança Social | | 4.017,12 € |
+
+O custo total dos recibos (15.274,15 €) é igual à soma de 632 e 635 (12.528,63 + 2.745,52). O mapa do custo mostrou **Diferença** de 0,00 €. Foram depois publicados à mão, com data de 31/10/2026, dois lançamentos fora dos recibos:
+
+| Lançamento | Débito | Crédito | O que mudou |
+|---|---|---|---|
+| Gratificação lançada à mão | 632: 150,00 € | 2781: 150,00 € | **Saldo das contas 63x** passa a 15.424,15 € e a **Diferença** a -150,00 €; a 632 abre com 12.678,63 €. |
+| Acerto manual de IRS | 2781: 40,00 € | 242: 40,00 € | **IRS a pagar (conta)** passa a 915,00 € e a **Diferença** a -40,00 €, com o motivo **Lançamento na conta do IRS que não vem de um recibo**. |
+
+Depois dos dois estornos, com data de 31/10/2026, as duas diferenças voltaram a 0,00 €. Ficou só **Líquido a receber** contra **Pagamentos** (10.382,03 €), porque o lote ainda não estava pago: «8 recibos no mês; 1 de 8 comparações com diferença; 8 documentos explicam-nas.»
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o plano de contas da demonstração, com o líquido em 2312 «Ao pessoal», e a escolha da conta de contrapartida de cada correção.</span>
+
+{/* Nota interna (PAY-080): conferido a 04/11/2026 em master 8c5a23228, com o líquido na 2312 e a transitória na 231290. Lote v17-PAY: este artigo não cita contas antigas; a 2322 só existe nos salários antigos da demonstração, como explica o DOC-0171. */}
+
+## No Enterprise
+
+No Odoo Enterprise, os dois mapas são os mesmos e abrem-se pelos mesmos menus: **Salários › Fechar e consultar › Reconciliação dos salários**, com o perfil **Processador de salários**, e **Direção › Pessoas › Custo dos salários vs contas 63x**, com o perfil **Gerência**. Os botões **Comparar**, **Mês anterior**, **Mês seguinte** e **Exportar para XLSX** e a frase por cima da tabela também não mudam.
+
+Os dois mapas leem os recibos de **Salários**. Numa empresa portuguesa, a aplicação **Folha de Salários** do Enterprise fica escondida a todos, também ao administrador (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)). O perfil **Contabilista** continua sem os dois mapas e estorna um lançamento da mesma maneira: no lançamento, **Ações › Estornar lançamento** abre a janela com **Motivo**, **Diário** e **Data de Reversão**.
+
+{/* Nota interna (lote EE-08, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee08_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8508/8509), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Processador de salários em Reconciliação dos salários (abre em 2026-10 com «0 recibos no mês», porque a base Enterprise não tem o lote de outubro; Mês anterior → 2026-09: «8 recibos no mês; 0 de 8 comparações com diferença; 0 documentos explicam-nas.», Remuneração bruta 11.560,00, IRS retido 875,00 e Contribuições do trabalhador 1.271,60 iguais na DMR, como no Resultado esperado); Gerência em Custo dos salários vs contas 63x (ano de 2026: 56.076,97 € de custo e de saldo, Diferença 0,00 €); Contabilista sem nenhum menu de Salários nem de Direção; no lançamento SAL/2026/00004, o botão Ações tem Estornar lançamento e Voltar a rascunho, e a janela Estornar lançamento tem Motivo, Diário, Data de Reversão, Estornar e Descartar (fechada sem estornar); Custo dos salários vs contas 63x em Controlo e inventário só para o administrador; 0 recibos da Folha de Salários na base. Os lançamentos manuais e os estornos de outubro do exemplo não se repetiram no Enterprise. Comparado com uma cópia da demonstração Community (docs_demo_ee08_test, 2c8d358c0, porta 8518). Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-08.md. */}
+
+## Resultado esperado
+
+- **Reconciliação dos salários:** «0 de 8 comparações com diferença; 0 documentos explicam-nas.», todas as linhas a verde. É o que mostra setembro de 2026 na demonstração, com o lote pago e a DMR: **Remuneração bruta** 11.560,00 €, **IRS retido** 875,00 € e **Contribuições do trabalhador** 1.271,60 € iguais nos recibos e na DMR.
+- **Custo dos salários vs contas 63x:** **Diferença** de 0,00 €.
+
+## Notas importantes
+
+- **O sinal.** A **Diferença** do mapa do custo é o custo dos recibos menos o saldo das contas. Um valor negativo quer dizer que a contabilidade tem mais gasto do que os recibos explicam.
+- **Com um departamento escolhido, a diferença deixa de servir.** Em **Mais filtros › Departamentos**, o custo limita-se a esse departamento mas o saldo continua a ser o da empresa toda, e o mapa avisa: «Os departamentos só limitam o custo dos recibos: a contabilidade não tem departamento, por isso o saldo da classe 63 e a diferença são os da empresa toda.» Com **Administração (demonstração)**, a diferença passou a -10.153,97 €, que não é um erro.
+- **A DMR conta os recibos pagos no mês.** Em outubro, com o lote por pagar e sem DMR, as três linhas da DMR mostram 0,00 € a verde. Isso não confirma nada: só dizem alguma coisa depois de o lote estar pago.
+- **Cada empresa tem o seu mapa.** Numa empresa sem salários, como a **Empresa Teste Portugal**, as linhas ficam todas a 0,00 €, a verde, com «0 recibos no mês».
+
+## Problemas frequentes
+
+### O Contabilista não encontra estes mapas
+
+- **Sintoma:** o perfil **Contabilista** não tem o menu e, com a ligação direta do mapa do custo, lê «Não tem acesso a «Custo total da empresa por trabalhador e período (PT)»…».
+- **Causa:** os dois mapas mostram totais dos salários e não estão abertos a este perfil.
+- **O que fazer:** peça o valor ao **Processador de salários** (reconciliação) ou à **Gerência** (custo), ou peça o perfil ao administrador.
+
+### O custo por departamento não abre nada
+
+- **Sintoma:** a seta de **Custo total dos recibos** muda para **▾**, mas não aparecem linhas. Com um departamento escolhido, o custo mostra 0,00 €.
+- **Causa:** os trabalhadores não têm departamento na ficha. Os recibos deles contam no total, mas não aparecem em nenhum departamento.
+- **O que fazer:** preencha o **Departamento** na ficha do trabalhador e abra de novo o mapa. O total não muda.
+
+### O Processador de salários não tem o mapa do custo
+
+- **Sintoma:** em **Fechar e consultar**, o **Processador de salários** vê **Reconciliação dos salários**, mas não **Custo dos salários vs contas 63x**.
+- **Causa:** este mapa mostra saldos da contabilidade, e estes perfis não têm a contabilidade. Está aberto à **Gerência**.
+- **O que fazer:** peça o mapa à Gerência.
+
+### Diferenças a rever não mostra nada
+
+- **Sintoma:** em **Salários › Fechar e consultar › Diferenças a rever**, com o **Mês** escolhido e depois de **Procurar diferenças**, a lista fica vazia.
+- **Causa:** este ecrã não confere a contabilidade. Procura variações entre os recibos deste mês e os do mês anterior acima do **Limite (%)**, que o ecrã não deixa alterar (20,00 % na demonstração). Em outubro de 2026 nenhuma passou o limite.
+- **O que fazer:** nada, se a lista está vazia. **Pedir ao Revisor de salários** abre o agente do Copiloto, que tem de estar ligado pelo administrador (ou por quem tem o acesso extra **Administração fiscal**).
+
+{/* Nota interna (DOCS-046, master 58eeca54d): defeitos no relatório do lote: faixa azul da Reconciliação só com a palavra «DMR» (V8PAY3-01); mensagem da Reconciliação diz que o contabilista certificado e o auditor podem abrir, mas o Auditor não tem menu (V8PAY3-02); recusa do mapa do custo enumera Processador e Administrador de Salários, que o menu exclui (V8PAY3-03). A faixa aparece na captura 01 e o artigo não a descreve. PAY-081/082 (comboio 143) não mudam estes mapas; o exemplo foi reconferido a 04/11/2026, com os mesmos valores. */}

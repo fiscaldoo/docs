@@ -1,0 +1,58 @@
+---
+id: entidades-publicas-e-snc-ap
+slug: /accounting-pt/entidades-publicas-e-snc-ap
+title: O fiscaldoo serve uma entidade pública que aplica o SNC-AP?
+sidebar_label: Entidades públicas e SNC-AP
+sidebar_position: 11
+description: O fiscaldoo não tem a contabilidade das administrações públicas (SNC-AP). Onde o produto o diz, que referenciais tem e o que fazer se a entidade é pública.
+keywords: [SNC-AP, snc ap, entidade pública, entidade publica, administração pública, câmara municipal, contabilidade pública, contabilidade publica, contabilidade orçamental, referencial contabilístico, Decreto-Lei 192/2015]
+doc_id: DOC-0439
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 97b34fac3)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/plano-de-contas/referencial-contabilistico, accounting-pt/plano-de-contas/plano-de-contas-snc]
+---
+
+## A resposta curta
+
+Não. O fiscaldoo faz a contabilidade das empresas e das entidades do setor não lucrativo que aplicam o SNC. A contabilidade das administrações públicas (SNC-AP), com a contabilidade orçamental e o plano de contas próprio, está fora do produto.
+
+## Onde o fiscaldoo o diz
+
+Na ficha da empresa, a ajuda do campo **Referencial contabilístico** termina com «O SNC-AP (contabilidade pública) não é suportado por este produto: está fora do seu âmbito.».
+
+Para a ver, quem administra o sistema abre **Definições › Utilizadores e empresas › Empresas**, a empresa, separador **Localização PT**, grupo **REFERENCIAL CONTABILÍSTICO E INVENTÁRIO**, e passa o rato sobre o **?** ao lado de **Referencial contabilístico**.
+
+O contabilista certificado, que é quem escolhe o referencial, não vê esta ajuda: escolhe-o em **Contabilidade › Configurar › Geral › Configurar a empresa**, passo **2. Enquadramento contabilístico**, campo **Enquadramento contabilístico**, com as mesmas seis opções, e nenhuma é o SNC-AP.
+
+![Ajuda do campo Referencial contabilístico, com o valor SNC (regime geral) e a frase O SNC-AP (contabilidade pública) não é suportado por este produto](/images/accounting-pt/entidades-publicas-e-snc-ap/01-ajuda-do-referencial.png)
+
+O produto não mostra nenhuma mensagem de erro por este motivo: nada impede de usar uma entidade pública como se fosse uma empresa.
+
+## Os referenciais que o fiscaldoo tem
+
+Em **Alterar referencial contabilístico**, no mesmo grupo, a lista **Referencial contabilístico** tem seis opções: **SNC (regime geral)**, **SNC-PE (pequenas entidades)**, **SNC-ME (microentidades)**, **SNC-ESNL (entidades sem fins lucrativos)**, **IFRS / IAS** e **Outro**. Não há SNC-AP.
+
+![Lista Referencial contabilístico aberta na janela Alterar referencial contabilístico, com as seis opções, sem SNC-AP](/images/accounting-pt/entidades-publicas-e-snc-ap/02-opcoes-do-referencial.png)
+
+Como escolher o referencial de uma empresa está em [Como escolher o referencial contabilístico e a categoria da entidade](/accounting-pt/referencial-contabilistico).
+
+## O que diz a lei
+
+- O **SNC-AP** foi aprovado pelo Decreto-Lei n.º 192/2015, de 11 de setembro, para as entidades das administrações públicas (por exemplo, serviços do Estado, autarquias e institutos públicos). Tem contabilidade orçamental, financeira e de gestão, com plano de contas e demonstrações próprios. *Pendente de validação por contabilista certificado* (quem tem de aplicar o SNC-AP e em que data).
+- O **SNC** das empresas foi aprovado pelo Decreto-Lei n.º 158/2009, de 13 de julho; é este que o fiscaldoo segue.
+
+## O que fazer
+
+- **A entidade aplica o SNC-AP:** use um programa de contabilidade pública. As contas, as demonstrações e o SAF-T que o fiscaldoo produz são do SNC e não substituem os do SNC-AP.
+- **A entidade é privada ou do setor não lucrativo:** escolha o referencial do SNC que lhe corresponde.
+- **Não sabe se a entidade está abrangida pelo SNC-AP:** pergunte ao contabilista certificado antes de configurar a empresa.
+
+## Notas importantes
+
+- **«Outro» não é o SNC-AP.** A ajuda do campo diz que «SNC-ESNL e outros» levam a referência de taxonomia «O» no SAF-T. Escolher **Outro** não dá à entidade a contabilidade orçamental nem o plano de contas público.
+
+{/* Nota interna (lote v23-AA, #4052 DOCS-069, tema que só a pasta congelada tinha: Empresa/entidades-publicas-e-snc-ap.md; master 97b34fac3, docs_demo_v23aa_test, porta 8478). Visto por clique com o utilizador admin (Definições › Utilizadores e empresas › Empresas › Empresa Demonstração, Lda › Localização PT): ajuda do campo lida ao passar o rato; janela Alterar referencial contabilístico aberta e a lista desdobrada, depois Cancelar (nada alterado). O guia antigo dizia «Definições › Contabilidade» e listava 5 opções; hoje há 6 (com Outro) e o campo está na ficha da empresa. Auditoria docs-aud-v23aa, com um utilizador só com o Perfil Contabilista certificado: o assistente Configurar a empresa (passo 2) tem o campo Enquadramento contabilístico com as 6 opções (aí SNC-ESNL diz «entidades do setor não lucrativo»), sem a ajuda do SNC-AP; esse perfil não abre a ficha da empresa nem vê o menu Referencial contabilístico. Decretos-Leis citados pelo número e data, sem leitura do texto neste lote. */}

@@ -1,0 +1,130 @@
+---
+id: importar-faturas-do-efatura
+slug: /accounting-pt/importar-faturas-do-efatura
+title: Como importar as faturas de compra do e-Fatura
+sidebar_label: Importar as faturas do e-Fatura
+sidebar_position: 2
+description: Importar a lista de compras que os fornecedores comunicaram à AT, ver quais já estão lançadas, lançar as que faltam com a conta sugerida e ligá-las ao documento do e-Fatura.
+keywords: [e-Fatura, efatura, e fatura, importar e-Fatura, importar efatura, faturas do e-Fatura, compras e-Fatura, ficheiro do e-Fatura, Portal das Finanças, portal das financas, contas por omissão do e-Fatura, contas por omissao, conta sugerida, comunicado não lançado, comunicado nao lancado, reconciliar de novo, faturas em falta, compras em falta]
+doc_id: DOC-0075
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/compras/fatura-de-fornecedor, accounting-pt/dia-a-dia/atrasos-de-registo, accounting-pt/iva/apuramento-do-iva]
+---
+
+## Para que serve?
+
+Os fornecedores comunicam as faturas que emitem à Autoridade Tributária e Aduaneira (AT), e essas faturas aparecem no e-Fatura, no Portal das Finanças. Importar a lista do e-Fatura mostra, documento a documento, o que o fornecedor comunicou e se essa fatura já está lançada na contabilidade. As que faltam ficam assinaladas, com a conta de gastos sugerida.
+
+**A importação não cria faturas nem lançamentos.** Cada fatura em falta lança-se como qualquer fatura de fornecedor, e só aí há linhas no razão. Também não envia nada à AT.
+
+## Quando utilizar?
+
+- Todos os meses, antes de apurar o IVA e de fechar o mês, para encontrar as compras que os fornecedores comunicaram e que ainda não foram lançadas.
+- Quando um fornecedor diz que mandou uma fatura e não a encontra na contabilidade.
+
+## Onde encontrar?
+
+- **Contabilidade › Lançar › Lançamentos › Importar**: a página **Importar** tem os botões **Importar ficheiro do e-Fatura** e **Contas por omissão do e-Fatura**.
+- **Contabilidade › Lançar › Compras › Faturas do e-Fatura**: a lista dos documentos já importados.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. Com ele faz todos os passos deste artigo, incluindo lançar a fatura em falta (testado com esse perfil). O perfil **Administrativo** não tem a aplicação **Contabilidade** nem estes menus.
+- Tem o ficheiro da lista das compras, exportado do e-Fatura no Portal das Finanças, em CSV ou XLSX. <span className="fd-pending">Pendente de validação no ecrã: o caminho da exportação no Portal das Finanças e os títulos das colunas do ficheiro de 2026 (a demonstração não liga à AT real; o ficheiro do exemplo foi feito com os títulos que o fiscaldoo reconhece).</span>
+- A empresa certa está escolhida no canto superior direito: os documentos ficam na empresa ativa.
+- No exemplo, a Empresa Demonstração, Lda importa as compras de setembro de 2026: 10 linhas (8 faturas, 1 linha com uma data errada e 1 documento anulado no Portal), com as colunas **NIF Emitente**, **Emitente**, **Tipo Documento**, **N.º Documento**, **Data Documento**, **Valor Base**, **Valor IVA**, **Total** e **Situação**.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Lançar › Lançamentos › Importar** e carregue em **Importar ficheiro do e-Fatura**.
+   ![Página Importar com os botões Importar extrato, Importar recibos verdes, Importar ficheiro do e-Fatura assinalado, Contas por omissão do e-Fatura e Importar ativos](/images/accounting-pt/importar-faturas-do-efatura/01-importar.png)
+2. Na janela **Importar ficheiro do e-Fatura**, deixe **Tipo de ficheiro** em **Compras e-Fatura** (a outra opção, **Recibos verdes**, é para a lista dos recibos verdes emitidos à empresa). Em **Ficheiro exportado do Portal (CSV ou XLSX)**, carregue em **Escolher ficheiro** e escolha o ficheiro.
+   ![Janela Importar ficheiro do e-Fatura com o Tipo de ficheiro Compras e-Fatura e o ficheiro efatura_compras_setembro_2026.csv escolhido](/images/accounting-pt/importar-faturas-do-efatura/02-janela-importar.png)
+3. Carregue em **Importar**. A janela **Importar compras e-Fatura** diz quantos documentos entraram e quais as linhas que não entraram, e porquê. No exemplo: «8 documento(s) importado(s), 6 já lançado(s), 0 duplicado(s) ignorado(s).», e duas linhas recusadas (ver «Problemas frequentes»). O número da linha conta a linha dos títulos: «Linha 10» é a décima linha do ficheiro.
+   ![Resultado da importação: 8 documentos importados, 6 já lançados, 0 duplicados, a linha 10 com uma data inválida e a linha 11 anulada no Portal](/images/accounting-pt/importar-faturas-do-efatura/03-resultado-da-importacao.png)
+4. Carregue em **Ver os documentos**. A lista **Compras e-Fatura** abre com o filtro **Não lançados**: no exemplo, 2 documentos, 159,90 €. Para ver todos, retire o filtro: 8 documentos, 3.671,55 €.
+   - **Comunicado e lançado** (a verde): há uma fatura de fornecedor confirmada com o mesmo NIF e com a **Referência da Fatura** igual ao **Número do documento** (espaços e sinais não contam). A coluna **Fatura de fornecedor** mostra qual, por exemplo `FTF/2026/00030 (FT GAB/928)`.
+   - **Comunicado, não lançado** (a vermelho): não há essa fatura. No exemplo, a `FT TEL/920` da Telecom Atlântico, SA (61,50 €) e a `FT OF/2026/7` da Oficina Sintética, Lda (98,40 €).
+   ![Lista Compras e-Fatura sem filtro: seis documentos Comunicado e lançado com a fatura de fornecedor ao lado e dois Comunicado, não lançado, total 3.671,55](/images/accounting-pt/importar-faturas-do-efatura/04-documentos-importados.png)
+5. Abra um documento **Comunicado, não lançado**. A **Conta sugerida** diz em que conta de gastos lançar, e **Sugestão vinda de** diz de onde veio: **Histórico** (a conta mais usada nas faturas confirmadas desse fornecedor) ou **Regra** (passo 8). No exemplo, a `FT TEL/920` tem **Base tributável** 50,00 €, **IVA** 11,50 €, **Total** 61,50 € e a **Conta sugerida** 6221 Trabalhos especializados, do **Histórico**.
+6. Lance a fatura como em [Como lançar uma fatura de fornecedor](/accounting-pt/fatura-de-fornecedor): o **Fornecedor**, a **Referência da Fatura** igual ao **Número do documento** (`FT TEL/920`), a **Data da Fatura de Fornecedor** (`20/09/2026`), a conta, o valor e o IVA. A conta sugerida vem das faturas antigas do fornecedor e não é uma regra: confira-a (no exemplo, a sugestão era 6221 Trabalhos especializados e a fatura foi lançada em 6262 Comunicação, a conta das telecomunicações). **Antes de carregar em Confirmar, confira a Data Contabilística**: é ela que decide o período do IVA, e o ecrã propõe o dia em que regista a fatura (no exemplo, 07/11/2026), não a data do documento (ver «Notas importantes»).
+   Se o valor parecer invulgar para este fornecedor, ao carregar em **Confirmar** abre-se a janela **Confirmar entradas**: carregue em **Confirmar** nessa janela se o valor está certo (no exemplo não abriu). A fatura ficou `FTF/2026/00048`, **Publicada**, com a **Data Contabilística** 07/11/2026 e estas linhas:
+   - 6262 Comunicação, a débito, 50,00 €;
+   - 2432 IVA - Dedutível, a débito, 11,50 €;
+   - 2211 Fornecedores gerais, a crédito, 61,50 €.
+7. Volte a **Contabilidade › Lançar › Compras › Faturas do e-Fatura**, abra o documento e carregue em **Reconciliar de novo**. Antes do clique, o documento já mostra a **Fatura sugerida** `FTF/2026/00048 (FT TEL/920)`. Depois, o estado passa a **Comunicado e lançado**, com a **Fatura de fornecedor** e a **Diferença para a fatura** 0,00 €.
+   ![Documento FT TEL/920 no estado Comunicado e lançado, com a Fatura de fornecedor FTF/2026/00048 (FT TEL/920), a Conta sugerida 6221 Trabalhos especializados e a Diferença para a fatura 0,00 €](/images/accounting-pt/importar-faturas-do-efatura/06-documento-lancado.png)
+   Se a referência da fatura não é igual ao número comunicado, **Reconciliar de novo** não a encontra: carregue em **Ligar uma fatura de fornecedor**, escolha a fatura confirmada em **Fatura de fornecedor** e carregue em **Ligar**.
+8. **Para um fornecedor sem histórico**, defina a conta antes de lançar. Na página **Importar**, carregue em **Contas por omissão do e-Fatura** e em **Novo**. Escreva o **NIF do fornecedor** (no exemplo, `599999861`), deixe o **Tipo de documento** vazio para valer para todos (ou escreva, por exemplo, `FT`), escolha a **Conta de gastos** (6226 Conservação e reparação), escreva uma **Nota** e carregue em **Guardar**. Depois, no documento, carregue em **Sugerir a conta de novo**: a `FT OF/2026/7` passou a ter a **Conta sugerida** 6226 Conservação e reparação, vinda da **Regra**.
+   ![Lista Contas por omissão do e-Fatura com a regra do NIF 599999861, Conta de gastos 6226 Conservação e reparação e a Nota Oficina: reparações](/images/accounting-pt/importar-faturas-do-efatura/05-contas-por-omissao.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- Cada documento que os fornecedores comunicaram está na lista, com o estado e, se já está lançado, a fatura de fornecedor ao lado. No exemplo, depois dos passos 6 e 7: 7 **Comunicado e lançado** e 1 **Comunicado, não lançado** (a Oficina, que ainda não existe como fornecedor).
+- A importação não criou nenhum lançamento: as únicas linhas no razão são as da fatura lançada no passo 6.
+
+## Notas importantes
+
+- **A Data Contabilística decide o período do IVA.** A fatura de 20/09/2026, lançada a 07/11/2026, ficou com a **Data Contabilística** 07/11/2026, e o IVA (11,50 €) entra no [apuramento do IVA](/accounting-pt/apuramento-do-iva) de novembro. Se a fatura tinha de ficar em setembro, escreva a data no campo antes de **Confirmar**. Se o período já está bloqueado ou declarado, veja [Como bloquear períodos e gerir exceções](/accounting-pt/datas-de-bloqueio). <span className="fd-pending">Pendente de validação por contabilista certificado: em que período se deduz o IVA de uma fatura comunicada num mês e recebida ou lançada noutro (CIVA, art. 22.º, n.º 2, e art. 78.º).</span>
+- **O que a lista não vê.** Só tem o que estava no ficheiro: as faturas que os fornecedores comunicaram à AT. Não tem as faturas de fornecedores estrangeiros (no exemplo, Cloud Services Inc. e Software Berlin GmbH), nem os documentos anulados no Portal, nem as faturas que um fornecedor não comunicou. As faturas lançadas que nenhum fornecedor comunicou veem-se no botão **Painel e sincronização** da lista, em **Lançados, não comunicados**. O painel abre no mês corrente: mude **Data de** e **Data até** para o mês importado. Uma lista sem documentos **Comunicado, não lançado** não quer dizer que a contabilidade das compras está completa.
+- **Importar o mesmo ficheiro outra vez não muda nada.** Um documento com o mesmo NIF, número e data é ignorado como duplicado, e os que já estavam na lista não voltam a ser comparados. Depois de lançar as faturas em falta, carregue em **Reconciliar de novo** em cada documento (a lista não tem esta ação para vários de uma vez).
+- **Não considerar.** Um documento que não é da atividade da empresa (por exemplo uma despesa pessoal com o NIF da empresa) marca-se escrevendo o **Motivo para não considerar** e carregando em **Não considerar**: fica **Não considerados**, com o motivo. **Considerar de novo** volta a pô-lo em **Comunicado, não lançado** e apaga o motivo. Um documento com fatura ligada não se pode marcar: carregue antes em **Desligar a fatura de fornecedor**.
+- **A conta sugerida é só uma ajuda.** Não lança nada e não muda as faturas já lançadas; confira-a com o contabilista quando o fornecedor muda de atividade.
+
+## Problemas frequentes
+
+### «Escolha primeiro o ficheiro exportado do Portal das Finanças.»
+
+- **Sintoma:** janela **Operação inválida** ao carregar em **Importar**.
+- **O que fazer:** carregue em **Escolher ficheiro**, escolha o ficheiro e carregue de novo em **Importar**.
+
+### «Linha 10 não importada: a coluna «Data do documento» tem «31-09-2026», que não é uma data válida…»
+
+- **Sintoma:** o resultado diz «… (espera-se dia/mês/ano, por exemplo 31/03/2026). Corrija a linha no ficheiro e importe-o de novo; as outras linhas já foram importadas.»
+- **O que fazer:** corrija a data dessa linha no ficheiro e importe o mesmo ficheiro outra vez: só entra a linha corrigida; as outras contam como duplicadas.
+
+### «Linha 11 não importada: o documento está anulado no Portal…»
+
+- **Sintoma:** «… por isso não foi importado como documento ativo. Não há nada a fazer, a não ser que esteja errado no Portal.»
+- **Causa verificada:** a coluna **Situação** do ficheiro diz que o documento foi anulado (no exemplo, `Anulado`).
+- **O que fazer:** nada. Se o fornecedor não devia ter anulado a fatura, fale com ele.
+
+### «0 documento(s) importado(s), 0 já lançado(s), 8 duplicado(s) ignorado(s).»
+
+- **Causa verificada:** o ficheiro já tinha sido importado. Nada mudou na lista.
+- **O que fazer:** abra a lista em **Contabilidade › Lançar › Compras › Faturas do e-Fatura**.
+
+### «As colunas do ficheiro não foram reconhecidas.»
+
+- **Sintoma:** a janela fica aberta com «… Formato lido: texto, codificação utf-8-sig, separador «;». Colunas do ficheiro: … Falta indicar: NIF do fornecedor, Número do documento, Data do documento, Valor total. … Ainda nada foi importado.» e as caixas **Coluna do NIF do fornecedor**, **Coluna do número do documento**, **Coluna da data do documento**, **Coluna do valor base**, **Coluna do IVA** e **Coluna do total**.
+- **O que fazer:** em cada caixa, escreva o título da coluna do ficheiro que tem esse dado, tal como está no ficheiro (por exemplo `Contribuinte` para o NIF), e carregue em **Importar**. No teste, com as quatro caixas que faltavam, o resultado foi «1 documento(s) importado(s), 0 já lançado(s), 0 duplicado(s) ignorado(s).»
+
+### «Nenhum contacto tem este NIF: crie o fornecedor antes de lançar a fatura.»
+
+- **Sintoma:** faixa azul no documento (no exemplo, a `FT OF/2026/7` da Oficina Sintética, Lda); a lista não lhe sugere nenhuma fatura nem conta do **Histórico**.
+- **O que fazer:** crie o fornecedor com esse NIF em **Contabilidade › Lançar › Terceiros e ativos › Fornecedores** e lance a fatura (passos 6 e 7). Para a conta, use uma regra (passo 8).
+
+### «Escreva o motivo para não considerar este documento na atividade…»
+
+- **Sintoma:** janela **Operação inválida** ao carregar em **Não considerar**: «… (por exemplo «despesa pessoal») antes de o marcar.»
+- **O que fazer:** escreva o **Motivo para não considerar** e carregue de novo em **Não considerar**.
+
+### «Escolha a fatura de fornecedor a ligar.»
+
+- **Sintoma:** janela **Operação inválida** ao carregar em **Ligar** na janela **Ligar uma fatura de fornecedor** sem escolher a fatura.
+- **O que fazer:** escolha a fatura em **Fatura de fornecedor**, ou carregue em **Cancelar** se a fatura ainda não foi lançada (passo 6).
+
+{/* Nota interna (DOCS-035, lote B2b, 29/10/2026, base docs_demo_loteb2b_test na 8101, perfil demo.contabilista, tudo por clique): ficheiro efatura_compras_setembro_2026.csv (scratchpad v2b2b/files) com 10 linhas de setembro de 2026; resultado 8 importados, 6 já lançados (FTF/2026/00027, 00028, 00029, 00030, 00037, 00038), linha 10 data 31-09-2026 e linha 11 «Anulado». Total da lista 3.671,55 € (8 documentos) conferido com o ficheiro. FT TEL/920: rascunho 574 pelo menu Lançar › Faturas de fornecedores › Novo, Data Contabilística proposta 29/10/2026 (diário FTF com numeração anual: _get_accounting_date devolve max(data da fatura, hoje), o mesmo comportamento do ACC-205), janela «Confirmar entradas» do alerta de valor incomum (texto meio em inglês: defeito B2-17), FTF/2026/00054 publicada; razão de outubro: 6262 D 50,00 / 2432 D 11,50 / 2211 C 61,50 a 29/10/2026. A DP de setembro está «validada» na demonstração, por isso o exemplo não escreveu 20/09/2026. Regra do NIF da Oficina → 6226 criada; Sugerir a conta de novo → Regra. Lote v23-C (06/11/2026, base-mãe v2, master 2bfd78d1a, demo.contabilista, por clique): o NIF da Oficina Sintética passou para 599999861, livre na mãe (o NIF anterior é hoje o da Empresa Demonstração); ficheiro de 1 linha com a FT OF/2026/7, faixa «Nenhum contacto tem este NIF…» vista, regra 599999861 → 6226 criada, Sugerir a conta de novo → 6226, Sugestão vinda de Regra; captura 05 refeita. Falhas provocadas: sem ficheiro; reimportação (8 duplicados); colunas não reconhecidas (ficheiro efatura_colunas.csv, testado antes de refazer a base, criou a FT TEL/930 de teste nessa base apagada); Não considerar sem motivo; Ligar sem fatura. Não considerar com motivo e Considerar de novo testados na FT OF/2026/7 (ficou Comunicado, não lançado). Empresa vazia (admin, Empresa Teste Filial): lista vazia com o texto «Aqui aparecem as faturas de compra recebidas da Autoridade Tributária depois de as obter; use o botão de obter para as trazer.», que fala de um botão que não existe (defeito B2-11). O resumo da arquitetura («lança-as nas contas por omissão») não é o que o produto faz: a conta é só sugerida. Vídeo previsto (video=sim): corrente própria dos vídeos; o lugar fica aqui, depois de «Como utilizar», com a mesma FT TEL/920. O painel (Painel e sincronização) é do DOC-0168, ainda por escrever: ligar quando existir. Correção da aud-v2e (NB2b-01, 30/10/2026): o painel abre com Data de 01/10/2026 e Data até 31/10/2026 (mês corrente, visto pelo auditor); frase acrescentada. */}
+
+{/* Nota interna (DOCS-046, lote v23-K, 07/11/2026, master a3603e0f2, base docs_demo_v23k_test na 8434, base-mãe v2): captura 06 refeita por clique com um utilizador só com o perfil Contabilista. O ficheiro do exemplo foi refeito com os NIF dos fornecedores da base-mãe v2 (599990xxx; a Oficina Sintética com 599999861): com os NIF antigos do ficheiro a importação dava «0 já lançado(s)»; com os novos dá «8 documento(s) importado(s), 6 já lançado(s), 0 duplicado(s) ignorado(s).» e as duas linhas recusadas. A FT TEL/920 ficou FTF/2026/00048 (criada por RPC; Data Contabilística proposta pelo ecrã para 20/09/2026 num formulário novo: 07/11/2026; confirmada por clique sem janela Confirmar entradas); linhas 6262 D 50,00 / 2432 D 11,50 / 2211 C 61,50. A Conta sugerida do Histórico passou a 6221 Trabalhos especializados. Os passos 1 a 4 e 8 não foram repercorridos. */}
+
+{/* Nota interna (lote v23-AT, DOC-0075, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador): o Administrativo não tem a aplicação Contabilidade */}

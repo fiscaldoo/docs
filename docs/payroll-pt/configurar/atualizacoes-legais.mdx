@@ -1,0 +1,130 @@
+---
+id: atualizacoes-legais
+slug: /payroll-pt/atualizacoes-legais
+title: Como o fiscaldoo atualiza a legislação laboral e fiscal
+sidebar_label: Atualizações legais
+description: O que é um pacote de atualização legal, onde ver a lei ainda não publicada, as versões do Código do Trabalho e as rubricas a rever, e o que fica à espera da atualização do produto.
+keywords: [atualização legal, atualizacao legal, pacotes de atualização legal, pacotes de atualizacao legal, lei ainda não publicada, lei ainda nao publicada, versões do código do trabalho, versoes do codigo do trabalho, regimes históricos, regimes historicos, rubricas a rever, legislação, legislacao, tabelas de IRS, salário mínimo, novo ano]
+doc_id: DOC-0183
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 8f78854ec)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/plano-de-contas/regras-legais, payroll-pt/configurar/salario-minimo, payroll-pt/configurar/contrato-coletivo]
+---
+
+## Para que serve?
+
+Os valores legais dos salários mudam: tabelas de retenção de IRS, salário mínimo, indexante dos apoios sociais (IAS), taxas da Segurança Social, códigos da declaração mensal. No fiscaldoo, esses valores chegam juntos, num **pacote de atualização legal** por ano. Este artigo explica como funciona, onde ver o que está instalado e o que ainda não é lei, e o que acontece aos recibos enquanto o pacote não chega.
+
+Um valor só entra no cálculo depois de a lei ser publicada e o pacote instalado. Não há ligação automática a nenhum serviço: nada se atualiza sozinho.
+
+## Quando utilizar?
+
+- No fim do ano, para saber se já pode processar janeiro.
+- Quando ouve falar de um valor novo e quer saber se já está a ser usado.
+- Quando um recibo do ano novo é recusado por falta das tabelas.
+
+## Onde encontrar?
+
+Em **Salários › Configurar › Legislação**:
+
+- **Pacotes de atualização legal**: o que está instalado.
+- **Lei ainda não publicada**: o que está por decidir e não entra em nenhum cálculo.
+- **Versões do Código do Trabalho** e **Rubricas a rever**: as alterações ao Código e as rubricas afetadas.
+- **Regimes históricos**: regimes que já terminaram, para consulta.
+
+## Antes de começar
+
+- Para consultar, precisa do acesso extra **Administrador de Salários**. Vê todas estas listas, sem o botão **Novo**. O **Processador de salários** não vê **Configurar**.
+- **Importar um pacote** só aparece a quem gere os dados legais e ao administrador do sistema.
+
+## Como funciona
+
+### O pacote do ano
+
+Cada ano tem um pacote. A lista mostra o ano, a versão, as datas e o número de registos.
+
+![Lista de pacotes: Pacote de atualização legal 2026, versão 1, de 01/01/2026 a 31/12/2026, 145 registos, Instalado](/images/payroll-pt/atualizacoes-legais/01-pacotes-de-atualizacao.png)
+
+Ao abrir o pacote, os separadores mostram o que ele traz: **Referências legais**, **Parâmetros de salários**, **Benefícios fiscais**, **Tabelas de IRS**, **Segurança Social** e **Códigos DMR**.
+
+O pacote chega como ficheiro, entregue com a atualização do produto. Quem gere os dados legais carrega em **Importar um pacote**, escolhe o ficheiro e carrega em **Instalar o pacote**. O próprio ecrã resume as regras: «Nada é descarregado: o ficheiro é o que recebeu. Os valores em vigor nunca são alterados, apenas terminam na véspera do início dos novos. Os recibos já calculados mantêm-se como estão.»
+
+Isto quer dizer que:
+
+- **Os recibos fechados não mudam.** Um recibo guarda os valores com que foi calculado.
+- **Um erro corrige-se com uma versão nova do pacote**, a começar numa data posterior, e não por cima da anterior.
+- **Um valor retroativo não se aplica sozinho aos meses já fechados.** No salário mínimo, ver [Como atualizar o salário mínimo e aplicar reduções](/payroll-pt/salario-minimo).
+
+### A lei ainda não publicada
+
+Esta lista é só para consulta. O ecrã avisa: «Uma lista de verificação, não uma fonte de valores: nada do que está escrito aqui entra num cálculo. Um valor só entra no produto num pacote de atualização legal, depois de a lei ser publicada.»
+
+![Lista Lei ainda não publicada, com as 7 colunas, as linhas de 2027 e 2028 e os estados Não confirmado, Anunciado, sem diploma e Hipótese](/images/payroll-pt/atualizacoes-legais/02-lei-ainda-nao-publicada.png)
+
+Leia a coluna **Estado** (numa janela estreita aparece cortado; abra a linha para o ler por inteiro):
+
+- **Não confirmado**: ainda não há base para usar um valor.
+- **Hipótese**: uma possibilidade, ainda sem lei.
+- **Anunciado, sem diploma**: o valor foi anunciado, mas não há lei publicada. Um exemplo do ecrã: **Salário mínimo para 2027**, que a linha descreve como «sem diploma» e diz que «o produto não tem salário mínimo de 2027».
+
+Abra uma linha para ler a fonte consultada e a nota. **Última verificação em** e **Verificar de novo em** são datas de trabalho de quem acompanha a lei: não são prazos legais nem a data do pacote.
+
+### O que acontece no ano novo
+
+Enquanto o ano novo não tiver o pacote instalado, o fiscaldoo **não calcula recibos desse ano**. Prefere recusar a usar valores do ano anterior. É a linha **Horizonte 2027: nada confirmado**, na lista da lei por publicar, que trava os recibos desse ano. Tem de existir também o calendário de feriados do ano.
+
+A data do pacote depende da publicação da lei e da atualização do produto, por isso este artigo não indica nenhuma. Se tiver de pagar antes de o pacote estar instalado, fale com o seu contabilista e com o suporte.
+
+### As alterações ao Código do Trabalho
+
+**Versões do Código do Trabalho** regista cada versão consolidada, com o diploma, a data de publicação, os artigos alterados e o **Número de regras a rever**. Na demonstração há uma linha: versão 25, **Lei n.º 32/2025, de 27 de março**, **Data por confirmar**, 0 regras a rever.
+
+**Rubricas a rever** mostra as rubricas que indicam, em **Artigos do Código do Trabalho**, um artigo alterado. Uma rubrica não muda sozinha. Quem gere os dados legais ou o administrador do sistema carrega em **Rever** na linha, escreve **O que a revisão encontrou** e carrega em **Registar a revisão**: a linha sai da lista e a versão do Código fica registada na rubrica. O **Administrador de Salários** vê a linha e o botão, mas recebe «Sem acesso».
+
+### Regimes históricos
+
+**Regimes históricos** lista regimes que já não se aplicam a recibos novos, com a referência legal, o **Estado da fonte** e as datas. Na demonstração há o regime dos duodécimos de 2013 a 2017, com a fonte em **Hipótese (a confirmar pelo contabilista certificado)**.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: os valores de cada pacote e a leitura de cada diploma.</span>
+
+{/* Nota interna (DOCS-046): testado com o admin: versão 26 de teste, com os arts. 258, 262 e 264 alterados, deu review_count 0, porque nenhuma rubrica tem ct_articles (apagada a seguir). Não há ficheiro de pacote real de 2027 para percorrer a instalação até ao fim; só as 2 recusas estão provadas. O cron de lembrete de «Verificar de novo em» foi lido das regras e ficou de fora. */}
+
+## Resultado esperado
+
+- Sabe que pacote está instalado e até que data vale.
+- Distingue um valor em vigor (no pacote) de um valor anunciado (na lista da lei por publicar).
+- Sabe que os recibos do ano novo ficam à espera do pacote e que os fechados não mudam.
+
+## Notas importantes
+
+- **Rubricas a rever vazia não prova que está tudo revisto.** Só entram rubricas que indicam os artigos do Código que aplicam, e as rubricas da demonstração não os indicam. Na demonstração, uma versão de teste do Código com os arts. 258.º, 262.º e 264.º alterados continuou com 0 regras a rever; com uma rubrica que indicava o art. 258, passou a 1. A leitura das alterações ao Código continua a ser sua.
+- **O contrato coletivo não vem no pacote.** Os instrumentos e as tabelas são carregados pela empresa (ver [Como aplicar o contrato coletivo](/payroll-pt/contrato-coletivo)).
+- **Empresas e pacote.** A lei é nacional: o pacote não pertence a uma empresa e vale para todas as empresas da base.
+- **Edição Enterprise.** Numa empresa portuguesa, os salários são estes e o menu de salários do Enterprise fica escondido. Numa empresa de outro país é ao contrário: os recibos são os do Enterprise, nenhuma regra portuguesa corre e estes menus só aparecem ao administrador do sistema. <span className="fd-pending">Pendente de validação no ecrã: diferenças na edição Enterprise.</span>
+
+## Problemas frequentes
+
+### O recibo não pode ser calculado: «as tabelas legais de 2027 ainda não estão publicadas»
+
+- **Mensagem:** «O recibo «… (01/01/2027 — 31/01/2027)» não pode ser calculado nem validado: as tabelas legais de 2027 ainda não estão publicadas. O que aconteceu: calcular agora usaria valores em falta ou desatualizados (salário mínimo, IRS, Segurança Social) e daria montantes errados. Como resolver: aguarde o pacote de atualização legal de 2027 e instale-o; a vigilância da lei marca o ano como confirmado.»
+- **O que fazer:** confirme em **Pacotes de atualização legal** se o ano está **Instalado**. Se não está, o recibo fica em rascunho até ao pacote chegar.
+
+### «Não existe calendário de feriados para 2027»
+
+- **Mensagem:** «Não existe calendário de feriados para 2027 (Continente) na empresa «…». O que aconteceu: os dias úteis nunca se adivinham sem os feriados do ano. Como resolver: peça aos Recursos Humanos ou ao responsável pelos Salários que criem o calendário desse ano.»
+- **Quando aparece:** ao carregar em **Criar os recibos do mês**, num lote do ano novo.
+- **O que fazer:** crie o calendário, como a mensagem indica. Sem o pacote do ano, o cálculo continua a ser recusado.
+
+### «O pacote legal está incompleto»
+
+- **Mensagem:** «O pacote legal está incompleto: falta … O que aconteceu: o ficheiro não diz que pacote é. Como resolver: peça o ficheiro de novo.»
+- **O que fazer:** peça o ficheiro de novo ao suporte. Nada fica instalado.
+
+### «O ficheiro foi alterado depois de emitido»
+
+- **Causa:** a impressão digital do ficheiro não corresponde ao conteúdo: um valor foi editado ou o ficheiro está danificado.
+- **O que fazer:** peça o ficheiro original. Nunca edite o ficheiro para corrigir um valor: a correção é emitida como versão nova do pacote.

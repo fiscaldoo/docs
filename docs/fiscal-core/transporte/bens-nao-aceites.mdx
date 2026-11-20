@@ -1,0 +1,101 @@
+---
+id: bens-nao-aceites
+slug: /fiscal-core/bens-nao-aceites
+title: Como registar bens não aceites pelo destinatário
+sidebar_label: Bens não aceites
+sidebar_position: 3
+description: Quando o cliente recusa parte ou toda a mercadoria na entrega, emitir na guia o documento adicional de transporte com as quantidades não aceites e o local para onde voltam.
+keywords: [bens não aceites, bens nao aceites, mercadoria recusada, devolução na entrega, devolucao na entrega, cliente recusou, documento adicional de transporte, documento de transporte adicional, guia de transporte, recusa parcial, recusa total]
+doc_id: DOC-0049
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c2bf63c34)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/transporte/emitir-uma-guia-de-transporte]
+---
+
+## Para que serve?
+
+Às vezes o cliente não aceita, no ato da entrega, parte ou toda a mercadoria que vai na guia de transporte (por exemplo, caixas danificadas). Os bens recusados voltam, e a guia emitida não se pode alterar. O fiscaldoo regista essa recusa num **documento adicional de transporte**, ligado à guia, que diz o que não foi aceite, quanto, porquê e para onde os bens vão.
+
+## Quando utilizar?
+
+- O destinatário recusa parte da mercadoria (no documento impresso fica «parte deles») ou toda (fica «todos»).
+- A guia já está emitida. Antes de emitir, corrija a própria entrega.
+
+Se o que muda é o **local de descarga** ou o **destinatário**, use as outras entradas do mesmo menu **Ações** da guia (**Alterar o local de descarga**, em [Como alterar o local de descarga de uma guia já comunicada](/fiscal-core/alterar-o-local-de-descarga), e **Mudar o destinatário**, em [Como mudar o destinatário de uma guia já emitida](/fiscal-core/mudar-o-destinatario)).
+
+## Onde encontrar?
+
+**Faturação › Faturar › Guias de transporte**, abra a guia e carregue em **Ações › Bens não aceites**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**. Os passos foram feitos do princípio ao fim com este perfil. Com o perfil **Administrativo**, a guia só tem **Imprimir guia** e **Cancelar**: a entrada **Bens não aceites** não aparece.
+- A guia está emitida (tem número e ATCUD) e não está anulada nem cancelada: [Como emitir uma guia de transporte e obter o código da AT](/fiscal-core/emitir-uma-guia-de-transporte).
+- Se trabalha com várias empresas, escolha a empresa da guia no canto superior direito.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a guia em **Faturação › Faturar › Guias de transporte** (no exemplo, a `GT D26/1` da Padaria Aurora, Lda, com 10 `Pão de forma 500 g (cx. 20)`).
+2. Carregue em **Ações** e escolha **Bens não aceites**. Abre-se a janela **Bens não aceites**, com a **Guia de transporte** e a **Alteração** já preenchidas e uma linha por artigo da guia. Cada linha traz a **Quantidade na guia** e, na **Quantidade não aceite**, a mesma quantidade (recusa total).
+3. Em **Para onde vão os bens não aceites**, escolha o local para onde a mercadoria volta (no exemplo, `Empresa Demonstração, Lda`, a morada do armazém).
+4. Em **Motivo**, escreva porque é que o cliente não aceitou (no exemplo, «O cliente recusou 3 caixas com a embalagem danificada»).
+5. Na **Quantidade não aceite** de cada linha, escreva só o que foi recusado. Ponha `0` nos artigos que o cliente aceitou por inteiro.
+   ![Janela Bens não aceites da guia DEM/OUT/00001, com o destino Empresa Demonstração, Lda, o motivo e a linha do Pão de forma com 10,00 na guia e 3,00 não aceites](/images/fiscal-core/bens-nao-aceites/01-janela-bens-nao-aceites.png)
+6. Carregue em **Emitir o documento adicional**. A janela fecha e o documento fica registado na guia.
+7. Para o confirmar, abra o separador **Guia de transporte** da guia: no fim do bloco da comunicação à AT aparece a linha do documento, com **Alterado em**, **Alteração** «Bens não aceites», o local, o **Motivo** e **Alterado por**.
+   ![Linha do documento adicional na guia GT D26/1: alterado em 02/11/2026 15:44:12, Bens não aceites, Rua da Demonstração, 100, Porto, e o motivo «O cliente recusou 3 caixas com a embalagem danificada»](/images/fiscal-core/bens-nao-aceites/02-documento-na-guia.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- **Na guia:** a `GT D26/1` fica igual (número, ATCUD, código AT, artigos e quantidades). Só ganha, no separador **Guia de transporte**, a linha do documento adicional.
+- **No documento adicional impresso:** no exemplo, o ficheiro «Documento adicional GT D26_1.pdf» tem o título «Documento de transporte adicional», o número `GT D26/1 / ALT 1`, o documento alterado (`GT D26/1 - ATCUD:DEMOGT2026-1`) e o **Código AT**, o remetente e o destinatário, «Bens não aceites pelo destinatário: parte deles em 02/11/2026 15:44:12», a tabela com 10,00 na guia e 3,00 não aceites, o local para onde vão, o motivo e a frase «Este documento acompanha os bens juntamente com o documento alterado (RBC, art. 4.º n.º 8).». Veja em «Notas importantes» quem o consegue imprimir nesta versão.
+- **O que não acontece:** o documento adicional não é comunicado à AT, não mexe no stock e não cria lançamentos contabilísticos. A entrega do exemplo continuou com 10 unidades e **Pronto**.
+
+<HelpCallout type="risco" title="O regresso dos bens">
+O documento adicional regista a recusa; não trata do regresso da mercadoria ao armazém nem da fatura. <span className="fd-pending">Pendente de validação por contabilista certificado: se o documento adicional basta para acompanhar o regresso dos bens recusados ou se é preciso uma guia nova, e o que fazer à fatura já emitida (nota de crédito).</span>
+</HelpCallout>
+
+## Notas importantes
+
+- **Um documento por recusa, e não se altera.** O documento adicional não se edita nem se apaga depois de emitido. Se se enganou, registe outro com os dados certos e explique no **Motivo**.
+- **Parcial ou total é automático.** Se todas as linhas ficam com a quantidade da guia, o documento é **Total** («todos» no PDF); se alguma fica abaixo, é **Parcial** («parte deles» no PDF).
+- **Imprimir o documento.** Na guia, abra o separador **Guia de transporte**, carregue na linha do documento e, na janela **Abrir: Documentos adicionais**, carregue em **Imprimir**. Sai o PDF «Documento adicional GT D26_1.pdf». A janela de emissão explica o mesmo caminho.
+- <span className="fd-pending">Pendente de validação por contabilista certificado: a base legal (Regime dos Bens em Circulação, art. 4.º n.º 8) e o que o documento adicional tem de conter.</span>
+
+{/* Nota interna (DOCS-046, lote v5-FC, 2.ª ronda, master 6fb7ee1d4): feito com demo.gestor_contabilidade na Empresa Demonstração (cookie cids=4), docs_demo_v5fc_test. GT D26/1 (DEM/OUT/00001), Pão de forma 10 → 3 não aceites, destino Empresa Demonstração; PDF impresso com o admin em modo programador. Falhas provocadas na GT D26/3 sem emitir. V5FC-07 saiu com o FAT-132: o Gestor de contabilidade imprimiu pela linha do separador (DOCS-065, master c643480c2). */}
+
+## Problemas frequentes
+
+### «Há campos obrigatórios por preencher…»
+
+- **Sintoma:** ao carregar em **Emitir o documento adicional**, aparece «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.».
+- **Causa:** falta o **Motivo** ou o local em **Para onde vão os bens não aceites**.
+- **O que fazer:** preencha os campos a vermelho e carregue outra vez.
+
+### «A quantidade não aceite de … tem de estar entre 0 e a quantidade da guia»
+
+- **Sintoma:** abre-se a janela **Operação inválida**, por exemplo com «A quantidade não aceite de «[DEMO003] Azeite virgem extra 1 L» tem de estar entre 0 e a quantidade da guia (4.0).». Nada é emitido.
+- **Causa:** escreveu numa linha mais do que a quantidade da guia (ou um número negativo).
+- **O que fazer:** carregue em **Fechar** e corrija a **Quantidade não aceite** para um valor entre 0 e a quantidade da guia.
+
+### «Indique a quantidade não aceite de pelo menos uma linha.»
+
+- **Sintoma:** a janela **Operação inválida** abre com esta frase.
+- **Causa:** todas as linhas estão a `0`.
+- **O que fazer:** escreva a quantidade recusada em pelo menos um artigo. Se o cliente aceitou tudo, não há nada a registar.
+
+### Não encontro «Bens não aceites» no menu Ações
+
+- **Sintoma:** o menu **Ações** da guia não tem a entrada.
+- **Causa:** o seu perfil não a tem (com o perfil **Administrativo** só aparecem **Imprimir guia** e **Cancelar**), ou a guia ainda não foi emitida, ou está cancelada.
+- **O que fazer:** confirme que a guia tem número e ATCUD; se tem, peça o registo a quem tem o perfil **Contabilista certificado**.
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); guia DEM/OUT/00001 aberta por clique com o Administrativo (Imprimir guia, Cancelar) e com o Contabilista certificado (Bens não aceites e Anular a guia presentes); o Contabilista vê o mesmo que o Administrativo */}

@@ -1,0 +1,63 @@
+---
+id: so-o-administrador-de-salarios-pode
+slug: /troubleshooting/so-o-administrador-de-salarios-pode
+title: Aparece «Só quem tem o acesso extra «Administrador de Salários» pode…»
+sidebar_label: «Só quem tem o acesso extra «Administrador de Salários» pode…»
+sidebar_position: 7
+description: Reabrir um lote de salários, alterar a classe contabilística de um trabalhador e outras operações que mexem na contabilidade ou no banco são de quem tem o acesso extra «Administrador de Salários», que o administrador dá. O Processador de salários e o Gestor de RH não as fazem.
+keywords: [acesso extra, só quem tem o acesso extra, so quem tem o acesso extra, administrador de salários, administrador de salarios, só o administrador de salários, so o administrador de salarios, processador de salários, processador de salarios, reabrir um lote, reabrir lote, classe contabilística, classe contabilistica, salários, salarios, recursos humanos, perfil, sem permissão, sem permissao]
+doc_id: DOC-0413
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master a67618a71)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-permissao, administration/utilizadores-e-permissoes/perfis-e-permissoes, people/trabalhadores/criar-um-trabalhador]
+---
+
+## Sintoma
+
+Nos salários, uma operação é recusada com uma mensagem que nomeia o acesso extra «Administrador de Salários». Quem a vê tem, normalmente, o perfil **Processador de salários** ou **Gestor de RH**. O «Administrador de Salários» não é um perfil nem uma pessoa: é um acesso extra que o administrador dá a um utilizador.
+
+## Mensagem
+
+Exemplo copiado da base de demonstração em português, com o perfil **Gestor de RH**: na ficha de um trabalhador, escolha uma **Classe contabilística** (por exemplo **Pessoal**) e guarde. Abre-se **Erro de Acesso**:
+
+> «Só quem tem o acesso extra «Administrador de Salários» pode alterar a classe contabilística de um trabalhador. O que aconteceu: as contas dos salários dependem da classe. Como resolver: peça a um utilizador com o acesso extra «Administrador de Salários» que a registe.»
+
+![Janela Erro de Acesso: só quem tem o acesso extra Administrador de Salários pode alterar a classe contabilística de um trabalhador](/images/troubleshooting/so-o-administrador-de-salarios-pode/01-classe-contabilistica.png)
+
+A ficha sem **Classe contabilística** guarda-se sem mensagem: [Como criar a ficha de um trabalhador](/people/criar-um-trabalhador).
+
+Reabrir um lote fechado também é deste acesso. Com o perfil **Processador de salários**, o lote **Fechado** não tem o botão **Reabrir** e diz: «Lote fechado: já não se altera. Um utilizador com o acesso extra «Administrador de Salários» pode reabri-lo, com um motivo.»
+
+## Causas verificadas
+
+O campo **Salários PT — Processar e administrar salários** dos **Ajustes avançados** tem as opções **Nenhum**, **Processador de Salários**, **Entregar ficheiros de pagamento** e **Administrador de Salários**. **Entregar ficheiros de pagamento** não inclui o processador e não serve para este caso. O Processador de salários prepara e calcula o mês. Quem tem o acesso extra **Administrador de Salários** fica com o que mexe no que já foi fechado ou na contabilidade da empresa, como reabrir um lote ou mudar a classe contabilística de um trabalhador. Os **Recursos Humanos** (perfil **Gestor de RH**) tratam as fichas e os contratos, mas não a parte contabilística.
+
+## O que confirmar
+
+1. Se a operação é mesmo necessária. Reabrir um lote já pago altera o registo do período: confirme primeiro com quem fecha os salários.
+2. Quem na empresa tem o acesso extra **Administrador de Salários**.
+
+## Como resolver
+
+- **Peça a operação a um utilizador com o acesso extra «Administrador de Salários».**
+- **Se a tarefa passa a ser sua:** peça esse acesso ao administrador. Ele escolhe **Administrador de Salários** em **Salários PT — Processar e administrar salários**, nos **Ajustes avançados** da sua ficha. O separador **Perfil** dá só **Processador de salários**: [Como dar a cada utilizador o perfil certo](/administration/perfis-e-permissoes).
+
+**Quem faz:** um utilizador com o acesso extra **Administrador de Salários**; ou o administrador, que dá esse acesso.
+
+## Resultado esperado
+
+Feita por um utilizador com o acesso extra **Administrador de Salários**, a operação passa e fica registada em nome dele.
+
+## Quando contactar o suporte
+
+- A mensagem aparece a um utilizador com **Administrador de Salários** nos **Ajustes avançados**.
+
+{/* Nota interna (lote v23-AO, DOCS-069 #4052, master a67618a71, docs_demo_v23ao_test, 09/11/2026): UX-147. Título e mensagem mudados com o UX-147 (o endereço fica). Recusa da classe contabilística provocada por clique com um utilizador só com o perfil Gestor de RH, numa ficha criada por clique para isso (Marta Ribeiro Antunes, sem classe; guardou sem mensagem); captura 01 nova. Lote de outubro de 2026 fechado por clique pelo Processador de salários: sem Reabrir; a recusa de reabrir («Só quem tem o acesso extra «Administrador de Salários» pode reabrir um lote. …») só se obteve por RPC com esse utilizador, por isso não é citada. */}
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com o lote ou o trabalhador em causa (sem dados pessoais além do nome) e a mensagem completa.

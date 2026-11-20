@@ -1,0 +1,112 @@
+---
+id: contas-bancarias-e-de-caixa
+slug: /accounting-pt/contas-bancarias-e-de-caixa
+title: Como criar uma conta bancária ou de caixa
+sidebar_label: Criar uma conta bancária ou de caixa
+sidebar_position: 7
+description: "Criar o diário de um banco ou de uma caixa com o assistente Criar um diário, e ver o que fica criado: o diário, a conta do plano de contas e a conta de pendentes."
+keywords: [criar conta bancária, criar conta bancaria, criar diário, criar diario, diário de banco, diario de banco, diário de caixa, diario de caixa, conta de caixa, iban, assistente criar um diário, conta de pendentes]
+doc_id: DOC-0108
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/importar-extrato-bancario, accounting-pt/bancos-e-tesouraria/pendentes-de-reconciliacao, accounting-pt/bancos-e-tesouraria/movimentos-de-caixa]
+---
+
+## Para que serve?
+
+Cada conta bancária e cada caixa tem um **diário** na contabilidade: é nele que entram os movimentos e os extratos. O assistente **Criar um diário** cria o diário e a conta do plano de contas que lhe corresponde, em três passos. Serve para um banco e para uma caixa, e o IBAN do banco preenche-se depois, na ficha do diário.
+
+## Quando utilizar?
+
+- Quando abre uma conta num banco novo ou uma nova caixa.
+- **Não** o use para trocar de IBAN numa conta que já existe: altera-se no diário existente.
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Geral › Criar um diário**. Os diários que já existem estão em **Contabilidade › Reconciliar › Bancos e caixa › O que há para fazer com os bancos?** › **Listas de apoio** › **Diários de banco e caixa**. Quem tem o perfil Contabilista certificado vê nessa lista o botão **Novo**, que abre a ficha de um diário em branco (ver «Notas importantes»); o Contabilista não o vê.
+
+## Antes de começar
+
+- O perfil é **Contabilista certificado**: testado até ao fim do assistente. O **Contabilista** não tem o menu **Criar um diário**.
+- Sabe o nome e o código curto do diário (até 5 caracteres). Para um banco, tem o IBAN à mão: não se pede no assistente, preenche-se na ficha do diário (passo 5).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › Geral › Criar um diário**. O assistente pergunta **Para que serve?** e oferece **Vendas (faturas a clientes)**, **Compras (faturas de fornecedores)**, **Banco**, **Caixa**, **Cartão de crédito** e **Operações diversas**. Escolha **Banco** (ou **Caixa**) e carregue em **Seguinte**.
+   ![Assistente Criar um diário, passo 1: para que serve, com as seis opções e o botão Seguinte](/images/accounting-pt/contas-bancarias-e-de-caixa/01-criar-um-diario.png)
+2. **Passo 2 de 3: nome e código.** Preencha o **Nome do diário** (por exemplo **Banco exemplo**), o **Código curto** (**BNK2**) e, se não for euros, a **Moeda**. Carregue em **Seguinte**.
+   ![Passo 2 de 3 do assistente, com o nome do diário, o código curto e a moeda](/images/accounting-pt/contas-bancarias-e-de-caixa/02-dados-do-diario.png)
+3. **Passo 3 de 3: contas.** O ecrã diz «Deixe a conta principal vazia e ela é criada por si no plano de contas». Pode escolher a **Conta principal** e a **Conta de pendentes**. Numa **Caixa**, o passo tem mais dois campos: **Conta de ganhos por diferenças de caixa** e **Conta de perdas por diferenças de caixa**. Deixe tudo vazio e carregue em **Criar diário**.
+   ![Passo 3 de 3 do assistente para um banco, com a conta principal, a conta de pendentes e o botão Criar diário](/images/accounting-pt/contas-bancarias-e-de-caixa/03-ultimo-passo.png)
+   ![Passo 3 de 3 do assistente para uma caixa, com a conta principal, a conta de pendentes, as contas de ganhos e de perdas por diferenças de caixa e o botão Criar diário](/images/accounting-pt/contas-bancarias-e-de-caixa/03b-ultimo-passo-caixa.png)
+4. Abre-se o diário criado. No exemplo do banco ficou **Banco exemplo**, tipo **Banco**, código BNK2, com a conta **122 Banco exemplo** criada no plano de contas, a conta de pendentes **120001 Conta Transitória** e as contas de ganhos **7888** e de perdas **6888** (**Outros não especificados**). O **Número da Conta Bancária** fica vazio. Numa caixa (no exemplo **Caixa exemplo**, código CSH1, que é o que o assistente propõe para uma caixa) a conta principal criada foi **112 Caixa exemplo**, com a mesma conta de pendentes e as mesmas contas de ganhos e de perdas.
+   ![Ficha do diário Banco exemplo, tipo Banco, com a conta 122, a conta de pendentes 120001 e as contas 7888 e 6888](/images/accounting-pt/contas-bancarias-e-de-caixa/05-diario-criado.png)
+5. **Preencher o IBAN (só num banco).** Na ficha do diário, escreva o IBAN em **Número da Conta Bancária** (no exemplo, PT50000201231234567890154), escolha **Criar “PT50000201231234567890154”** na lista que aparece (se o IBAN já existir, a lista oferece-o formatado e escolhe-o) e carregue em **Guardar**. O número fica guardado com espaços, em grupos de quatro: **PT50 0002 0123 1234 5678 9015 4**.
+   ![Ficha do diário Banco exemplo com o Número da Conta Bancária preenchido: PT50 0002 0123 1234 5678 9015 4](/images/accounting-pt/contas-bancarias-e-de-caixa/06-iban-no-diario.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o assistente **Criar um diário** é o mesmo, com os três passos (visto com um utilizador só com o perfil **Contabilista certificado**; no exemplo, o banco **Banco exemplo**, código BNK2). Muda o seguinte:
+
+- A ficha do diário de banco tem o campo **Informações Bancárias**, com **Ainda Não Definido**, **Manual (ou importar CAMT, CSV, JPEG, OFX, PDF, PNG, XLS, XLSX)** e **Sincronização online**. A sincronização online é um serviço do Enterprise que liga ao banco pela internet e fica fora deste artigo.
+- Em **Diários de banco e caixa**, o **Contabilista certificado** vê dois botões **Novo**: o primeiro abre a ficha de um diário em branco, como no Community; o segundo é do Enterprise e abre a janela **Que tipo de diário quer adicionar?**. O **Contabilista** não vê nenhum dos dois, como no Community.
+
+{/* Nota interna (lote EE-03, DOCS-073 #4142, DEC-1794, master e4dd4ae90, base Enterprise docs_ee_ee03_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0108. Contabilista certificado: assistente Banco › Banco exemplo / BNK2 › Criar diário, conta principal 123 (na base Enterprise a 122 já é do diário Recibos (RG)), conta de pendentes 120001, ganhos 7888 e perdas 6888; Novo na lista abre a ficha com Banco e BNK2, como no Community. Contabilista: Novo › Numerário deu a recusa citada. Diário criado só na cópia. Ver reports/LOTE_EE-03.md. Auditoria EE-03 (11/11/2026, master 7cd24fcc9, comboio 192 com o EEA-073 #4157, cópia Enterprise docs_ee_audee03_test da odoo20_ee_test, utilizadores só com o perfil indicado): Contabilista certificado: assistente Criar um diário com os passos 1, 2 e 3 de 3 (não criado); em Diários de banco e caixa, dois botões Novo (o_list_button_add abre a ficha em branco com Informações Bancárias; account_accountant.action_journal_create_wizard abre «Que tipo de diário quer adicionar?», com «Quadro» no cartão de crédito). Contabilista: nenhum Novo nessa lista. Ver reports/AUDITORIA_EE-03.md. */}
+
+## Ligar o banco online
+
+Se a empresa usa a ligação online ao banco, cada **diário de banco** liga-se a **uma** conta do consentimento dado no banco. O fiscaldoo escolhe a conta que corresponde ao diário: a que tem o **IBAN** do diário ou, se o IBAN não servir, a que tem a **moeda** do diário. Se nenhuma conta servir, nada é ligado e o consentimento termina, em vez de ligar a primeira conta que o banco devolva. Um consentimento abandonado, em que o banco nunca chegou a responder, deixa a ligação **à espera do consentimento**; fecha-se com **Desligar**.
+
+Hoje esta lista não aparece no menu **Contabilidade › Reconciliar › Bancos e caixa** de nenhum perfil da demonstração (visto com Contabilista certificado, Contabilista, quem tem o acesso extra «Tesouraria» e administrador), por isso o artigo não dá um caminho de menu para ela.
+
+<span className="fd-pending">Pendente de validação no ecrã: a janela de ligação, o estado «à espera do consentimento» e o botão **Desligar** não foram percorridos: a ligação real ao banco ainda não está ativa nesta versão, e a documentação não leva chaves nem endereços de teste. </span>
+
+## Resultado esperado
+
+- Um diário novo na lista **Diários de banco e caixa**, e uma conta nova no plano de contas: 122 no exemplo do banco (a seguinte à 121, por baixo da 12 Depósitos à ordem) e 112 no da caixa (a seguinte à 111, por baixo da 11 Caixa).
+- Num banco, o IBAN guardado na ficha do diário.
+- O assistente **não lança** nada: só cria o diário e a conta.
+
+## Notas importantes
+
+- **O IBAN não se pede no assistente.** Preenche-se na ficha do diário, depois de o criar (passo 5). Um IBAN que já existe não se cria outra vez: aparece formatado na lista do campo, onde o escolhe. Se tentar criá-lo de novo, o ecrã diz «A operação não pode ser concluída: A combinação de 'utilizador' e 'número da conta' deve ser única».
+- **O botão Novo da lista de diários.** O Contabilista certificado vê **Novo** em **Diários de banco e caixa**. Abre a ficha de um diário em branco, já com o tipo **Banco** e um código sugerido (BNK3 no exemplo). Ao carregar em **Guardar** com só o nome preenchido (no exemplo, **Banco pela ficha**), a conta principal também é criada (123). O assistente continua a ser o caminho recomendado, porque pergunta primeiro se é banco ou caixa. Só experimentei o **Novo** num banco.
+  ![Lista Diários de banco e caixa com o botão Novo assinalado](/images/accounting-pt/contas-bancarias-e-de-caixa/08-lista-de-diarios-com-novo.png)
+- **O Contabilista não cria diários.** Não tem o menu **Criar um diário** nem o botão **Novo** na lista. Peça a quem tem o perfil **Contabilista certificado** (tem o menu **Criar um diário**).
+- **Uma conta nova no plano de contas** deve ser conferida pelo contabilista certificado (classe 12 para bancos e 11 para caixas). <span className="fd-pending">Pendente de validação por contabilista certificado: a conta que o assistente escolhe por omissão para o diário de caixa.</span>
+
+## Problemas frequentes
+
+### «O IBAN … é inválido»
+
+- **Sintoma:** ao escolher **Criar “…”** com um IBAN errado, abre-se a janela **Criar Número da Conta Bancária** e, ao carregar em **Guardar**, aparece **Erro de Validação**: «O IBAN “PT50000700000000000000023” é inválido (dígitos de controlo do NIB português). Verifique o número no seu extrato bancário.»
+  ![Janela Erro de Validação: o IBAN PT50000700000000000000023 é inválido, dígitos de controlo do NIB português](/images/accounting-pt/contas-bancarias-e-de-caixa/09-iban-invalido.png)
+- **Causa:** os dígitos de controlo do IBAN não batem certo.
+- **O que fazer:** carregue em **Fechar** e em **Descartar**, confira o número no extrato do banco e escreva-o de novo.
+
+### «Já existe um diário com o código…»
+
+- **Sintoma:** no passo 2, ao carregar em **Seguinte**, abre-se a janela **Operação inválida**: «Já existe um diário com o código «BNK1» em Empresa Demonstração, Lda. Os códigos de diário não se repetem: escolha outro.»
+  ![Janela Operação inválida sobre o passo 2: já existe um diário com o código BNK1](/images/accounting-pt/contas-bancarias-e-de-caixa/04-codigo-repetido.png)
+- **Causa:** o código curto já é de outro diário da mesma empresa.
+- **O que fazer:** carregue em **Fechar** e escolha outro código (o campo aceita no máximo 5 caracteres).
+
+### O menu «Criar um diário» não aparece
+
+- **Sintoma:** em **Configurar › Geral** não há **Criar um diário**.
+- **Causa:** o perfil (por exemplo Contabilista) não tem direito de criar diários.
+- **O que fazer:** peça a quem tem o perfil **Contabilista certificado** que o crie.
+
+{/* Nota interna (cor5, NV3C-06, 01/11): refeito no master b1c81051 (comboio 128, ACC-211 em master) na base docs_demo_cor5_test, com o Gestor de contabilidade (assistente, IBAN, Novo, caixa) e o Contabilista (sem Criar um diário nem Novo). Criados na base: Banco exemplo (BNK2, 121002, IBAN PT50 0002 0123 1234 5678 9015 4), Caixa exemplo (CSH1, 111003) e Banco pela ficha (BNK3, 121003). O cabeçalho do assistente diz «Odoo» antes de «Passo 2 de 3» (V3A3-12, baixo). Não percorridos, por não terem efeito no que o artigo afirma: moeda estrangeira e empresa vazia real. */}
+
+{/* Nota interna (v23-T, DOC-0108, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}
+
+{/* Nota interna (lote 99, BNK-044, 19/11/2026): só o que o cliente vê, a partir do bilhete do programador (l10n_pt_fiscaldoo_bank_sync 20.0.1.0.8); sem chaves, endereços nem credenciais de teste. O menu existe na base (Contabilidade/Reconciliar/Bancos e caixa/Ligações bancárias online) mas o clique pelo script de menus falhou com o administrador e com o Contabilista certificado: confirmar o caminho antes de publicar. */}

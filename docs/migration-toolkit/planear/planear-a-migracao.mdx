@@ -1,0 +1,99 @@
+---
+id: planear-a-migracao
+slug: /migration-toolkit/planear-a-migracao
+title: Como preparar a migração de outro programa para o fiscaldoo
+sidebar_label: Preparar a migração
+sidebar_position: 0
+description: Antes de importar, decidir o que vem do programa anterior, a data de arranque no fiscaldoo e a ordem das importações, com os ecrãs de migração que o produto tem.
+keywords: [preparar a migração, preparar a migracao, planear a migração, planear migracao, mudar de programa, migração, migracao, data de arranque, ordem das importações, ordem das importacoes, diagnóstico, diagnostico, migração e importações, importar ficheiro SAF-T, saldos de abertura, documentos em aberto]
+doc_id: DOC-0294
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [migration-toolkit/planear/validar-a-migracao, migration-toolkit/importar/importar-saldos-de-abertura, migration-toolkit/importar/importar-documentos-em-aberto]
+---
+
+## Para que serve?
+
+Quando uma empresa muda de programa, há três decisões a tomar antes da primeira importação: **o que vem** do programa anterior, **a partir de que data** a empresa trabalha no fiscaldoo e **por que ordem** se importa. Este artigo ajuda a tomá-las e diz que ecrã do fiscaldoo recebe cada parte. Cada importação tem o seu artigo; aqui só se planeia.
+
+O fiscaldoo não tem um ecrã de «plano de migração» nem de diagnóstico: o plano faz-se fora do programa (numa folha ou num documento), com a lista abaixo.
+
+## Quando utilizar?
+
+- Antes de importar o que quer que seja para uma empresa que vem de outro programa.
+- Quando a mudança é a meio do ano, para decidir o que fica no programa anterior e o que vem.
+- **Não use** para uma empresa que passa do regime simplificado à contabilidade organizada sem mudar de programa: ver [Como passar do regime simplificado para a contabilidade organizada](/migration-toolkit/passar-a-contabilidade-organizada).
+
+## Onde encontrar?
+
+Não há um menu próprio. Os ecrãs que a migração usa estão em três sítios:
+
+- **Contabilidade › Configurar › Migração e importações**: **Histórico migrado**, **Importar documentos em aberto**, **Saldos de abertura por terceiro**, **Registo de importações de dados**, **Importar ficheiro SAF-T**, **Migração de documentos certificados**, **Migração de séries** e **Migração para a contabilidade organizada**. No teste, o **Administrador** viu as oito; o utilizador **Contabilista certificado** com a permissão de migração viu todas menos **Histórico migrado**.
+- **Contabilidade › Lançar › Lançamentos › Importar**: entre outros, **Importar lançamentos**, **Importar saldos de abertura** e **Importar ativos**.
+- **Definições › fiscaldoo · Certificação**, no grupo **Configurar os dados: migração e importações**, com um **Abrir** para cada um destes cinco: **Histórico migrado**, **Importar documentos em aberto**, **Saldos de abertura por terceiro**, **Registo de importações de dados** e **Importar ficheiro SAF-T**. As **Definições** são só do **Administrador**.
+
+![Definições, grupo Configurar os dados: migração e importações, com Abrir em Histórico migrado, Importar documentos em aberto, Saldos de abertura por terceiro, Registo de importações de dados e Importar ficheiro SAF-T](/images/migration-toolkit/planear-a-migracao/01-definicoes-migracao.png)
+
+## Antes de começar
+
+- Quem importa precisa da permissão **Migração / Importação fiscal**. No utilizador (**Definições › Utilizadores**), está em **Ajustes avançados**, no grupo **LOCALIZAÇÃO PT**, com o nome **Localização PT — Migração e importação fiscal (saldos, SAF-T)**. O **Administrador** tem-na sempre, e o perfil **Contabilista certificado** também a traz. Com o perfil **Contabilista** sem esta permissão, o grupo **Migração e importações** não aparece em **Contabilidade › Configurar**, e a página **Importar** não mostra **Importar lançamentos** nem **Importar saldos de abertura**. Os ecrãs deste artigo foram abertos com o **Administrador** e com um utilizador com o perfil **Contabilista certificado** e esta permissão.
+- Faça a migração primeiro numa base de teste e só depois na base onde a empresa vai trabalhar.
+- Peça ao programa anterior, para a data de arranque: o balancete, a lista das faturas por receber e por pagar, o mapa dos ativos, o último número de cada série de faturação, os ficheiros SAF-T (PT) de faturação e de contabilidade e, se a empresa processa salários, os recibos do ano.
+
+## Como utilizar
+
+<StepByStep>
+
+1. **Faça o inventário do que vem.** Para cada linha da tabela, decida se vem, de que ficheiro e quem o confere.
+
+   | O que existe no programa anterior | Onde entra no fiscaldoo |
+   |---|---|
+   | Dados da empresa, plano de contas, impostos | **Contabilidade › Configurar › Geral › Configurar a empresa** e **Plano de contas** |
+   | Clientes, fornecedores e artigos | **Importar** no menu da roda dentada de cada lista (por exemplo **Contabilidade › Lançar › Terceiros e ativos › Clientes**) |
+   | Saldos das contas na data de arranque | **Importar saldos de abertura**, em **Importar**; ver [Importar os saldos de abertura](/migration-toolkit/importar-saldos-de-abertura) |
+   | Faturas de clientes e de fornecedores por liquidar | **Importar documentos em aberto** ou **Saldos de abertura por terceiro**; ver [Importar faturas em aberto e saldos de terceiros](/migration-toolkit/importar-documentos-em-aberto) |
+   | Ativos fixos, com as depreciações acumuladas | **Importar ativos**, em **Importar**; ver [Importar ativos de outro programa](/migration-toolkit/importar-ativos) |
+   | Séries de faturação e documentos já emitidos | **Migração de séries** e **Migração de documentos certificados**; ver [Migrar as séries e os documentos certificados](/migration-toolkit/migrar-series-e-documentos-certificados) |
+   | Lançamentos de anos anteriores, para consulta | [Importar lançamentos](/migration-toolkit/importar-lancamentos) com **Histórico migrado**, consultados em [Consultar o histórico do programa anterior](/migration-toolkit/consultar-historico-migrado) |
+   | Recibos de vencimento já pagos | Na aplicação **Salários**; ver [Importar o histórico de salários](/migration-toolkit/historico-de-salarios) |
+
+   Se o programa anterior exporta o SAF-T (PT), **Importar ficheiro SAF-T** pode ler o plano de contas, os saldos de abertura, os artigos, os documentos de venda, os clientes e fornecedores e os lançamentos do ficheiro: a ficha da importação tem estas opções em **O QUE IMPORTAR**, e os campos **NIF no ficheiro**, **Empresa no ficheiro**, **Início do período do ficheiro** e **Fim do período do ficheiro**. Use-o para confirmar de que empresa e de que período é o ficheiro antes de escolher o que importa dele.
+2. **Escolha a data de arranque.** É o dia a partir do qual a empresa lança e fatura no fiscaldoo. O mais simples é o primeiro dia de um exercício (por exemplo 01/01/2027): os saldos de abertura são o balancete de fecho do ano anterior, e o ano inteiro fica num só programa. A meio do ano, os meses anteriores ficam no programa anterior e os documentos já emitidos nesse ano têm de vir também, para o SAF-T de faturação do ano (ver [Migrar as séries e os documentos certificados](/migration-toolkit/migrar-series-e-documentos-certificados)). <span className="fd-pending">Pendente de validação por contabilista certificado: escolha da data de arranque a meio do exercício e o que fica a cargo de cada programa (SAF-T, declarações periódicas e conservação dos documentos).</span>
+3. **Importe por esta ordem**, porque cada passo usa o que o anterior criou:
+   1. dados da empresa, plano de contas e impostos;
+   2. clientes, fornecedores e artigos (as faturas em aberto e os saldos de clientes e fornecedores pedem o parceiro já criado: a importação procura-o pelo NIF ou, se ele não tiver NIF, pelo nome exato);
+   3. saldos de abertura das contas;
+   4. faturas em aberto de clientes e fornecedores (ou o saldo de cada um, não as duas coisas: ver «Notas importantes»);
+   5. categorias de ativos e depois os ativos;
+   6. séries e documentos certificados do programa anterior;
+   7. histórico de lançamentos e de salários, só para consulta.
+4. **Confira cada importação** antes da seguinte, como em [Como confirmar que a migração ficou certa](/migration-toolkit/validar-a-migracao): **Registo de importações de dados** e o balancete.
+
+</StepByStep>
+
+## Resultado esperado
+
+- Um plano escrito, fora do programa, com o que vem, de que ficheiro, a data de arranque e a ordem.
+- Depois das importações, uma linha por importação em **Registo de importações de dados** e o balancete do fiscaldoo igual ao do programa anterior na data de arranque.
+
+## Notas importantes
+
+- **Clientes e fornecedores entram uma só vez.** Pelos saldos de abertura ou pelas faturas em aberto (ou pelo saldo de cada um, em **Saldos de abertura por terceiro**), nunca por dois caminhos para as mesmas contas: o saldo ficaria em dobro. A escolha está explicada em [Importar faturas em aberto e saldos de terceiros](/migration-toolkit/importar-documentos-em-aberto).
+- **Faturas não se recriam.** Nenhum destes ecrãs emite faturas certificadas: os documentos do programa anterior entram com a assinatura que já tinham, só para consulta e para o SAF-T. A faturação nova começa nas séries preparadas na migração.
+- **O histórico migrado não mexe no ano em curso.** Os lançamentos de anos anteriores ficam só para consulta. Antes de os importar, **Histórico migrado** diz «Ainda não há histórico migrado».
+
+## Problemas frequentes
+
+### Não vejo «Migração e importações» em Contabilidade › Configurar
+
+- **Causa:** o utilizador não tem a permissão **Migração / Importação fiscal**; com o perfil **Contabilista** o grupo não aparece.
+- **O que fazer:** peça ao **Administrador** que lhe dê a permissão em **Ajustes avançados** (**Localização PT — Migração e importação fiscal (saldos, SAF-T)**), ou que faça a importação.
+
+### Procuro o ecrã do plano de migração
+
+- **Causa:** não existe. O fiscaldoo tem os ecrãs de cada importação, não um ecrã que planeie a migração ou faça o diagnóstico do programa anterior.
+- **O que fazer:** faça o plano fora do programa com a tabela do passo 1 e siga a ordem do passo 3.

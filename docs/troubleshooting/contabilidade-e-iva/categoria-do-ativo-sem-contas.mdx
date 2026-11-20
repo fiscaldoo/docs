@@ -1,0 +1,152 @@
+---
+id: categoria-do-ativo-sem-contas
+slug: /troubleshooting/categoria-do-ativo-sem-contas
+title: A categoria do ativo ou a tabela de taxas está incompleta
+sidebar_label: Categoria do ativo ou tabela de taxas incompleta
+description: As recusas por faltarem contas, incluindo as de mais e menos-valias, ou o diário na categoria do ativo, por uma conta da classe errada, e por uma taxa de depreciação fiscal mal definida.
+keywords: [excedente na alienação, excedente de revalorização na alienação, conta 58, resultados transitados, conta 56 agregadora, categoria do ativo, categoria incompleta, faltam contas na categoria, Diário de ativos, Conta do ativo, Conta de depreciações acumuladas, Conta de gastos de depreciação, tem ativos em uso, excedente de revalorização, ativos intangíveis, contas SNC esperadas, taxa de depreciação, período sobreposto, tabela de taxas, DR 25/2009]
+doc_id: DOC-0380
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/contabilidade-e-iva/depreciacoes-nao-sao-processadas, accounting-pt/ativos/categorias-e-modelos-de-depreciacao, troubleshooting/contabilidade-e-iva/ficha-do-ativo-com-dados-em-falta]
+---
+
+## Sintoma
+
+**Pôr em uso** recusa o ativo por causa da categoria, a categoria não grava, ou uma taxa de depreciação fiscal nova não é aceite.
+
+## Mensagem
+
+No ativo, ao carregar em **Pôr em uso**:
+
+> «O ativo “*Ativo de exemplo*” não pode ser posto em uso: à categoria “*Categoria incompleta*” faltam: *Conta do ativo, Conta de depreciações acumuladas, Conta de gastos de depreciação, Diário de ativos*. Sem elas não é possível lançar as depreciações. Preencha-as na categoria (Contabilidade › Configurar › Bancos e ativos › Categorias de ativos) e tente novamente.»
+
+![Janela Erro de Validação: à categoria Categoria incompleta faltam quatro contas e diário](/images/troubleshooting/categoria-do-ativo-sem-contas/01-faltam-contas-na-categoria.png)
+
+Em **Alienar / Abater**, ao carregar em **Calcular** numa venda com ganho ou com perda, já com o **Comprador** escolhido (sem ele nem a **Conta do valor de venda**, a recusa é «Uma alienação com valor de venda precisa da conta que o recebe (banco ou clientes) ou do comprador para a fatura de venda. Escolha um e tente novamente.»):
+
+> «A categoria não tem conta de mais-valias (787x): preencha-a antes de alienar o ativo.»
+
+> «A categoria não tem conta de menos-valias (687x): preencha-a antes de alienar o ativo.»
+
+Na categoria, ao apagar uma conta obrigatória com ativos em uso:
+
+> «A categoria «*Equipamento administrativo*» tem ativos em uso, por isso não pode perder as contas obrigatórias (*Conta de depreciações acumuladas*): a depreciação deles ficaria sem onde ser lançada. Preencha-as e grave novamente.»
+
+Ao escolher uma conta de outra classe:
+
+> «A conta *11 Caixa* escolhida como «*Conta de depreciações acumuladas*» da categoria «*Equipamento administrativo*» não pertence às contas SNC esperadas para ela (código a começar por *43*). O Código de Contas do SNC (Portaria 218/2015) fixa onde se regista cada tipo de movimento, e os relatórios e os mapas fiscais leem essas contas. Escolha uma conta da classe certa e grave novamente.»
+
+Numa categoria de ativos intangíveis, com conta de excedente de revalorização:
+
+> «A categoria «*Programas de computador*» é de ativos intangíveis (classe SNC 44), que não são revalorizados (NCRF 6), por isso não pode ter conta de excedente de revalorização. Limpe a conta (ou mude a classe) e grave novamente.»
+
+Em **Alienar / Abater**, ao carregar em **Calcular** num sinistro:
+
+> «À categoria “*Equipamento de oficina*” falta: a conta de perda por sinistro (6872), onde se lança a perda do ativo. Defina-as em Contabilidade › Configurar › Bancos e ativos › Categorias de ativos (só o contabilista certificado ou o administrador o podem fazer; peça-lhes) e tente de novo.»
+
+Em **Alienar / Abater**, ao carregar em **Calcular** num ativo revalorizado cuja categoria já não tem **Conta do excedente de revalorização**, a janela **Operação inválida** diz:
+
+> «O excedente de revalorização de «*Secretária de direção*» tem de passar para resultados transitados à medida que se realiza, mas a categoria «*Mobiliário de escritório*» não tem conta de excedente (58x) ou o plano não tem conta 56. Defina-as em Contabilidade › Configurar › Bancos e ativos › Categorias de ativos (só o contabilista certificado ou o administrador podem).»
+
+![Janela Operação inválida: o excedente de revalorização da Secretária de direção tem de passar para resultados transitados, mas a categoria Mobiliário de escritório não tem conta de excedente (58x)](/images/troubleshooting/categoria-do-ativo-sem-contas/02-excedente-na-alienacao.png)
+
+Com a conta do excedente preenchida e a **Conta de resultados transitados** vazia, **Calcular** recusa numa janela **Erro de Validação**:
+
+> «A conta 56 é agregadora; escolha uma conta de movimento (561). Só se pode lançar em contas de movimento (o SAF-T e o SNC não admitem lançamentos em contas agregadoras).»
+
+Ao mudar a natureza fiscal de uma categoria com ativos em quotas decrescentes:
+
+> «A categoria «*Equipamento de oficina*» tem ativos com quotas decrescentes, que não são permitidas para a sua natureza fiscal (edifícios, viaturas ligeiras de passageiros, mobiliário e equipamento social). Passe primeiro esses ativos a quotas constantes.»
+
+Na tabela de taxas de depreciação (**Contabilidade › Lançar › Terceiros e ativos › O que há para fazer com os ativos? › Listas de apoio › Taxas de depreciação fiscais**), ao gravar uma taxa nova:
+
+> «A taxa de “*2245*” é *150.0*%, o que não é válido: uma taxa anual de depreciação é uma percentagem entre 0 (ativos não depreciáveis, como terrenos) e 100 (gasto integral num ano). Corrija a taxa e grave novamente.»
+
+> «O código “*2240*” da tabela *II* já tem uma taxa em vigor num período sobreposto (*01/01/2010* a *(em aberto)*). Duas taxas para o mesmo código no mesmo dia tornariam ambígua a depreciação fiscal de um ativo. Termine a taxa anterior no dia anterior ao início desta, ou altere as datas, e grave novamente.»
+
+Numa base com mais de uma empresa, ao mudar a **Empresa** de uma categoria que já tem ativos e carregar em guardar, a janela **Operação inválida** diz:
+
+> «Não é possível mudar a empresa de uma categoria que já tem ativos.»
+
+A outra empresa só aparece na lista do campo **Empresa** quando também está marcada no seletor de empresas, no canto do ecrã, e confirmada com **Confirmar**.
+
+No ativo, em **Ações** › **Revalorizar classe**, numa categoria sem **Conta do excedente de revalorização**, **Calcular** mostra no assistente:
+
+> «A categoria “*Mobiliário de sala de reuniões*” não tem conta de excedente de revalorização (58x): a revalorização não pode ser confirmada até estar definida em Contabilidade › Configurar › Bancos e ativos › Categorias de ativos (só o contabilista certificado ou o administrador o podem fazer).»
+
+E **Confirmar** recusa numa janela **Operação inválida**:
+
+> «A categoria “*Mobiliário de sala de reuniões*” precisa de conta de excedente de revalorização (58x) antes de a revalorização ser lançada. Defina-a em Contabilidade › Configurar › Bancos e ativos › Categorias de ativos (só o contabilista certificado ou o administrador o podem fazer; peça-lhes) e calcule de novo.»
+
+![Janela Operação inválida: a categoria Mobiliário de sala de reuniões precisa de conta de excedente de revalorização (58x) antes de a revalorização ser lançada](/images/troubleshooting/categoria-do-ativo-sem-contas/03-revalorizacao-sem-excedente.png)
+
+Todas as citadas foram provocadas na base de demonstração: as do ativo e da alienação com um utilizador só com o perfil **Contabilista**, as da categoria e da tabela com um utilizador só com o perfil **Contabilista certificado**. Sem **Código** ou **Nome** numa taxa aparece «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+
+## Causas verificadas
+
+- **A categoria foi criada sem as contas e o diário.** Grava-se assim, mas nenhum ativo dela entra em uso. No topo da categoria aparece: «Os ativos desta categoria ainda não podem ser postos em uso. Em falta: Conta do ativo, Conta de depreciações acumuladas, Conta de gastos de depreciação, Diário de ativos».
+- **Faltam as contas de mais ou de menos-valias.** A categoria grava e o ativo entra em uso sem elas, mas a alienação com ganho ou com perda recusa.
+- **Falta a conta de perdas por sinistros.** A categoria grava e o ativo entra em uso sem ela, mas o sinistro recusa em **Calcular**. Preencha **Conta de perdas por sinistros** na categoria.
+- **A natureza fiscal nova não admite quotas decrescentes.** Passe primeiro os ativos da categoria a **Quotas constantes**, como a mensagem indica.
+- **A categoria tem ativos em uso.** As contas obrigatórias já não se podem apagar.
+- **A conta não é da classe esperada.** Cada campo aceita só o grupo de contas certo do SNC.
+- **Os ativos intangíveis não têm revalorização.** A conta de excedente tem de ficar vazia.
+- **O ativo foi revalorizado e a categoria não tem a conta do excedente ou a de resultados transitados.** Ao alienar ou abater, o excedente que ainda não se realizou passa da 58x para a 56x. A categoria grava sem estas contas, mesmo com ativos revalorizados, mas a alienação recusa. Por agora, com a **Conta de resultados transitados** vazia, a alienação recusa com a mensagem da conta 56 agregadora: preencha-a com a 561. Sem a conta do excedente, a revalorização também não se confirma.
+- **A categoria já tem ativos e mudou de empresa.** A empresa fica a que era: crie a categoria na outra empresa.
+- **A taxa da tabela está mal definida:** percentagem fora de 0 a 100, ou vigência sobreposta à de outra taxa do mesmo código.
+
+## O que confirmar
+
+1. Em **Contabilidade › Configurar › Bancos e ativos › Categorias de ativos**, abra a categoria e veja o aviso do topo.
+2. As contas de categorias do mesmo tipo: **Equipamento administrativo** serve de exemplo para os tangíveis, **Programas de computador** para os intangíveis.
+3. A classe da categoria (**Ativos fixos tangíveis (43x)**, na demonstração) e a natureza fiscal.
+
+{/* Nota interna (DOCS-063 req. 46233, lote v23-AD, 08/11/2026, master 97b34fac3, docs_demo_v23ad_test): excedente na alienação provocado por clique. Por RPC como administrador, só na cópia: categoria «Mobiliário de escritório» (cópia de Equipamento administrativo, sem 58x nem 56x como todas as da demonstração), ativo «Secretária de direção» AF/00010 (3.000,00 €, I-1565, 8 anos; posto em uso por clique com ad.contab, só o Perfil Contabilista), conta 5891 na categoria e revalorização da classe a 08/11/2026 (+600,00 €, OD/2026/00139: D 435 / C 5891); sem a 58x, a revalorização recusa («…precisa de conta de excedente de revalorização (58x) antes de a revalorização ser lançada…», só por RPC, não citada). Por clique: ad.cc (só Contabilista certificado) limpou a 58x e gravou sem aviso; ad.contab: Alienar / Abater, Abate, Motivo, Calcular: «Operação inválida» do excedente (captura 02); ad.cc repôs 5891: Calcular recusou com a conta 56 agregadora; ad.cc preencheu 561; Calcular e Confirmar: OD/2026/00141 conferido no razão (linhas da tabela). Ativo Abatido. */}
+{/* Nota interna (DOCS-063 req. 46233, lote v23-X, 08/11/2026, master cebcb888d, docs_demo_v23x_test): mudança de empresa por clique, com um utilizador criado só com o perfil Contabilista certificado e as duas empresas (Equipamento administrativo, 5 ativos; Empresa Teste Filial escolhida com as duas empresas ativas no seletor; com só uma ativa, o campo diz «Sem registos»). A empresa da categoria ficou igual (conferido por RPC). Das outras três da lista do v16-RESTOS: a revalorização sem conta de excedente continua fora do artigo; o ativo sem contas ao lançar não se alcança no ecrã (Pôr em uso recusa antes, com a mensagem do topo, e a categoria com ativos em uso não deixa apagar as contas); o excedente na alienação precisa de uma revalorização antes e não foi provocado neste lote (orçamento). */}
+{/* Nota interna (lote v22-H, master d83bdf7ae, docs_demo_v22h_test): as 11 mensagens e o aviso do topo por clique. Criados por RPC só na cópia: «Categoria incompleta» (depois completada sem contas de mais e menos-valias nem de sinistros), «Ativo de exemplo» (hoje Em uso), «Equipamento de oficina» e o rascunho «Torno mecânico» em quotas decrescentes. A taxa de 150 % e a sobreposta não ficaram gravadas. */}
+
+## Como resolver
+
+1. Na categoria, preencha o que o aviso indica: **Conta do ativo**, **Conta de depreciações acumuladas**, **Conta de gastos de depreciação** e **Diário de ativos**. A lista de diários mostra só os adequados; escrever outro nome abre a janela **Criar Diário de ativos**: descarte-a.
+2. Grave. O aviso do topo desaparece.
+3. Volte ao ativo e carregue em **Pôr em uso**.
+
+Na alienação, preencha na categoria a **Conta de mais-valias na alienação** ou a **Conta de menos-valias na alienação**, grave e volte a **Alienar / Abater**.
+
+Antes de revalorizar, ou num ativo já revalorizado, preencha na categoria a **Conta do excedente de revalorização** (58x, por exemplo 5891) e a **Conta de resultados transitados** (561), grave e volte a **Alienar / Abater**. No exemplo, a Secretária de direção (custo 3.000,00 €, revalorizada em mais 600,00 € a 08/11/2026, com 375,00 € de depreciações) foi abatida a 08/11/2026 e o lançamento do abate ficou assim:
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| 4385 Depreciações acumuladas (equipamento administrativo) | 375,00 € | |
+| 5891 Excedente de revalorização, antes de imposto | 600,00 € | |
+| 561 Resultados transitados | | 600,00 € |
+| 435 Equipamento administrativo | | 3.600,00 € |
+| 6871 Alienações | 3.225,00 € | |
+
+O excedente passa diretamente para resultados transitados, sem passar pelos resultados do período. <span className="fd-pending">Pendente de validação por contabilista certificado: a conta do excedente (5891 ou outra 58x) e a conta 6871 usada para a perda de um abate (o código de contas do SNC tem a 6873 Abates).</span>
+
+Para a escolha de cada conta: [Como configurar as categorias de ativos e os modelos de depreciação](/accounting-pt/categorias-e-modelos-de-depreciacao). <span className="fd-pending">Pendente de validação por contabilista certificado: as contas SNC de cada categoria e as taxas fiscais (DR 25/2009).</span>
+
+**Quem faz:** Contabilista certificado. Com o perfil **Contabilista**, **Configurar › Bancos e ativos › Categorias de ativos** abre as categorias só para consulta, sem campos para alterar e sem **Novo**.
+
+Numa taxa recusada, corrija a percentagem ou as datas. Uma taxa nova para um código que já existe exige terminar a anterior no dia antes. Uma alteração da tabela legal é uma decisão do contabilista certificado.
+
+## Resultado esperado
+
+A categoria grava sem aviso e o ativo passa a **Em uso**.
+
+## Quando contactar o suporte
+
+- O aviso continua com todas as contas preenchidas.
+- A conta recomendada pelo contabilista certificado é recusada como sendo da classe errada.
+
+## Informação a enviar
+
+- O nome da categoria e a empresa, e o código do ativo, se houver.
+- O texto completo da mensagem, copiado do ecrã.
+- A conta ou a taxa que tentou escolher.

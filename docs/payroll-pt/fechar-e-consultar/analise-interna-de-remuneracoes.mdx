@@ -1,0 +1,90 @@
+---
+id: analise-interna-de-remuneracoes
+slug: /payroll-pt/analise-interna-de-remuneracoes
+title: Como fazer a análise interna de remunerações (transparência salarial)
+sidebar_label: Análise interna de remunerações
+sidebar_position: 5
+description: Comparar a remuneração média e mediana de mulheres e homens por categoria profissional, ver a diferença em percentagem e perceber porque é que alguns grupos não aparecem. Não é o relatório legal de transparência salarial.
+keywords: [análise interna de remunerações, transparência salarial, diferença salarial entre homens e mulheres, gender pay gap, igualdade salarial, média e mediana, categoria profissional, grupo pequeno, mínimo de trabalhadores]
+doc_id: DOC-0237
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/fechar-e-consultar/mapa-de-recursos-humanos, payroll-pt/fechar-e-consultar/folha-para-a-seguradora]
+---
+
+## Para que serve?
+
+Compara, por categoria profissional, a remuneração das mulheres com a dos homens: quantas e quantos são, a média, a mediana e a diferença em percentagem. É uma ferramenta interna para a empresa ver onde há diferenças a explicar.
+
+**Não é o relatório legal de transparência salarial.** O ecrã avisa-o: esse relatório «ainda não existe na lei». A análise não se entrega a ninguém. Esta análise não substitui nenhuma obrigação da Lei n.º 60/2018 (igualdade de remuneração entre mulheres e homens por trabalho igual ou de valor igual). <span className="fd-pending">Pendente de validação por contabilista certificado: o que a lei vier a exigir à empresa e a que remuneração se refere o relatório oficial.</span>
+
+## Quando utilizar?
+
+- Para preparar a empresa para a transparência salarial e olhar para as diferenças antes de alguém as pedir.
+- Quando a gestão quer saber se uma categoria paga de forma diferente a mulheres e a homens.
+
+## Onde encontrar?
+
+**Salários › Fechar e consultar › Mapas de recursos humanos › Análise interna de remunerações**
+
+## Antes de começar
+
+- Perfil **Gestor de RH**, com o qual se fez o percurso inteiro deste artigo. O perfil **Processador de salários** não tem este menu (só com o acesso extra **Administrador de Salários**). {/* Nota interna (DOCS-046): a arquitetura previa Contabilista e Administrador; na demonstração o Contabilista não tem a aplicação Salários e o Processador não vê esta análise. */}
+- Cada trabalhador tem o **Sexo** preenchido (**Masculino** ou **Feminino**) na ficha, em **Pessoas**. Sem isso a análise fica vazia (ver «Problemas frequentes»). Na demonstração, preencheu-se: Ana Margarida Pinto, Carla Sofia Mendes, Eva Cristina Rocha e Gabriela Sousa Reis como **Feminino**; Bruno Miguel Teixeira, Diogo Ferreira Lopes, Fábio Nuno Carvalho e Hugo Miguel Santos como **Masculino**.
+- Os trabalhadores têm contrato com categoria profissional. Na demonstração, todos estão em «Profissionais qualificados».
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Fechar e consultar › Mapas de recursos humanos › Análise interna de remunerações**. Abre-se uma janela com a data de hoje em **Data de referência** (no exemplo, `02/11/2026`).
+2. Se quiser outro dia, escreva-o em **Data de referência**: a retribuição em vigor nesse dia é a analisada.
+3. Carregue em **Calcular**. O **Mínimo de trabalhadores por grupo** passa a 3 e a lista **Categoria profissional** é preenchida: **Mulheres**, **Homens**, **Grupo demasiado pequeno**, **Média (mulheres)**, **Média (homens)**, **Mediana (mulheres)**, **Mediana (homens)**, **Diferença da média (%)** e **Diferença da mediana (%)**.
+   ![Janela da análise interna, com a data de referência 02/11/2026, o mínimo de 3 trabalhadores por grupo e a categoria Profissionais qualificados com 4 mulheres e 4 homens](/images/payroll-pt/analise-interna-de-remuneracoes/01-grupos.png)
+4. Leia a linha de cada categoria. No exemplo, as 4 mulheres têm média de 1.515,00 € e mediana de 1.430,00 €, e os 4 homens média de 1.375,00 € e mediana de 1.350,00 €.
+   ![Medianas e diferenças da categoria Profissionais qualificados, com -10,18 na média e -5,93 na mediana](/images/payroll-pt/analise-interna-de-remuneracoes/02-diferencas.png)
+5. Carregue em **Fechar** quando acabar. A janela não guarda o resultado: ao abri-la de novo, calcula-se outra vez.
+
+</StepByStep>
+
+**Exemplo.** Os valores batem com o bruto de setembro de 2026: mulheres 2.400,00 + 1.900,00 + 960,00 + 800,00 = 6.060,00 €, que dão a média de 1.515,00 €; homens 1.650,00 + 1.150,00 + 1.450,00 + 1.250,00 = 5.500,00 €, média de 1.375,00 €. A **Diferença da média (%)** de **-10,18** é (1.375,00 − 1.515,00) ÷ 1.375,00: calcula-se sobre a remuneração dos homens, e o sinal negativo quer dizer que, nesta categoria, as mulheres ganham mais do que os homens. A **Diferença da mediana (%)** de **-5,93** é (1.350,00 − 1.430,00) ÷ 1.350,00.
+
+## No Enterprise
+
+No Odoo Enterprise, a análise faz-se da mesma maneira, com o perfil **Gestor de RH** e o mesmo menu: a janela **Análise interna de remunerações** tem a **Data de referência** e os botões **Calcular** e **Fechar**. O perfil **Processador de salários** sem o acesso extra **Administrador de Salários** também não tem o menu.
+
+O **Sexo** preenche-se no separador **Pessoal** da ficha do trabalhador, como no Community. Sem ele, **Calcular** deixa a lista vazia. Com os oito trabalhadores da demonstração preenchidos como em «Antes de começar», a linha **Profissionais qualificados** deu os mesmos valores: **Diferença da média (%)** -10,18 e **Diferença da mediana (%)** -5,93.
+
+{/* Nota interna (lote EE-08, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee08_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8508/8509), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Gestor de RH: Calcular com a Data de referência de hoje deixou a lista vazia (a base Enterprise não tinha o Sexo preenchido); o Sexo dos oito trabalhadores foi preenchido na cópia por RPC com os direitos do Gestor de RH (o campo Sexo está no separador Pessoal da ficha, visto no ecrã); depois, Calcular: Profissionais qualificados 4/4, médias 1.515,00 e 1.375,00, medianas 1.430,00 e 1.350,00, -10,18 e -5,93. Processador de salários sem o menu. Comparado com uma cópia da demonstração Community (docs_demo_ee08_test, 2c8d358c0, porta 8518). Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-08.md. */}
+
+## Resultado esperado
+
+- Uma linha por categoria profissional com pelo menos 3 pessoas de cada sexo.
+- Diferença **positiva**: os homens ganham mais do que as mulheres. **Negativa**: as mulheres ganham mais.
+
+## Notas importantes
+
+- **Grupos pequenos.** Um grupo com menos de 3 trabalhadores de um dos sexos (**Mínimo de trabalhadores por grupo**) fica marcado em **Grupo demasiado pequeno**, para não identificar ninguém. Testou-se passando 3 homens para **Feminino**: a categoria ficou com 7 mulheres e 1 homem, e as médias, medianas e diferenças aparecem a **0,00**. Esse 0,00 não quer dizer «sem diferença»: quer dizer «não calculado». {/* Nota interna (DOCS-046): defeito V4PAYb-07: grupo pequeno mostra 0,00 em vez de vazio. */}
+- **O que a análise não faz.** Não cruza por antiguidade, função, horário nem tempo parcial: a Gabriela Sousa Reis, de tempo parcial, entra com o valor que tem na ficha. Só vê as categorias que a ficha do trabalhador tem preenchidas. Duas pessoas com a mesma categoria mas funções diferentes contam no mesmo grupo.
+- **Dados pessoais.** O sexo e a remuneração individual são dados pessoais; a análise só mostra grupos, mas quem a vê vê o que sai de cada grupo pequeno. Veja quem tem acesso ao menu antes de a partilhar.
+
+## Problemas frequentes
+
+### A lista fica vazia
+
+- **Sintoma:** depois de **Calcular**, o **Mínimo de trabalhadores por grupo** mostra 3 e a lista **Categoria profissional** não tem nenhuma linha, sem mensagem.
+- **Causa:** nenhum dos 8 trabalhadores tinha o **Sexo** preenchido (era o estado da demonstração).
+- **O que fazer:** abra cada ficha em **Pessoas**, preencha **Sexo** e volte a carregar em **Calcular**.
+
+### O grupo aparece com tudo a 0,00
+
+- **Sintoma:** a categoria aparece com 7 e 1 trabalhadores e médias a 0,00.
+  ![Categoria com 7 mulheres e 1 homem: médias, medianas e diferenças a 0,00](/images/payroll-pt/analise-interna-de-remuneracoes/03-grupo-pequeno.png)
+- **Causa:** o grupo tem menos de 3 pessoas de um dos sexos; o valor não é calculado.
+- **O que fazer:** leia o **Grupo demasiado pequeno** como «sem resultado».
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Recursos Humanos passou a Gestor de RH; menus lidos com utilizadores criados por RPC só com um valor do campo Perfil: Salários › Fechar e consultar › Mapas de recursos humanos › Análise interna de remunerações aparece ao Gestor de RH, ao administrador e a quem tem o acesso extra Administrador de Salários (utilizador da demonstração sem valor no campo Perfil) */}

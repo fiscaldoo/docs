@@ -1,0 +1,112 @@
+---
+id: resumo-dos-impostos
+slug: /accounting-pt/resumo-dos-impostos
+title: Como consultar o resumo dos impostos e o IVA por mercado
+sidebar_label: Resumo dos impostos e IVA por mercado
+sidebar_position: 8
+description: Ver a base tributável e o IVA de vendas e compras por taxa, abrir os documentos de cada linha, exportar para PDF ou folha de cálculo e consultar o mapa do IVA por mercado (Continente, UE e fora da UE).
+keywords: [resumo dos impostos, recapitulativo de imposto, iva por taxa, iva por mercado, mapa resumo de iva por mercado, base tributável, base tributavel, iva liquidado, iva dedutível, iva dedutivel, relatório de impostos, relatorio de impostos, exportar pdf, exportar xlsx, mercado, continente, ue, fora da ue]
+doc_id: DOC-0101
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master c689f7580)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/iva/apuramento-do-iva, accounting-pt/iva/declaracao-periodica-de-iva]
+---
+
+## Para que serve?
+
+O resumo dos impostos mostra, para o período que escolher, a **base tributável** e o **imposto** das vendas e das compras, linha a linha por taxa de IVA. Serve para conferir os valores antes do apuramento e da declaração. O **Mapa resumo de IVA por mercado** divide os mesmos movimentos por Continente, UE e Fora da UE, com o IVA liquidado e o IVA dedutível em colunas separadas.
+
+## Quando utilizar?
+
+- Para ver rapidamente quanto IVA há por taxa no mês, no trimestre ou no ano.
+- Para conferir o que alimenta o [apuramento do IVA](/accounting-pt/apuramento-do-iva) e a [declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva).
+- Para separar as operações do Continente das da UE e de fora da UE (mapa por mercado).
+- **Não** o use para entregar valores à AT: o que se entrega é a declaração periódica. O resumo é uma leitura de conferência.
+
+## Onde encontrar?
+
+- Resumo dos impostos: **Contabilidade › Consultar › Impostos e tesouraria › Resumo dos impostos**. O ecrã tem o mesmo nome, **Resumo dos impostos**.
+- Mapa resumo de IVA por mercado: **Contabilidade › Consultar › Impostos e tesouraria › Mapa resumo de IVA por mercado**, logo a seguir ao **Resumo dos impostos**. Vê-o quem vê o **Resumo dos impostos** (perfis **Contabilista**, **Contabilista certificado**, **Gerência** e **Auditor / ROC**).
+- O **Relatório de impostos** (genérico) continua escondido: só aparece com o modo de programador, e este artigo não o usa.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. Com ele faz todos os passos deste artigo, incluindo exportar e o mapa por mercado.
+- As faturas de venda e de compra do período estão confirmadas. Para ver também as faturas em rascunho, marque **Incluir rascunhos**.
+- O exemplo usa a Empresa Demonstração, Lda, no ano de 2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Consultar › Impostos e tesouraria › Resumo dos impostos**. Por omissão, abre o ano 2026 (01/01/2026 – 31/12/2026). Em cima, **Mês**, **Trimestre** e **Ano** mudam a unidade; a lista ao lado escolhe o período (por exemplo **4.º trimestre 2026**; em **Mês** e **Trimestre** escolhe-se antes o ano, noutra lista) e as setas passam ao seguinte ou ao anterior.
+   ![Resumo dos impostos de 2026, no Ano: vendas 35.013,00 € de base e 7.827,77 € de imposto, compras 38.927,87 € e 5.771,85 €, e o total geral](/images/accounting-pt/resumo-dos-impostos/01-resumo-dos-impostos.png)
+2. Leia as duas grandes linhas. **Vendas** mostra uma linha por taxa: no exemplo 13 % (base 281,20 €, imposto 36,56 €), 23 % (33.572,30 €, 7.721,64 €) e 6 % (1.159,50 €, 69,57 €). **Compras** mostra o IVA a 23 %, as linhas **23% AUT construção**, **23% EU S** e **23% EX S** (operações com autoliquidação) e a **Retenção IRS 23% — trabalho independente (art. 151.º)**, com a taxa -23 % e o imposto -667,00 €.
+3. Carregue na seta de uma linha (por exemplo **23%** das vendas) para ver os documentos que a compõem: cada um com a **Data**, o **Terceiro**, a **Base tributável** e o **Imposto**.
+4. Carregue em **Mais filtros** para afinar: as datas **De** e **até**, **Incluir rascunhos**, **Período predefinido** (**Este mês**, **Trimestre anterior**, **Período de IVA atual**, **Período de IVA anterior**…), **Desdobrar tudo**, **Empresas** e **Diários**.
+5. Para guardar o resultado, carregue em **Exportar PDF** (gera `Empresa_Demonstracao_Lda_Resumo_dos_impostos_2026-01-01_2026-12-31.pdf`, com o cabeçalho da empresa e a data e o utilizador de emissão) ou em **Exportar** e escolha **Exportar XLSX**, **Exportar CSV (formato PT)** ou **Imprimir**.
+6. Para ver o IVA por mercado, abra **Contabilidade › Consultar › Impostos e tesouraria › Mapa resumo de IVA por mercado**. Em **Vendas (IVA liquidado)** e em **Compras (IVA dedutível)**, cada mercado (**Continente**, **UE**, **Fora da UE**) divide-se por taxa e por **Bens** e **Serviços**, com as colunas **Base tributável**, **IVA liquidado** e **IVA dedutível**. No fim, o **Saldo (liquidado - dedutível)**: 1.388,92 € no exemplo.
+   ![Mapa resumo de IVA por mercado de 2026: vendas do Continente, UE e Fora da UE por taxa, bens e serviços, e compras com IVA liquidado e dedutível](/images/accounting-pt/resumo-dos-impostos/02-mapa-resumo-iva-por-mercado.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, **Resumo dos impostos** abre o mesmo ecrã do fiscaldoo, com **Vendas**, **Compras** e o **Total geral**, e o **Mapa resumo de IVA por mercado** está em **Contabilidade › Consultar › Impostos e tesouraria**, ao lado do **Resumo dos impostos**, sem o modo de programador (visto com um utilizador só com o perfil **Contabilista**). Muda o **Relatório de impostos**: é o do Enterprise, está em **Contabilidade › Consultar › Impostos e tesouraria** sem o modo de programador e abre a **Declaração de imposto** do mês corrente, com o **Relatório** «Declaração Periódica de IVA (PT)» e o botão **Imprimir**. Veja [Como apurar o IVA do período](/accounting-pt/apuramento-do-iva).
+
+{/* Nota interna (lote EE-03, DOCS-073 #4142, DEC-1794, master e4dd4ae90, base Enterprise docs_ee_ee03_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0101. Contabilista: Resumo dos impostos com Vendas 35.013,00 € / 7.827,77 € e Compras 38.927,87 € / 5.771,85 € na base Enterprise (mesmas taxas do artigo); Relatório de impostos do Enterprise em Consultar sem ?debug=1 (Declaração de imposto, nov. 2026, Comparação, Lançamentos feitos, Em .€); com ?debug=1 o menu Consultar mostra também Mapa resumo de IVA por mercado. Ver reports/LOTE_EE-03.md. */}
+
+## Resultado esperado
+
+- O resumo mostra, por taxa, a base e o imposto do período, com um **Total geral**. No exemplo de 2026: base 73.940,87 € e imposto 13.599,62 €.
+- O PDF repete a tabela do ecrã (conferido: mesmos valores, 1 página).
+- O mapa por mercado confere com o resumo, com uma diferença que se explica: o resumo **não mostra as linhas a 0 %**. No exemplo, as vendas do mapa têm base 38.073,00 € e as do resumo 35.013,00 €; a diferença, 3.060,00 €, são as vendas a 0 % (2.100,00 € no Continente e 960,00 € fora da UE). Nas compras, os 1.200,00 € a 0 % (sem produto) explicam a diferença entre o mapa (37.227,87 €) e as linhas de IVA do resumo (36.027,87 €, antes da retenção).
+- Este artigo não gera lançamentos: é uma consulta.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a leitura das linhas com autoliquidação (no resumo têm imposto 0,00 €; no mapa, o IVA liquidado e o dedutível aparecem lado a lado, 881,56 € de cada, na UE) e a inclusão da retenção de IRS, em base e imposto, no total geral do resumo.</span>
+
+## Notas importantes
+
+- **O resumo não mostra o que não tem imposto.** Linhas a 0 % e isenções não aparecem. Para o quadro completo, use o mapa por mercado.
+- **O total geral soma vendas e compras.** O **Total geral** (73.940,87 € de base e 13.599,62 € de imposto) soma tudo, incluindo a retenção de IRS. O produto incluiu nesta tabela, na secção das compras, a linha **Retenção IRS 23% — trabalho independente (art. 151.º)**, porque a retenção é um imposto da fatura de fornecedor, mas não é IVA: um resumo «de IVA» mostra assim valores que não são IVA. Não leia o total como o IVA a pagar: o IVA a pagar vem do [apuramento](/accounting-pt/apuramento-do-iva).
+- **Rascunhos.** Só entram se marcar **Incluir rascunhos**; um valor que muda ao marcar a caixa indica faturas por confirmar.
+- **Relatório de impostos (variante genérica): hoje não usar para conferir.** Abre com as opções **Relatório genérico de imposto**, **Agrupar por: Conta > Imposto**, **Agrupar por: Imposto > Conta** e **Declaração Periódica de IVA**, mas na demonstração nenhuma delas mostra linhas. Use o resumo.
+
+## Problemas frequentes
+
+### Numa empresa vazia, o resumo só tem o total a zero
+
+- **Sintoma:** na empresa **Empresa Teste Filial**, que não tem nenhum lançamento, o **Resumo dos impostos** de 2026 só mostra a linha **Total geral** com 0,00 € de base e 0,00 € de imposto, sem **Vendas** nem **Compras**.
+  ![Resumo dos impostos da Empresa Teste Filial: só a linha Total geral, com 0,00 € de base e de imposto](/images/accounting-pt/resumo-dos-impostos/03-empresa-sem-movimentos.png)
+- **O que fazer:** nada, se a empresa ainda não lançou. Confirme que escolheu a empresa certa no seletor de empresas, em cima. Atenção: a **Empresa Teste Portugal** não está vazia (tem faturas em 2026).
+
+### O período escolhido aparece vazio
+
+- **Sintoma:** a tabela só tem **Total geral 0,00 € 0,00 €** (por exemplo, no ano 2027 da demonstração).
+- **Causa:** não há faturas confirmadas nesse período.
+- **O que fazer:** confirme o período e a empresa (**Mais filtros › Empresas**) e marque **Incluir rascunhos** para ver as faturas ainda por confirmar.
+
+### Os valores do mapa por mercado e do resumo não batem
+
+- **Causa:** o resumo não mostra as linhas a 0 % nem o mercado; o mapa mostra-as.
+- **O que fazer:** some as linhas a 0 % do mapa à base do resumo (ver «Resultado esperado»). Se ainda assim houver diferença, abra o **Suporte à declaração periódica do IVA** (**Contabilidade › Consultar › Impostos e tesouraria**) e procure o documento em causa.
+
+### Não vejo o Mapa resumo de IVA por mercado no menu
+
+- **Causa:** o seu perfil não vê os relatórios de impostos. O mapa aparece a quem vê o **Resumo dos impostos** (**Contabilista**, **Contabilista certificado**, **Gerência** e **Auditor / ROC**); o perfil **Administrativo**, por exemplo, não tem a aplicação **Contabilidade**.
+- **O que fazer:** peça ao administrador do sistema um destes perfis. Não precisa do modo de programador.
+
+{/* Nota interna (DOCS-046, DOC-0101): visto na base docs_demo_v3a3_test (master ba9c8bd7). V3A3-01: o ecrã chama-se «Recapitulativo de Imposto» e o menu «Resumo dos impostos». V3A3-02: Relatório de impostos (genérico) abre sem linhas em todas as variantes com dados de 2026. Mapa por mercado e Relatório de impostos só em modo de programador (menu_use.py, classe «detail»/«alt»). Empresa vazia real não testada; período sem dados (2027) sim. */}
+{/* Nota interna (docs-v3acor, NV3A-16, NV3A-17, 01/11): empresa vazia real provada com a Empresa Teste Filial (0 lançamentos); a Empresa Teste Portugal tem 40 lançamentos em 2026 (vendas 8.250,00 €, compras 11.680,00 €). Passo 6 percorrido com o Contabilista e ?debug=1. */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AX, 09/11/2026, master 25a465133, docs_demo_v23ax_test, porta 8505): números de 2026 lidos por clique com um utilizador só com o perfil Contabilista (Resumo dos impostos; Mapa resumo de IVA por mercado com modo de programador): vendas 35.013,00 € / 7.827,77 € (23 %: 33.572,30 € / 7.721,64 €), total geral 73.940,87 € / 13.599,62 €, mapa 38.073,00 € e saldo 1.388,92 €; compras sem mudança. Capturas 01 e 02 refeitas. O resto do artigo não foi revisto neste lote. */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AY, 10/11/2026, master fa7915ea8, docs_demo_v23ay_test, porta 8505): Resumo dos impostos de 2026 relido por clique com um utilizador só com o perfil Contabilista: compras 38.927,87 € / 5.771,85 € e total geral 73.940,87 € / 13.599,62 € (vendas 35.013,00 € / 7.827,77 €), iguais aos do v23-AX. */}
+
+{/* Nota interna (lote v23-BF, DOCS-063 #3853, 10/11/2026, master e4dd4ae90, docs_demo_v23bf_test, porta 8504): com um utilizador só com o perfil Contabilista, por clique, o ecrã aberto por Resumo dos impostos chama-se hoje «Resumo dos impostos» (título e separador do navegador); o V3A3-01 já não se vê. Exportar PDF dá Empresa_Demonstracao_Lda_Resumo_dos_impostos_2026-01-01_2026-12-31.pdf, 1 página, com o título «Resumo dos impostos», o NIF, o período e «Emitido em … por …». Números de 2026 iguais aos do artigo (vendas 35.013,00 € / 7.827,77 €, compras 38.927,87 € / 5.771,85 €, total geral 73.940,87 € / 13.599,62 €). O resto do artigo não foi revisto neste lote. */}
+
+{/* Nota interna (lote EE-15, comboio 197, master c689f7580, 12/11/2026, cópia Community docs_demo_ee15_test, porta 8532, perfil Contabilista): UX-165 (d39c98ae7): a barra do período é a mesma do Balancete (lista do ano em Mês e Trimestre); o Resumo dos impostos não foi reaberto neste lote. Ver reports/LOTE_EE-15.md. */}

@@ -1,0 +1,99 @@
+---
+id: recibo-sem-dados-para-calcular
+slug: /troubleshooting/recibo-sem-dados-para-calcular
+title: "O recibo não é calculado: falta o horário, a tabela de IRS ou outro dado"
+sidebar_label: Recibo sem dados para calcular
+description: O que quer dizer cada aviso de um recibo por calcular (Segurança Social não calculada, IRS por calcular) e as recusas por um horário sem horas ou por uma tabela de IRS com «Sem retenção».
+keywords: [recibo não calculado, recibo nao calculado, falta a retribuição, falta a retribuicao, retribuição base, retribuicao base, horário com 0 horas, horario com 0 horas, horário de trabalho, horario de trabalho, IRS por calcular, Segurança Social não calculada, seguranca social nao calculada, sem retenção de IRS, sem retencao de IRS, motivo da ausência de retenção, presenças em aberto, presencas em aberto, sem contrato, não tem contrato em vigor, nao tem contrato em vigor, contrato a termo, contrato terminou]
+doc_id: DOC-0399
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7281543f)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado, troubleshooting/salarios-e-pessoas/tabelas-legais-em-falta, payroll-pt/processar-e-pagar/processar-o-mes]
+---
+
+## Sintoma
+
+O recibo fica em **Rascunho** com avisos por cima, ou **Calcular** e **Guardar** abrem uma janela de erro que nomeia o dado em falta: o contrato, o horário, a residência do trabalhador, as presenças ou a tabela de IRS.
+
+## Mensagem
+
+**Trabalhador sem contrato no período.** Num recibo de 01/11/2026 a 30/11/2026 de um trabalhador sem nenhum contrato registado, **Calcular** (perfil **Processador de salários**):
+
+> «*Rita Fonseca Lima* não tem contrato. O que aconteceu: o trabalhador nunca teve contrato, por isso não há enquadramento de retribuição nem de Segurança Social para calcular. Como resolver: abra a ficha do trabalhador (Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores) e preencha o Tipo de contrato (separador Trabalho, bloco «Contrato português»), a Data de admissão (no topo, até ao período) e o Salário (separador Folha de Salários), ou não inclua este trabalhador no lote.»
+
+![Janela Operação inválida: o trabalhador nunca teve contrato, por isso o recibo não se calcula](/images/troubleshooting/recibo-sem-dados-para-calcular/03-sem-contrato.png)
+
+{/* Nota interna (auditoria v23-L, 07/11/2026): a mensagem de hoje diz «nunca teve contrato» (PAY-062); saiu a frase sobre o «último contrato». */}
+
+{/* Nota interna (DOCS-036): defeito P-AUD-06 (PAY-062, #3602): «o último contrato terminou» a quem nunca teve contrato. Rever a frase acima quando a mensagem mudar. */}
+
+**Avisos de um recibo por calcular.** Num recibo novo, guardado e ainda não calculado (Bruno Miguel Teixeira, dezembro de 2026, perfil **Processador de salários**):
+
+> «Segurança Social não calculada: este recibo não tem regime de Segurança Social. Escolha o regime e recalcule — uma DMR ou um lançamento contabilístico não podem usar um recibo sem contribuições.»
+>
+> «IRS por calcular: este recibo não tem tabela de retenção de IRS. Escolha a tabela da situação do trabalhador (ou declare expressamente que não é retido IRS, com o motivo) e recalcule — um lançamento contabilístico não pode usar um recibo sem IRS.»
+
+Os dois avisos saem quando o recibo é calculado. Se ficarem depois de **Calcular**, o regime de Segurança Social ou a situação de IRS do trabalhador não estão preenchidos.
+
+**Tabela de IRS e «Sem retenção» ao mesmo tempo.** No mesmo recibo (Bruno Miguel Teixeira, dezembro de 2026), depois de calculado, no separador **Segurança Social e IRS**: marcar **Sem retenção de IRS (declarado expressamente)**, escrever o **Motivo da ausência de retenção** e guardar:
+
+> «O recibo «Bruno Miguel Teixeira (01/12/2026 — 31/12/2026)» tem uma tabela de IRS e «Sem retenção de IRS (declarado expressamente)» ao mesmo tempo. O que aconteceu: as duas opções contradizem-se. Como corrigir: mantenha a tabela, ou limpe-a e mantenha o «sem retenção» explícito.»
+
+![Janela Erro de Validação: o recibo tem uma tabela de IRS e Sem retenção de IRS ao mesmo tempo](/images/troubleshooting/recibo-sem-dados-para-calcular/02-tabela-e-sem-retencao.png)
+
+**Horário sem horas.** Com o administrador da demonstração, em **Pessoas › Configurar › Gestão de tempo › Horários de trabalho** › **Novo**, um horário sem nenhuma linha de dias de trabalho, ao guardar:
+
+> «O horário «Horário a definir» tem 0 horas por semana. O que aconteceu: um horário sem horas não paga nada e estraga o cálculo dos dias e das horas do recibo (CT art. 203.º). Como resolver: acrescente as linhas dos dias de trabalho, ou escolha o tipo flexível se o trabalhador não tem horas fixas.»
+
+![Janela Erro de Validação: o horário tem 0 horas por semana](/images/troubleshooting/recibo-sem-dados-para-calcular/01-horario-sem-horas.png)
+
+## Causas verificadas
+
+- **O trabalhador não tem contrato em vigor no período do recibo**: um contrato a termo que acabou, uma renovação por registar ou um trabalhador novo sem contrato. Sem contrato não há retribuição base nem enquadramento da Segurança Social, e **Calcular** é recusado.
+- **A retribuição base está a zero, e o fiscaldoo não o recusa.** Num recibo de novembro de 2026 de um trabalhador de exemplo com a retribuição do contrato a 0,00 €, **Calcular** (perfil **Processador de salários**) calculou sem mensagem de erro (uma linha a 0,00 € e um líquido de 129,15 €), e ficou só o aviso «IRS por calcular». **Validar** foi recusado por outra razão (faltavam o NISS e a categoria profissional na ficha do trabalhador). Por isso, a retribuição em falta não aparece como recusa do recibo: confira a retribuição no contrato antes de calcular.
+{/* Nota interna (DOCS-036, 2.ª ronda): defeito do produto para o Gestor: Calcular não avisa nem recusa um recibo cuja retribuição base é 0,00 €. */}
+- **O recibo ainda não foi calculado**, ou falta ao trabalhador o regime de Segurança Social ou a situação de IRS (os dois avisos de cima).
+- **Foram escolhidas duas opções de IRS que se contradizem**: uma tabela e **Sem retenção de IRS (declarado expressamente)**. Ao marcar **Sem retenção**, o **Motivo da ausência de retenção** passa a obrigatório; sem ele, **Guardar** dá «Há campos obrigatórios por preencher».
+- **O horário de trabalho não tem horas.** A recusa vem ao guardar o horário, por isso nenhum recibo chega a usá-lo.
+- Há outras causas, cada uma com a sua mensagem: presenças por fechar no período, o trabalhador não residente sem país de residência, uma linha sem versão da rubrica aplicada, uma despesa sem mapa de deslocação. <span className="fd-pending">Pendente de validação no ecrã: estas recusas não foram provocadas nesta ronda. Na demonstração, os trabalhadores têm residência e a empresa não usa a verificação de presenças (não há presenças registadas).</span>
+
+## O que confirmar
+
+1. Os avisos por cima do recibo, depois de carregar em **Calcular**.
+2. No separador **Segurança Social e IRS** do recibo: o **Regime de Segurança Social**, a **Tabela de retenção na fonte de IRS**, o **Estado civil (IRS)**, os **Dependentes** e se **Sem retenção de IRS (declarado expressamente)** está marcado.
+3. O horário do contrato do trabalhador e as horas por dia de cada linha.
+
+## Como resolver
+
+1. **Trabalhador sem contrato no período.** Registe a versão do contrato nova ou renovada que cubra o período, em **Salários › Preparar › Trabalhadores e contratos › Contratos**, e carregue de novo em **Calcular**. Se o trabalhador nunca teve contrato, a mensagem manda abrir a ficha dele (**Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores**) e preencher o **Tipo de contrato** (separador **Trabalho**, bloco «Contrato português»), a **Data de admissão** (no topo) e o **Salário** (separador **Folha de Salários**). Se o trabalhador já saiu e não deve receber nesse mês, tire-o do lote: apague o recibo dele em rascunho.
+2. **Avisos de recibo por calcular.** Carregue em **Calcular**. Se os avisos ficarem, complete o regime de Segurança Social ou a situação de IRS na ficha do trabalhador e calcule de novo.
+3. **Tabela e «Sem retenção».** Escolha uma das duas:
+   - o trabalhador tem retenção: desmarque **Sem retenção de IRS (declarado expressamente)** e guarde;
+   - o trabalhador não tem retenção por um motivo legal: limpe a **Tabela de retenção na fonte de IRS**, mantenha **Sem retenção** com o motivo e guarde. <span className="fd-pending">Pendente de validação por contabilista certificado: em que casos a lei dispensa a retenção na fonte de IRS de rendimentos do trabalho dependente.</span>
+4. **Horário sem horas.** Acrescente as linhas dos dias de trabalho (dia, hora de entrada, hora de saída) antes de guardar. Se o trabalhador não tem horas fixas, escolha o tipo flexível, como diz a mensagem.
+
+<HelpCallout type="risco" title="Não declare «Sem retenção» para fazer o recibo calcular">
+«Sem retenção» tira o IRS do recibo, da DMR e do lançamento. Use-o só com o motivo legal escrito no recibo e confirmado pelo contabilista certificado.
+</HelpCallout>
+
+## Resultado esperado
+
+- O recibo calcula e os avisos «Segurança Social não calculada» e «IRS por calcular» desaparecem.
+- No **Como foi calculado?** do separador **Segurança Social e IRS** aparecem a tabela de IRS, a base, a taxa e o IRS retido (no exemplo: «Tabela I — Não casado sem dependentes ou casado dois titulares», base 1.650,00 €, IRS retido 204,00 €).
+- Se a recusa for de tabelas legais do ano ou do calendário de feriados, siga [Falta uma tabela legal em vigor nessa data](/troubleshooting/tabelas-legais-em-falta).
+
+## Quando contactar o suporte
+
+- O trabalhador tem regime de Segurança Social e situação de IRS e os avisos ficam depois de **Calcular**.
+- Um horário com linhas e horas é recusado com «0 horas por semana».
+
+## Informação a enviar
+
+- O trabalhador, a empresa e as datas do recibo.
+- O texto completo da mensagem ou do aviso, copiado do ecrã.
+- Uma captura do separador **Segurança Social e IRS** do recibo.
+- O perfil com que entrou.

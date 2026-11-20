@@ -1,0 +1,75 @@
+---
+id: cofre-sem-chave-de-cifra
+slug: /troubleshooting/cofre-sem-chave-de-cifra
+title: O cofre de credenciais não tem chave de cifra no servidor
+sidebar_label: "Cofre: sem chave de cifra"
+sidebar_position: 13
+description: O cofre de credenciais cifra as palavras-passe com uma chave que vive fora da base de dados. Se o ficheiro falta, não se lê ou está aberto a outros utilizadores do servidor, só o administrador do servidor resolve.
+keywords: [cofre, chave de cifra, FISCALDOO_SECRETS_KEY, FISCALDOO_SECRETS_KEY_PATH, permissões 600, ficheiro da chave, administrador do servidor, nada foi guardado, cofre sem chave de cifra]
+doc_id: DOC-0428
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master b8b799c8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/cofre-sem-permissao, troubleshooting/acesso-e-dados/sem-permissao]
+---
+
+## Sintoma
+
+Ao guardar uma credencial no cofre, abre-se a janela **Operação inválida** e a credencial não fica guardada. A causa não está no seu perfil, mas no servidor onde o fiscaldoo corre.
+
+## Mensagem
+
+Copiadas da base de demonstração em português, ao carregar em **Guardar** numa credencial nova (**Contabilidade › Configurar › Cofre de credenciais › Credenciais**), com o perfil **Administrador**. Há três formas:
+
+- O servidor não tem chave:
+  > «Este servidor não tem chave de cifra para o cofre de credenciais, por isso nada foi guardado e nenhuma credencial guardada pode ser usada. Peça ao administrador de sistema para definir a variável de ambiente FISCALDOO_SECRETS_KEY (ou FISCALDOO_SECRETS_KEY_PATH, um ficheiro com permissões 600) fora da base de dados.»
+
+  ![Janela Operação inválida com a frase Este servidor não tem chave de cifra para o cofre de credenciais](/images/troubleshooting/cofre-sem-chave-de-cifra/01-sem-chave-de-cifra.png)
+
+- O ficheiro da chave está aberto a outros utilizadores do servidor:
+  > «O ficheiro da chave de cifra do cofre de credenciais pode ser lido por outros utilizadores. Ponha as permissões a 600 e tente outra vez.»
+
+- O caminho indicado não existe ou o ficheiro não se lê:
+  > «Não é possível ler o ficheiro da chave de cifra do cofre de credenciais. Verifique o caminho e as permissões do ficheiro.»
+
+Em todos os casos nada foi guardado, e o ecrã das credenciais continua a abrir.
+
+## Causas verificadas
+
+O cofre cifra cada palavra-passe com uma chave que nunca está na base de dados nem no repositório. O servidor lê-a de uma variável de ambiente (`FISCALDOO_SECRETS_KEY`) ou de um ficheiro de um só dono, com permissões 600, indicado por `FISCALDOO_SECRETS_KEY_PATH`. A mensagem muda conforme o que falta: nenhuma das duas, ficheiro legível por outros, ou ficheiro que não se encontra.
+
+## O que confirmar
+
+1. Qual das três frases aparece: diz o que falta.
+2. Quem administra o servidor. Esta correção não se faz no fiscaldoo.
+
+## Como resolver
+
+Quem faz: **o administrador do servidor** (não os utilizadores do fiscaldoo).
+
+1. Se a frase fala de «não tem chave»: defina a variável `FISCALDOO_SECRETS_KEY`, ou crie um ficheiro com a chave e indique o seu caminho em `FISCALDOO_SECRETS_KEY_PATH`. A chave é uma sequência aleatória de 32 bytes, codificada em base64 «URL-safe» (44 caracteres), numa única linha. Se a chave existir mas não tiver esse formato, a frase é «A chave de cifra do cofre de credenciais não é válida: tem de ser 32 bytes aleatórios em base64 URL-safe (44 caracteres)…».
+2. Se a frase fala de «pode ser lido por outros utilizadores»: ponha o ficheiro a 600 (`chmod 600`) e confirme que pertence ao utilizador que corre o Odoo.
+3. Se a frase fala de «não é possível ler»: confirme o caminho e o dono do ficheiro.
+4. Reinicie o serviço do Odoo, para que o servidor leia a chave de novo, e guarde a credencial outra vez.
+5. Guarde uma cópia da chave num local seguro, fora da base de dados e fora do repositório.
+
+Não ponha a chave num e-mail, numa mensagem de apoio nem na própria base de dados.
+
+## Resultado esperado
+
+A credencial guarda-se, o campo **Tem segredo** fica ativo e a palavra-passe passa a aparecer como uma fila de pontos: ninguém a volta a ler, nem o administrador ([Como guardar senhas de portais no cofre de credenciais](/administration/cofre-de-credenciais)).
+
+## Quando contactar o suporte
+
+- A chave está definida, o ficheiro tem permissões 600 e o serviço foi reiniciado, e a mesma frase aparece.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com a frase completa da mensagem. Nunca envie o conteúdo da chave.
+
+{/* Nota interna (lote v23-Q, #3740 req. 46455, master 808f8ca1f, docs_demo_v23q_test): só a frase do resultado (sem o botão Revelar segredo, que o SEC-115 tirou), vista no ecrã com uma chave de cifra só na memória da instância. A mensagem sem chave não foi provocada de novo; no texto de hoje (pt_PT.po) continua a dizer «nada foi guardado nem revelado». */}
+
+{/* Nota interna (lote v23-AB, master 97b34fac3, docs_demo_v23ab_test, porta 8480, utilizadores criados só com cada valor do campo Perfil): captura 01 refeita com o administrador em Credenciais › Novo › Guardar, com a instância sem chave de cifra: o texto de hoje diz «nada foi guardado e nenhuma credencial guardada pode ser usada». */}

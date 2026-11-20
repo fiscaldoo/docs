@@ -1,0 +1,100 @@
+---
+id: ecra-inicial-por-perfil
+slug: /getting-started/ecra-inicial-por-perfil
+title: O que aparece no ecrã inicial de cada perfil
+sidebar_label: Ecrã inicial de cada perfil
+sidebar_position: 1
+description: Cada perfil entra no ecrã onde o seu trabalho começa, e os menus mostram primeiro os seus favoritos e os que usa mais. Veja onde abre cada perfil e como fixar menus favoritos.
+keywords: [ecrã inicial, ecra inicial, página inicial, pagina inicial, perfil, perfis, onde abre, menus favoritos, favoritos, as minhas preferências, as minhas preferencias, ordem dos menus, modo gabinete, empresas clientes]
+doc_id: DOC-0009
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c689f7580)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [getting-started/usar-o-odoo/encontrar-um-menu, troubleshooting/acesso-e-dados/nao-vejo-um-menu]
+---
+
+## Para que serve?
+
+Ao entrar no Odoo, cada pessoa abre no ecrã onde o seu trabalho começa, conforme o perfil que o administrador lhe deu: o administrativo abre no balcão da faturação, o contabilista na lista do que há para fazer, o trabalhador no seu recibo. Não precisa de procurar por onde começar.
+
+Dentro de cada aplicação, os menus põem primeiro os seus favoritos e os que abre mais vezes. Nada desaparece: cada entrada fica no mesmo menu da barra de cima (por exemplo **Lançar** ou **Receber**) e só muda a ordem dentro dele. Nos menus com grupos, os grupos também mudam de lugar com o uso.
+
+## Quando utilizar?
+
+- No primeiro dia com o fiscaldoo, para saber em que ecrã vai entrar.
+- Quando um colega entra num ecrã diferente do seu e quer perceber porquê.
+- Para pôr no topo de um menu as entradas que usa todos os dias.
+
+## Onde encontrar?
+
+- O ecrã inicial abre sozinho quando entra no Odoo.
+- Os menus favoritos: o seu nome, no canto superior direito › **As minhas preferências** › **Menus favoritos**.
+
+## Antes de começar
+
+- O administrador da base de dados deu-lhe um perfil. Os perfis são **Administrativo**, **Contabilista (opera)**, **Contabilista certificado (assina, fecha períodos)**, **Processador de salários**, **Gestor de RH**, **Gerência**, **Trabalhador** e **Auditor / ROC**.
+- Os passos dos menus favoritos foram feitos com o perfil **Administrativo**. Qualquer perfil tem **As minhas preferências**.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Entre no Odoo com o seu utilizador. O ecrã que abre depende do perfil:
+
+   | Perfil | Abre em |
+   | --- | --- |
+   | Administrativo | **Balcão**, na aplicação **Faturação** |
+   | Contabilista (opera) e Contabilista certificado (assina, fecha períodos) | **O que há para fazer?**, na aplicação **Contabilidade** |
+   | Processador de salários e Gestor de RH | **O que há para fazer este mês?**, na aplicação **Salários** |
+   | Gerência | **Painel da Direção**, na aplicação **Direção** |
+   | Auditor / ROC | **Registo de auditoria**, na aplicação **Auditoria** |
+   | Trabalhador | **O meu recibo**, na aplicação **O meu espaço** |
+
+   Com o **Modo gabinete** ligado, o **Contabilista** e o **Contabilista certificado** abrem em **Empresas clientes: o que está em dia?** (veja «Notas importantes»).
+2. Para ir para outra aplicação, carregue no ícone dos quadrados, no canto superior esquerdo, e escolha a aplicação. Para ir direto a um menu, use a pesquisa: [Como encontrar um menu pela pesquisa](/getting-started/encontrar-um-menu).
+3. Para fixar uma entrada no topo do seu menu, carregue no seu nome, no canto superior direito, e depois em **As minhas preferências**.
+4. No separador **Preferências**, em **Menus favoritos**, escreva parte do nome do menu e escolha-o na lista. A lista mostra o caminho completo, por exemplo `cobrar` dá **Faturação/Receber/Por cobrar**. Pode escolher vários: cada um fica numa etiqueta, com um **×** para o tirar.
+   ![Campo Menus favoritos com a etiqueta Faturação/Receber/Extratos de clientes e a lista aberta com Faturação/Receber/Por cobrar](/images/getting-started/ecra-inicial-por-perfil/01-menus-favoritos.png)
+5. Carregue em **Atualizar preferências**.
+6. Atualize a página do navegador (tecla F5) e abra o menu da aplicação.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, cada perfil abre no mesmo ecrã da tabela (visto com um utilizador só com cada um dos oito perfis), e o administrador, sem perfil, abriu em **O que há para fazer?**, da **Contabilidade**. **As minhas preferências** tem os mesmos **Menus favoritos**.
+
+Mudam duas coisas no aspeto. O ícone dos quadrados, no canto superior esquerdo, abre um ecrã inteiro com os ícones das aplicações, em vez de uma lista. Em **As minhas preferências** há mais um campo, **Tema** (**Sistema**, **Claro** ou **Escuro**), que muda as cores do ecrã.
+
+{/* Nota interna (lote EE-13, DOCS-073 #4142, req 46633, DEC-1794, master 7f41ce71b, base Enterprise docs_ee_ee13_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee13_test): DOC-0009. Entrada por perfil na cópia Enterprise: Administrativo Balcão (Faturação), Contabilista e Contabilista certificado O que há para fazer? (Contabilidade), Processador de salários e Gestor de RH O que há para fazer este mês? (Salários), Gerência Painel da Direção (Direção), Auditor / ROC Registo de auditoria (Auditoria), Trabalhador O meu recibo (O meu espaço). Menu do utilizador igual nas duas cópias; o campo Theme e as opções System, Light e Dark só no Enterprise, em inglês (EEA-072). A arquitetura marca o artigo «Só Enterprise»: o ecrã inicial por perfil existe nas duas edições. A ordem dos menus pelo uso não foi repetida no Enterprise. Ver reports/LOTE_EE-13.md. */}
+
+{/* Nota interna (lote EE-15, comboio 197, master c689f7580, 12/11/2026; cópia Enterprise docs_ee_ee15_test (portas 8530/8531, cópia da odoo20_ee_test com ee_neutralizar) e cópia Community docs_demo_ee15_test (porta 8532), utilizadores criados nas cópias só com o perfil indicado): DOC-0009, I18N-045 (94e21f451) e I18N-049 (143b65382). Administrativo, As minhas preferências por clique: janela «Alterar as minhas preferências» com o campo Tema e as opções Sistema, Claro e Escuro. Ver reports/LOTE_EE-15.md. */}
+
+## Resultado esperado
+
+O menu põe primeiro os favoritos, depois as entradas que já abriu e por fim as outras, na ordem de sempre. No exemplo, com **Extratos de clientes** como favorito e **Avisos de cobrança** aberto uma vez, o menu **Receber** da **Faturação** passou de «**Recibos e pagamentos recebidos**, **Por cobrar**, **Avisos de cobrança**, **Extratos de clientes**» para «**Extratos de clientes**, **Avisos de cobrança**, **Recibos e pagamentos recebidos**, **Por cobrar**». As quatro entradas continuam lá.
+
+Nos menus com grupos, cada grupo sobe com a entrada mais usada dele. No menu **Lançar** da **Contabilidade**, o **Auditor / ROC**, sem uso, tem primeiro o grupo **Início** e depois **Compras**; o **Contabilista** da demonstração, que já usou outras entradas, tem primeiro **Compras** e **Vendas e cobranças**, e o grupo **Início** mais abaixo.
+
+## Notas importantes
+
+- **O Modo gabinete muda o ecrã dos contabilistas.** Liga-se em **Definições**, grupo **Gabinete de contabilidade**, opção **Modo gabinete**, que só o administrador da base de dados vê. É para um gabinete de contabilidade que trabalha para várias empresas clientes: o próprio ecrã diz «Deixe desligado numa empresa que faz a sua própria contabilidade.»
+- **O ecrã inicial não dá acessos novos.** Mostra só o que o seu perfil já pode abrir. O detalhe de cada ecrã está no artigo próprio, por exemplo [Como vender ao balcão](/fiscal-core/balcao) ou [O que mostra o painel da Direção](/management/painel-da-direcao).
+- **Quem não tem perfil** (por exemplo o utilizador administrador da base de dados) entra no ecrã que o Odoo lhe der. Na demonstração, foi **O que há para fazer?**, da **Contabilidade**.
+
+## Problemas frequentes
+
+### Entro num ecrã diferente do que a tabela diz
+
+- **Causa:** o seu perfil é outro, ou o **Modo gabinete** está ligado.
+- **O que fazer:** peça ao administrador da base de dados que confirme o seu perfil. Para saber porque não vê um menu, carregue no seu nome, no canto superior direito, e em **Porque não vejo…?**, ou veja [Não vejo um menu ou um botão](/troubleshooting/nao-vejo-um-menu).
+
+### Um menu mudou de lugar
+
+- **Causa:** dentro de cada menu da barra de cima, as entradas que usa mais vêm primeiro e, nos menus com grupos, o grupo delas sobe também.
+- **O que fazer:** procure-a no mesmo menu da barra de cima: pode ter subido, ou o grupo dela pode ter mudado de lugar. Também pode escrever o nome na pesquisa de menus. Para que fique sempre no topo, junte-a aos **Menus favoritos**.
+
+{/* Nota interna (DOCS-040, lote F2): ecrã inicial visto a 30/10/2026 com os utilizadores demo de cada perfil (o do Processador de salários tem também a Ação principal «O que há para fazer este mês?» na ficha; o Gestor de RH, sem ela, abre no mesmo ecrã). Modo gabinete ligado e desligado outra vez pelo admin. A arquitetura marca o DOC-0009 «Só Enterprise» (pontes l10n_pt_fiscaldoo_ee_home e l10n_pt_arxi_ee_org), mas o ecrã por perfil existe e foi visto na Community; o front matter ficou «Community e Enterprise», como o guia antigo («Ambas»). Correção aud-v2f2 (NF2a-04): menu Lançar visto a 30/10 na 8111 com o Auditor (Início, Compras…) e o Contabilista (Compras, Vendas e cobranças, Início…); arxi_ux_kit menu_learning.js põe cada grupo na posição da entrada mais usada. */}

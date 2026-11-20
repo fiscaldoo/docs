@@ -1,0 +1,117 @@
+---
+id: mandatos-de-debito-direto
+slug: /fiscal-core/mandatos-de-debito-direto
+title: Como registar o mandato de débito direto de um cliente
+sidebar_label: Mandatos de débito direto
+sidebar_position: 5
+description: Registar a conta do cliente, criar e ativar o mandato SEPA de débito direto, e saber o que o ecrã recusa e como o anular.
+keywords: [mandato, mandato de débito direto, mandato de debito direto, SDD, SEPA, RUM, débito direto, debito direto, IBAN, autorização de débito, anular mandato, CORE, B2B]
+doc_id: DOC-0041
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/subscricoes, fiscal-core/recibos-e-cobrancas/emitir-um-recibo]
+---
+
+## Para que serve?
+
+O mandato é a autorização escrita do cliente que permite cobrar-lhe por débito direto (SEPA) na conta dele. O fiscaldoo guarda o mandato com uma referência única (RUM), o IBAN do cliente, a data da assinatura e a validade. Sem um mandato ativo, o cliente não entra num lote de débito direto nem numa [subscrição](/fiscal-core/subscricoes) cobrada por débito direto.
+
+## Quando utilizar?
+
+- Quando um cliente autoriza, por escrito, a cobrança por débito direto.
+- Antes de criar uma subscrição com **Cobrança** em **Débito direto SEPA**.
+- Não o use para o cliente que paga por transferência ou Multibanco: não precisa de mandato.
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Cobranças a clientes › Mandatos de débito direto**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** ou **Contabilista certificado**. **Gerência** e **Auditor / ROC** abrem a lista e os mandatos, mas não têm **Novo**, **Ativar** nem **Anular**. O perfil **Administrativo** não tem este menu.
+- O cliente tem uma conta bancária registada com o IBAN. Sem ela, o campo **Conta do devedor** diz «Sem registos»: registe-a primeiro, no passo 1.
+- Tem em mão o mandato assinado pelo cliente e a data em que ele o assinou.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a ficha do cliente em **Contabilidade › Lançar › Terceiros e ativos › Clientes**. No separador **Faturação**, escreva o IBAN no campo **Contas bancárias**, escolha «Criar “…”» e guarde a ficha. A etiqueta da conta fica vermelha, com um sinal de exclamação, enquanto não estiver marcada como **Conta bancária de confiança**: isso não impede o mandato.
+   ![Separador Faturação da ficha do cliente com o IBAN no campo Contas bancárias](/images/fiscal-core/mandatos-de-debito-direto/00-conta-bancaria-do-cliente.png)
+2. Abra **Mandatos de débito direto**. Numa empresa sem mandatos, a lista diz «Ainda não tem nenhum mandato de débito direto. O mandato é a autorização do cliente que lhe permite cobrar por débito direto.» Carregue em **Novo mandato** (ou em **Novo**, se a lista já tiver mandatos).
+   ![Lista de mandatos vazia, com a explicação e o botão Novo mandato](/images/fiscal-core/mandatos-de-debito-direto/01-lista-vazia.png)
+3. Em **Cliente**, escolha o cliente e, em **Conta do devedor**, a conta do passo 1. A lista só mostra as contas desse cliente.
+4. Em **Esquema**, escolha **CORE (consumidores)** (o valor proposto) ou **B2B (empresas)** (ver «Mandato B2B» mais abaixo). Marque **Único** só se o mandato serve para uma única cobrança.
+5. Em **Data de assinatura**, escreva a data em que o cliente assinou (por exemplo, `01/11/2026`).
+6. Carregue em **Guardar**. O mandato recebe a referência `RUM/…` (por exemplo `RUM/00001`) e fica em **Rascunho**. **Expira em** mostra 01/11/2029 para uma assinatura de 01/11/2026.
+   ![Mandato RUM/00001 em rascunho, com cliente, conta do devedor, esquema CORE e data de assinatura](/images/fiscal-core/mandatos-de-debito-direto/03-mandato-rascunho.png)
+7. Carregue em **Ativar**. O mandato fica **Ativo**, com **Ativo desde** na data de hoje (03/11/2026, no exemplo).
+   ![Mandato RUM/00001 ativo desde 03/11/2026 e a expirar em 01/11/2029, com o botão Anular](/images/fiscal-core/mandatos-de-debito-direto/04-mandato-ativo.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, os mandatos de débito direto são os do fiscaldoo, e o menu não tem outra entrada de débito direto. **Contabilidade › Lançar › Cobranças a clientes › Mandatos de débito direto** abre a mesma lista, e **Novo** abre o mandato com **Cliente**, **Conta do devedor**, **Esquema**, **Único**, **Data de assinatura**, **Expira em**, **Direito a reembolso** e **Dias de pré-notificação acordados** (visto com um utilizador só com o perfil **Contabilista**).
+
+{/* Nota interna (lote EE-12, DOCS-073 #4142, DEC-1794, master 589ecfd27, base Enterprise docs_ee_ee12_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee12_test): DOC-0041. Contabilista: lista (vazia) e Novo sem gravar. O módulo de débito direto SEPA do Enterprise (account_sepa_direct_debit) não está instalado na cópia; Contabilidade › Lançar só tem as entradas do fiscaldoo. Igual na cópia Community. Ver reports/LOTE_EE-12.md. */}
+
+## Resultado esperado
+
+- O mandato está **Ativo**, com **Cobranças** a 0, e aparece assim na lista, com o IBAN sem espaços.
+- O botão **Ativar** desaparece e fica só **Anular**. **Cliente**, **Conta do devedor**, **Esquema**, **Único** e **Data de assinatura** deixam de se poder alterar.
+- Uma subscrição do cliente com **Cobrança** em **Débito direto SEPA** já se ativa: ver [subscrições](/fiscal-core/subscricoes). O mandato ainda não cobra nada: a cobrança faz-se num [lote de débito direto](/fiscal-core/debitos-diretos-lotes).
+- Este passo não faz nenhum lançamento na contabilidade nem emite nenhum documento: fica só o registo do mandato.
+
+## Notas importantes
+
+<HelpCallout type="atencao" title="Anular um mandato não se desfaz">
+**Anular** pede um **Motivo** e passa o mandato a **Anulado**, sem botão para o reativar; o motivo fica em **Motivo da anulação**. Para voltar a cobrar o cliente, registe um mandato novo, com nova assinatura. Um mandato que já foi ativado nunca se elimina; um rascunho elimina-se pelo menu de ações.
+</HelpCallout>
+
+- **Mandato B2B.** O campo **Validado pelo banco do devedor** só aparece com **B2B (empresas)**. Marque-o quando o banco do cliente confirmar o mandato: sem isso, **Ativar** recusa. Com B2B, **Direito a reembolso** fica desmarcado. Segundo a ajuda do ecrã, com CORE o devedor pode pedir o reembolso durante 8 semanas, sem justificação, e com B2B não há reembolso automático.
+- **Validade.** **Expira em** conta os meses definidos na empresa (36, por omissão) desde a assinatura e, depois da primeira cobrança, desde a última cobrança. Os meses mudam-se com o perfil Administrador, em **Definições**, separador **Faturação**, grupo **Débito direto SEPA**, campo **Meses sem cobrança até um mandato expirar**. Passada a data sem cobrança, uma tarefa diária passa o mandato a **Expirado**: deixa de servir para cobrar e, sem botões, não se reativa; registe um mandato novo.
+- **Dias de pré-notificação acordados** vêm a 0: é o prazo, em dias, de aviso ao cliente antes de cada débito, e pode alterar-se mesmo com o mandato ativo. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo de pré-notificação, validade do mandato e tempo de conservação do mandato assinado.</span>
+- O fiscaldoo guarda os dados do mandato, não a assinatura do cliente: o documento assinado continua à sua guarda.
+
+## Problemas frequentes
+
+### «O IBAN … é inválido»
+
+- **Sintoma:** ao criar a conta na ficha do cliente abre-se a janela **Criar Contas bancárias** e, ao guardar: «O IBAN “PT50 1234 5678” é inválido (dígitos de controlo do NIB português). Verifique o número no seu extrato bancário.»
+- **O que fazer:** confirme o IBAN no documento do cliente, corrija **Número da Conta** e guarde. Se a janela continuar a recusar, carregue em **Descartar**: nenhuma conta fica criada.
+
+### «A data de assinatura … é futura»
+
+- **Sintoma:** ao guardar com uma data posterior a hoje: «A data de assinatura 31/12/2026 é futura.»
+- **O que fazer:** escreva a data em que o cliente realmente assinou (a de hoje ou anterior) e guarde de novo.
+  ![Mensagem do ecrã: a data de assinatura 31/12/2026 é futura](/images/fiscal-core/mandatos-de-debito-direto/02-assinatura-futura.png)
+
+### «Há campos obrigatórios por preencher»
+
+- **Sintoma:** ao guardar sem **Cliente**, **Conta do devedor** ou **Data de assinatura**: «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **O que fazer:** preencha os campos a vermelho. Se **Conta do devedor** disser «Sem registos», o cliente não tem conta: registe o IBAN na ficha dele (passo 1) e volte ao mandato.
+
+### «… já tem o mandato ativo …»
+
+- **Sintoma:** ao carregar em **Ativar** um segundo mandato do mesmo cliente, com a mesma conta e o mesmo esquema: «Escola de Condução Rota, Lda já tem o mandato ativo RUM/00001 para esta conta e este esquema: cancele-o primeiro ou use a outra conta.»
+- **O que fazer:** se o novo mandato substitui o antigo, anule o antigo (o ecrã diz «cancele-o», o botão chama-se **Anular**) e ative o novo. Se é o mesmo mandato, elimine o rascunho.
+
+### «Um mandato B2B precisa da confirmação do banco do devedor»
+
+- **Sintoma:** ao carregar em **Ativar** com **B2B (empresas)**: «Um mandato B2B precisa da confirmação do banco do devedor antes da primeira cobrança: marque «Validado pelo banco do devedor» quando a tiver.»
+- **O que fazer:** deixe o mandato em **Rascunho** até ter a confirmação; depois marque o campo, guarde e carregue em **Ativar**.
+
+### «Um mandato que foi ativado nunca se elimina»
+
+- **Sintoma:** ao escolher **Eliminar** no menu de ações de um mandato ativo ou anulado: «Um mandato que foi ativado nunca se elimina: cancele-o (fica no histórico).»
+- **O que fazer:** carregue em **Anular**, escreva o **Motivo** e confirme em **Cancelar mandato**. Sem motivo, a janela diz «Há campos obrigatórios por preencher.» e não anula.
+  ![Janela Cancelar mandato com o campo Motivo](/images/fiscal-core/mandatos-de-debito-direto/05-anular-mandato.png)
+
+{/* Nota interna (DOCS-046, DOC-0041, v7-FC2, master 584213fd9, base docs_demo_v7fc2_test, perfil Contabilista por clique): RUM/00001 ativo; RUM/00002 B2B anulado; RUM/00003 rascunho criado e eliminado pelo Gestor de contabilidade; RUM/00004 (assinatura de 2023) passou a Expirado com a tarefa acionada à mão pelo Administrador. NV3F-14 a 16 tratadas. Único não testado até à cobrança: depende do lote (DOC-0042). A arquitetura indica o perfil Administrativo, mas o Faturação não tem o menu nem a leitura. */}
+
+{/* Nota interna (lote v23-AT, DOC-0041, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador): o Administrativo não tem a aplicação Contabilidade */}

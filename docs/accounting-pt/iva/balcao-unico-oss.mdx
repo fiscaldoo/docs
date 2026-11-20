@@ -1,0 +1,86 @@
+---
+id: balcao-unico-oss
+slug: /accounting-pt/balcao-unico-oss
+title: Como declarar o IVA no balcão único (OSS e IOSS)
+sidebar_label: Balcão único (OSS e IOSS)
+description: Prepara os valores da declaração do IVA das vendas à distância a consumidores de outros países da UE, para os preencher no Portal das Finanças.
+keywords: [OSS, IOSS, balcão único, balcao unico, vendas à distância, vendas a distancia, importações à distância, importacoes a distancia, declaração OSS, declaracao OSS, declaração IOSS, consumidores de outros países, consumidor na UE, taxas OSS]
+doc_id: DOC-0099
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/iva/declaracao-recapitulativa, accounting-pt/iva/provas-de-exportacao]
+---
+
+## Para que serve?
+
+Reúne as vendas a consumidores de outros países da UE por país, tipo de fornecimento e taxa de IVA, e dá-lhe os valores para preencher a declaração no Portal das Finanças. O fiscaldoo não envia nada à AT.
+
+## Quando utilizar?
+
+- A empresa aderiu ao regime OSS e vende a consumidores particulares de outros países da UE: uma declaração por trimestre.
+- A empresa aderiu ao IOSS e vende bens importados até 150 EUR: uma declaração por mês civil, só com as faturas marcadas como venda IOSS.
+- Não use para vendas a empresas com NIF de outro país: essas vão para a [declaração recapitulativa](/accounting-pt/declaracao-recapitulativa).
+
+## Onde encontrar?
+
+Também pode escrever OSS, IOSS ou balcão único na caixa **Pesquisar menu**, na barra de cima: abre a declaração sem passar pelo painel do IVA.
+
+**Contabilidade › Declarar › IVA › O que há para fazer com o IVA?** › **Listas de apoio** › **Declaração do IVA das vendas à distância na UE** (OSS) ou **Declaração do IVA das importações à distância** (IOSS).
+
+As duas declarações não têm linha própria no menu **IVA**: chega-se a elas por este painel.
+
+## Antes de começar
+
+- **Perfil:** para criar e calcular, **Contabilista certificado**. O **Contabilista** e o **Auditor / ROC** só consultam: a lista não lhes mostra o botão **Novo** e a declaração aberta não tem **Calcular**, só **Exportar para Excel** e **Ver as linhas de fatura**.
+- **A empresa está no regime:** o Administrador abre a empresa em **Definições › Utilizadores e empresas › Empresas** e, no separador **Localização PT**, no grupo **Balcão único (OSS)**, marca **No regime OSS**, preenche **OSS desde** e carrega em **Criar taxas OSS**. Para o IOSS, preenche o **Número IVA IOSS**. Na empresa de demonstração foram criadas 30 taxas, com a taxa normal de cada país na data de hoje. <span className="fd-pending">Pendente de validação por contabilista certificado: as taxas de cada país.</span>
+- **As faturas estão emitidas** com a taxa OSS do país do consumidor. Na fatura, o aviso diz «Operação OSS: venda a um consumidor em Espanha. É devido o IVA desse país (taxa normal em vigor: 21%), não o português, e vai para a declaração OSS.»
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Declarar › IVA › O que há para fazer com o IVA?** e carregue em **Listas de apoio**.
+2. Carregue em **Declaração do IVA das vendas à distância na UE** e depois em **Novo**.
+3. Confirme o **Início do período** e o **Fim do período** (no exemplo, 01/10/2026 e 31/12/2026). O **Prazo** preenche-se sozinho.
+4. Carregue em **Calcular**.
+5. Confira as linhas com as faturas, em **Ver as linhas de fatura**, e carregue em **Exportar para Excel** se quiser guardar os valores.
+6. Preencha os mesmos valores na declaração do Portal das Finanças.
+
+</StepByStep>
+
+![Declaração OSS de 01/10/2026 a 31/12/2026, com Espanha, Bens, 21 %, 95,00 € de valor tributável e 19,95 € de IVA devido](/images/accounting-pt/balcao-unico-oss/01-declaracao-oss-calculada.png)
+
+## Resultado esperado
+
+No exemplo, a fatura FT D26/34 de 95,00 € a um consumidor em Espanha, com a taxa OSS ES 21 %, dá uma linha **Espanha · Bens · 21,00 · 95,00 € · 19,95 €**. Os totais mostram **IVA devido** 19,95 €, **IVA lançado na contabilidade** 19,95 € e **Diferença** 0,00 €. O **Prazo** é 31/01/2027.
+
+A fatura gerou estas linhas no razão:
+
+| Conta | Débito | Crédito |
+|---|---:|---:|
+| 2111 Clientes gerais | 114,95 € | |
+| 711 Mercadorias | | 95,00 € |
+| 2439901 IVA - regime OSS | | 19,95 € |
+
+O Excel sai com o nome `oss_2026-10-01_2026-12-31.xlsx`.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o prazo calculado (fim do mês seguinte ao período), as contas, o pagamento do IVA do balcão único e a separação entre vendas a consumidores e a empresas.</span>
+
+## Notas importantes
+
+- **Daqui não se envia nada.** A declaração e o pagamento fazem-se no Portal das Finanças.
+- **As vendas IOSS ficam só na declaração IOSS**, e as restantes só na OSS: uma venda nunca aparece nas duas.
+- **Notas de crédito de um trimestre já declarado** aparecem em linhas separadas, na coluna **Correção ao trimestre**, por país e trimestre de origem.
+
+## Problemas frequentes
+
+- **Sintoma:** «O fim do período é anterior ao início. Como resolver: corrija as datas.» **Causa:** as datas estão trocadas. **O que fazer:** corrija-as e carregue outra vez em **Calcular**.
+- **Sintoma:** «A declaração IOSS abrange um mês civil inteiro. O que aconteceu: as datas 01/10/2026 a 15/10/2026 não são o primeiro e o último dia do mesmo mês. Como resolver: escolha o primeiro e o último dia do mês.» **Causa:** o período da IOSS é sempre um mês inteiro. **O que fazer:** escolha o primeiro e o último dia do mês.
+- **Sintoma:** não vê **Novo** nem **Calcular**. **Causa:** o seu perfil só consulta. **O que fazer:** peça a quem tem o perfil **Contabilista certificado** que calcule a declaração.
+
+{/* Nota interna (DOCS-046, lote v22-E, 06/11/2026, master d83bdf7ae, base docs_demo_v22e_test, porta 8362): só a frase dos perfis, por clique com utilizadores criados só com cada perfil (DEC-1777). Contabilista certificado: Novo, guardar e Calcular numa OSS de 01/10/2026 a 31/12/2026. Contabilista e Auditor: sem Novo; a declaração aberta só tem Exportar para Excel e Ver as linhas de fatura. «Responsável fiscal» e «Administração fiscal» são grupos dos Ajustes avançados, não perfis do campo Perfil: saíram. */}
+{/* Nota interna (DOCS-046, lote v16-NOVOS, master 255d77e63): Gestor de contabilidade e Contabilista percorridos por clique até ao último passo; 2 de 3 mensagens de erro por clique. Regime da empresa e taxas (botão Criar taxas OSS) e fatura FT D26/34 criados por RPC como admin; a ficha da empresa não abre ao Gestor de contabilidade. Ficha da empresa vista por clique com o admin na auditoria (separador Localização PT); o botão Criar taxas OSS foi visto, não carregado. Não provocados: fatura OSS sem taxa OSS, diferença para a contabilidade e correção de trimestre anterior. A coluna de menu do mapeamento dizia «Declaração…» no grupo IVA de Contabilidade › Declarar: os dois menus estão em SEARCH_ONLY e só se chega pelo painel; a pesquisa de menus não os encontrava; desde o UX-110 encontra (auditoria v20-A, master 0289754a8, porta 8328: OSS, IOSS e balcão único abrem as duas declarações). Novo só aparece com Responsável fiscal ou Administração fiscal (utilizadores só com cada perfil); o Contabilista e o Contabilista Certificado sozinho não o têm. */}

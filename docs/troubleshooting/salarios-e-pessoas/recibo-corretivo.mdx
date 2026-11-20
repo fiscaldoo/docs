@@ -1,0 +1,130 @@
+---
+id: recibo-corretivo
+slug: /troubleshooting/recibo-corretivo
+title: Não consigo criar ou validar um recibo corretivo
+sidebar_label: Recibo corretivo recusado
+description: Porque um recibo corretivo não se cria ou não se valida (nada mudou, falta a linha, falta o perfil, tipo escolhido à mão, mês já declarado) e o que fazer.
+keywords: [recibo corretivo, corretivo recusado, criar corretivo, retificar, retificar recibo, nada mudou desde que este recibo foi fechado, motivo da correção, motivo da correcao, preparar o corretivo, sem acesso, exceção auditada, excecao auditada, nenhuma linha, declaração de substituição, declaracao de substituicao, já declarado, ja declarado, evento de correção, evento de correcao, correções ao processamento, correcoes ao processamento]
+doc_id: DOC-0401
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado, payroll-pt/processar-e-pagar/corrigir-um-processamento, payroll-pt/declarar/dmr-de-substituicao]
+---
+
+## Sintoma
+
+Quer corrigir um recibo já fechado e acontece uma destas coisas:
+
+- **Retificar** responde com **Operação inválida** e não cria nada;
+- o recibo corretivo não se grava;
+- o corretivo abre, mas **Validar** é recusado.
+
+## Mensagem
+
+Vistas na Empresa Demonstração, Lda., no recibo pago de setembro de 2026. Os nomes e as datas mudam com o seu caso.
+
+Ao carregar em **Retificar** e **Preparar o corretivo**, com o perfil **Processador de salários**, sem nada mudado:
+
+> «Nada mudou desde que este recibo foi fechado. O que aconteceu: o contrato, o horário e as presenças do período estão como estavam. Como resolver: não é preciso fazer nada; para pagar outra coisa crie um recibo corretivo à mão.»
+
+Ao carregar em **Preparar o corretivo** com **Motivo da correção** vazio:
+
+> «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+
+Ao carregar em **Validar** num corretivo sem linhas:
+
+> «O recibo «*Fábio Nuno Carvalho (01/09/2026 — 30/09/2026)*» não pode ser validado: faltam 1 elemento(s) obrigatório(s) do documento de retribuição — (5) retribuição base e demais prestações (nenhuma linha). O que aconteceu: o Código do Trabalho (art. 276.º/3) fixa o conteúdo que o trabalhador deve receber com o pagamento. Como corrigir: preencha o que falta (o NISS e a categoria profissional na ficha do trabalhador, o NIF na ficha da empresa) e valide outra vez.»
+
+Ao carregar em **Validar** num corretivo com linhas, com o perfil **Processador de salários**:
+
+> «Não tem acesso a «Exceção auditada à data de bloqueio da folha (PT)». Quem faz: quem tem o acesso extra «Administrador de Salários», «Submissor de declarações». Só o administrador dá esse acesso (Definições › Utilizadores e empresas › Utilizadores, «Ajustes avançados» do utilizador).»
+
+Ao carregar em **Validar** num corretivo feito com **Criar corretivo**, num mês já declarado, com o acesso **Administrador de Salários** (agosto de 2026):
+
+> «O período do recibo a corrigir está fechado ou já declarado. O que aconteceu: a partir daí qualquer alteração passa pelo evento de correção, que pede também as declarações de substituição. Como resolver: abra o evento em Salários › Processar › Correções ao processamento «*Ana Margarida Pinto (01/08/2026 — 31/08/2026)*» e valide a partir dele este recibo corretivo.»
+
+Ao carregar em **Validar** no corretivo de uma correção em curso, com a linha **DMR de substituição** em **Pendente**:
+
+> «O recibo corretivo não pode ser validado antes de existir a declaração de substituição. O que aconteceu: o original já foi declarado (*DMR de substituição*). Como resolver: gere primeiro essas propagações no evento de correção.»
+
+![Janela Operação inválida: o recibo corretivo não pode ser validado antes de existir a declaração de substituição](/images/troubleshooting/recibo-corretivo/01-declaracao-de-substituicao-em-falta.png)
+
+{/* Nota interna (DOC-0401): o artigo recibo-validado-nao-se-altera atribui a correção ao Processador de Salários. A recusa ao Processador vê-se também sem data de bloqueio da folha: defeito a confirmar na auditoria do lote v7-TS3. */}
+
+## Causas verificadas
+
+- **O botão Retificar só trata de mudanças no contrato, no horário ou nas presenças.** Compara o recibo com os dados de hoje. Se nada mudou, não prepara nada. Um valor que não vem desses dados (um prémio esquecido, por exemplo) faz-se à mão.
+- **Falta o motivo.** **Motivo da correção** é obrigatório.
+- **O corretivo feito à mão começa vazio.** **Criar corretivo** abre um recibo sem linhas, e **Calcular** não as cria.
+- **O perfil não chega.** O **Processador de salários** cria o corretivo, mas não o valida.
+- **O tipo foi escolhido à mão.** Com **Novo** e o tipo **Corretivo**, sem partir de um recibo, o recibo não se gravou: a mensagem é a dos campos por preencher. Crie o corretivo a partir do recibo que corrige.
+- **O mês já foi declarado.** Com a DMR do mês original submetida, o corretivo só se valida a partir de uma correção em **Salários › Processar › Correções ao processamento**, com a linha **DMR de substituição** gerada.
+- **O período não se muda.** No corretivo, **Início do período** e **Fim do período** ficam só de leitura: valem os do recibo corrigido.
+
+## O que confirmar
+
+1. O estado do recibo original. **Retificar** e **Criar corretivo** só aparecem em **Validado** e **Pago**. Um recibo em **Rascunho** altera-se diretamente.
+2. O que está errado: vem do contrato, do horário ou das presenças, ou é outro valor?
+3. O seu perfil.
+4. Se já há outro corretivo do mesmo recibo por validar. O ecrã deixa criar um segundo: na demonstração, ficaram dois rascunhos do mesmo recibo, sem aviso.
+
+## Como resolver
+
+### Nada mudou, mas há um valor a pagar ou a descontar
+
+1. Abra o recibo em **Salários › Processar › Recibos de vencimento**.
+2. Em **Ações**, escolha **Criar corretivo**. Abre-se um recibo em **Rascunho**, com o aviso «Recibo corretivo de:» e o recibo original.
+3. Em **Adicionar uma linha**, escolha a **Rubrica** e preencha a **Quantidade** e o **Valor base**. Guarde e carregue em **Calcular**.
+4. Peça ao **Administrador de Salários** que carregue em **Validar**.
+
+Na demonstração, um corretivo com uma linha de **Retribuição base** de 10,00 € passou a **Validado** com o acesso **Administrador de Salários**, e a barra passou a mostrar **Pagar** e **Contabilizar**. <span className="fd-pending">Pendente de validação por contabilista certificado: como se trata na declaração e no IRS a diferença de um corretivo de um mês já fechado.</span>
+
+### Mudou o contrato, o horário ou as presenças
+
+Registe primeiro a mudança e só depois use **Retificar**: [Como corrigir um processamento](/payroll-pt/corrigir-um-processamento).
+
+### Sobrou um corretivo a mais
+
+Abra o que não interessa, escolha **Ações › Anular**, escreva o **Motivo** e carregue em **Confirmar anulação**.
+
+### O mês original já foi declarado
+
+**Quem faz:** Administrador de Salários. Se a causa é uma retribuição que mudou:
+
+1. No recibo, em **Ações**, escolha **Alteração retroativa da retribuição**, preencha **Nova retribuição mensal** e **Motivo** e carregue em **Alterar e preparar o corretivo**. Use-a só se a retribuição mudou mesmo, porque altera também o contrato.
+2. Abra **Salários › Processar › Correções ao processamento** e a correção **Em curso** desse mês.
+3. Na linha **DMR de substituição**, carregue em **Gerar**.
+4. Abra o recibo corretivo e carregue em **Validar**.
+
+Na demonstração, com agosto de 2026 declarado, **Validar** antes do passo 3 deu a recusa acima, e depois dele o corretivo ficou **Validado**. A correção continua **Em curso**: o que falta está em [Como corrigir um processamento](/payroll-pt/corrigir-um-processamento), e a entrega da declaração em [DMR de substituição](/payroll-pt/dmr-de-substituicao).
+
+Se é outro valor, ou se já criou o corretivo com **Criar corretivo**, hoje o ecrã não tem saída: em **Correções ao processamento**, **Novo**, o campo **Recibo a corrigir** responde «Sem registos». Anule esse corretivo em **Ações › Anular** e contacte o suporte.
+
+{/* Nota interna (DOC-0401): «Sem registos» visto com o Administrador de Salários e com o administrador do sistema; defeito no relatório AUDITORIA_V7TS3. Rever este parágrafo quando for corrigido. */}
+
+### É só o IRS retido
+
+O caminho é outro: veja «Corrigir só o IRS retido» em [O recibo já está validado e não se altera](/troubleshooting/recibo-validado-nao-se-altera).
+
+## Resultado esperado
+
+O corretivo fica **Validado**, com o aviso «Recibo corretivo de:». O recibo original não muda.
+
+## Quando contactar o suporte
+
+- **Validar** continua a dar «Sem acesso» depois de o Administrador de Salários o tentar.
+- Não há **Retificar** nem **Ações › Criar corretivo** num recibo **Validado** ou **Pago**.
+- O mês já foi declarado e o valor a corrigir não vem de uma retribuição que mudou.
+
+## Informação a enviar
+
+- O nome do trabalhador e o período do recibo original.
+- O estado do recibo e do corretivo, se já existe.
+- O texto completo da mensagem, copiado do ecrã.
+- O perfil com que entrou.
+
+{/* Nota interna (DOCS-066 #3947, lote v23-BA, master ce51f2d47, docs_demo_v23ba_test, 10/11/2026, DEF-QA8-c-02): a mensagem «Não tem acesso a «Exceção auditada…»» foi provocada pela integração com um utilizador criado só com o perfil Processador de salários (leitura do registo da exceção, o que o Validar faz); a base não tem nenhum corretivo com linhas para a provocar por clique. «Quem faz» diz hoje os acessos extra, não uma lista de perfis. */}

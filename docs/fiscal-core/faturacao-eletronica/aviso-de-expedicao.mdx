@@ -1,0 +1,85 @@
+---
+id: aviso-de-expedicao
+slug: /fiscal-core/aviso-de-expedicao
+title: Como enviar o aviso de expedição a partir da guia
+sidebar_label: Aviso de expedição
+sidebar_position: 3
+description: Enviar ao retalhista, por EDI, o aviso de expedição (DESADV) da guia de transporte emitida, e confirmar que o operador o aceitou.
+keywords: [aviso de expedição, aviso de expedicao, DESADV, enviar aviso de expedição, guia de transporte, EDI, retalhista, mercadoria a caminho, SSCC, paletes, painel EDI]
+doc_id: DOC-0059
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 3a28c9b91)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao-eletronica/encomendas-edi, fiscal-core/transporte/emitir-uma-guia-de-transporte]
+---
+
+<HelpCallout type="risco" title="Nesta versão, só a conta de testes da Saphety">
+O fiscaldoo só liga ao ambiente de testes da Saphety (veja [Como ligar o EDI e a Saphety](/fiscal-core/ligar-o-edi)): um aviso «Aceite» foi aceite por esse ambiente e não chegou ao retalhista. Avise o retalhista da expedição pela via habitual.
+</HelpCallout>
+
+## Para que serve?
+
+O aviso de expedição diz ao retalhista, por EDI, o que vai a caminho: os artigos, as quantidades e a guia que os acompanha. O fiscaldoo constrói-o a partir da guia de transporte emitida. A guia não muda.
+
+## Quando utilizar?
+
+- A encomenda do retalhista foi confirmada ([Como receber e responder a encomendas EDI](/fiscal-core/encomendas-edi)) e a guia da entrega foi emitida.
+- O retalhista pede o aviso: **Aviso de expedição (DESADV)** marcado no separador **Faturação eletrónica (EDI)** do cliente.
+
+## Onde encontrar?
+
+**Faturação › Faturar › Guias de transporte**, abra a guia: botão **Enviar aviso de expedição**.
+
+## Antes de começar
+
+- O seu perfil é **Administrativo**. Os passos foram feitos do princípio ao fim com um utilizador só com este perfil. O perfil **Contabilista** também tem o botão **Enviar aviso de expedição**.
+- A guia já está emitida e tem o código da AT. Quem a emite precisa de acesso ao **Inventário**: veja [Como emitir uma guia de transporte e obter o código da AT](/fiscal-core/emitir-uma-guia-de-transporte).
+- O exemplo criou-se assim, na demonstração, com o administrador e a `Empresa Demonstração, Lda` escolhida no seletor de empresas: em **Vendas**, abrir o orçamento `S00004` do Retalhista Exemplo (EDI), carregar em **⋮** › **Duplicar** (fica `S00005`) e em **Confirmar**; abrir a entrega `DEM/OUT/00005`, escrever o **Início do transporte** no separador **Guia de transporte** e carregar em **Emitir guia** e **Confirmar**: a guia fica `GT D26/5`. A demonstração não está ligada à AT: o código AT da guia `GT D26/5` é fictício. Foi escrito à mão em **Registar o código da AT à mão**, só para o aviso de expedição poder sair, e não veio da AT. Numa empresa, a guia é comunicada à AT antes do aviso de expedição.
+- Os artigos da guia têm **Código de Barras** e o cliente e a empresa têm o **EAN/GLN**: [Como ligar o EDI e a Saphety](/fiscal-core/ligar-o-edi).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Faturação › Faturar › Guias de transporte** e abra a guia (no exemplo, a `GT D26/5`, da entrega `DEM/OUT/00005` da encomenda `S00005`). O botão **Enviar aviso de expedição** só aparece numa guia emitida de um cliente com o EDI e o aviso de expedição ativos.
+   ![Guia DEM/OUT/00005 com os botões Imprimir guia, Enviar aviso de expedição e Ações](/images/fiscal-core/aviso-de-expedicao/01-botao-enviar-aviso.png)
+2. Carregue em **Enviar aviso de expedição**. Aparece a mensagem «Aviso de expedição. Aceites: 1, à espera ou recusados: 0. Veja o detalhe no painel EDI.».
+3. O ecrã atualiza-se: o botão desaparece e, ao lado de **Ações**, fica o estado do aviso: **Aceite**.
+   ![Guia DEM/OUT/00005 depois do envio: o botão desapareceu e, ao lado de Ações, o estado do aviso é Aceite](/images/fiscal-core/aviso-de-expedicao/02-aviso-aceite.png)
+
+</StepByStep>
+
+**Envio automático.** No separador **Faturação eletrónica (EDI)** do cliente, a opção **Enviar o aviso de expedição automaticamente** dispensa o passo 2. Na demonstração está desligada e o envio foi feito pelo botão.
+
+## Resultado esperado
+
+- Em **EDI › Mensagens** fica a linha **Enviada**, **DESADV (aviso de expedição)**, `DESADV|GT D26/5`, do Retalhista Exemplo (EDI), com o **Estado** **Aceite**.
+- A guia `GT D26/5` fica igual: o número, o ATCUD, o código AT e as quantidades não mudam, e continua **Pronto** até alguém validar a saída dos bens.
+- O passo seguinte do percurso é a fatura: [Como enviar uma fatura por EDI](/fiscal-core/fatura-edi).
+
+## Notas importantes
+
+- **Um aviso aceite nunca se envia outra vez.** Depois de **Aceite**, o botão deixa de aparecer.
+- **Guia anulada depois do aviso.** O retalhista já recebeu o aviso; avise-o e, se a mercadoria ainda segue, emita uma guia nova. Não há mensagem EDI de anulação.
+- **Paletes (SSCC).** Se o cliente pede o código das paletes (**O cliente pede o SSCC das paletes**), o código é lido do nome da embalagem. O fiscaldoo ainda não gera o SSCC nem a etiqueta da palete.
+- Na demonstração, o aviso foi aceite pelo simulador do operador, não pela Saphety real. O formato do aviso que cada retalhista aceita confirma-se com a Saphety.
+
+{/* Nota interna (lote v23-AR, #4052, master d277b0e80, docs_demo_v23ar_test, porta 8508): por RPC, como administrador, só na cópia: S00004 (orçamento em rascunho da base-mãe, 35,61 €) duplicado para S00005 e confirmado; guia DEM/OUT/00005 emitida como GT D26/5 (início do transporte +30 min, AA-00-AA, transportador a própria empresa); código AT fictício DEMO-AT-0005 pelo assistente Registar o código da AT à mão (nada foi enviado à AT). Por clique, com um utilizador só com o Perfil Administrativo: botão Enviar aviso de expedição (captura 01), mensagem «Aviso de expedição. Aceites: 1, à espera ou recusados: 0. Veja o detalhe no painel EDI.», estado Aceite sem o botão (captura 02), Troca de documentos › Mensagens com a linha DESADV|GT D26/5 Aceite. Entrega e fatura não foram feitas neste lote (são do DOC-0061). Auditoria docs-aud-v23ar (master b605851c7): com um utilizador só com o Perfil Contabilista, a guia mostra Imprimir guia e Enviar aviso de expedição, e o envio foi aceite numa guia só da cópia (GT D26/6); a leitura «sem botões» foi feita antes de a barra carregar. O Contabilista certificado não foi conferido. */}
+{/* Nota interna (DOCS-046, lote v5-FC, 2.ª ronda, master 6fb7ee1d4): GT D26/5 emitida com o admin (Inventário; início +20 min, AA-00-AA, transportador Empresa Demonstração; comunicada ao simulador da AT, MOCK-C5D6F8C6); envio com demo.faturacao. V5FC-11 saiu com o FAT-132 (visto com demo.faturacao, DOCS-065, master c643480c2). Recusas da guia não emitida/anulada e do código de barras em falta não foram provocadas: o botão só aparece em guias emitidas de clientes EDI e os artigos EDI da demonstração têm código. */}
+
+## Problemas frequentes
+
+### Não vejo o botão «Enviar aviso de expedição»
+
+- **Causa:** a guia ainda não foi emitida, foi anulada ou cancelada, o cliente não tem o EDI ou o **Aviso de expedição (DESADV)** ativos, ou o aviso já foi aceite.
+- **O que fazer:** confirme que a guia tem número e ATCUD e veja o separador **Faturação eletrónica (EDI)** do cliente.
+
+### O aviso não foi aceite
+
+- **Sintoma:** na mensagem do passo 2, o aviso conta em «à espera ou recusados» e não em «Aceites». (Na demonstração o aviso foi aceite; este caso não foi visto no ecrã.)
+- **O que fazer:** abra **EDI › Painel**: no bloco **Por tratar** está o motivo (por exemplo, um artigo sem **Código de Barras** válido ou um GLN em falta). Corrija-o e carregue de novo em **Enviar aviso de expedição**.
+
+{/* Nota interna (DOCS-075, lote v23-BJ, master 7f41ce71b): a mensagem do passo 2 diz agora «painel da Troca de documentos» (UX-163, c8e2cded1, pt_PT.po do l10n_pt_fiscaldoo_edi_docs). Não reenviada na cópia: este lote não envia documentos. */}

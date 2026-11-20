@@ -1,0 +1,57 @@
+---
+id: so-os-seus-proprios-registos
+slug: /troubleshooting/so-os-seus-proprios-registos
+title: Aparece «Só pode … os seus próprios…»
+sidebar_label: "«Só pode… os seus próprios»"
+sidebar_position: 8
+description: Recibos, deslocações, assinaturas e relatórios abertos por outra pessoa só os abre ou decide o próprio trabalhador ou utilizador. Peça aos Recursos Humanos o que for de outra pessoa.
+keywords: [só pode, os seus próprios, seus proprios, outro trabalhador, outro utilizador, registar as suas próprias deslocações, recibo de outra pessoa, relatório aberto por outro utilizador, O meu espaço]
+doc_id: DOC-0415
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master b8b799c8)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-permissao]
+---
+
+## Sintoma
+
+Ao registar uma deslocação, imprimir um recibo ou assinar um documento, o fiscaldoo recusa porque o registo é de outra pessoa.
+
+## Mensagem
+
+Copiada da base de demonstração em português, provocada pela integração com o perfil **Trabalhador**, ao registar uma deslocação em nome de outro trabalhador:
+
+> «Só pode registar as suas próprias deslocações. Como resolver: peça aos recursos humanos que a registem por si.»
+
+As outras mensagens desta família têm a mesma lógica: «Só o próprio signatário assina o seu documento», «Só pode preencher os seus próprios campos», «Só pode decidir sobre propostas que pediu» e, só para o perfil Auditor, «Este relatório foi aberto por outro utilizador. Abra-o de novo a partir do menu: cada utilizador consulta o seu relatório.» *(A frase das propostas do Copiloto foi provocada e bate com a citada. Pendente de validação no ecrã: a demonstração não tem pedidos de assinatura nem relatórios abertos por outra pessoa.)*
+
+## Causas verificadas
+
+O **Trabalhador** vê e decide só o que é seu: o seu recibo, as suas ausências, as suas deslocações e os documentos que lhe foram enviados ([O que posso fazer no O meu espaço](/people/o-meu-espaco)). Quem quer registar algo em nome de outra pessoa pede-o aos **Recursos Humanos**.
+
+## O que confirmar
+
+1. Se está a abrir o registo pelo menu **O meu espaço** e não por uma ligação de outra pessoa.
+2. Se o documento foi enviado para si ou para um colega.
+
+## Como resolver
+
+- Abra o registo a partir do seu **O meu espaço**: só aparece o que é seu.
+- Se é de um colega, peça aos **Recursos Humanos** que o registem, ou ao colega que o faça.
+
+**Quem faz:** o próprio trabalhador; ou os Recursos Humanos, em nome dele.
+
+## Resultado esperado
+
+O registo abre no seu **O meu espaço** e a operação passa.
+
+## Quando contactar o suporte
+
+- O registo é seu (o trabalhador da ficha é o seu utilizador) e a mensagem continua.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com o menu, o registo e a mensagem completa.

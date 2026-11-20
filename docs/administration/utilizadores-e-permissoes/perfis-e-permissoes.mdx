@@ -1,0 +1,151 @@
+---
+id: perfis-e-permissoes
+slug: /administration/perfis-e-permissoes
+title: Como dar a cada utilizador o perfil certo
+sidebar_label: Perfis dos utilizadores
+sidebar_position: 1
+description: Escolher o perfil de cada utilizador no separador Perfil, ver o que cada perfil faz, dar nos Ajustes avançados um acesso extra que nenhum perfil dá e evitar juntar o Auditor a um perfil que altera dados.
+keywords: [perfil, perfis, permissões, permissoes, acessos, grupo, utilizador, utilizadores, administrativo, contabilista, contabilista certificado, gestor fiscal, responsável fiscal, responsavel fiscal, administração fiscal, administracao fiscal, auditor, ROC, gerência, gerencia, atribuir um perfil, ajustes avançados, ajustes avancados]
+doc_id: DOC-0312
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 3a28c9b91)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/empresa/contabilista-certificado, getting-started/primeira-configuracao/configurar-uma-empresa-nova]
+---
+
+## Para que serve?
+
+O perfil decide o que cada pessoa vê e pode fazer: emitir faturas, lançar, fechar períodos, entregar declarações ou só consultar. Um perfil a mais deixa alguém fazer o que não devia; um perfil a menos esconde-lhe os menus de que precisa.
+
+## Quando utilizar?
+
+- Quando uma pessoa nova começa a usar o fiscaldoo.
+- Quando alguém muda de funções, por exemplo passa a entregar as declarações.
+- Quando uma pessoa diz que não vê um menu que os colegas veem.
+
+## Onde encontrar?
+
+- Uma pessoa: **Definições › Utilizadores e empresas › Utilizadores**, abra o utilizador, separador **Perfil**.
+- Várias pessoas de uma vez: **Definições › Utilizadores e empresas › Atribuir um perfil**.
+
+## Antes de começar
+
+- Precisa de acesso às **Definições** (administrador da base de dados). Os passos foram feitos com o administrador. Nenhum valor do campo **Perfil** (Administrativo, Contabilista, Contabilista certificado, Processador de salários, Gestor de RH, Gerência, Trabalhador, Auditor / ROC) vê as **Definições**.
+- O utilizador já existe, com nome e e-mail de acesso. Para criar um, carregue em **Novo** na lista **Utilizadores**.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Definições › Utilizadores e empresas › Utilizadores** e abra o utilizador, por exemplo **Utilizador Exemplo**.
+2. No separador **Perfil**, escolha um **Perfil**: **Administrativo**, **Contabilista (opera)**, **Contabilista certificado (assina, fecha períodos)**, **Processador de salários**, **Gestor de RH**, **Gerência**, **Trabalhador** ou **Auditor / ROC**. O ecrã explica: «Escolher um perfil define os grupos de acesso certos. Para algo diferente, use «Ajustes avançados».» Nos outros artigos do site, os perfis escrevem-se só com o nome, sem a nota entre parênteses que o ecrã acrescenta a dois deles.
+   ![Separador Perfil com as oito opções de perfil e o campo Acesso de auditor até](/images/administration/perfis-e-permissoes/01-separador-perfil.png)
+3. Para um auditor externo, preencha também **Acesso de auditor até** com a data em que o acesso acaba.
+4. Carregue em **Guardar** (ícone da nuvem).
+5. Para ver ou acertar o que o perfil deu, abra o separador **Ajustes avançados** e desça até ao grupo **LOCALIZAÇÃO PT**. É aqui que se dá um acesso extra que nenhum perfil da lista do passo 2 dá, por exemplo **Administração fiscal** ou **Submissões fiscais**.
+   ![Grupo Localização PT dos Ajustes avançados de um Contabilista certificado, com Responsável fiscal, Contabilista Certificado / Gestor fiscal e Migração / Importação fiscal escolhidos](/images/administration/perfis-e-permissoes/02-ajustes-avancados-localizacao-pt.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+Ao guardar, o perfil escolhido passa a estes valores do grupo **LOCALIZAÇÃO PT** (vistos na demonstração, um perfil de cada vez):
+
+| Perfil (separador **Perfil**) | **Localização PT — Faturação, contabilidade e fiscal** | Outros do grupo **LOCALIZAÇÃO PT** |
+|---|---|---|
+| **Administrativo** | **Faturação** | nenhum |
+| **Contabilista** | **Contabilista** | nenhum |
+| **Contabilista certificado** | **Contabilista Certificado / Gestor fiscal** | **Responsável fiscal (submete à AT)** e **Migração e importação fiscal (saldos, SAF-T)** |
+| **Gerência** | nenhum | **Gerência** |
+| **Auditor / ROC** | nenhum | **Auditor (só consulta)** |
+| **Processador de salários**, **Gestor de RH**, **Trabalhador** | nenhum | nenhum (dão o grupo **Salários PT**: **Processador de Salários**, **RH** ou **Trabalhador (portal-lite)**) |
+
+Os níveis de **Localização PT — Faturação, contabilidade e fiscal** são **Não**, **Faturação**, **Contabilista**, **Contabilista Certificado / Gestor fiscal** e **Administração fiscal**, e cada um inclui o anterior. O texto de ajuda do campo (o «?» ao lado) diz o que cada um faz: a **Faturação** cria faturas, notas de crédito e de débito e recibos, sem lançamentos nem configuração fiscal; o **Contabilista** faz lançamentos, reconciliação e relatórios; o **Contabilista Certificado / Gestor fiscal** faz o fecho do ano, a configuração fiscal e prepara as declarações, e a ajuda avisa: «Por si só não permite submeter declarações à Autoridade Tributária: para isso é preciso o perfil «Responsável fiscal» ou «Submissões fiscais».»; a **Administração fiscal** tem acesso total às funções fiscais. Nenhum valor do campo **Perfil** dá a **Administração fiscal** nem as **Submissões fiscais**: o administrador tem-nas, e a mais alguém só se dão aqui, como acesso extra.
+
+{/* Nota interna (lote v23-O, DOCS-066, master dbbb5ac5c, docs_demo_v23o_test): a ajuda do nível «Contabilista Certificado / Gestor fiscal» foi vista no ecrã pela auditoria docs-aud-v23o (administrador, Ajustes avançados, ajuda do campo): não mudou e continua a falar do perfil «Responsável fiscal», que é o nome do acesso (grupo) e não um valor do campo Perfil; fica letra a letra. */}
+
+Na próxima entrada, a pessoa vê só as aplicações e os menus do perfil.
+
+### O que cada perfil vê
+
+Visto na demonstração com um utilizador por perfil, criado só com esse valor do campo **Perfil**. Sem contar com **Contactos**, **Discussões**, **Calendário** e **As minhas assinaturas**, que quase todos têm. Entre parênteses, os menus da barra de cima de cada aplicação.
+
+| Perfil | Aplicações e menus de topo |
+| --- | --- |
+| **Administrativo** | **Faturação** (Início, Faturar, Receber, Clientes e artigos), **Vendas** (Ordens), **Ponto de venda**, **EDI**, **Ausência**, **Despesas**, **Painéis** |
+| **Contabilista** | as do **Administrativo**, mais **Contabilidade** (Lançar, Reconciliar, Declarar, Fechar, Consultar, Configurar) e **Copiloto** (Agentes, Ligações às IAs, Controlo). Em **Configurar** só tem os grupos **Geral** (modelos de lançamento), **Bancos e ativos**, **Plano e regras legais** (ajustes manuais dos relatórios) e **Outras definições** (o arquivo) |
+| **Contabilista certificado** | as do **Contabilista**, mais **Auditoria** (Registos, Integridade, Conferências, Pacote do auditor) e todos os grupos do menu **Configurar**, incluindo **Faturação certificada**, **IVA e retenções**, **Plano e regras legais**, **Sistema e segurança**, **Migração e importações** e **Cofre de credenciais** |
+| **Gerência** | **Direção** (Início, Clientes e vendas, Dinheiro, Resultados, Pessoas, Obrigações, Aprovar), **Contabilidade** (sem **Configurar**), **Faturação**, **Salários** (Processar, Declarar, Fechar e consultar), **Pessoas** (Início, Trabalhadores, Contratos e saídas, Formação, com o crédito de horas), **Copiloto**, **Auditoria**, **EDI**, **Assinaturas** |
+| **Auditor / ROC** | **Contabilidade** (as seis, com **Configurar**), **Faturação**, **Copiloto**, **Auditoria**, **EDI**, **Assinaturas**. Não tem **Salários** nem **Pessoas**: dos salários, só vê **Auditoria › Conferências › Relatório de auditoria dos salários** |
+| **Processador de salários** | **Salários** (Preparar, Processar, Pagar, Declarar, Fechar e consultar), **Pessoas** (Início, só com os Indicadores, Trabalhadores, Contratos e saídas, Férias e ausências, Tempo de trabalho, Formação, com o crédito de horas, Consultar), **Despesas**. Em **Pessoas › Trabalhadores** não tem a lista **Trabalhadores**: tem os documentos, o diretório e os pedidos |
+| **Gestor de RH** | **Pessoas** (Início, com **O que há a tratar em RH?**, Trabalhadores, com a lista **Trabalhadores**, Contratos e saídas, Férias e ausências, Tempo de trabalho, Formação e Consultar; o detalhe está em [A aplicação Pessoas](/people/a-aplicacao-pessoas)), **Salários** (Preparar, Processar, Declarar, Fechar e consultar: sem **Pagar** e sem os recibos de vencimento), **Despesas**, **Assinaturas** |
+| **Trabalhador** | só **O meu espaço** (Recibos e documentos, Ausências e presenças, Formação, Deslocações e despesas, Diretório, Os meus dados, As minhas assinaturas) |
+
+O administrador da base de dados vê todas as aplicações. A lista curta, só com as aplicações, está em [O que é o fiscaldoo](/getting-started/o-que-e-o-fiscaldoo).
+
+### O que cada perfil pode fazer
+
+Ações vistas no ecrã com os mesmos utilizadores. «Sim»: o botão está lá. «Não»: o botão não aparece. «Sem o menu»: o perfil não tem o ecrã.
+
+| Perfil | Criar uma fatura (**Novo**) | Emitir um rascunho (**Confirmar**) | **Anular documento certificado** | Lançamento novo | **Gerar SAF-T** | **Exportar** uma lista |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Administrativo** | Sim | Sim | Não | Sem o menu | Sem o menu | Não |
+| **Contabilista** | Sim | Sim | Não | Sim | Sim | Não |
+| **Contabilista certificado** | Sim | Sim | Sim | Sim | Sim | Não |
+| **Gerência** | Não | Não | Não | Não | Sem o menu | Não |
+| **Auditor / ROC** | Não | Não | Não | Não | Sem o menu | Não |
+
+- Os ecrãs são **Faturação › Faturar › Faturas de clientes**, **Contabilidade › Lançar › Lançamentos › Lançamentos contabilísticos** e **Contabilidade › Declarar › Ficheiro SAF-T › Gerar SAF-T**. Emitir é carregar em **Confirmar** no rascunho, com qualquer um dos três perfis que o podem fazer: a fatura recebe o número da série e fica emitida. Na demonstração, o **Administrativo** e o **Contabilista** emitiram cada um um rascunho com **Confirmar**, e o **Contabilista certificado** anulou o do Administrativo: «Documento anulado: mantém o número e a assinatura e já não se altera. Não é preciso fazer mais nada.»
+- A **Gerência** e o **Auditor / ROC** abrem as faturas e os lançamentos só para ler: sem **Novo**, sem **Confirmar** num rascunho e sem o menu **Ações** na lista. Do SAF-T, veem **Contabilidade › Declarar › Ficheiro SAF-T › O que há para fazer com o SAF-T?** e os ficheiros já gerados, em **Auditoria › Conferências › SAF-T gerados**.
+- **Exportar** (menu **Ações** de uma lista, com linhas escolhidas): hoje só o administrador o tem. Os perfis têm nesse menu **Duplicar**, **Eliminar** e outras ações da lista, mas não **Exportar**. Quem precisar de uma lista em folha de cálculo pede-a ao administrador. <span className="fd-pending">Pendente de validação: as regras de permissões do fiscaldoo preveem que o Administrativo exporte as suas faturas e que o Contabilista, o Contabilista certificado e o Auditor / ROC exportem; o ecrã ainda não o permite.</span>
+- Nos salários: o **Processador de salários** cria recibos em **Salários › Processar › Recibos de vencimento** (**Novo**); a **Gerência** vê a lista, sem **Novo**. O **Gestor de RH** cria fichas em **Pessoas › Trabalhadores › Trabalhadores** (**Novo**). O **Trabalhador** só vê os seus recibos e pedidos em **O meu espaço**.
+
+### Pontos que costumam gerar dúvidas
+
+- **Auditoria:** a **Gerência**, o **Auditor / ROC** e o **Contabilista certificado** têm a aplicação. Os três veem **Auditoria › Pacote do auditor**.
+- **Layouts dos documentos emitidos:** o **Auditor / ROC** e o **Contabilista certificado** veem **Contabilidade › Configurar › Outras definições › Segurança e auditoria › Layouts dos documentos emitidos**, só para leitura: a lista não tem **Novo**. A lista mostra o **Modelo**, o **Desenho das tabelas**, o **Tipo de letra** e as cores de cada documento; só o **Auditor / ROC** tem também a coluna **Versão do layout**. O **Contabilista** e o **Administrativo** não têm este menu. {/* Nota interna (lote EE-14, DS-006 ba8d6c5e7 em master acd623385, docs_demo_ee14_test, porta 8526, 12/11/2026): por clique com utilizadores criados na cópia só com o perfil Contabilista certificado e só com o perfil Auditor / ROC: os dois abrem a lista (colunas Número, Tipo de documento, [Versão do layout só no Auditor], Modelo, Desenho das tabelas, Tipo de letra, Cor principal, Cor secundária, Guardado em; sem Novo). */} Cada documento emitido guarda ali o layout que estava em uso quando foi emitido, e a 2.ª via usa esse registo.
+- **Gerir layouts dos documentos:** é uma permissão que se junta ao perfil, em **Definições › Utilizadores e empresas › Utilizadores**, separador **Ajustes avançados**, grupo **Localização PT**. Quem a tem cria, valida e põe em uso o aspeto das faturas em **Faturação › Configurar › Layouts dos documentos** e em **Contabilidade › Configurar › Faturação certificada › Layouts dos documentos** (ver [Como mudar o aspeto das faturas](/fiscal-core/layouts-dos-documentos)). Sem ela, o **Administrativo** não tem o menu **Configurar** da **Faturação**.
+- **Ligar o Copiloto:** em **Copiloto › Controlo › Interruptores**, o **Contabilista certificado** tem o botão **Ligar o essencial**, que liga só os interruptores seguros. Na demonstração: «O essencial ficou ligado para “Empresa Demonstração, Lda”: 6 interruptores. Os que comunicam para fora ficam desligados.» Os interruptores um a um, incluindo os que comunicam para fora, só os muda quem tem o acesso extra **Administração fiscal**. O **Contabilista** e o **Auditor / ROC** veem a lista sem o botão e sem poder mudar nada.
+- **Data de bloqueio definitivo:** em **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**, botão **Datas de bloqueio**, a janela do **Contabilista certificado** traz a lista «Datas que o seu perfil não pode alterar»: a **Data de bloqueio da declaração de impostos** só a pode recuar e, para a outra, diz «Data de bloqueio definitivo: o seu perfil não a pode alterar; peça ao administrador.» Nenhum valor do campo **Perfil** a muda: só o administrador, ou quem tem o acesso extra **Administração fiscal**. O passo a passo está em [Datas de bloqueio](/accounting-pt/datas-de-bloqueio).
+- **Prova de exportação:** numa fatura de exportação isenta, o **Contabilista** e o **Contabilista certificado** registam a prova no menu **Ações**, **Provas de exportação**, **Novo**. O **Auditor / ROC** e a **Gerência** abrem a mesma lista sem **Novo**. O **Administrativo** não tem **Provas de exportação** no menu **Ações**. A fatura avisa: «Quando chegar, um utilizador com o perfil «Contabilista (opera)» ou «Contabilista certificado (assina, fecha períodos)» regista-a». Veja [Provas de exportação](/accounting-pt/provas-de-exportacao).
+
+### Os acessos extra mais pedidos
+
+Dão-se nos **Ajustes avançados** (passo 5), por cima de um perfil. Vistos na demonstração, cada um junto ao perfil indicado:
+
+| Acesso extra | Junto a | O que acrescenta |
+| --- | --- | --- |
+| **Administração fiscal** | **Contabilista certificado** | **Faturação certificada › Credenciais da AT**, **Cofre de credenciais** (**Iniciar o cofre** e **Permissões**) e **Raio-X de permissões**, em **Contabilidade › Configurar**; no **Copiloto**, o menu **Instruções**, as **Regras agendadas com IA** e, em **Ligações às IAs**, as **Ligações**, os **Agentes e ligações**, as **Definições da IA**, os **Preços da IA** e o **Endereço único das faturas de fornecedor**, e os interruptores um a um; a **Data de bloqueio definitivo** (a janela das datas de bloqueio deixa de a recusar); e **Corrigir dados de certificação** no menu **Ações** de uma fatura emitida |
+| **Ver ausência médica** | **Gestor de RH** | **Salários › Preparar › Ausências e presenças › Baixas por incapacidade** |
+| **Administrador de Salários** | **Processador de salários** | **Salários › Configurar** (empresa, legislação, regulamentação coletiva, rubricas, Segurança Social e IRS, migração e outras definições), **Salários › Processar › Correções ao processamento**, **Salários › Pagar › Acerto com credores**, **Salários › Declarar › Modelo 10 dos trabalhadores**, **Salários › Declarar › Relatório Único** e **Salários › Fechar e consultar › Mapas de recursos humanos › Análise interna de remunerações**; em **Pessoas**, o **Painel de RH** (em **Início**), **Pessoas › Configurar**, **Pessoas › Consultar › Relatório Único**, **Pessoas › Trabalhadores › Confirmações dos trabalhadores**, **Pessoas › Formação › Configuração e painéis › Cursos** e, em **Pessoas › Contratos e saídas**, os apoios do Estado e à contratação e os benefícios fiscais e aumentos |
+
+{/* Nota interna (lote v23-AJ, DOCS-069 #4052, master 7a3b55244, docs_demo_v23aj_test, porta 8496): tabelas vistas no ecrã a 08/11 com 11 utilizadores criados por RPC (perfil.*: um por valor do campo Perfil e três com um acesso extra), empresa Demonstração. Menus pelo que o ecrã carrega sem modo de programador (load_menus) e, para o Auditor, o menu Configurar aberto por clique. FT D26/31 é um rascunho do lote, emitido pelo Administrativo e anulado pelo Contabilista certificado; nenhum documento que já existia foi emitido, anulado ou alterado. «Ligar o essencial» carregado pelo Contabilista certificado na cópia. A Data de bloqueio definitivo não foi gravada (só lida a janela). O Administrador de Salários dá também as aplicações Ponto de venda e Painéis: é o defeito SEC-118 e fica fora da tabela até ser corrigido. Exportar: a matriz de permissões (DEC-915, permission_matrix.json) dá «permitido» à Faturação nas faturas e ao Contabilista, ao Contabilista certificado e ao Auditor, mas nenhum perfil dá base.group_allow_export (auditoria docs-aud-v23aj). O artigo provas-de-exportacao diz que o Contabilista não regista a prova; o ecrã de hoje mostra-lhe Novo (reportado). */}
+
+## Vídeo demonstrativo
+
+O vídeo dá o perfil **Contabilista** ao **Utilizador Exemplo** (o passo 3 é só para um auditor).
+
+<VideoTutorial src="/videos/perfis-e-permissoes.mp4" captions="/videos/perfis-e-permissoes.vtt" poster="/videos/perfis-e-permissoes-poster.png" width="1440" height="1140" title="Dar o perfil certo a um utilizador" duration="27 s" />
+
+## Notas importantes
+
+<HelpCallout type="risco" title="O Auditor / ROC não deve alterar dados">
+Um auditor ou revisor oficial de contas só consulta. Não lhe junte, nos **Ajustes avançados**, um perfil que altera dados. Hoje a ficha do utilizador deixa guardar **Auditor (só consulta)** com **Contabilista** sem nenhum aviso (o assistente da empresa nova recusa-o, a ficha não). Confirme o grupo **LOCALIZAÇÃO PT** depois de guardar. <span className="fd-pending">Pendente de validação por contabilista certificado: incompatibilidades de funções que a lei impõe ao revisor e ao auditor.</span>
+</HelpCallout>
+
+{/* Nota interna (DOCS-020): defeito proposto no LOTE_A (P-A19): res.users aceita Auditor + Contabilista nos Ajustes avançados; o assistente (passo 10) diz «Um auditor não pode ter também um perfil que altera dados». Rever o aviso quando o cartão entrar. */}
+
+- O acesso **Responsável fiscal** é o de quem entrega à AT e vem com o perfil **Contabilista certificado**. Dê esse perfil (ou só este acesso, nos **Ajustes avançados**) a quem tem essa responsabilidade na empresa. Escolher outro perfil no separador **Perfil** tira-o (a demonstração tirou o acesso **Responsável fiscal** ao passar de **Contabilista certificado** para **Administrativo**).
+- O perfil é por base de dados; as empresas a que a pessoa acede escolhem-se em **Ajustes avançados**, **Empresas**.
+- **Atribuir um perfil** faz o mesmo para vários utilizadores: escolha o **Perfil**, os **Utilizadores** e carregue em **Aplicar**.
+
+## Problemas frequentes
+
+### Um utilizador não vê um menu
+
+- **Causa:** o perfil dele não inclui esse menu. Por exemplo, o **Contabilista** gera o SAF-T mas não vê **Descarregar ficheiro**: [Como gerar o ficheiro SAF-T de faturação](/fiscal-core/gerar-o-saft).
+- **O que fazer:** confirme o perfil no separador **Perfil** e o grupo **LOCALIZAÇÃO PT** dos **Ajustes avançados**. Se a pessoa precisa só daquele passo, prefira que outra pessoa com o perfil certo o faça, em vez de lhe dar um perfil acima.
+

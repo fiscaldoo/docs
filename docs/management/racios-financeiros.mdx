@@ -1,0 +1,109 @@
+---
+id: racios-financeiros
+slug: /management/racios-financeiros
+title: Como ler os rácios financeiros
+sidebar_label: Rácios financeiros
+sidebar_position: 8
+description: O que mede cada rácio do ecrã Rácios financeiros (liquidez, autonomia, solvabilidade, endividamento, rendibilidade, rotação e prazos médios), de onde vêm os valores e porque um rácio pode ficar em branco.
+keywords: [rácios financeiros, racios financeiros, liquidez geral, liquidez reduzida, autonomia financeira, solvabilidade, endividamento, rendibilidade, rentabilidade, ROE, ROA, rotação do ativo, prazo médio de recebimento, prazo médio de pagamento, PMR, PMP, direção, direcao]
+doc_id: DOC-0275
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/balanco, accounting-pt/relatorios/demonstracao-de-resultados, management/painel-da-direcao]
+---
+
+Um rácio é uma divisão entre dois números das contas da empresa: diz, por exemplo, quantos euros a empresa tem a curto prazo por cada euro que deve a curto prazo. O ecrã **Rácios financeiros** calcula onze rácios a partir do [Balanço](/accounting-pt/balanco) e da [Demonstração de resultados](/accounting-pt/demonstracao-de-resultados) da empresa, para o período escolhido.
+
+## Onde encontrar
+
+- Perfil **Gerência**: **Direção › Resultados › Rácios financeiros**.
+- Perfil **Contabilista**: **Contabilidade › Consultar › Demonstrações financeiras › Rácios financeiros**.
+
+No topo escolhe o período (**Mês**, **Trimestre** ou **Ano**, e o ano), e pode marcar **Comparar com período anterior**. **Exportar PDF** e **Exportar** tiram o quadro para fora do ecrã.
+
+![Topo do ecrã Rácios financeiros com os botões Exportar PDF e Exportar, a escolha Mês, Trimestre ou Ano, o ano 2026, a opção Comparar com período anterior, o aviso dos pagamentos por reconciliar e os cinco primeiros rácios de 2026: liquidez geral e reduzida 1,71, autonomia financeira 0,28, solvabilidade 0,39 e endividamento 0,72](/images/management/racios-financeiros/01-periodo.png)
+
+O quadro tem três colunas: **Linha** (o nome do rácio e a conta, em palavras), **Valor** e **Fórmula (rubricas)** (a mesma conta, com os nomes das linhas do Balanço e da Demonstração de resultados, por exemplo «Ativo corrente / Passivo corrente»).
+
+## O que mede cada rácio
+
+| Rácio | Conta | O que diz |
+| --- | --- | --- |
+| **Liquidez geral** | ativo corrente ÷ passivo corrente | Quanto a empresa tem a curto prazo (clientes, bancos, Estado a receber) por cada euro que deve a curto prazo. |
+| **Liquidez reduzida** | (ativo corrente − inventários − ativos biológicos) ÷ passivo corrente | O mesmo, sem contar com o que ainda está em armazém. |
+| **Autonomia financeira** | capital próprio ÷ ativo total | Que parte do que a empresa tem é financiada pelos sócios e pelos resultados, e não por dívida. |
+| **Solvabilidade** | capital próprio ÷ passivo total | Quantos euros de capital próprio há por cada euro de dívida. |
+| **Endividamento** | passivo total ÷ ativo total | Que parte do que a empresa tem é financiada por dívida. Soma 1 com a autonomia financeira. |
+| **Rendibilidade do capital próprio** | resultado líquido ÷ capital próprio | Quanto o resultado do período rende sobre o capital dos sócios. |
+| **Rendibilidade do ativo** | resultado líquido ÷ ativo total | Quanto o resultado rende sobre tudo o que a empresa tem. |
+| **Rotação do ativo** | vendas ÷ ativo total | Quantos euros de vendas a empresa faz por cada euro que tem. |
+| **Rotação dos inventários** | custo das mercadorias vendidas ÷ inventários | Quantas vezes o armazém “roda” no período. |
+| **Prazo médio de recebimento** (dias) | clientes ÷ (vendas e serviços + IVA) × dias | Quantos dias, em média, os clientes demoram a pagar. |
+| **Prazo médio de pagamento** (dias) | fornecedores ÷ (compras + fornecimentos e serviços externos + IVA) × dias | Quantos dias, em média, a empresa demora a pagar aos fornecedores. |
+
+Os sete primeiros são uma proporção (0,33 quer dizer 33 %). As duas rotações dizem quantas vezes (1,33 quer dizer 1,33 vezes). Os dois prazos médios são em dias.
+
+## Exemplo
+
+Na Empresa Demonstração, Lda, com o perfil **Gerência**, o ano de 2026 (01/01/2026 a 31/12/2026, visto a 10 de novembro) e **Comparar com período anterior** marcado:
+
+| Rácio | 2026 | 2025 |
+| --- | --- | --- |
+| Liquidez geral | 1,71 | 0,00 |
+| Liquidez reduzida | 1,71 | 0,00 |
+| Autonomia financeira | 0,28 | 0,62 |
+| Solvabilidade | 0,39 | 1,67 |
+| Endividamento | 0,72 | 0,38 |
+| Rendibilidade do capital próprio | −0,84 | 0,24 |
+| Rendibilidade do ativo | −0,23 | 0,15 |
+| Rotação do ativo | 0,15 | 1,33 |
+| Rotação dos inventários | (em branco) | (em branco) |
+| Prazo médio de recebimento | 52,39 | 0,00 |
+| Prazo médio de pagamento | 22,89 | (em branco) |
+
+Os valores conferem com o **Balanço** e a **Demonstração de resultados** do mesmo ano:
+- Ativo corrente 41.030,84 € ÷ passivo corrente 23.962,68 € = 1,71. No ativo corrente pesam a linha **Caixa e depósitos bancários** (33.390,63 €, o mesmo que as contas de caixa e depósitos do [Balancete](/accounting-pt/balancete)) e **Clientes** (6.588,13 €). O passivo corrente é quase todo dívida ao Estado (**Estado e outros entes públicos**, 21.265,81 €). A liquidez reduzida é igual à geral porque a empresa não tem inventários.
+- Capital próprio 71.312,32 € ÷ ativo total 255.275,00 € = 0,28. Capital próprio 71.312,32 € ÷ passivo total 183.962,68 € = 0,39. Passivo total 183.962,68 € ÷ ativo total 255.275,00 € = 0,72. A autonomia financeira e o endividamento somam 1 (0,28 + 0,72), porque o ativo total é o capital próprio mais o passivo (71.312,32 € + 183.962,68 € = 255.275,00 €).
+- Resultado líquido −59.791,84 € ÷ capital próprio 71.312,32 € = −0,84, e ÷ ativo total 255.275,00 € = −0,23: a empresa tem prejuízo em 2026.
+- Vendas e serviços prestados 38.073,00 € ÷ ativo total 255.275,00 € = 0,15.
+- Clientes 6.588,13 € ÷ (vendas 38.073,00 € + IVA cobrado 7.827,77 €) × 365 dias = 52,39 dias. O IVA cobrado é o imposto da linha **Vendas** do [Resumo dos impostos](/accounting-pt/resumo-dos-impostos) do mesmo ano.
+
+## Como ler os valores
+
+- **Compare sempre com outro período.** Um rácio sozinho diz pouco: veja se melhora ou piora em relação ao ano anterior (a opção **Comparar com período anterior**).
+- **Os prazos médios contam os dias do período escolhido.** Com o ano todo escolhido e o ano ainda a decorrer, as vendas são só as feitas até hoje, mas a conta usa os 365 dias.
+- **Um rácio negativo** vem de um resultado líquido negativo (prejuízo) ou de um capital próprio negativo. Leia o rácio com a [Demonstração de resultados](/accounting-pt/demonstracao-de-resultados) aberta.
+- O fiscaldoo não diz se um valor é bom ou mau: não há limites nem cores no quadro. Que valores são razoáveis depende do setor e da dimensão da empresa. <span className="fd-pending">Pendente de validação por contabilista certificado: valores de referência dos rácios por setor.</span>
+
+## O que o ecrã não vê
+
+- Só usa a contabilidade da empresa ativa (a que está escolhida no canto superior direito).
+- Não faz projeções: para o dinheiro dos próximos meses, use a [Previsão de tesouraria](/management/tesouraria).
+
+## No Enterprise
+
+No Odoo Enterprise, os rácios são o mesmo ecrã do fiscaldoo, e não um relatório do Enterprise, nos dois caminhos (visto com um utilizador só com o perfil **Gerência** e outro só com o perfil **Contabilista**). Tem as colunas **Linha**, **Valor** e **Fórmula (rubricas)**, o aviso dos pagamentos por reconciliar, **Mês**, **Trimestre** e **Ano**, **Comparar com período anterior**, **Exportar PDF** e **Exportar**. O **Contabilista** tem também **Guardar opções**, como no Community.
+
+{/* Nota interna (lote EE-13, DOCS-073 #4142, req 46633, DEC-1794, master 7f41ce71b, base Enterprise docs_ee_ee13_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee13_test): DOC-0275. Gerência (Direção › Resultados) e Contabilista (Contabilidade › Consultar): visualizador do fiscaldoo nas duas cópias; liquidez geral 1,72 na base Enterprise e 1,71 na Community (a base Enterprise tem mais uma fatura). Ver reports/LOTE_EE-13.md. */}
+
+## Problemas frequentes
+
+### Um rácio aparece em branco
+
+- **Causa:** a conta não se consegue fazer. Falta uma das linhas do Balanço ou da Demonstração de resultados, ou o número por que se divide é zero. No exemplo, a **Rotação dos inventários** fica em branco porque a empresa não tem inventários no Balanço.
+- **O que fazer:** nada, se a empresa não tem essa realidade (por exemplo, não tem armazém). Um rácio em branco não é zero.
+
+### «O referencial contabilístico de … não está definido, por isso esta demonstração não pode ser mostrada…»
+
+- **Sintoma:** numa empresa sem referencial, o ecrã mostra só esta mensagem e não calcula nada. Visto com a **Empresa Teste Filial**.
+- **O que fazer:** peça a um utilizador com o perfil **Contabilista certificado** ou ao administrador do sistema que escolha o **Referencial contabilístico** em **Definições › Utilizadores e empresas › Empresas**, separador **Localização PT**, como diz a mensagem. Depois abra de novo os rácios.
+
+{/* Nota interna (DOCS-046, lote v5-ADM, 02/11/2026, master 6fb7ee1d4, base docs_demo_v5adm_test): conceito, risco normal. Valores lidos no ecrã com o perfil Gerência (demo.gerencia), conferidos com o Balanço e a DR do mesmo perfil; empresa sem referencial vista com o administrador na Empresa Teste Filial. V5ADM-01 saiu com o UX-099: colunas Linha, Valor e Fórmula com nomes, vistas com demo.gerencia (DOCS-065, master c643480c2). Captura só do topo: o quadro não cabe em 400 px. */}
+
+{/* Nota interna (DOCS-066 #3947, lotes v23-AW, v23-AX e v23-AY, 10/11/2026, master fa7915ea8 com o REP-134 (DEC-1822), docs_demo_v23ay_test, porta 8505): tabela de 2026 e 2025 lida por clique com um utilizador só com o perfil Gerência (Direção › Resultados › Rácios financeiros, Ano 2026, Comparar com período anterior); Balanço e DR do mesmo perfil; caixa 33.390,63 € igual à classe 1 do Balancete (Contabilista), Financiamentos obtidos correntes 0,00 €. IVA cobrado 7.827,77 € (Resumo dos impostos, v23-AX; o PMR 52,39 do ecrã confere com ele). Captura 01 refeita com os cinco primeiros rácios. O defeito V23AX-01 saiu com o REP-134: o problema frequente e o «Pendente de validação» da autonomia foram retirados. */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-BA, master ce51f2d47, docs_demo_v23ba_test, 10/11/2026, DEF-QA8-c observação): quem escolhe o referencial é o que diz a mensagem de hoje, vista por clique no Balanço da Empresa Teste Portugal: um utilizador com o perfil Contabilista certificado ou o administrador do sistema. */}

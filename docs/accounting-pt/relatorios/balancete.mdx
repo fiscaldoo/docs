@@ -1,0 +1,120 @@
+---
+id: balancete
+slug: /accounting-pt/balancete
+title: Como tirar o balancete (analítico e por graus)
+sidebar_label: Tirar o balancete
+sidebar_position: 1
+description: Ver o saldo inicial, os movimentos e o saldo final de cada conta num mês, trimestre ou exercício, conferir que os débitos igualam os créditos e exportar o balancete em PDF, Excel ou CSV.
+keywords: [balancete, balancete analítico, balancete analitico, balancete geral, balancete do razão, balancete do razao, saldos das contas, trial balance, débitos e créditos, debitos e creditos, balancete mensal, balancete por graus, grau das contas, exportar balancete, balancete em excel, balancete em pdf, saldo inicial, saldo final]
+doc_id: DOC-0141
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c689f7580)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/balanco, accounting-pt/relatorios/demonstracao-de-resultados, accounting-pt/dia-a-dia/lancamentos-contabilisticos]
+---
+
+## Para que serve?
+
+O balancete mostra, conta a conta, o saldo no início do período, os débitos e créditos do período e o saldo no fim. É a primeira conferência de um fecho: se uma conta tem um saldo que não devia ter (um banco a crédito, um cliente a crédito, uma conta de passagem que não ficou a zero), vê-se aqui antes de chegar ao balanço ou à declaração.
+
+Tirar o balancete não cria nem altera lançamentos: só lê o que está publicado.
+
+## Quando utilizar?
+
+- No fim de cada mês, antes de [fechar o IVA](/accounting-pt/apuramento-do-iva) e de entregar a [declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva).
+- Para mandar ao contabilista certificado, ao banco ou à gerência os saldos de um período, em PDF ou numa folha de cálculo.
+- Para procurar uma conta com um saldo estranho e ver os lançamentos que o fizeram.
+- Para ver os saldos por conta e por classe, o relatório que muitos contabilistas chamam **balancete analítico** (saldo inicial, débitos, créditos e saldo final de cada conta).
+
+## Onde encontrar?
+
+**Contabilidade › Consultar › Livros e balancetes › Balancete**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. Com ele faz todos os passos deste artigo, incluindo as exportações (testado com o perfil Contabilista). A **Gerência** e o **Auditor / ROC** também têm o menu; o perfil **Administrativo** não tem a aplicação **Contabilidade**.
+- Os lançamentos do período estão publicados. Os rascunhos não entram, a não ser que os peça (passo 4).
+- No exemplo, a Empresa Demonstração, Lda, a 10/11/2026, com o exercício de 2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Consultar › Livros e balancetes › Balancete**. O balancete abre no exercício corrente (**Ano**, `01/01/2026 – 31/12/2026`), com uma linha por classe do plano de contas e as colunas **Saldo inicial**, **Movimentos do período** e **Saldo final**, cada uma com **Débito** e **Crédito**.
+   ![Cabeçalho do balancete com o selo Débitos = créditos assinalado, os botões Exportar PDF, Exportar, Guardar opções, Copiar ligação e Repor, e a barra do período com Mês, Trimestre e Ano, o exercício 2026 e Mais filtros](/images/accounting-pt/balancete/01-periodo-e-controlo.png)
+2. Escolha o período. **Mês**, **Trimestre** e **Ano** mudam o tamanho do período; as setas **‹** e **›** andam para trás e para a frente; a lista ao lado escolhe o mês, o trimestre ou o ano. Em **Mês** e **Trimestre**, escolha antes o ano na lista que aparece à direita (por exemplo, **2025** e **4.º trimestre 2025** dão `01/10/2025 – 31/12/2025`). Com **Mês** abre no mês corrente (no exemplo, **Novembro de 2026**) e com **Trimestre** no trimestre corrente (**4.º trimestre 2026**, `01/10/2026 – 31/12/2026`). Num mês ou trimestre, o **Saldo inicial** já inclui os movimentos dos meses anteriores do exercício.
+3. Confira o selo ao lado do título: **Débitos = créditos**. Confira também a última linha, **Total**: os débitos e os créditos de cada par de colunas são iguais (no exemplo, 219.500,00 €, 736.101,67 € e 364.163,18 €).
+4. Para ver mais detalhe, carregue em **Mais filtros**. As opções que mais se usam:
+   - **Desdobrar tudo** abre todas as classes até às contas; para abrir só uma, carregue no triângulo à esquerda da classe.
+   - **Grau**, com **Desdobrar tudo** marcado, mostra o balancete só até esse grau. Com `2`, a classe 2 abre em **21 Clientes**, **22 Fornecedores**, **23 Pessoal**, **24 Estado e outros entes públicos**… Nas classes 1 e 5 o grau 2 mostra **11 Caixa**, **12 Depósitos à ordem**, **51 Capital subscrito** e **56 Resultados transitados**.
+   - **Movimentos**: **Do período** ou **Acumulados no ano**.
+   - **Lançamentos das contas** mostra, debaixo de cada conta, os lançamentos que a movimentaram (data, número do documento e descrição), com a ligação **Documento** para os abrir.
+   - **Incluir rascunhos** junta os lançamentos ainda não publicados (ver «Notas importantes»).
+   - **Variante**: **Geral**, **IVA** ou **Retenções e Imposto do Selo**.
+   - **Variação (Δ e Δ %) face à comparação** mostra a diferença para o período anterior. A comparação liga-se em **Comparar com período anterior**, na barra do período, fora de **Mais filtros**.
+
+   As outras opções do painel são **De** e **até** (datas à escolha), **Período predefinido**, **Esconder contas sem valores** (marcada por omissão), **Por imposto**, **Contas de** e **até**, **Excluir contas** (por exemplo `2432, 62*`), **Linha de controlo (total dos débitos = total dos créditos)** (marcada), **Empresas**, **Agrupar contas por hierarquia** (marcada), **Mostrar valores em** (**Unidades**, **Milhares**, **Milhões**) e **Diários**.
+   ![Painel Mais filtros do balancete com as datas De e até, Incluir rascunhos, Período predefinido Este exercício, Desdobrar tudo, Grau, Movimentos Do período, Esconder contas sem valores, Lançamentos das contas, Variante Geral, Por imposto, Contas de, Excluir contas, Variação, Linha de controlo, Empresas, Agrupar contas por hierarquia, Mostrar valores em Unidades e Diários Todos](/images/accounting-pt/balancete/02-mais-filtros.png)
+5. Para tirar o balancete para fora, carregue em **Exportar PDF**, ou em **Exportar** e escolha **Exportar com opções…**, **Exportar XLSX**, **Exportar CSV (formato PT)**, **Exportar CSV (técnico)** ou **Imprimir**. O ficheiro sai com o período e as opções que estão no ecrã.
+   ![Botão Exportar aberto com Exportar com opções, Exportar XLSX, Exportar CSV (formato PT), Exportar CSV (técnico) e Imprimir, ao lado de Exportar PDF](/images/accounting-pt/balancete/03-exportar.png)
+6. Se vai voltar a usar as mesmas opções, carregue em **Guardar opções**. **Copiar ligação** copia o endereço do balancete com as opções escolhidas, para o mandar a um colega; **Repor** volta às opções de origem.
+
+</StepByStep>
+
+## No Enterprise
+
+Nesta versão, no Odoo Enterprise, **Contabilidade › Consultar › Livros e balancetes › Balancete** abre o balancete do próprio Enterprise, e não o ecrã deste artigo (visto com um utilizador só com o perfil **Contabilista**). O ecrã chama-se **Balancete** e abre no mês corrente (no exemplo, **nov. 2026**). As diferenças:
+
+- As colunas são **Saldo de Abertura** (**Saldo**), o período (**Débito** e **Crédito**) e **Saldo Final** (**Saldo**), com uma linha por classe, a linha **Resultado transitado** e a linha **Total**. Confira na linha **Total** que o **Débito** e o **Crédito** do período são iguais: não há o selo **Débitos = créditos**.
+- O período escolhe-se no botão da data (**Mês**, **Trimestre**, **Exercício** ou **Datas personalizadas**) e a comparação em **Comparação** (por exemplo **Período Anterior**).
+- Nesta versão, este ecrã não tem **Mais filtros**, **Grau**, **Variante** nem **Lançamentos das contas**. Para abrir uma classe, carregue na seta à esquerda dela. Em **Lançamentos feitos** estão **Lançamentos provisórios** (para juntar os rascunhos) e **Desdobrar Tudo**.
+- **Imprimir** dá o PDF e a roda dentada ao lado do título dá o **XLSX**. Nesta versão, não tem **Exportar CSV (formato PT)**, **Guardar opções** nem **Copiar ligação**.
+
+Nesta versão, algumas opções destas listas aparecem em inglês.
+
+{/* Nota interna (lote EE-02, DOCS-073 #4142, DEC-1794, master 7a46de91a, base Enterprise docs_ee_ee02_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): Contabilista: o menu Balancete é, no Enterprise, o balancete do Enterprise com os termos em português da ponte (UX-078, DEC-1239); a entrada do fiscaldoo está arquivada nesta edição. Visto: colunas, opções da data (Mês, Trimestre, Exercício, Datas personalizadas), Comparação (No Comparison, Período Anterior, Same Period Last Year, Datas personalizadas), Analítico, Lançamentos feitos (Lançamentos provisórios, Simulações analíticas, Subtotals, Desdobrar Tudo), Em .€ e a roda dentada (XLSX, Copy to Documents). Totais da cópia em nov. 2026: 110.956,46 € a débito e a crédito. Ver reports/LOTE_EE-02.md. */}
+
+## Resultado esperado
+
+- O selo diz **Débitos = créditos** e a linha **Total** tem débitos iguais aos créditos em cada par de colunas.
+- O PDF tem o nome da empresa, o NIF, o período, a data e o nome do utilizador que o emitiu («Emitido … por …»), e os mesmos valores do ecrã. No exemplo (`Empresa_Demonstracao_Lda_Balancete_2026-01-01_2026-12-31.pdf`), as linhas das 8 classes e o total são iguais aos do ecrã, e o XLSX e o CSV (formato PT) também (conferidos um a um).
+- Nenhum lançamento é criado: o balancete só lê.
+
+## Notas importantes
+
+- **Nos saldos, o total não é a soma das classes.** Cada classe mostra o saldo líquido das suas contas; a linha **Total** soma o saldo de cada conta. É por isso que, no exemplo, o saldo inicial a débito das classes (209.804,16 €) é diferente do total (219.500,00 €); o próprio ecrã o diz na linha do total. Nos **Movimentos do período**, o total é a soma das classes (736.101,67 €).
+- **Rascunhos mudam os números.** Com **Incluir rascunhos** marcado, os movimentos do exemplo passam de 736.101,67 € para 737.604,14 €, e mudam as linhas das classes 2 e 6. O **Saldo final** do **Total** fica em 364.163,18 €: os rascunhos do exemplo (o diferimento da fatura de fornecedor FTF/2026/00045 e os reconhecimentos de outubro a dezembro) passam 897,53 € da 6226 Conservação e reparação para a 281 Gastos a reconhecer, duas contas com saldo devedor, e a soma dos saldos devedores não muda. Não mande a terceiros um balancete com rascunhos sem o dizer; desmarque a opção antes de exportar.
+- **A classe 8 no exercício seguinte ao apuramento.** No exemplo, o resultado de 2025 foi apurado (lançamentos `APR/2025/00001` e `APR/2025/00002`, de 31/12/2025, que passam as classes 6 e 7 para a 811 e a 811 para a **818 Resultado líquido**, a crédito 31.104,16 €) e aplicado em 2026 (`MISC/2026/00013`, de 02/01/2026, «Aplicação do resultado de 2025»: 818 a débito e 561 Resultados transitados a crédito, 31.104,16 €). O balancete de 2026 mostra a classe **8 RESULTADOS** com 31.104,16 € a crédito no **Saldo inicial**, 31.104,16 € a débito nos **Movimentos do período** e 0,00 € no **Saldo final**, que é o saldo real da 818.
+- **A ligação Conta abre a ficha da conta, não os lançamentos.** Para ver os lançamentos de uma conta, use **Lançamentos das contas** em **Mais filtros** ou o razão.
+
+### Balancete analítico
+
+O balancete analítico, no sentido de saldos por conta, é este relatório. O balancete por centro de custo (contabilidade analítica) é outro ecrã, em **Consultar › Livros e balancetes**, explicado em [Como usar centros de custo](/accounting-pt/centros-de-custo).
+
+## Problemas frequentes
+
+### O balancete sai só com a linha Total a zeros
+
+- **Causa:** a empresa escolhida não tem lançamentos publicados no período. Numa empresa sem nenhum lançamento, o balancete mostra só **Total** a 0,00 € e o selo **Débitos = créditos** (visto numa empresa vazia da demonstração).
+- **O que fazer:** confirme a empresa no canto superior direito e o período. Se os lançamentos existem mas estão em rascunho, publique-os, ou marque **Incluir rascunhos** só para conferir.
+
+### Uma conta não aparece
+
+- **Causa:** **Esconder contas sem valores** está marcada e a conta não tem saldo nem movimentos no período, ou a conta está em **Excluir contas** ou fora de **Contas de** e **até**.
+- **O que fazer:** em **Mais filtros**, desmarque **Esconder contas sem valores** e limpe os filtros de contas.
+
+### Ao abrir a ficha da conta aparece «A conta de 2 dígitos 62 não existe no plano de contas…»
+
+- **Sintoma:** na ficha da conta (ligação **Conta**), uma faixa amarela: «A conta de 2 dígitos 62 não existe no plano de contas de Empresa Demonstração, Lda. Uma conta sob um prefixo desconhecido pode ser rejeitada pelo SAF-T; crie a conta-mãe 62 ou confirme o código.»
+- **O que fazer:** não mexe no balancete. Antes de gerar o [SAF-T de contabilidade](/accounting-pt/saft-de-contabilidade), fale com o contabilista certificado sobre as contas-mãe do plano.
+
+{/* Nota interna (DOCS-035, DOC-0141): o defeito P-V2-01 (REP-125) já não se vê (auditoria v20-A, master 0289754a8, porta 8328, Contabilista: classe 8 com 31.104,16 € a crédito no saldo inicial e a débito nos movimentos, saldo final 0,00 €; já não aparece a linha «Resultados de exercícios anteriores por apurar»; Total do saldo inicial 219.500,00 €). a faixa da conta-mãe 62 aparece na ficha de 6221 apesar de o balancete agrupar a conta debaixo de «62» (defeito B2-03 em reports/LOTE_B2.md). O estado «débitos diferentes dos créditos» não foi visto: os lançamentos publicados estão sempre equilibrados e não há forma de o provocar na demonstração sem SQL. Com Grau 2, as classes 1 e 5 mostravam 110000, 120000, 510000 e 560000 em vez de 11, 12, 51 e 56 (defeito B2-04); desde o SNC-022 (master 21f7dc02f, DOCS-050) o plano não tem códigos com zeros de enchimento e essas contas chamam-se 11, 12, 51 e 56, por isso o passo 4 já não fala da exceção. DOC-0141 tem video=sim na arquitetura; quando a DOCS-006 gravar o episódio, «## Vídeo demonstrativo» fica depois de «Resultado esperado». */}
+
+{/* Nota interna (lote v23-AT, DOC-0141, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador): o Administrativo não tem a aplicação Contabilidade */}
+
+{/* Nota interna (lote v23-BF, DOCS-063 #3853, 10/11/2026, master e4dd4ae90, docs_demo_v23bf_test acabada de copiar da base-mãe, porta 8504): totais lidos por clique com um utilizador só com o perfil Contabilista, antes de criar qualquer documento na cópia. Ano 2026: Total 219.500,00 € / 736.101,67 € / 364.163,18 € (os 736.101,67 € são a soma das 8 classes); saldo inicial a débito das classes 209.804,16 €; classe 8 com 31.104,16 € como antes; com Incluir rascunhos, movimentos 737.604,14 €. Mês abre em Novembro de 2026 e Trimestre em 4.º trimestre 2026. O PDF (Empresa_Demonstracao_Lda_Balancete_2026-01-01_2026-12-31.pdf) tirado depois na mesma cópia repete as linhas e o total do ecrã nesse momento. Capturas 01 a 03 sem números: não mudaram. A secção «No Enterprise» não foi tocada. */}
+
+{/* Nota interna (lote EE-15, comboio 197, master c689f7580, 12/11/2026, cópia Community docs_demo_ee15_test, porta 8532, perfil Contabilista): UX-165 (d39c98ae7): Trimestre e ano 2025 deram 01/10/2025 – 31/12/2025 no Balancete; a captura 01 (em Ano) continua certa, porque em Ano não há lista do ano. Ver reports/LOTE_EE-15.md. */}

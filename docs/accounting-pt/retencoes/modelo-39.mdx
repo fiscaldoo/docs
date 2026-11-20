@@ -1,0 +1,90 @@
+---
+id: modelo-39
+slug: /accounting-pt/modelo-39
+title: Como preparar o Modelo 39 (rendimentos de capitais)
+sidebar_label: Modelo 39
+description: Gerar o ficheiro do Modelo 39 com os juros de suprimentos e de mútuos pagos a pessoas singulares residentes, com a retenção a taxa liberatória, para o entregar no Portal das Finanças.
+keywords: [Modelo 39, modelo 39, ficheiro do modelo 39, rendimentos de capitais, taxa liberatória, taxa liberatoria, juros de suprimentos, juros de mútuos, juros de mutuos, códigos de rendimento do modelo 39, codigos de rendimento do modelo 39, retenção 28%, retencao 28%]
+doc_id: DOC-0107
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master cebcb888d)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/retencoes/modelo-10, accounting-pt/retencoes/modelo-30]
+---
+
+{/* Nota interna (DOCS-046 #3616, teste 14817, lote v23-Z, 08/11/2026, master cebcb888d, docs_demo_v23z_test): percurso inteiro com um utilizador criado só com o perfil Contabilista certificado. A base-mãe de hoje não tinha a fatura de juros: criados por RPC, só na cópia, dois rascunhos de fatura de fornecedor de Rui Matos (NIF 399999833), 1.000,00 € Juros de suprimentos e 500,00 € Juros de mútuos, só com a retenção de 28 %. Por clique: Confirmar recusou com a mensagem do IVA; depois de acrescentada a taxa 0% por RPC, Confirmar deu FTF/2026/00046 e FTF/2026/00047 (documento criado por RPC na cópia desse lote; não existe na base-mãe de hoje, lote 99). Linhas da 00046 lidas: 6911 débito 1.000,00; 242 crédito 280,00; 2211 crédito 720,00. Janela: ano 2025 por omissão e recusa dos quadros 4 e 6 por clique; com 2026, 3085 e Primeira declaração, ficheiro MODELO39_599999993_2026.xml descarregado por clique: linhas 399999833/03/100000/28000 e 399999833/19/50000/14000. O utilizador só com o perfil Contabilista vê Listas de apoio sem Ficheiro do Modelo 39 nem Códigos de rendimento do Modelo 39. Lei: CIRS art. 71.º e art. 119.º, n.º 12, al. b); Portaria n.º 350/2024/1. Nada foi enviado à AT. */}
+
+## Para que serve?
+
+O Modelo 39 é a declaração anual dos rendimentos de capitais pagos a pessoas singulares residentes, com retenção a taxa liberatória. Na prática, são os juros que a empresa paga a um sócio ou a quem lhe emprestou dinheiro, com 28 % de retenção.
+
+Este procedimento gera o ficheiro para entregar no Portal das Finanças. O produto não envia nada à Autoridade Tributária e Aduaneira (AT).
+
+A declaração abrange os rendimentos sujeitos a taxas liberatórias (Código do IRS, art. 71.º) e entrega-se até ao fim de fevereiro do ano seguinte (Código do IRS, art. 119.º, n.º 12, alínea b)). Se esse dia não for útil, o prazo passa para o primeiro dia útil seguinte, como a AT fez em 2026 (Ofício Circulado n.º 20286, de 15/01/2026). Os rendimentos de 2026 entregam-se até 1 de março de 2027, porque 28 de fevereiro de 2027 é um domingo. O modelo em vigor foi aprovado pela Portaria n.º 350/2024/1, de 23 de dezembro.
+
+## Quando utilizar?
+
+- Até ao fim de fevereiro, para declarar os juros pagos no ano anterior.
+- Quando a empresa paga juros de suprimentos a um sócio ou juros de um empréstimo a uma pessoa singular residente.
+- Quando entregou a declaração com erros e tem de a substituir.
+- Não use para rendimentos com retenção que não é liberatória, como rendas ou honorários: esses vão no [Modelo 10](/accounting-pt/modelo-10). Empresas e não residentes também não entram neste ficheiro.
+
+## Onde encontrar?
+
+**Contabilidade › Declarar › Retenções na fonte › O que há para fazer com as retenções?** › **Listas de apoio** › **Ficheiro do Modelo 39**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**. O **Contabilista** não tem esta ligação no painel, nem a de **Códigos de rendimento do Modelo 39**.
+- Os juros estão lançados em faturas de fornecedor confirmadas, do ano a declarar. Veja o passo 1.
+- Tem o número do seu **Serviço de Finanças**, com 4 algarismos.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Na fatura de fornecedor dos juros, a linha leva o imposto **Retenção IRS 28% — rendimentos de capitais (taxa liberatória)** e o imposto de IVA que o contabilista certificado indicar. Depois de escolher a retenção, abra o separador **Outra Informação** e, em **Natureza do rendimento de capitais**, escolha **Juros de suprimentos** ou **Juros de mútuos**. Confirme a fatura.
+   ![Campo Natureza do rendimento de capitais na fatura de fornecedor, com Juros de suprimentos escolhido](/images/accounting-pt/modelo-39/01-natureza-do-rendimento.png)
+2. Abra **Contabilidade › Declarar › Retenções na fonte › O que há para fazer com as retenções?**. Em **Listas de apoio**, carregue em **Ficheiro do Modelo 39**.
+3. Em **Ano**, escreva o ano a declarar, por exemplo `2026`. A janela abre com o ano anterior ao atual.
+4. Escreva o **Serviço de Finanças**, por exemplo `3085`.
+5. Se o contabilista certificado assina a declaração, escreva o **NIF do contabilista certificado**.
+6. Em **Tipo de declaração**, escolha **Primeira declaração** ou **Substituição**.
+   ![Janela Ficheiro do Modelo 39, com o ano 2026, o serviço de finanças 3085 e Primeira declaração](/images/accounting-pt/modelo-39/02-janela-do-ficheiro.png)
+7. Carregue em **Descarregar o ficheiro da AT**.
+8. Entregue o ficheiro no Portal das Finanças. A entrega é feita por si, fora do produto.
+
+</StepByStep>
+
+## Resultado esperado
+
+Descarrega-se o ficheiro `MODELO39_<NIF da empresa>_<ano>.xml`, por exemplo `MODELO39_599999993_2026.xml`. Tem uma linha por titular e por código de rendimento.
+
+No exemplo, a linha tem o NIF do sócio `399999833`, o código `03`, o rendimento de 1.000,00 € e o valor retido de 280,00 €. No ficheiro, os valores estão em cêntimos: `100000` e `28000`. **Juros de suprimentos** dá o código `03` e **Juros de mútuos** dá o código `19`: com uma segunda fatura de 500,00 € de juros de mútuos ao mesmo sócio, o ficheiro ganha uma segunda linha com o código `19`, `50000` e `14000`.
+
+A fatura de fornecedor do exemplo gera estas linhas. Gerar o ficheiro não gera lançamentos.
+
+| Conta | Débito | Crédito |
+|---|---:|---:|
+| 6911 Juros de financiamentos obtidos | 1.000,00 € | |
+| 242 Retenção de impostos sobre rendimentos | | 280,00 € |
+| 2211 Fornecedores gerais | | 720,00 € |
+
+## Notas importantes
+
+- O ficheiro só vê faturas de fornecedor confirmadas, com a retenção de taxa liberatória, com a natureza preenchida e de uma pessoa singular residente. Uma fatura sem natureza fica de fora sem aviso: confira o total do ficheiro com a conta 242 do ano. Uma fatura ainda por pagar também entra. <span className="fd-pending">Pendente de validação por contabilista certificado: o momento em que o rendimento conta.</span>
+- O produto reconhece a pessoa singular pelo NIF, que começa por 1, 2 ou 3. Sem NIF, usa a marca de empresa da ficha do contacto.
+- O ficheiro é gerado sempre de novo a partir das faturas, por isso não fica guardado no produto. Guarde-o com a prova da entrega.
+
+## Problemas frequentes
+
+**«Não é possível gerar o ficheiro do Modelo 39 de *2025*. O que aconteceu: O ficheiro do Modelo 39 não é válido: Quadro 4: falta o serviço de finanças (4 algarismos). | Quadro 6: não há rendimentos a declarar. Como resolver: corrija o que está indicado (serviço de finanças, NIF, códigos de rendimento).»** Podem faltar as duas coisas. Escreva o **Serviço de Finanças**. Depois, confirme o **Ano**, que abre no ano anterior.
+
+**Continua «Quadro 6: não há rendimentos a declarar».** Não há faturas desse ano nas condições de cima. Abra a fatura de fornecedor e confirme a retenção, a **Natureza do rendimento de capitais** e o estado. Se a fatura é de uma empresa ou de um não residente, não entra no Modelo 39.
+
+**Ao confirmar a fatura: «A linha “*Juros de suprimentos 2026*” da fatura a *Rui Matos* não tem taxa de IVA. Escolha uma taxa de IVA (ou uma taxa de IVA a 0% com motivo de isenção, ou uma taxa «não sujeito»).»** A retenção não substitui o imposto de IVA. Acrescente à linha o imposto de IVA que o contabilista certificado indicar.
+
+**O campo Natureza do rendimento de capitais não aparece.** Está no separador **Outra Informação** da fatura e só aparece quando a linha tem a retenção de rendimentos de capitais. Escolha primeiro a retenção.

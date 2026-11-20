@@ -1,0 +1,109 @@
+---
+id: debitos-diretos-lotes
+slug: /fiscal-core/debitos-diretos-lotes
+title: Como criar e enviar um lote de débitos diretos
+sidebar_label: Lotes de débito direto
+sidebar_position: 3
+description: Juntar as faturas de clientes com mandato ativo num lote SEPA, gerar o ficheiro para o banco, avisar os clientes e marcar o lote como enviado; o que o ecrã recusa.
+keywords: [débito direto, debito direto, SDD, SEPA, lote de débito direto, ficheiro SEPA, pain.008, pré-notificação, pré-aviso, identificador de credor, mandato, cobrar por débito direto, RUM, FRST, RCUR]
+doc_id: DOC-0042
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/recibos-e-cobrancas/devolucoes-de-debitos-diretos, fiscal-core/recibos-e-cobrancas/emitir-um-recibo]
+---
+
+## Para que serve?
+
+O lote de débito direto junta várias faturas de clientes que autorizaram o débito (têm um mandato ativo) e gera o ficheiro SEPA que leva ao banco. O banco cobra nas contas dos clientes na data de cobrança. O fiscaldoo guarda o lote, o ficheiro, o aviso feito a cada cliente e a resposta do banco.
+
+## Quando utilizar?
+
+- Quando quer cobrar, numa só operação, as faturas de vários clientes que assinaram um mandato de débito direto.
+- Não o use para o cliente que paga por transferência ou por Multibanco: só entram faturas de clientes com mandato ativo.
+- O lote **não envia nada ao banco**: gera o ficheiro e, depois de o levar ao banco, regista que foi enviado.
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Cobranças a clientes › Lotes de débito direto**. O lote cria-se a partir da lista de faturas (passo 2). Os avisos aos clientes abrem-se no próprio lote, no botão **Pré-notificações**; o menu **Pré-avisos de débito direto** só aparece ao Administrador.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** (ou quem tem o acesso extra **Tesouraria: Gestor**, dado nos **Ajustes avançados** do utilizador, campo **Tesouraria**): é o que valida e envia um lote. O perfil **Administrativo** não vê estes menus.
+- A empresa tem o **Identificador de credor SEPA**, que o banco atribui à empresa. Sem ele o ficheiro não se gera (ver «Problemas frequentes»). O Administrador preenche-o no passo 1.
+- O diário do banco tem o IBAN da empresa.
+- O cliente tem um mandato **Ativo** e a fatura está emitida e por pagar, em euros. Os débitos diretos SEPA só se fazem em euros.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Com o perfil **Administrador**, abra **Contabilidade › Configurar › Geral › Definições**, vá à secção **Débito direto SEPA** e escreva o **Identificador de credor SEPA** (por exemplo `PT91ZZZ123456789`, um valor de demonstração). Carregue em **Guardar**. A mesma secção tem os prazos: **Antecedência SDD (CORE, dias)** e **(B2B, dias)**, com 1 dia útil, e **Dias de pré-notificação SDD** (CORE e B2B), com 14 dias.
+   ![Secção Débito direto SEPA das definições, com o identificador de credor preenchido](/images/fiscal-core/debitos-diretos-lotes/01-identificador-de-credor.png)
+2. Abra **Faturas** (**Faturação › Receber**), pesquise a fatura e marque-a na lista; pode marcar várias. Carregue em **Ações** e em **Criar lote SDD**.
+   ![Menu Ações da lista de faturas com a opção Criar lote SDD](/images/fiscal-core/debitos-diretos-lotes/02-acoes-criar-lote.png)
+3. Na janela **Criar lote SDD**, escolha o **Diário bancário** e a **Data de cobrança**. A janela propõe a data de dois dias úteis depois de hoje; use uma data que deixe cumprir a pré-notificação (passo 6). A lista mostra as faturas e o valor em dívida. Carregue em **Criar lote SDD**.
+   ![Janela Criar lote SDD com o diário Banco, a data de cobrança 16/11/2026 e uma fatura da Escola de Condução Rota, Lda](/images/fiscal-core/debitos-diretos-lotes/03-assistente-criar-lote.png)
+4. O lote abre em **Rascunho**, com uma linha por mandato: cliente, esquema (**CORE (consumidores)** ou **B2B**), IBAN do cliente, faturas e montante. Só o rascunho se altera. Carregue em **Validar e gerar o ficheiro**.
+   ![Lote SDD em rascunho com a linha do mandato RUM/00001, cliente, esquema CORE, IBAN e fatura](/images/fiscal-core/debitos-diretos-lotes/04-lote-em-rascunho.png)
+5. O lote passa a **Validado** e o **Tipo de sequência** de cada linha fica preenchido: **FRST** na primeira cobrança do mandato e **RCUR** nas seguintes. Abra o separador **Ficheiro SEPA**: está lá o ficheiro `SDD_….xml` e o **Código de controlo do ficheiro**. Os **Avisos do ficheiro** dizem que o ficheiro leva os nomes sem acentos (por exemplo «Escola de Conducao Rota, Lda»), porque o formato SEPA não os aceita. Carregue em **Descarregar o ficheiro** para o levar ao banco.
+   ![Lote validado, com os botões Descarregar o ficheiro, Pré-notificar os clientes, Marcar como enviado e Anular](/images/fiscal-core/debitos-diretos-lotes/05-lote-validado.png)
+   ![Separador Ficheiro SEPA com o ficheiro, o código de controlo e os avisos sobre os nomes sem acentos](/images/fiscal-core/debitos-diretos-lotes/06-ficheiro-sepa.png)
+6. Carregue em **Pré-notificar os clientes**. Cria-se, por cada cliente, uma pré-notificação (`PNS/…`) com o texto do aviso, o valor, a data de cobrança e **Avisar o cliente até** (14 dias antes da cobrança: 02/11/2026 para uma cobrança em 16/11/2026). O fiscaldoo **não envia** o aviso: a ficha diz «Daqui não se envia nada: entregue o PDF ao cliente e marque-a como entregue». Carregue em **Descarregar o PDF**, entregue-o ao cliente, volte à ficha e carregue em **Marcar como entregue** e em **Confirmar**.
+   ![Pré-notificação PNS/00001 com o prazo de aviso de 14 dias, a data limite e o texto para o cliente](/images/fiscal-core/debitos-diretos-lotes/07-pre-aviso.png)
+7. Depois de levar o ficheiro ao banco, abra o lote e carregue em **Marcar como enviado**. A janela **Confirmação** avisa: «Daqui não é enviado nada ao banco. Confirme só depois de levar o ficheiro ao banco.» Carregue em **Confirmar**.
+   ![Janela de confirmação de Marcar como enviado](/images/fiscal-core/debitos-diretos-lotes/08-confirmar-envio.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, os lotes de débito direto são os do fiscaldoo. **Contabilidade › Lançar › Cobranças a clientes › Lotes de débito direto** abre a mesma lista e, em **Faturação › Faturar › Faturas de clientes**, com uma fatura marcada, **Ações** tem **Criar lote SDD** (visto com um utilizador só com o perfil **Contabilista**). O administrador preenche o **Identificador de credor SEPA** nas **Definições**, no mesmo bloco **Débito direto SEPA**. Em **Ações** aparecem também entradas do Enterprise, como **Enviar faturas para digitalização**, que não fazem parte deste percurso.
+
+{/* Nota interna (lote EE-12, DOCS-073 #4142, DEC-1794, master 589ecfd27, base Enterprise docs_ee_ee12_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee12_test): DOC-0042. Contabilista: lista de lotes (vazia) e Ações da lista de faturas (Exportar, Inserir em folha de cálculo, Duplicar, Eliminar, Estornar lançamento, Criar notas de pagamento, Criar lote SDD, Confirmar entradas, Enviar faturas para digitalização). Administrador: bloco Débito direto SEPA nas Definições. Nenhum lote criado. Igual na cópia Community, sem as duas entradas do Enterprise. Ver reports/LOTE_EE-12.md. */}
+
+## Resultado esperado
+
+- O lote está **Enviado**, com **Enviado em** e **Enviado por** preenchidos, e já não se altera nem se anula.
+  ![Lote enviado com a data e o utilizador do envio e o botão Reenviar os erros](/images/fiscal-core/debitos-diretos-lotes/09-lote-enviado.png)
+- As faturas continuam **Por pagar**: o lote **não regista o pagamento**. A fatura só fica paga quando o banco cobrar e o recebimento for registado, por exemplo com um [recibo](/fiscal-core/emitir-um-recibo). Se o banco rejeitar ou devolver a cobrança, veja [as devoluções de débitos diretos](/fiscal-core/devolucoes-de-debitos-diretos).
+- <span className="fd-pending">Pendente de validação por contabilista certificado: o prazo de pré-notificação de 14 dias, o prazo em dias úteis até à data de cobrança e o registo contabilístico do recebimento depois de o banco cobrar.</span>
+
+## Notas importantes
+
+<HelpCallout type="atencao" title="Um lote enviado não se anula">
+**Anular** só existe em rascunho e validado. Um lote **Enviado** é o registo do que foi ao banco: se o banco rejeitar cobranças, crie um lote de reenvio, em [devoluções de débitos diretos](/fiscal-core/devolucoes-de-debitos-diretos). Anular um lote validado liberta as faturas e deixa o lote **Anulado** na lista (os totais da lista contam-no).
+</HelpCallout>
+
+- Uma fatura só pode estar num lote de cada vez, e uma linha por mandato: duas faturas do mesmo cliente somam-se na mesma linha.
+- Uma fatura de um cliente sem mandato ativo fica de fora.
+- Um lote pode juntar clientes com mandato **CORE** e **B2B**: tem uma linha por mandato, com **FRST** na primeira cobrança de cada mandato e **RCUR** nas seguintes, e uma pré-notificação por linha. Um mandato **B2B** só pode ser ativado depois de marcar **Validado pelo banco do devedor** na ficha do mandato; sem isso o cliente não entra no lote.
+
+## Problemas frequentes
+
+### «Não é possível gerar o ficheiro SEPA: o identificador de credor SEPA da empresa falta ou não é válido»
+
+- **Causa:** a empresa não tem o **Identificador de credor SEPA** (ou tem-no com os dígitos de controlo errados).
+- **O que fazer:** peça ao Administrador que o preencha em **Contabilidade › Configurar › Geral › Definições › Débito direto SEPA** (passo 1).
+
+### «Nenhuma das faturas pode ser cobrada por débito direto: … não tem mandato SDD ativo»
+
+- **Causa:** o cliente da fatura não tem mandato **Ativo**. A janela do lote não chega a criar nada.
+- **O que fazer:** registe e ative o mandato do cliente e crie o lote de novo.
+
+### «O lote não pode ser validado: … a data de cobrança … está demasiado próxima»
+
+- **Sintoma:** com a cobrança marcada para hoje (01/11/2026): «a data de cobrança 01/11/2026 está demasiado próxima: CORE exige pelo menos 1 dia(s) útil(eis) depois de hoje (mais cedo 2026-11-02)». A mesma janela diz «uma fatura já está no lote SDD/…» quando a fatura já foi para outro lote.
+- **O que fazer:** em rascunho, mude a **Data de cobrança** para a data indicada ou posterior. Se a fatura já está noutro lote, e esse lote ainda está em rascunho, retire-a de lá; se esse lote já foi **Enviado**, a fatura não pode ir para outro lote enquanto aquele existir, porque um lote enviado já não se altera.
+
+### «Não é possível fazer as pré-notificações: … o cliente tem de ser avisado 14 dia(s) antes …»
+
+- **Sintoma:** com a cobrança a 03/11/2026: «o cliente tem de ser avisado 14 dia(s) antes da data de cobrança 03/11/2026, ou seja até 20/10/2026, e já é tarde».
+- **O que fazer:** use uma data de cobrança com 14 dias de antecedência (o lote já validado não muda de data: anule-o e crie outro), ou registe no mandato um prazo mais curto acordado com o cliente.
+
+{/* Nota interna (DOCS-046 v3-FC2, DOC-0042, master f16f4a3e0, base docs_demo_v3fc2_test, perfil Contabilista; Administrador para as definições): lotes SDD/00001 a 00007 criados; a fatura usada é a FT D26/54 da Escola de Condução Rota, Lda (104,55 €, criada de enchimento a seguir às FT D26/35 a 53 para não repetir números de outros artigos). Defeitos: (1) a janela Criar lote SDD mostra o diário vazio mas o lote cria-se com o diário Banco; (2) a mensagem da data usa formato ISO «2026-11-02» e «mais cedo»; (3) o menu Pré-avisos só em modo programador; (4) a lista de lotes soma os anulados no total; (5) o ficheiro SEPA tem o tipo text/plain. Não validado: B2B, vários clientes, devolução do ficheiro ao banco real. */}
+
+{/* Nota interna (lote v23-AT, DOC-0042, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); acesso extra Tesouraria: Gestor visto nos Ajustes avançados (grupo Bancos e tesouraria (PT), campo Tesouraria) e provado com um utilizador sem valor no campo Perfil e só com ele: tem Lotes, Mandatos e Retornos de débito direto e Cobranças Multibanco */}

@@ -1,0 +1,133 @@
+---
+id: anular-uma-fatura
+slug: /fiscal-core/anular-uma-fatura
+title: Como anular uma fatura ou outro documento certificado
+sidebar_label: Anular um documento certificado
+sidebar_position: 2
+description: Anular uma fatura, nota de crédito ou recibo emitido por erro, com o motivo registado, comunicar a anulação à AT e manter o número do documento.
+keywords: [anular fatura, anular documento, anular documento certificado, anular recibo, cancelar fatura, cancelar documento, cancelar recibo, fatura emitida por engano, fatura em duplicado, anulação, anulacao, estado anulado, comunicar anulação, comunicar anulacao, comunicar à AT, comunicar a at]
+doc_id: DOC-0023
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7a46de91a)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/emitir-uma-nota-de-credito, troubleshooting/faturacao-e-at/nao-consigo-alterar-um-documento-certificado]
+---
+
+## Para que serve?
+
+Um documento certificado emitido por erro (uma fatura em duplicado, um recibo de um pagamento que não existiu) anula-se com o motivo. O documento não é apagado nem volta a rascunho: mantém o número, o ATCUD e a assinatura e passa ao estado de anulado. Se a AT já recebeu a fatura ou a nota de crédito, a anulação também lhe é comunicada. O recibo não tem este passo (ver «Resultado esperado»).
+
+A anulação serve para documentos de operações que não aconteceram e para erros só formais, como o NIF ou a morada do cliente: anula-se a fatura e emite-se outra com os dados certos. Se a operação aconteceu e o valor ou o IVA estão errados, a correção é uma nota de crédito (ou de débito, se faltou valor). A regra completa, com o Ofício-Circulado 25120/2026, está em [Como corrigir uma fatura](/fiscal-core/corrigir-uma-fatura).
+
+## Quando utilizar?
+
+- A fatura foi emitida em duplicado ou para o cliente errado e a operação não existiu.
+- O recibo foi emitido para um pagamento que não chegou a acontecer.
+- Não use a anulação para devoluções, descontos ou erros de preço numa venda que aconteceu: use [Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito).
+
+## Onde encontrar?
+
+- Fatura ou nota de crédito: **Faturação › Faturar › Faturas de clientes** › abrir o documento › **Anular documento certificado**.
+- Recibo: **Faturação › Receber › Recibos e pagamentos recebidos** › abrir o recibo › **Anular recibo**. A partir da fatura, o recibo abre-se em **Pagamentos**, nos **Documentos ligados**.
+
+## Antes de começar
+
+- Para anular uma fatura ou nota de crédito, o seu perfil é **Contabilista certificado** (ou é o administrador); com os perfis **Administrativo** e **Contabilista** o botão não aparece. Um recibo também o anula o **Contabilista**; com o perfil **Administrativo**, **Anular recibo** não aparece.
+- A fatura não tem pagamentos, recibos nem notas de crédito. Se tiver, a janela de anulação mostra o bloqueio e não deixa anular (ver «Problemas frequentes»).
+- Sabe explicar o motivo numa frase: fica registado e segue para o SAF-T.
+
+## Como utilizar
+
+### Anular uma fatura ou nota de crédito
+
+<StepByStep>
+
+1. Abra o documento e carregue em **Anular documento certificado**.
+   ![Fatura FT D26/32 com o botão Anular documento certificado assinalado, entre os botões da fatura](/images/fiscal-core/anular-uma-fatura/01-botao-anular-documento-certificado.png)
+2. Leia o aviso da janela: o número, o ATCUD e a assinatura mantêm-se e, se a AT já recebeu o documento, a anulação também tem de lhe ser comunicada.
+3. Em **Motivo**, escreva porque o documento é anulado, por exemplo «Fatura emitida em duplicado».
+   ![Janela Anular documento certificado com o aviso e o motivo Fatura emitida em duplicado](/images/fiscal-core/anular-uma-fatura/02-janela-anular-documento-certificado.png)
+4. Carregue em **Anular documento**. O documento passa a **Anulada** e, por baixo dos botões, aparece «A anulação ainda não foi comunicada à Autoridade Tributária».
+   ![Fatura anulada com o botão Comunicar à AT assinalado e a frase A anulação ainda não foi comunicada à Autoridade Tributária](/images/fiscal-core/anular-uma-fatura/03-anulacao-por-comunicar.png)
+5. Carregue em **Comunicar à AT**. A frase muda para «A anulação foi comunicada à Autoridade Tributária enviando o documento de novo com o estado «Anulado».» e o campo **AT** do bloco **Documento certificado** mostra **Aceite**.
+   ![Frase A anulação foi comunicada à Autoridade Tributária enviando o documento de novo com o estado Anulado](/images/fiscal-core/anular-uma-fatura/04-anulacao-comunicada.png)
+
+</StepByStep>
+
+As imagens são da base de demonstração, onde a AT é substituída por um simulador.
+
+### Anular um recibo
+
+<StepByStep>
+
+1. Abra o recibo e carregue em **Anular recibo**.
+2. Leia a lista **O que vai ser desfeito**: as faturas que voltam a ficar por pagar, com o valor (por exemplo «Pagamento das faturas que voltam a ficar por pagar: - FT D26/47: 246,00 €»). Se o pagamento já estiver ligado a um movimento do extrato do banco, a lista mostra também essa ligação, por exemplo «Ligação ao extrato do banco que vai ser desfeita: - BNK1/2026/00028: 3.685,08 €». Esse movimento volta a ficar por reconciliar. Se o recibo já foi comunicado à AT, a janela mostra também, em **Avisos**: «Este documento já foi comunicado à AT. A anulação destina-se a documentos emitidos por erro; se a operação ocorreu, corrija por nota de crédito.» A última parte é o texto das faturas: não há nota de crédito de um recibo.
+   ![Janela Anular recibo do RG D26/14: a fatura FT D26/22 de 3.685,08 € que volta a ficar por pagar, a ligação ao extrato do banco que vai ser desfeita e o motivo](/images/fiscal-core/anular-uma-fatura/07-janela-anular-recibo-com-extrato.png)
+3. Em **Motivo**, escreva porque o recibo é anulado, por exemplo «Pagamento registado por engano».
+   ![Janela Anular recibo com a lista do que vai ser desfeito, a fatura FT D26/47 de 246,00 € e o motivo Pagamento registado por engano](/images/fiscal-core/anular-uma-fatura/05-janela-anular-recibo.png)
+4. Carregue em **Anular recibo**.
+
+</StepByStep>
+
+## Resultado esperado
+
+- A fatura fica no estado **Anulada**, com a etiqueta **Anulada** por baixo do número e o **Estado contabilístico** **Anulado**, e mantém o número e o ATCUD. Depois de **Comunicar à AT**, o campo **AT** mostra **Aceite**.
+- O recibo fica no estado **Anulado**, mantém o número, a data, o ATCUD e o PDF, e as faturas que pagava voltam a **Por pagar** (no exemplo, o recibo `RG D26/16` e a fatura `FT D26/47`; com o extrato do banco, o recibo `RG D26/14` e a fatura `FT D26/22`).
+- Ao contrário da fatura, o recibo anulado não tem **Comunicar à AT** nem a frase sobre a comunicação, mesmo que já tivesse sido comunicado. <span className="fd-pending">Pendente de validação por contabilista certificado: se e como a anulação de um recibo já comunicado chega à AT.</span>
+
+## Vídeo demonstrativo
+
+<VideoTutorial src="/videos/anular-uma-fatura.mp4" captions="/videos/anular-uma-fatura.vtt" poster="/videos/anular-uma-fatura-poster.png" width="1440" height="1140" title="Anular uma fatura emitida por engano" duration="28 s" />
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Anular ou creditar, e até quando">
+A anulação destina-se a documentos de operações que não aconteceram e a erros só formais; se a operação aconteceu e o valor ou o IVA mudam, corrige-se com nota de crédito ou de débito ([Como corrigir uma fatura](/fiscal-core/corrigir-uma-fatura)). Se a fatura já foi comunicada à AT, anule-a e comunique a anulação (passo 5); se a declaração periódica do período já foi entregue e a operação nunca existiu, é preciso uma declaração de substituição. Este artigo não indica até quando se pode anular uma fatura: esse prazo depende da comunicação da faturação e do SAF-T e fica para o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: anular ou creditar, e prazo para anular.</span>
+</HelpCallout>
+
+- A anulação não se desfaz. O número anulado nunca é reutilizado.
+- Para corrigir os dados do cliente, veja [Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado).
+
+- **Fatura nova a substituir a anulada.** Quando só o NIF do cliente está errado e se emite uma fatura nova no lugar da anulada (**Corrigir os dados do cliente**, **Só o NIF**), a fatura nova fica sempre com a data do IVA de cada linha igual à da fatura anulada: o período do IVA já entregue não muda (Informação vinculativa n.º 26393). Visto no ecrã: uma data do IVA escrita à mão no rascunho voltou à da fatura anulada ao confirmar, com uma nota no histórico; e, se o par não for igual em linhas, valores e impostos, a fatura nova não se confirma. Os passos e as mensagens estão em [Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado), «Nome, morada ou NIF do cliente».
+
+## Problemas frequentes
+
+### O botão Anular documento certificado não aparece
+
+- **Causa:** o seu perfil não pode anular (por exemplo, **Administrativo** ou **Contabilista**), ou o documento ainda está em rascunho.
+- **O que fazer:** peça ao Contabilista certificado. Um rascunho não precisa de ser anulado: pode ser alterado ou apagado.
+
+### A janela não deixa anular
+
+- **Sintoma:** a janela mostra **Bloqueios**, por exemplo «O documento “FT D26/26” tem o estado de pagamento “Pago” — só se anula um documento ainda por pagar; depois de pago, parcialmente pago ou creditado, a correção é uma nota de crédito, nunca uma anulação. Se for preciso corrigir mais, emita um documento novo (uma nota de débito ou uma fatura nova, conforme o caso); se for mesmo preciso anular, fale com o contabilista certificado.», e só tem o botão **Fechar**. Se a fatura já foi comunicada à AT, a janela mostra também, em **Avisos**: «Este documento já foi comunicado à AT. A anulação destina-se a documentos emitidos por erro; se a operação ocorreu, corrija por nota de crédito.»
+  ![Janela Anular documento certificado da FT D26/26: o bloqueio de um documento pago, o aviso de documento já comunicado à AT e só o botão Fechar](/images/fiscal-core/anular-uma-fatura/06-janela-com-bloqueio.png)
+
+{/* Nota interna (DOCS-046, lote v6-P1, 03/11/2026, master 8f78854ec, docs_demo_v6p1_test, DOC-0035 continua fundido aqui): secção «Anular um recibo» percorrida de novo com o Contabilista, em RG D26/14 (ligado a BNK1/2026/00028) e RG D26/15 (BNK1/2026/00029); a Faturação não vê o botão; estado passou a Anulado; pendente do extrato fechado; motivo vazio dá «Há campos obrigatórios por preencher». Artigo alterado depois de aprovado: precisa de nova aprovação humana. */}
+{/* Nota interna (fix-docs-008, NC-D8-02, 31/10/2026, master 511b97687, base docs_demo_fix008_test, perfil Contabilista Certificado / Gestor fiscal + Responsável fiscal, por clique): a recusa mudou no FAT-124 (055c50fc9). Mensagem e captura 06 refeitas na FT D26/26 (Oficina Auto Rápido, Lda, 120,54 €, paga, comunicada à AT), uma fatura antiga da base-mãe; a FT D26/47 da amostra não existe nesta base. Artigo alterado depois de aprovado: precisa de nova aprovação humana. */}
+- **Causa:** a fatura está paga, paga em parte ou creditada.
+- **O que fazer:** se o pagamento foi registado por engano, anule primeiro o recibo (ver «Anular um recibo»); a fatura volta a **Por pagar** e pode ser anulada. Se o pagamento aconteceu mesmo, corrija com uma [nota de crédito](/fiscal-core/emitir-uma-nota-de-credito).
+
+### O botão Comunicar à AT não aparece depois de anular
+
+- **Causa:** a anulação já foi comunicada (a frase por baixo dos botões diz «A anulação foi comunicada…»), ou a AT não respondeu (o campo **AT** mostra **Desconhecida**). Num recibo, o botão nunca aparece (ver «Resultado esperado»).
+- **O que fazer:** se foi comunicada, nada. Se a AT não respondeu, veja «A AT não respondeu à comunicação da anulação», mais abaixo. Se a comunicação foi rejeitada, veja o problema seguinte.
+
+### A AT rejeitou a comunicação da anulação
+
+- **Sintoma:** depois de **Comunicar à AT**, a mensagem diz «Comunicação com a Autoridade Tributária. Aceites: 0, rejeitados: 1, sem resposta: 0.», o campo **AT** da fatura mostra **Rejeitada** e o botão **Comunicar à AT** continua lá. O aviso no topo da fatura diz «Documento anulado: mantém o número e a assinatura e já não se altera. A Autoridade Tributária rejeitou a comunicação, por isso a anulação ainda não está registada lá. Carregue em «Comunicar à AT» para a enviar de novo; se for rejeitada outra vez, abra a comunicação para ver o motivo.» e a frase por baixo dos botões diz «A anulação ainda não está registada na Autoridade Tributária.». Só com o campo **AT** em **Aceite** a anulação está comunicada.
+- **Onde ler o motivo:** em **Contabilidade › Declarar › Autoridade Tributária › Comunicações à AT (faturas e histórico)**, abra a comunicação da fatura no estado **Rejeitada** e leia **Código de erro** e **Mensagem**.
+  ![Comunicação da anulação da FT D26/32 no estado Rejeitada, com o transporte Simulado, o ambiente Teste, o código de erro e a mensagem da recusa simulada](/images/fiscal-core/anular-uma-fatura/08-comunicacao-da-anulacao-rejeitada.png)
+- **Exemplo:** na demonstração, a AT é um simulador, e a rejeição foi provocada nele, numa fatura emitida, comunicada e anulada só para isso (a *FT D26/32*). A comunicação mostrou o **Código de erro** *MOCK-0001* e a **Mensagem** «*Recusa simulada (feita pelo simulador da AT, não pela AT real).*». Numa rejeição verdadeira, o código e a mensagem são os da AT.
+- **O que fazer:** corrija o que a mensagem indicar e carregue de novo em **Comunicar à AT**, na fatura, até o campo **AT** mostrar **Aceite**. Na demonstração, com o simulador de novo a aceitar, a mensagem foi «Comunicação com a Autoridade Tributária. Aceites: 1, rejeitados: 0, sem resposta: 0.», o campo **AT** passou a **Aceite** e o botão desapareceu. O aviso no topo voltou a «Documento anulado: mantém o número e a assinatura e já não se altera. Não é preciso fazer mais nada.», e a frase por baixo dos botões a «A anulação foi comunicada à Autoridade Tributária enviando o documento de novo com o estado «Anulado».». Se não percebe a mensagem, fale com o contabilista certificado antes de voltar a comunicar.
+
+### A AT não respondeu à comunicação da anulação
+
+- **Sintoma:** depois de **Comunicar à AT**, a mensagem diz «Comunicação com a Autoridade Tributária. Aceites: 0, rejeitados: 0, sem resposta: 1.», o campo **AT** mostra **Desconhecida** e o botão **Comunicar à AT** desaparece. O aviso no topo diz «Documento anulado: mantém o número e a assinatura e já não se altera. A Autoridade Tributária não respondeu, por isso não se sabe se registou a anulação. Consulte primeiro o estado da comunicação (Contabilidade › Declarar › Autoridade Tributária, abra a comunicação deste documento e carregue em «Consultar estado»); não a envie de novo antes disso.»
+- **O que fazer:** abra **Contabilidade › Declarar › Autoridade Tributária › Comunicações à AT (faturas e histórico)**, abra a comunicação da fatura no estado **Desconhecida** e carregue em **Consultar estado**. Na demonstração, com o simulador de novo a responder, a comunicação passou a **Aceite**, e a fatura também. Veja [Como comunicar as faturas à AT e ver o histórico](/fiscal-core/comunicar-faturas-a-at).
+
+{/* Nota interna (lote v23-BD, DOCS-064 #3900, master ce51f2d47, docs_demo_v23bd_test, porta 8504): credenciais de Teste fictícias guardadas no ecrã pelo administrador (cofre iniciado na cópia, .pfx em memória, transporte simulado, nunca Produção). FT D26/32 (Papelaria Central, Lda, 1 × Material de escritório (kit), 104,55 €) criada e emitida por RPC só na cópia. Por clique, com um utilizador só Contabilista certificado: Comunicar à AT → Aceite; Anular documento certificado, motivo «Fatura emitida em duplicado» → Anulada, «A anulação ainda não foi comunicada…»; cenário «reject» do simulador posto por RPC → Comunicar à AT → «… rejeitados: 1 …», AT Rejeitada; comunicação aberta em Comunicações à AT (captura 08); cenário reposto em «accept» → Comunicar à AT → Aceite. O número da fatura e o código MOCK-0001 são da cópia e do simulador. Depois da rejeição, o aviso no topo continuava «… Não é preciso fazer mais nada.» com o campo AT Rejeitada (corrigido no ATWS-050 #4140, ver a nota seguinte). */}
+
+{/* Nota interna (lote v23-BE, depois do comboio 188 com o ATWS-050 #4140, master 7a46de91a, docs_demo_v23be_test, porta 8504): credenciais de Teste fictícias guardadas no ecrã pelo administrador (chave do cofre só na memória da instância, .pfx em memória, transporte simulado, nunca Produção). FT D26/32 (Papelaria Central, Lda, 1 × Material de escritório (kit), 104,55 €) criada e emitida por RPC só na cópia. Por clique, com um utilizador só Contabilista certificado: Comunicar à AT → Aceite; Anular documento certificado («Fatura emitida em duplicado») → Anulada; cenário «reject» posto por RPC → Comunicar à AT → «… rejeitados: 1 …», AT Rejeitada, aviso e frase de baixo citados acima; cenário «timeout» → «… sem resposta: 1.», AT Desconhecida, sem o botão Comunicar à AT, aviso citado; cenário reposto em «accept» → Comunicações à AT, comunicação Desconhecida da FT D26/32, Consultar estado → Aceite; na fatura, AT Aceite, «Não é preciso fazer mais nada.» e «A anulação foi comunicada…». O título da comunicação na lista é «Fatura - FT D26/32». */}

@@ -1,0 +1,195 @@
+---
+id: tributacoes-autonomas
+slug: /accounting-pt/tributacoes-autonomas
+title: Como apurar as tributações autónomas
+sidebar_label: Tributações autónomas
+sidebar_position: 5
+description: Marcar as despesas e apurar as tributações autónomas de IRC (despesas de representação, encargos com viaturas e ajudas de custo) no Modelo 22 e, para as ajudas de custo, no assistente que dá a base por trabalhador e exporta para Excel.
+keywords: [tributações autónomas, tributação autónoma, artigo 88.º CIRC, ajudas de custo, despesas de representação, encargos com viaturas, viatura ligeira de passageiros, agravamento prejuízo fiscal, início de atividade, lucro tributável dos três períodos anteriores, custo de aquisição da viatura, Modelo 22, mapa de deslocação, 6311, 6321, 62511, ajudas de custo fora dos salários, portagens sem viatura]
+doc_id: DOC-0160
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 78c1ec1ac)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/declaracoes/modelo-22]
+---
+
+## Para que serve?
+
+As **tributações autónomas** são um imposto à parte, sobre certas despesas da empresa (artigo 88.º do CIRC). O fiscaldoo apura-as de duas formas: no **Modelo 22**, a partir das despesas marcadas com uma categoria (representação, encargos com viaturas, ajudas de custo, entre outras), com a taxa que o produto tem em vigor para cada uma; e, só para as **ajudas de custo**, num assistente que mostra a **base** por trabalhador (o que foi pago e não foi tributado ao trabalhador nem faturado a clientes) e a exporta para Excel.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: as taxas (8 %, 25 % e 32 % nas viaturas conforme o custo de aquisição, 10 % na representação, 5 % nas ajudas de custo), o agravamento de 10 pontos com prejuízo fiscal e as suas exceções (artigo 88.º, n.os 3, 7, 9, 14 e 15 do CIRC), as condições das híbridas plug-in (n.º 18) e a exclusão dos ligeiros de mercadorias sem a taxa intermédia do ISV, tal como o ecrã as aplica.</span>
+
+## Quando utilizar?
+
+- Ao lançar despesas de representação ou encargos de viaturas: é aí que se marca a categoria.
+- Ao preparar o Modelo 22: o separador **Tributação autónoma** mostra o que a empresa vai pagar por categoria.
+- Para saber a **base das ajudas de custo** de um período, por trabalhador, e entregá-la ao contabilista em Excel.
+- Para conferir as ajudas de custo dos recibos com o que o Modelo 22 apura.
+- **Não** serve para calcular o IRC nem a derrama (isso é o Modelo 22) e **não** corrige as ajudas de custo dos recibos (isso é no recibo).
+
+## Onde encontrar?
+
+- Modelo 22: **Contabilidade › Declarar › IRC › Declaração de IRC (Modelo 22)**, botão **Calcular a tributação autónoma** e separador **Tributação autónoma**. Perfil **Contabilista**.
+- Assistente das ajudas de custo: **Contabilidade › Declarar › IRC › O que há para fazer com o IRC?**, botão **Tributação autónoma das ajudas de custo**. Perfil **Contabilista**.
+- Categoria por omissão de uma conta: **Contabilidade › Configurar › Geral › Plano de contas**, campo **Tributação autónoma (por omissão)**. Perfil **Contabilista certificado**: o perfil **Contabilista** não tem o **Plano de contas** neste menu.
+- Viatura: aplicação **Frota**, separador **Informações fiscais**, zona **Tributação autónoma (IRC)**. Quem escreve aqui o **Custo de aquisição (tributação autónoma)** e a **Origem do custo** (o valor dado pelo locador, nas viaturas alugadas) é quem tem o acesso **Frota (gestor)**. O **Contabilista** e o **Contabilista certificado** abrem a ficha da viatura e só leem estes dois campos; se o custo faltar, pedem-no à Frota. Na demonstração nenhum perfil traz o acesso à Frota: o exemplo usou um utilizador só com esse acesso e o administrador.
+
+## Antes de começar
+
+- Perfil do exemplo: **Contabilista**, exceto na conta (perfil **Contabilista certificado**) e na viatura (quem tem a Frota). O **Auditor / ROC** não faz este trabalho: o seu menu não tem **Declarar**, e a ficha do Modelo 22 não lhe mostra o botão **Calcular a tributação autónoma**.
+- **Como entram as despesas.** O Modelo 22 só soma os lançamentos **publicados** do período que têm uma categoria de tributação autónoma:
+
+  | De onde vem a categoria | O que acontece |
+  |---|---|
+  | Recibo com ajudas de custo | Automática: o lançamento do recibo marca só a parte isenta de cada linha. Já tributado em IRS ou faturado a clientes fica sem categoria |
+  | Conta com **Tributação autónoma (por omissão)** | Automática em cada linha nova dessa conta. Mudar a categoria da conta não altera os lançamentos que já existem |
+  | Linha de fatura de fornecedor com **Veículo** | Automática: categoria e custo vêm da viatura, se a conta for de gastos |
+  | Linha escrita à mão | Escolha a categoria na coluna **Tributação autónoma** e, nas viaturas, escreva o **Custo de aquisição da viatura** |
+
+- **Ajudas de custo pagas fora dos salários.** O plano de contas tem três subcontas com a categoria **Ajudas de custo e compensação pela deslocação em viatura própria** já em **Tributação autónoma (por omissão)**: 6311 Ajudas de custo pagas fora dos salários (órgãos sociais), 6321 Ajudas de custo pagas fora dos salários (pessoal) e 62511 Compensação por deslocação em viatura própria (km). Use-as para as ajudas de custo e os quilómetros que não passam pelos recibos: entram no Modelo 22 como as outras ajudas de custo. A parte paga nos recibos já leva a categoria pelo lançamento do recibo (primeira linha da tabela). <span className="fd-pending">Pendente de validação por contabilista certificado: uso das subcontas 6311, 6321 e 62511 para as ajudas de custo e os quilómetros pagos fora dos salários.</span>
+
+- As categorias são: Despesas não documentadas; Encargos com viaturas (ligeiras de passageiros, ligeiras de mercadorias, motos e motociclos); Encargos com viaturas: híbridas plug-in ou a gás natural veicular; Encargos com viaturas: veículos elétricos; Despesas de representação; Pagamentos a residentes em paraísos fiscais; Ajudas de custo e compensação pela deslocação em viatura própria; Indemnizações e remunerações variáveis de gestores, administradores e gerentes; Lucros distribuídos a sujeitos passivos com isenção total ou parcial.
+- Taxas do produto em 2026, sem agravamento: não documentadas 50 %; encargos com viaturas 8 % abaixo de 37.500,00 €, 25 % até 45.000,00 € e 32 % daí para cima; híbridas plug-in ou a gás natural 2,5 %, 7,5 % e 15 % nos mesmos escalões (estas também em 2025; numa híbrida plug-in, só com as emissões de CO2 e a autonomia elétrica do n.º 18 do art. 88.º do CIRC, e sem elas as taxas das viaturas de combustão); elétricas 0 % até 62.500,00 € de custo de aquisição e 10 % acima desse valor; paraísos fiscais 35 %; indemnizações e remunerações de gestores 35 %; lucros distribuídos 23 %.
+- Exemplo (inventado): Empresa Demonstração, Lda, outubro de 2026.
+  - Recibo de outubro de uma trabalhadora com **5 dias de ajudas de custo** a 80,00 € por dia: 3 dias com um mapa de deslocação aprovado (Porto–Lisboa) e 2 dias de outra deslocação **faturada a um cliente**. O limite diário isento é 65,89 €.
+  - Um jantar com clientes de **2.000,00 €**.
+  - Combustível da viatura AA-00-AA, com custo de aquisição de 30.000,00 € (**1.000,00 €** mais IVA a 23 %) e reparação da viatura BB-00-BB, com custo de 50.000,00 € (**800,00 €**).
+- O exercício de 2026 está **em prejuízo fiscal**, por isso o exemplo aplica o agravamento.
+
+## Como utilizar
+
+<StepByStep>
+
+1. **Marque a conta** (uma vez, perfil **Contabilista certificado**). Abra a conta 6266 Despesas de representação no **Plano de contas** e escolha **Despesas de representação** em **Tributação autónoma (por omissão)**. O campo só aparece nas contas de gastos.
+   ![Ficha da conta 6266 com o campo Tributação autónoma por omissão](/images/accounting-pt/tributacoes-autonomas/04-categoria-por-omissao-na-conta.png)
+2. **Prepare a viatura** (uma vez, quem tem a Frota: o Contabilista só lê estes campos). Abra a viatura e, em **Informações fiscais**, preencha **Custo de aquisição (tributação autónoma)**. **Tributação autónoma (tipo de viatura)** é sugerido pelo combustível: confirme-o. Na demonstração, uma viatura nova veio com o tipo **veículos elétricos**. **Escalões em vigor** mostra as taxas e uma seta no escalão desta viatura. Este custo não é o **Valor de catálogo** da Frota. Em **Viatura de passageiros ou de mercadorias**, escolha **Ligeiro de passageiros ou misto**, **Ligeiro de mercadorias com a taxa intermédia do ISV (CISV art. 7.º, n.º 1, al. b))** ou **Ligeiro de mercadorias sem a taxa intermédia do ISV** (no exemplo, as duas viaturas são ligeiros de passageiros). Enquanto o campo estiver vazio, a ficha avisa: «Tipo de viatura por definir: os encargos são tratados como os de uma viatura de passageiros. Um ligeiro de mercadorias só entra na tributação autónoma quando é tributado pela taxa intermédia do ISV (CISV art. 7.º, n.º 1, al. b)).» Numa híbrida plug-in, a ficha pede também a **Autonomia em modo elétrico (km)** e, sem ela e sem as emissões oficiais de CO2, avisa: «Híbrido plug-in sem as condições das taxas reduzidas (CIRC art. 88.º, n.º 18): faltam as emissões oficiais de CO2; falta a autonomia em modo elétrico. Aplicam-se as taxas das viaturas de combustão.»
+   ![Zona Tributação autónoma da viatura: custo de 30.000 euros e seta no escalão de 8 por cento](/images/accounting-pt/tributacoes-autonomas/05-viatura-custo-e-tipo.png)
+3. **Lance as despesas** (**Contabilista**).
+   - **Combustível:** em **Faturas de fornecedores**, escolha o **Veículo** na linha. Nas faturas, as colunas **Veículo**, **Tributação autónoma** e **Custo de aquisição da viatura** estão escondidas: ligue-as no menu de colunas, à direita do cabeçalho. A linha na conta 6242 pede também a **Categoria de despesa** (no exemplo, **Combustível: gasóleo**), que define o IVA dedutível.
+   ![Linha da fatura com a categoria de despesa Combustível: gasóleo, a conta 6242, a categoria de encargos com viaturas, o custo de 30.000 euros e a viatura AA-00-AA](/images/accounting-pt/tributacoes-autonomas/06-linha-da-fatura-com-viatura.png)
+   - **Reparação:** em **Lançamentos contabilísticos**, a conta 6226 não tem categoria: escolha-a na coluna **Tributação autónoma** e escreva o custo da viatura. Na outra linha, o campo **Conta** não oferece a 121 nem as contas de caixa («Sem registos») e a 2211 pede o **Parceiro**: no exemplo, a contrapartida é a 2781 Outros devedores e credores.
+   - **Jantar:** na conta 6266, a coluna **Tributação autónoma** preenche-se sozinha.
+4. **Confira as ajudas de custo.** Abra o assistente, preencha **De** 01/10/2026 e **Até** 31/10/2026 e carregue em **Calcular**. Só contam os recibos **validados ou pagos** cujo fim cai no período. Resultado: **Base da tributação autónoma** 197,67, **Taxa (%)** 5,00 e **Tributação autónoma** 9,88.
+   - A base são 400,00 € pagos, menos 70,55 € que o recibo tributou em IRS (o excesso acima de 65,89 € por dia) e menos 131,78 € de dois dias faturados a um cliente: 3 × 65,89 = 197,67 €.
+   ![Assistente com a base de 197,67 euros, a taxa de 5 por cento e a tributação autónoma de 9,88 euros](/images/accounting-pt/tributacoes-autonomas/02-assistente-sem-prejuizo.png)
+5. Marque **A empresa tem prejuízo fiscal no período**. Aparecem **Início de atividade** e **Lucro tributável num dos três períodos anteriores**; com este último marcado, aparece também **Obrigações declarativas dos dois períodos anteriores cumpridas**. Deixe-os como estão se a empresa não está em nenhum destes casos, e carregue em **Calcular**: a taxa sobe para **15,00** e a tributação autónoma para **29,65**. A **Nota** diz porquê: «Sem Modelo 22 do período: Prejuízo fiscal no período: as taxas são aumentadas em 10 pontos percentuais (CIRC art. 88.º, n.º 14).»
+   ![Assistente de outubro de 2026 com A empresa tem prejuízo fiscal no período marcado e os campos Início de atividade e Lucro tributável num dos três períodos anteriores](/images/accounting-pt/tributacoes-autonomas/03-assistente-com-prejuizo.png)
+   Os 10 pontos só se somam quando são devidos. Com **Início de atividade** 01/03/2025, a taxa volta a **5,00**, com a **Nota** «Sem Modelo 22 do período: Período de início de atividade ou um dos seguintes: o agravamento não se aplica (CIRC art. 88.º, n.º 15).». Com **Lucro tributável num dos três períodos anteriores** e **Obrigações declarativas dos dois períodos anteriores cumpridas** marcados, também **5,00**, com «Sem Modelo 22 do período: Lucro tributável num dos três períodos anteriores e declarações cumpridas: o agravamento não se aplica (regra transitória do Orçamento do Estado).». É a mesma regra do Modelo 22 (passo 7 e «Notas importantes»).
+6. Carregue em **Exportar para XLSX**: descarrega «IRC autonomous taxation 2026-10-01-2026-10-31.xlsx», com uma linha por trabalhador: **Trabalhador**, **Pago** 400, **Tributado em IRS** 70,55, **Faturado a clientes** 131,78, **Base** 197,67, **Taxa (%)** 15 e **Imposto** 29,65. O ficheiro só tem valores, sem fórmulas, e o nome está em inglês. Feche a janela.
+7. **Calcule no Modelo 22.** Abra o de 2026 (ou carregue em **Novo** e escolha o **Exercício**) e carregue em **Calcular a tributação autónoma**. No separador **Tributação autónoma**, o ecrã diz primeiro porque agrava: «Prejuízo fiscal no período: as taxas são aumentadas em 10 pontos percentuais (CIRC art. 88.º, n.º 14).» Depois há uma linha por categoria e, nas viaturas, por custo de aquisição:
+
+   | Categoria | Custo da viatura | Linhas | Despesas | Taxa | Agravamento | Imposto |
+   |---|---|---|---|---|---|---|
+   | Encargos com viaturas | 30.000,00 € | 4 | 1.115,00 € | 8,00 % | 10,00 p.p. | 200,70 € |
+   | Encargos com viaturas | 50.000,00 € | 1 | 800,00 € | 32,00 % | 10,00 p.p. | 336,00 € |
+   | Despesas de representação | | 1 | 2.000,00 € | 10,00 % | 10,00 p.p. | 400,00 € |
+   | Ajudas de custo e compensação pela deslocação em viatura própria | | 1 | 197,67 € | 5,00 % | 10,00 p.p. | 29,65 € |
+   | **Total** | | | **4.112,67 €** | | | **966,35 €** |
+
+   O imposto de cada linha é a despesa × (taxa + agravamento): por exemplo, 1.115,00 € × 18 % = 200,70 €. Cada linha mostra também o **Sujeito passivo** e a **Referência legal**. A linha das ajudas de custo (29,65 €) é igual à do assistente com prejuízo.
+   ![Separador Tributação autónoma do Modelo 22 de 2026 com as quatro linhas e o total de 966,35 euros](/images/accounting-pt/tributacoes-autonomas/01-modelo-22-tributacao-autonoma.png)
+8. Confira o **Total da tributação autónoma** (966,35 €), que aparece também na lista dos Modelos 22. Se lançar mais despesas, carregue outra vez em **Calcular a tributação autónoma**: o total não se atualiza sozinho.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, a tributação autónoma é a mesma (visto com um utilizador só com o perfil **Contabilista**). **Contabilidade › Declarar › IRC › Declaração de IRC (Modelo 22)** tem o botão **Calcular a tributação autónoma** e o separador **Tributação autónoma**, e **Tributação autónoma das ajudas de custo**, no painel **O que há para fazer com o IRC?**, abre a mesma janela, com **Calcular** e **Exportar para XLSX**. Muda o seguinte:
+
+- Na conta (perfil **Contabilista certificado**, **Contabilidade › Configurar › Geral › Plano de contas**), o campo **Tributação autónoma (por omissão)** é o mesmo. A ficha tem mais campos do Enterprise (por exemplo, **Exige veículo?** e **Com diferimento?**), que este artigo não usa.
+- Na viatura (administrador, aplicação **Frota**), o separador **Informações fiscais** tem, por cima de **TRIBUTAÇÃO AUTÓNOMA (IRC)**, a zona **FISCALIDADE** do Enterprise, com a **Dedutibilidade fiscal** (**Data de início** e **Não dedutível (%)**). A zona da tributação autónoma é a mesma, com o tipo de viatura e os mesmos avisos, e é a única que este artigo usa.
+
+{/* Nota interna (lote EE-04, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee04_test, cópia da odoo20_ee_test com EE_FASE=construir, 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0160. Contabilista: Modelo 22 - 2025 da cópia com Calcular a tributação autónoma e o separador Tributação autónoma (não calculado: documento da base); ajudas de custo: janela com De, Até, «A empresa tem prejuízo fiscal no período?», Base da tributação autónoma, Taxa (%), Tributação autónoma, Nota, Calcular, Exportar para XLSX e Fechar (não calculado). Contabilista certificado: conta 6251 aberta no Plano de contas. Administrador: Frota › Frota › Frota › Novo (não guardado), separador Informações fiscais; na cópia Community docs_demo_ee04_test o mesmo separador não tem a zona FISCALIZAÇÃO. A ponte l10n_pt_fiscaldoo_ee_payroll não está instalada na odoo20_ee_test (hr_payroll do Enterprise não instalado): o caso dos dois salários lado a lado não foi visto. Textos em inglês: defeito EEA-080 #4188. Ver reports/LOTE_EE-04.md. */}
+
+## Resultado esperado
+
+- No assistente, a base, a taxa e o imposto das ajudas de custo, e um Excel com o detalhe por trabalhador.
+- No Modelo 22, uma linha por categoria com as despesas, a taxa e o agravamento e o **Total da tributação autónoma**.
+- **Calcular não faz lançamentos:** só preenche o separador. As despesas ficam nos lançamentos de origem:
+
+  | Lançamento | Débito | Crédito |
+  |---|---|---|
+  | Recibo SAL/2026/00005 (só as ajudas de custo) | 6251 Deslocações e estadas 197,67 € (com categoria), 70,55 € e 131,78 € | 231290 Remunerações em processamento 400,00 € |
+  | Fatura FTF/2026/00046 | 6242 Combustíveis 1.115,00 € e 2432 IVA - Dedutível 115,00 € | 2211 Fornecedores gerais 1.230,00 € |
+  | Lançamento à mão, reparação | 6226 Conservação e reparação 800,00 € | 2781 Outros devedores e credores 800,00 € |
+  | Lançamento à mão, jantar | 6266 Despesas de representação 2.000,00 € | 2781 Outros devedores e credores 2.000,00 € |
+
+  Os 1.115,00 € da fatura são os 1.000,00 € mais a metade do IVA que não é dedutível (115,00 €): o IVA não dedutível entra na base da tributação autónoma. No razão, a conta 6242 mostra 4 linhas, porque a parte não dedutível é repartida (por isso **Linhas** 4 no Modelo 22). <span className="fd-pending">Pendente de validação por contabilista certificado: a inclusão do IVA não dedutível na base.</span>
+
+## Notas importantes
+
+- **O aviso das despesas sem categoria só vê duas contas.** Se houver movimentos sem categoria nas contas 6242 ou 6266, o separador avisa (ver «Problemas frequentes»). Uma reparação na 6226 sem categoria **não** dá aviso e fica fora do cálculo: confira as outras contas de encargos de viaturas.
+- **Com um Modelo 22 do período, é ele que decide.** Depois de criado o Modelo 22 do exercício (passo 7), o assistente lê dele o prejuízo fiscal e as exceções, e a caixa **A empresa tem prejuízo fiscal no período** deixa de contar. Na demonstração, com o Modelo 22 de 2026 criado e a caixa por marcar, o assistente de outubro deu a taxa **15,00**, com a **Nota** «Modelo 22 do período que termina em 31/12/2026: Prejuízo fiscal no período: as taxas são aumentadas em 10 pontos percentuais (CIRC art. 88.º, n.º 14).». Para mudar o resultado, corrija os campos do separador **Tributação autónoma** do Modelo 22.
+- **O agravamento depende de factos da empresa.** O separador tem os campos **Atividade comercial, industrial ou agrícola** (vem marcado), **Isento ou sem atividade comercial principal**, **Início de atividade**, **Lucro tributável num dos três períodos anteriores** e **Obrigações declarativas dos dois períodos anteriores cumpridas**. Depois de os alterar, calcule de novo. No exemplo, o total passa de 966,35 € para 555,08 € em cada um destes casos, com a explicação do ecrã:
+  - **Início de atividade** 01/01/2026: «Período de início de atividade ou um dos seguintes: o agravamento não se aplica (CIRC art. 88.º, n.º 15).»
+  - Os dois campos do lucro e das obrigações marcados: «Lucro tributável num dos três períodos anteriores e declarações cumpridas: o agravamento não se aplica (regra transitória do Orçamento do Estado).»
+  - **Atividade comercial** desmarcado: «O agravamento só se aplica a factos relacionados com uma atividade comercial, industrial ou agrícola não isenta de IRC.»
+
+  <span className="fd-pending">Pendente de validação por contabilista certificado: as exceções ao agravamento do artigo 88.º, n.os 14 e 15, do CIRC, e a regra transitória do Orçamento do Estado para 2025 e 2026 (Leis n.os 45-A/2024 e 73-A/2025), tal como o assistente e o Modelo 22 as aplicam.</span>
+- **Só a parte isenta das ajudas de custo conta.** O excesso sobre o limite diário já é rendimento do trabalhador (tributado em IRS) e a parte faturada a clientes fica de fora. Nos recibos, uma deslocação só é faturada se o **mapa de deslocação** estiver marcado como «Faturado a um cliente» (artigo dos recibos). A compensação do teletrabalho não entra.
+- **O assistente só vê recibos.** Não vê as outras categorias (representação, viaturas, não documentadas, pagamentos a paraísos fiscais, remunerações de gestores). O resultado do assistente tem de coincidir com a linha das ajudas de custo do Modelo 22 do mesmo período (no exemplo: 29,65 €), desde que o período e o agravamento sejam os mesmos.
+- **O lançamento do recibo.** Uma ajuda de custo só entra no Modelo 22 depois de o recibo ser **contabilizado** (lançamento publicado): no exemplo, o recibo de outubro gerou o lançamento SAL/2026/00005.
+- **Regime simplificado.** Com o **Regime** simplificado, não há agravamento. No exemplo, as viaturas ficam a 8 % e 32 % (345,20 €). Na representação e nas ajudas de custo, a taxa e o imposto ficam a 0,00 e a coluna **Aviso** diz «Não tributável no regime simplificado (CIRC art. 88.º, n.º 16).» O separador diz «Regime simplificado: o agravamento não se aplica (CIRC art. 88.º, n.º 16).»
+- **Elétricas com prejuízo fiscal.** Até 62.500,00 € de custo de aquisição, inclusive, a taxa é 0 % e não há agravamento: 300,00 € de despesa com custo de 40.000,00 € e 200,00 € com custo de 62.500,00 € deram 0,00 € de imposto, com a referência «CIRC art. 88.º, n.º 20: só há tributação (10 %) quando o custo de aquisição excede o limite…». Acima desse valor, a taxa de 10 % agrava: 500,00 €, com custo de 70.000,00 €, a 10 % mais 10 pontos, deram 100,00 €.
+- **Isento ou sem atividade comercial principal.** Marcado, as não documentadas passam a 70 % e os paraísos fiscais a 55 %, e as viaturas ficam com imposto 0,00 € e o aviso «Não é tributável para um sujeito passivo isento ou sem atividade comercial principal (CIRC art. 88.º, n.º 3).». A representação (10 %), as ajudas de custo (5 %), as indemnizações e os lucros não mudam, e o agravamento continua até desmarcar **Atividade comercial, industrial ou agrícola**. <span className="fd-pending">Pendente de validação por contabilista certificado: o resultado com este campo marcado.</span>
+- **Avisos ao abrir o Modelo 22.** «O exercício não está fechado…» e «Não há Anexo A da IES gerado…» são do resto da declaração e não impedem este cálculo.
+
+## Problemas frequentes
+
+### «O período termina antes de começar. Como resolver: corrija as datas.»
+
+- **Causa:** no assistente, a data **De** é posterior à data **Até**.
+- **O que fazer:** corrija as datas e volte a calcular.
+
+### O assistente dá 0,00 € de base
+
+- **Causa:** não há recibos **validados ou pagos** com ajudas de custo cujo fim caia no período, ou as ajudas estão todas dentro do limite diário e foram faturadas a clientes, ou o mapa de deslocação não está aprovado (nesse caso a ajuda é rendimento do trabalhador e a base fica a zero).
+- **O que fazer:** confirme no recibo as linhas de ajudas de custo e o mapa de deslocação associado.
+
+### «Há gastos em contas típicas de tributação autónoma sem categoria (6242 Combustíveis: 50,00 € (1)): não entram no cálculo abaixo. Classifique os movimentos (campo «Tributação autónoma») e volte a calcular: a categoria por omissão de uma conta só vale para os movimentos lançados depois de ser definida.»
+
+- **Causa:** há movimentos publicados nessas contas sem categoria. O aviso não impede o cálculo, mas o total fica incompleto. O aviso aparece no topo do separador **Tributação autónoma** do Modelo 22, depois de **Calcular a tributação autónoma**.
+- **O que fazer:** se o lançamento ainda puder ser alterado, marque a linha. Definir a categoria na conta só vale para as linhas novas. Depois carregue em **Calcular a tributação autónoma**.
+
+### «Há portagens (categoria de IVA «Portagens») sem viatura: …»
+
+- **Sintoma:** no topo do separador **Tributação autónoma** do Modelo 22, depois de **Calcular a tributação autónoma**: «Há portagens (categoria de IVA «Portagens») sem viatura: 1 movimentos, 20,00 €. Não entram no cálculo abaixo. As portagens de viaturas ligeiras de passageiros contam (CIRC art. 88.º, n.os 3 e 5; Acórdão do STA n.º 10/2024): indique a viatura em cada movimento ou confirme que não é uma (um camião não paga tributação autónoma) e volte a calcular.»
+- **Causa:** há linhas de compras com a **Categoria de despesa** **Portagens** e sem **Veículo**. No exemplo, uma fatura de fornecedor de novembro de 2026 com uma linha de portagens de 20,00 € na conta 6251. O aviso não impede o cálculo, e essas linhas ficam fora dele.
+- **O que fazer:** se as portagens são de uma viatura ligeira de passageiros, indique o **Veículo** na linha, enquanto o lançamento o permitir, e carregue outra vez em **Calcular a tributação autónoma**. Se são de uma viatura que não paga tributação autónoma (por exemplo, um camião), não há nada a fazer. <span className="fd-pending">Pendente de validação por contabilista certificado: portagens de viaturas ligeiras de passageiros na tributação autónoma (Acórdão do STA n.º 10/2024).</span>
+
+### «A categoria «Encargos com viaturas (…)» depende do custo de aquisição da viatura: preencha o «Custo de aquisição da viatura» na linha do lançamento (conta 6226 Conservação e reparação) para se escolher a taxa certa.»
+
+- **Causa:** escolheu uma categoria de viatura e não escreveu o custo.
+- **O que fazer:** preencha a coluna **Custo de aquisição da viatura** na linha, ou escolha o **Veículo**, numa fatura.
+
+### «Viaturas com encargos no período e sem tipo de viatura (…): são tratadas como viaturas de passageiros. …»
+
+- **Causa:** há despesas do período lançadas com uma viatura que ainda não tem o campo **Viatura de passageiros ou de mercadorias** preenchido (passo 2). O Modelo 22 avisa no separador **Tributação autónoma**, depois de **Calcular a tributação autónoma**, com a matrícula e o total; por exemplo «Viaturas com encargos no período e sem tipo de viatura (AB-12-CD: Renault/Clio: 150,00 €): são tratadas como viaturas de passageiros. Um ligeiro de mercadorias só entra na tributação autónoma quando é tributado pela taxa intermédia do ISV (CISV art. 7.º, n.º 1, al. b)): escolha o tipo na ficha da viatura (separador «Informações fiscais») e calcule de novo.». Enquanto o tipo faltar, os encargos dessa viatura entram como os de uma viatura de passageiros.
+- **O que fazer:** abra a viatura, escolha o tipo em **Informações fiscais** e carregue outra vez em **Calcular a tributação autónoma**. Se for um ligeiro de mercadorias sem a taxa intermédia do ISV, os seus encargos saem do cálculo.
+
+### «Não há taxa em vigor para esta categoria no período: não é tributada. Carregue a taxa antes de confiar no resultado.»
+
+- **Causa:** o produto não tem taxa para essa categoria nesse período. A linha fica com imposto 0,00 €.
+- **O que fazer:** não entregue o total sem o contabilista certificado confirmar o imposto dessa linha.
+
+### A linha da fatura pede a «Categoria de despesa»
+
+- **Causa:** o IVA das contas como a 6242 é limitado pelo artigo 21.º do CIVA, e a percentagem dedutível depende da categoria.
+- **O que fazer:** escolha a categoria na coluna **Categoria de despesa**, antes de publicar.
+
+{/* Nota interna (DOCS-046, DOC-0160, risco alto): visto em docs_demo_v6p1b_test (master cf08b95ce, -i l10n_pt_fiscaldoo_fleet_irc, porta 8171). No ecrã: demo.contabilista (assistente, XLSX lido, datas trocadas, Modelo 22 de 2026 criado, cálculo, aviso sem categoria, colunas de um lançamento à mão e custo em falta, colunas da fatura, início de atividade, lucro e obrigações, atividade comercial); demo.gestor_contabilidade (categoria na conta 6266); admin (duas viaturas na Frota). Por chamada ao servidor, com o mesmo perfil: lançamentos OD/2026/00104 e 00105, fatura FTF/2026/00046, regime simplificado, recusa do Auditor. Dados criados como administrador (o Contabilista não cria rubricas): regra AJC, 2 mapas aprovados, recibo de outubro da Ana Margarida Pinto, contabilizado em SAL/2026/00005. Estorno de 50,00 € na 6242 usado para provocar o aviso. Auditoria de 03/11 (master 584213fd9): publicação à mão por clique (OD/2026/00108, com 2781), simplificado e Auditor por clique; 35 %, 50 %, 55 %, 70 %, 23 %, híbrida de 2026 e elétrica com lançamento provocados; híbrida de 2025 lida no código, porque o exercício está fechado na demonstração. OD/2026/00104 e 00105 da demonstração têm a 121 por chamada ao servidor, o que o ecrã não permite. V3A5-23 e V3A5-25 resolvidos; o nome inglês do XLSX mantém-se. Depois de juntar, voltar a pôr tributacoes-autonomas no related do DOC-0161 (ramo v6-P1).  Lote v22-C (DOCS-058 req. do DOC-0160 e DOCS-057 req. 45817, master d83bdf7ae, docs_demo_v22c_test), com utilizadores de um só perfil: Contabilista lançou por RPC OD/2026/00140 a 00142 (elétricas de 40.000, 62.500 e 70.000 €) e, por clique, criou o Modelo 22 de 2026, calculou (0, 0 e 100 €; agravamento de 10 pontos com a frase nova) e marcou Isento (as três a 0 € com o aviso do n.º 3), e desmarcou. Taxas lidas como admin: híbridas 2,5/7,5/15 % desde 01/01/2025; elétricas 0 % até 62.500,01 exclusive e 10 % daí (ACC-258). Plano de contas no menu só do Contabilista Certificado (e da Administração fiscal), não do Responsável fiscal nem do Contabilista; conta 6266 marcada por clique com o Contabilista Certificado. Captura 06 com a viatura AA-00-AA criada como admin e uma fatura em rascunho do Contabilista (colunas ligadas no menu de colunas, Analítica e Unidade escondidas, colunas alargadas pelo puxador). O assistente das ajudas de custo e a tabela de 4 linhas do exemplo não foram refeitos. */}
+
+{/* Nota interna (v23-T, DOC-0160, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}
+
+{/* Nota interna (lote v23-BI, DOCS-063 #3853, master 2c8d358c0, docs_demo_v23bi_test, 11/11/2026): aviso do M22-014 provocado na cópia: lançamento OD de 50,00 € na 6242 sem categoria (por RPC, Contabilista) e Modelo 22 de 2026 novo; Calcular a tributação autónoma por clique com o Contabilista mostrou a frase nova no topo do separador Tributação autónoma (título acertado). */}
+
+{/* Nota interna (lote EE-15, comboio 197, master c689f7580, 12/11/2026, cópias docs_demo_ee15_test (porta 8532) e docs_ee_ee15_test (8530), administrador para a Frota e Contabilista certificado para a conta): M22-015 (371106f5e) e M22-016 (5005f816c), juntos no 8a5841ab5: marca Renault e modelo «Mégane E-Tech» criados por RPC nas duas cópias (sem viaturas na demonstração), com o combustível Híbrido plug-in a gasolina; ficha Nova viatura aberta por clique e descartada: aviso do tipo por definir, as três opções de Viatura de passageiros ou de mercadorias, Autonomia em modo elétrico (km) e o aviso do híbrido plug-in. Enterprise: zona FISCALIDADE (Dedutibilidade fiscal: Data de início, Não dedutível (%)) por cima da mesma zona; conta 6242 com Tributação autónoma (por omissão), Exige veículo? e Com diferimento?. O aviso do Modelo 22 das viaturas com gastos sem tipo não foi provocado. Ver reports/LOTE_EE-15.md. */}
+
+{/* Nota interna (lote EE-16, comboios 198 e 199, master 7b476ad71, 13/11/2026; cópia Enterprise docs_ee_ee16_test (portas 8524/8525, cópia da odoo20_ee_test com ee_neutralizar) e cópia Community docs_demo_ee16_test (porta 8526), utilizadores criados nas cópias só com o perfil indicado): M22-016 (5005f816c, em master), aviso do Modelo 22 provocado na cópia Community: marca Renault, modelo Clio e viatura AB-12-CD sem tipo (administrador, RPC); lançamento OD/2026/00139 de 05/11/2026, 6226 Conservação e reparação 150,00 € com a viatura / 2781 Outros devedores e credores 150,00 € (Contabilista, RPC, publicado só na cópia). Por clique com um utilizador só com o perfil Contabilista: Contabilidade › Declarar › IRC › Declaração de IRC (Modelo 22), Novo, Exercício 2026, guardar (Modelo 22 - 2026), Calcular a tributação autónoma, separador Tributação autónoma: o aviso citado, a seguir ao dos gastos sem categoria («… (6226 Conservação e reparação: 150,00 € (1)) …»). Ver reports/LOTE_EE-16.md. */}
+
+{/* Nota interna (lote 96, ACC-286, master 78c1ec1ac, docs_demo_lote96_test, porta 8596, 18/11/2026, utilizador só Contabilista): assistente aberto pelo botão do painel O que há para fazer com o IRC? (a entrada Declarar › IRC › Tributação autónoma das ajudas de custo existe, mas não aparece no menu do Contabilista). A mãe não tem recibos com ajudas de custo: base 0,00 em 2026, por isso os valores 197,67/9,88/29,65 são do exemplo antigo; as taxas e as notas foram vistas no ecrã: 5,00 sem caixa; 15,00 com a caixa; 5,00 com Início de atividade 01/03/2025; 5,00 com Lucro + Obrigações; captura 03 refeita (só a coluna dos campos). Modelo 22 de 2026 criado por clique (action-1553/2): com ele o assistente deu 15,00 com a caixa por marcar. Subcontas 6311, 6321 e 62511 lidas por RPC com o Contabilista certificado (categoria 7). Portagens: FTF/2026/00049 de 05/11/2026 (Categoria de despesa Portagens, 6251, 20,00 € + IVA, sem viatura) lançada por RPC com o Contabilista; aviso lido por clique depois de Calcular a tributação autónoma. */}
+
+{/* Nota interna (lote 99, FIX-M253, master 73d6a5fed, docs_demo_99_test, porta 9784, 19/11/2026): a demonstração não tem viaturas; criada por RPC na cópia a viatura AA-00-AA (Renault Clio, Empresa Demonstração) e o utilizador l99.frota (só o grupo Frota/Gestor, senha mudada no ecrã na 1.ª entrada e só em memória). Por clique, na ficha da viatura › Informações fiscais: l99.frota vê os campos Custo de aquisição (tributação autónoma) e Origem do custo editáveis; demo.contabilista abre a ficha sem erro e vê os dois campos só de leitura (0,00 €); lido por script que testa se o campo tem caixa de escrita. Não se escreveu nenhum custo. */}

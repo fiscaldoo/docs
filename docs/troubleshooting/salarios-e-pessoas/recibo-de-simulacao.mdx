@@ -1,0 +1,81 @@
+---
+id: recibo-de-simulacao
+slug: /troubleshooting/recibo-de-simulacao
+title: O recibo ou o lote é uma simulação
+sidebar_label: Recibo ou lote de simulação
+sidebar_position: 41
+description: Um lote do tipo Simulação calcula os recibos para ver o resultado, mas nunca é validado, pago nem fechado, e não passa para um lote real. Para processar a sério, crie um lote de outro tipo.
+keywords: [simulação, simulacao, recibo de simulação, lote de simulação, recibo simulação, não tem efeito oficial, nao tem efeito oficial, botão validar, marca de simulação, lote real]
+doc_id: DOC-0396
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado, payroll-pt/processar-e-pagar/processar-o-mes]
+---
+
+## Sintoma
+
+Um lote calculado não tem o botão **Validar**, só **Calcular**, **Tirar do lote**, **Repor em rascunho** e **Apagar lote**. No topo do lote e de cada recibo aparece um aviso de simulação.
+
+## Mensagem
+
+Copiadas do ecrã com um utilizador só com o perfil **Processador de salários**, no lote «Simulação de novembro de 2026».
+
+No topo do lote calculado:
+
+> «O lote está «Calculado» e é uma simulação: não tem efeito oficial, por isso não se valida. Ainda pode ser calculado novamente; enquanto nenhum recibo estiver validado, «Repor em rascunho» ou «Apagar lote» desfazem-no (pede-se um motivo).»
+
+No topo de cada recibo:
+
+> «Simulação: este recibo só mostra o que aconteceria. Nunca é validado, pago, contabilizado nem declarado e não tem efeito oficial.»
+
+![Aviso no topo do recibo: Simulação, este recibo só mostra o que aconteceria](/images/troubleshooting/recibo-de-simulacao/01-recibo-simulacao.png)
+
+Em **Tirar do lote**, ao escolher um recibo da simulação, escrever o **Motivo** e carregar em **Tirar do lote** (as partes em itálico mudam de caso para caso):
+
+> «O recibo «*nome do trabalhador (01/11/2026 — 30/11/2026)*» não pode passar entre um lote de simulação e um lote real. O que aconteceu: isso transformaria uma simulação num recibo oficial (ou o contrário). Como resolver: crie um novo recibo no lote pretendido.»
+
+No ecrã, o lote não recusa a validação: esconde o botão **Validar**. Quem chama o fiscaldoo por uma integração recebe a recusa por escrito. Estas frases vieram de uma chamada direta, porque no ecrã não há botão que as faça aparecer:
+
+- Ao validar o lote:
+  > «O lote «*Simulação de novembro de 2026*» é uma simulação. O que aconteceu: uma simulação não tem efeito oficial, por isso nunca é validada, paga nem fechada. Como corrigir: crie um lote de um tipo real.»
+- Ao validar um recibo:
+  > «O recibo «*nome do trabalhador e período*» é uma simulação e não pode ser validado. O que aconteceu: uma simulação não tem efeito oficial, por isso nunca é validada, paga, contabilizada, declarada nem enviada para pagamento. Como resolver: crie um recibo num lote real com os mesmos dados e processe esse.»
+- Ao tentar tirar a marca de simulação:
+  > «A marca de simulação não se pode alterar. O que aconteceu: uma simulação nunca se torna um recibo oficial (e um oficial nunca é uma simulação). Como resolver: crie um novo recibo no lote certo.»
+
+## Causas verificadas
+
+- **O lote foi criado com o Tipo «Simulação».** O nome passa a começar por «Simulação», como «Simulação de novembro de 2026», e serve para ver o resultado de um mês antes de o processar.
+- **Uma simulação não se transforma em real.** Se passasse, um recibo sem validação teria efeito oficial. Por isso, a marca do recibo não muda e um recibo não passa de um lote de simulação para fora dele nem para um lote real.
+
+## O que confirmar
+
+1. A coluna **Tipo** da lista em **Salários › Processar › Processar o mês**.
+2. Se o nome do lote começa por **Simulação**.
+
+## Como resolver
+
+Quem faz: o perfil **Processador de salários** ou quem tem o acesso extra **Administrador de Salários**. Cada um deles, sozinho, tem os botões **Repor em rascunho** e **Apagar lote** no lote de simulação.
+
+1. Se a simulação já não faz falta, abra o lote e carregue em **Apagar lote**. A janela avisa: «O lote «Simulação de novembro de 2026» e os seus 8 recibos em rascunho vão ser apagados. Nada do que está validado ou pago é tocado: se algum recibo estiver validado ou pago, o lote é recusado. O apagamento fica registado no registo de auditoria com o seu motivo.» Escreva o **Motivo** e carregue em **Apagar lote**. Sem motivo, aparece «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+2. Abra **Salários › Processar › Processar o mês** e carregue em **Novo**.
+3. Em **Tipo**, escolha um tipo real, por exemplo **Normal**, e confirme o período (**Início do período** e **Fim do período**).
+4. Continue como em [Como processar os salários do mês](/payroll-pt/processar-o-mes).
+
+## Resultado esperado
+
+O lote novo chega a **Calculado** com o botão **Validar**, e os recibos deixam de mostrar o aviso de simulação.
+
+## Quando contactar o suporte
+
+- Um lote com outro **Tipo** mostra o aviso de simulação nos recibos.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com o nome do lote e o tipo.
+
+{/* Nota interna (DOCS-046, lote v22-B, 06/11/2026, master d83bdf7ae, base docs_demo_v22b_test, porta 8350): utilizadores de um só perfil criados na cópia. Por clique com o Processador de Salários: lote «Simulação de novembro de 2026» criado (Novo, Tipo Simulação, Criar os recibos do mês: 8 recibos) e calculado; aviso do lote (já não diz «Valide-o»), aviso do recibo, recusa de Tirar do lote, janela de Apagar lote e recusa sem motivo (o lote NÃO foi apagado: fica para o auditor). Administrador de Salários: mesmos botões. Por RPC (sem botão no ecrã): validar o lote, validar o recibo e escrever is_simulation. Não provocada: ERR-3591 (criar um recibo de simulação num lote real). */}

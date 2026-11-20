@@ -1,0 +1,89 @@
+---
+id: configurar-a-formacao
+slug: /people/configurar-a-formacao
+title: Como configurar a formação obrigatória e os cursos
+sidebar_label: Configurar a formação
+sidebar_position: 1
+description: "Criar um curso, dizer se conta para as 40 horas anuais e para o crédito de horas, e torná-lo obrigatório."
+keywords: [configurar formação, cursos, curso obrigatório, 40 horas, formação contínua, crédito de horas, anexo C, relatório único, validade do curso, orçamento de formação]
+doc_id: DOC-0256
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/formacao/registar-formacao, people/formacao/horas-de-formacao]
+---
+
+## Para que serve?
+
+O curso é a base de cada ação de formação. Diz quantas horas tem, se conta para as 40 horas anuais de formação contínua e para o crédito de horas, e se os trabalhadores têm de o renovar.
+
+## Quando utilizar?
+
+- Vai registar a primeira formação do ano e o curso ainda não existe.
+- Quer que um curso (por exemplo segurança no trabalho) fique como obrigatório, com data de validade e aviso antes de expirar.
+- Uma sessão não é formação para efeitos da lei (por exemplo, uma sessão de acolhimento) e não deve contar horas.
+
+## Onde encontrar?
+
+**Pessoas › Formação › Configuração e painéis › Cursos** › **Novo**. **Pessoas › Formação › Configuração e painéis › Formação obrigatória** lista os trabalhadores com formação a renovar. O orçamento anual, para o administrador do sistema, está em **Pessoas › Configurar › Definições**, secção **Formação**.
+
+## Antes de começar
+
+- O seu perfil é **Gestor de RH**.
+- O orçamento anual só o administrador do sistema altera. O **Gestor de RH**, o **Processador de salários** e a **Gerência** não têm o menu **Configurar** da aplicação **Pessoas**.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Pessoas › Formação › Configuração e painéis › Cursos** e carregue em **Novo**.
+2. Escreva o nome em **Nome do curso**, por exemplo `Segurança e saúde no trabalho`, e o **Código interno** (`SST-01`).
+3. Em **Duração por omissão (h)**, que vem com 4,00, escreva as horas do curso (`8`). **Entidade formadora** vem em **Interna** e o **Responsável** é quem cria o curso.
+4. Confirme as caixas **Conta para as 40 horas** e **Área válida para o crédito de horas**, que vêm marcadas:
+   - **Conta para as 40 horas**: as horas contam para o mínimo anual do Código do Trabalho (art. 131.º/2) e para a conta corrente do crédito de horas. Desmarque-a no que não é formação para efeitos da lei.
+   - **Área válida para o crédito de horas**: o trabalhador só pode usar o crédito de horas em formação de uma área válida (CT art. 133.º/2). Desmarcada, uma participação «por iniciativa do trabalhador» mostra um aviso.
+
+   ![Curso novo Segurança e saúde no trabalho, código SST-01, 8,00 horas, entidade formadora Interna e as caixas Conta para as 40 horas e Área válida para o crédito de horas marcadas](/images/people/configurar-a-formacao/01-curso-novo-horas-e-credito.png)
+5. Se o curso é obrigatório, marque **Obrigatória**. Aparecem **Obrigatória para todos**, **Obrigatória para os departamentos**, **Validade (meses)** (zero: não expira) e **Avisar com antecedência (dias)**, que vem em 60. Marque **Obrigatória para todos** ou escolha os departamentos: só com **Obrigatória**, ninguém entra na lista **Formação obrigatória**.
+   ![Bloco Formação obrigatória com Obrigatória marcada, Obrigatória para todos ainda por marcar, Validade (meses) 0 e Avisar com antecedência (dias) 60](/images/people/configurar-a-formacao/02-curso-obrigatorio.png)
+6. Preencha os códigos do Anexo C do Relatório Único, se os tiver: **Área de educação e formação (t30)**, **Modalidade (t31)**, **Entidade formadora (t34)**, **Tipo de certificado (t35)** e **Nível de qualificação (t36)**. A **Origem (Anexo C)** não se escreve: segue a **Entidade formadora** do passo 3 (**Interna** ou **Externa**). **Anexo C completo** só fica marcada com todos preenchidos.
+7. Carregue no ícone de guardar. Num curso obrigatório aparece o campo **Certificação**, só de leitura, com o nome do curso: a ajuda do campo diz «A certificação nativa de um curso obrigatório. Uma função exige o curso nas suas Competências (separador «Competências» da posição de trabalho).»
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, os cursos configuram-se da mesma maneira, com o perfil **Gestor de RH**: **Pessoas › Formação › Configuração e painéis › Cursos** › **Novo** tem os mesmos campos, de **Código interno** e **Duração por omissão (h)** aos códigos do Anexo C, e as listas **Formação obrigatória** e **Certificações** são as mesmas. Os menus de **Pessoas › Formação** do **Gestor de RH**, do **Processador de salários** e da **Gerência** são os mesmos que no Community, e o orçamento anual continua em **Pessoas › Configurar › Definições**, secção **Formação**, só para o administrador do sistema.
+
+{/* Nota interna (lote EE-11, DOCS-073 #4142, DEC-1794, master 589ecfd27, 12/11/2026): cópia Enterprise docs_ee_ee11_test no portátil (pg_dump da odoo20_ee_test, já em 589ecfd27; -i de hr_payroll, planning, hr_appraisal e hr_recruitment e -u de fiscaldoo_ux_kit e l10n_pt_fiscaldoo_demo; ee_neutralizar antes e construir), porta 8508, guarda de rede ligada; utilizadores criados por RPC na cópia, cada um só com um valor do campo Perfil: ee11_rh: Cursos (Curso, Código interno, Duração por omissão (h), Origem (Anexo C), Obrigatória, Conta para as 40 horas, Validade (meses), Anexo C completo), Novo com os mesmos rótulos (FORMAÇÃO OBRIGATÓRIA, t30 a t36, Origem (Anexo C), Anexo C completo), curso «Segurança e saúde no trabalho» SST-01 criado por clique (documento meu); Formação obrigatória («Não há formação obrigatória») e Certificações («Ainda não há certificações!»). Menus de Pessoas de ee11_rh, ee11_proc e ee11_ger iguais nas duas cópias. Administrador: Definições, secção Formação com Orçamento anual de formação. Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee11_test (master 589ecfd27, porta 8518), com os mesmos utilizadores. Ver reports/LOTE_EE-11.md. */}
+
+## Resultado esperado
+
+O curso aparece em **Pessoas › Formação › Configuração e painéis › Cursos** e na lista **Curso** do **Registo rápido**. Se é obrigatório para todos, cada trabalhador sem a formação válida aparece em **Formação obrigatória** com o **Estado** «Em falta»; no exemplo, os 9 trabalhadores da empresa. A **Visão da direção** conta-os em **Formação obrigatória › Expirada ou em falta**. Sem nenhum curso obrigatório, a lista diz «Não há formação obrigatória».
+
+## Notas importantes
+
+- **Os códigos do Anexo C vazios não bloqueiam o curso:** guarda-se na mesma. Sem eles, o Relatório Único fica por preencher; o aviso que aparece ao registar a ação está em [Como registar uma ação de formação e as presenças](/people/registar-formacao).
+- O **Responsável** recebe as atividades quando o curso está em falta, expirado ou prestes a expirar.
+- **Pessoas › Formação › Configuração e painéis › Certificações** lista as certificações de cada trabalhador, com as colunas **Trabalhador**, **Certificação**, **De** e **A**.
+- **Orçamento anual:** o administrador do sistema abre **Pessoas › Configurar › Definições** e, na secção **Formação**, escreve o **Orçamento anual de formação** («Comparado com o custo das ações do ano no ecrã da direção. Deixe vazio se não houver orçamento.») e carrega em **Guardar**. Com 5.000,00 €, a **Visão da direção** passou a mostrar «0,00 € por participação, de 5.000,00 € orçamentados». Este valor aparece à **Gerência**, ao **Processador de salários** e ao administrador do sistema; o **Gestor de RH** não o vê na **Visão da direção**. O orçamento fica na empresa em que está a trabalhar: as outras empresas não o mostram.
+
+{/* Nota interna (auditoria v22-E, 06/11/2026, master d83bdf7ae, base docs_demo_v22e_test, porta 8372): por clique com utilizadores criados só com cada valor do campo Perfil (DEC-1777). Gestor de RH: curso PS-01 criado; só com Obrigatória não entrou ninguém em Formação obrigatória, com Obrigatória para todos entraram os 9 «Em falta»; Duração 4,00, Avisar 60, Validade 0; Origem (Anexo C) só de leitura, passa a Externa com a Entidade formadora Externa; Certificação com o nome do curso e a ajuda citada. Menus de Formação do Processador de salários (4), da Gerência (2) e do Auditor (sem Pessoas) e falta de Configurar conferidos. Orçamento de 5.000 € gravado pelo admin na Empresa Demonstração: a Visão da direção mostra-o ao admin, à Gerência e ao Processador de salários; ao Gestor de RH não (nem o Passivo de formação). Empresa Teste Filial sem orçamento. Lote v23-G (master 5228a94bd, docs_demo_v23g_test): a lista vazia de Certificações, aberta no ecrã com um utilizador só com o perfil Gestor de RH, já diz «Ainda não há certificações!»; o artigo não a cita. */}
+{/* Nota interna (DOCS-046, lote v22-E, 06/11/2026, master d83bdf7ae, base docs_demo_v22e_test, porta 8362): percorrido por clique com um utilizador criado só com o perfil Gestor de RH (curso SST-01 criado, obrigatório para todos, 9 trabalhadores «Em falta»; «Há campos obrigatórios por preencher» ao guardar vazio). Menus de Formação vistos com utilizadores só com Processador de salários, Gerência e Auditor (DEC-1777). Orçamento gravado pelo administrador (5.000 €) e visto na Visão da direção. O aviso do Anexo C ao registar a ação não foi repetido aqui: é do DOC-0257. */}
+
+## Problemas frequentes
+
+### Não vejo o menu Cursos
+
+Só o **Gestor de RH** e o administrador do sistema têm **Cursos**, **Registo rápido** e **Formação obrigatória**. Em **Pessoas › Formação**:
+
+- o **Processador de salários** tem **Ações de formação**, todo o bloco **Horas e crédito de horas** (com o **Crédito de horas** e as **Declarações na saída**), o **Painel de formação** e a **Visão da direção**;
+- a **Gerência** tem o bloco **Horas e crédito de horas** sem **Horas de formação do ano**, o **Painel de formação** e a **Visão da direção**;
+- o **Auditor / ROC** não tem a aplicação **Pessoas**.
+
+Peça ao administrador do sistema que lhe dê o perfil **Gestor de RH**, ou que crie o curso. Ver também [Como se organiza a aplicação Pessoas e o painel de RH](/people/a-aplicacao-pessoas).
+
+{/* Nota interna (DOCS-005 #3400, lote CAP-01, 10/11/2026, master ce51f2d47, docs_demo_cap01_test, porta 8504): por clique com um utilizador criado na cópia só com o perfil Gestor de RH: Pessoas › Formação › Configuração e painéis › Cursos › Novo (caminho de hoje, UX-160), curso SST-01 preenchido (captura 01) e Obrigatória marcada (captura 02: Obrigatória para todos por marcar, Validade 0, Avisar 60); o curso NÃO foi guardado (descartado), para não mudar a lista Formação obrigatória da cópia. O formulário tem hoje também o separador Programa, ao lado do Anexo C. Duas frases reescritas com o caminho no início, porque o verificador do test_doc_paths lia «A lista dos trabalhadores…» e «Certificações (…» como o primeiro nível do caminho. */}

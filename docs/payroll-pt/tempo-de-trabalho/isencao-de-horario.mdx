@@ -1,0 +1,117 @@
+---
+id: isencao-de-horario
+slug: /payroll-pt/isencao-de-horario
+title: Como registar uma isenção de horário de trabalho
+sidebar_label: Isenção de horário
+sidebar_position: 10
+description: Registar o acordo de isenção de horário de um trabalhador e pagar a retribuição específica no recibo.
+keywords: [registar, isenção, isencao, horário, horario, trabalho, isenções de horário, isencoes de horario, retribuição específica, retribuicao especifica, acordo escrito, art. 218, art. 265, mínimo legal]
+doc_id: DOC-0190
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/tempo-de-trabalho/horario-de-trabalho, payroll-pt/tempo-de-trabalho/trabalho-suplementar, payroll-pt/configurar/rubricas-salariais]
+---
+
+## Para que serve?
+
+Guarda o acordo de isenção de horário de um trabalhador e calcula a retribuição específica que a lei garante, quando uma rubrica a leva ao recibo. Sem acordo escrito e sem fundamento, o fiscaldoo recusa o registo.
+
+## Quando utilizar?
+
+- Quando a empresa e o trabalhador assinam um acordo de isenção de horário.
+- Quando a isenção acaba: preencha **Até**, ou registe a renúncia na linha **Renunciada**.
+- Não use a isenção para horas a mais pontuais: isso é [trabalho suplementar](/payroll-pt/trabalho-suplementar).
+
+## Onde encontrar?
+
+**Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores** › abrir a ficha › separador **Trabalho** › **Tempo de trabalho** › **Abrir a isenção de horário de trabalho**.
+
+A lista com as isenções de todos os trabalhadores está em **Salários › Preparar › O que há para fazer este mês?** › **Situações e deveres com um trabalhador** › **Isenções de horário**.
+
+## Antes de começar
+
+- O seu perfil é **Gestor de RH**, ou tem o acesso extra **Administrador de Salários**.
+- Tem o acordo assinado à mão: data e onde está guardado.
+- A ficha tem preenchido o **Local de trabalho habitual**. O botão guarda a ficha antes de abrir e, sem esse campo, não abre.
+- Para o valor chegar ao recibo, existe uma rubrica com a origem **Isenção de horário de trabalho** (passo 5).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Na ficha, carregue em **Abrir a isenção de horário de trabalho**. Se já houver uma em vigor, abre-a. Se não houver, abre uma nova, com o **Trabalhador** preenchido.
+2. Em **Fundamento da isenção (art. 218.º)**, escolha: **a)** cargo de administração ou direção, ou funções de confiança; **b)** trabalhos preparatórios ou complementares; **c)** teletrabalho e atividade regular fora do estabelecimento; ou **Outra situação admitida pelo IRCT**, com a cláusula.
+3. Preencha **Data do acordo escrito** e **Acordo escrito (documento)**, onde o acordo está guardado. Em **Modalidade**, escolha **Sem observância do período normal de trabalho — 1 hora por dia** ou **Com observância do período normal de trabalho — 2 horas por semana**. Em **Efeito no período normal (art. 219.º/1)**, escolha entre **a)**, **b)** e **c)**.
+4. Preencha **De** e, se tiver fim, **Até**. Em **Valor fixado por**, deixe **Mínimo legal**, ou escolha o IRCT ou o contrato e preencha **Percentagem ou valor** e a **Cláusula do IRCT ou do contrato**. Carregue em **Guardar**.
+   ![Isenção com o fundamento c, o acordo escrito de 28/10/2026, desde 01/11/2026 e o valor pelo mínimo legal](/images/payroll-pt/isencao-de-horario/01-isencao-com-acordo-escrito.png)
+5. Se a empresa ainda não tem a rubrica, abra **Salários › Configurar › Rubricas › Rubricas salariais** e crie-a como em [Como criar e configurar uma rubrica salarial](/payroll-pt/rubricas-salariais). Em **Origem da quantidade**, escolha **Isenção de horário de trabalho (CT art. 265.º)**.
+6. No recibo do mês, ainda por validar, carregue em **Calcular**. A linha da rubrica entra sozinha.
+   ![Recibo de novembro com a Retribuição base de 1.900,00 €, a Isenção de horário de 287,74 € e o Subsídio de alimentação](/images/payroll-pt/isencao-de-horario/02-recibo-com-a-isencao.png)
+
+</StepByStep>
+
+**Exemplo.** Um trabalhador com 1.900,00 € de retribuição base e 40 horas por semana, isento sem observância do período normal desde 01/11/2026:
+
+- Valor da hora: 1.900,00 × 12 ÷ (52 × 40) = 10,96 €.
+- Com o acréscimo de 25 % da primeira hora de trabalho suplementar: 13,70 € por dia (13,7019 € sem arredondar, o valor que entra na conta).
+- Dias do mês: **21** (novembro de 2026, de segunda a sexta, sem dias registados).
+- Valor da linha: **287,74 €**. **Como foi calculado?** diz «Isenção de horário»: 287,74 €, sujeita a IRS e a Segurança Social. Fonte: CT art. 265.º, lido na PGDL a 09/10/2026.
+
+## No Enterprise
+
+No Odoo Enterprise, a isenção regista-se da mesma maneira. Com o perfil **Gestor de RH**, ou com o acesso extra **Administrador de Salários**, a ficha do trabalhador tem, no separador **Trabalho**, secção **Tempo de trabalho**, o botão **Abrir a isenção de horário de trabalho**, e o painel **O que há para fazer este mês?** tem a lista **Isenções de horário**, com **Novo**.
+
+O recibo calcula a isenção como no Community. No exemplo, com a isenção sem observância desde 01/11/2026 do trabalhador de 1.900,00 €, o recibo de novembro de 2026, só calculado, teve a linha de 287,74 €.
+
+{/* Nota interna (lote EE-08, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee08_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8508/8509), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Gestor de RH e Processador com o acesso Administrador de Salários na ficha (botão Abrir a isenção de horário de trabalho) e no painel (Isenções de horário com Novo e as colunas Trabalhador, Fundamento da isenção (art. 218.º), Modalidade, Valor fixado por, De, Até, Renunciada). O cálculo foi feito por RPC com os direitos de cada perfil, numa transação desfeita no fim (nada ficou na cópia): isenção criada pelo Gestor de RH (fundamento a), sem observância, mínimo legal, desde 01/11/2026), lote de novembro criado e calculado pelo Processador de salários: linha de 287,74 € no recibo do trabalhador de 1.900,00 €. Comparado com uma cópia da demonstração Community (docs_demo_ee08_test, 2c8d358c0, porta 8518). Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-08.md. */}
+
+## Resultado esperado
+
+- Ao abrir de novo o botão da ficha, vê a isenção em vigor.
+- O recibo mostra a linha da rubrica, com o valor e **Como foi calculado?**.
+- Se a isenção começar num mês com recibo pago, e a rubrica existir, ao guardar o fiscaldoo cria sozinho um recibo corretivo desse mês, por validar. O recibo pago não muda. Veja [corrigir um processamento](/payroll-pt/corrigir-um-processamento).
+
+## Notas importantes
+
+- **Lei.** Código do Trabalho: art. 218.º (acordo escrito e situações), art. 219.º (modalidades) e art. 265.º (retribuição específica). Texto lido na PGDL a 09/10/2026, como o fiscaldoo indica no recibo.
+- **Um IRCT ou o contrato podem fixar outro valor.** O fiscaldoo usa o que escolher em **Valor fixado por**. Com **Renunciada**, a retribuição não se paga: a lei só o admite a quem está em cargo de administração ou direção.
+- **Sem limite no ecrã.** O registo não conta as horas feitas pelo trabalhador.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a categoria e o código de Segurança Social da rubrica, a renúncia à retribuição (art. 265.º/2) e a leitura do art. 219.º/3.</span>
+
+## Problemas frequentes
+
+### A isenção não se guarda
+
+- **Mensagem:** «A isenção de horário de trabalho de … não tem fundamento legal ou não tem acordo escrito. O que aconteceu: o art. 218.º/1 do Código do Trabalho só permite a isenção por acordo escrito, para o trabalhador em cargo de administração ou direção, em trabalhos preparatórios ou complementares, ou em teletrabalho ou atividade regular fora do estabelecimento. Como resolver: preencha «Fundamento da isenção (art. 218.º)», «Data do acordo escrito» e «Acordo escrito (documento)».»
+- **Causa:** falta um destes três campos.
+- **O que fazer:** preencha-os e guarde.
+
+### As datas são recusadas
+
+- **Mensagens:** «A isenção de … termina antes de começar. Como resolver: corrija as datas.» ou «… já tem uma isenção de horário de trabalho nesse período (desde 01/11/2026). Como resolver: termine a anterior ou altere as datas.»
+- **Causa:** o **Até** é anterior ao **De**, ou o período sobrepõe-se a outra isenção do mesmo trabalhador.
+- **O que fazer:** corrija as datas. Para mudar de regime, preencha **Até** na isenção antiga e crie outra no dia seguinte.
+
+### Com IRCT ou contrato, não guarda
+
+- **Mensagem:** «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** falta **Percentagem ou valor** ou **Cláusula do IRCT ou do contrato**.
+- **O que fazer:** preencha-os, ou volte a **Mínimo legal**.
+
+### O botão não abre a isenção
+
+- **Mensagem:** «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** a ficha do trabalhador não tem o **Local de trabalho habitual**.
+- **O que fazer:** preencha-o e carregue de novo no botão. Pode escrever o nome e carregar em **Criar**.
+
+### O recibo avisa que não há rubrica
+
+- **Mensagem:** «… tem uma isenção de horário registada e não há nenhuma rubrica em vigor para a pagar: a retribuição específica (CT art. 265.º) ficaria por pagar. Como corrigir: crie a rubrica em Salários › Configurar › Rubricas › Rubricas salariais com a origem «Isenção de horário de trabalho (CT art. 265.º)» e calcule outra vez.»
+- **O que fazer:** faça o passo 5 e carregue de novo em **Calcular**.
+
+{/* Nota interna (DOCS-046, lote v13-PAY, master 56504fe86): por clique com Administrador de Salários: botão da ficha, 4 recusas, recibo de novembro calculado com rubrica ISENHOR criada por clique. Revisto no lote v15-REV (master 255d77e63): linha sozinha e aviso vistos por clique, com isenção e rubrica criadas por RPC; lista fora dos menus de Salários, defeito no relatório do lote; título técnico «Isenção de horário de trabalho (PT) #4» no caminho de navegação. */}

@@ -1,0 +1,112 @@
+---
+id: rubricas-salariais
+slug: /payroll-pt/rubricas-salariais
+title: Como criar e configurar uma rubrica salarial
+sidebar_label: Rubricas salariais
+description: Criar uma rubrica de abono ou desconto, com a versão que a põe em vigor, a categoria, a origem do valor e os códigos das declarações, e saber como chega ao recibo.
+keywords: [rubrica salarial, rubricas salariais, criar rubrica, abono, desconto, categorias de rubrica, estruturas salariais, versão da rubrica, origem da quantidade, código DMR, código de remuneração, rubrica de prémio]
+doc_id: DOC-0178
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/configurar/contabilizar-os-salarios, payroll-pt/configurar/configurar-os-salarios, payroll-pt/processar-e-pagar/premios-e-pagamentos-variaveis]
+---
+
+## Para que serve?
+
+Uma rubrica é uma linha possível do recibo: a retribuição base, um prémio, um desconto. A demonstração traz 38. Crie uma nova quando a empresa paga ou desconta algo que nenhuma destas cobre, por exemplo uma gratificação. A rubrica diz de onde vem o valor, se é abono ou desconto e como é tratada no IRS, na Segurança Social e nas declarações.
+
+## Quando utilizar?
+
+- A empresa passa a pagar gratificações, comissões ou um benefício em espécie, e a lista de rubricas não os tem.
+- Uma rubrica muda de regras a partir de uma data: feche a versão atual e crie outra.
+
+Não crie uma rubrica nova para um valor pontual de uma rubrica que já existe: acrescente a linha ao recibo. Não altere rubricas da lei para ajustar um recibo.
+
+## Onde encontrar?
+
+- **Salários › Configurar › Rubricas › Rubricas salariais**
+- **Salários › Configurar › Rubricas › Categorias de rubrica**
+- **Salários › Configurar › Rubricas › Estruturas salariais**
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador: só quem o tem vê o menu **Configurar**.
+- O contabilista certificado decidiu o tratamento fiscal e os códigos: **Imposto sobre o rendimento (IRS)**, **Segurança Social**, **Código DMR** e **Código de remuneração da Segurança Social**.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Configurar › Rubricas › Rubricas salariais** e carregue em **Novo**.
+2. Escreva o **Nome**, por exemplo `Gratificação por bons resultados`, e o **Código**, por exemplo `GRATIF`. Guarde.
+3. Na lista de versões, carregue em **Adicionar uma linha**. Abre-se a janela **Criar Versões**.
+4. Em **Designação da versão**, escreva `2026.1`. Em **Válido desde**, escreva `01/01/2026`. Em **Tipo de fonte**, escolha **Regra da empresa**: as opções são **Regra legal**, **Regra de instrumento de regulamentação coletiva (CCT)**, **Regra da empresa**, **Regra do contrato** e **Regra do trabalhador**.
+5. Em **Tipo**, escolha **Abono**, **Desconto**, **Encargo patronal** ou **Informativas**. Em **Categoria**, escolha uma categoria que a estrutura salarial tenha, por exemplo **Subsídios**.
+6. Em **Origem da quantidade**, escolha de onde vem o valor. Para pagamentos variáveis, escolha **Participação nos lucros, gratificação ou comissão** e, em **Tipo de pagamento variável**, **Gratificação por bons resultados**. Para valores escritos à mão, escolha **Introdução manual**.
+7. Em **Impostos e declarações**, escolha o **Imposto sobre o rendimento (IRS)**, a **Segurança Social**, o **Código DMR** e o **Código de remuneração da Segurança Social**, e a **Natureza laboral**. No IRS e na Segurança Social, as opções são **Sujeito**, **Isento** e **Parcialmente sujeito**. Na natureza laboral, **Retribuição (CT art. 258.º)**, **Não é retribuição (CT art. 260.º)**, **Retribuição só acima dos montantes normais (CT art. 260.º)** e **A decidir**. Confira também **Conta para o salário mínimo**, que decide se a linha entra na comparação com os mínimos. Em **Artigos do Código do Trabalho**, indique os artigos que a rubrica aplica, por exemplo `258`: sem isso, nunca aparece em [Rubricas a rever](/payroll-pt/atualizacoes-legais). Guarde a janela e, a seguir, a rubrica: a versão só fica gravada quando a rubrica é guardada.
+   ![Rubrica GRATIF com a versão 2026.1, válida desde 01/01/2026, tipo Abono e categoria Subsídios](/images/payroll-pt/rubricas-salariais/01-rubrica-e-versoes.png)
+8. Em **Modelos de contabilização**, crie o modelo da rubrica (ver [Como contabilizar o processamento dos salários](/payroll-pt/contabilizar-os-salarios)). Sem ele, o lote não se contabiliza.
+9. Num recibo em aberto, carregue em **Adicionar uma linha**, escolha a rubrica e carregue em **Calcular**: a linha traz o valor.
+
+</StepByStep>
+
+**Exemplo.** Com a rubrica `GRATIF` e uma gratificação de 500,00 € registada, o recibo de novembro de 2026 de Bruno Miguel Teixeira ganhou a linha de 500,00 € (ver [Como pagar prémios, comissões e outros valores variáveis](/payroll-pt/premios-e-pagamentos-variaveis)).
+
+Criar uma rubrica não gera lançamentos. O lançamento nasce quando o lote é contabilizado, com as contas do modelo: na demonstração, débito na 632 Remunerações do pessoal e crédito na transitória 231290.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o tratamento fiscal, a natureza laboral e os códigos de cada rubrica criada pela empresa.</span>
+
+## No Enterprise
+
+No Odoo Enterprise, as rubricas salariais, as categorias e as estruturas criam-se e alteram-se nos mesmos ecrãs, com o acesso extra **Administrador de Salários**: **Salários › Configurar › Rubricas** tem as mesmas entradas e a lista **Rubricas salariais** tem o botão **Novo** e as colunas **Código**, **Nome**, **Número de versões** e **Empresa**, como no Community.
+
+As regras salariais da aplicação **Folha de Salários** do Enterprise não aparecem numa empresa portuguesa, nem ao administrador, e não entram no recibo do fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
+
+{/* Nota interna (lote EE-07, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee07b_test: cópia da odoo20_ee_test com a aplicação de salários do Enterprise (hr_payroll) instalada e o código de master; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado: Processador de salários com o acesso Administrador de Salários em Salários › Configurar › Rubricas (Rubricas salariais com Novo); administrador sem a aplicação Folha de Salários na Empresa Demonstração, Lda e na Empresa Teste Portugal. Caminhos do artigo conferidos com o verificador do test_doc_paths na mesma cópia (0 erros). Ver reports/LOTE_EE-07.md. */}
+
+## Resultado esperado
+
+- A lista **Rubricas salariais** mostra a rubrica com o **Código**, o **Nome** e o **Número de versões**.
+- Numa rubrica sem código, a janela da versão avisa: «Código de Segurança Social em falta: esta rubrica está sujeita a Segurança Social mas não tem código de remuneração. Uma declaração não a consegue classificar (o fecho do mês é recusado).» e «Código DMR em falta: esta rubrica de abono não tem código nem divisão do DMR. …»
+- A versão vale a partir de **Válido desde**. A demonstração tem uma estrutura salarial, **Mensalistas**, com as categorias **Vencimento**, **Subsídios**, **Horas**, **Descontos**, **Encargos patronais** e **Informativas**.
+
+![Estrutura salarial Mensalistas, com a lista de categorias](/images/payroll-pt/rubricas-salariais/03-estrutura-mensalistas.png)
+
+## Notas importantes
+
+- **O histórico não se reescreve.** Uma versão já começada não se edita nos valores. Feche-a com **Válido até** e crie outra, a começar no dia seguinte (ver «Problemas frequentes»).
+- **Rubricas da lei.** Os dados das rubricas que o fiscaldoo traz, com **Regra legal**, mudam por pacote de atualização legal. O nome de uma rubrica deixa-se alterar e afeta todos os recibos que a mostram: não o mude sem razão.
+- **Métodos e elegibilidade.** Os métodos da retribuição diária, a elegibilidade do subsídio de refeição e as regras de diuturnidades estão no mesmo menu, **Rubricas**, e dizem como certas rubricas são calculadas.
+
+![Janela da versão da rubrica, com a natureza, os impostos e os códigos das declarações](/images/payroll-pt/rubricas-salariais/02-versao-da-rubrica.png)
+
+## Problemas frequentes
+
+### «A(s) versão(ões) de «GRATIF» já começou(aram) … e não pode(m) ser editada(s)»
+
+- **Mensagem:** «A(s) versão(ões) de «GRATIF» já começou(aram) (desde 2026-01-01) e não pode(m) ser editada(s): o histórico nunca é reescrito. Feche a atual com «Válido até» e crie uma nova versão a começar no dia seguinte.»
+- **O que fazer:** faça o que a mensagem diz. Os recibos antigos ficam como estão.
+
+### «Uma rubrica de pagamento variável precisa do tipo de pagamento»
+
+- **Mensagem:** «Uma rubrica de pagamento variável precisa do tipo de pagamento, é um abono e não tem valor fixo; só uma comissão tem percentagem. Como resolver: preencha «Tipo de pagamento» e limpe os valores.»
+- **O que fazer:** escolha o **Tipo de pagamento variável**, o **Tipo** **Abono** e limpe **Valor fixo**.
+
+### «Uma rubrica de benefício em espécie precisa do código da regra do benefício»
+
+- **Mensagem:** «Uma rubrica de benefício em espécie precisa do código da regra do benefício, é um abono e não tem montante fixo nem percentagem. Como resolver: preencha «Regra do benefício» e limpe os montantes.»
+- **O que fazer:** preencha **Regra do benefício** com o código da regra (ver [Como processar benefícios em espécie e o uso de viatura](/payroll-pt/beneficios-em-especie)).
+
+### «Uma rubrica de rendimento em espécie precisa do tipo»
+
+- **Mensagem:** «Uma rubrica de rendimento em espécie precisa do tipo e é um abono. Como resolver: preencha «Tipo de rendimento em espécie».»
+
+### Não consigo apagar uma rubrica
+
+- **Causa:** a rubrica já é usada por um modelo de contabilização ou por um recibo. A mensagem aparece em inglês: «Another model is using the record you are trying to delete. …»
+- **O que fazer:** deixe-a ficar e feche a versão com **Válido até**.
+{/* Nota interna (DOCS-046, defeito V6PAY-08): mensagem de apagar rubrica em uso em inglês. O Administrador de Salários altera o nome de rubricas da lei (write em BASE aceite; revertido na base). */}

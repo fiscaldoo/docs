@@ -1,0 +1,83 @@
+---
+id: dmr-de-substituicao
+slug: /payroll-pt/dmr-de-substituicao
+title: Como substituir uma DMR já entregue
+sidebar_label: DMR de substituição
+sidebar_position: 8
+description: Preparar no fiscaldoo a declaração mensal de remunerações de substituição depois de corrigir um recibo, ver as diferenças face à original, perceber quando o ecrã recusa a validação e marcar uma declaração como sem efeito.
+keywords: [dmr de substituição, substituir dmr, declaração de substituição, corrigir dmr, dmr entregue, diferenças face à declaração, sem efeito, recibo corretivo, declaração mensal de remunerações]
+doc_id: DOC-0224
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/declarar/dmr, payroll-pt/processar-e-pagar/corrigir-um-processamento]
+---
+
+## Para que serve?
+
+Quando se corrige um recibo cujo pagamento já entrou numa [DMR](/payroll-pt/dmr) entregue, o mês tem de ser declarado outra vez. Esta declaração chama-se **Declaração de substituição**. O fiscaldoo prepara-a com todos os recibos pagos do mês, mostra o que mudou face à original e só a deixa seguir se houver mudança. O fiscaldoo não entrega nada à AT: o ficheiro entrega-se no Portal das Finanças, fora do produto.
+
+## Quando utilizar?
+
+- Quando um recibo de um mês cuja DMR já foi entregue é corrigido (ver [corrigir um recibo já processado](/payroll-pt/corrigir-um-processamento)).
+- Quando descobre que a DMR entregue tem valores errados e já corrigiu os recibos.
+
+## Onde encontrar?
+
+**Salários › Declarar › Declaração mensal de remunerações (DMR)**
+
+## Antes de começar
+
+- Perfil **Processador de salários**, com o qual se fez o percurso deste artigo. Entregar e registar a resposta da AT é com o **Submissor de declarações** (ver [DMR](/payroll-pt/dmr)).
+- A DMR original do mês existe e já foi **Submetida** ou **Aceite**. Na demonstração, a de agosto de 2026 está **Submetida**.
+- O recibo foi corrigido: existe um recibo corretivo, aberto a partir de **Salários › Processar › Correções ao processamento**. Se o mês já foi declarado, o fiscaldoo só deixa validar o recibo corretivo depois de existir a declaração de substituição, por isso esta gera-se a partir da linha **DMR de substituição** da correção (ver [Como corrigir um processamento](/payroll-pt/corrigir-um-processamento)). O passo a passo completo está em [DMR](/payroll-pt/dmr), «Corrigir uma DMR já entregue»; aqui trata-se do que o ecrã faz e recusa.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Salários › Declarar › Declaração mensal de remunerações (DMR)**, carregue em **Novo**.
+2. Preencha **Serviço de Finanças (Quadro 1)**, o **Ano (Quadro 3)** e o **Mês (Quadro 3)** da declaração que quer substituir (no exemplo, 2026, **Agosto**).
+3. Em **Tipo de declaração (Quadro 6)**, escolha **Declaração de substituição** e carregue em **Gerar**.
+4. No topo aparece o bloco **Diferenças face à declaração que substitui**: em **Substitui** vem a declaração original (no exemplo, `DMR 2026-08 (1.ª declaração)`) e, por baixo, **Diferença: rendimento**, **Diferença: IRS retido**, **Diferença: contribuições** e **Diferença: quotas sindicais**. A lista **Titulares (Quadro 5)** traz todos os trabalhadores do mês (8 linhas, rendimentos de 11.076,67 € e IRS de 832,00 € no exemplo), como na original.
+   ![Declaração de substituição de agosto de 2026 gerada, com o aviso de que não tem diferenças e o bloco Diferenças face à declaração que substitui, tudo a 0,00](/images/payroll-pt/dmr-de-substituicao/01-substituicao-gerada.png)
+5. Confira as diferenças com o que corrigiu. Se estiverem certas, carregue em **Validar**, depois em **Gerar ficheiro de entrega**, **Descarregar ficheiro de entrega** e entregue o ficheiro no Portal das Finanças.
+
+</StepByStep>
+
+## Resultado esperado
+
+- Uma declaração do mesmo ano e mês, do tipo **Declaração de substituição**, ao lado da original, no estado **Gerada** e depois **Validada**.
+- Diferenças diferentes de zero em pelo menos uma das quatro linhas. Se estiverem todas a 0,00, só se valida depois de o **Administrador de Salários** carregar em **Confirmar sem diferenças** (ver «Problemas frequentes»).
+
+## Notas importantes
+
+- **A substituição declara tudo, não só a diferença.** Leva todos os recibos pagos do mês, como a original; a diferença é só informação.
+- **A original continua como estava.** Depois de gerar a substituição, a DMR original não muda de estado.
+- **Prazo e consequências.** O prazo, a data do facto e a escolha entre substituição e declaração fora de prazo dependem do caso. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo para entregar a substituição, quando se usa a declaração com data do facto e a regularização de eventual coima.</span>
+- **Ficheiro de entrega.** O ecrã avisa que o ficheiro segue o formato da AT, mas «ainda não foi conferido com o validador do Portal das Finanças». Confira-o no portal antes de entregar.
+- **Campo «Primeira ou substituição».** No ecrã o campo chama-se **Tipo de declaração (Quadro 6)** e tem as opções **1.ª declaração**, **Declaração de substituição** e a declaração com data do facto. <span className="fd-pending">Pendente de validação por contabilista certificado: o que deve constar do Quadro 6 em cada caso.</span>
+
+## Problemas frequentes
+
+### «Operação inválida: A substituição … não tem diferença face a …»
+
+- **Sintoma:** ao carregar em **Validar**, o ecrã diz «A substituição «DMR 2026-08 (Declaração de substituição)» não tem diferença face a «DMR 2026-08 (1.ª declaração)». O que aconteceu: uma substituição que declara os mesmos valores não substitui nada. Como corrigir: confirme que o recibo corretivo está validado e gere as linhas de novo ou, se for mesmo essa a intenção, peça a um utilizador com o acesso extra «Administrador de Salários» que abra esta declaração e carregue em «Confirmar sem diferenças» na barra de cima (só quem tem o acesso extra «Administrador de Salários» vê o botão) e valide de novo.» Na faixa do topo vem «Esta declaração não tem diferenças face à que substitui».
+- **Causa:** nenhum recibo do mês mudou desde a original (no teste, agosto de 2026, sem recibo corretivo).
+- **O que fazer:** Volte à correção em **Salários › Processar › Correções ao processamento**, confirme que o recibo corretivo está calculado e gere a linha **DMR de substituição** a partir dela; depois carregue de novo em **Gerar**. Se a substituição sem diferenças for mesmo a intenção, o **Administrador de Salários** abre a declaração e carrega em **Confirmar sem diferenças**, na barra de cima: depois, **Validar** deixa-a **Validada**. {/* Nota interna (auditoria v20-A, master 0289754a8, porta 8328): o defeito V4PAYb-08 já não se vê; Confirmar sem diferenças só aparece ao Administrador de Salários, e a substituição de agosto ficou Validada. */}
+
+### Já não quero esta substituição
+
+- **Sintoma:** gerou uma substituição por engano.
+- **O que fazer:** carregue em **Sem efeito** e em **Confirmar** na janela «A declaração fica na lista para registo e já não pode ser validada nem submetida. Depois pode criar-se uma nova para o mesmo mês. Continuar?». A declaração passa ao estado **Sem efeito**, fica na lista e deixa de ter botões.
+
+### «Já existe uma declaração deste tipo …»
+
+- **Sintoma:** ao carregar em **Gerar**, o ecrã diz «Já existe uma declaração deste tipo para (empresa) em 08/2026 …».
+- **Causa:** cada mês de pagamento só tem uma declaração viva de cada tipo.
+- **O que fazer:** abra a que já existe; se ainda não foi submetida e já não a quer, carregue nela em **Sem efeito** e crie outra.
+
+{/* Nota interna (DOCS-066 #3947, lote v23-BA, master ce51f2d47, docs_demo_v23ba_test, 10/11/2026, regra do check-perfis): a mensagem da substituição sem diferenças citada é a do pt_PT.po de master (l10n_pt_fiscaldoo_payroll_fiscal): manda pedir a um utilizador com o acesso extra «Administrador de Salários». */}

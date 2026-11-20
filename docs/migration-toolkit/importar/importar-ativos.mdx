@@ -1,0 +1,140 @@
+---
+id: importar-ativos
+slug: /migration-toolkit/importar-ativos
+title: Como importar ativos de outro programa
+sidebar_label: Ativos
+description: Trazer as fichas dos ativos fixos do programa anterior com a depreciação acumulada, validar o ficheiro linha a linha, importar só as linhas válidas e pôr os ativos em uso.
+keywords: [importar ativos, ativos fixos, depreciação acumulada, depreciacao acumulada, migração de ativos, migracao, csv, xlsx, DR 25/2009, taxa fiscal, abate, Importar ativos, Criar localizações em falta]
+doc_id: DOC-0302
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/ativos/registar-um-ativo, migration-toolkit/importar/migrar-series-e-documentos-certificados, migration-toolkit/planear/validar-a-migracao]
+---
+
+{/* Nota interna (DOCS-046, #3616): risco alto (contabilidade e ativos). Percurso inteiro feito por clique com um utilizador criado só com o perfil Contabilista (DEC-1777), lote v23-U. O botão Importar ativos foi conferido no ecrã com utilizadores só com Contabilista e Contabilista certificado (têm) e só com Auditor e Gerência (abrem Importar sem o botão); o Administrativo não tem a aplicação Contabilidade. */}
+
+## Para que serve?
+
+Quando uma empresa passa a trabalhar no fiscaldoo, os ativos fixos que já tinha no programa anterior têm de entrar com o que já foi depreciado, para a depreciação continuar do ponto onde ficou. Este assistente lê um ficheiro CSV ou Excel com **uma linha por ativo**, confere cada linha e cria as fichas **em preparação**. Nada é posto em uso e nenhum lançamento contabilístico é criado.
+
+Ao contrário do assistente de lançamentos, este **não é tudo ou nada**: as linhas com erro ficam de fora e as válidas importam-se.
+
+## Quando utilizar?
+
+- Para trazer o mapa de ativos do programa anterior, com o custo, a data de aquisição e a depreciação acumulada até à data da migração.
+- Para trazer também os ativos que já saíram (abatidos ou vendidos), com a data de abate, para que fiquem no histórico.
+- **Não use** para registar um ativo novo: use [Registar um ativo](/accounting-pt/registar-um-ativo), que liga o ativo à fatura de compra.
+- **Não use** para corrigir ativos que já existem: o assistente salta os que já existem e não os altera.
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Lançamentos › Importar**, e carregue em **Importar ativos**. Abre a lista **Importar ativos**, com as importações já feitas; carregue em **Novo** para fazer uma.
+
+![Página Importar com o botão Importar ativos assinalado](/images/migration-toolkit/importar-ativos/01-menu-importar.png)
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** ou **Contabilista certificado**: com cada um destes perfis sozinho, **Contabilidade › Lançar › Lançamentos › Importar** mostra o botão **Importar ativos**. Com o **Auditor / ROC** ou a **Gerência** sozinhos, a página **Importar** abre, mas sem esse botão; o **Administrativo** não tem a aplicação **Contabilidade**.
+- **As localizações do ficheiro.** Se o ficheiro traz localizações que ainda não existem na empresa, assinale **Criar localizações em falta**: o fiscaldoo cria-as ao importar (na demonstração, **DEM/Stock/Escritório** e **DEM/Stock/Armazém**). Sem a caixa, essas linhas dão erro (ver «Problemas frequentes»).
+- **Os fornecedores do ficheiro já existem como parceiros.** Um fornecedor que não existe não impede a linha, mas o ativo entra sem fornecedor, com o aviso «O fornecedor “Auto Comercial Sul, Lda” não foi encontrado: o ativo é importado sem fornecedor. Crie o parceiro e preencha o fornecedor no ativo.»
+- **A empresa tem as categorias de ativos que o ficheiro usa** (por exemplo «Equipamento administrativo»). Uma categoria que não existe dá erro na linha: «A categoria “Mobiliário inexistente” não existe na empresa: crie-a em Categorias de ativos ou escolha outra.» Se o ficheiro não tem a coluna da categoria, escolha uma **Categoria por omissão** no formulário.
+- O ficheiro é CSV (vírgula ou ponto e vírgula) ou XLSX, com a primeira linha de cabeçalho. **Designação** e **Valor de aquisição** são obrigatórias. Números como `1.200,00` ou `1200.00`; datas como `02/01/2024` ou `2024-01-02`. Exemplo, com dados inventados (cada linha da tabela é uma linha do ficheiro; grave com ponto e vírgula entre colunas):
+
+  | Código | Designação | Categoria | Data de aquisição | Data de entrada em funcionamento | Valor de aquisição | Valor residual | Vida útil | Depreciação acumulada | Código da taxa | Localização | Fornecedor |
+  |---|---|---|---|---|---|---|---|---|---|---|---|
+  | `INF-001` | Computador portátil | Equipamento administrativo | `02/01/2024` | `02/01/2024` | `1.200,00` | `0` | `4` | `600,00` | `2240` | Escritório | Equipamentos e Mobiliário Lusitano, Lda |
+  | `MOB-001` | Secretária de escritório | Equipamento administrativo | `02/01/2023` | `02/01/2023` | `800,00` | `0` | `8` | `300,00` | `2430` | Escritório | Equipamentos e Mobiliário Lusitano, Lda |
+  | `VIA-001` | Carrinha de distribuição | Equipamento de transporte | `03/01/2022` | `03/01/2022` | `18.000,00` | `2.000,00` | `5` | `12.800,00` | | Armazém | Auto Comercial Sul, Lda |
+
+  A **Vida útil** está em anos. O **Código da taxa** é o do DR 25/2009: `2240` (computadores) e `2430` (mobiliário) são da tabela II, a das taxas genéricas. Os códigos da tabela I só servem às empresas do setor de cada grupo. A **Depreciação acumulada** é a do programa anterior à data da migração (aqui, a 31/12/2025, com dois, três e quatro anos completos de quota constante).
+- A faixa do formulário lista as colunas: «A primeira linha do ficheiro é o cabeçalho. Colunas obrigatórias: Designação (nome) e Valor de aquisição. Opcionais: Código, Categoria, Data de aquisição, Data de entrada em funcionamento, Custos atribuíveis, Valor residual, Vida útil (anos), Depreciação acumulada, Depreciação acumulada fiscal, Vida remanescente, Código da taxa, Localização, Fornecedor, Moeda. CSV (; ou ,) ou XLSX. Os ativos são criados em preparação: nada é posto em uso.» Para ativos que já saíram, juntam-se **Data de abate**, **Tipo de saída** (venda, abate ou sinistro) e **Valor de realização** (ver «Ativos que já saíram»).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Importar ativos**, carregue em **Novo**. Em **Ficheiro (CSV ou XLSX)**, escolha o ficheiro. Como as localizações Escritório e Armazém ainda não existem, assinale **Criar localizações em falta**. Carregue em **Validar**.
+   ![Formulário com o ficheiro ativos.csv escolhido e Criar localizações em falta assinalado](/images/migration-toolkit/importar-ativos/02-ficheiro-escolhido.png)
+2. Nada é criado neste passo. O formulário passa a **Validado** e mostra as contagens **Linhas** 3, **Válido** 3, **Erros** 0, **Duplicados** 0 e, linha a linha, o estado e a mensagem. A carrinha fica **Válida** com dois avisos: o do fornecedor que não existe e «Sem taxa fiscal (DR 25/2009) no ficheiro nem na categoria: o ativo é importado sem quadro fiscal e o Modelo 32 não o consegue comparar com a quota fiscal máxima. Preencha o código da taxa no separador «Quadro fiscal» (ou a coluna «Código da taxa» do ficheiro).» Um aviso não impede a importação, mas trate-o (ver «Resultado esperado»). Carregue em **Importar**.
+   ![Importação validada: 3 linhas válidas, 0 erros, 0 duplicados, e os dois avisos da carrinha](/images/migration-toolkit/importar-ativos/03-validado.png)
+3. O fiscaldoo abre a lista **Ativos importados**, com os três ativos **Em preparação** (código, nome, categoria, data de aquisição, custo e valor líquido). Volte à importação pelo caminho no topo do ecrã: passa a **Importado**, com **Criado** 3, **Importado por** e **Importado em**, e cada linha mostra o ativo criado. A **Impressão digital do ficheiro** fica guardada para reconhecer o mesmo ficheiro mais tarde. Uma importação concluída é o registo: não se altera nem se apaga (o menu **Ações** só tem **Duplicar**).
+   ![Importação concluída: estado Importado, Criado 3 e as três linhas com o ativo criado](/images/migration-toolkit/importar-ativos/04-importado.png)
+4. Abra cada ativo em **Contabilidade › Lançar › Terceiros e ativos › Ativos fixos**. A lista abre com o filtro **Em uso**, que esconde os ativos importados: tire o filtro ou procure pelo nome. Confira o **Custo**, o **Já depreciado** e o **Valor líquido**: para o computador, 1.200,00 €, 600,00 € e 600,00 €. Quando estiver certo, carregue em **Pôr em uso**.
+   ![Ficha do ativo INF-001 em preparação, com custo 1.200,00 €, já depreciado 600,00 €, valor líquido 600,00 € e o botão Pôr em uso](/images/migration-toolkit/importar-ativos/05-ativo-criado.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, a importação é a do fiscaldoo e os ativos importados ficam nos **Ativos fixos** do fiscaldoo (visto com um utilizador só com o perfil **Contabilista**). O ficheiro do exemplo deu, em **Validar**, **Linhas** 3, **Válido** 3, **Erros** 0 e **Duplicados** 0, com os mesmos dois avisos na carrinha. **Importar** abriu **Ativos importados** com os três ativos **Em preparação**, e **Pôr em uso** pôs o computador **Em uso**, com **Já depreciado** 600,00 € e **Valor líquido** 600,00 €, sem lançamentos. Como no Community, a lista **Ativos fixos** abre com o filtro **Em uso**: tire-o para ver os ativos importados.
+
+{/* Nota interna (lote EE-05, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee05_test (cópia da odoo20_ee_test com EE_FASE=construir), 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0302. Contabilista: Lançar › Lançamentos › Importar › Importar ativos (lista vazia); Novo, ficheiro ativos_programa_anterior.csv com as 3 linhas do exemplo (ponto e vírgula), Criar localizações em falta, Validar → Validado, as mesmas mensagens do artigo; Importar → Ativos importados (VIA-001 5.200,00 €, INF-001 600,00 €, MOB-001 500,00 € de valor líquido, Em preparação); a importação ficou Importado, Criado 3. INF-001 posto em uso por clique: Em uso, 0 lançamentos (lido na base). Os 3 ativos são da cópia, fora dos números do artigo. Ver reports/LOTE_EE-05.md. */}
+
+## Resultado esperado
+
+- Três ativos em estado **Em preparação**, com o código, a categoria e as datas do ficheiro, o fornecedor quando já existia como parceiro (o computador e a secretária; a carrinha ficou sem fornecedor), a localização criada (separador **Onde está**: **DEM/Stock/Escritório** e **DEM/Stock/Armazém**) e o campo **Já depreciado** igual à depreciação acumulada do ficheiro. Nenhum lançamento contabilístico foi criado: o saldo das contas de depreciação acumulada vem do balancete de abertura (ver [Saldos de abertura](/migration-toolkit/importar-saldos-de-abertura)).
+- Ao carregar em **Pôr em uso**, o computador passou a **Em uso**, com **Já depreciado** 600,00 € e **Valor líquido** 600,00 €; ainda não existe nenhum lançamento de depreciação, que será gerado ao processar as depreciações (ver [Processar depreciações](/accounting-pt/processar-depreciacoes)).
+- **Código da taxa**: com o código `2240`, o separador **Quadro fiscal** do computador mostra a **Taxa DR 25/2009** «[II-2240] Computadores» e a **Taxa fiscal (%)** 33,33. A **Depreciação fiscal acumulada** não vinha no ficheiro e a **Depreciação fiscal à entrada** ficou a 0,00, por isso o quadro fiscal do ativo começa do zero. <span className="fd-pending">Pendente de validação por contabilista certificado: a taxa fiscal a atribuir a cada ativo importado e a depreciação fiscal acumulada de abertura.</span>
+- A importação fica no [registo de importações](/migration-toolkit/validar-a-migracao).
+
+## Ativos que já saíram
+
+Com as colunas **Data de abate**, **Tipo de saída** e **Valor de realização** preenchidas, o ativo entra já no estado **Abatido**, com a **Data de saída** do ficheiro. O botão **1 alienação** da ficha abre o registo da saída, com o **Motivo** «Saiu da contabilidade no programa anterior (importado com a data de abate; aqui não se lança nenhum movimento).» Na demonstração, um computador de 900,00 € totalmente depreciado e abatido a 30/06/2025 ficou assim. O abate não gera nenhum lançamento: se a venda ou o abate ainda não foram contabilizados, faça-o como em [Abater ou vender um ativo](/accounting-pt/abater-ou-vender-um-ativo). A **Data de abate** não pode estar no futuro («A data de abate (30/06/2030) é futura: só se importam saídas que já aconteceram.») nem ser anterior à data de aquisição («A data de abate (01/01/2019) é anterior à data de aquisição (02/01/2020).»).
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Uma importação concluída não se desfaz">
+Os ativos importados podem ser eliminados enquanto estão em preparação (**Ações › Eliminar** na ficha; e antes de terem lançamentos), mas a importação em si é o registo e fica. Valide sempre primeiro e confira as contagens com o mapa do programa anterior antes de carregar em **Importar**.
+</HelpCallout>
+
+- O ficheiro de exemplo usa os nomes da faixa do formulário (**Depreciação acumulada**, **Data de entrada em funcionamento**, **Código da taxa**). Na demonstração, um ficheiro com os cabeçalhos «Amortização acumulada», «Data de utilização» e «Código DR25» também foi lido sem erros. Para ativos tangíveis, o termo certo no SNC é depreciação.
+- **Importar o mesmo ficheiro outra vez não duplica nada**: as linhas ficam **Duplicado** e são saltadas.
+- As localizações criadas com **Criar localizações em falta** ficam dentro da localização principal da empresa (na demonstração, **DEM/Stock**).
+
+## Problemas frequentes
+
+### «A localização … não existe»
+
+- **Sintoma:** sem **Criar localizações em falta**, todas as linhas ficam **Erro** com «A localização “Escritório” não existe: crie-a ou assinale «Criar localizações em falta».» (e «… “Armazém” …» na carrinha).
+  ![Validação com as três linhas em erro por falta das localizações](/images/migration-toolkit/importar-ativos/06-localizacao-em-falta.png)
+- **O que fazer:** numa importação nova, assinale **Criar localizações em falta** e valide outra vez; ou tire a coluna **Localização** do ficheiro e preencha-a depois em cada ativo.
+
+### Linhas com erro no mesmo ficheiro
+
+- **Sintoma:** na demonstração, um ficheiro com 7 linhas deu 5 erros e 2 válidas (**Linhas** 7, **Válido** 2, **Erros** 5): são as cinco primeiras mensagens da tabela. A última aparece com um ficheiro sem a coluna da categoria:
+
+  | Linha | Mensagem |
+  |---|---|
+  | Valor «abc» | «“abc” não é um número (coluna Valor de aquisição): use 1234.56 ou 1.234,56.» e «Falta o valor de aquisição.» |
+  | Depreciação de 1.500 num ativo de 1.000 | «A depreciação acumulada (1.500,00) é superior ao valor depreciável (1.000,00): um ativo não pode ser depreciado mais de 100 %.» |
+  | Categoria «Mobiliário inexistente» | «A categoria “Mobiliário inexistente” não existe na empresa: crie-a em Categorias de ativos ou escolha outra.» |
+  | Sem designação | «O ativo não tem nome.» |
+  | Entrada em funcionamento antes da aquisição | «A data de início de utilização (02/01/2024) é anterior à data de aquisição (02/01/2025).» |
+  | Sem categoria (e sem categoria por omissão) | «A linha não tem categoria: preencha a coluna, ou escolha uma categoria por omissão no formulário.» |
+
+  ![Validação com cinco linhas em erro e duas válidas](/images/migration-toolkit/importar-ativos/07-erros-do-ficheiro.png)
+- **O que fazer:** corrija o ficheiro e valide-o numa importação nova, ou importe só as linhas válidas e acrescente depois as outras num segundo ficheiro. O botão **Erros e duplicados** abre **Linhas com erros**, só com as linhas que não vão entrar (as 5). Ao importar, só as linhas válidas criaram ativos: o fiscaldoo abriu **Ativos importados** com os 2 ativos, e a importação ficou **Importado** com **Criado** 2.
+
+### Duplicado
+
+- **Sintoma:** ao validar outra vez o mesmo ficheiro, **Linhas** 3, **Duplicados** 3, e em cada linha: «O ativo já existe (mesmo código, ou mesmo nome, data e valor): é saltado, por isso importar o mesmo ficheiro duas vezes não o duplica.»
+  ![Validação com as três linhas marcadas como duplicado](/images/migration-toolkit/importar-ativos/08-duplicados.png)
+- **O que fazer:** nada, se os ativos estavam certos. Se um ativo importado estava errado, elimine-o enquanto está em preparação e importe o ficheiro corrigido.
+
+### «Sem taxa fiscal (DR 25/2009)»
+
+- **Sintoma:** a linha fica **Válida** com este aviso: sem **Código da taxa** no ficheiro nem na categoria, o ativo entra sem quadro fiscal.
+- **O que fazer:** preencha a coluna **Código da taxa** do ficheiro, ou abra o ativo depois e escolha a taxa no separador **Quadro fiscal**. <span className="fd-pending">Pendente de validação por contabilista certificado: escolha da taxa do DR 25/2009 para cada categoria.</span>
+
+### Lista de importações vazia
+
+- **Sintoma:** numa empresa que ainda não importou nada, a lista diz «Ainda não há importações de ativos. Cada ficheiro de ativos que importar aparece aqui. Carregue em Novo, escolha o ficheiro e siga os passos para carregar os ativos.»
+  ![Lista de importações de ativos vazia](/images/migration-toolkit/importar-ativos/09-lista-vazia.png)
+- **O que fazer:** carregue em **Novo**.
+
+{/* Nota interna (DOCS-046, lote v22-B, 06/11/2026, master d83bdf7ae, base docs_demo_v22b_test): Criar localizações em falta dava «Sem acesso» ao Contabilista e ao Contabilista certificado (ACC-267, #3976). */}
+{/* Nota interna (DOCS-046, lote v23-U, #3616, 08/11/2026, master cebcb888d, base docs_demo_v23u_test, porta 8462): ACC-267 já em master (3ff8be5a7). Tudo por clique com um utilizador só com o perfil Contabilista, na Empresa Demonstração, com ficheiros sintéticos: lista vazia; ativos.csv sem a caixa (3 erros de localização); com a caixa (3 válidos, avisos do fornecedor e da taxa na carrinha; Importar → Ativos importados; Importado, Criado 3; localizações DEM/Stock/Escritório e DEM/Stock/Armazém criadas); INF-001 com 1.200/600/600, Pôr em uso → Em uso; Quadro fiscal [II-2240] Computadores 33,33; mesmo ficheiro → 3 duplicados; ficheiro de 7 linhas → 5 erros, Erros e duplicados com 5 linhas, Importar → 2 criados; ficheiro sem categoria; abatidos (1 válido Abatido com Data de saída 30/06/2025 e o motivo em 1 alienação, 2 erros de data); cabeçalhos antigos da ajuda lidos sem erros. Ativo em preparação (Telefone de secretária) eliminado sem recusa; importação concluída só com Duplicar. Nenhum lançamento novo na empresa depois da importação (contagem lida por RPC, só leitura). As mensagens da depreciação acima do valor e da data de início de utilização mudaram de texto e foram copiadas do ecrã de hoje. */}

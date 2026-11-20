@@ -1,0 +1,57 @@
+---
+id: custos-com-pessoas
+slug: /management/custos-com-pessoas
+title: Quanto custa cada trabalhador à empresa
+sidebar_label: Custos com pessoas
+sidebar_position: 7
+description: O que mostra o Custo total da empresa por trabalhador e mês, de onde vem cada coluna e onde se veem os pressupostos de gestão das pessoas.
+keywords: [custo total da empresa, custo por trabalhador, custos com pessoas, encargos, contribuições da empresa, contribuicoes da empresa, pressupostos de pessoas, massa salarial, direção, direcao]
+doc_id: DOC-0276
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [management/painel-da-direcao]
+---
+
+O custo de um trabalhador para a empresa é o salário bruto mais as contribuições que a empresa paga por ele. O ecrã **Direção › Pessoas › Custo total da empresa** mostra-o por trabalhador e por mês, a partir dos recibos de vencimento processados.
+
+## O que o ecrã mostra
+
+Uma tabela com um trabalhador por linha e, por mês, seis colunas (as **Medidas**):
+
+| Coluna | O que é |
+| --- | --- |
+| **Bruto** | O vencimento antes de descontos. |
+| **Descontos do trabalhador** | O que é retido ao trabalhador no recibo. |
+| **Líquido** | O que o trabalhador recebe: bruto menos descontos. |
+| **Contribuições da empresa** | O que a empresa paga à Segurança Social por ele. |
+| **Outros custos da empresa** | Outros encargos da empresa com ele. |
+| **Custo total da empresa** | O custo do trabalhador para a empresa. |
+
+No exemplo, a Empresa Demonstração, Lda tem quatro meses com recibos (de junho a setembro de 2026). O total dos quatro é 45.314,67 € de bruto, 10.762,30 € de contribuições da empresa e **56.076,97 €** de custo total. **Outros custos da empresa** está a 0,00 €. O custo total de um mês fica entre 13.707,39 € e 14.305,52 €. O perfil **Gerência** vê este ecrã.
+
+## O que o ecrã não vê
+
+- Só aparecem os meses com recibos processados. Um mês sem recibo não tem coluna.
+- O ecrã soma o que os recibos têm. Não projeta aumentos nem novas contratações: para isso, o simulador de aumentos usa os pressupostos abaixo.
+
+## Os pressupostos de pessoas
+
+**Direção › Pessoas › Pressupostos de pessoas** abre a ficha da empresa, na secção **Pressupostos de gestão**. São escolhas da empresa, não taxas da lei:
+
+- **Custo de uma saída (meses de custo)**, **Taxa média de IRS para simulações (%)** e **Seguro de acidentes de trabalho (% da massa salarial)** alimentam o simulador de aumentos.
+- **Saldo no FCT** e **Limiar de materialidade do painel da Direção** (500,00 € no exemplo) decidem que pontos chegam ao painel da Gerência.
+- **Resumo semanal de pessoas** está na secção **Interruptores (desligados por omissão)** da própria ficha (não nos interruptores do Copiloto).
+
+A taxa da Segurança Social a cargo da empresa não está aqui: lê-se das taxas da Segurança Social dos salários.
+
+## No Enterprise
+
+No Odoo Enterprise, **Direção › Pessoas › Custo total da empresa** é o mesmo quadro, com as seis medidas, os mesmos meses e os mesmos totais, e **Direção › Pessoas › Pressupostos de pessoas** abre a mesma ficha, com os **Pressupostos de gestão** e o interruptor **Resumo semanal de pessoas** (visto com um utilizador só com o perfil **Gerência**). Os valores continuam a vir dos recibos de vencimento do fiscaldoo. Na base Enterprise usada, a aplicação de salários do Enterprise não está instalada; sobre a convivência das duas, veja a secção «No Enterprise» de [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise).
+
+{/* Nota interna (lote EE-13, DOCS-073 #4142, req 46633, DEC-1794, master 7f41ce71b, base Enterprise docs_ee_ee13_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee13_test): DOC-0276. Gerência: tabela dinâmica com junho a setembro de 2026 e os mesmos valores por mês nas duas cópias (por exemplo junho: bruto 11.176,67, custo total 13.831,14); Pressupostos de pessoas com os mesmos campos. hr_payroll e a ponte dos salários do Enterprise não estão instalados na odoo20_ee_test: o ecrã com eles não foi visto. A confirmação de documentos pelo Assinar (ponte de Pessoas) não mexe neste ecrã. Ver reports/LOTE_EE-13.md. */}
+
+{/* Nota interna (DOCS-040, lote F4): conceito, risco normal. Colunas lidas do ecrã com o perfil Gerência (demo.gerencia); as definições das colunas vêm do nome do ecrã e do texto da ficha, não de recibos conferidos. Sem captura: o ecrã lista nomes de trabalhadores e salários. Quem vê estes valores é a Gerência: dado sensível. */}

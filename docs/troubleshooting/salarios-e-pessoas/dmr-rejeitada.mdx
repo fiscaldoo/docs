@@ -1,0 +1,98 @@
+---
+id: dmr-rejeitada
+slug: /troubleshooting/dmr-rejeitada
+title: A DMR foi rejeitada ou não pode ser gerada
+sidebar_label: DMR rejeitada
+description: O que fazer quando o Portal das Finanças rejeita a DMR (registar a rejeição, reabrir, corrigir e entregar de novo) e quando o fiscaldoo recusa os dados do empregador da DMR.
+keywords: [DMR rejeitada, DMR recusada, AT recusou a DMR, registar como rejeitada, reabrir para corrigir, motivo da rejeição, motivo da rejeicao, DMR não gera, DMR nao gera, NIPC inválido, NIPC invalido, NIPC da Segurança Social, ficha do empregador, declaração mensal de remunerações, declaracao mensal de remuneracoes, recibos por pagar, não há recibos pagos, nao ha recibos pagos, rendimento pago no mês]
+doc_id: DOC-0360
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master bfedd3b23)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/declarar/dmr, troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado, troubleshooting/salarios-e-pessoas/recibo-validado-nao-se-altera]
+---
+
+## Sintoma
+
+Há dois casos:
+
+- **O Portal das Finanças rejeitou a DMR** que foi entregue. No fiscaldoo, a DMR está **Submetida** e é preciso registar a rejeição, corrigir e entregar outra vez.
+- **O fiscaldoo recusa um passo antes da entrega**: **Gerar**, **Validar** ou guardar os dados do empregador abrem uma janela de erro.
+
+Este artigo parte da DMR de agosto de 2026 da Empresa Demonstração, Lda (8 linhas, 11.076,67 € de rendimentos, 832,00 € de IRS retido), já **Submetida**. O caminho normal da DMR está em [Como enviar a declaração mensal de remunerações (DMR) à AT](/payroll-pt/dmr).
+
+## Mensagem
+
+**Rejeição registada.** Depois de **Registar como rejeitada**, a DMR fica **Rejeitada** e mostra por cima, com o motivo escrito:
+
+> «A AT recusou esta declaração. Erro 999: NIF do titular inválido»
+
+O separador **Tentativas** guarda a tentativa com a **Resposta da AT** «Rejeitada», a data e o **Motivo dado pela AT**.
+
+**NIPC do empregador inválido.** Em **Salários › Configurar › Empresa › Ficha do empregador**, ao guardar um **NIPC da Segurança Social (DMR)** com o dígito de controlo errado:
+
+> «O NIPC «509999990» não é válido. O que aconteceu: não tem 9 algarismos com o dígito de controlo certo. Como resolver: corrija «NIPC da Segurança Social (DMR)».»
+
+![Janela Erro de Validação: o NIPC 509999990 não é válido](/images/troubleshooting/dmr-rejeitada/03-nipc-invalido.png)
+
+**Recibos validados e ainda por pagar.** Com o lote de outubro de 2026 só **Validado**, uma DMR nova de 2026-10 (perfil **Processador de salários**) mostra por cima:
+
+> «*8* recibo(s) validado(s) de *10/2026* ainda por pagar (*Ana Margarida Pinto, Bruno Miguel Teixeira, Carla Sofia Mendes, Diogo Ferreira Lopes, Eva Cristina Rocha, Fábio Nuno Carvalho*) e fora desta declaração: a DMR declara o rendimento PAGO no mês. Entram na DMR do mês em que forem pagos (marque-os como pagos depois da transferência bancária).»
+
+E **Gerar** dá «Não há recibos pagos em *10/2026* para Empresa Demonstração, Lda. O que aconteceu: uma DMR declara o rendimento PAGO no mês. Como corrigir: marque primeiro os recibos como pagos.»
+
+![Janela Operação inválida: não há recibos pagos em 10/2026, uma DMR declara o rendimento pago no mês](/images/troubleshooting/dmr-rejeitada/04-nao-ha-recibos-pagos.png)
+
+As outras recusas da DMR antes da entrega, «Já existe uma declaração deste tipo» e o aviso «as contas do mês não batem certo», e o que fazer com «Não há recibos pagos», estão em [DMR, Problemas frequentes](/payroll-pt/dmr).
+
+## Causas verificadas
+
+- **O Portal das Finanças rejeitou o ficheiro.** O motivo vem do Portal; o fiscaldoo só regista o que lá se viu. O fiscaldoo não sabe da rejeição até alguém a registar.
+- **O NIPC da ficha do empregador tem um algarismo errado.** O fiscaldoo confere o dígito de controlo ao guardar.
+- **O recibo ainda não está pago.** A DMR declara os recibos **Pagos** no mês, pela data do pagamento. Um recibo validado e por pagar não entra: um salário de outubro pago em novembro entra na DMR de novembro. O pagamento regista-se com **Banco executou** ou **Marcar como pago** no lote ([Não consigo pagar os salários ou gerar o ficheiro de transferências](/troubleshooting/pagamento-dos-salarios-recusado)). <span className="fd-pending">Pendente de validação por contabilista certificado: a DMR do mês em que os rendimentos são pagos ou colocados à disposição (CIRS, art. 119.º).</span>
+- **A DMR de um mês já entregue não se refaz com «Reabrir».** Se a AT aceitou a DMR e o valor mudou depois, faz-se uma declaração de substituição. <span className="fd-pending">Pendente de validação no ecrã: a declaração de substituição não foi feita nesta ronda.</span>
+
+## O que confirmar
+
+1. O motivo da rejeição no Portal das Finanças (código e texto) e a linha a que se refere.
+2. Na DMR, o separador **Titulares (Quadro 5)**: o **NIF do titular (01)**, o **Tipo de rendimento (04)**, o **Local (05)** e os valores de cada linha.
+3. Os dados do declarante: **Serviço de Finanças (Quadro 1)**, **NIF do declarante (Quadro 2)**, **NIF do Contabilista Certificado (Quadro 7)** e **NIF do declarante / representante legal (Quadro 7)**.
+
+## Como resolver
+
+Feito com o administrador da demonstração. Os botões **Registar …** são do acesso extra **Submissor de declarações** (ver [DMR](/payroll-pt/dmr), «Antes de começar»); o perfil **Processador de salários** sozinho corrige e gera, mas não regista a rejeição: numa DMR **Submetida** só vê **Gerar ficheiro de entrega** e **Descarregar ficheiro de entrega**.
+
+1. Abra a DMR **Submetida** e carregue em **Registar como rejeitada**.
+2. Na janela **Registar a rejeição**, escreva o **Motivo** que o Portal deu (é obrigatório; sem ele, **Registar** dá «Há campos obrigatórios por preencher») e, se tiver, a **Referência no portal**. Carregue em **Registar**.
+   ![Janela Registar a rejeição da DMR 2026-08, com Motivo, Referência no portal e o botão Registar assinalado](/images/troubleshooting/dmr-rejeitada/01-registar-a-rejeicao.png)
+3. A DMR passa a **Rejeitada**. Carregue em **Reabrir para corrigir**.
+   ![Barra da DMR rejeitada com Reabrir para corrigir assinalado e o estado Rejeitada](/images/troubleshooting/dmr-rejeitada/02-reabrir-para-corrigir.png)
+4. A DMR volta a **Gerada**, com os botões **Gerar** e **Validar**. Corrija a causa onde ela está (o NIF na ficha do trabalhador, o recibo com um corretivo, os dados do declarante na DMR) e carregue em **Gerar** para refazer as linhas.
+5. Siga a partir do passo 6 de [Como enviar a DMR](/payroll-pt/dmr): conferir o Quadro 4, **Validar**, gerar e descarregar o ficheiro, entregar no Portal, **Submeter** e registar a resposta.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: se a nova entrega de uma DMR rejeitada conta como entrega no prazo (dia 10) e o que fazer quando a rejeição chega depois do prazo.</span>
+
+## Resultado esperado
+
+- Depois de **Reabrir para corrigir**, a DMR está **Gerada** e o separador **Tentativas** mantém a tentativa rejeitada com o motivo.
+- Depois da nova entrega registada como aceite, a DMR fica **Aceite**.
+
+## Quando contactar o suporte
+
+- **Registar como rejeitada** não aparece numa DMR **Submetida** a quem tem o acesso extra **Submissor de declarações**.
+- Depois de **Reabrir para corrigir** e **Gerar**, as linhas do Quadro 5 não refletem a correção feita.
+- O NIPC está certo (confirmado na certidão permanente) e o fiscaldoo recusa-o.
+
+## Informação a enviar
+
+- A empresa, o mês e o tipo da DMR.
+- O motivo da rejeição, copiado do Portal das Finanças, e o texto da mensagem do fiscaldoo.
+- Uma captura do separador **Tentativas**.
+- O perfil com que entrou.
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): como em dmr: Registar como aceite/rejeitada só com o acesso extra Submissor de declarações. */}
+
+{/* Nota interna (DOC-0360, DOCS-066 #3947, lote v23-AZ, 10/11/2026, master bfedd3b23, docs_demo_v23az_test, porta 8508, observação da QA7-c): «Processador de Salários» passou a «Processador de salários», o valor do campo Perfil de hoje (lista de valores lida na cópia). Só esse texto mudou. */}

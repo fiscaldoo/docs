@@ -1,0 +1,118 @@
+---
+id: peppol
+slug: /fiscal-core/peppol
+title: Como enviar e receber faturas pela rede Peppol
+sidebar_label: Enviar e receber pela rede Peppol
+sidebar_position: 1
+description: "Ativar o Peppol na empresa, enviar uma fatura certificada pela rede Peppol (BIS 3) e receber faturas de fornecedor como rascunhos; o que o ecrã mostra e quem chega a cada passo. Hoje tudo é simulado: não há ligação real à rede."
+keywords: [Peppol, rede Peppol, fatura eletrónica, faturação eletrónica, e-fatura, BIS 3, UBL, enviar fatura por Peppol, receber faturas de fornecedor, ponto de acesso, identificador Peppol, CIUS-PT, FE-AP, administração pública, enviar ao FE-AP, ativar Peppol, peppol portugal]
+doc_id: DOC-0057
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/clientes, fiscal-core/at-e-saft/ligar-a-at]
+---
+
+## Para que serve?
+
+O Peppol é uma rede europeia de troca de faturas eletrónicas: a empresa entrega a fatura a um ponto de acesso e este entrega-a ao ponto de acesso do cliente, num ficheiro estruturado (formato BIS 3) em vez de um PDF. Neste ecrã, o fiscaldoo simula o envio das faturas certificadas e a receção de faturas de fornecedor como **rascunhos**, que uma pessoa confirma. Para as faturas a entidades públicas existe ainda o botão **Enviar ao FE-AP**, tratado nas notas.
+
+<HelpCallout type="risco" title="Hoje isto é só um simulador">
+O fiscaldoo não tem ligação real à rede Peppol nem à Saphety. Nada do que este artigo mostra sai da máquina: a empresa fica registada em «MODO DE TESTE», o envio não chega a nenhum cliente e a «receção» é uma fatura de fornecedor de exemplo. Não use este ecrã para cumprir uma obrigação perante um cliente: envie-lhe a fatura por e-mail ou imprima-a.
+</HelpCallout>
+
+## Quando utilizar?
+
+- Para conhecer o percurso de envio e receção por Peppol, com dados de exemplo.
+- Não é para enviar a fatura em PDF por e-mail (é a outra caixa do mesmo ecrã) nem para a comunicar à AT: a [comunicação à AT](/fiscal-core/ligar-a-at) faz-se à parte, e o envio por Peppol não a substitui nem a altera.
+
+## Onde encontrar?
+
+- Ativar: **Definições**, separador **Faturação**, bloco **Faturação eletrónica**.
+- Enviar: **Contabilidade › Lançar › Vendas e cobranças › Faturas de clientes**; na fatura emitida, **Ações › Enviar**. Com o perfil **Administrativo**: **Faturação › Faturar › Faturas de clientes**, e o botão **Enviar** está no cimo da fatura.
+- Receber: **Contabilidade › Lançar › Compras › Faturas de fornecedores**.
+
+## Antes de começar
+
+- **Quem configura:** o perfil **Administrador**. Os outros perfis não têm o menu **Definições**.
+- **Quem envia:** o **Contabilista**, o **Contabilista certificado** e o **Administrativo** (e o Administrador). A **Gerência** não tem **Enviar** em **Ações**.
+- **Quem confirma o rascunho recebido (passo 6):** o **Contabilista**, em **Faturas de fornecedores**. O perfil **Administrativo** não tem a aplicação **Contabilidade**, por isso não chega a este passo.
+- A fatura está **Publicada**. Uma fatura em rascunho não tem este envio.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Definições**, separador **Faturação**, no bloco **Faturação eletrónica**, ligue **Peppol (Portugal)** e carregue em **Guardar**. Tem de ser antes do passo 2: ver «Problemas frequentes».
+2. No mesmo bloco, carregue em **Ativar Peppol**. Abre-se **Ativar a faturação eletrónica (via Peppol)**, com o NIF da empresa, o **E-mail** e o **Telefone**. Carregue em **Ativar Peppol (Demo)**. O bloco passa a mostrar «O seu identificador Peppol 9946:PT599999993. (MODO DE TESTE)», o **E-mail de contacto do Peppol**, a **Função de participação no Peppol** (**Envio e receção** ou **Só envio**) e **Desligar do Peppol**.
+   ![Definições, separador Faturação: identificador Peppol em modo de teste e função de participação](/images/fiscal-core/peppol/01-definicoes-peppol.png)
+3. Abra uma fatura **Publicada** (no exemplo, a `FT D26/38`, de 104,55 €, à `Escola de Condução Rota, Lda`) e escolha **Ações › Enviar**. A janela **Enviar** tem duas caixas, **por e-mail** e **por Peppol (demonstração)**. Marque **por Peppol (demonstração)** e desmarque **por e-mail**: os anexos passam a incluir o ficheiro `FT D26_38_ubl_bis3.xml` além do PDF.
+   ![Janela Enviar com por Peppol (demonstração) marcada, por e-mail desmarcada e os dois anexos](/images/fiscal-core/peppol/02-assistente-enviar-peppol.png)
+4. Carregue em **Enviar**. A fatura mostra a etiqueta **Enviada por Peppol: entrega ainda não confirmada** e o histórico diz «A fatura foi enviada para o ponto de acesso Peppol.» Depois de correr a tarefa agendada do Peppol, a etiqueta passa a **Entregue: o ponto de acesso confirmou**.
+   ![Fatura FT D26/38 depois do envio, com a etiqueta Enviada por Peppol: entrega ainda não confirmada e o botão Comunicar à AT](/images/fiscal-core/peppol/03-fatura-enviada.png)
+5. Abra outra vez **Ações › Enviar** na mesma fatura: a caixa fica desativada, «por Peppol (enviada anteriormente) (demonstração)».
+   ![Janela Enviar de uma fatura já enviada, com a caixa por Peppol desativada](/images/fiscal-core/peppol/04-ja-enviada.png)
+6. **Receção.** O simulador entrega uma fatura de fornecedor de exemplo depois do primeiro envio. Abra **Faturas de fornecedores** e **retire o filtro Por pagar** da pesquisa: com ele, o rascunho não aparece. Abra «Rascunho de fatura de fornecedor (INV/2025/00017)», do fornecedor `Tintin`, de 12,00 €, com a etiqueta **Recebida do fornecedor por Peppol**. Carregue em **Confirmar** só depois de a conferir.
+   ![Rascunho de fatura de fornecedor recebido por Peppol, com os avisos de data e a etiqueta Recebida do fornecedor por Peppol](/images/fiscal-core/peppol/05-fatura-recebida.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o Peppol é o mesmo do fiscaldoo. Nas **Definições**, no bloco **Faturação eletrónica**, o administrador liga **Peppol (Portugal)**, guarda e carrega em **Ativar Peppol**. A janela **Ativar a faturação eletrónica (via Peppol)** tem **Ativar Peppol (Demo)** e, depois, o bloco mostra o identificador Peppol da empresa com «(MODO DE TESTE)», a **Função de participação no Peppol** e **Desligar do Peppol**. Numa fatura emitida, **Ações › Enviar** abre a janela **Enviar** com as caixas **por e-mail** e **por Peppol (demonstração)** (visto com um utilizador só com o perfil **Contabilista**).
+
+<span className="fd-pending">Pendente de validação no ecrã: no Enterprise, o envio por Peppol (passo 4) e a receção da fatura de fornecedor de exemplo (passo 6). Esta parte é completada quando a correção entrar.</span>
+
+{/* Nota interna (lote EE-12, DOCS-073 #4142, DEC-1794, master 589ecfd27, base Enterprise docs_ee_ee12_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee12_test): DOC-0057. Administrador: Peppol (Portugal) ligado, Guardar, Ativar Peppol › Ativar Peppol (Demo) na cópia (modo de teste, guarda de rede ligada). Contabilista: FT D26/31 › Ações › Enviar com as duas caixas, fechada com Escape (a fatura da base não foi enviada). Para o passo 4 criou-se por RPC um rascunho meu (Escola de Condução Rota, Lda, 85,00 € + IVA 23 %, 104,55 €); Confirmar com o Contabilista deu «Operação inválida — A chave de assinatura do programa não está configurada neste servidor, por isso não é possível assinar documentos. Nada foi emitido.…»: dependência FIX-M213 #4206 (nome do ficheiro da chave de teste da fase 6), não um defeito do Enterprise. O rascunho ficou na cópia, por emitir. Na lista de faturas de fornecedores do Enterprise aparece a coluna «Last Reminder» em inglês. Ver reports/LOTE_EE-12.md. */}
+
+## Resultado esperado
+
+- A fatura enviada não se envia uma segunda vez por Peppol. Nenhuma das etiquetas é prova de que o cliente a recebeu: **Entregue: o ponto de acesso confirmou** vem do simulador, e nada saiu da máquina.
+- O envio **não comunica a fatura à AT** e não a dá como comunicada: o botão **Comunicar à AT** continua na fatura para o Administrador e o Contabilista certificado (o Contabilista e o Administrativo não o têm).
+- Enviar por Peppol não faz nenhum lançamento: os lançamentos da fatura são os da sua emissão.
+- O rascunho recebido não tem lançamento nem número até ser confirmado. O exemplo avisa: «399 dias desde o fim do mês a que este lançamento respeita (limite do CIRC, art. 123.º, n.º 3). Lance-o ou reveja a sua data; nada é bloqueado.» e «A data do documento (10/09/2025) está num período bloqueado (até 31/12/2025); o lançamento vai ficar com a data contabilística de 03/11/2026.…»
+- Confirmado, ficou `FTF/2026/00046`, com data contabilística de 03/11/2026: **6228** a débito 10,00 € e 2,00 €, **2432** a débito 1,44 €, **2433** a crédito 1,44 € e **2211** a crédito 12,00 €. As contas e a taxa (12 %, com o IVA a débito e a crédito, em autoliquidação) vêm do exemplo do simulador: num fornecedor seu, confira-as antes de confirmar. <span className="fd-pending">Pendente de validação por contabilista certificado: contas e IVA de uma fatura de fornecedor estrangeiro recebida fora do período, e prazo de registo.</span>
+- A fatura de exemplo não é de um fornecedor da empresa.
+
+## Notas importantes
+
+- **O que não se pode ver aqui.** Sem ligação real, não há resposta de um cliente, recusa de um ponto de acesso nem confirmação verdadeira de entrega: o simulador aceita sempre, mesmo que o cliente não tenha identificador Peppol. <span className="fd-pending">Pendente de validação no ecrã: envio e receção reais, porque o produto ainda não tem essa ligação.</span>
+- **Enviar ao FE-AP (fatura à Administração Pública).** O botão aparece ao Administrador e ao Contabilista certificado nas faturas emitidas (não ao Contabilista, à Gerência nem ao Administrativo). Ao carregar, o ecrã diz «Fatura eletrónica FE-AP. Aceites: 1, rejeitados: 0, sem resposta: 0.» durante poucos segundos; depois o botão desaparece e a fatura mostra a etiqueta **Aceite**. Esse «Aceite» vem também de um simulador: não houve envio real. <span className="fd-pending">Pendente de validação por contabilista certificado: quando a fatura eletrónica à Administração Pública é obrigatória e o que o fiscaldoo envia (XML UBL 2.1 CIUS-PT).</span>
+
+## Problemas frequentes
+
+### «O Peppol está desligado para a empresa …»
+
+- **Sintoma:** ao carregar em **Ativar Peppol (Demo)**: «O Peppol está desligado para a empresa Empresa Demonstração, Lda. Ligue «Peppol (Portugal)» nas definições da Contabilidade e registe-se depois.»
+- **O que fazer:** descarte a janela e faça primeiro o passo 1. As «definições da Contabilidade» são o separador **Faturação** de **Definições**.
+
+### A janela Enviar não mostra «por Peppol»
+
+- **Sintoma:** só aparece **por e-mail**.
+- **Causa:** a opção **Peppol (Portugal)** está desligada.
+- **O que fazer:** faça os passos 1 e 2 com o Administrador.
+
+### «por Peppol (Cliente não está no Peppol)»
+
+- **Sintoma:** numa fatura ao consumidor final (por exemplo, `FS POS26/1`), a janela diz «O(s) parceiro(s) deve(m) ter um endereço de e-mail.» e mostra «por Peppol (Cliente não está no Peppol) (demonstração)».
+- **O que fazer:** o Peppol não se aplica a esta fatura. Para dar uma cópia ao cliente, use **Imprimir**.
+
+### A caixa «por Peppol (enviada anteriormente)» está desativada
+
+- **Causa:** a fatura já passou por este envio, que não se repete.
+- **O que fazer:** nada. Para corrigir a fatura, emita uma [nota de crédito](/fiscal-core/emitir-uma-nota-de-credito).
+
+### O rascunho recebido não aparece em Faturas de fornecedores
+
+- **Causa:** a lista abre com o filtro **Por pagar**, que esconde os rascunhos.
+- **O que fazer:** retire o filtro da pesquisa e procure pelo fornecedor.
+
+### Não vejo o menu Definições
+
+- **Causa:** só o Administrador o tem.
+- **O que fazer:** peça-lhe os passos 1 e 2; depois, os perfis indicados enviam sem mais configuração.
+
+{/* Nota interna (DOCS-046, DOC-0057, v7-FC2, master 584213fd9, base docs_demo_v7fc2_test): EDI-015 por fazer: sem ligação real à Saphety nem ao Peppol. NV3M-03 a 06 tratadas: a fatura ao consumidor final já abre a janela (V3FC3-12 resolvido), a etiqueta do Peppol já não é a da AT (V3FC3-11 resolvido), FE-AP com etiqueta Aceite, Quem envia completo. Enviada FT D26/38 (Administrador); janela aberta na FT D26/36 sem enviar, com Contabilista, Gestor de contabilidade e Faturação; FE-AP em FT D26/35 (Administrador) e FT D26/36 (Gestor); recebida FTF/2026/00046 (confirmada por RPC pelo produtor; na auditoria de 03/11, reposta em rascunho e confirmada por clique com o Contabilista). A captura 02 é da FT D26/38. */}

@@ -1,0 +1,69 @@
+---
+id: avisos-ao-trabalhador
+slug: /payroll-pt/avisos-ao-trabalhador
+title: Que avisos o fiscaldoo envia aos trabalhadores
+sidebar_label: Avisos aos trabalhadores
+sidebar_position: 23
+description: O que o trabalhador recebe sozinho, como o aviso do recibo, e o que vai antes para os Recursos Humanos, como documentos a caducar.
+keywords: [avisos, fiscaldoo, envia, trabalhadores, recibo disponível, recibo disponivel, notificações, notificacoes, avisar o trabalhador, documentos a caducar, contrato a terminar]
+doc_id: DOC-0213
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2d5e95c9d)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/processar-e-pagar/documentos-dos-trabalhadores, payroll-pt/processar-e-pagar/recibo-de-vencimento]
+---
+
+## Para que serve?
+
+Explica quem recebe cada aviso automático: o que chega ao próprio trabalhador e o que chega a quem gere os salários e os Recursos Humanos.
+
+## Quem recebe o quê
+
+| Aviso | Quem recebe | Quando |
+| --- | --- | --- |
+| **O teu recibo de … está disponível** | O trabalhador com acesso a **O meu espaço** | Ao validar o recibo |
+| Documento prestes a caducar | O responsável do trabalhador ou quem registou o documento | Quando o documento entra no período de aviso. Veja [documentos com validade](/payroll-pt/documentos-dos-trabalhadores) |
+| Prazo de exame de saúde ou de avaliação de riscos | Um utilizador de RH | Uma vez por mês. Veja [trabalho noturno](/payroll-pt/trabalho-noturno) |
+| Contrato a terminar | Quem abre o painel de salários | Na lista **O que está pendente**, em **Salários › Preparar › O que há para fazer este mês?** |
+
+Destes avisos, só o do recibo chega ao próprio trabalhador.
+
+## O aviso do recibo
+
+1. **Quem o trabalhador é.** Tem uma conta de utilizador ligada à ficha.
+2. **Quando sai.** Ao carregar em **Validar** no recibo, sem mais nenhum passo.
+3. **Por onde chega.** Pela preferência da conta do trabalhador: e-mail ou **Notificações**, no separador **Conversas**.
+4. **O que diz.** «O teu recibo de dezembro de 2026 está disponível. O PDF vai em anexo; podes encontrá-lo sempre em «O meu espaço» › «Recibos e documentos» › «O meu recibo».»
+
+## Desligar o aviso
+
+O aviso é por empresa. O administrador do sistema abre **Definições › Utilizadores e empresas › Empresas**, escolhe a empresa e, no separador **Avisos ao trabalhador**, desmarca **Avisar o trabalhador quando há um recibo disponível?**
+
+![Separador Avisos ao trabalhador, com a opção Avisar o trabalhador quando há um recibo disponível](/images/payroll-pt/avisos-ao-trabalhador/03-avisos-na-empresa.png)
+
+O ecrã explica: «Quando um recibo é validado, o trabalhador recebe uma notificação com o PDF do recibo, só na sua própria caixa de entrada e no seu e-mail.»
+
+## Notas importantes
+
+- **Sem conta de utilizador, não há aviso.** O trabalhador recebe o recibo pelo caminho habitual da empresa.
+- **O e-mail depende do servidor de correio da empresa.** Se o envio falhar, o aviso fica em erro, e o recibo fica validado à mesma. Um recibo não volta a avisar sozinho.
+- **Saldo de férias.** Não é um aviso: o trabalhador vê-o em **O meu espaço › Ausências e presenças › Pedir férias**, por exemplo **22** em **Férias anuais**.
+- **Nenhum destes avisos** é uma comunicação à Segurança Social nem à AT.
+
+## Problemas frequentes
+
+### O trabalhador diz que não recebeu o aviso
+
+- **Sintoma:** o recibo está validado, mas o trabalhador não tem o e-mail.
+- **Causa:** a conta dele não tem endereço de e-mail, o servidor de correio falhou, ou a preferência dele é receber em **Notificações**.
+- **O que fazer:** peça-lhe para abrir **O meu espaço › Recibos e documentos › O meu recibo**: o recibo está lá.
+
+### Ninguém recebe o aviso do recibo
+
+- **Causa:** a opção está desligada na empresa.
+- **O que fazer:** peça ao administrador do sistema para a marcar. Os recibos já validados não voltam a avisar.
+
+{/* Nota interna (DOCS-046, lote v13-PAY, master 56504fe86): recibo de novembro validado com a preferência E-mail: «exception» por a guarda de rede bloquear o envio (mail.mail 40, Connection refused); recibo de dezembro validado com a preferência Notificações (mudada por RPC na conta do trabalhador): visto em Conversas › Notificações. Não foram mandados e-mails reais. O texto «Tem N dias» do guia de produto não se viu no formulário: não se descreve; ver o relatório. */}

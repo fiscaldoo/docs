@@ -1,0 +1,103 @@
+---
+id: documentos-de-formacao
+slug: /fiscal-core/documentos-de-formacao
+title: Como emitir documentos de formação
+sidebar_label: Documentos de formação
+sidebar_position: 10
+description: Criar o diário e a série de formação, emitir faturas de treino que não são comunicadas à AT e reconhecê-las no PDF e na lista de documentos de formação.
+keywords: [formação, formacao, documento de formação, documentos de formacao, treino, diário de formação, diario de formacao, série de formação, serie de formacao, modo de formação, sem valor fiscal, fatura de teste, Despacho 8632/2014]
+doc_id: DOC-0020
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/certificacao/series-documentais, fiscal-core/faturacao/emitir-uma-fatura-certificada, fiscal-core/certificacao/tipos-de-documento]
+---
+
+## Para que serve?
+
+Os documentos de formação deixam treinar a faturação com o programa certificado sem usar a numeração das faturas reais. Criam lançamentos na contabilidade, mas não contam em nada fiscal (ver «Notas importantes»). Saem de um **diário de formação** e são numerados numa **série de formação** própria, que não tem código de validação e nunca se comunica à Autoridade Tributária e Aduaneira (AT).
+
+O ecrã de consulta diz-o assim: «Os documentos emitidos num diário de formação são listados aqui apenas para consulta: não constam do SAF-T de faturação e nunca são comunicados à Autoridade Tributária.»
+
+## Quando utilizar?
+
+- Para ensinar um colaborador novo a emitir faturas, sem tocar na numeração fiscal da empresa.
+- Para experimentar clientes, artigos e impostos antes de começar a faturar a sério.
+- Não o use para um documento que o cliente vai receber como fatura: um documento de formação serve só para treino. Para esse caso, [emita uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada).
+
+## Onde encontrar?
+
+- Diário: **Contabilidade › Configurar › Geral › Diários**.
+- Série: **Contabilidade › Configurar › Faturação certificada › Séries fiscais**.
+- Documentos: **Faturação › Faturar › Documentos emitidos em modo de formação**. Este item só aparece depois de existir um diário de formação (ver «Problemas frequentes»). O menu **Contabilidade** não o tem.
+
+## Antes de começar
+
+- A empresa tem Portugal como país fiscal e já tem um diário de vendas certificado.
+- Os passos 1 a 4 (criar o diário e a série) fazem-se uma só vez, com o perfil **Contabilista certificado** (tem os menus **Diários** e **Séries fiscais**; o **Contabilista** não).
+- O passo 5 em diante faz-se com quem emite as faturas da empresa.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › Geral › Diários**, abra o diário **Vendas** da empresa e, no ícone de engrenagem ao lado do nome, escolha **Duplicar**. A cópia fica logo gravada, com o nome **Vendas (cópia)**. Se desistir, arquive-a no mesmo ícone: não a deixe por completar.
+2. Em **Nome do Diário**, escreva `Formação` e, em **Prefixo da sequência**, `FOR`.
+3. Abra o separador **Certificação PT**, marque **Diário certificado** e **Diário de formação** e guarde.
+   ![Separador Certificação PT do diário Formação com Diário certificado e Diário de formação marcados](/images/fiscal-core/documentos-de-formacao/01-diario-de-formacao.png)
+4. Abra **Séries fiscais** e carregue em **Novo** (não em **Criar e comunicar**: a série de formação não se comunica). Escreva o **Identificador da série** `FOR26`, escolha **[FT] Fatura** em **Tipo de documento SAF-T** e **Formação** em **Diário**, deixe o **Exercício** em 2026 e marque **Série de formação**. Guarde, carregue em **Ativar** e, na pergunta «Ativar esta série? A sua identidade deixa de poder ser alterada.», em **Confirmar**.
+   ![Série FOR26, tipo [FT] Fatura, diário Formação, exercício 2026, com Série de formação marcada e o estado Ativa](/images/fiscal-core/documentos-de-formacao/03-serie-de-formacao.png)
+5. Abra **Faturação › Faturar › Documentos emitidos em modo de formação**. Com o diário de formação ainda sem documentos, a lista mostra o aviso acima e nenhum documento. Carregue em **Novo**.
+6. Escolha o **Cliente** e, em **Diário**, **Formação**: o ecrã propõe **Vendas**, confirme que mudou. Adicione uma linha (no exemplo, o artigo `DEMO013`, 60,00 € com IVA a 23 %) e carregue em **Confirmar**.
+7. Confirme que o documento ficou **Publicada**, com o número `FT FOR26/1`, e que o total é 73,80 € (60,00 € mais 13,80 € de IVA).
+   ![Lista Documentos de formação com a fatura FT FOR26/1, 73,80 €, por pagar](/images/fiscal-core/documentos-de-formacao/04-documentos-de-formacao.png)
+8. Carregue em **Imprimir**. Abaixo dos totais, o PDF traz o nome e o NIF do produtor do programa e a frase «DOCUMENTO EMITIDO PARA FINS DE FORMAÇÃO».
+   ![Parte do PDF da fatura FT FOR26/1 com a frase DOCUMENTO EMITIDO PARA FINS DE FORMAÇÃO abaixo dos totais](/images/fiscal-core/documentos-de-formacao/05-pdf-formacao.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- O documento está **Publicada** e aparece em **Documentos emitidos em modo de formação**, numerado na série `FOR26` (aqui `FT FOR26/1`).
+- O campo **ATCUD** do documento está vazio: a série de formação não tem código de validação. O PDF não mostra ATCUD.
+- O PDF leva a frase «DOCUMENTO EMITIDO PARA FINS DE FORMAÇÃO».
+- Nada foi comunicado à AT. A série mostra **Ativa**, na ficha e na lista **Séries fiscais**, sem código de validação: uma série de formação não se comunica. O documento usa a numeração própria da série `FOR26`, separada das séries das faturas reais.
+- Uma fatura nova em **Faturação › Faturar › Faturas de clientes › Novo** continua a propor o diário **Vendas**. O diário de formação nunca é proposto sozinho: só se usa quando o escolhe.
+
+## Notas importantes
+
+<HelpCallout type="nota" title="O documento de formação lança na contabilidade, mas não conta">
+`FT FOR26/1` ficou com lançamento: 2111 Clientes gerais a débito 73,80 €, 721 a crédito 60,00 € e 2433 a crédito 13,80 € de IVA, e na ficha aparece por pagar. Mesmo assim, não conta na declaração periódica de IVA, nos mapas de IVA, no SAF-T, na comunicação à AT, no Balanço, na Demonstração de resultados, na IES, no Modelo 22 nem nos painéis. No exemplo, em novembro de 2026: o campo 3 da declaração de IVA fica em 1.420,00 € e o campo 4 em 396,60 €, só com as faturas reais; a **Demonstração de resultados** mostra os mesmos 1.420,00 € em **Vendas e serviços prestados**; e a **Antiguidade de saldos** não mostra este documento na linha do cliente.
+</HelpCallout>
+
+<HelpCallout type="atencao" title="Parece uma fatura, mas não é">
+O número `FT FOR26/1` tem o mesmo aspeto de uma fatura real. O que o distingue é a série (`FOR26`) e a frase do PDF. Não envie ao cliente um PDF de formação como se fosse uma fatura. Se o fizer sem querer, não o apague: fale com o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: a reação a um documento de formação entregue por engano.</span>
+</HelpCallout>
+
+- Um diário de formação só tem séries de formação, e uma série de formação só pertence a um diário de formação. Os dois lados têm de coincidir.
+- O diário de formação só pode ser um diário de **vendas** certificado de uma empresa portuguesa.
+- Em **Documentos emitidos em modo de formação**, o diário proposto é o de vendas: se não escolher **Formação**, emite uma fatura verdadeira (ela deixa de aparecer nesta lista).
+
+## Problemas frequentes
+
+### «só um diário de vendas certificado de uma empresa portuguesa pode ser diário de formação»
+
+- **Sintoma:** ao guardar o diário com **Diário de formação** marcado, o ecrã diz: «Diário “Formação”: só um diário de vendas certificado de uma empresa portuguesa pode ser diário de formação. Desmarque “Diário de formação” ou certifique primeiro o diário.»
+- **O que fazer:** marque também **Diário certificado** e guarde de novo.
+  ![Erro de validação ao guardar um diário de formação que não está certificado](/images/fiscal-core/documentos-de-formacao/02-recusa-diario-nao-certificado.png)
+
+### «A série “FT FOR26” e o diário “Formação” não correspondem»
+
+- **Sintoma:** ao guardar a série sem **Série de formação** marcada, o ecrã diz: «A série “FT FOR26” e o diário “Formação” não correspondem: uma série de formação pertence a um diário de formação, e um diário de formação só tem séries de formação (Despacho 8632/2014, 1.5). Marque ou desmarque “Série de formação” na série, ou escolha o diário certo.»
+- **O que fazer:** marque **Série de formação** na série (ou escolha outro diário) e guarde.
+
+### Quero corrigir um dado de um documento de formação
+
+- Emita outro documento de formação. A correção auditada de dados é para documentos reais: veja [corrigir dados de certificação](/fiscal-core/corrigir-dados-de-certificacao). O documento errado continua lançado, por pagar na ficha, e a ficha oferece **Nota de Crédito** e **Emitir recibo**. <span className="fd-pending">Pendente de validação por contabilista certificado: como retirar estes lançamentos; não use estes botões sem essa resposta.</span>
+
+{/* Nota interna (DOCS-058 req. 45834, lote v18-C, master 0289754a8, docs_demo_v18c_test): FAT-136 em master (QA aprovado, DEC-887). Por clique, Gestor de contabilidade: duplicar Vendas, as duas recusas, série FOR26 ativa com o estado Ativa na ficha e na lista. Faturação: item no menu sem reiniciar (a secção saiu), FT FOR26/1 de 73,80 € na Papelaria Central, Lda. Contabilista: campos 3 e 4 da DP de 2026/11 (1.420,00 e 396,60: as 14 FT do mês, sem os 60,00), DR e Antiguidade. Lançamento lido por RPC. SAF-T, comunicação, Balanço, IES e Modelo 22: provas do FAT-136, não repetidas. Ficam 2 marcas, que o FAT-136 não respondeu: documento entregue por engano e como retirar os lançamentos. */}
+
+{/* Nota interna (DOCS-046, DOC-0020, master 584213fd9, base docs_demo_v7fc_test): percorrido pela barra com o Gestor de contabilidade como Responsável fiscal (duplicar, recusas provocadas do diário e da série, ativar; NV3F-01 fechada) e com Faturação (lista vazia, Novo, Confirmar, PDF lido). FAT-128 entrou (53b41cc38): com o diário de formação de sequência 5, igual à de Vendas, a fatura nova propõe Vendas; o passo de arrastar saiu do artigo (NV3F-02). Menu do Contabilista confirmado ausente (NV3F-03). Segundo Duplicar sem erro hoje (NV3F-04): a cópia ficou arquivada. Novo no formulário do diário funciona; a lista não tem Novo. Defeitos no relatório: o item não aparece até reiniciar; o documento de formação lança em contas reais, IVA incluído. SAF-T e declaração de IVA não gerados: a exclusão cita-se do texto do ecrã, com marca, até o FAT-136 a provar. Auditoria 03/11, por clique: série FOR26 com a etiqueta Por comunicar à AT (defeito novo); FT FOR26/1 publicada, ATCUD vazio, com Emitir recibo e Nota de Crédito; fatura nova propõe Vendas. */}

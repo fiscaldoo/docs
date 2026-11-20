@@ -1,0 +1,105 @@
+---
+id: anexo
+slug: /accounting-pt/anexo
+title: Como preparar o anexo às demonstrações financeiras
+sidebar_label: Anexo às demonstrações financeiras
+sidebar_position: 10
+description: Criar o anexo às demonstrações financeiras de um exercício, preencher as notas, ver os quadros que o produto preenche a partir da contabilidade, imprimir o PDF e finalizar o anexo.
+keywords: [anexo às demonstrações financeiras, anexo, notas do anexo, quadros automáticos, imprimir o anexo, finalizar o anexo, acrescentar as notas em falta, modelo de anexo, portaria 220/2015, SNC, IES, demonstrações financeiras]
+doc_id: DOC-0147
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/relatorios/alteracoes-no-capital-proprio, accounting-pt/relatorios/exportar-pdf-para-assinar]
+---
+
+## Para que serve?
+
+O anexo às demonstrações financeiras é o conjunto de notas que acompanha o balanço, a demonstração de resultados e as restantes demonstrações. No produto cada exercício tem **um** anexo, criado com as notas numeradas do modelo oficial do referencial contabilístico da empresa (no exemplo, **SNC (regime geral)**, com 212 notas). Algumas notas já vêm com quadros preenchidos a partir da contabilidade; nas outras escreve-se o texto. O anexo imprime-se em PDF e finaliza-se quando está pronto.
+
+## Quando utilizar?
+
+- No fecho do exercício, depois de a contabilidade estar fechada e as demonstrações financeiras conferidas, e antes de entregar a IES.
+- Quando precisa do PDF do anexo para assinar ou arquivar.
+- **Não** o use para empresas dispensadas do anexo: nas **microentidades (SNC-ME)** o produto não o cria (ver «Problemas frequentes»).
+
+## Onde encontrar?
+
+**Contabilidade › Declarar › Declarações anuais › O que há para fazer com as declarações anuais?**, em **Antes de entregar**, **Anexo às demonstrações financeiras**. A lista chama-se **Anexo às demonstrações financeiras** e tem as colunas **Exercício Fiscal**, **Referencial**, **N.º de notas** e **Estado**.
+
+## Antes de começar
+
+- O anexo depende do **referencial contabilístico** definido na empresa (nas Definições da contabilidade, separador de localização portuguesa). Sem referencial, o produto não cria o anexo (ver «Problemas frequentes»).
+- **Quem faz o quê** (testado com os perfis):
+  - **Criar o anexo, escrever as notas, Acrescentar as notas em falta, Imprimir o Anexo e Finalizar**: o **Contabilista** (e o **Contabilista certificado**).
+  - **Reabrir** um anexo finalizado: o **Contabilista certificado** e o administrador. O Contabilista não vê o botão.
+  - O **Auditor / ROC** só consulta: na ficha tem apenas **Imprimir o Anexo**.
+- O exemplo é o exercício de **2026** da Empresa Demonstração, Lda (referencial **SNC (regime geral)**).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Declarar › Declarações anuais** e, em **Antes de entregar**, **Anexo às demonstrações financeiras**. Num exercício sem anexo a lista abre vazia, com a frase «Aqui aparece o anexo às demonstrações financeiras de cada ano; cria-se um com «Novo», escolhendo a empresa e o ano.» Não é um erro: ainda não há anexo.
+2. Carregue em **Novo**, escolha o **Exercício Fiscal** (`2026`) e carregue em **Guardar**. O produto preenche o **Referencial** (**SNC (regime geral)**), a **Data de início** (01/01/2026) e a **Data de fim** (31/12/2026), cria as 212 notas do modelo e o estado é **Em preparação**. Só pode haver um anexo por empresa e exercício.
+   ![Lista do anexo às demonstrações financeiras com o anexo de 2026: SNC regime geral, 212 notas, Em preparação](/images/accounting-pt/anexo/01-lista-do-anexo.png)
+3. Abra o anexo. A ficha tem a barra de estado (**Em preparação** e **Finalizado**), os botões **Imprimir o Anexo**, **Acrescentar as notas em falta** e **Finalizar**, e a tabela das notas, com **Número**, **Título** e **Texto**.
+   ![Ficha do anexo de 2026: o exercício, o referencial SNC (regime geral), as datas, as notas 1-40 de 212 e a tabela com Número, Título e Texto](/images/accounting-pt/anexo/02-ficha-do-anexo.png)
+4. Escreva o **Texto** de cada nota que a empresa tem de divulgar: carregue na célula do **Texto**, escreva e guarde (no exemplo, a nota **1.3 Natureza da atividade.** com «Comércio de mercadorias e prestação de serviços (exemplo).»). Os números e os títulos das notas não se alteram.
+5. As notas **1.1** (designação da entidade), **1.2** (sede), **7.3** (partes relacionadas), **8.1** (ativos intangíveis), **9.1** (ativos fixos tangíveis), **23.1** (provisões) e **32.6** (dívidas ao Estado) têm um **quadro automático**: o PDF preenche-o com os dados da empresa e das contas (por exemplo, os movimentos dos ativos por conta, com saldo inicial, aumentos, alienações e abates e saldo final). Não é preciso escrever nada nessas notas. Na **7.3**, enquanto nenhum terceiro tiver a etiqueta «Parte relacionada», o quadro diz «Nenhum terceiro tem a etiqueta «Parte relacionada»: marque as partes relacionadas para preencher este quadro.»
+6. Carregue em **Imprimir o Anexo**. O PDF `Anexo - 2026.pdf` (4 páginas no exemplo) abre com a empresa, o NIF e o exercício. Mostra as notas com texto e os quadros automáticos; as notas **sem texto e sem quadro não aparecem** (só os títulos principais, 1 a 32). Confira as notas e os valores dos quadros com as demonstrações antes de finalizar.
+7. **Acrescentar as notas em falta** junta ao anexo as notas do modelo que ainda não existam (por exemplo, depois de uma atualização do modelo oficial). Num anexo completo não faz nada: o número de notas continua em 212 e não há mensagem.
+8. Quando o anexo estiver pronto, carregue em **Finalizar**. O estado passa a **Finalizado** e o Contabilista fica só com **Imprimir o Anexo**: as notas deixam de se alterar e **Acrescentar as notas em falta** e **Finalizar** desaparecem.
+   ![Barra de estado do anexo finalizado, só com o botão Imprimir o Anexo](/images/accounting-pt/anexo/03-anexo-finalizado.png)
+9. Para corrigir um anexo finalizado, o Contabilista certificado abre-o e carrega em **Reabrir**, ao lado de **Imprimir o Anexo**: volta a **Em preparação**. Numa janela estreita, **Reabrir** passa para a seta (**Mais**) ao lado de **Imprimir o Anexo**.
+   ![Anexo finalizado visto pelo Contabilista certificado: os botões Imprimir o Anexo e Reabrir e o estado Finalizado](/images/accounting-pt/anexo/04-reabrir.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o anexo é o mesmo (visto com um utilizador só com o perfil **Contabilista**). No painel **O que há para fazer com as declarações anuais?**, **Anexo às demonstrações financeiras** está em **Antes de entregar**, a lista vazia mostra a mesma frase e **Novo** com o **Exercício Fiscal** `2026` cria o anexo com o **Referencial** **SNC (regime geral)**, as 212 notas e o estado **Em preparação**. A ficha tem os mesmos botões: **Imprimir o Anexo**, **Acrescentar as notas em falta** e **Finalizar**.
+
+{/* Nota interna (lote EE-04, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee04_test, cópia da odoo20_ee_test com EE_FASE=construir, 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0147. Contabilista: lista vazia na cópia («Aqui aparece o anexo às demonstrações financeiras de cada ano; cria-se um com «Novo», escolhendo a empresa e o ano.»); anexo de 2026 criado no ecrã na cópia (01/01/2026–31/12/2026, 1-40 / 212 notas, Em preparação). Não feitos no Enterprise: escrever notas, Imprimir o Anexo, Finalizar e Reabrir. Ver reports/LOTE_EE-04.md. */}
+
+## Resultado esperado
+
+- Um anexo por exercício, com as 212 notas do modelo do SNC (regime geral), o texto que escreveu e os quadros automáticos preenchidos.
+- Um PDF com o texto e os quadros. Imprimir não muda o estado nem cria lançamentos.
+- Um anexo **Finalizado**, sem alterações possíveis até alguém o reabrir. O produto não cria lançamentos com o anexo.
+- <span className="fd-pending">Pendente de validação por contabilista certificado: o conteúdo exigido em cada nota (modelo da Portaria 220/2015 e NCRF), a adequação dos quadros automáticos e a obrigatoriedade do anexo por referencial.</span>
+
+## Notas importantes
+
+- **O que o produto escreve e o que não escreve.** Só 7 das 212 notas têm quadro automático. Todas as outras (políticas contabilísticas, partes relacionadas descritivas, factos após o balanço…) têm de ser escritas por si. Uma nota vazia não sai no PDF: confira que não esqueceu nenhuma que a empresa tenha de divulgar.
+- **Os quadros mostram o que há na contabilidade.** Se a contabilidade estiver por fechar, o quadro também está. Finalize só depois de fechar o exercício.
+- **Finalizar não é entregar.** O anexo finalizado ainda tem de ser incluído na IES e assinado ([exportar o PDF para assinar](/accounting-pt/exportar-pdf-para-assinar)).
+- **Referencial.** O modelo das notas depende do referencial da empresa: com outro referencial (por exemplo, pequenas entidades), o anexo tem as notas desse modelo.
+
+## Problemas frequentes
+
+### «O Anexo não é exigido ao referencial de «…» (Portaria 220/2015: as microentidades estão dispensadas). Não foi criado nenhum Anexo.»
+
+- **Causa:** a empresa tem o referencial **SNC-ME (microentidades)**.
+- **O que fazer:** nada: as microentidades estão dispensadas do anexo. Se o referencial está errado, corrija-o nas Definições da contabilidade.
+
+### «Não é possível criar o Anexo de «…»: a empresa não tem referencial contabilístico. Defina-o na configuração da contabilidade (separador Localização PT) e tente de novo.»
+
+- **Causa:** o referencial contabilístico da empresa está vazio.
+- **O que fazer:** defina o referencial nas Definições da contabilidade, separador **Localização PT**, e crie o anexo outra vez.
+
+### «O Anexo está final: reabra-o antes de alterar as notas.»
+
+- **Causa:** tentou escrever numa nota de um anexo **Finalizado**. O ecrã já tem as notas só de leitura; a mensagem sai por outras vias.
+- **O que fazer:** peça ao Contabilista certificado que o **Reabra**.
+
+### «A operação não pode ser concluída: Já existe um Anexo para esta empresa e este exercício.»
+
+- **Causa:** tentou criar um segundo anexo do mesmo exercício (janela **Erro de Validação**).
+- **O que fazer:** carregue em **Fechar**, descarte a ficha nova e abra, na lista, o anexo que já existe.
+  ![Janela Erro de Validação ao criar um segundo anexo do mesmo exercício](/images/accounting-pt/anexo/07-ja-existe.png)
+
+{/* Nota interna (DOCS-046, DOC-0147): visto em docs_demo_v6a4_test (master 8f78854ec). Contabilista no ecrã: criar (ACC-216: V3A4-14 resolvido, 212 notas), duplicado (mensagem em português), escrever a 1.3, Acrescentar as notas em falta (212, sem mensagem), PDF (4 páginas, pdftotext), Finalizar. Responsável fiscal: Reabrir no ecrã. Auditor: só Imprimir o Anexo, em preparação e finalizado (ACC-223). Microentidade e sem referencial: referencial mudado pelo administrador e reposto; a recusa saiu a criar por RPC com o Contabilista. Nota de anexo finalizado: o ecrã tem as notas só de leitura. Não provado: Acrescentar as notas em falta com notas realmente em falta (a demonstração não tem). A captura do PDF saiu do artigo: o texto do passo 6 chega. O anexo de 2026 fica Em preparação com a nota 1.3 escrita.  Lote v22-C (DOCS-057, master d83bdf7ae, docs_demo_v22c_test), por clique com utilizadores de um só perfil: Contabilista com a lista vazia (frase do passo 1), Novo com 2026 (212 notas), botões Imprimir o Anexo, Acrescentar as notas em falta e Finalizar; depois de Finalizar, só Imprimir o Anexo. Responsável fiscal e Contabilista Certificado: Imprimir o Anexo e Reabrir lado a lado a 1366 px e a 860 px; a 700 px, Reabrir fica na seta Mais. Capturas 02 e 04 refeitas. O anexo de 2026 desta cópia fica Finalizado. */}

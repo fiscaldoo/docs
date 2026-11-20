@@ -1,0 +1,71 @@
+---
+id: ver-o-meu-recibo
+slug: /people/ver-o-meu-recibo
+title: Como ver e descarregar o meu recibo de vencimento
+sidebar_label: Ver o meu recibo
+sidebar_position: 4
+description: "O trabalhador vê a lista dos seus recibos, abre o do mês e vê os comprovativos de rendimentos em O meu espaço."
+keywords: [meu recibo, recibo de vencimento, descarregar pdf, comprovativos de rendimentos, o meu espaço, líquido a receber, recibo do mês]
+doc_id: DOC-0264
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/o-meu-espaco/pedir-ferias]
+---
+
+## Para que serve?
+
+O trabalhador consulta os seus recibos sem passar pelo RH: vê o que recebeu em cada mês e os mapas de rendimentos que a empresa já emitiu.
+
+## Quando utilizar?
+
+- Quer saber o que recebeu num mês.
+- Precisa do recibo em PDF para um banco ou para a sua declaração.
+
+## Onde encontrar?
+
+**O meu espaço › Recibos e documentos › O meu recibo** e **O meu espaço › Recibos e documentos › Os meus comprovativos de rendimentos**.
+
+## Antes de começar
+
+- O seu perfil é **Trabalhador**, com a ficha ligada ao seu utilizador.
+- O recibo só aparece depois de a empresa o validar.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **O meu espaço › Recibos e documentos › O meu recibo**. A lista tem um recibo por mês: **Início do período**, **Fim do período**, **Líquido a receber** e **Estado**, do mais recente para o mais antigo (na demonstração, de setembro a junho de 2026).
+2. Abra o do mês que procura. Vê as rubricas (**Retribuição base**, **Retribuição perdida por faltas**), o **Bruto**, os **Descontos** (a quotização do trabalhador e o **IRS retido**) e o **Líquido a receber**. No exemplo de setembro de 2026: 960,00 de bruto, 122,60 de descontos (105,60 e 17,00) e 837,40 a receber.
+3. Para o PDF, carregue em **Descarregar PDF**, na linha da lista ou no topo do recibo. O PDF descarrega-se com o nome «Recibo - » e o seu nome (no exemplo, `Recibo - Eva Cristina Rocha.pdf`).
+4. Para os mapas de rendimentos, abra **Os meus comprovativos de rendimentos**.
+
+</StepByStep>
+
+![Lista O meu recibo com quatro recibos pagos e o botão Descarregar PDF em cada linha](/images/people/ver-o-meu-recibo/01-lista-de-recibos.png)
+
+## Resultado esperado
+
+- Os recibos estão com o estado **Pago** (ou **Validado**), por ordem, e já não se alteram: o ecrã diz «Recibo de vencimento já validado: já não se altera. Para corrigir, crie um recibo corretivo.» (quem corrige é o RH, não o trabalhador).
+- **Os meus comprovativos de rendimentos** abre vazio («Os seus mapas de rendimentos aparecem aqui depois de emitidos») até a empresa emitir o mapa, com **Tipo**, **Ano do rendimento**, **Prazo**, **Rendimentos**, **IRS retido** e **Estado**.
+
+- O **Descarregar PDF** da linha da lista e o do topo do recibo dão o mesmo ficheiro, no mesmo formato do recibo que a empresa imprime e do anexo do aviso por e-mail: uma folha A4 na horizontal, com o **Original** à esquerda e o **Duplicado** à direita, iguais (ver [Como ler o recibo de vencimento](/payroll-pt/recibo-de-vencimento), «O que vem no PDF»). No exemplo (recibo de setembro de 2026 de Eva Cristina Rocha, `Recibo - Eva Cristina Rocha.pdf`, 1 página), cada metade tem o «Recibo de Vencimentos», a entidade empregadora, o trabalhador, o **Período**, o **Vencimento** (960,00), o quadro **Faltas**, o **IRS retido** (17,00), a tabela com os códigos **R03** Retribuição base 960,00, **R22** Retribuição perdida por faltas 0,00, **D01** Segurança Social (trabalhador) 105,60 e **D02** IRS retido 17,00, a informação «Férias do ano» (22,0 dias úteis, 0,0 gozados, 22,0 em falta gozar), o **Total** (960,00 e 122,60), o **Total Pago (EUR)** 837,40 e as **Obs.** Só o Original tem a declaração de recebimento. Os valores são os do recibo no ecrã. Conferido com o perfil **Trabalhador** (descarregado pelo ecrã e lido com o leitor de PDF).
+
+## Notas importantes
+
+- **Só vê os seus recibos.** O trabalhador não escolhe o trabalhador nem o período.
+- **Recibos de antes do fiscaldoo.** Se a empresa os trouxe do software anterior, estão em **O meu espaço › Recibos e documentos › Os meus recibos anteriores**, só de leitura.
+- **O que o recibo não mostra.** A lista não tem filtro nem pesquisa; para um mês antigo, percorra a lista.
+
+{/* Nota interna (lote 99, PAY-152, master 73d6a5fed, docs_demo_99_test, porta 9784, 19/11/2026): o PDF foi descarregado por clique com demo.trabalhador (Eva Cristina Rocha) no recibo de setembro de 2026 e lido com pdftotext: A4 horizontal (842 x 595 pt), 1 página, Original e Duplicado com os mesmos valores, códigos R03/R22/D01/D02 e o quadro Férias do ano. A captura 01 (lista) não mudou; não há captura do PDF neste artigo (a do formato está em recibo-de-vencimento). */}
+
+{/* Nota interna (cor4, master f16f4a3e0): PAY-063 (#3608) já está em master; o passo «Descarregar PDF» foi refeito no ecrã com o Trabalhador (lista e recibo abertos, ficheiro «Recibo - Eva Cristina Rocha.pdf», 1 página). O vídeo do 0264 (video=sim) continua por produzir: é da corrente própria dos vídeos (VIDEO_PRODUCTION_GUIDE), com o passo 3 já corrigido. */}
+
+## Problemas frequentes
+
+### Não vejo o recibo do mês
+
+O recibo só aparece depois de validado. Fale com os Salários.

@@ -1,0 +1,85 @@
+---
+id: configurar-ausencias
+slug: /people/configurar-ausencias
+title: Como configurar os tipos de ausência e os planos de férias
+sidebar_label: Configurar tipos de ausência e planos de férias
+sidebar_position: 6
+description: "Onde se definem os tipos de ausência, os planos de acumulação de férias, os dias obrigatórios e as regras automáticas, e o que cada campo do tipo de ausência faz."
+keywords: [tipos de ausência, tipos de ausencia, plano de acumulação, planos de acumulação de férias, dias obrigatórios, regras automáticas, configurar ausências, aprovação de ausências, requer atribuição de dias, contar os dias]
+doc_id: DOC-0248
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/ausencias-e-presencas/registar-uma-ausencia, people/ausencias-e-presencas/feriados]
+---
+
+## Para que serve?
+
+Define como se pedem e se aprovam as ausências da empresa: os tipos de ausência, o plano que faz crescer o saldo de férias, os dias em que ninguém pode faltar e as regras que o sistema aplica sozinho.
+
+## Quando utilizar?
+
+- Quer criar um tipo de ausência que ainda não existe, ou mudar quem o aprova.
+- Quer impedir férias numa semana crítica (dias obrigatórios).
+- Quer saber porque é que o trabalhador não consegue pedir um tipo (falta de saldo atribuído).
+
+## Onde encontrar?
+
+**Pessoas › Configuração de ausências e assiduidades**, com **Tipos de ausência**, **Planos de acumulação de férias**, **Dias obrigatórios** e **Regras automáticas**. Este menu só existe para o **Administrador**: o Gestor de RH não o vê.
+
+## Antes de começar
+
+- O seu perfil é **Administrador** (o perfil que, nesta instalação, tem a **Configuração de ausências e assiduidades**).
+- Os tipos de lei já vêm criados (59 na demonstração, como **Férias anuais**, **Falecimento de cônjuge, filho ou enteado (20 dias)** ou **Assistência a filho**). Antes de criar um, procure se já existe.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Pessoas › Configuração de ausências e assiduidades › Tipos de ausência**. A lista tem **Nome**, **Código** e **Descrição**.
+2. Abra o tipo, por exemplo **Férias anuais**. No topo, escolha **Considerado como** (**Tempo de Trabalho** ou **Ausência**), a **Unidade** (**Horas** ou **Dias**) e a **Unidade do pedido** (**Dia completo**, **Meio dia** ou **Horas à escolha**).
+3. No separador **Ausência**, em **Aprovação**, escolha quem aprova: **Nenhuma**, **Pelo Gestor de Ausências**, **Por aprovador do trabalhador** ou **Por aprovador do trabalhador e administrador de ausências**. Nas **Férias anuais** da demonstração está a última.
+4. Em **Atribuição**, **Requer atribuição de dias** quer dizer que o trabalhador só pede se tiver saldo. **Permitir pedidos de trabalhadores?** diz se o trabalhador pode pedir dias novos para si (o botão **Novo Pedido** de **Pedir férias**). Nas **Férias anuais** está desmarcado, e o trabalhador continua a poder pedir as férias que tem.
+5. Em **Configuração**, escolha **Contar os dias como** **Dias úteis** ou **Dias corridos**, e marque, conforme o caso, **Permitir saldo negativo?**, **Ignorar feriados públicos?**, **Ocultar no painel?**, **Documento de suporte esperado?** ou **Elegível para a taxa de acumulação?**.
+6. Carregue no ícone de guardar.
+
+</StepByStep>
+
+![Ficha do tipo Férias anuais com a aprovação por aprovador do trabalhador e administrador de ausências](/images/people/configurar-ausencias/01-tipo-de-ausencia.png)
+
+## No Enterprise
+
+No Odoo Enterprise, o menu **Pessoas › Configuração de ausências e assiduidades** tem as mesmas entradas, e as listas **Tipos de ausência**, **Planos de acumulação de férias**, **Dias obrigatórios** e **Regras automáticas** têm as mesmas colunas (visto com o administrador). No formulário de um tipo de ausência, o separador **Processamento salarial** tem a mais campos dos salários do Enterprise, como **Regra categorias salariais**. O recibo do fiscaldoo não os lê: o efeito de cada falta no recibo vem dos **Tipos de falta** (ver «Notas importantes»). Deixe-os como estão.
+
+{/* Nota interna (lote EE-10, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): cópia Enterprise docs_ee_ee10b_test no portátil (pg_dump da odoo20_ee_test, -u dos módulos mudados até master e -i de hr_payroll, planning, hr_appraisal e hr_recruitment), porta 8504, guarda de rede ligada; utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): administrador em Pessoas › Configuração de ausências e assiduidades (pelo «+» do menu): Tipos de ausência (Nome, Código, Descrição), Planos de acumulação de férias, Dias obrigatórios, Regras automáticas; Férias anuais: separadores Ausência e Processamento salarial (CÁLCULO: Taxa de pagamento, Display Hours, Rounding Method, Regra categorias salariais, Optional Categories; CÓDIGO DE EXPORTAÇÃO). Os campos category_ids, optional_category_ids, display_hours e round_days_type só existem na vista Enterprise e não aparecem no código de l10n_pt_fiscaldoo_payroll nem de l10n_pt_fiscaldoo_ee_payroll. Rótulos em inglês: defeito D4 do relatório. Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee10_test (master e4dd4ae90, a do lote EE-10 interrompido) e com o texto do artigo. Ver reports/LOTE_EE-10.md. */}
+
+## Resultado esperado
+
+O tipo passa a comportar-se como definiu no pedido e na aprovação: a decisão do pedido segue o que escolheu em **Aprovação**, e um tipo que exige documento mostra o alerta «É obrigatório juntar um documento que justifique este tipo de ausência.» ao guardar um pedido sem prova (visto num pedido do tipo **Autorizada ou aprovada pelo empregador**).
+
+## O resto do menu
+
+- **Planos de acumulação de férias:** a lista abre vazia, com «Criar um plano de acréscimo» e as colunas **Nome**, **Níveis** e **Trabalhadores**.
+- **Dias obrigatórios:** a lista abre vazia («Ainda não há dias obrigatórios!»), com as colunas **Nome**, **Empresa**, **Data Inicial**, **Data Final** e **Cor**. Para criar um, carregue em **Novo**, escreva o **Nome** e as datas na linha nova e guarde. Um pedido de ausência num desses dias não se guarda: «Erro de Validação Não pode pedir ausência num dia obrigatório.»
+- **Regras automáticas:** vem com uma regra, «Regra do horário do trabalhador», que na demonstração tem 9 trabalhadores.
+- **Integração do quiosque:** o menu tem ainda este submenu, que ainda não tem artigo próprio nesta documentação.
+- **Feriados da empresa** e **Definições das assiduidades** têm artigos próprios: [Como configurar os feriados](/people/feriados) e [Como registar presenças](/people/registar-presencas).
+
+<span className="fd-pending">Pendente de validação no ecrã: a criação de um plano de acumulação e de uma regra automática não foi percorrida; o texto acima descreve só o que as listas mostram.</span>
+
+## Notas importantes
+
+- **Mudar o tipo não muda os pedidos já aprovados.** Um pedido já aprovado não se reabre: use o artigo [Registar uma ausência](/people/registar-uma-ausencia) para o corrigir.
+- **O tipo por omissão do pedido.** No pedido do trabalhador, o **Tipo de tempo** vem hoje preenchido com **Formação**, que não conta como férias; se o apagar, volta a **Formação**.
+- Os campos que tocam na lei (alínea do art. 249.º, retribuição, duração máxima) não se editam aqui: estão em **Salários › Configurar › Empresa › Faltas e feriados › Tipos de falta**, sob a responsabilidade dos dados legais nacionais.
+
+{/* Nota interna (DOCS-040 F3b): rótulo «Availability» sem tradução na ficha do tipo (F3-10). F3-07: plano de acumulação com 10 linhas de exemplo. */}
+
+## Problemas frequentes
+
+### O trabalhador não vê o tipo de ausência no pedido
+
+Se **Requer atribuição de dias** está marcado, o trabalhador precisa de ter saldo atribuído desse tipo. Veja [O pedido de férias não tem o tipo, as datas ou o contrato](/troubleshooting/pedido-de-ferias-incompleto).

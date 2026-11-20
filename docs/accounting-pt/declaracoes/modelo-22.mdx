@@ -1,0 +1,134 @@
+---
+id: modelo-22
+slug: /accounting-pt/modelo-22
+title: Como preparar a declaração de IRC (Modelo 22)
+sidebar_label: Declaração de IRC (Modelo 22)
+sidebar_position: 4
+description: Abrir a declaração de IRC do exercício, conferir o resultado líquido com a IES, registar as correções fiscais, calcular o imposto, exportar o ficheiro da AT e guardar o comprovativo de entrega.
+keywords: [Modelo 22, modelo 22, declaração de IRC, IRC, correções fiscais, acréscimos e deduções, lucro tributável, matéria coletável, derrama, tributação autónoma, pagamentos por conta, prejuízos fiscais, exportar XML, comprovativo de entrega, conferência com a IES, campo 701]
+doc_id: DOC-0159
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 3a28c9b91)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/declaracoes/ies, accounting-pt/declaracoes/pagamentos-por-conta]
+---
+
+{/* Nota interna (v3-A1, DOC-0159, risco alto): validado na base docs_demo_v3a1_test (8175) com o Contabilista, no Modelo 22 de 2025 que já existia (regime geral, campo 701 31.104,16 €, acréscimo 1.500,00 € «Multas e coimas (exemplo)» no campo 709, dedução 500,00 € «Reintegrações não aceites revertidas (exemplo)» no campo 704, lucro tributável 32.104,16 €, imposto 5.136,67 €, volume de negócios 279.000,00 €, sem derrama). Criei o Anexo A da IES de 2025 (DOC-0164) e o Modelo 22 passou de «Não conferido» a «Igual à IES». Exportação XML descarregada: Modelo22_599999993_2025.xml (os Quadros 02, 05 e 08 saem vazios). O botão «Calcular imposto (campo 351)» e o separador «Comprovativo de entrega» (referência IRC-2025-000123, data 31/10/2026) foram usados; a gravação não deu mensagem. Não testado: Calcular tributação autónoma, derramas, pagamentos por conta e prejuízos fiscais com dados (o exemplo não tem).  Correção v3a1cor (base docs_demo_v3a1cor_test, 8219, Contabilista): os botões de tributação autónoma, derrama, pagamentos por conta e prejuízos foram TESTADOS com dados num Modelo 22 de 2026 criado para o efeito (exercício em curso, campo 701 provisório): lançamento OD/2026/00110 de 30/06/2026 com 1.000,00 € de «Despesas de representação» e 600,00 € de combustível de viatura de 30.000,00 €, ambos com «Tributação autónoma» preenchida; correção fiscal de acréscimo 1.700.000,00 € (campo 709, valor artificial de teste) para passar o primeiro escalão da derrama estadual. Resultados: tributação autónoma 308,00 € (viaturas 600,00 × (8 % + 10 p.p.) = 108,00; representação 1.000,00 × (10 % + 10 p.p.) = 200,00; o agravamento de 10 p.p. aparece porque 2026 tem prejuízo antes das correções); lucro tributável 1.639.067,14 €; imposto 311.422,76 €; derrama estadual 4.172,01 €; derrama municipal: recusa sem código do concelho e, com o código 1106 na empresa (feito pelo administrador), «Não há taxa carregada para o concelho 1106»; pagamentos por conta com base no Modelo 22 de 2025 (5.136,67 €, 80 %): 3 prestações de 1.370,00 € (4.110,00 €); prejuízos a deduzir 0,00 € e limite legal 1.065.393,64 €; PEC: sem pagamentos especiais por conta, não sugere nada. Correção v3a1cor2 (base docs_demo_v3a1cor2_test, 8233): prejuízos anteriores COM dados testados: adicionei uma dedução de 40.000,00 € (campo 704) ao Modelo 22 de 2025 da cópia (lucro tributável −7.895,84 €), registei o prejuízo (menu de prejuízos, a partir do Modelo 22) e criei o Modelo 22 de 2026 com um acréscimo de teste de 100.000,00 € (campo 709); «Sugerir prejuízos a deduzir» deduziu 7.895,84 €. Verificado por chamadas ao mesmo método do botão e conferido no ecrã (captura 13). */}
+
+## Para que serve?
+
+O Modelo 22 é a declaração anual de IRC. No fiscaldoo, a declaração parte do resultado líquido do exercício, junta as **correções fiscais** (os acréscimos e as deduções que a lei manda fazer ao resultado), calcula o lucro tributável, o imposto, a derrama e a tributação autónoma, e prepara o ficheiro que se entrega no Portal das Finanças.
+
+O fiscaldoo não entrega nada à AT: o ficheiro entrega-se no Portal e o comprovativo guarda-se na declaração.
+
+## Quando utilizar?
+
+- Depois do fecho do exercício e da [IES](/accounting-pt/ies), para o ano que terminou.
+- Para preparar a declaração depois dos passos do fecho do exercício.
+- Não use a declaração para corrigir a contabilidade: as correções fiscais ficam só na declaração, não nos lançamentos.
+
+## Onde encontrar?
+
+- **Contabilidade › Declarar › IRC › Declaração de IRC (Modelo 22)**: lista com **Início do período**, **Fim do período**, **Regime**, **Campo 701 - Resultado líquido do período**, **Lucro tributável**, **Total da tributação autónoma** e **Conferência com a IES**. <span className="fd-pending">Pendente de validação por contabilista certificado: campo 701 e conferência com a IES.</span>
+- **Contabilidade › Declarar › IRC › O que há para fazer com o IRC?**: o painel do IRC.
+
+## Antes de começar
+
+- O perfil é **Contabilista**.
+- O exercício está fechado e o **Anexo A** da IES gerado ([Como preparar e entregar a IES](/accounting-pt/ies)): sem ele, a ficha avisa «Não há Anexo A da IES gerado para o período que termina em 31/12/2025, por isso o campo 701 não foi conferido. Gere o Anexo A nas declarações IES e abra este Modelo 22 de novo.»
+- Conhece as correções fiscais do ano (multas, reintegrações não aceites, provisões, etc.). <span className="fd-pending">Pendente de validação por contabilista certificado: quais as correções do exercício e o enquadramento de cada uma.</span>
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Declaração de IRC (Modelo 22)**, abra a declaração do exercício (no exemplo, **Modelo 22 - 2025**) ou crie uma com **Novo** e escolha o **Exercício**: o **Início do período** e o **Fim do período** preenchem-se sozinhos. Confirme o **Regime** e se é **Pequena ou média empresa**.
+   ![Modelo 22 de 2025 com o período, o campo 701, os acréscimos, as deduções e o lucro tributável](/images/accounting-pt/modelo-22/01-modelo-22.png)
+2. Confira o **Campo 701 - Resultado líquido do período** com o **Resultado líquido na IES (Anexo A)**: depois de gerado o Anexo A, a **Conferência com a IES** passa de **Não conferido** a **Igual à IES** e a **Diferença para a IES** é 0,00 €. No exemplo, 31.104,16 € nos dois. <span className="fd-pending">Pendente de validação por contabilista certificado: campo 701 e conferência com a IES.</span>
+   ![Conferência do campo 701 com a IES, com a diferença a zero e igual à IES](/images/accounting-pt/modelo-22/03-conferencia-ies.png)
+3. No separador **Correções fiscais**, acrescente uma linha por correção: o **Campo do Quadro 07**, a **Natureza** (**Acréscimo** ou **Dedução**), a **Descrição**, o **Montante**, a **Nota explicativa** e a **Referência legal**. No exemplo, uma dedução de 500,00 € no campo 704 e um acréscimo de 1.500,00 € no campo 709. O **Total dos acréscimos** (1.500,00 €), o **Total das deduções** (500,00 €) e o **Lucro tributável** (32.104,16 €) calculam-se sozinhos. <span className="fd-pending">Pendente de validação por contabilista certificado: campos 704 e 709, natureza e referência legal das correções.</span>
+4. Carregue em **Calcular imposto (campo 351)**. No separador **Imposto e deduções (Quadro 10)**, o **Imposto (campo 351)** passa a 5.136,67 € e o **IRC liquidado (campo 358)** a 5.136,67 €, sem deduções nem derrama. <span className="fd-pending">Pendente de validação por contabilista certificado: taxa, escalões, campos 351 e 358.</span>
+   ![Separador Imposto e deduções com o imposto de 5.136,67 euros e o IRC liquidado](/images/accounting-pt/modelo-22/02-imposto-e-deducoes.png)
+5. Se aplicável, use os botões de cada separador. Os exemplos que se seguem são de um **Modelo 22 de 2026** (exercício em curso, por isso o campo 701 é provisório), com despesas e uma correção de valor artificial, só para mostrar o ecrã com dados:
+   - **Calcular a tributação autónoma** lê os lançamentos do período com a **Tributação autónoma** (categoria) preenchida na linha e põe uma linha por categoria e por custo da viatura. No exemplo, 1.000,00 € de **Despesas de representação** e 600,00 € de combustível de uma viatura de 30.000,00 €: **Total da tributação autónoma** 308,00 € (200,00 € e 108,00 €). Como o período tem prejuízo fiscal, o ecrã junta um **Agravamento (p.p.)** de 10 pontos às taxas e diz porquê («Prejuízo fiscal no período: as taxas são aumentadas em 10.0 pontos percentuais (CIRC art. 88.º, n.º 14).»).
+     ![Separador Tributação autónoma com as linhas por categoria, o agravamento e o total de 308,00 euros](/images/accounting-pt/modelo-22/10-tributacao-autonoma.png)
+   - **Calcular derramas** preenche a **Derrama estadual (campo 373)** pelos escalões sobre o lucro tributável (no exemplo, 4.172,01 € sobre 1.639.067,14 €) e a derrama municipal por concelho. Sem o código do concelho na empresa, o ecrã recusa: «A derrama municipal não foi calculada. A empresa […] não tem o código do concelho […]». Preenchido o código (quatro algarismos, por exemplo 1106 para Lisboa, pelo administrador, na ficha da empresa), a linha do concelho aparece e, se a tabela de taxas não estiver carregada, o aviso diz «Não há taxa carregada para o concelho 1106 no período […]», e a derrama municipal fica a 0,00 €.
+     ![Janela de recusa da derrama municipal por falta do código do concelho](/images/accounting-pt/modelo-22/08-derrama-sem-concelho.png)
+     ![Separador Derramas com a derrama estadual e o aviso de taxa do concelho em falta](/images/accounting-pt/modelo-22/09-derramas.png)
+   - Sem derrama estadual a pagar, o separador **Derramas** diz «O lucro tributável não excede o primeiro escalão: não há derrama estadual.» (no Modelo 22 de 2025, com o lucro tributável de 33.104,16 €, visto com o perfil **Contabilista**). Sem o código do concelho, o mesmo separador acrescenta uma proposta tirada da localidade da empresa, por exemplo «Proposta: concelho Porto (código 1312), pela localidade «Porto» da empresa. É só uma proposta: aceite-a na ficha da empresa depois de confirmar o concelho da sede.»
+   - **Calcular pagamentos por conta** parte do imposto do período de referência (no exemplo, o Modelo 22 de 2025, 5.136,67 €) e cria as três prestações de 80 %: 1.370,00 € cada, 4.110,00 € no total, com a data limite (31/07, 30/09 e 15/12) e o estado de cada uma (**Em atraso**, **A pagar**).
+     ![Separador Pagamentos por conta com as três prestações](/images/accounting-pt/modelo-22/11-pagamentos-por-conta.png)
+   - **Sugerir prejuízos a deduzir** lista os prejuízos fiscais de anos anteriores ainda por deduzir e mostra o **Limite legal da dedução** (no exemplo, 1.065.393,64 €, que é 65 % do lucro tributável). Sem prejuízos anteriores, a lista fica vazia e os **Prejuízos fiscais por deduzir** a 0,00 €. Com prejuízos de anos anteriores, o botão põe-os na lista até ao limite. Exemplo testado: o Modelo 22 de 2025 com uma dedução de 40.000,00 € no campo 704 passou a **Lucro tributável (prejuízo fiscal se negativo)** de −7.895,84 € e o prejuízo ficou registado como **Prejuízo fiscal reportável (Modelo 22)** de 7.895,84 €, sem prazo (aviso do ecrã: «Sem prazo (CIRC art. 52.º com a redação da Lei n.º 24-D/2022).»). No Modelo 22 de 2026, com lucro tributável de 29.200,21 € (um acréscimo de teste de 100.000,00 € a um resultado de −70.799,79 €), o **Limite legal da dedução** é 18.980,14 € (65 %), **Sugerir prejuízos a deduzir** deduz 7.895,84 € (campo 777), o **Lucro tributável depois dos prejuízos fiscais** é 21.304,37 € e o prejuízo de 2025 passa a **Totalmente deduzido**, sem saldo.
+     ![Separador Prejuízos fiscais do Modelo 22 de 2026 com o prejuízo de 2025 deduzido](/images/accounting-pt/modelo-22/13-prejuizos-anteriores.png)
+     ![Separador Prejuízos fiscais sem prejuízos anteriores e com o limite legal](/images/accounting-pt/modelo-22/12-prejuizos-fiscais.png)
+   - **Sugerir deduções dos PEC** só sugere se a empresa tiver pagamentos especiais por conta por deduzir; sem eles, a tabela **Dedução** do separador **Imposto e deduções (Quadro 10)** fica vazia.
+   <span className="fd-pending">Pendente de validação por contabilista certificado: taxas, agravamento por prejuízo, escalões da derrama, limite de 65 % e percentagem e datas dos pagamentos por conta.</span>
+6. Carregue em **Exportar XML (formato da AT)**: descarrega o ficheiro `Modelo22_599999993_2025.xml`, com o período, o campo 701 (31104.16), os campos 704 e 709 e a matéria coletável. Entregue-o no Portal das Finanças. <span className="fd-pending">Pendente de validação por contabilista certificado: conteúdo do ficheiro; os Quadros 02, 05 e 08 saem vazios no exemplo.</span>
+7. No separador **Comprovativo de entrega**, escreva a **Referência do comprovativo da AT** e a **Data de entrega** e anexe o **Ficheiro do comprovativo**. O ecrã diz: «O produto nunca contacta a AT.»
+   ![Separador Comprovativo de entrega com a referência e a data de entrega](/images/accounting-pt/modelo-22/04-comprovativo.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, a declaração de IRC prepara-se nos mesmos ecrãs: a lista **Declaração de IRC (Modelo 22)** tem as mesmas colunas, e a ficha tem os mesmos botões e separadores, com **Correções fiscais**, **Imposto e deduções (Quadro 10)**, **Comprovativo de entrega** e **Exportar XML (formato da AT)** (visto com um utilizador só com o perfil **Contabilista**). Depois de gerar o **Anexo A** da IES do mesmo exercício, a **Conferência com a IES** passou de **Não conferido** a **Igual à IES**.
+
+{/* Nota interna (lote EE-02, DOCS-073 #4142, DEC-1794, master 7a46de91a, base Enterprise docs_ee_ee02_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): Contabilista: Modelo 22 - 2025 da cópia aberto, com o aviso «Não há Anexo A da IES gerado para o período que termina em 31/12/2025…» antes de gerar o Anexo A e, depois, «Igual à IES» na lista (campo 701 31.104,16 €). Botões vistos: Preparar o Modelo 22, Propor correções pela contabilidade, Lançar a estimativa de IRC (rascunho), Calcular a tributação autónoma, Exportar XML (formato da AT), Sugerir deduções dos PEC, Calcular pagamentos por conta, Sugerir prejuízos a deduzir e Importar prejuízos fiscais anteriores; nove separadores. Ver reports/LOTE_EE-02.md. */}
+
+## Mais-valias e menos-valias de ativos
+
+Quando carrega em **Propor correções pela contabilidade**, o fiscaldoo lê também as vendas e os abates de ativos do período (os mesmos do Modelo 31) e acrescenta ao separador **Correções fiscais** linhas com a descrição «Proposta pela contabilidade»:
+
+- a menos-valia contabilística no campo **736** (acréscimo) e a mais-valia contabilística no campo **767** (dedução);
+- a soma dos resultados fiscais das saídas: no campo **739** (acréscimo), se for positiva, ou no campo **769** (dedução), se for negativa;
+- se, ao vender o ativo, marcou **Intenção de reinvestir** na janela **Alienar / Abater** (ver [Como abater ou vender um ativo](/accounting-pt/abater-ou-vender-um-ativo)), metade da diferença positiva no campo **740**, em vez do 739. Vale só para ativos fixos tangíveis e intangíveis detidos há pelo menos um ano. No fim do 2.º período seguinte, o que não foi reinvestido propõe-se no campo **741**, com mais 15 %; o valor reinvestido escreve-se no abate, em **Valor reinvestido**.
+
+Na demonstração, o Modelo 22 de 2026 criado com **Novo** (perfil **Contabilista**) propôs, a partir do abate dos «Computadores portáteis e servidor» (`AF/00002`, abatidos a 31/08/2026 com o valor líquido de 2.500,00 €, contabilístico e fiscal), duas linhas com a nota «Modelo 31: 1 abates de ativos no período (resultado da venda ou do abate, contabilístico e fiscal).»:
+
+- **736 - Menos-valias contabilísticas**, **Acréscimo**, 2.500,00 €;
+- **769 - Diferença negativa entre as mais-valias e as menos-valias fiscais (art.º 46.º)**, **Dedução**, 2.500,00 €.
+
+O efeito no lucro tributável é nulo: a menos-valia que a contabilidade já tirou ao resultado volta a somar-se no 736 e sai, como menos-valia fiscal, no 769. Confira cada linha proposta antes de calcular o imposto. <span className="fd-pending">Pendente de validação por contabilista certificado: campos 736 a 741 e 767 a 769, reinvestimento e majoração de 15 %.</span>
+
+{/* Nota interna (lote 97, M22-017 #4342, só as mais e menos-valias; os donativos esperam pelo M22-019. Master 3a28c9b91, docs_demo_lote97_test, porta 8597, 18/11/2026, utilizador só com o perfil Contabilista): Modelo 22 de 2026 criado por clique e «Propor correções pela contabilidade» carregado: linhas 719 (600,00 €, Modelo 32), 736 e 769 (2.500,00 € cada) do AF/00002. Os campos 739, 740, 741 e 767 não foram vistos com valores: exigem uma venda confirmada com mais-valia, e esta ronda não confirmou nada. O separador mostra também o bloco DONATIVOS, que este lote não documenta. */}
+
+## Donativos e o Anexo D
+
+**Onde:** na ficha do **Modelo 22**, a zona **DONATIVOS (EBF, ARTS. 62.º, 62.º-A E 62.º-B)** (visto com o perfil **Contabilista certificado**). Cada linha tem **Data**, **Descrição**, **Montante**, o **Enquadramento no EBF**, o **N.º do art. 62.º**, o **Beneficiário**, a **Finalidade**, **Contrato plurianual**, a **Entidade beneficiária** e o **Documento de suporte**. Por cima das linhas, uma nota diz o que o programa fez com elas.
+
+1. **O estorno abate ao donativo antes dos limites.** Um valor negativo (uma nota de crédito) abate ao donativo do mesmo limite antes de se aplicarem os limites anuais. No exemplo, no Modelo 22 de 2025 da demonstração: um donativo de 12.000,00 € e um estorno de −5.000,00 €, ambos no art. 62.º, n.º 3 (mecenato social, beneficiário privado, finalidade social), dão donativos de **7.000,00 €**. Com o volume de negócios de 279.000,00 € que o ecrã usa, são aceites 2.232,00 € e **4.768,00 €** vão para o **campo 751**, e a majoração, **669,60 €**, vai para o Anexo D (Quadro 04, campo 426).
+   ![Zona Donativos do Modelo 22 de 2025: a nota com os donativos de 7.000,00 €, os 4.768,00 € do campo 751 e a majoração de 669,60 €, e as três linhas de donativo](/images/accounting-pt/modelo-22/09-donativos.png)
+2. **Um donativo datado fora do período não entra.** Só contam os donativos com data dentro do período do Modelo 22. No exemplo, um donativo de 3.000,00 € de 01/12/2024 ficou fora do cálculo de 2025, e a nota avisa: «Os donativos datados fora do período deste Modelo 22 (01/01/2025 a 31/12/2025) ficaram fora do cálculo: Donativo de dezembro de 2024 (01/12/2024). Corrija a data ou retire-os.» Fica fora também do Anexo D.
+3. **A majoração arredonda-se uma só vez.** A majoração dos donativos (campo 774 e Quadro 04 do Anexo D) calcula-se sobre o total aceite de cada grupo de limite, arredonda-se uma só vez e reparte-se em cêntimos inteiros pelo Anexo D. Exemplo do programador: 4 donativos de 3.333,33 € e um estorno de 1.111,11 €, no n.º 3, com volume de negócios de 1.000.000,00 € e os donativos datados depois de 18/08/2026, quando o limite global é 1 % do volume de negócios (10.000,00 € aceites e majoração de 30 %): 774 = 3.000,00 € (antes dava 3.000,01 €). Com datas anteriores a 18/08/2026 o limite é 8/1000 (8.000,00 € aceites) e a majoração seria 2.400,00 €.
+4. **O Anexo D (Quadro 08)** leva o valor líquido de estornos, por tipo e por NIF do beneficiário.
+
+<span className="fd-pending">Pendente de validação no ecrã: (a) o estorno de um donativo de outro ano, sem donativo do período para abater, que fica fora do 751 e do 774 com nota; (b) o exemplo dos 3.333,33 € e do volume de 1.000.000,00 € (a demonstração tem volume de 279.000,00 €); (c) a exportação do Anexo D com o valor líquido por NIF, e o pedido de correção da data na exportação. Só se provou, por clique e por leitura da nota, o abatimento do estorno e a exclusão do donativo fora do período.</span> <span className="fd-pending">Pendente de validação por contabilista certificado: os limites e a majoração do EBF em cada n.º do art. 62.º, a lei aplicável a cada data (DL 167/2026 depois de 18/08/2026) e os campos 751, 774 e 426 (Anexo D, Quadro 04) onde o valor cai.</span>
+
+## Resultado esperado
+
+- A declaração mostra o **Lucro tributável**, o **IRC liquidado** e a **Conferência com a IES** igual.
+- O ficheiro XML fica descarregado e o comprovativo guardado na ficha.
+- A declaração **não faz lançamentos**: o imposto estimado ou liquidado lança-se à parte, na contabilidade.
+
+## Notas importantes
+
+- **Sem Anexo A, o campo 701 não é conferido.** Gere primeiro a IES: o painel do fecho do exercício lista «Preparar a declaração de IRC (Modelo 22)» antes de «Entregar a IES», mas é a IES (Anexo A) que dá ao Modelo 22 o resultado com que ele confere o campo 701. <span className="fd-pending">Pendente de validação por contabilista certificado: ordem de preparação das declarações.</span>
+- **As correções fiscais são suas.** O fiscaldoo calcula a partir do que escrever. **Propor correções pela contabilidade** propõe algumas a partir da contabilidade (por exemplo, as depreciações não aceites do Modelo 32 e as mais e menos-valias, ver «Mais-valias e menos-valias de ativos»), e os botões **Sugerir** propõem as deduções dos PEC e os prejuízos; confira-as e escreva as outras.
+- **Prazo de entrega.** <span className="fd-pending">Pendente de validação por contabilista certificado: prazo de entrega do Modelo 22 e pagamentos do imposto.</span>
+
+## Problemas frequentes
+
+### «O período de tributação começa depois de acabar»
+
+- **Sintoma:** ao guardar um Modelo 22 com o **Fim do período** antes do **Início do período**: «O período de tributação começa depois de acabar. Corrija as datas do Modelo 22.» (provocado por RPC com o perfil **Contabilista**; nada foi gravado).
+- **O que fazer:** corrija as datas do período.
+
+### A «Conferência com a IES» está em «Não conferido»
+
+- **Causa:** não há Anexo A da IES gerado para o período, ou o campo 701 não coincide com o resultado do Anexo. <span className="fd-pending">Pendente de validação por contabilista certificado: campo 701 e conferência com a IES.</span>
+- **O que fazer:** gere o Anexo A em [IES](/accounting-pt/ies) e abra o Modelo 22 de novo. Se aparecer uma **Diferença para a IES**, corrija a contabilidade e gere o Anexo A outra vez.
+
+{/* Nota interna (lote 99, FIX-M251/M252/M273, master 73d6a5fed, docs_demo_99_test, porta 9784, 19/11/2026): três linhas de donativo criadas por RPC no Modelo 22 - 2025 da cópia (12.000,00 e -5.000,00 de 2025, 3.000,00 de 01/12/2024; n.º 3, privado, social) e lidas por clique com demo.gestor_contabilidade: nota «donativos de 7.000,00 €, 2.232,00 € aceites … 4.768,00 € vão para o campo 751 … 426 = 669,60 €» e o aviso do donativo fora do período. As linhas ficam na cópia, para o auditor, e entram nos totais desse Modelo 22 (não são da base-mãe). */}

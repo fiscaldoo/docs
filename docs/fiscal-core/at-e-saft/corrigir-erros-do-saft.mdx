@@ -1,0 +1,150 @@
+---
+id: corrigir-erros-do-saft
+slug: /fiscal-core/corrigir-erros-do-saft
+title: Como corrigir os erros de validação do SAF-T
+sidebar_label: Corrigir os erros do SAF-T
+sidebar_position: 4
+description: Ler a lista de erros de um ficheiro SAF-T inválido, saber quem corrige cada um e onde, regenerar o ficheiro, e as regras do NIF do cliente e do fornecedor em cada ficheiro (o cliente sem NIF não é erro; o fornecedor sem número fiscal, de Portugal ou de outro país, é, no de contabilidade, e a guia de devolução a um fornecedor sem NIF não se emite).
+keywords: [erros do SAF-T, guia de devolução, guia de devolucao, devolução a fornecedor, referência órfã, Consumidor-final, erros do saft, SAF-T inválido, saft invalido, corrigir SAF-T, corrigir saft, formato ou valor inválido, fornecedor sem NIF, fornecedor sem nif, fornecedor estrangeiro sem NIF, fornecedor de outro país, identificador fiscal do país, SupplierTaxID, fatura de compra sem NIF, cliente sem NIF, cliente estrangeiro sem NIF, cliente de outro país sem NIF, consumidor final, 999999990, CustomerID, cliente sem NIF com nome, venda anónima, FAQ 2753, avisos do SAF-T, TransactionID, regenerar, exportar erros, XLSX, quem corrige, validação SAF-T, validacao saft]
+doc_id: DOC-0054
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 78c1ec1ac)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/at-e-saft/gerar-o-saft, accounting-pt/declaracoes/saft-de-contabilidade, fiscal-core/at-e-saft/comunicar-a-faturacao-mensal, fiscal-core/faturacao/clientes]
+---
+
+## Para que serve?
+
+Um ficheiro SAF-T **Inválido** não se entrega. O registo da exportação lista cada erro, diz quem o corrige e leva ao registo a corrigir. Depois de corrigir, gera-se de novo e confirma-se que o ficheiro passa a **Gerado**.
+
+## Quando utilizar?
+
+- Quando **Gerar SAF-T** devolve um registo **Inválido**, no ficheiro de faturação ([Como gerar o ficheiro SAF-T de faturação](/fiscal-core/gerar-o-saft)) ou no de contabilidade ([Como gerar o SAF-T de contabilidade](/accounting-pt/saft-de-contabilidade)).
+- Quando a comunicação mensal diz «O ficheiro não passou a validação…»: [Como comunicar a faturação do mês à AT](/fiscal-core/comunicar-a-faturacao-mensal).
+- Quando **O que há para fazer com o SAF-T?** mostra **Ficheiros SAF-T com erros** ou **Documentos a corrigir**.
+
+## Onde encontrar?
+
+**Contabilidade › Declarar › Ficheiro SAF-T › O que há para fazer com o SAF-T?**, lista de apoio **SAF-T gerados**, e abra o registo **Inválido**. Também se chega lá pela **Exportação SAF-T** de uma comunicação mensal.
+
+## Antes de começar
+
+- Para ler a lista e regenerar: perfil **Contabilista** ou acima. Os passos e o exemplo foram feitos com o perfil **Contabilista**, até ao ficheiro **Gerado**.
+- Para corrigir: cada linha diz **Quem corrige** (por exemplo «Quem mantém os contactos (Contabilista ou Faturação)»). Se não é o seu perfil, envie-lhe a lista (passo 3).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra o registo **Exportação SAF-T (PT)** no estado **Inválido**. O cabeçalho mostra o **N.º de erros** e os **Erros por tipo**. No exemplo, o ficheiro **C — Contabilidade** de outubro de 2026: 1 erro, «Formato ou valor inválido: 1». O **N.º de avisos** de um registo inválido fica em 0, porque a geração parou antes de os contar: os avisos aparecem no registo novo (passo 6).
+   ![Registo de exportação SAF-T inválido, modo C — Contabilidade, com os botões Regenerar e Exportar erros (XLSX), os erros por tipo assinalados e N.º de avisos 0](/images/fiscal-core/corrigir-erros-do-saft/01-ficheiro-invalido.png)
+2. Desça até à lista **Erros**. Cada linha tem o **Tipo**, o **Nó** (onde fica no ficheiro), a **Chave** (o registo com o problema, por exemplo o nome do fornecedor), a **Mensagem**, **Quem corrige**, a **Sugestão** e o botão **Abrir o registo a corrigir**.
+   ![Lista de erros com o botão Abrir o registo a corrigir assinalado na linha do fornecedor sem NIF](/images/fiscal-core/corrigir-erros-do-saft/02-lista-de-erros.png)
+3. A lista corta os textos longos. Para os ler inteiros, ou para os mandar a quem corrige, carregue em **Exportar erros (XLSX)**: o navegador guarda uma folha de cálculo (no exemplo, `saft_erros_10.xlsx`, com as colunas **Tipo**, **Nó**, **Chave**, **Mensagem**, **Sugestão**, **Registo a corrigir** e **Quem corrige**).
+4. Em cada linha, carregue em **Abrir o registo a corrigir**. Abre-se o registo certo (no exemplo, a ficha do fornecedor **Fornecedor Sem NIF Exemplo, Lda**). Corrija o que a **Mensagem** diz (para um NIF em falta, escreva no campo do NIF o número fiscal que está na fatura do fornecedor; num NIF português aparece **NIF válido**, num de outro país **NIF por validar**), guarde e volte ao registo da exportação pelo trilho do topo. Antes de corrigir, leia a tabela abaixo: um NIF não se inventa.
+   ![Ficha do fornecedor Fornecedor Sem NIF Exemplo, Lda, de Portugal, com o NIF 599999918 escrito e a etiqueta NIF válido](/images/fiscal-core/corrigir-erros-do-saft/06-ficha-com-nif.png)
+5. Carregue em **Regenerar**. O fiscaldoo gera um ficheiro novo, num registo novo; o registo antigo fica como histórico.
+6. Leia o registo novo. Se ainda tem erros, repita os passos 2 a 5. Quando fica **Gerado**, com **N.º de erros** 0, leia os avisos (veja «Notas importantes») e:
+   - num ficheiro de faturação (**F**), confira os totais (passos 8 e 9 de [Como gerar o ficheiro SAF-T de faturação](/fiscal-core/gerar-o-saft)) e entregue-o como diz [Como comunicar a faturação do mês à AT](/fiscal-core/comunicar-a-faturacao-mensal);
+   - num ficheiro de contabilidade (**C**), o do exemplo, confira em **NOTAS** que as verificações do registo dizem todas «OK». Este ficheiro não se entrega todos os meses: o do exercício é a base da IES ([Como gerar o SAF-T de contabilidade](/accounting-pt/saft-de-contabilidade)). <span className="fd-pending">Pendente de validação por contabilista certificado: obrigação e prazo de entrega do SAF-T de contabilidade.</span>
+
+</StepByStep>
+
+## Os erros vistos e onde se corrigem
+
+| Erro (mensagem do ecrã) | Onde se corrige | Estado hoje |
+|---|---|---|
+| «O quê: o fornecedor «…» não tem NIF. Porquê: a Autoridade Tributária exige o identificador fiscal de todos os fornecedores no ficheiro, e um fornecedor de outro país identifica-se pelo identificador fiscal do seu país (de IVA ou não); o ficheiro nunca leva um valor de substituição, por isso não é gerado. Como: preencha no contacto o identificador fiscal do país do fornecedor (consta da fatura recebida) e gere o ficheiro outra vez; se o fornecedor não tiver nenhum, peça orientação à Autoridade Tributária antes de gerar.» | Ficha do fornecedor | Nos ficheiros **C** e **I**, pelas faturas de compra, num fornecedor de Portugal ou de outro país. Escreva na ficha o número fiscal do fornecedor, guarde e carregue em **Regenerar** (veja «Fornecedor sem NIF», abaixo). No **F**, só com uma guia de devolução emitida a esse fornecedor antes de o fiscaldoo recusar a guia sem NIF: veja «Problemas frequentes». |
+| «O fornecedor Consumidor-final é usado nos documentos de transporte mas não está no ficheiro.» (tipo **Referência órfã**) | Não se corrige na ficha | Só no **F**, ao lado do erro anterior, numa guia de devolução a um fornecedor que foi emitida como dirigida a um consumidor final, antes de o fiscaldoo recusar a guia sem NIF. Veja «Problemas frequentes». |
+| «O documento de venda “…” está lançado mas não tem série/número SAF-T (o seu diário não está certificado) — não pode ser omitido do ficheiro em silêncio. Emita-o num diário certificado ou corrija o diário antes de gerar.» | Diário e documento | Veja «Problemas frequentes» em [Como gerar o ficheiro SAF-T de faturação](/fiscal-core/gerar-o-saft). |
+
+### Fornecedor sem NIF
+
+- **Nos ficheiros de contabilidade:** um ficheiro **C — Contabilidade** ou **I — Contabilidade integrada com a faturação** fica **Inválido** quando o período tem uma fatura de compra de um fornecedor cuja ficha não tem número fiscal. Vale para um fornecedor de Portugal e para um de outro país: o ficheiro não escreve «Desconhecido» nem outro valor no lugar do número, e há um erro por fornecedor.
+- **Fornecedor de outro país:** identifica-se pelo número fiscal do país dele, de IVA ou não, tal como está na fatura recebida. Na demonstração, uma fatura de compra de novembro de 2026 do **Fornecedor Espanha Exemplo, S.L.** (Espanha, sem número na ficha) deixou o **C** de novembro **Inválido**, com este erro e mais nenhum. Pelo **Abrir o registo a corrigir**, escreveu-se `ESB99999997` (fictício): a ficha ficou com **NIF por validar** e **Não verificado** no VIES. **Regenerar** deu um registo **Gerado**, e no ficheiro o fornecedor saiu com o número sem a sigla do país (`B99999997`) e o país ES. Um número com a sigla de outro país à frente não é conferido como um NIF português, mesmo numa ficha sem país: um fornecedor com `IE6388047V` (fictício) e sem país na ficha saiu no mesmo ficheiro com `6388047V` e o país IE, sem erro.
+- **No ficheiro de faturação:** o ficheiro **F — Faturação** do mês não leva os fornecedores das faturas de compra, por isso não fica **Inválido** por elas. Na demonstração, com a fatura do fornecedor já lançada, o **F** de outubro de 2026 ficou **Gerado**, sem esse fornecedor no ficheiro descarregado, e o **C** do mesmo mês ficou **Inválido**, com este erro e mais nenhum (exemplo abaixo). <span className="fd-pending">Pendente de validação por contabilista certificado: ficheiro SAF-T de faturação sem a tabela dos fornecedores das faturas de compra (Portaria n.º 302/2016, anexo I).</span>
+- **A guia de devolução, no ficheiro de faturação:** o **F** leva o fornecedor a quem o mês tem uma guia de devolução (a devolução de mercadoria recebida dele), com o NIF dele. Por isso o fiscaldoo não emite essa guia a um fornecedor sem NIF: «O quê: o fornecedor «Fornecedor Devolução Sem NIF, Lda» não tem NIF. Porquê: um fornecedor é um sujeito passivo, por isso a guia que lhe devolve mercadoria tem de indicar o NIF (DL 147/2003, art. 4.º n.º 2 c)). Como: preencha o NIF na ficha do fornecedor (consta da fatura recebida) e emita a guia de novo.» A recusa não propõe outra saída. Na demonstração, depois de escrito o NIF `599999900` (fictício) na ficha, a guia saiu como `GD D26/1`, e o **F** de outubro ficou **Gerado**, com 0 erros e esse fornecedor no ficheiro descarregado, com o NIF.
+- **O que fazer:** escreva na ficha o NIF que está na fatura do fornecedor e guarde. Num ficheiro **C** ou **I** inválido, carregue depois em **Regenerar** (exemplo abaixo); numa guia de devolução, emita-a só depois de escrito o NIF. Um número fiscal não se inventa, e o NIF 999999990 de consumidor final não serve a um fornecedor. Se um fornecedor de outro país não tem nenhum número fiscal, a mensagem manda pedir orientação à Autoridade Tributária antes de gerar o ficheiro. <span className="fd-pending">Pendente de validação por contabilista certificado: o número a declarar de um fornecedor de outro país que só tem um identificador fiscal que não é de IVA, e o que fazer quando não tem nenhum (Portaria n.º 302/2016, anexo I, ponto 2.3.3).</span>
+
+### Cliente sem NIF: não é um erro
+
+Uma fatura a um cliente sem NIF, de Portugal ou de outro país, não deixa o ficheiro **Inválido**: o ficheiro declara o cliente com o NIF 999999990, o número que a Autoridade Tributária usa para quem não tem, e o registo fica **Gerado**. O que muda é o resto da identificação:
+
+| Venda | Como o cliente sai no ficheiro | Aviso |
+|---|---|---|
+| Anónima: o cliente **Consumidor final** ou uma venda sem nome nem morada do cliente (por exemplo, uma fatura simplificada do ponto de venda sem cliente) | Todos juntos como `Consumidor-final`, com o NIF 999999990, o nome «Consumidor final» e a morada e o país «Desconhecido», também se o cliente for de outro país | Nenhum |
+| A um cliente com nome ou morada na fatura, mas sem NIF | Com uma identificação própria (por exemplo `PAR-000014`), o NIF 999999990, o nome e a morada da fatura e o país do cliente | Um por cliente |
+
+Na demonstração, as vendas de outubro de 2026 eram só a `FT D26/31` ao **Cliente Sem NIF Exemplo** (Portugal, sem NIF) e a `FT D26/32` ao **Cliente Particular Espanha** (Espanha, sem NIF), ambas de 30/10/2026, de 10,00 € + 2,30 € de IVA cada uma. Com o perfil **Contabilista**, **Gerar SAF-T** com **F — Faturação** e outubro de 2026 deu **Gerar com 2 documentos** (a janela conta «2 documentos de venda (faturas e notas de crédito)»), e o registo ficou **Gerado**, com 0 erros e 2 avisos, um por cada um dos dois clientes sem NIF.
+
+![Registo da exportação SAF-T de outubro de 2026, modo F — Faturação, no estado Gerado, com N.º de erros 0 e N.º de avisos 2 assinalado](/images/fiscal-core/corrigir-erros-do-saft/08-ficheiro-f-gerado-com-avisos.png)
+
+O aviso do cliente de Espanha:
+
+> «O quê: o cliente «Cliente Particular Espanha» não tem NIF. Porquê: o documento leva o nome ou a morada do cliente, por isso o ficheiro dá-lhe um CustomerID próprio, com CustomerTaxID 999999990 (o número da Autoridade Tributária para quem não tem), o nome e a morada do documento e o país «ES» (FAQ 2753 da Autoridade Tributária). Como: não há nada a fazer neste ficheiro. Um documento emitido nunca se altera, por isso um NIF preenchido na ficha depois só vale para os documentos emitidos a seguir. Para identificar este cliente numa fatura já emitida, anule-a com «Corrigir os dados do cliente» (só o NIF difere; não se emite nota de crédito) e emita a fatura nova com o NIF.»
+
+O aviso do cliente de Portugal diz o mesmo, com o país «PT». No ficheiro descarregado, o **Cliente Sem NIF Exemplo** é `PAR-000014`, com o NIF 999999990, o nome dele e o país PT, e o **Cliente Particular Espanha** é `PAR-000015`, com o NIF 999999990, o nome dele e o país ES. As fichas não têm morada, por isso a morada sai «Desconhecido». O ficheiro não tem nenhum fornecedor: a fatura de compra do exemplo abaixo não conta para ele.
+
+A venda anónima não dá aviso. No **F** de novembro de 2026 da demonstração (**Gerar com 6 documentos**, **Gerado**, 0 avisos), a fatura simplificada `FS POS26/1` do ponto de venda, sem cliente, saiu com o cliente `Consumidor-final`, o NIF 999999990 e a morada e o país «Desconhecido».
+
+O aviso não pede nada para o ficheiro. Se o cliente quer a fatura com o NIF dele, ou é uma empresa, a questão é a fatura: veja [O SAF-T não é gerado ou fica Inválido](/troubleshooting/saft-com-erros-de-validacao), secção «O cliente é de outro país e não tem NIF». <span className="fd-pending">Pendente de validação por contabilista certificado: identificação no SAF-T do cliente sem NIF com nome ou morada (identificação própria, NIF 999999990 e o país do cliente) e da venda anónima (morada e país «Desconhecido»), segundo a Portaria n.º 302/2016, anexo I, tabela 2.2, e a FAQ 2753 da AT.</span>
+
+{/* Nota interna (ronda única fix-ronda-unica, DEC-1481/1482/1530; 31/10/2026, master 27cebe13a, base docs_demo_ronda_test, perfil Contabilista): fonte única das regras do NIF do cliente e do fornecedor e do exemplo do F de outubro (AS2-04); o DOC-0052 e o DOC-0343 só ligam aqui. Faturas emitidas pela ordem do fix-vies2 (FT D26/33 Cliente Sem NIF Exemplo, 34 Cliente Alemanha Exemplo GmbH com Data de entrega 28/10, 35 Software Berlin GmbH, 36 Cliente Particular Espanha, 37 e 38 Cliente Alemanha), todas a 30/10/2026. Registos da cópia: 9 (F de outubro, Gerar com 14 documentos = 9 de venda + 4 guias + 1 de conferência, Gerado, 5 avisos, sem Supplier), 10 (C, Inválido, 1 erro), 11 (C regenerado, Gerado, 17 avisos, 48 de 48), 12 (F depois da NC D26/2 e da FT D26/39: 16 documentos, 8 avisos), 13 (F com a GD D26/1: 17 documentos, Gerado, 8 avisos, Supplier PT-116 com o NIF 599999900). AS3-01: números 8→5, 20→17, morada 9→6 (SAFT-157 FS-04: a ficha Consumidor final já não avisa). AS3-04: o intervalo de números saiu do texto. Mudou desde o fix-saft2: o XML declara o Consumidor-final de Portugal com o país «Desconhecido» (antes PT), igual ao aviso. Não é defeito: decidido na DEC-1480 (o SAF-T não muda; a pergunta foi ao CC); explicado no texto acima (retoma, 31/10/2026, F de outubro na docs_demo_ronda2_test: 5 avisos, o do Cliente Sem NIF Exemplo com o país «Desconhecido» citado). Leitura legal do SAFT-155: VALIDAR-CC SAFT-155-Q1. */}
+
+{/* Nota interna (lote v23-E, 06/11/2026, master 7a44f0c73, docs_demo_v23e_test, mãe v2 com o NIF 599999993): exemplo refeito por clique com um utilizador só Contabilista. Dados pela integração: os clientes Cliente Sem NIF Exemplo (PT) e Cliente Particular Espanha (ES) e o Fornecedor Sem NIF Exemplo, Lda, sem NIF; FT D26/31 e 32 de 30/10/2026 (a mãe v2 não tinha vendas em outubro); FTF/2026/00046 de 28/10/2026 (6221 100,00 D, 2432 23,00 D, 2211 123,00 C, conferido). Registos: 9 (F, Gerar com 2 documentos, Gerado, 2 avisos; ficheiro sem Supplier, Consumidor-final com o país Desconhecido e Consumidor-final-ES com ES), 10 (C, Gerar com 10 documentos, Inválido, 1 erro), 11 (C regenerado depois do NIF 599999918 pela ficha aberta no erro: Gerado, 7 avisos, 10 de 10). Capturas 07 e 08 refeitas destes registos. Os passos 3 (XLSX) e o caso da guia de devolução não foram refeitos neste lote. */}
+
+{/* Nota interna (lote 96, SAFT-177/178/179 e SAFT-176, master 78c1ec1ac, docs_demo_lote96_test, porta 8596, 18/11/2026): por clique com um utilizador só Contabilista. Dados criados na cópia pela integração, como no v23-E: clientes Cliente Sem NIF Exemplo (PT) e Cliente Particular Espanha (ES) e FT D26/31 e 32 de 30/10/2026 (perfil Administrativo); Fornecedor Sem NIF Exemplo, Lda e FTF/2026/00046 de 28/10/2026 (6221 100,00 D, 2432 23,00 D, 2211 123,00 C). Registos: 9 (F de outubro, Gerar com 2 documentos, Gerado, 2 avisos novos do SAFT-178; XML PAR-000014 PT e PAR-000015 ES com 999999990), 10 (F de novembro, Gerar com 6 documentos, 0 avisos; FS POS26/1 em Consumidor-final com o país Desconhecido), 11 (C de outubro, Gerar com 10 documentos, Inválido, 1 erro com a mensagem nova do SAFT-179), 12 (C regenerado depois do NIF 599999918 escrito pelo Contabilista na ficha aberta pelo erro: Gerado, 7 avisos, 10 de 10). Fornecedor de outro país (SAFT-179): Fornecedor Espanha Exemplo, S.L. e FTF/2026/00047 (documento criado por RPC na cópia desse lote; não existe na base-mãe de hoje, lote 99) de 10/11/2026 (23% EU S), registos 14 (C de novembro, Inválido, 1 erro) e 15 (Gerado depois de ESB99999997; Supplier B99999997, ES). SAFT-176: Fornecedor Irlanda Exemplo Ltd, sem país, IE6388047V, FTF/2026/00048; C de novembro Gerado com 6388047V e IE. O «Como» do aviso do cliente cita o CERT-149 («anule-a com Corrigir os dados do cliente»); o percurso desse botão é de outro lote. */}
+
+### NIF de um documento importado que não é válido
+
+Um documento que veio de outro programa (migração) guarda o NIF do cliente como foi emitido. Se esse NIF não for válido, o ficheiro de faturação declara o cliente com o NIF do documento e com um aviso, nunca como **Consumidor final**. A mensagem diz que o documento emitido não muda: o NIF corrige-se na ficha do cliente para os documentos seguintes, e o documento importado fica como saiu. Ver [Como migrar as séries e os documentos certificados](/migration-toolkit/migrar-series-e-documentos-certificados). <span className="fd-pending">Pendente de validação no ecrã: o aviso e o texto da mensagem; exigem importar documentos certificados, e a sessão de produção não os podia publicar. O comportamento vem do bilhete do MIG-128.</span>
+
+## Exemplo completo, até Gerado
+
+Feito na **Empresa Demonstração, Lda**, a 18/11/2026, com o perfil **Contabilista**. Antes, ficou lançada a fatura de fornecedor `FTF/2026/00046` (referência do fornecedor `FT 2026/88`, de 28/10/2026, 100,00 € + 23,00 € de IVA), de uma ficha nova, **Fornecedor Sem NIF Exemplo, Lda**, criada com **País** Portugal e sem NIF. O lançamento dessa fatura: débito de 100,00 € em 6221 Trabalhos especializados e de 23,00 € em 2432 IVA - Dedutível, e crédito de 123,00 € em 2211 Fornecedores gerais.
+
+1. **Gerar SAF-T** com **F — Faturação** e outubro de 2026 (**Data de referência** 01/10/2026, a que a janela propõe): **Gerar com 2 documentos**, registo **Gerado**, com 0 erros e os 2 avisos de «Cliente sem NIF: não é um erro». O ficheiro descarregado não tem nenhum fornecedor.
+2. **Gerar SAF-T** com **C — Contabilidade** e o mesmo mês: o botão diz **Gerar com 10 documentos** e o registo fica **Inválido**, com 1 erro, «Formato ou valor inválido: 1», e **N.º de avisos** 0. Na lista **Erros**, o **Nó** é `MasterFiles/Supplier/tax_id`, a **Chave** é «Fornecedor Sem NIF Exemplo, Lda» e a **Mensagem** é a da tabela acima. **Quem corrige**: «Quem mantém os contactos (Contabilista ou Faturação)». O histórico do registo diz «Geração do SAF-T (PT) bloqueada: 1 erro(s) de integridade referencial. Nenhum ficheiro foi produzido.»
+3. **Exportar erros (XLSX)** guardou `saft_erros_10.xlsx`, com uma linha.
+4. **Abrir o registo a corrigir** abriu a ficha **Fornecedor Sem NIF Exemplo, Lda**, sem aviso no topo. Escreveu-se o NIF `599999918` (fictício), apareceu **NIF válido** e guardou-se.
+5. De volta ao registo pelo trilho do topo, **Regenerar** criou um registo novo: **Gerado**, **N.º de erros** 0, **N.º de avisos** 7, ficheiro `SAFT-PT_599999993_2026_10_C.xml`, com **Descarregar ficheiro**. A nota de verificação do registo diz «Transactions = lançamentos publicados do período: 10 de 10 — OK», o mesmo número do botão do passo 2.
+
+![Registo novo da exportação SAF-T, modo C — Contabilidade, no estado Gerado, com N.º de erros 0 assinalado e 7 avisos](/images/fiscal-core/corrigir-erros-do-saft/07-ficheiro-gerado.png)
+
+## Resultado esperado
+
+- O registo novo fica **Gerado**, com **N.º de erros** 0, e já se pode descarregar e entregar.
+- Os registos inválidos anteriores ficam na lista **SAF-T gerados** como histórico. Corrigir um erro não cria lançamentos contabilísticos (no exemplo, corrigir a ficha e regenerar não criaram nenhum); uma correção que obrigue a emitir um documento (por exemplo, uma nota de crédito) segue o artigo desse documento.
+
+## Notas importantes
+
+- **Regenerar** usa a versão atual dos dados e do produto. Se os erros já estavam corrigidos quando o ficheiro foi gerado, carregue em **Regenerar** e o ficheiro novo passa.
+- Os avisos não tornam o ficheiro inválido, mas dizem o que saiu incompleto. No exemplo, os 7 avisos do registo novo são:
+  - 2 do nome dos lançamentos de venda do mês, um por lançamento, por exemplo «O quê: o nome do lançamento «FT D26/31» tinha espaços, que foram removidos no TransactionID, onde o nome fica «FTD26/31». Porquê: o TransactionID do SAF-T é a data, o diário e o nome sem espaços (o padrão do ficheiro não admite espaços). Como: não há nada a fazer; o lançamento mantém o nome que tem.»;
+  - 3 de morada, da ficha do fornecedor do exemplo: «O quê: a morada não tem rua. Porquê: o ficheiro exige-a e foi escrito «Desconhecido». Como: preencha a rua no contacto.», e o mesmo para a localidade e o código postal;
+  - 2 dos clientes sem NIF com nome, cada um com a sua identificação (acima).
+- Preencha a morada na ficha de um cliente ou fornecedor real e carregue em **Regenerar** antes de entregar. A ficha **Consumidor final** é a de quem não se identifica: não lhe escreva a morada de um cliente (no exemplo, não deu avisos). Uma ficha com nome e sem NIF já não sai como consumidor final: sai com a sua própria identificação (veja «Cliente sem NIF: não é um erro»).
+- Não entregue um ficheiro **Inválido**.
+
+## Problemas frequentes
+
+### Corrigi tudo e o ficheiro continua «Inválido»
+
+- **Causa:** está a olhar para o registo antigo, ou falta um erro de outro tipo.
+- **O que fazer:** o **Regenerar** abre o registo novo; confirme que é esse que está a ver (a data e a hora estão no nome). Leia de novo a lista **Erros** do registo novo.
+
+### O ficheiro de faturação ficou «Inválido» por um fornecedor sem NIF
+
+- **Sintoma:** um registo com o **Modo** **F — Faturação** fica **Inválido**, com o erro do fornecedor sem NIF (nó `MasterFiles/Supplier/tax_id`) e, ao lado, a **Referência órfã** «O fornecedor Consumidor-final é usado nos documentos de transporte mas não está no ficheiro.» (nó `SourceDocuments/MovementOfGoods/StockMovement/SupplierID`).
+- **Causa:** o mês tem uma guia de devolução a um fornecedor sem NIF, emitida como dirigida a um consumidor final antes de o fiscaldoo passar a recusar essa guia (veja «Fornecedor sem NIF»). Um fornecedor é um sujeito passivo: a guia saiu mal, sem o NIF do destinatário. Hoje, a guia já não se emite assim, por isso a demonstração não permite refazer este caso.
+- **O que fazer:** não trate este erro como um dado da ficha. Uma guia emitida não se altera, e escrever o NIF na ficha não muda o que a guia diz. Fale com quem tem o perfil **Contabilista certificado** e com o contabilista certificado da empresa, que decidem o que fazer à guia já emitida (por exemplo, anulá-la e emitir outra com o NIF, se a mercadoria ainda não saiu). <span className="fd-pending">Pendente de validação por contabilista certificado: o que fazer a uma guia de devolução já emitida a um fornecedor sem o NIF dele.</span>
+- **Se o mês não tem nenhuma guia a esse fornecedor:** o **F** não devia ficar **Inválido** por ele. Envie ao suporte a folha de **Exportar erros (XLSX)** e o nome do registo.
+
+{/* Nota interna (ronda única, 31/10/2026, master 27cebe13a, SAFT-158 #3553): com o produto de hoje a guia de devolução a um fornecedor sem NIF é recusada (GD por omissão; a recusa já não oferece «Consumidor final») e emite-se depois de escrito o NIF (GD D26/1, F Gerado, Supplier PT-116 com o NIF). O caso deste problema só existe com guias emitidas antes do comboio 110; não reproduzível. PD-AS2C-03 (Regenerar com o NIF escrito depois punha no F o NIF que a guia não tem) deixou de se poder provocar; o SAFT-158 diz que as guias declaram o parceiro como estava no dia da emissão, o que não foi provado aqui (pede uma guia antiga). Rever se aparecer um caso real. */}
+
+### Não sei o que fazer com uma mensagem
+
+- **O que fazer:** carregue em **Exportar erros (XLSX)** e envie a folha ao contabilista certificado ou ao suporte, com o nome do registo (empresa, data e hora).

@@ -1,0 +1,81 @@
+---
+id: relatorio-unico
+slug: /payroll-pt/relatorio-unico
+title: Como preparar o Relatório Único
+sidebar_label: Relatório Único
+description: Gerar os anexos A a F do Relatório Único a partir dos dados do ano, corrigir o que estiver errado, registar a entrega feita no portal e retificar.
+keywords: [relatório único, relatorio unico, anexo A, anexo B, anexo D, quadro de pessoal, fluxo de entradas e saídas, fluxo de entradas e saidas, segurança e saúde no trabalho, seguranca e saude no trabalho, registar entrega, retificar, 31 de outubro, Portaria 55/2010]
+doc_id: DOC-0230
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/declarar/comprovativos-anuais, troubleshooting/salarios-e-pessoas/faltam-dados-do-trabalhador]
+---
+
+## Para que serve?
+
+Prepara os anexos do Relatório Único a partir dos dados de salários do ano, diz o que está errado em cada anexo e guarda o histórico das versões. O fiscaldoo **não entrega** o relatório nem gera um ficheiro para o portal: a entrega é feita por si no portal oficial.
+
+## Quando utilizar?
+
+- Para preparar o relatório do ano anterior, antes de abrir o prazo de entrega.
+- Para registar que a entrega foi feita no portal.
+- Para corrigir um relatório já entregue, com uma versão retificada.
+
+## Onde encontrar?
+
+**Salários › Declarar › Relatório Único**
+
+## Antes de começar
+
+- Acesso **Administrador de Salários** para preparar o relatório. **Registar entrega** só aparece a quem tem também o acesso **Submissor de declarações**: com um utilizador só com o acesso **Administrador de Salários**, o relatório em rascunho mostrou só **Gerar**; com os dois acessos, **Gerar** e **Registar entrega**.
+- As fichas e os contratos dos trabalhadores do ano registados. Veja [Faltam dados obrigatórios do trabalhador](/troubleshooting/faltam-dados-do-trabalhador).
+- O tipo de serviço de segurança e saúde da empresa, o nome do prestador, os trabalhadores com exame médico e os acidentes de trabalho do ano. São só totais.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Carregue em **Novo** e escreva o **Ano de referência** (no exemplo, 2026). A **Versão** fica 1.
+2. Guarde. Aparecem a **Data de referência do pessoal** (31/10/2026), **A entrega abre em** (16/03/2027) e o **Prazo de entrega** (15/04/2027). <span className="fd-pending">Pendente de validação por contabilista certificado: as datas de cada ano.</span>
+3. No separador **Anexo D — totais indicados**, escolha o **Serviço de segurança e saúde (Anexo D)**: «Serviço interno», «Serviço comum» ou «Serviço externo». Preencha o **Nome do serviço ou do prestador (Anexo D)**, os **Trabalhadores com exame médico (Anexo D)** e os **Acidentes de trabalho no ano (Anexo D)**. Guarde.
+4. Carregue em **Gerar**.
+5. No separador **Anexos**, veja o **Estado** e **O que está errado** de cada anexo.
+   ![Separador Anexos do relatório de 2026: os seis anexos, A a F, com o estado Válido](/images/payroll-pt/relatorio-unico/01-anexos.png)
+6. Se um anexo estiver «Com problemas», corrija na origem, por exemplo o **Tipo de contrato** na ficha do trabalhador, e carregue de novo em **Gerar**. As linhas anteriores são substituídas.
+7. Confira no separador **Linhas** tudo o que vai ser declarado.
+8. Preencha e envie o relatório no portal oficial com esses valores, e guarde o comprovativo. <span className="fd-pending">Pendente de validação no ecrã: o portal real não se usa na demonstração.</span>
+9. Com o acesso **Submissor de declarações**, carregue em **Registar entrega** e, na janela de confirmação, em **Confirmar**.
+
+</StepByStep>
+
+## Resultado esperado
+
+- O relatório passa a **Submetida**, com **Entregue em** e **Entrega registada por**.
+- A lista mostra o ano, a versão, o **Estado dos anexos** (no exemplo, A:ok B:ok C:ok D:ok E:ok F:ok), o **Prazo de entrega** e o **Estado**.
+- Este procedimento não gera lançamentos contabilísticos.
+
+## Notas importantes
+
+- **Registar entrega não comunica nada.** Só regista o que já fez no portal. O fiscaldoo aceitou o registo a 04/11/2026, antes de abrir o prazo do exemplo, por isso a data certa é da sua responsabilidade.
+- **Dados de saúde e greves.** O Anexo D e o Anexo E só têm totais. Não escreva nomes nem motivos clínicos nestes campos.
+- **«Válido» no Anexo E pode querer dizer que não foi gerada nenhuma linha.** Sem as tabelas oficiais de greves do ano, o estado fica «Válido», com a frase que aparece em «Problemas frequentes». Confira as greves do ano antes de entregar.
+- **A obrigação.** <span className="fd-pending">Pendente de validação por contabilista certificado: a obrigação de entrega, a contagem do pessoal a 31 de outubro e o prazo por omissão de 16 de março a 15 de abril (Portaria n.º 55/2010).</span>
+
+## Depois de entregar: retificar
+
+Um relatório **Submetida** só tem o botão **Retificar**. Ao carregar, nasce a versão 2 no estado **Retificado**, com os botões **Gerar** e **Registar entrega** e o separador **Diferenças**, que mostra o que mudou (no exemplo, «Nenhuma diferença nas linhas dos anexos.»). A versão 1 fica na lista como **Submetida**. Corrija, carregue em **Gerar**, entregue a retificação no portal e registe a entrega.
+
+## Problemas frequentes
+
+- **Um anexo fica «Com problemas».** «*Nome do trabalhador* não tem tipo de contrato.» ou «Preencha a modalidade do serviço de segurança e saúde.» Preencha o **Tipo de contrato** na ficha ou o **Serviço de segurança e saúde (Anexo D)** e carregue em **Gerar**. Se o contrato já tiver um recibo validado, a ficha recusa a alteração: siga [Faltam dados obrigatórios do trabalhador](/troubleshooting/faltam-dados-do-trabalhador).
+- **Registar a entrega com um anexo por corrigir.** A janela **Operação inválida** diz: «O relatório não pode ser entregue: anexos sem conteúdo válido: D. O que aconteceu: [D] Preencha a modalidade do serviço de segurança e saúde. Como resolver: carregue em «Gerar» e corrija o que os anexos indicam.» Corrija o anexo e gere de novo.
+  ![Janela Operação inválida: o relatório não pode ser entregue porque o Anexo D tem problemas](/images/payroll-pt/relatorio-unico/02-anexos-com-problemas.png)
+- **Criar um segundo relatório do mesmo ano.** «A operação não pode ser concluída: Esta empresa já tem esta versão do relatório para esse ano.» Abra o que já existe na lista. Se já foi entregue, use **Retificar**.
+- **Não vejo o botão Registar entrega.** O seu utilizador não tem o acesso **Submissor de declarações**. Peça-o a quem administra o programa, ou peça a essa pessoa que registe a entrega.
+- **O Anexo E avisa que faltam tabelas.** «As tabelas oficiais de greves (51, 52, 53) de 2026 não estão carregadas, por isso não foi gerada nenhuma linha de greve. Importe-as em «Importar as tabelas de greves do Relatório Único».» Em **Salários › Preparar › O que há para fazer este mês?**, grupo **Outros registos e tabelas**, abra **Importar as tabelas de greves do Relatório Único** (só o administrador tem esta ligação), indique o **Ano de referência**, escolha o **Ficheiro (CSV: tabela;código;nome)** e carregue em **Importar**. Com um ficheiro de exemplo de 3 códigos, o **Resultado** foi «3 código(s) criado(s)». Depois, carregue em **Gerar**: o Anexo E ficou com 1 linha. <span className="fd-pending">Pendente de validação no ecrã: o ficheiro oficial das tabelas.</span>
+
+{/* Nota interna (DOCS-046, lote v22-A, 06/11/2026, master d83bdf7ae, base docs_demo_v22a_test): revista só a frase dos perfis, por clique com dois utilizadores criados para isso (só Administrador de Salários; Administrador de Salários e Submissor de declarações), sobre um relatório de 2026 criado no ecrã e deixado em Rascunho. «Retificar» deixou de dizer qual perfil o tem (não provado nesta ronda). O resto do artigo é o da auditoria v20-A (master 0289754a8) e não foi repercorrido. */}

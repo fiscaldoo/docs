@@ -1,0 +1,116 @@
+---
+id: premio-de-assiduidade-e-parentalidade
+slug: /payroll-pt/premio-de-assiduidade-e-parentalidade
+title: Como pagar um prémio de assiduidade que não perde com as licenças parentais
+sidebar_label: Prémio de assiduidade e parentalidade
+sidebar_position: 22
+description: Criar a rubrica do prémio de assiduidade com o valor, os dias tolerados e a parte perdida por dia, e ver no recibo que as licenças e faltas da parentalidade não o cortam.
+keywords: [prémio de assiduidade, premio de assiduidade, prémio por faltas, corte do prémio, dias de ausência tolerados, prémio perdido por dia, licença parental, assistência a filho, parentalidade, art. 35.º-A, art. 65.º, discriminação]
+doc_id: DOC-0443
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 8d5d6c606)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/configurar/rubricas-salariais, payroll-pt/processar-e-pagar/premios-e-pagamentos-variaveis, troubleshooting/salarios-e-pessoas/rubrica-salarial-mal-configurada]
+---
+
+## Para que serve?
+
+Um prémio de assiduidade pode baixar quando o trabalhador falta, mas nunca por causa das licenças, faltas e dispensas da parentalidade. No fiscaldoo, o prémio é uma rubrica com a origem **Prémio de assiduidade (CT art. 35.º-A)**: o recibo conta só as ausências que podem cortar o prémio e deixa de fora as protegidas pela lei. Não há opção para as contar.
+
+Como se cria uma rubrica qualquer está em [Como criar e configurar uma rubrica salarial](/payroll-pt/rubricas-salariais). Aqui ficam só os campos do prémio e o resultado no recibo.
+
+## Quando utilizar?
+
+- A empresa paga um prémio mensal a quem não falta e quer cortá-lo por faltas.
+- Uma trabalhadora esteve de licença parental e é preciso confirmar que o prémio não baixou por isso.
+
+## Onde encontrar?
+
+- **Salários › Configurar › Rubricas › Rubricas salariais** (a rubrica e a versão do prémio).
+- **Salários › Processar › Recibos de vencimento** (o prémio no recibo).
+
+## Antes de começar
+
+- A rubrica cria-a quem tem o acesso **Administrador de Salários**: o menu **Configurar** de Salários só aparece com ele. Com o perfil **Processador de salários** não aparece. Provado com um utilizador só com esse acesso e com outro só com esse perfil.
+- O recibo calcula-o o perfil **Processador de salários**. Provado com um utilizador criado só com esse perfil.
+- As ausências do mês estão registadas e aprovadas (ver [Como registar uma ausência](/people/registar-uma-ausencia)).
+- Decida com o contabilista certificado o valor do prémio, os dias tolerados e a parte perdida por dia: vêm da empresa ou do contrato coletivo, o fiscaldoo não tem valores próprios.
+- Feito a 8 de novembro de 2026 na `Empresa Demonstração, Lda`, no recibo de novembro de 2026 de Eva Cristina Rocha, que teve **Assistência a filho (art. 49.º)** de 2 a 6/11, **Falta injustificada** de 10 a 12/11 e **Licença parental complementar** de 16 a 20/11.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Com o acesso **Administrador de Salários**, abra **Salários › Configurar › Rubricas › Rubricas salariais** e carregue em **Novo**. Escreva o **Nome**, por exemplo `Prémio de assiduidade`, e o **Código**, por exemplo `PASSID`. Guarde.
+2. Na lista de versões, carregue em **Adicionar uma linha**. Na janela **Criar Versões**, escreva a **Designação da versão** (`2026.11`) e o **Válido desde** (`01/11/2026`), e escolha o **Tipo de fonte** (**Regra da empresa**), o **Tipo** (**Abono**) e a **Categoria** (**Subsídios**).
+3. Em **Origem da quantidade**, escolha **Prémio de assiduidade (CT art. 35.º-A)**.
+4. Preencha os três campos do prémio:
+   - **Valor fixo:** o prémio inteiro do mês, por exemplo `100`.
+   - **Dias de ausência tolerados:** os dias do mês que não cortam nada, por exemplo `2`.
+   - **Prémio perdido por dia (%):** a parte do prémio perdida por cada dia acima dos tolerados, por exemplo `25`.
+   Deixe **Percentagem** a zero e **Natureza do prémio** vazia.
+   ![Versão do prémio de assiduidade: Valor fixo 100, Percentagem 0, Dias de ausência tolerados 2 e Prémio perdido por dia 25 %](/images/payroll-pt/premio-de-assiduidade-e-parentalidade/01-valores-do-premio.png)
+5. Escolha o **Imposto sobre o rendimento (IRS)** e a **Segurança Social** que o contabilista certificado indicou e carregue em **Guardar & Fechar**.
+6. **Guarde a rubrica.** A versão só fica gravada quando a rubrica é guardada.
+7. Com o perfil **Processador de salários**, abra o recibo do mês em **Salários › Processar › Recibos de vencimento**, carregue em **Adicionar uma linha**, escolha `Prémio de assiduidade` e guarde.
+8. Carregue em **Calcular**. A linha do prémio traz o valor; **Como foi calculado?**, na linha, diz o prémio completo, os dias de ausência que contam, os tolerados, os que passam a tolerância e a parte perdida, os dias protegidos por lei, a versão em vigor e a fonte legal.
+   ![Janela Como foi calculado? do Prémio de assiduidade: 75,00 €, prémio completo 100,00 €, 3 dias que contam, 2 tolerados, 1 acima da tolerância, 25 % perdidos, 10 dias protegidos por lei, versão 2026.11 desde 01/11/2026, fonte Código do Trabalho art. 35.º-A/1 e 2 e art. 65.º](/images/payroll-pt/premio-de-assiduidade-e-parentalidade/02-como-foi-calculado.png)
+
+</StepByStep>
+
+### Como o fiscaldoo chega ao valor
+
+Prémio = valor fixo × (100 % − dias acima dos tolerados × prémio perdido por dia).
+
+No exemplo, Eva Cristina Rocha esteve 13 dias ausente em novembro, mas só os 3 dias de **Falta injustificada** contam. Os 5 dias de **Assistência a filho** e os 5 de **Licença parental complementar** são protegidos e ficam de fora:
+
+| Dias que contam | Tolerados | Acima | Perdido | Prémio |
+|---|---|---|---|---|
+| 3 | 2 | 1 | 1 × 25 % = 25 % | 100,00 € × 75 % = **75,00 €** |
+
+As ausências que nunca cortam o prémio são as do art. 65.º do Código do Trabalho, por exemplo as licenças parentais em qualquer modalidade (inicial, exclusiva do pai, complementar), a licença por adoção, a licença por risco clínico na gravidez, as faltas para assistência a filho ou a neto, as dispensas para amamentação ou aleitação, para consultas pré-natais ou de procriação medicamente assistida, e o luto gestacional.
+
+## O que diz a lei
+
+Código do Trabalho (Lei n.º 7/2009), 25.ª versão (Lei n.º 32/2025, de 27 de março), lido no portal da Procuradoria-Geral Distrital de Lisboa a 8 de novembro de 2026:
+
+- **Art. 35.º-A, n.º 1 e 2:** é proibida a discriminação pelo exercício dos direitos de maternidade e paternidade, incluindo as «discriminações remuneratórias relacionadas com a atribuição de prémios de assiduidade e produtividade». Artigo aditado pela Lei n.º 90/2019, de 4 de setembro.
+- **Art. 65.º, n.º 1:** «Não determinam perda de quaisquer direitos, salvo quanto à retribuição, e são consideradas como prestação efectiva de trabalho» as ausências por licença parental em qualquer das modalidades (alínea d), licença parental complementar (alínea f), falta para assistência a filho (alínea g), entre outras.
+- **Art. 65.º, n.º 2:** a falta por luto gestacional e as dispensas para consulta de PMA ou pré-natal, amamentação ou aleitação também «não determinam a perda de quaisquer direitos e são consideradas como prestação efetiva de trabalho».
+
+Por isso, para o prémio, estes dias contam como dias trabalhados. A proteção é da lei: nem o contrato nem o contrato coletivo a podem afastar.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o tratamento fiscal e os códigos das declarações do prémio, e se um contrato coletivo pode cortar o prémio por ausências que o art. 65.º não lista.</span>
+
+## Resultado esperado
+
+- A rubrica tem a versão com a origem **Prémio de assiduidade (CT art. 35.º-A)** e os três valores.
+- O recibo traz a linha do prémio já com o corte das ausências que contam.
+
+## Notas importantes
+
+- **O prémio não baixa, mas a retribuição pode baixar.** O n.º 1 do art. 65.º protege os direitos «salvo quanto à retribuição»; as ausências do n.º 2 (luto gestacional, consultas pré-natais ou de PMA, amamentação e aleitação) não perdem nem a retribuição. No recibo do exemplo, a linha **Retribuição perdida por faltas** tem 104 horas (os 13 dias de 8 horas), incluindo os dias protegidos. <span className="fd-pending">Pendente de validação por contabilista certificado: a perda de retribuição nos dias de assistência a filho e de licença parental complementar.</span>
+- **«Como foi calculado?» dá os dias só em números.** A janela diz quantos dias contaram, quantos foram tolerados e quantos ficaram protegidos por lei, mas não o tipo de cada ausência. Para ver os tipos, abra a lista de ausências do mês.
+  {/* Nota interna (auditoria docs-aud-v23am, 08/11/2026, master 8d5d6c606, docs_demo_v23am_test): a nota antiga («não mostra os dias») ficou falsa com o RH-035 (comboio 173). Visto por clique com um utilizador só com o perfil Processador de salários, no recibo de novembro de 2026 de Eva Cristina Rocha (rascunho criado na cópia, com as 3 ausências do exemplo criadas e aprovadas por RPC como admin): «Dias de ausência que contam: 3. Dias tolerados sem perda: 2. Dias acima da tolerância: 1, cada um tira 25 % do prémio, pelo que se perdem 25 %. 10 dia(s) de ausência estão protegidos por lei (CT art. 35.º-A/2 e art. 65.º) e não reduzem o prémio.», versão 2026.11 desde 01/11/2026. A janela já não diz o método. Captura 02 refeita. */}
+- **Uma versão já começada não se edita.** Para mudar os valores do prémio, feche a versão com **Válido até** e crie outra (ver [Como criar e configurar uma rubrica salarial](/payroll-pt/rubricas-salariais)).
+
+## Problemas frequentes
+
+### «A rubrica «PASSID» não tem nenhuma versão em vigor em 30/11/2026. …»
+
+- **Causa:** a versão não foi gravada (carregou em **Guardar & Fechar** mas não guardou a rubrica) ou começa depois do fim do recibo. A mensagem completa: «A rubrica «PASSID» não tem nenhuma versão em vigor em 30/11/2026. Adicione uma versão que comece nessa data ou antes (ou prolongue o fim da anterior).»
+- **O que fazer:** abra a rubrica, confirme a versão na lista e guarde.
+
+### «O código «PASSID» já é usado pela rubrica «Prémio de assiduidade». Escolha outro código.»
+
+- **Causa:** já existe uma rubrica com esse código.
+- **O que fazer:** abra a rubrica que já existe e acrescente-lhe uma versão, em vez de criar outra.
+
+### O prémio, a tolerância ou a parte perdida não grava
+
+As mensagens da versão do prémio (sem **Valor fixo**, tolerância ou parte perdida fora dos limites, **Natureza do prémio** preenchida) estão em [Não consigo guardar uma rubrica salarial](/troubleshooting/rubrica-salarial-mal-configurada).
+
+{/* Nota interna (lote v23-AD, #4052 DOCS-069, guia Salários/premio-de-assiduidade-e-licencas-parentais.md da pasta congelada). master 97b34fac3, docs_demo_v23ad_test, porta 8484. Utilizadores criados por RPC: ad.admsal só com o grupo Administrador de Salários (id 112, sem Perfil) e ad.proc só com o Perfil Processador de salários (sem Configurar na barra, conferido no navegador). Ausências de Eva Cristina Rocha criadas e aprovadas por RPC como ad.rh (Gestor de RH): Assistência a filho 2–6/11 (id 12, com Comunicada em e data de nascimento; sem a comunicação ficava «Falta injustificada», art. 253.º), Falta injustificada 10–12/11 (id 11), Licença parental complementar 16–20/11 (id 13); as ids 9 e 10 ficaram Recusadas (a falta de 9 a 12/11 pedia «Horas perdidas por dia de descanso ou feriado» na configuração, art. 256.º/3). Por clique: rubrica PASSID e versão 2026.11 (a 1.ª tentativa não guardou a rubrica: daí a mensagem da versão em falta, vista no recibo; a 2.ª deu «O código «PASSID» já é usado…»); recibo de novembro de Eva (id 50, Rascunho) com a linha, Calcular, 75,00 €, Como foi calculado?. Um 2.º rascunho igual (id 49), criado por mim, foi apagado. Os passos com os dias contados e protegidos que o motor calcula não chegam ao ecrã: defeito no LOTE_V23-AD. */}

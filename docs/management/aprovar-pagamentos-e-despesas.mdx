@@ -1,0 +1,123 @@
+---
+id: aprovar-pagamentos-e-despesas
+slug: /management/aprovar-pagamentos-e-despesas
+title: Como aprovar pagamentos a fornecedores e despesas
+sidebar_label: Aprovar pagamentos e despesas
+sidebar_position: 2
+description: Aprovar ou recusar as despesas dos trabalhadores e aprovar as notas de pagamento a fornecedores que a tesouraria já conferiu, com o perfil Gerência.
+keywords: [aprovar despesas, despesas por aprovar, recusar despesa, aprovar pagamento, pagamentos a fornecedores, nota de pagamento, notas de pagamento, pronto a pagar, aprovação, aprovacao, segundo nível de aprovação, segundo nivel de aprovacao, 2.º nível, gerência, gerencia, direção, direcao, reembolso de despesas]
+doc_id: DOC-0271
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 54a9f5f03)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [management/painel-da-direcao, accounting-pt/compras/fatura-de-fornecedor]
+---
+
+## Para que serve?
+
+A gerência decide duas coisas antes de o dinheiro sair: as despesas que os trabalhadores pedem para reembolsar e os pagamentos a fornecedores que a tesouraria preparou. Uma despesa aprovada segue para a contabilidade; uma nota de pagamento aprovada fica **Pronto a pagar** e a tesouraria pode emiti-la.
+
+## Quando utilizar?
+
+- Um trabalhador submeteu uma despesa (deslocação, refeição, estacionamento) e espera o reembolso.
+- A tesouraria preparou e conferiu uma nota de pagamento a um fornecedor e precisa da aprovação da gerência.
+- Uma despesa está acima do limite da empresa e precisa de dois níveis de aprovação.
+
+## Onde encontrar?
+
+- Despesas: **Direção › Aprovar › Despesas por aprovar**.
+- Pagamentos: **Direção › Aprovar › Pagamentos a fornecedores**.
+
+Num ecrã mais estreito (por exemplo, um portátil de 1366 px de largura), **Aprovar** não aparece na barra da **Direção**: carregue no botão **+**, no fim da barra, e escolha aí **Despesas por aprovar** ou **Pagamentos a fornecedores**.
+
+## Antes de começar
+
+- O seu perfil é **Gerência**. É o perfil que vê a aplicação **Direção** e que tem o botão **Aprovar (pronto a pagar)** nas notas de pagamento.
+- A despesa está **Submetido**. O produto só deixa submeter uma despesa com o documento anexado, o número do documento e, se tiver IVA, o fornecedor com NIF.
+- **Hoje, o trabalhador não consegue submeter a despesa que criou:** o fiscaldoo dá um erro de acesso e a despesa fica em **Rascunho**. Até o erro ser corrigido, a gerência pode submetê-la por ele: na lista de **Despesas por aprovar**, sem filtro, abra a despesa em **Rascunho**, escolha o **Artigo**, o **Documento de suporte** e o **Número do documento**, anexe o documento (botão **Anexar ficheiros**, na conversa da despesa) e carregue em **Submeter**. Como é a gerência que aprova, a despesa abaixo do limite passa logo de **Rascunho** a **Aprovado**, sem passar por **Submetido**, por isso confira tudo antes de carregar. Confira também o que o **Artigo** preenche: no teste, o artigo **[EXP_GEN] Despesas** trouxe o IVA de 23%, um fornecedor e a conta 311 Mercadorias, que não serviam a um estacionamento.
+- A nota de pagamento está **Conferido**: a tesouraria criou-a a partir das faturas do fornecedor e conferiu-a.
+- Se a empresa usa dois níveis, o administrador definiu o limite em **Definições › Despesas › 2.º nível de aprovação acima de**. Com zero, há uma só aprovação.
+
+  ![Opção 2.º nível de aprovação acima de, com a explicação e o valor 100,00 €](/images/management/aprovar-pagamentos-e-despesas/01-limite-do-segundo-nivel.png)
+
+## Como utilizar
+
+### Aprovar ou recusar uma despesa
+
+<StepByStep>
+
+1. Abra **Direção › Aprovar › Despesas por aprovar**. A página abre em gráfico (**Análise de despesas**).
+2. Carregue no botão **Lista**, no canto do ecrã.
+3. Carregue na seta da pesquisa e, em **Filtros**, escolha **A aguardar aprovação**.
+   ![Lista de despesas com o filtro A aguardar aprovação e a despesa Deslocação a cliente em Lisboa de 142,00 €, no estado Submetido](/images/management/aprovar-pagamentos-e-despesas/02-despesas-a-aguardar-aprovacao.png)
+4. Abra a despesa. Confira o **Total**, os **Impostos**, o **Fornecedor** e o documento anexado.
+5. Carregue em **Aprovar**.
+   ![Despesa no estado Submetido com os botões Aprovar, Recusar e Reiniciar e o aviso Um despesa com o mesmo recibo já existe](/images/management/aprovar-pagamentos-e-despesas/03-despesa-submetida.png)
+   No exemplo, o aviso «Um despesa com o mesmo recibo já existe.» não quer dizer que a despesa está repetida: os documentos de exemplo anexados às despesas estão vazios, e o fiscaldoo dá ficheiros iguais (incluindo vazios) como o mesmo recibo. A ligação **despesa** do aviso mostra duas despesas que nada têm a ver com esta (24,60 € e 38,50 €). Com documentos verdadeiros, o aviso só aparece quando outra despesa tem o mesmo ficheiro (ver «Problemas frequentes»).
+6. Para recusar, carregue em **Recusar**, escreva o **Motivo** na janela **Recusar despesa** e carregue em **Recusar**.
+
+</StepByStep>
+
+Se a despesa está acima do limite, **Aprovar** dá só o 1.º nível. A conversa da despesa regista-o e a despesa continua **Submetido** até um administrador de Despesas dar o 2.º nível:
+
+![Mensagem 1.º nível de aprovação dado por Gerência, com o total de 142,00 € acima do limite de 100,00 €](/images/management/aprovar-pagamentos-e-despesas/04-primeiro-nivel-dado.png)
+
+### Aprovar uma nota de pagamento
+
+<StepByStep>
+
+1. Abra **Direção › Aprovar › Pagamentos a fornecedores**. A lista mostra todos os pagamentos a sair, incluindo os já pagos.
+2. Carregue na seta da pesquisa e, em **Filtros**, escolha **Rascunho**.
+   ![Lista Pagamento a Fornecedor com o filtro Rascunho e o pagamento de 600,00 € a Rui Matos](/images/management/aprovar-pagamentos-e-despesas/05-pagamentos-em-rascunho.png)
+3. Abra o pagamento e, no separador **Nota de pagamento**, confira o **Estado de aprovação** (**Conferido**) e as faturas que a nota paga.
+4. Carregue em **Aprovar (pronto a pagar)**.
+   ![Nota de pagamento em Rascunho com o botão Aprovar (pronto a pagar) assinalado](/images/management/aprovar-pagamentos-e-despesas/06-nota-de-pagamento-verificada.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- Despesa abaixo do limite: passa a **Aprovado**. Acima do limite: a mensagem do 1.º nível na conversa e, depois do 2.º nível, **Aprovado**. Recusada: **Recusado**. No exemplo, a despesa «Almoço com cliente (demonstração)», de 38,50 € (abaixo do limite de 100,00 €), ficou **Aprovado** com um só **Aprovar** da gerência.
+- Aprovar não cria lançamentos: a despesa aprovada é lançada depois (estado **Publicada**) e a nota só lança o pagamento quando a tesouraria a emite.
+- Nota de pagamento: o separador **Nota de pagamento** mostra **Pronto a pagar**, **Aprovado por** e **Aprovado em**. Ainda não há pagamento lançado: a nota diz «Ao emiti-la, o pagamento é lançado e reconciliado com as faturas.», e quem a emite é a tesouraria.
+
+![Separador Nota de pagamento com a nota NLP/00001, o estado Pronto a pagar, aprovada pela Gerência, e a fatura FTF/2026/00044 de 600,00 €](/images/management/aprovar-pagamentos-e-despesas/07-nota-pronta-a-pagar.png)
+
+## Notas importantes
+
+- A gerência não bloqueia uma nota de pagamento: o botão **Bloquear** é só da tesouraria. Para travar um pagamento, peça à tesouraria que bloqueie a nota com o motivo. Não use **Cancelar**: aparece, mas recusa (ver «Problemas frequentes»).
+- O filtro **Rascunho** de **Pagamentos a fornecedores** mostra juntas as notas ainda por aprovar (**Conferido**) e as já aprovadas (**Pronto a pagar**). Abra cada pagamento e veja o **Estado de aprovação** no separador **Nota de pagamento** antes de aprovar.
+- Quem deu o 1.º nível de uma despesa já não a pode recusar nem dar o 2.º nível. Se decidir recusar depois do 1.º nível, peça ao administrador de Despesas.
+- A nota de pagamento é um documento interno: «Documento interno sem valor fiscal: sem série fiscal e sem ATCUD.»
+- O mesmo menu **Aprovar** tem **Pedidos de ausência**, que não fazem parte deste artigo.
+
+{/* Nota interna (correção R2, ND2-R01, 29/10/2026, 8095, Gerência): o aviso do recibo repetido do exemplo vem dos anexos vazios da demonstração (P-V2-11: recibo-sintetico-1.png, recibo-sintetico-2.png e talao-estacionamento.png com 0 bytes; _compute_same_receipt_expense_ids agrupa por checksum). Na despesa de 142,00 €, a ligação «despesa» abriu «Despesas com um recibo semelhante ao de Deslocação a cliente em Lisboa (demonstração)» com Estacionamento em cliente 24,60 € e Almoço com cliente 38,50 €. Quando o gerador da demonstração tiver recibos diferentes e não vazios, refazer a captura 03 sem o aviso e tirar a frase do passo 5. «Um despesa» é erro de concordância da tradução (P-V2-11). Histórico: correção V2, AUDITORIA_V2_B2_D ND2-01 a ND2-03: o trabalhador não submete despesas (defeito D7 alargado do LOTE_D, erro de acesso ao campo l10n_pt_nif_to_fix; o Gestor abre o cartão): quando entrar em master, tirar o aviso de «Antes de começar». Provado a 29/10 na 8095: a Gerência submeteu por clique a despesa de 24,60 € do Hugo (anexo sintético) e ela passou de Rascunho a Aprovado num só passo; depois foi reiniciada (Rascunho) e limpa (sem IVA, sem fornecedor, conta 6251). Aprovação de um só nível: 38,50 € Aprovado (auditoria V2, d_despesa_um_nivel_aprovada.png). Aprovar fica no botão + a 1366 px (visto também a 1600 e 1920 px, onde aparece na barra). «Despesas por aprovar» abre o gráfico de todas as despesas, sem filtro (defeito V2D-03); a Gerência não tem «Bloquear» e vê «Cancelar» que recusa (V2D-04); recusar depois do 1.º nível dá «You cannot refuse:» (V2D-05). Rever os passos 1 a 3 e as notas quando os defeitos entrarem em master. */}
+
+## Problemas frequentes
+
+### Aparece «Um despesa com o mesmo recibo já existe.»
+
+- **Causa:** outra despesa tem anexado um ficheiro igual a um desta. O fiscaldoo compara o conteúdo dos ficheiros, não o nome: dois ficheiros vazios também contam como o mesmo recibo, e é por isso que o aviso aparece nas despesas do exemplo.
+- **O que fazer:** carregue na ligação **despesa** do aviso. Abre a lista «Despesas com um recibo semelhante ao de …», com as outras despesas. Confirme se alguma é a mesma despesa submetida duas vezes: se for, recuse uma delas. Se forem despesas diferentes, abra o documento anexado a cada uma e confirme que é o recibo certo e não um ficheiro vazio.
+
+### Recusar depois do 1.º nível dá «Operação inválida»
+
+- **Mensagem:** «You cannot refuse: *despesa*: deu o primeiro nível de aprovação. O segundo nível de uma despesa acima do limite tem de ser dado por outro administrador de Despesas.»
+- **O que fazer:** peça a um administrador de Despesas que recuse ou aprove o 2.º nível.
+
+### Recusar sem motivo
+
+- **Mensagem:** «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **O que fazer:** escreva o **Motivo** na janela e carregue de novo em **Recusar**.
+
+### Cancelar uma nota de pagamento dá «Sem acesso»
+
+- **Mensagem:** «Não tem permissão para alterar «Pagamento». O seu perfil só consulta «Pagamento»: não cria, altera nem elimina nada aí. Esta área abre com o perfil «Administrativo». Peça ao administrador para lhe atribuir o perfil de que precisa.» {/* Nota interna (lote v23-M, master dbbb5ac5c, docs_demo_v23m_test): provocado no ecrã com um utilizador criado só com o perfil Gerência, num pagamento a fornecedor em Rascunho (600,00 €, criado pela integração), botão Cancelar. */}
+- **O que fazer:** a gerência aprova ou deixa a nota por aprovar. Para a travar, peça à tesouraria que a bloqueie.
+
+### As listas estão vazias
+
+Numa empresa sem despesas, **Despesas por aprovar** mostra «Sem dados!». Confirme a empresa ativa na barra de cima: cada empresa tem as suas despesas e os seus pagamentos.

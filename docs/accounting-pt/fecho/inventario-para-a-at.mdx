@@ -1,0 +1,76 @@
+---
+id: inventario-para-a-at
+slug: /accounting-pt/inventario-para-a-at
+title: Como comunicar o inventário anual à AT
+sidebar_label: Inventário para a AT
+sidebar_position: 3
+description: Gerar o ficheiro do inventário anual das existências no fim do exercício, entregá-lo no Portal das Finanças e registar na ficha a data e a referência do comprovativo.
+keywords: [inventário para a AT, inventário anual, ficheiro de inventário, comunicação de inventários, existências, stocks no fim do ano, e-Fatura inventários, enviar ficheiro, valorização das existências, prazo de comunicação do inventário, comprovativo do Portal das Finanças]
+doc_id: DOC-0138
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/fecho/fechar-o-mes]
+---
+
+{/* Nota interna (v3-A1, DOC-0138, risco alto): validado na base docs_demo_v3a1_test (8175) com o Contabilista. O ecrã NÃO está no menu «Fechar › Fecho do exercício» que o mapeamento indica (nem em nenhum menu de nenhum perfil): abre-se em «Fechar › Contabilidade do mês › Fechar o mês › Listas de apoio › Inventário para a AT» (defeito V3A1-06: o menu do inventário não existe; o produto só o liga a partir do painel «O que falta para fechar?»). A demonstração não tem stock: o ficheiro de 2025 saiu com 0 produtos, 0,00 € e a nota «Sem existências no fim do período», versão do ficheiro «1_02 - Sem valorização» escolhida pela regra «inventory_valuation_required_permanent» de 01/01/2019. Não se testou um ficheiro com produtos, nem a versão com valorização. Referência de comprovativo inventada: COMP-INV-2025-0001. O botão «Gerar de novo» continua visível depois de «Registado como submetido». */}
+
+## Para que serve?
+
+Os sujeitos passivos com existências comunicam à Autoridade Tributária o inventário no fim do exercício. O fiscaldoo prepara o **ficheiro** do inventário a partir das existências da empresa, escolhe a versão do ficheiro consoante as regras de valorização, e guarda na ficha a data de entrega e a referência do comprovativo.
+
+**O fiscaldoo não envia nada à AT**: o ficheiro entrega-se no Portal das Finanças. O ecrã diz-o: «Isto só gera o ficheiro. Nada é enviado à Autoridade Tributária: carregue-o no Portal das Finanças > e-Fatura > Inventários > Enviar Ficheiro.»
+
+## Quando utilizar?
+
+- Depois de fechado o exercício, para o inventário com data de referência a 31 de dezembro, antes do **Prazo de comunicação** que a ficha mostra (02/02/2026 para o exercício de 2025: o dia 31 de janeiro de 2026 é um sábado, e a ficha passa o prazo para o dia útil seguinte). <span className="fd-pending">Pendente de validação por contabilista certificado: obrigação de comunicar o inventário, prazo e dispensa para quem não tem existências.</span>
+- Para voltar a gerar o ficheiro se corrigiu o stock depois de o gerar: **Gerar de novo** cria uma ficha nova (ver as notas).
+- Não serve para o relatório interno das existências: é só o ficheiro para o Portal.
+
+## Onde encontrar?
+
+- **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**, e na secção **Listas de apoio** a linha **Inventário para a AT**. Não está em nenhum menu próprio: abre-se sempre por este painel. {/* Nota interna (v3-A1, V3A1-06): o mapeamento dá «Fechar › Fecho do exercício › Inventário para a AT», que não existe. */}
+
+## Antes de começar
+
+- O perfil é **Contabilista** (ou **Contabilista certificado**).
+- O exercício está fechado e as existências estão atualizadas; o NIF da empresa está preenchido (vai no nome do ficheiro).
+- Um sujeito passivo sem existências também gera o ficheiro: sai vazio, como no exemplo.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Listas de apoio**, abra **Inventário para a AT** e carregue em **Novo**. O **Exercício** abre no ano anterior (2025) e o **Início do período** (01/01/2025), a **Data de referência** (31/12/2025) e o **Prazo de comunicação** (02/02/2026) calculam-se sozinhos. {/* Nota interna (auditoria v23-D, master 7a44f0c73, docs_demo_v23d_test): o PAY-126 passou para o dia útil seguinte os prazos que acabam num fim de semana; capturas 02, 04 e 05 refeitas por clique no mesmo inventário, com um utilizador só com o perfil Contabilista. */}
+   ![Ficha nova do inventário de 2025 com o botão Gerar ficheiro assinalado](/images/accounting-pt/inventario-para-a-at/01-inventario-novo.png)
+2. Carregue em **Gerar ficheiro**. A ficha fica **Gerado** e mostra o **Ficheiro** (`Inventario_599999993_2025_1_02.xml`), o **SHA-256**, o número de **Produtos**, o **Valor total** e a versão: no exemplo, **1_02 - Sem valorização**, escolhida pela regra da ficha (**Valorização obrigatória**, **Regra aplicada**) e registada na conversa. A demonstração não tem existências: **Produtos** 0, **Valor total** 0,00 € e **Sem existências no fim do período**.
+   ![Inventário gerado com o ficheiro, o SHA-256, zero produtos e a versão sem valorização](/images/accounting-pt/inventario-para-a-at/02-inventario-gerado.png)
+3. Entregue o ficheiro no Portal das Finanças, em **e-Fatura › Inventários › Enviar Ficheiro**.
+4. Na ficha, preencha **Submetido no Portal em** (a data da entrega) e a **Referência do comprovativo do Portal**, e carregue em **Registar como submetido no Portal**. A ficha passa a **Registado como submetido**.
+   ![Ficha com a data de submissão e a referência do comprovativo preenchidas](/images/accounting-pt/inventario-para-a-at/04-registar-dados.png)
+   ![Inventário em Registado como submetido](/images/accounting-pt/inventario-para-a-at/05-inventario-submetido.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- A ficha fica **Registado como submetido**, com a data e a referência do comprovativo.
+- Gerar o ficheiro não faz lançamentos contabilísticos nem comunica nada à AT.
+- A conversa da ficha regista quem gerou o ficheiro, quando, o número de produtos, o total, o SHA-256 e a regra aplicada.
+
+## Notas importantes
+
+- **Só a data de entrega é obrigatória para registar.** A referência do comprovativo é opcional no ecrã, mas guarde-a: é a prova da entrega.
+- **Gerar de novo não substitui o ficheiro entregue.** Copia os parâmetros da ficha e cria **outra ficha** com o ficheiro novo; a anterior fica como estava, com o estado e o comprovativo (no exemplo, a ficha 1, **Registado como submetido**, manteve-se e surgiu a ficha 2, **Gerado**, sem submissão). O botão continua visível depois de registado como submetido. O risco é ficar com duas fichas para o mesmo período: use a nova só se corrigiu o stock, entregue o ficheiro novo no Portal e registe a entrega nessa ficha; confira sempre qual é a ficha entregue. {/* Nota interna (v3a1cor, V3A1-13, NV3D-04): confirmado pela auditoria no ecrã; o relatório do lote dizia que podia substituir o ficheiro, o que não acontece. */}
+- **O ficheiro depende da valorização.** A versão do ficheiro (com ou sem valorização) é escolhida pelo fiscaldoo. <span className="fd-pending">Pendente de validação por contabilista certificado: versão e valorização exigidas ao sujeito passivo; o exemplo só tem o caso sem existências.</span>
+
+## Problemas frequentes
+
+### «Indique a data em que submeteu o ficheiro no Portal das Finanças»
+
+- **Sintoma:** ao carregar em **Registar como submetido no Portal** sem a data, «Operação inválida: Indique a data em que submeteu o ficheiro no Portal das Finanças (e, se a tiver, a referência do comprovativo).»
+- **O que fazer:** preencha **Submetido no Portal em** e volte a carregar.
+   ![Aviso a pedir a data em que o ficheiro foi submetido no Portal](/images/accounting-pt/inventario-para-a-at/03-registar-sem-data.png)

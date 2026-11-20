@@ -1,0 +1,82 @@
+---
+id: pedidos-dos-trabalhadores
+slug: /people/pedidos-dos-trabalhadores
+title: Como tratar os pedidos dos trabalhadores
+sidebar_label: Tratar os pedidos dos trabalhadores
+sidebar_position: 4
+description: "Aprovar ou recusar os pedidos de mudança de IBAN, morada e contacto de emergência feitos pelos trabalhadores em O meu espaço."
+keywords: [pedidos dos trabalhadores, mudar iban, mudar morada, contacto de emergência, os meus dados, aprovar pedido, recusar pedido, alteração de dados pessoais]
+doc_id: DOC-0244
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c2bf63c34)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/o-meu-espaco/pedir-ferias]
+---
+
+## Para que serve?
+
+O trabalhador pede em **O meu espaço › Os meus dados** para mudar o IBAN, a morada ou o contacto de emergência. A ficha só muda quando a pessoa certa aprova o pedido. Este artigo mostra como se decide.
+
+## Quando utilizar?
+
+- Um trabalhador avisou que mudou de casa ou de conta bancária.
+- Quer ver o que ficou por decidir e o que já foi decidido.
+
+## Onde encontrar?
+
+**Pessoas › Trabalhadores › Pedidos dos trabalhadores**. O trabalhador faz o pedido em **O meu espaço › Os meus dados**.
+
+## Antes de começar
+
+- O perfil que decide depende do que muda, e cada perfil só vê os pedidos que pode decidir:
+  - **Gestor de RH**: morada e contacto de emergência;
+  - **Processador de salários**: IBAN. O Gestor de RH não vê os pedidos de IBAN.
+- O trabalhador tem a ficha ligada ao seu utilizador.
+
+## Como utilizar
+
+<StepByStep>
+
+1. O trabalhador abre **O meu espaço › Os meus dados**, carrega em **Novo**, escolhe em **O que muda** uma de três opções (**IBAN**, **Morada** ou **Contacto de emergência**) e preenche o que aparece: o **Novo IBAN**; a **Rua**, o **Código postal** e a **Localidade**; ou o **Contacto de emergência** e o **Telefone de emergência**. Guarda. O pedido fica **A aguardar aprovação**.
+2. Quem decide abre **Pessoas › Trabalhadores › Pedidos dos trabalhadores**. A lista abre com o filtro **Por decidir**.
+3. Abra o pedido e carregue em **Aprovar** ou em **Recusar**. O estado passa a **Aprovado** ou **Recusado** e preenche-se **Decidido em**. A ficha do trabalhador só muda com **Aprovar**.
+
+</StepByStep>
+
+![Lista Pedidos dos trabalhadores com o filtro Por decidir e um pedido de morada a aguardar aprovação](/images/people/pedidos-dos-trabalhadores/01-lista-por-decidir.png)
+
+![Pedido de morada do trabalhador com os botões Aprovar e Recusar](/images/people/pedidos-dos-trabalhadores/02-pedido-de-morada.png)
+
+## Resultado esperado
+
+- **Aprovar:** a ficha passa a ter o valor novo. Numa morada e num IBAN aprovados, o histórico da ficha regista a mudança com o nome de quem aprovou (por exemplo, o IBAN antigo substituído pelo novo, com o número mascarado).
+- **Recusar:** a ficha fica como estava. Não há campo para o motivo: se quiser explicar, fale com o trabalhador.
+- O trabalhador vê o resultado na lista de **Os meus dados**, com o estado e **Decidido em**.
+
+![Lista Os meus dados do trabalhador com um pedido Recusado e dois Aprovados, cada um com a data da decisão](/images/people/pedidos-dos-trabalhadores/03-decisoes-do-trabalhador.png)
+
+## Notas importantes
+
+- **Os pedidos fazem-se em O meu espaço.** O botão **Novo** da lista de quem decide abre um pedido em branco, que não é o caminho previsto: use-o só se o trabalhador não puder fazer o pedido.
+- **Depois de decidido, o pedido já não tem botões.** Uma decisão errada corrige-se com um pedido novo do trabalhador.
+- Quando o pedido está por decidir, o ecrã diz «Nada muda na sua ficha enquanto o RH não aprovar este pedido» (nos pedidos de IBAN, «enquanto os Salários não aprovarem»).
+- Esta lista não substitui o artigo [Pedir ao trabalhador que confirme um documento](/people/enviar-documentos-para-confirmar): aquela é para documentos que o RH envia.
+
+## Problemas frequentes
+
+### Aparece «A nova morada está incompleta porque a rua ou a localidade está vazia»
+
+É o trabalhador que vê esta mensagem ao guardar o pedido de morada sem **Rua** ou **Localidade**. Preencha as duas e grave outra vez.
+
+### Aparece «O IBAN não é válido porque não segue o formato internacional»
+
+Ao guardar um IBAN sem o país ou com poucos algarismos (por exemplo, `PT50 1234`), o ecrã pede o formato completo, como `PT50 0002 0123 1234 5678 9015 4`. Corrija e grave outra vez.
+
+### Não vejo o pedido de IBAN
+
+O pedido existe, mas só o perfil **Processador de salários** o vê. Peça a quem tem esse perfil.
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Salários passou a Processador de salários e o Recursos Humanos a Gestor de RH; menus lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); um pedido de morada e um de IBAN criados por RPC pelo trabalhador da demonstração na cópia: o Processador de salários só vê o de IBAN, o Gestor de RH só o de morada */}

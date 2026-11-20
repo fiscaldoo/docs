@@ -1,0 +1,138 @@
+---
+id: movimento-nao-reconcilia
+slug: /troubleshooting/movimento-nao-reconcilia
+title: Não consigo reconciliar um movimento bancário
+sidebar_label: Movimento não reconcilia
+description: O que quer dizer cada recusa do ecrã de reconciliação bancária (sem correspondência, dois documentos iguais, valor diferente, abate sem motivo, pagamento recusado) e o que fazer em cada caso.
+keywords: [não consigo reconciliar, nao consigo reconciliar, movimento não reconcilia, movimento nao reconcilia, reconciliação bancária, reconciliacao bancaria, valor diferente, diferença fora da tolerância, diferenca fora da tolerancia, correspondência plausível, correspondencia plausivel, reconciliar num clique, abate, conta de abate, reconciliação parcial, reconciliacao parcial, por reconciliar, desfazer reconciliação, desfazer reconciliacao, pagamento parcial, marque só um documento, pagaria a fatura a mais, moeda estrangeira]
+doc_id: DOC-0356
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c2bf63c34)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/reconciliar-movimentos-bancarios, troubleshooting/bancos-e-pagamentos/extrato-nao-importa]
+---
+
+## Sintoma
+
+Em **Contabilidade › Reconciliar › Bancos e caixa › Reconciliação bancária**, ao carregar num botão, abre-se **Operação inválida** e o movimento continua **Por reconciliar**. Nada é lançado.
+
+O caminho normal está em [Como reconciliar os movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios). Os exemplos foram feitos com o perfil **Contabilista**, no diário **Banco** da Empresa Demonstração, Lda.
+
+Se o movimento nem aparece na lista, ainda não foi importado: veja [O extrato bancário não importa](/troubleshooting/extrato-nao-importa). Com o perfil **Administrativo**, os menus não mostram a reconciliação (não tem a aplicação **Contabilidade**): peça a um **Contabilista**.
+
+## Mensagem
+
+**Nenhum documento corresponde ao movimento.** Em **Reconciliar num clique** ou em **Registar pagamento e reconciliar**, sem nada marcado (movimento de 380,00 € sem referência e sem cliente):
+
+> «Nenhum item em aberto é uma correspondência plausível desta linha (ou a diferença está fora da tolerância do diário Banco): verifique o valor, a janela de datas e a tolerância, ou reconcilie à mão. Se o banco pagou MENOS do que uma fatura, use «Registar pagamento e reconciliar»: pede-lhe que confirme um pagamento parcial e o resto fica em aberto.»
+
+![Janela Operação inválida: nenhum item em aberto é uma correspondência plausível desta linha](/images/troubleshooting/movimento-nao-reconcilia/01-sem-correspondencia-plausivel.png)
+
+**Dois documentos correspondem igualmente bem.** Em **Reconciliar num clique** (123,00 € recebidos, sem descrição, com duas faturas de 123,00 €):
+
+> «2 itens em aberto correspondem igualmente bem a esta linha: a reconciliação num clique exige uma única correspondência plausível. Abra as sugestões e escolha o documento.»
+
+![Janela Operação inválida: 2 itens em aberto correspondem igualmente bem a esta linha](/images/troubleshooting/movimento-nao-reconcilia/02-dois-itens-iguais.png)
+
+**O valor do movimento e o dos documentos são diferentes.** Ao marcar um documento com outro valor, aparece por cima a **Diferença** e a lista **Escolha: reconciliação parcial ou abate**.
+
+![Resumo com Movimento bancário 380,00 €, Documentos 135,88 €, Diferença -244,12 € e a lista para escolher reconciliação parcial ou abate](/images/troubleshooting/movimento-nao-reconcilia/03-diferenca-fora-da-tolerancia.png)
+
+Em **Confirmar reconciliação**, sem escolher (1.000,00 € contra uma fatura de 143,10 €):
+
+> «O movimento e os documentos diferem em 856,90 €, fora da tolerância: escolha reconciliação parcial (o resto fica em aberto) ou abate (com conta e motivo), ou selecione outros documentos.»
+
+**O abate está incompleto.** Em **Confirmar reconciliação**, com **Abate (conta e motivo)** escolhido e sem motivo:
+
+> «Escreva a justificação para lançar a diferença (pelo menos 5 carateres): um abate nunca é feito em silêncio.»
+
+Com o motivo escrito e sem **Conta de abate**:
+
+> «A diferença não pode ser lançada nesta conta. Porquê: A diferença de uma reconciliação é um gasto ou um rendimento, por isso vai para uma conta de gastos ou de rendimentos. Como resolver: Escolha uma conta de gastos ou de rendimentos.»
+
+**O pagamento não se regista.** Em **Registar pagamento e reconciliar**, com o documento marcado. Com um movimento maior do que a fatura (hoje, a mensagem mostra os valores sem formato):
+
+> «O movimento bancário (1000.0) é superior ao que FT D26/28 ainda deve (143.1): pagaria a fatura a mais. Reconcilie-o num clique ou divida-o à mão.»
+
+Com dois documentos marcados:
+
+> «Marque só um documento: o pagamento é registado para uma única fatura.»
+
+Com uma fatura em dólares marcada:
+
+> «O pagamento não pode ser registado num só passo quando o diário ou a fatura estão numa moeda estrangeira (diferenças cambiais): reconcilie-o num clique ou à mão.»
+
+**Desfazer sem motivo.** Na janela **Desfazer a reconciliação**, com menos de 5 carateres em **Motivo**:
+
+> «Escreva porque é que a reconciliação é desfeita (pelo menos 5 carateres).»
+
+## Causas verificadas
+
+- **O documento ainda não está lançado, ou o valor e a descrição não o identificam.** O fiscaldoo só propõe um documento quando o reconhece, e nunca escolhe ao acaso.
+- **Há mais do que um documento possível.** Num clique só funciona com uma única correspondência.
+- **O movimento não paga exatamente o que marcou.** Falta outro documento, a fatura foi paga só em parte, ou há uma diferença a tratar.
+- **O abate exige motivo e conta de gastos ou de rendimentos**, porque a diferença passa a ser um gasto ou um rendimento da empresa.
+- **Registar pagamento e reconciliar paga o documento que marcou.** Sem nada marcado, procura ele próprio a correspondência. Só aceita um documento, em euros, e um valor que não passe o que ainda está em dívida.
+- **O banco pagou menos do que a fatura.** Isto não é um erro: com o documento marcado, ou com o cliente identificado e o número da fatura na descrição, abre-se **O banco pagou menos do que o documento**.
+
+## O que confirmar
+
+1. A data, o valor e a descrição do movimento, no extrato do banco.
+2. Se o documento existe e está em aberto, nos separadores **Recibos**, **Pagamentos** e **Contabilidade**.
+3. Com o cliente ou o fornecedor, qual foi o documento pago. Nunca escolha só pelo valor.
+4. Se a diferença é real, ou se falta marcar outro documento.
+
+## Como resolver
+
+**O que faz sozinho:**
+
+1. **Sem correspondência:** procure o documento num dos separadores, marque-o e carregue em **Confirmar reconciliação**. Se o documento ainda não existe, deixe o movimento por reconciliar até ser lançado.
+2. **Dois documentos iguais:** marque o documento que o cliente confirmou e carregue em **Confirmar reconciliação**. Com o valor certo, entra sem mais perguntas.
+3. **O banco pagou menos:** se o resto vai ser pago mais tarde, carregue em **Registar o pagamento parcial**. No exemplo, 2.000,00 € de uma fatura de 4.847,43 €: a janela mostrou **Fica em aberto** 2.847,43 € e a fatura ficou com esse valor em dívida. Se a diferença for um desconto ou um engano, carregue em **Cancelar** e siga o que a janela indica: **Lançamento direto** ou o separador **Operações manuais**.
+4. **O movimento paga mais do que a fatura:** escolha **Reconciliação parcial (o resto fica em aberto)** e carregue em **Confirmar reconciliação**. No exemplo, 1.000,00 € contra a `FT D26/28` de 143,10 €: a fatura ficou **Paga** e o movimento continuou na lista, com **Por reconciliar: 856,90 €**. Ao marcar outro documento, o resumo já conta só o que falta. Hoje, a mensagem da recusa propõe também reconciliar num clique, mas isso exige um documento com o valor do movimento.
+5. **Dois documentos ou moeda estrangeira em Registar pagamento:** marque um só documento ou, numa fatura em moeda estrangeira, siga o caminho de [Como reconciliar os movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios).
+6. **Reconciliado com o documento errado:** em cima, escolha **Reconciliada** e carregue no movimento. **Documentos reconciliados** mostra a que foi ligado. Carregue em **Desfazer reconciliação**, escreva o motivo e confirme. Como a janela explica, o lançamento é revertido com um estorno datado de hoje, nada é apagado e os documentos voltam a ficar em aberto. Um pagamento registado a partir da linha mantém-se, como pagamento ainda por reconciliar com o banco.
+
+**O que pede ao contabilista:**
+
+7. **Abater a diferença.** O abate fica como gasto ou rendimento da empresa: peça-lhe a conta antes de escolher **Abate (conta e motivo)**, e escreva o motivo.
+
+   Hoje, a lista **Conta de abate** não mostra todas as contas: faltam as contas 78, como a 7811. Se a conta indicada não estiver lá, faça-o em dois passos, porque o separador **Operações manuais** não conta os documentos marcados. Primeiro, com o documento marcado, escolha **Reconciliação parcial (o resto fica em aberto)** e carregue em **Confirmar reconciliação**. Depois, abra de novo o movimento e, em **Operações manuais**, carregue em **Adicionar uma linha** e escolha a **Conta**: o **Montante** já traz o que falta. Carregue em **Confirmar operação manual**. No exemplo, 377,00 € recebidos contra a `FT D26/33` de 147,60 €, com 229,40 € para a 7811: a fatura ficou **Paga**, o movimento passou a **Reconciliada** e o lançamento dos 229,40 € ficou com a Conta Transitória a débito e a 7811 a crédito.
+
+   No exemplo, 380,00 € recebidos contra a `FT D26/27` de 135,88 €, com 244,12 € de diferença e o movimento de 25/09/2026, o lançamento de reconciliação ficou assim:
+
+   | Conta | Débito | Crédito |
+   |---|---|---|
+   | Conta Transitória | 380,00 € | |
+   | 2111 Clientes gerais | | 135,88 € |
+   | A conta de abate escolhida | | 244,12 € |
+
+<HelpCallout type="risco" title="Um abate não corrige um documento errado">
+Se a diferença vem de uma fatura com o valor errado, corrija primeiro a fatura com o contabilista. Abater esconde o erro nas contas de gastos ou de rendimentos.
+</HelpCallout>
+
+## Resultado esperado
+
+- O movimento sai de **Por reconciliar** e aparece em **Reconciliada**, ou continua na lista com **Por reconciliar** a mostrar só o que falta.
+- A fatura fica **Paga**, ou com o resto em dívida quando o pagamento é parcial.
+- Depois de desfazer, o movimento volta a **Por reconciliar** e a fatura volta a ficar em aberto.
+
+## Quando contactar o suporte
+
+- A mensagem continua depois de seguir o que ela indica.
+- A sua mensagem não está neste artigo. Os movimentos de lotes de pagamentos, a reconciliação de vários movimentos com um só documento, os diários em moeda estrangeira e a [reconciliação de terceiros](/accounting-pt/reconciliar-terceiros) têm mensagens próprias, que este artigo não cobre.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com:
+
+- a data, o valor e a descrição do movimento, e o diário;
+- o documento marcado, por exemplo `FT D26/34`, e o seu valor;
+- o botão em que carregou e o texto completo da mensagem.
+
+{/* Nota interna (DOCS-062, lote v9-E, master 52dd90689): todas as mensagens por clique com demo.contabilista: 9 de 9 mais a janela do pagamento parcial. Movimentos de ensaio criados por API (123,00, 1.000,00 e 2.000,00). BNK-039 mudou: Registar pagamento usa o documento marcado e «Por reconciliar» aparece na lista e no painel. Lançamento do abate conferido em OD/2026/00108. Na lista Conta de abate só vêm 200 contas; em Operações manuais a 7811 aparece na lista. Auditoria V9E: operação concluída por clique depois de uma reconciliação parcial (os documentos marcados não contam nesse separador; OD/2026/00110). Defeitos em reports/LOTE_V9E.md. */}
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador) */}

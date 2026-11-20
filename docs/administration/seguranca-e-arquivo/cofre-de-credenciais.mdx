@@ -1,0 +1,109 @@
+---
+id: cofre-de-credenciais
+slug: /administration/cofre-de-credenciais
+title: Como guardar senhas de portais no cofre de credenciais
+sidebar_label: Cofre de credenciais
+sidebar_position: 1
+description: Iniciar o cofre numa empresa nova, dar e tirar permissões, guardar a senha de um portal ou de um serviço (AT, Segurança Social, banco, pagamentos, IA) cifrada e por empresa, e saber que ninguém a volta a ler, nem o administrador.
+keywords: [cofre de credenciais, senhas, palavras-passe, portal, credenciais, segredo, cifrado, revelar segredo, ver a senha, ler a palavra-passe, iniciar o cofre, permissões do cofre, administrador, autoridade tributária, segurança social, banco]
+doc_id: DOC-0317
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master d7b8279e9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/utilizadores-e-permissoes/perfis-e-permissoes, administration/seguranca-e-arquivo/registo-de-auditoria, fiscal-core/at-e-saft/ligar-a-at, troubleshooting/acesso-e-dados/cofre-sem-permissao]
+---
+
+## Para que serve?
+
+O cofre guarda as senhas dos portais da Autoridade Tributária, da Segurança Social e dos bancos, e também as chaves de serviços de pagamentos e de IA, cifradas e por empresa. Depois de guardada, uma senha nunca mais aparece no ecrã, a ninguém, nem ao administrador: o fiscaldoo usa-a por si e cada uso fica registado.
+
+## Quando utilizar?
+
+- Numa empresa nova, para iniciar o cofre e dar as primeiras permissões.
+- Para o gabinete deixar de guardar senhas de clientes em folhas de cálculo.
+- Para um colega poder usar o acesso a um portal sem saber a senha.
+- **Não** use o cofre para guardar uma senha que precisa de voltar a ler: o cofre não a mostra. Guarde-a onde a empresa guarda as senhas que as pessoas escrevem à mão.
+- Não use o cofre para as credenciais do serviço web da AT: essas têm o seu ecrã, em **Contabilidade › Configurar › Faturação certificada › Credenciais da AT**. Veja [Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at).
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Cofre de credenciais**. O administrador vê **Credenciais**, **Permissões**, **Iniciar o cofre**, **Tipos de portal**, **Domínios permitidos** e **Rodar a chave de cifra**. O perfil **Contabilista certificado** vê só **Credenciais**. Os perfis **Contabilista** e **Auditor** têm **Contabilidade › Configurar**, mas sem o cofre; a **Gerência** não tem **Configurar**; o **Administrativo**, o **Processador de salários**, o **Gestor de RH** e o **Trabalhador** não têm a Contabilidade.
+
+## Antes de começar
+
+- Os passos 1 a 3 e 6 são do administrador. Foram feitos a 7 de novembro de 2026 na `Empresa Demonstração, Lda`, com credenciais fictícias, numa base de demonstração em ambiente de teste.
+- O passo 4 faz-se com quem tem **Editar** no cofre da empresa: o administrador, ou o **Contabilista certificado** a quem ele deu **Editar** (feito com esse perfil, na mesma empresa).
+- O servidor tem a chave de cifra do cofre. Sem ela, nada se guarda: veja [O cofre de credenciais não tem chave de cifra no servidor](/troubleshooting/cofre-sem-chave-de-cifra).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Confirme, no canto superior direito, que está na empresa certa. Abra **Contabilidade › Configurar › Cofre de credenciais › Iniciar o cofre**. A janela **Iniciar o cofre de credenciais** explica: «Ainda ninguém tem «Editar» no cofre de credenciais desta empresa, por isso ninguém pode dar permissões nem guardar credenciais. Se confirmar, RECEBE «Editar» em todos os portais desta empresa, uma só vez, e fica registado no registo de auditoria (quem, quando, que empresa). A partir daí só quem tem «Editar» dá permissões a outros, e ninguém a pode dar a si próprio. Ninguém, nem o administrador técnico, lê uma palavra-passe guardada.»
+   ![Janela Iniciar o cofre de credenciais com o texto do arranque, que acaba em «Ninguém, nem o administrador técnico, lê uma palavra-passe guardada», e os botões Confirmar e Cancelar](/images/administration/cofre-de-credenciais/02-iniciar-o-cofre.png)
+2. Carregue em **Confirmar**. Abre **Permissões do cofre** com uma linha: o seu utilizador, a empresa, **Portal** vazio (todos os portais) e **Nível** **Editar**.
+3. Para dar acesso a outra pessoa, em **Permissões**, carregue em **Novo** e preencha a linha: **Utilizador**, **Empresa**, **Portal** (vazio para todos os portais, ou um só portal) e **Nível**: **Nenhum**, **Ver** ou **Editar**. Carregue em **Guardar**. A coluna **Aviso** diz, em **Ver** e em **Editar**: «Não pode ler uma palavra-passe guardada. Fica registado no registo de auditoria.».
+   ![Lista Permissões com duas linhas na Empresa Demonstração, Lda: o administrador com Editar e um utilizador com o perfil Contabilista certificado com Ver, e em ambas o aviso «Não pode ler uma palavra-passe guardada»](/images/administration/cofre-de-credenciais/03-permissoes-dadas.png)
+4. Abra **Credenciais** e carregue em **Novo**. A ficha nova já mostra, antes de escrever nada, o aviso «O segredo é guardado cifrado e nunca mais é mostrado a ninguém. Para o mudar, escreva um novo. O programa usa o guardado por si e cada uso fica registado.» e, por baixo, o limite desta proteção.
+   ![Ficha nova de uma credencial, ainda vazia: aviso do ambiente de teste, aviso de que o segredo é guardado cifrado e nunca mais é mostrado a ninguém, o limite desta proteção e os campos Descrição, Empresa, Portal, Nome de utilizador e Palavra-passe / segredo](/images/administration/cofre-de-credenciais/06-ficha-nova-com-aviso.png)
+   Escreva a **Descrição** (no exemplo, «Segurança Social Direta da empresa (fictício)»), confirme a **Empresa**, escolha o **Portal** e escreva o **Nome de utilizador** e a **Palavra-passe / segredo**. Carregue em **Guardar**. A palavra-passe passa a aparecer como uma fila de pontos, sempre do mesmo tamanho; o ícone do olho troca-os por oito asteriscos, nunca pela palavra-passe.
+   ![Credencial guardada: avisos do ambiente de teste e de que o segredo nunca mais é mostrado a ninguém, Descrição, Empresa Demonstração, Lda, Portal Segurança Social, Nome de utilizador e a palavra-passe em pontos, com Tem segredo marcado](/images/administration/cofre-de-credenciais/04-credencial-gravada.png)
+5. Para mudar a senha, escreva a nova em **Palavra-passe / segredo** e guarde. A antiga não se recupera.
+6. Para mudar ou tirar um acesso, volte a **Permissões**. Para mudar, carregue no **Nível** da linha, escolha outro e carregue em **Guardar**. Para tirar, marque a linha e carregue em **Ações › Eliminar** e, na janela de confirmação, em **Eliminar**.
+
+</StepByStep>
+
+## Resultado esperado
+
+- A credencial aparece em **Credenciais** com **Tem segredo**. A ficha diz, desde o **Novo**, «O segredo é guardado cifrado e nunca mais é mostrado a ninguém. Para o mudar, escreva um novo. O programa usa o guardado por si e cada uso fica registado.».
+- Em **Permissões** está quem tem acesso a cada empresa e portal, e com que nível.
+- Em **Auditoria › Registos › Registo de acessos**, agrupados por **Tipo de evento**, ficam **Cofre: permissão alterada** (o início do cofre e cada permissão dada ou mudada), **Cofre: segredo criado** e **Cofre: segredo consultado** (cada vez que alguém abre uma credencial), com a data, o utilizador e a empresa. Cada recusa do cofre (por exemplo, abrir uma credencial sem **Ver**, mudar a própria linha em **Permissões** ou iniciar outra vez um cofre já iniciado) fica como **Cofre: acesso recusado**, com a data, o utilizador, a empresa e o ecrã tocado, e sem o segredo. Ao abrir uma credencial sem **Ver**, **Modelo auditado** diz «Entrada do cofre de credenciais»; nas recusas da própria linha e do cofre já iniciado, o ecrã tocado lê-se em **Registo (na data do evento)**: «Permissão do cofre de credenciais». Quem tenta pesquisar as credenciais pelo segredo, nos filtros da pesquisa, em **Filtro personalizado...**, com o campo **Palavra-passe / segredo**, recebe «O segredo só se escreve: não pode ser pesquisado nem filtrado por valor. Filtre pela descrição, pelo portal ou pela empresa da entrada.». A recusa é igual para todos, do administrador a quem não tem nenhuma permissão no cofre, e a tentativa fica como **Cofre: acesso recusado**: **Modelo auditado** diz «Entrada do cofre de credenciais» e, ao abrir a linha, **Motivo** diz «Tentativa de pesquisar credenciais pelo segredo» e **VALORES** diz «Ecrã: Entrada do cofre de credenciais» e «Campo: Palavra-passe / segredo» (veja [Como ver quem exportou, importou ou alterou dados](/administration/registo-de-auditoria)). {/* Nota interna (lote v23-AS, depois do comboio 177 com o SEC-120, master d7b8279e9, docs_demo_v23as_test, 09/11/2026): por clique, em Contabilidade › Configurar › Cofre de credenciais › Credenciais, Filtro personalizado..., campo Palavra-passe / segredo, com um utilizador só com o perfil Contabilista certificado, sem nenhuma permissão no cofre, e com o administrador: os dois receberam a mensagem citada. A tentativa do Contabilista certificado ficou em Auditoria › Registos › Registo de acessos (Cofre: acesso recusado), lida por clique com um utilizador só com o perfil Auditor / ROC: Modelo auditado «Entrada do cofre de credenciais», Motivo citado e, em VALORES, «Ecrã: Entrada do cofre de credenciais» e «Campo: Palavra-passe / segredo». A recusa sem linha no registo do lote v23-AQ e o nome técnico no Modelo auditado já não se reproduzem. */} Ler o segredo não é possível no ecrã: só um programa ligado ao fiscaldoo o pode tentar, e essa tentativa também fica como **Cofre: acesso recusado**. {/* Auditoria docs-aud-v23aq (09/11/2026, master d277b0e80, cópia nova da base de demonstração): a pesquisa pelo segredo fez-se por clique em Filtro personalizado..., com o administrador e com um utilizador só com o perfil Contabilista certificado; os dois receberam a mensagem citada e as duas tentativas ficaram no Registo de acessos com o Motivo citado (lido por clique com o administrador). A leitura do segredo só se provoca por pedido direto ao servidor: o artigo não cita a mensagem nem o Motivo dessa tentativa. */} O segredo nunca fica no registo. {/* Nota interna (lote v23-AQ, depois do comboio 175 com o SEC-117 v2, master d277b0e80, docs_demo_v23aq_test): pedidos diretos ao servidor (RPC) com um utilizador só com o perfil Contabilista certificado (ler secret_encrypted de uma credencial; criar o assistente Iniciar o cofre) e com o administrador (pesquisar por segredo); nenhum segredo foi lido nem mostrado. Auditoria › Registos › Registo de acessos, com o administrador na Empresa Demonstração, Lda: grupo Cofre: acesso recusado com as linhas «Entrada do cofre de credenciais» e, no formulário, Motivo «Tentativa de ler o segredo de uma credencial» e «Tentativa de pesquisar credenciais pelo segredo». O Contabilista certificado, sem permissão no cofre, pesquisou pelo segredo e recebeu uma lista vazia, sem recusa nem linha no registo (observação no relatório do lote). No formulário da linha, Modelo auditado mostra o nome técnico ir.model (a lista mostra «Entrada do cofre de credenciais»). */}
+
+## Notas importantes
+
+- **Ninguém lê uma senha guardada**, nem o administrador nem quem tem **Editar**. Não há botão para a revelar. Se precisar de a saber, vá à fonte (o portal ou quem a criou) e, se a mudar lá, escreva a nova no cofre.
+- **A empresa de uma credencial não muda depois de guardada:** o campo **Empresa** passa a só de leitura. Para outra empresa, crie outra credencial.
+- **Não escreva senhas na Descrição:** a descrição vê-se na lista das credenciais; a senha vai só em **Palavra-passe / segredo**.
+- **Só o administrador inicia o cofre.** Os outros perfis não veem **Iniciar o cofre**: com o perfil Contabilista certificado, o grupo **Cofre de credenciais** do menu **Configurar** da Contabilidade só tem **Credenciais**.
+- **Iniciar o cofre é uma vez por empresa.** Depois disso, a janela **Iniciar o cofre de credenciais** já diz «O cofre de credenciais desta empresa já está iniciado: Administrador (demonstração) pode(m) dar permissões, por isso não há nada a iniciar. As permissões dão-se em Contabilidade › Configurar › Cofre de credenciais › Permissões.»
+- **Ninguém muda o seu próprio acesso**, nem o administrador: o ecrã manda pedir «a outro administrador, ou a quem já tenha «Editar» no cofre desta empresa».
+- **Os níveis:** **Nenhum** não vê as credenciais; **Ver** vê a descrição, o portal e o nome de utilizador; **Editar** também cria, altera e apaga credenciais. Com **Ver**, guardar uma alteração é recusado. Dê **Editar** só a quem trata das credenciais.
+- **O Contabilista não tem o menu Cofre de credenciais**, mesmo com a permissão **Ver** (visto com um utilizador só com esse perfil).
+- **O cofre tem um limite:** quem instala módulos, usa a consola do servidor ou acede à base de dados tem poder total sobre a instalação, e o ecrã di-lo.
+- **Num ambiente de teste o portal não se abre** a partir do cofre: «Este é um ambiente de teste: o portal não se abre a partir daqui, para que nenhuma credencial real seja usada em testes.»
+- **A chave do Copiloto** também fica aqui («Chave de IA do Copiloto»): veja [Como ligar o Copiloto a um fornecedor de IA](/copilot/ligar-a-uma-ia).
+
+## Problemas frequentes
+
+### Quero ver a senha guardada e não há botão
+
+- **Causa:** o cofre não mostra senhas a ninguém, nem ao administrador. O campo mostra sempre a mesma fila de pontos.
+- **O que fazer:** se a senha mudou ou se perdeu, peça uma nova no portal e escreva-a na credencial.
+
+### «Não tem permissão para criar, alterar ou apagar estas credenciais…»
+
+- **Causa:** tem **Ver**, mas não **Editar**, nesta empresa e portal. Com **Ver**, abre a credencial, mas não guarda alterações.
+- **O que fazer:** carregue em **Fechar**, descarte a alteração e peça **Editar** ao administrador.
+
+### «O teste falhou: as credenciais foram gravadas com outra chave que não a deste servidor…»
+
+- **Sintoma:** em **Contabilidade › Configurar › Faturação certificada › Credenciais da AT**, **Testar a ligação (simulador)** diz no canto do ecrã «O teste falhou: as credenciais foram gravadas com outra chave que não a deste servidor. Volte a gravá-las (escreva outra vez a palavra-passe e a chave privada).».
+- **Causa:** a chave de cifra do servidor mudou depois de as credenciais serem gravadas (por exemplo, uma cópia da base levada para outro servidor). Os segredos guardados com a chave antiga já não abrem. O teste confirma que o segredo abre com a chave de hoje antes de dizer que as credenciais estão válidas.
+- **O que fazer:** abra a linha das credenciais, escreva outra vez a **Palavra-passe do webservice**, volte a carregar o **Ficheiro do certificado (.pfx)** com a **Palavra-passe do .pfx** e guarde. Depois, carregue outra vez em **Testar a ligação (simulador)**.
+
+### Outras recusas do cofre
+
+«Não tem permissão para ver estas credenciais…», «Não pode dar a si próprio, alterar nem retirar o seu acesso…» e «O cofre da empresa … já está iniciado…»: veja [Não tenho permissão para ver, usar ou alterar uma credencial do cofre](/troubleshooting/cofre-sem-permissao).
+
+{/* Nota interna (lote v23-V2, #3740 req. 46473 e #4052 DOCS-069, master cebcb888d, docs_demo_v23vinv_test, porta 8464, chave do cofre só na memória da instância, ambiente de teste): G1 provado no ecrã com o administrador na Empresa Demonstração, Lda: Credenciais › Novo mostra logo os dois avisos e o limite (captura 06, lida por OCR); Iniciar o cofre e o aviso das Permissões iguais aos citados; menus do administrador vistos (Credenciais, Permissões, Iniciar o cofre, Tipos de portal, Domínios permitidos, Rodar a chave de cifra). Depois de guardada, a Empresa fica só de leitura (visto na ficha). Do guia da pasta congelada (Segurança/cofre-de-credenciais.md, reescrito a 07/11) vieram as duas notas novas. G2 («Testar a ligação» com segredos cifrados com outra chave) fica para depois do SEC-116 (#3740), que ainda não está em master: o artigo não fala desse teste. */}
+
+{/* Nota interna (lote v23-Q, #3740 req. 46455 e #3947, master 808f8ca1f, docs_demo_v23q_test, porta 8452, chave do cofre só na memória da instância, ambiente de teste): reescrito pelo ecrã de hoje (SEC-113: o administrador inicia o cofre e dá permissões; SEC-115: sem «Revelar segredo»). No ecrã, com o administrador: Iniciar o cofre (texto citado), Confirmar, Permissões com o aviso novo, Novo com «Perfil Contabilista certificado» em Ver, credencial «Segurança Social Direta da empresa (fictício)» com senha fictícia gerada em memória, ícone do olho só com oito asteriscos (auditoria docs-aud-v23q), recusa da própria linha, «já está iniciado». Com utilizadores criados só com cada valor do campo Perfil (DEC-1777): Contabilista certificado sem permissão (Novo recusado), com Ver (abre e não grava: recusa citada), com Editar (guardou «Banco da empresa, acesso online (fictício)»); menus por clique (Contabilista certificado com Credenciais; Contabilista e Auditor com Configurar sem o cofre; Gerência sem Configurar; Administrativo sem Contabilidade) e por load_menus (Processador de salários, Gestor de RH e Trabalhador sem o menu; Contabilista com Ver sem o menu). Pela integração: o administrador também grava uma credencial e dá permissões numa empresa em que ninguém tem Editar. Registo de acessos visto no ecrã: permissão alterada 4, segredo consultado 8, segredo criado 2; as recusas não apareceram como «Cofre: acesso recusado» (por isso o artigo já não promete esse evento). Capturas 01 (Ajustes avançados) e 05 (Revelar) retiradas. */}
+
+{/* Nota interna (DOCS-052, ATWS-046 no master 461788688): refeito na base docs_demo_prod052_test (porta 8160, guarda de rede, simulador). Visto no ecrã: menus do admin (só Credenciais) e da Administração fiscal (Credenciais, Permissões, Iniciar o cofre; em modo programador também Tipos de portal, Domínios permitidos e Rodar a chave de cifra, fora deste artigo); o perfil dado pelo admin nos Ajustes avançados (P2 da AUDITORIA_0050); Iniciar o cofre, Permissões com Nenhum/Ver/Editar, recusa da própria linha, segunda tentativa recusada, credencial criada, revelação por quem tem Ver (com palavra-passe, 60 segundos), gravação recusada com Ver, nível mudado e linha eliminada, Registo de acessos; Contabilista com Ver sem o menu. Desde o ATWS-047 (master 5086447e8), as recusas dizem «Contabilidade › Configurar › Cofre de credenciais», como o menu: revisto no ecrã a 03/11 (docs-aud-052). A rotação da chave de cifra não foi provada (modo programador). */}
+
+{/* Nota interna (lote v23-G, #3947, master 5228a94bd, docs_demo_v23g_test, DOC-0317): menus vistos por load_menus e no ecrã com utilizadores criados só com cada valor do campo Perfil (DEC-1777): Contabilista certificado só Credenciais (Novo dá a janela «Não tem permissão para ver estas credenciais…», igual à citada); Administrativo, Contabilista, Processador de salários, Gestor de RH, Gerência, Trabalhador e Auditor sem o menu do cofre; admin com Credenciais, Tipos de portal, Domínios permitidos e Rodar a chave de cifra, sem Permissões nem Iniciar o cofre. Um utilizador com o perfil Contabilista certificado e o acesso Administração fiscal (Ajustes avançados, dado por RPC na cópia) vê Permissões e Iniciar o cofre; a janela Iniciar o cofre e a lista vazia de Permissões dizem o texto citado. Defeito: a mensagem do Contabilista certificado manda-o a menus que nenhum valor do campo Perfil mostra. */}
+
+{/* Nota interna (lote v23-AB, master 97b34fac3, docs_demo_v23ab_test, porta 8480, utilizadores criados só com cada valor do campo Perfil): SEC-116 com o administrador (chave do cofre só na memória da instância): Iniciar o cofre, Permissões, a própria linha recusada, a janela já iniciada e o Confirmar recusado; o Contabilista certificado sem permissão abriu uma credencial pelo endereço (recusa «Não tem permissão para ver…»); o Registo de acessos mostrou «Cofre: acesso recusado» (4) com «Entrada do cofre de credenciais» em Modelo auditado; Auditoria docs-aud-v23ab (mesma base, chave nova só na memória da instância): as recusas da própria linha e do Confirmar do cofre já iniciado ficam no Registo de acessos com Modelo auditado «Modelo» e o número 2.203 (defeito, cartão do Gestor); a recusa da credencial aberta sem Ver fica com «Entrada do cofre de credenciais». G2: «Testar a ligação (simulador)» deu «O teste falhou: … gravadas com outra chave…» depois de arrancar a instância com outra chave, e «Teste passou» depois de gravar de novo. */}

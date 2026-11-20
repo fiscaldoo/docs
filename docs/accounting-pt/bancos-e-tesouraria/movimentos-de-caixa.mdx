@@ -1,0 +1,134 @@
+---
+id: movimentos-de-caixa
+slug: /accounting-pt/movimentos-de-caixa
+title: Como registar os movimentos da caixa
+sidebar_label: Movimentos da caixa
+sidebar_position: 8
+description: "Registar entradas e saídas de dinheiro da caixa: a saída de uma despesa pelo Lançamento rápido e o pagamento em dinheiro de uma fatura pelo diário Caixa, com os lançamentos que cada um gera."
+keywords: [movimentos da caixa, extratos de caixa, caixa, numerário, numerario, diário de caixa, diario de caixa, entradas e saídas de dinheiro, entradas e saidas de dinheiro, dinheiro em caixa, pagar em dinheiro, registar um movimento de caixa]
+doc_id: DOC-0114
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/importar-extrato-bancario, accounting-pt/bancos-e-tesouraria/contas-bancarias-e-de-caixa, accounting-pt/bancos-e-tesouraria/pendentes-de-reconciliacao]
+---
+
+## Para que serve?
+
+A caixa é o dinheiro em numerário da empresa. Este artigo mostra como registar o que entra e o que sai dela: uma despesa paga em dinheiro e o pagamento ou o recebimento em dinheiro de uma fatura. Cada movimento deixa um lançamento na conta da caixa (112 **Caixa** no exemplo), e o **Dinheiro em caixa** do painel inicial da Contabilidade acompanha-o.
+
+## Quando utilizar?
+
+- Quando pagou uma despesa em dinheiro, sem fatura de fornecedor lançada: **Registar um movimento de caixa**.
+- Quando paga em dinheiro uma fatura de fornecedor já lançada, ou recebe em dinheiro uma fatura de cliente: o registo do pagamento, com o diário **Caixa**.
+- **Não** deixe o diário **Banco**, que a janela **Pagar** traz por omissão, nem escolha **Depósitos à ordem** no **Lançamento rápido**: escolha a caixa antes de **Criar Pagamento** ou de **Publicar**.
+
+## Onde encontrar?
+
+- **Contabilidade › Reconciliar › Bancos e caixa › O que há para fazer com os bancos?** › **Listas de apoio** › **Extratos de caixa**, botão **Registar um movimento de caixa**.
+- O pagamento em dinheiro faz-se na própria fatura: **Pagar** (fatura de fornecedor) ou **Emitir recibo** (fatura de cliente), com o diário **Caixa**.
+- O saldo vê-se no painel inicial: **Contabilidade**, bloco **Bancos e caixa (no fim do mês)**, linha **Dinheiro em caixa**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** (testado) ou **Contabilista certificado** (o botão **Registar um movimento de caixa** também aparece). Os perfis **Auditor / ROC** e **Gerência** veem a lista **Extratos de caixa**, mas sem o botão. O perfil **Administrativo** nem tem a aplicação Contabilidade.
+- O exemplo é a Empresa Demonstração, Lda, com o diário **Caixa** (código CX, conta **112 Caixa**). Se a empresa ainda não tem diário de caixa, veja [Como criar uma conta bancária ou de caixa](/accounting-pt/contas-bancarias-e-de-caixa).
+
+## Como utilizar
+
+### Registar uma saída de dinheiro da caixa
+
+<StepByStep>
+
+1. Abra **Extratos de caixa**. A lista (**Data**, **Diário**, **Saldo inicial**, **Saldo final**, **Movimentos**, **Por reconciliar**, **Estado**) está vazia: «Ainda não há extratos de caixa. Um extrato de caixa lista tudo o que entrou e saiu de uma caixa num período.» Em cima, à esquerda, está o botão **Registar um movimento de caixa**.
+   ![Lista Extratos de caixa vazia, com o botão Registar um movimento de caixa assinalado](/images/accounting-pt/movimentos-de-caixa/01-extratos-de-caixa.png)
+2. Carregue em **Registar um movimento de caixa**. Abre o **Lançamento rápido**. Em **1. O que aconteceu?**, escolha **Paguei uma despesa**.
+3. Preencha **2. Quando?** (a data, hoje por omissão) e **3. Quanto?** (no exemplo, 12,30).
+4. Em **4. De onde sai e para onde vai?**, em **Pago a partir de** escolha **Caixa**. Há duas linhas com este nome, **111 · Caixa** e **112 · Caixa**: use a **112**, a conta do diário **Caixa**. Em **Para quê** escolha a despesa (no exemplo, **Material de escritório**, conta 6233). Em **5. Descrição**, escreva uma nota curta (por exemplo «Papel para a impressora»).
+5. Confira **O que vai ficar registado**: «Vão sair 12,30 € de «Caixa» e ficam registados como gasto em «Material de escritório»», com o débito em **6233 Material de escritório** e o crédito em **112 Caixa**, e a barra **Equilibrado**.
+   ![Lançamento rápido preenchido: despesa de 12,30 € paga a partir da Caixa para Material de escritório, com o que vai ficar registado (débito 6233, crédito 112) e a barra Equilibrado](/images/accounting-pt/movimentos-de-caixa/02-registar-saida-de-caixa.png)
+6. Carregue em **Publicar**. O lançamento fica publicado (no exemplo, **OD/2026/00139**). Com **Abrir o lançamento** vê-o, no diário **Operações Diversas**:
+   ![Lançamento OD/2026/00139 publicado: débito 6233 Material de escritório 12,30 €, crédito 112 Caixa 12,30 €](/images/accounting-pt/movimentos-de-caixa/04-lancamento-da-saida-de-caixa.png)
+
+</StepByStep>
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| 6233 Material de escritório | 12,30 € | |
+| 112 Caixa | | 12,30 € |
+
+Conferido no razão da conta 112: um crédito de 12,30 € em 10/11/2026. O **Dinheiro em caixa** do painel desce 12,30 €.
+
+### Pagar uma fatura de fornecedor em dinheiro
+
+<StepByStep>
+
+1. Abra a fatura de fornecedor já lançada (no exemplo, **FTF/2026/00044**, Rui Matos, total 600,00 €) e carregue em **Pagar**. A janela abre com o diário **Banco**, o **Valor** 600,00 € e a **Data de Pagamento**.
+2. Em **Diário**, escolha **Caixa**. O campo **Conta bancária** desaparece, porque a caixa não tem IBAN.
+   ![Janela Pagar da fatura FTF/2026/00044 com o diário Caixa escolhido, o valor 600,00 € e a data de pagamento](/images/accounting-pt/movimentos-de-caixa/07-pagar-fatura-em-dinheiro.png)
+3. Carregue em **Criar Pagamento**. A fatura passa a **Pago** («Paga em 10/11/2026 600,00 €», **Valor em Dívida** 0,00 €) e o pagamento chama-se **PCX/2026/00006**.
+4. Abra o pagamento: o lançamento vai direto à conta da caixa, sem passar pelos pagamentos pendentes:
+   ![Lançamento PCX/2026/00006: débito 2211 Fornecedores gerais 600,00 €, crédito 112 Caixa 600,00 €](/images/accounting-pt/movimentos-de-caixa/05-lancamento-do-pagamento-em-dinheiro.png)
+
+</StepByStep>
+
+| Conta | Débito | Crédito |
+|---|---|---|
+| 2211 Fornecedores gerais | 600,00 € | |
+| 112 Caixa | | 600,00 € |
+
+Conferido no razão: a conta 112 recebeu o crédito de 600,00 € e a fatura ficou paga. O pagamento a um fornecedor com o diário **Banco** faz outra coisa: fica em **120003 Pagamentos Pendentes** até ser reconciliado com o extrato; com o diário **Caixa** não há extrato por reconciliar, por isso o lançamento vai logo à conta da caixa.
+
+### Receber de um cliente em dinheiro
+
+- Abra a fatura de cliente (no exemplo, **FT D26/28**, da Padaria Aurora, Lda, 143,10 €) e carregue em **Emitir recibo**. O diário sugerido é **Recibos (RG)**; em **Diário** escolha **Caixa**. A janela avisa: «O diário «Caixa» não emite recibo: a fatura fica paga mas NÃO existe recibo (número, ATCUD, QR) para o cliente. Para emitir o recibo, escolha o diário «Recibos (RG)».» Carregue em **Criar Pagamento**.
+- O pagamento fica **Pago**, com o nome **PCX/2026/00007**, e o lançamento é: débito 112 Caixa 143,10 €, crédito 2111 Clientes gerais 143,10 €.
+- <span className="fd-pending">Pendente de validação por contabilista certificado: se o recebimento em dinheiro de uma fatura de cliente exige o recibo certificado (diário **Recibos (RG)**) em vez do pagamento **PCX**.</span>
+
+## No Enterprise
+
+No Odoo Enterprise, o **Lançamento rápido** é o mesmo e abre-se pelo mesmo botão **Registar um movimento de caixa**, com **1. O que aconteceu?** e as cinco escolhas (visto com um utilizador só com o perfil **Contabilista**). A lista **Extratos de caixa** tem também os botões **Novo** e **Enviar**, que são do Enterprise: este artigo usa só **Registar um movimento de caixa**.
+
+{/* Nota interna (lote EE-03, DOCS-073 #4142, DEC-1794, master e4dd4ae90, base Enterprise docs_ee_ee03_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0114. Contabilista: Extratos de caixa vazia («Ainda não há extratos de caixa…») com Novo, Enviar e Registar um movimento de caixa (no Community só o último); Lançamento rápido com Paguei uma despesa, Paguei a um fornecedor, Recebi dinheiro de um cliente, Transferi dinheiro entre as minhas contas e Outra coisa. Nada publicado na base Enterprise. Ver reports/LOTE_EE-03.md. */}
+
+## Resultado esperado
+
+- Cada movimento deixa um lançamento publicado e equilibrado, com a conta **112 Caixa** a débito (entrada) ou a crédito (saída).
+- O **Dinheiro em caixa** do painel inicial muda: no exemplo, de 578,46 € no fim de outubro para 129,40 € em novembro (578,46 + 20,14 - 12,30 - 600,00 + 143,10 = 129,40). O valor do painel soma todas as caixas: no exemplo, os 20,14 € entraram a 06/11/2026 na Caixa do ponto de venda (113), além da 112.
+  ![Bloco Bancos e caixa do painel inicial da Contabilidade, com a linha Dinheiro em caixa: 129,40 € em novembro de 2026, 578,46 € em outubro](/images/accounting-pt/movimentos-de-caixa/03-dinheiro-em-caixa-no-painel.png)
+- A lista **Extratos de caixa** continua vazia: os movimentos acima não criam extratos.
+
+## Notas importantes
+
+- **Onde está o «Dinheiro em caixa».** Está no painel inicial da **Contabilidade**, bloco **Bancos e caixa (no fim do mês)**, e não no hub **O que há para fazer com os bancos?**, que só mostra o **Dinheiro nos bancos**.
+- **Confira a conta antes de publicar.** O **Lançamento rápido** abre sem contas escolhidas («Escolha uma conta…»). A lista de **Pago a partir de** tem duas linhas chamadas **Caixa** (**111 · Caixa** e **112 · Caixa**), a **113 · Caixa do ponto de venda** e a **121 · Depósitos à ordem** (o banco); o diário **Caixa** usa a 112, que é a que o ecrã mostra em «O que vai ficar registado».
+- **Diferenças de caixa.** As contas de lucros e de perdas do diário **Caixa** (7888 e 6888) são as das diferenças de contagem. Os movimentos acima não passam por elas, e não encontrei no fiscaldoo um ecrã de contagem da caixa: a lista **Extratos de caixa** só mostra extratos já existentes. <span className="fd-pending">Pendente de validação por contabilista certificado: o tratamento contabilístico das diferenças de caixa.</span>
+- **Pagamentos em dinheiro e limites legais.** O fiscaldoo não impede um pagamento em dinheiro de valor alto: o limite legal é uma decisão do contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: limites aos pagamentos em numerário.</span>
+
+## Problemas frequentes
+
+### Não vejo o botão «Registar um movimento de caixa»
+
+- **Sintoma:** em **Extratos de caixa** só aparece a lista.
+- **Causa:** o perfil não pode registar lançamentos (Auditor e Gerência, por exemplo).
+- **O que fazer:** peça a um **Contabilista** ou a um **Contabilista certificado** que registe o movimento.
+
+### O botão «Publicar» está desativado
+
+- **Sintoma:** no **Lançamento rápido**, **Publicar** não responde e o ecrã diz «Preencha os valores para verificar o equilíbrio».
+- **Causa:** falta o valor em **3. Quanto?**.
+- **O que fazer:** escreva o valor; quando o lançamento fica **Equilibrado**, o botão ativa-se.
+  ![Lançamento rápido com Paguei uma despesa escolhido e sem valor: a mensagem «Preencha os valores para verificar o equilíbrio» e o botão Publicar desativado](/images/accounting-pt/movimentos-de-caixa/06-publicar-sem-valor.png)
+
+### O pagamento em dinheiro não baixa a caixa
+
+- **Sintoma:** ao pagar uma fatura, o lançamento foi para **120003 Pagamentos Pendentes** e a caixa não mudou.
+- **Causa:** o diário escolhido na janela **Pagar** foi o **Banco**, que é o que a janela traz por omissão.
+- **O que fazer:** peça ao contabilista que corrija o pagamento: é preciso registá-lo de novo com o diário **Caixa**. Antes de pagar, confirme o **Diário** na janela **Pagar**.
+
+{/* Nota interna (cor5, NV3C-09, NV3C-10, 01/11): refeito do zero no master b1c81051 (comboio 128, ACC-211 em master) na base docs_demo_cor5_test. Percorridos com o Contabilista: Lançamento rápido na caixa (OD/2026/00104 nessa ronda, OD/2026/00111 na captura de 03/11, D 6233 / C 111001 12,30), pagamento da FTF/2026/00044 pelo diário Caixa (PCX/2026/00006, D 2211 / C 111001 600,00), recebimento da FT D26/32 pelo diário Caixa (PCX/2026/00007, D 111001 / C 2111 123,00). Gestor de contabilidade tem o botão; Auditor e Gerência não. Por engano criei e cancelei o OD/2026/00105 (12,30, «Outros serviços» / Caixa; o ecrã abre com Depósitos à ordem e Outros serviços por omissão): fica cancelado na base. Defeito LOW do produto: duas linhas «Caixa» (111 e 111001) na lista «Pago a partir de» do Lançamento rápido. Não percorrido: contagem de caixa (não há ecrã de extratos de caixa com «Novo»). */}
+
+{/* Nota interna (lote v23-BF, DOCS-063 #3853, 10/11/2026, master e4dd4ae90, docs_demo_v23bf_test, porta 8504): a conta do diário Caixa é hoje a 112 (a Caixa do ponto de venda é a 113); o artigo dizia 111001. Percorrido de novo por clique com um utilizador só com o perfil Contabilista, por esta ordem, numa cópia acabada de copiar da base-mãe: Lançamento rápido (abre com «Escolha uma conta…» nas duas listas; Publicar desativado sem valor) → OD/2026/00139 (D 6233 / C 112, 12,30); Pagar da FTF/2026/00044 (janela com Banco por omissão) pelo diário Caixa → PCX/2026/00006 (D 2211 / C 112, 600,00); Emitir recibo da FT D26/28 (a FT D26/32 já não existe na base-mãe) pelo diário Caixa, com o aviso citado → PCX/2026/00007 (D 112 / C 2111, 143,10). Linhas conferidas nos lançamentos. Painel: Dinheiro em caixa 578,46 € em out. 2026 e 129,40 € em nov. 2026. Capturas 02 a 07 refeitas (a 01 não mudou). */}

@@ -1,0 +1,92 @@
+---
+id: mapa-de-recursos-humanos
+slug: /payroll-pt/mapa-de-recursos-humanos
+title: Como consultar o mapa de recursos humanos
+sidebar_label: Mapa de recursos humanos
+sidebar_position: 4
+description: Ver quanto custam as pessoas da empresa, quantas entraram e saíram, quantos dias faltaram e uma previsão do custo até ao fim do ano, por departamento, centro de custo, trabalhador ou mês, com Excel e PDF.
+keywords: [mapa de recursos humanos, custo com pessoal, absentismo, rotação de pessoal, previsão de custos, headcount, trabalhadores no início, entradas e saídas, relatório de gestão, mapa rh]
+doc_id: DOC-0236
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/fechar-e-consultar/folha-para-a-seguradora, management/custos-com-pessoas]
+---
+
+## Para que serve?
+
+O mapa de recursos humanos responde, para um período à sua escolha, a três perguntas: quanto custam as pessoas à empresa, quantas são (e quantas entraram, saíram ou faltaram) e quanto vão custar até ao fim do ano. Os valores vêm dos recibos já fechados e, numa empresa migrada, dos recibos do programa anterior; o mapa não altera nada nos salários.
+
+## Quando utilizar?
+
+- No fecho do mês ou do ano, para a gestão ou para preparar o relatório de pessoal.
+- Antes de decidir um aumento ou uma contratação, para ver quanto custa o ano com e sem a mudança.
+
+## Onde encontrar?
+
+**Salários › Fechar e consultar › Mapas de recursos humanos › Mapa de recursos humanos**
+
+## Antes de começar
+
+- Perfil **Processador de salários**, com o qual se fez o percurso inteiro deste artigo. {/* Nota interna (DOCS-046): na demonstração, o perfil de Contabilista não tem a aplicação Salários e o perfil de Recursos Humanos vê 3 dos 4 mapas (sem o Mapa de recursos humanos); a arquitetura previa Contabilista. Testado só com o Processador de Salários. */}
+- Há recibos **fechados** no período. O mapa ignora recibos por fechar.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Salários › Fechar e consultar › Mapas de recursos humanos › Mapa de recursos humanos**.
+2. Escolha **De** e **Até**. O ecrã propõe o dia 1 de janeiro do ano e o dia de hoje (no exemplo, `01/01/2026` a `02/11/2026`).
+3. Em **Mostrar por**, escolha **Departamento**, **Centro de custo**, **Trabalhador** ou **Mês**. Para ver só alguns departamentos, escolha-os em **Só estes departamentos**; em branco entram todos.
+4. Carregue em **Mostrar o mapa**. Aparecem três blocos: **O que as pessoas custam**, **Quantos são** e **Previsão do custo até ao fim do ano**, e no fim a lista **Detalhe**, com uma linha por departamento, centro de custo, trabalhador ou mês, e o total.
+   ![Mapa de recursos humanos de 01/01/2026 a 02/11/2026, mostrado por mês, com o custo total de 56.076,97 e a remuneração bruta de 45.314,67](/images/payroll-pt/mapa-de-recursos-humanos/01-mapa-calculado.png)
+5. Para simular o resto do ano, escreva em **Aumento previsto do custo mensal (%)** a subida esperada (por exemplo `5`) e em **Outros custos previstos até ao fim do ano** o que ainda vai pagar (por exemplo `1.000,00` de subsídios por pagar ou de uma admissão) e carregue outra vez em **Mostrar o mapa**.
+   ![Bloco de previsão com aumento de 5, outros custos de 1.000,00 e a previsão de 46.062,39 para o resto do ano](/images/payroll-pt/mapa-de-recursos-humanos/02-previsao-e-detalhe.png)
+6. Carregue em **Descarregar Excel** ou **Imprimir PDF** para guardar o mapa. O Excel traz os valores e a lista **Detalhe**; o PDF chama-se «Mapa de recursos humanos».
+
+</StepByStep>
+
+**Exemplo.** De 01/01/2026 a 02/11/2026, mostrado por mês, com os 8 trabalhadores da demonstração: **Custo total para a empresa** 56.076,97 €, dos quais **Remuneração bruta** 45.314,67 € e **Contribuições e outros custos da empresa** 10.762,30 €. A lista **Detalhe** tem os meses 2026-06 (13.831,14 €), 2026-07 (14.232,92 €), 2026-08 (13.707,39 €) e 2026-09 (14.305,52 €), que somam o total. A previsão parte do **Custo do último mês fechado** (14.305,52 €) e dos **Meses que faltam até ao fim do ano** (3): sem aumento, o resto do ano custa 42.916,56 € (14.305,52 × 3); com 5 % e 1.000,00 € de outros custos, custa 46.062,39 € e o ano inteiro 102.139,36 €.
+
+## No Enterprise
+
+No Odoo Enterprise, o mapa é o mesmo, com o perfil **Processador de salários** e o mesmo menu: os mesmos campos (**De**, **Até**, **Mostrar por** e **Só estes departamentos**), os três blocos e a lista **Detalhe**. **Descarregar Excel** e **Imprimir PDF** guardam os ficheiros «Mapa de recursos humanos.xlsx» e «Mapa de recursos humanos.pdf».
+
+Com os mesmos recibos de junho a setembro de 2026, o mapa dá o mesmo **Custo total para a empresa** (56.076,97 €) e a mesma **Previsão para o resto do ano** sem aumento (42.916,56 €).
+
+{/* Nota interna (lote EE-08, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee08_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8508/8509), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Processador de salários: De 01/01/2026 a 11/11/2026, Mostrar o mapa: Custo total 56.076,97, Remuneração bruta 45.314,67, Contribuições e outros custos 10.762,30, Custo do último mês fechado 14.305,52, Meses que faltam 3, Previsão para o resto do ano 42.916,56; Descarregar Excel e Imprimir PDF descarregados (o PDF abre com «Mapa de recursos humanos» e a empresa). Comparado com uma cópia da demonstração Community (docs_demo_ee08_test, 2c8d358c0, porta 8518). Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-08.md. */}
+
+## Resultado esperado
+
+- **Trabalhadores pagos** conta quem tem recibo fechado no período; **Trabalhadores no início** e **no fim**, **Entradas** e **Saídas** contam as pessoas ao serviço no início e no fim do período e as que entraram ou saíram. No exemplo, 0 no início, 8 entradas (todos admitidos em 2026) e 8 no fim.
+- **Rotação de pessoal (%)** (0,00 no exemplo) e **Absentismo (%)** (0,34 %, para 3,00 **Dias de ausência**) saem destas contagens. <span className="fd-pending">Pendente de validação por contabilista certificado: a definição exata de rotação e de absentismo usada pelo fiscaldoo.</span>
+- A previsão é só um cálculo simples: o último mês fechado repetido pelos meses que faltam, com o aumento e os outros custos que indicou.
+
+## Notas importantes
+
+- **Só contam recibos fechados e os migrados do programa anterior.** Um mês processado mas por fechar não entra, e a previsão usa sempre o último mês fechado do período. Se escolher `Até 30/06/2026`, o ecrã conta 6 meses por vir (julho a dezembro) e prevê com junho, mesmo havendo recibos de meses seguintes.
+- **Recibos migrados.** Quem veio de outro programa vê o custo dos meses anteriores sem mais nada a fazer. No exemplo, com um recibo migrado de maio de 2026 (bruto 1.650,00 € e 391,88 € de Segurança Social da empresa), o **Custo total para a empresa** sobe de 56.076,97 € para 58.118,85 €, e a lista **Detalhe** ganha 2026-05 com 2.041,88 €. O recibo migrado de um mês em que o mesmo trabalhador já tem recibo fechado no fiscaldoo não conta: um segundo recibo, de setembro, não mudou os 14.305,52 € desse mês. Num mês só com recibos migrados, o botão da linha chama-se **Recibos migrados** e abre esses recibos (trabalhador, período, data de pagamento, bruto, Segurança Social do trabalhador, IRS retido, líquido e o programa anterior); também se consultam em **Salários › Processar › Recibos antigos (versão anterior)** (ver [Importar o histórico de salários](/migration-toolkit/historico-de-salarios)). O cartão **Custo das pessoas**, no painel da aplicação **Pessoas**, conta da mesma forma (no exemplo, 58.118,85 € com o período **Este ano**, visto com a **Gerência**; o **Processador de salários** não tem esse painel) e, quando conta recibos migrados, diz por baixo «Recibos fechados e migrados do período» (sem migrados no período, «Recibos fechados do período»). {/* Nota interna (DOCS-063 #3853, lote v23-S, master cebcb888d, docs_demo_v23s_test, porta 8458): PAY-121 visto no ecrã. Um recibo migrado de maio de 2026 (Bruno Miguel Teixeira, 1.650,00 € e 391,88 €) importado por clique em Importar histórico de salários com um utilizador só com o grupo Administrador de Salários; Mapa de recursos humanos por Mês com um utilizador só com o Perfil Processador de salários: linha 2026-05 com o botão «Recibos migrados», que abre o recibo; cartão Custo das pessoas com Este ano visto com demo.gerencia (Perfil Gerência). Os valores do exemplo (56.076,97 € e 58.118,85 €) conferem com a base de hoje (auditoria docs-aud-v23s: na cópia, 73.393,00 € = 56.076,97 + 2.041,88 do recibo migrado + 15.274,15 do lote de outubro validado; meses 06 a 09 iguais aos do texto). Lote 96 (UX-167, master 78c1ec1ac): o caminho da lista dos recibos migrados passou para Processar › Recibos antigos (versão anterior), visto por clique com um utilizador só Processador de salários na docs_demo_lote96_test. */}
+- **Ausências.** O mapa nunca conta as ausências por motivo de saúde ou greve, e as férias não são ausências (a faixa azul do ecrã avisa-o). O **Absentismo (%)** é por isso menor do que a falta real.
+- **Centro de custo.** Com o perfil **Processador de salários**, **Mostrar por › Centro de custo** dá uma linha por centro de custo. Na demonstração, os recibos não têm centro de custo: a lista **Detalhe** tem uma só linha, **Sem centro de custo**, com os 56.076,97 € do exemplo. {/* Nota interna (DOCS-046; revisto no lote v23-D, master 2bfd78d1a, docs_demo_v23d_test): o erro «Não tem acesso a «Modelo de distribuição analítica». Esta área é para: …» (defeito V4PAYb-03) já não aparece; provado no ecrã com um utilizador só com o perfil Processador de salários, de 01/01/2026 a 06/11/2026. */}
+- **Só estes departamentos.** Escolher um departamento sem trabalhadores com recibos (no teste, «Comercial (demonstração)») dá o mapa a zeros: na demonstração os trabalhadores não têm departamento e aparecem em **Sem departamento**.
+- **Mostrar por Trabalhador** lista cada pessoa com o custo e o número de dias de ausência (no exemplo, Ana Margarida Pinto 11.880,00 €); use-o só com quem pode ver salários individuais.
+- **O que o mapa não é.** Não substitui o Relatório Único nem a contabilidade dos salários; é um quadro de gestão. <span className="fd-pending">Pendente de validação por contabilista certificado: se este mapa serve de base ao relatório de pessoal que a empresa tenha de apresentar.</span>
+- Para ver o custo de cada trabalhador mês a mês, veja [Quanto custa cada trabalhador à empresa](/management/custos-com-pessoas).
+- O ficheiro Excel descarregado chama-se `Map of Human Resources.xlsx` (nome em inglês); mude-lhe o nome se o enviar a alguém. {/* Nota interna (DOCS-046): defeito V4PAYb-04, nome do ficheiro Excel não traduzido; ver reports/LOTE_V4_PAY2b.md. */}
+
+## Problemas frequentes
+
+### «O fim do período é anterior ao seu início»
+
+- **Sintoma:** ao carregar em **Mostrar o mapa**, o ecrã diz «O fim do período é anterior ao seu início. Como resolver: corrija as datas.» (no teste, **De** `01/12/2026` com **Até** `02/11/2026`).
+- **Causa:** a data **Até** é anterior à data **De**.
+- **O que fazer:** corrija as datas e carregue de novo.
+
+### Tudo a zero
+
+- **Sintoma:** **Custo total para a empresa** a 0,00 e **Trabalhadores pagos** a 0.
+- **Causa:** não há recibos fechados nesse período (no teste, o ano de 2025 inteiro, antes de a empresa processar salários).
+- **O que fazer:** escolha outro período ou [processe e feche o mês](/payroll-pt/processar-o-mes).

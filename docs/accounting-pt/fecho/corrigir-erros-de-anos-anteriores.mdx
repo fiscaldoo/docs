@@ -1,0 +1,118 @@
+---
+id: corrigir-erros-de-anos-anteriores
+slug: /accounting-pt/corrigir-erros-de-anos-anteriores
+title: Como corrigir erros de anos anteriores
+sidebar_label: Corrigir erros de anos anteriores
+sidebar_position: 5
+description: Registar um erro encontrado num período anterior, deixar o contabilista certificado decidir se é material e gerar o lançamento de correção em rascunho (NCRF 4).
+keywords: [erros de anos anteriores, correção de erros, correcao de erros, NCRF 4, erro material, erro não material, resultados transitados, 56, 6881, 7881, lançamento de correção]
+doc_id: DOC-0135
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/fecho/simular-o-resultado, accounting-pt/relatorios/diario-e-razao, accounting-pt/fecho/datas-de-bloqueio]
+---
+
+## Para que serve?
+
+Quando se descobre um erro de um período anterior (por exemplo, uma fatura de dezembro de 2025 que só aparece em 2026), o produto regista a **correção** com a data do erro, a sua natureza e as linhas a corrigir. Quem decide se o erro é **material** é o contabilista certificado: o produto avisa «Só o contabilista certificado decide se o erro é material.». Depois da decisão, o produto escolhe a conta de contrapartida e cria o lançamento de correção **em rascunho**, no período aberto de hoje.
+
+## Quando utilizar?
+
+- Quando o erro é de um período anterior e já não se corrige no próprio período (que está fechado ou entregue).
+- Para ficar com o rasto: quem registou, quem decidiu, quando e porquê.
+- **Não** a use para erros do mês corrente: corrija o lançamento original. O ecrã recusa-os (ver «Problemas frequentes»).
+
+## Onde encontrar?
+
+**Contabilidade › Fechar › Contabilidade do mês › Fechar o mês**, em **Listas de apoio**, **Correções de erros de anos anteriores**. A lista chama-se **Correções de erros (NCRF 4)**; vazia, diz «Sem correções de erros».
+
+## Antes de começar
+
+- Quem **regista** a correção é o **Contabilista**. Quem **decide** a materialidade é o perfil **Contabilista certificado**: ao perfil **Contabilista** a ficha não mostra o botão **Decidir a materialidade**. Depois da decisão seguem-se **Gerar lançamento** e, no fim, **Publicar**.
+- Saiba o **terceiro** (cliente ou fornecedor) de cada linha numa conta de terceiros: sem ele o lançamento não se gera (ver «Problemas frequentes»).
+- As linhas usam a conta de balanço que estava errada, como a **2211 Fornecedores gerais**: as contas de gastos e rendimentos (6 e 7) não aparecem na pesquisa. A outra parte do lançamento é automática (a **Conta de contrapartida**).
+- O exemplo é a fatura de eletricidade de 15/12/2025 (500,00 €) da Energia Norte, SA, nunca registada, descoberta em 2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Fechar › Contabilidade do mês › Fechar o mês** e, em **Listas de apoio**, **Correções de erros de anos anteriores**. Carregue em **Novo**.
+2. Preencha: **Descrição curta** (`Fatura de eletricidade de dezembro de 2025 por registar`), **Data do período do erro** (`15/12/2025`: qualquer data do período em que o erro foi cometido), **Natureza do erro** (**Valor errado**, **Conta errada**, **Período errado (periodização)**, **Omissão** ou **Outro**; no exemplo, **Omissão**) e, em **O que correu mal**, o que estava errado e como foi descoberto. **Lançamento original** só se existir um lançamento com o erro. A **Data do lançamento de correção** (hoje) tem de estar num período aberto e o **Diário** vem preenchido (**Lançamentos de ajustamento**).
+3. No separador **Correções**, **Adicionar uma linha**: **Conta** 2211 Fornecedores gerais, **Parceiro** Energia Norte, SA, **Descrição** e **Crédito** 500,00 €. A **Contrapartida** mostra o que falta para equilibrar (500,00 €). Guarde. A correção fica em **Por decidir**.
+4. Com o perfil **Contabilista certificado**, abra a correção e carregue em **Decidir a materialidade**. A janela mostra o **Limiar sugerido**, se a empresa o tiver definido (ver «Notas importantes»). Em **O erro é?** escolha **Material** ou **Não material** e escreva o **Motivo da decisão**, com pelo menos uma frase curta. No exemplo, **Não material**.
+   ![Janela Decidir a materialidade, numa empresa sem limiar definido: as opções Material e Não material e o motivo da decisão](/images/accounting-pt/corrigir-erros-de-anos-anteriores/02-decidir-materialidade.png)
+5. Carregue em **Registar decisão**. O estado passa a **Decidido**, a ficha mostra **Materialidade**, **Decidido por**, **Decidido em** e a **Conta de contrapartida**: **6881 Correções relativas a períodos anteriores**.
+6. Carregue em **Gerar lançamento**. O estado passa a **Lançamento gerado** e a ficha mostra o **Lançamento de correção**, em rascunho.
+   ![Ficha da correção com o estado Lançamento gerado, a decisão e o lançamento de correção em rascunho](/images/accounting-pt/corrigir-erros-de-anos-anteriores/05-lancamento-gerado.png)
+7. Abra o lançamento e confira as linhas: **crédito de 500,00 € na 2211 Fornecedores gerais** (parceiro Energia Norte, SA) e **débito de 500,00 € na 6881 Correções relativas a períodos anteriores**, no diário **Lançamentos de ajustamento**, na data de hoje. Carregue em **Publicar** quando concordar (no exemplo, AJU/2026/00001).
+   ![Linhas do lançamento de correção não material: débito de 500,00 euros na 6881 e crédito de 500,00 euros na 2211 com Energia Norte, SA](/images/accounting-pt/corrigir-erros-de-anos-anteriores/06-lancamento-em-rascunho.png)
+
+</StepByStep>
+
+### Se o erro for material
+
+O caminho é o mesmo; muda a conta de contrapartida. No passo 4, escolha **Material**. O lançamento gerado credita a mesma conta e debita a **561 Resultados transitados**, fora dos resultados do período. No exemplo de um erro de 50.000,00 € (AJU/2026/00002): **débito de 50.000,00 € na 561 Resultados transitados** e **crédito de 50.000,00 € na 2211 Fornecedores gerais**.
+
+![Linhas do lançamento de correção material: débito de 50.000,00 euros na 561 e crédito de 50.000,00 euros na 2211 com Energia Norte, SA](/images/accounting-pt/corrigir-erros-de-anos-anteriores/07-lancamento-material.png)
+
+## Resultado esperado
+
+- Uma correção em **Lançamento gerado**, com a decisão e o lançamento de correção equilibrado, em rascunho. Nada é lançado até o publicar.
+- **Não material**, depois de publicar: no [razão](/accounting-pt/diario-e-razao), a 6881 mostra 500,00 € a débito. O gasto entra no resultado do período corrente, não no de 2025: na [demonstração de resultados](/accounting-pt/demonstracao-de-resultados), **Outros gastos** passa de -2.500,00 € para -3.000,00 € e o **Resultado líquido do período** de -59.791,84 € para -60.291,84 €. Reveja a [simulação do resultado](/accounting-pt/simular-o-resultado), se já tinha feita.
+- **Material**, depois de publicar: o resultado do período não muda. A 561 mostra os 50.000,00 € a débito e, no [balanço](/accounting-pt/balanco), **Resultados transitados** baixa esse valor.
+- A dívida à Energia Norte, SA fica na 2211, e a linha **Fornecedores** do balanço sobe.
+
+## Notas importantes
+
+- **Material ou não.** Pelo texto do ecrã, o erro **material** corrige-se por resultados transitados (conta 56), com reexpressão dos comparativos; o **não material** corrige-se nos resultados do período (contas 6881/7881). Só o contabilista certificado decide, nunca o sistema. O produto gera só o lançamento: a reexpressão dos comparativos não é feita por ele. <span className="fd-pending">Pendente de validação por contabilista certificado: critério de materialidade e reexpressão dos comparativos.</span>
+- **Limiar sugerido.** Nas definições da empresa, no separador da localização portuguesa, o administrador pode definir o **Limiar de materialidade (%)** e a base (por omissão, o volume de negócios). Zero desliga-o. É só uma indicação: «O erro de 500.0 está ACIMA do limiar sugerido de 383.93 (1.0% de 38393.0). A decisão é sua.» O ecrã compara com o ano do erro. **Não conte com ele para anos já apurados**: em 2025, a demonstração diz «A base do limiar é zero no ano do erro: não há com que comparar. A decisão é sua.», embora a [demonstração de resultados](/accounting-pt/demonstracao-de-resultados) mostre vendas de 279.000,00 €. Faça a comparação à mão.
+- **A decisão é definitiva.** Uma correção **Decidido** já não se altera nem se elimina («Uma correção com decisão não pode ser eliminada: a decisão do contabilista certificado fica registada.»). Em **Por decidir** ainda se edita e se elimina.
+- **Não use a conta 56 nas linhas.** A pesquisa deixa escolher a 561, e **Registar decisão** aceita-a, mas **Gerar lançamento** recusa-a depois. Como a correção já tem decisão, fica sem lançamento e não se pode corrigir nem eliminar. Registe outra correção, com a conta certa.
+- **O produto não corrige o lançamento original.** Cria um lançamento novo, hoje. O IVA, as retenções e as declarações do período do erro não se corrigem aqui: avise o contabilista certificado para ver se é preciso uma declaração de substituição.
+- **Datas de bloqueio.** A data do lançamento de correção tem de estar num período aberto: ver [datas de bloqueio](/accounting-pt/datas-de-bloqueio).
+
+## Problemas frequentes
+
+### «Indique o cliente ou o fornecedor nas linhas de uma conta de terceiros (2211) antes de avançar: sem ele não é possível gerar o lançamento de correção. Acrescente o parceiro à linha e decida outra vez.»
+
+- **Causa:** uma linha na 2211 não tem **Parceiro** (mensagem **Operação inválida**, ao carregar em **Registar decisão**). A decisão não fica registada e a correção continua em **Por decidir**.
+- **O que fazer:** carregue em **Fechar** e em **Cancelar**, preencha o **Parceiro** na linha, guarde e decida outra vez.
+  ![Mensagem Operação inválida a pedir o cliente ou o fornecedor da linha da 2211](/images/accounting-pt/corrigir-erros-de-anos-anteriores/04-falta-parceiro.png)
+
+### «O erro tem a data 02/11/2026, que não é anterior ao período do lançamento de correção (03/11/2026). A NCRF 4 trata erros de períodos ANTERIORES: para um erro do mês corrente, corrija o próprio lançamento.»
+
+- **Causa:** a **Data do período do erro** está no mês da **Data do lançamento de correção**.
+- **O que fazer:** corrija o próprio lançamento. Se o erro é mesmo de outro período, corrija a data.
+
+### «Escreva o motivo da decisão (pelo menos uma frase curta): a NCRF 4 deixa o juízo de materialidade à entidade e o motivo é o que o justifica numa auditoria.»
+
+- **Causa:** o **Motivo da decisão** é demasiado curto (por exemplo, «Teste.»).
+- **O que fazer:** escreva uma frase com a razão da decisão.
+
+### «A conta «561 Resultados transitados» não pode ser usada nas linhas: a contrapartida (conta 56 se material, 6881/7881 se não) é acrescentada pelo sistema. Num erro material a correção fica fora dos resultados do período (NCRF 4, par. 37). Use a conta de balanço que estava errada.»
+
+- **Causa:** carregou em **Gerar lançamento** numa correção com uma linha na conta 56 (mensagem **Operação inválida**).
+- **O que fazer:** esta correção já não se altera. Registe outra, com a conta de balanço que estava errada, e explique no **O que correu mal** da nova que a primeira ficou sem lançamento.
+
+### «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+
+- **Causa:** carregou em **Registar decisão** sem escolher **Material** ou **Não material** nem escrever o **Motivo da decisão**.
+- **O que fazer:** escolha uma das opções e escreva o motivo.
+
+### Não vejo «Decidir a materialidade»
+
+- **Causa:** o seu perfil é **Contabilista**.
+- **O que fazer:** peça a quem tem o perfil **Contabilista certificado** que decida.
+
+{/* Nota interna (DOCS-046, DOC-0135): visto em docs_demo_v6a4_test (master 8f78854ec). Registo por RPC com o Contabilista e aberto no ecrã (sem botão de decidir: confirmado); decisão e geração no ecrã com o Responsável fiscal (demo.gestor_contabilidade); publicação no ecrã. Os dois caminhos publicados e conferidos no razão: AJU/2026/00001 (D 6881 / C 2211, 500) e AJU/2026/00002 (D 561 / C 2211, 50.000), DR e Balanço lidos, depois estornados com o Responsável fiscal (2026 volta aos números de partida). Recusas no ecrã: sem parceiro (ACC-213: já não prende), motivo curto, 6881 e 561 ao gerar; data do erro do mês corrente por RPC (mesma validação da gravação; texto do produto). Limiar: empresa a 1 % só para a prova, reposta a 0 (valor da base-mãe). Defeitos no relatório: V6A4-01 (561 prende a correção decidida), V6A4-02 (limiar a zero em anos apurados), V6A4-03 (números do limiar sem formato). A correção «T» (linha 6881, criada por RPC; o ecrã não a deixa escolher) ficou Decidida e presa na base; «Linha sem terceiro» ficou em Lançamento gerado (rascunho por publicar), da prova do Contabilista. */}
+
+{/* Nota interna (v23-T, DOC-0135, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AX, 09/11/2026, master 25a465133, docs_demo_v23ax_test): resultado líquido de 2026 (-59.791,84 €) e Outros gastos (-2.500,00 €) lidos na Demonstração de resultados da cópia limpa; o valor depois da correção soma os 500,00 € da 6881 (a correção não foi repetida neste lote). */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AY, 10/11/2026, master fa7915ea8, docs_demo_v23ay_test, porta 8505): ponto de partida relido na DR com um utilizador só com o perfil Contabilista: Outros gastos -2.500,00 € e resultado líquido -59.791,84 €, iguais aos do v23-AX. O REP-134 não muda a demonstração de resultados. */}

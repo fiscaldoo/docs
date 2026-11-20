@@ -1,0 +1,92 @@
+---
+id: subsidio-de-ferias-ou-natal
+slug: /troubleshooting/subsidio-de-ferias-ou-natal
+title: "O subsídio de férias ou de Natal não é calculado"
+sidebar_label: Subsídio não é calculado
+description: O que quer dizer cada recusa ao calcular um subsídio de férias ou de Natal (sem base, sem acordo de duodécimos, ano de referência inválido, parâmetro legal em falta) e como a resolver.
+keywords: [subsídio de natal, subsidio de natal, subsídio de férias, subsidio de ferias, não calcula, nao calcula, duodécimos, duodecimos, acordo escrito, não tem base, nao tem base, indemnização de férias, indemnizacao de ferias, ano de referência, ano de referencia]
+doc_id: DOC-0404
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado, payroll-pt/processar-e-pagar/subsidios-de-ferias-e-natal]
+---
+
+## Sintoma
+
+Em **Salários › Processar › Processar o mês**, ao carregar em **Calcular** num lote com subsídios, abre-se a janela **Operação inválida** e o lote não avança. A mensagem nomeia o trabalhador, e os outros recibos do lote ficam à espera.
+
+## Mensagem
+
+As três primeiras mensagens foram provocadas com **Calcular**, com o perfil **Processador de salários**, num lote do tipo **Natal** de outubro de 2026 (8 recibos), em **Rascunho**. A linha de exemplo acrescenta-se no recibo, em **Adicionar uma linha**.
+
+**Duodécimo sem acordo escrito.** O recibo tem uma linha **Duodécimo do subsídio de Natal** ou **Duodécimo do subsídio de férias**, e o trabalhador não tem acordo:
+
+> ««Ana Margarida Pinto» não tem acordo escrito para ser pago em duodécimos em 31/10/2026. O que aconteceu: pagar um subsídio em duodécimos precisa do acordo escrito do trabalhador (CT art. 264.º/3), com o documento anexado. Como resolver: registe o acordo na ficha do trabalhador (menu Ação › Acordos escritos de pagamento), ou retire do recibo a linha do duodécimo.»
+
+![Janela Operação inválida: o trabalhador não tem acordo escrito para receber em duodécimos](/images/troubleshooting/subsidio-de-ferias-ou-natal/01-duodecimo-sem-acordo.png)
+
+**Subsídio de férias sem base.** A linha **Subsídio de férias** indica dias, mas nenhuma linha do recibo entra na base:
+
+> «O subsídio de férias de «Ana Margarida Pinto» não tem base. O que aconteceu: nenhuma linha do recibo entra na base do subsídio (nenhuma tem «Entra no subsídio de férias» = Sim) e não foi dada nenhuma base. Como resolver: ponha no recibo a retribuição base e as prestações do modo específico de trabalho, marcadas no subsídio, ou preencha a base da linha.»
+
+**Parâmetro legal em falta para o ano de referência.** A linha **Subsídio de férias** tem quantidade 0 e, na coluna opcional **Férias do ano**, um ano muito antigo (no exemplo, 2000). Com quantidade 1 e sem base, sai antes a mensagem de «não tem base»:
+
+> «O parâmetro de salários «HOLIDAY_MINIMUM_DAYS» não tem versão em vigor em 01/01/2000. O que aconteceu: o cálculo precisa de um valor legal válido nesse dia e não se encontrou nenhum, por isso nada se assumiu. Como resolver: peça a quem mantém os dados legais nacionais (grupo «Dados legais nacionais») que carregue a versão desse período em Salários › Configurar › Legislação › Parâmetros legais, e calcule de novo.»
+
+<span className="fd-pending">Pendente de validação no ecrã: a mensagem seguinte veio do servidor, numa chamada à parte, e não foi repetida por clique.</span>
+
+> «O ano de referência 2030 do subsídio no recibo de Ana Margarida Pinto não é válido. O que aconteceu: um subsídio pertence a um ano entre 2000 e o ano do recibo (2026); um ano futuro não tem tabela de IRS para reter.»
+
+**Indemnização de férias.** O botão para a pagar só aparece nas férias com **Alterada pela empresa** marcada e **Indemnização pela alteração** preenchida. Sem isso não há botão nem mensagem. <span className="fd-pending">Pendente de validação no ecrã: lido na definição do ecrã; a demonstração não tem férias nestas condições.</span>
+
+<span className="fd-pending">Pendente de validação no ecrã: «não tem base» do subsídio de Natal e «férias não aprovadas». Na demonstração, o subsídio de Natal encontrou sempre a retribuição (Ana Margarida Pinto: 2.400,00 €), e um pedido de férias de 5 dias foi recusado por ter menos de 10 dias consecutivos, antes de chegar ao recibo. Por isso os textos não se citam aqui.</span>
+
+## Causas verificadas
+
+| Causa | Como se reconhece |
+| --- | --- |
+| Falta o acordo de duodécimos | A mensagem nomeia o trabalhador e a data; não há acordo em **Salários › Preparar › O que há para fazer este mês?**, grupo **Situações e deveres com um trabalhador**, **Acordos escritos de pagamento** |
+| O subsídio de férias não encontra base | O recibo tem só a linha do subsídio, nenhuma linha entra na base e a **base da linha** está vazia |
+| O ano de referência está fora do que o programa conhece | A mensagem refere o parâmetro e uma data desse ano, ou um ano futuro |
+| A indemnização não tem valor | Não há botão para a pagar: as férias não estão marcadas como **Alterada pela empresa**, ou **Indemnização pela alteração** está a zero |
+
+## O que confirmar
+
+1. O **Tipo** do lote e o período.
+2. No recibo do trabalhador nomeado: as linhas, a quantidade, a base e a coluna **Férias do ano** da linha do subsídio.
+3. Em **Salários › Preparar › O que há para fazer este mês?**, grupo **Situações e deveres com um trabalhador**, **Acordos escritos de pagamento**: se há acordo em vigor na data do recibo.
+4. Nas **Ausências**: as férias do trabalhador e o estado do pedido.
+
+## Como resolver
+
+1. **Duodécimo.** Registe o acordo em **Acordos escritos de pagamento** (mesmo grupo do painel), com o documento anexado. Se o trabalhador não acordou duodécimos, retire a linha do recibo.
+2. **Sem base.** Preencha a base da linha do subsídio, ou ponha no recibo a retribuição base, marcada no subsídio.
+3. **Ano de referência.** Corrija **Férias do ano** ou limpe o campo: assim, fica o ano do recibo. Se o ano está certo e falta o parâmetro, peça-o a quem mantém os dados legais nacionais.
+4. **Indemnização.** Nas férias, marque **Alterada pela empresa** e preencha **Indemnização pela alteração**, se a empresa alterou ou interrompeu férias já marcadas. <span className="fd-pending">Pendente de validação por contabilista certificado: quando é devida a indemnização do art. 243.º.</span>
+5. Carregue de novo em **Calcular**.
+
+<HelpCallout type="nota" title="Limite de hoje">
+Na demonstração, sem ocorrências no mês, o recibo do lote de Natal trouxe só a linha **Subsídio de Natal**. <span className="fd-pending">Pendente de validação no ecrã: o recibo de subsídio de um mês com prémios, benefícios em espécie ou prestações de um adiantamento, e a correção de uma ausência depois de validado um recibo de subsídio.</span>
+</HelpCallout>
+
+## Resultado esperado
+
+- **Calcular** termina sem janela e o lote passa a **Calculado**. Para mexer de novo nas linhas, **Repor em rascunho** pede um motivo. No exemplo, o recibo de Ana Margarida Pinto fica com **Subsídio de Natal** de 2.400,00 €.
+- Para o processo completo, siga [Como pagar os subsídios de férias e de Natal](/payroll-pt/subsidios-de-ferias-e-natal). Se o bloqueio é de outro tipo, siga [Não consigo processar os salários do mês](/troubleshooting/processamento-de-salarios-bloqueado).
+
+## Quando contactar o suporte
+
+- A mesma mensagem continua depois de corrigir o que ela pede.
+- A mensagem refere um parâmetro de um ano recente: o programa devia tê-lo.
+- O valor calculado não bate com a retribuição e o tempo de serviço do trabalhador.
+
+## Informação a enviar
+
+- O nome do lote, o tipo e o período.
+- O trabalhador nomeado e as linhas do recibo.
+- O texto completo da mensagem, copiado do ecrã.
+- O perfil com que entrou.

@@ -1,0 +1,144 @@
+---
+id: emitir-uma-nota-de-credito
+slug: /fiscal-core/emitir-uma-nota-de-credito
+title: Como emitir uma nota de crédito
+sidebar_label: Emitir uma nota de crédito
+sidebar_position: 1
+description: Corrigir uma fatura já emitida, no todo ou em parte, com uma nota de crédito ligada à fatura original e com os dados da regularização do IVA.
+keywords: [nota de crédito, nota de credito, notas de crédito de clientes, NC, devolução, devolucao, devolução de mercadorias, corrigir fatura, desconto depois da fatura, erro de preço, erro de preco, erro de quantidade, retificar fatura, regularização do IVA, regularizacao do iva, artigo 78, prazo do artigo 78, estornado, creditar acima do faturado]
+doc_id: DOC-0024
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7a46de91a)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/iva/declaracao-periodica-de-iva, fiscal-core/faturacao/anular-uma-fatura, troubleshooting/faturacao-e-at/nao-consigo-alterar-um-documento-certificado]
+---
+
+## Para que serve?
+
+{/* Exceção CC campo 40: resumo com ligação à declaração periódica; a mesma afirmação está em «Que motivo de IVA escolher», com a marca do contabilista certificado. */}
+
+Uma fatura emitida já não se altera: tem número, ATCUD e assinatura. Quando o cliente devolve mercadoria, quando o preço ou a quantidade estavam errados, ou quando dá um desconto depois de faturar, a correção faz-se com uma nota de crédito.
+
+A nota de crédito é um documento certificado novo, com série, número e ATCUD próprios, que indica a fatura que corrige e o motivo. Pode creditar a fatura toda ou só uma parte. Os dados da regularização do IVA que preenche aqui seguem para a [declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva) (campo 40 e o seu anexo).
+
+## Quando utilizar?
+
+- O cliente devolveu toda a mercadoria ou parte dela.
+- A fatura saiu com um preço ou uma quantidade errados.
+- Deu um desconto ou um abatimento depois de emitir a fatura.
+- A operação foi anulada depois de faturada (devolução, rescisão do contrato): é a «anulação da operação» do art. 78.º, n.º 2 do CIVA.
+
+A nota de crédito **não serve para anular uma fatura** emitida por engano nem para corrigir só dados (NIF, morada, descrição): nesses casos anula-se a fatura e emite-se outra (Ofício-Circulado 25120/2026, pontos 4 a 6). Se a fatura saiu com valor ou IVA a menos, a correção é uma nota de débito. A regra completa está em [Como corrigir uma fatura](/fiscal-core/corrigir-uma-fatura).
+
+Dois casos têm um caminho próprio:
+
+- **Os dados do cliente estão errados** (nome, morada, NIF): o ofício manda anular e emitir de novo, sem nota de crédito ([Como corrigir uma fatura](/fiscal-core/corrigir-uma-fatura)); veja [Não consigo alterar uma fatura já emitida](/troubleshooting/nao-consigo-alterar-um-documento-certificado).
+- **A fatura foi emitida por engano** e a operação não aconteceu: veja [Como anular uma fatura ou outro documento certificado](/fiscal-core/anular-uma-fatura).
+
+## Onde encontrar?
+
+**Faturação › Faturar › Faturas de clientes** › abrir a fatura › **Nota de Crédito**
+
+As notas de crédito emitidas ficam em **Faturação › Faturar › Notas de crédito de clientes**.
+
+## Antes de começar
+
+- O seu perfil é **Administrativo** ou **Contabilista**.
+- A fatura está no estado **Publicada**.
+- Sabe o que aconteceu (devolução, erro, desconto) e quando: a data que conta para o prazo de regularização do IVA depende do motivo (ver o passo 5 e «Prazo para regularizar o IVA»).
+- Tem, ou vai ter, uma prova de que o cliente tomou conhecimento da correção (por exemplo, o e-mail com que lhe envia a nota). O fiscaldoo pede que a indique.
+
+{/* Nota interna (auditoria v22-E, 06/11/2026, master d83bdf7ae, base docs_demo_v22e_test, porta 8372): por clique com utilizadores criados só com cada valor do campo Perfil (DEC-1777): o Contabilista emitiu a NC D26/4 (sobre a FT D26/35, cópia publicada da FT D26/33 feita por RPC como admin), da janela Criar nota de crédito até Confirmar. Série (passo «Criar a série em falta»): só o Contabilista certificado tem Contabilidade › Configurar › Faturação certificada › Séries fiscais. Tem Novo e Criar e comunicar (a janela «Criar e comunicar uma série» abriu; não foi submetida); o Administrativo não tem Contabilidade e o Contabilista, o Auditor e a Gerência não têm o menu. */}
+{/* Nota interna (DOCS-046, lote v22-E, 06/11/2026, master d83bdf7ae, base docs_demo_v22e_test, porta 8362): só esta frase, por clique com utilizadores criados só com cada perfil (DEC-1777): o Administrativo emitiu a NC D26/2 (sobre a FT D26/33) e o Contabilista a NC D26/3 (sobre a FT D26/34, criada por RPC como cópia da D26/33), da janela Criar nota de crédito até Confirmar. O resto do artigo não foi repercorrido. */}
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Faturação › Faturar › Faturas de clientes** e abra a fatura que quer corrigir.
+2. Carregue em **Nota de Crédito**.
+   ![Fatura FT D26/32 publicada, com o botão Nota de Crédito assinalado na barra de botões](/images/fiscal-core/emitir-uma-nota-de-credito/01-fatura-com-o-botao-nota-de-credito.png)
+3. Na janela **Criar nota de crédito**, em **Motivo**, escolha o que aconteceu: **Devolução de mercadorias**, **Erro de preço**, **Erro de quantidade ou de artigo**, **Anulação da operação**, **Desconto ou abatimento concedido** ou **Outro (descrever)**. Com **Outro (descrever)**, escreva o motivo em **Descreva o motivo**.
+4. Em **Motivo da regularização de IVA**, escolha o enquadramento. A própria janela indica: «Devolução, anulação ou desconto numa venda: n.º 2 do art. 78.º», que na lista se chama **Anulação ou redução da operação (invalidade, resolução, rescisão, redução do contrato, devolução de mercadorias, abatimentos ou descontos)**. Para um erro de preço ou de quantidade, veja «Que motivo de IVA escolher» abaixo.
+5. Em **Data de referência da regularização**, escreva a data que o motivo de IVA pede. Por baixo do campo, a janela diz qual é:
+   - **Anulação ou redução da operação (…)**: «A data de referência é: Data das circunstâncias que anularam a operação ou reduziram o seu valor», ou seja, o dia da devolução, do desconto ou da anulação.
+   - **Correção de erros materiais ou de cálculo, a favor do sujeito passivo**: «A data de referência é: Data em que nasceu o direito à dedução (art. 22.º n.º 1) ou data do registo».
+   - **Fatura inexata, IVA liquidado a mais (retificação facultativa)**: a janela não mostra essa frase nem exige a data. Deixe o campo vazio: o fiscaldoo conta o prazo a partir da data da fatura que está a corrigir.
+6. Em **Prova da regularização**, diga como demonstra que o cliente tomou conhecimento da correção, por exemplo «E-mail de 07/11/2026».
+   ![Janela Criar nota de crédito preenchida: motivo Devolução de mercadorias, motivo da regularização de IVA Anulação ou redução da operação, data de referência 07/11/2026 e prova E-mail de 07/11/2026](/images/fiscal-core/emitir-uma-nota-de-credito/02-janela-criar-nota-de-credito.png)
+7. Deixe **Diário** e **Data de Reversão** como estão: o diário é o da fatura e a data é a de hoje, que passa a ser a data da nota de crédito.
+8. Carregue em **Criar nota de crédito**. Abre-se a nota em rascunho, com todas as linhas da fatura.
+9. Se só vai creditar uma parte, mude a quantidade ou o preço das linhas e apague as linhas que não quer creditar. Não mude o cliente nem a taxa de IVA.
+   ![Linha da nota de crédito em rascunho com a quantidade alterada de 10 para 2 unidades](/images/fiscal-core/emitir-uma-nota-de-credito/03-linhas-com-a-quantidade-devolvida.png)
+10. Carregue em **Confirmar**. A nota de crédito recebe o número da série, o ATCUD e a assinatura.
+
+</StepByStep>
+
+**Exemplo.** A fatura `FT D26/32` tem 10 kits de material de escritório a 85,00 € + IVA 23 %, total 1.045,50 €. O cliente devolve 2 kits a 07/11/2026. No rascunho, a quantidade passa de 10 para 2 e a nota de crédito fica em 170,00 € + IVA 39,10 € = 209,10 €. A fatura passa a **Pago em parte**, com 836,40 € em dívida. É o mesmo exemplo do vídeo.
+
+## Resultado esperado
+
+- A nota de crédito está **Publicada**, com o número da série de notas de crédito (`NC D26/2` no exemplo) e o ATCUD (`DEMONC2026-2`).
+- Na nota aparecem o **Documento retificado** (a fatura), o **Motivo da retificação** e os dados da regularização do IVA. O botão **Fatura original** abre a fatura.
+- A nota fica abatida à fatura. Se creditou uma parte, a fatura mostra **Pago em parte** e o valor em dívida desce na mesma medida. Se creditou a fatura toda, a fatura passa a **Estornado** (não fica «Pago»: não houve recebimento).
+
+![Nota de crédito NC D26/2 publicada, com a série NC D26 e o ATCUD DEMONC2026-2](/images/fiscal-core/emitir-uma-nota-de-credito/04-nota-de-credito-emitida.png)
+
+## Vídeo demonstrativo
+
+<VideoTutorial src="/videos/emitir-uma-nota-de-credito.mp4" captions="/videos/emitir-uma-nota-de-credito.vtt" poster="/videos/emitir-uma-nota-de-credito-poster.png" width="1440" height="1140" title="Emitir uma nota de crédito por uma devolução" duration="34 s" />
+
+## Notas importantes
+
+### Prazo para regularizar o IVA
+
+O prazo depende do **Motivo da regularização de IVA** que escolhe, e a data a partir da qual conta também (passo 5):
+
+- **Anulação ou redução da operação (…)** (art. 78.º n.º 2 do CIVA): até ao fim do período de imposto seguinte ao da data das circunstâncias que anularam ou reduziram a operação. Num regime mensal, uma devolução de junho regulariza-se até 31 de julho.
+- **Fatura inexata, IVA liquidado a mais (retificação facultativa)**: dois anos a contar da data da fatura que corrige.
+- **Correção de erros materiais ou de cálculo, a favor do sujeito passivo**: dois anos a contar da data em que nasceu o direito à dedução ou da data do registo.
+
+Hoje o fiscaldoo deixa confirmar uma nota fora do prazo e regista o aviso no histórico de mensagens da nota, por exemplo: «O documento … regulariza IVA a favor do sujeito passivo em 28/10/2026, depois do prazo legal (31/07/2026, art. 78.º do CIVA: CIVA art. 78.º n.º 2). Confirme com o contabilista se a dedução ainda é possível.» Se vir este aviso, fale com o contabilista certificado antes de contar com a recuperação do IVA. <span className="fd-pending">Pendente de validação por contabilista certificado: prazos e data de contagem do art. 78.º.</span>
+
+### Que motivo de IVA escolher
+
+<HelpCallout type="risco" title="O motivo do IVA decide o campo e o prazo">
+Para uma nota de crédito de venda, a lista oferece seis motivos: **Anulação ou redução da operação (…)**, **Fatura inexata, IVA liquidado a mais (retificação facultativa)**, **Correção de erros materiais ou de cálculo, a favor do sujeito passivo**, **Dedução do IVA de créditos incobráveis (…)**, **Dedução do IVA de outros créditos (…)** e **e-Taxfree (…)**. Todos levam a regularização ao campo 40, mas cada um tem o seu prazo e as suas condições. Devolução, anulação e desconto são **Anulação ou redução da operação**, como a janela indica. Para um erro de preço ou de quantidade, a escolha entre esse motivo, **Fatura inexata, IVA liquidado a mais** e **Correção de erros materiais ou de cálculo** depende do caso: decida-a com o contabilista certificado. Os três últimos motivos (créditos incobráveis, outros créditos, e-Taxfree) têm regras próprias e não são para corrigir uma fatura. <span className="fd-pending">Pendente de validação por contabilista certificado: motivo do IVA por tipo de erro.</span>
+</HelpCallout>
+
+### Prova da regularização
+
+Para recuperar o IVA, a empresa tem de ter prova de que o cliente tomou conhecimento da correção ou foi reembolsado (CIVA, art. 78.º n.º 5). A **Prova da regularização** regista onde está essa prova; a prova tem de existir e ficar guardada. <span className="fd-pending">Pendente de validação por contabilista certificado.</span>
+
+### Outras notas
+
+- Uma nota de crédito publicada também já não se altera. Se creditou a mais, o próprio ecrã indica o caminho: emita uma nota de débito.
+- O motivo segue para o SAF-T e para a AT. Com **Outro (descrever)**, o texto fica cortado aos 50 carateres (na demonstração, um motivo de 62 carateres ficou com os primeiros 50): escreva-o curto.
+- **Creditar a fatura em várias notas.** A nota que completa o crédito da base da fatura leva o IVA que falta, para que a soma das notas iguale a fatura ao cêntimo. O acerto faz-se ao carregar em **Confirmar**: o rascunho ainda mostra o IVA arredondado. Na demonstração, uma fatura de 1 × **Material de escritório (kit)**, de 104,55 € (85,00 € mais 19,55 € de IVA), foi creditada em duas notas de 0,5 unidades: a primeira ficou com 52,28 € (9,78 € de IVA) e a segunda, que em rascunho também tinha 9,78 € de IVA, ficou com 52,27 € (9,77 € de IVA). O histórico da segunda nota diz «O IVA desta nota de crédito foi ajustado (de 9,78 € para 9,77 €) para que as notas de crédito de “*FT D26/31*” somem exatamente o seu IVA: esta nota credita o último da base e os cêntimos de arredondamento do IVA linha a linha acertam-se aqui (CIVA art. 78.º). O total creditado não passa o do documento.», e a fatura passou a **Estornado**. <span className="fd-pending">Pendente de validação por contabilista certificado: o acerto dos cêntimos do IVA na última nota, com a base no art. 78.º do CIVA que o ecrã cita.</span>
+- **Criar nota de crédito e nova fatura** é a via transitória do Ofício-Circulado 25120/2026 (admitida até ao fim de 2026, para corrigir o IVA): emite a nota de crédito já publicada, pelo total da fatura, e abre uma fatura nova em rascunho, para o mesmo cliente e com as mesmas linhas: corrija-a e carregue em **Confirmar**. Na demonstração, com o perfil **Administrativo**, uma fatura de 123,00 € deu uma nota de crédito publicada, de 123,00 €, e um rascunho de fatura de 123,00 €.
+
+## Problemas frequentes
+
+### Não consigo carregar em Criar nota de crédito
+
+- **Sintoma:** aparece «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** **Motivo** e **Motivo da regularização de IVA** são obrigatórios; **Data de referência da regularização** e **Prova da regularização** também, conforme o motivo de IVA (e **Descreva o motivo**, com **Outro (descrever)**).
+- **O que fazer:** preencha os campos a vermelho e carregue de novo.
+
+### A nota é recusada por creditar mais do que foi faturado
+
+{/* Nota interna (DOCS-046, lote v23-K, 07/11/2026, master a3603e0f2 com o ACC-270, base docs_demo_v23k_test na 8434): mensagem de creditar a mais provocada por clique com um utilizador criado só com o perfil Contabilista: FT D26/32 (10 kits, 1.045,50 €, criada por RPC depois da FT D26/31), NC D26/2 de 2 kits (209,10 €, a fatura ficou Pago em parte com 836,40 €) e uma 2.ª nota de 9 kits recusada ao Confirmar com a janela Operação inválida; números agora com vírgula (2,00, 9,00, 10,00). O rascunho recusado foi apagado. */}
+- **Sintoma:** ao carregar em **Confirmar** abre-se a janela **Operação inválida**: «A nota de crédito Rascunho de nota de crédito (NC de FT D26/32: Devolução de mercadorias) creditaria a linha “Material de escritório (kit)” do documento “FT D26/32” acima do que foi faturado: já creditado 2,00 unidades / 170,00 €, esta nota 9,00 unidades / 765,00 €, faturado 10,00 unidades / 850,00 €. Reduza a quantidade ou o valor da linha.»
+- **Causa:** somando as notas de crédito já emitidas para essa fatura, a nova nota passaria do valor faturado.
+- **O que fazer:** reduza a quantidade ou o preço da linha até ao que falta creditar e carregue de novo em **Confirmar**.
+
+### A nota de crédito não recebe número ao confirmar
+
+- **Sintoma:** ao carregar em **Confirmar** abre-se a janela «Ainda não é possível confirmar»: «O diário «…» não tem nenhuma série do tipo «[NC] Nota de crédito» pronta para 2026. As séries ativas (…) são de outros tipos e não podem numerar este documento. … Crie e ative uma série do tipo «[NC] Nota de crédito» para 2026: o botão abaixo abre o formulário já preenchido.»
+- **Causa:** o diário da fatura não tem uma série de notas de crédito ativa para o ano da nota. A nota fica em rascunho, sem número.
+- **O que fazer:** a janela tem o botão **Criar a série em falta**, que abre o formulário da série já preenchido, mas criar e comunicar uma série é do **Contabilista certificado**. Se não tem esse perfil, carregue em **Fechar** e peça-lhe que o faça: [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais). Com a série ativa, abra o rascunho e carregue de novo em **Confirmar**.
+
+{/* Nota interna (lote v23-BE, depois do comboio 188 com o FAT-154 #4141, master 7a46de91a, docs_demo_v23be_test, porta 8504): FT D26/31 (Papelaria Central, Lda, 1 × Material de escritório (kit), 104,55 €) criada e emitida por RPC só na cópia (o número é o da cópia). Por clique, com um utilizador criado por RPC só com o perfil Administrativo: Nota de Crédito, motivo Devolução de mercadorias, Anulação ou redução da operação, rascunho com a quantidade 0,5 → Confirmar: 42,50 + 9,78 = 52,28 €; segunda nota igual: rascunho 9,78 → depois de Confirmar 9,77, total 52,27 €, mensagem do histórico citada; a fatura ficou Estornado com 0,00 € em dívida. */}

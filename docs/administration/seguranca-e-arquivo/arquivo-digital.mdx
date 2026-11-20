@@ -1,0 +1,87 @@
+---
+id: arquivo-digital
+slug: /administration/arquivo-digital
+title: Como funciona o arquivo digital e a verificação da sua integridade
+sidebar_label: Arquivo digital
+sidebar_position: 5
+description: Arquivar os ficheiros anexados aos lançamentos, ver o estado de cada um e confirmar com Verificar integridade que continuam iguais ao que foi guardado.
+keywords: [arquivo digital, integridade, hash, sha-256, anexos, conservação, arquivar, verificar integridade, ficheiro]
+doc_id: DOC-0319
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 584213fd9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/seguranca-e-arquivo/registo-de-auditoria, administration/utilizadores-e-permissoes/raio-x-de-permissoes, administration/utilizadores-e-permissoes/perfis-e-permissoes]
+---
+
+## Para que serve?
+
+Os ficheiros anexados aos lançamentos (por exemplo o PDF de uma fatura de fornecedor) entram no arquivo digital, cada um com a data até à qual tem de ser conservado. Ao **Arquivar**, o ficheiro recebe um número (`ARQ/2026/00001`). **Verificar integridade** confirma, ficheiro a ficheiro, que o ficheiro guardado continua igual ao que ficou registado; se mudou ou desapareceu, avisa e fica registado.
+
+## Quando utilizar?
+
+- Para dar número de arquivo a um comprovativo.
+- Antes de uma inspeção, para confirmar que os comprovativos continuam iguais: faz-se linha a linha, porque a lista não verifica vários ficheiros de uma vez.
+- A verificação só lê: nunca altera nem repõe o ficheiro.
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Outras definições › Arquivo › Arquivo digital**.
+
+## Antes de começar
+
+- O perfil é o de **Contabilista** (feito a 3 de novembro de 2026; o **Contabilista certificado** tem o mesmo menu).
+- O ficheiro tem de estar anexado a um lançamento ou fatura. Aqui, anexou-se pelo botão do clipe (**Anexar ficheiros**), na zona das mensagens, um PDF a uma fatura de fornecedor em rascunho, **Energia Norte, SA**, 100,00 € + IVA 23 %.
+- Só os ficheiros de empresas com país fiscal Portugal entram no arquivo.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › Outras definições › Arquivo › Arquivo digital**. A lista traz o filtro **Por rever** e as colunas **N.º de ficheiro**, **Nome**, **Lançamento**, **Criado em**, **Estado do ficheiro** e **Conservar até** (aqui, 31/12/2036: já vem preenchido antes de arquivar).
+2. Na linha do ficheiro, carregue em **Arquivar**. A mensagem diz o número recebido, e o ficheiro sai da lista porque já não está **Por rever**.
+3. Retire o filtro **Por rever** para o voltar a ver: está **Associado**, com o número (se a fatura já estiver confirmada, fica logo **Contabilizado**).
+   ![Lista sem filtro, sem as colunas Lançamento, Criado em e Conservar até, para caber na imagem: um ficheiro Por rever, sem número, com os botões Arquivar e Verificar integridade; três Associado e um Contabilizado, com número ARQ seguido e só Verificar integridade](/images/administration/arquivo-digital/01-lista-do-arquivo.png)
+4. Carregue em **Verificar integridade**, na linha, e leia a mensagem no canto do ecrã.
+
+</StepByStep>
+
+## Resultado esperado
+
+A mensagem verde diz «Arquivo digital. Verificação de integridade concluída: todos os ficheiros correspondem ao hash arquivado.». **Apesar de dizer «todos os ficheiros», só responde pela linha em que carregou:** com outro ficheiro alterado, a mensagem foi a mesma. Quando a fatura é confirmada (aqui **FTF/2026/00046**), o estado do ficheiro passa de **Associado** a **Contabilizado**.
+
+## Notas importantes
+
+- **Os estados são três:** **Por rever**, **Associado** e **Contabilizado**, e há um filtro para cada um.
+- **A lista não prova que todos os comprovativos foram anexados:** um documento que ninguém anexou não aparece.
+- **A ficha do ficheiro tem também o botão Registar como digitalização de papel.** Serve para documentos digitalizados a partir de papel e este artigo não o cobre.
+- **A verificação só deteta o que mudou fora do produto.** Compara o ficheiro com o que ficou registado: não diz se o ficheiro está legível nem se tem conteúdo. Para isso, abra-o. Dentro do produto, um ficheiro arquivado não se apaga (ver a seguir) e a ficha dele só se lê.
+
+## Problemas frequentes
+
+### «Verificação de integridade FALHADA em…»
+
+- **Sintoma:** mensagem vermelha, que fica no ecrã até a fechar: «Arquivo digital. Verificação de integridade FALHADA em: fatura-energia-norte-4.pdf. O ficheiro guardado já não corresponde ao hash arquivado; a falha ficou registada no log de auditoria.»
+- **Causa:** o ficheiro no servidor foi alterado fora do produto, danificou-se ou desapareceu (a mensagem é a mesma).
+- **O que fazer:** avise quem administra a instalação para o repor de uma [cópia de segurança](/administration/copias-de-seguranca). A falha fica no [registo de auditoria](/administration/registo-de-auditoria), como «Arquivo: verificação de integridade falhou»: o **Contabilista** não tem esse menu, por isso peça-o ao **Contabilista certificado**. A verificação não repara o ficheiro.
+
+### «…não pode ser alterado» ao trocar ou mudar o nome do ficheiro
+
+- **Sintoma:** no ecrã, a ficha do ficheiro só se lê e não tem onde o trocar nem mudar o nome. A mensagem aparece quando outro programa, por integração, o tenta alterar: «O ficheiro fatura-energia-norte.pdf é um documento justificativo conservado até 31/12/2036 (conservação legal de 10 anos) e não pode ser alterado. Mantenha-o; para o corrigir, anexe um ficheiro novo ao mesmo registo.»
+- **O que fazer:** deixe o ficheiro como está e anexe um novo ao mesmo lançamento.
+
+### «Não se pode eliminar antes dessa data»
+
+- **Sintoma:** ao apagar o ficheiro na zona dos anexos da fatura (botão **Remover**), mesmo com o administrador, a janela **Erro de Acesso**: «O ficheiro “fatura-energia-norte.pdf” é um documento de suporte de um lançamento e tem de ser conservado até 31/12/2036 (CIVA art. 52.º, CIRC art. 123.º: 10 anos, salvo prazo superior). Não se pode eliminar antes dessa data. Depois, o administrador pode purgá-lo em «Purgar registos expirados».»
+- **O que fazer:** mantenha-o. Também não se apaga o lançamento em rascunho a que está arquivado: a mensagem diz que o ficheiro «é prova do lançamento contabilístico».
+
+### O ficheiro desapareceu da lista depois de **Arquivar**
+
+- **Causa:** a lista abre com o filtro **Por rever** e o ficheiro já não está nesse estado. A mensagem manda procurar em «Lançado», mas o filtro chama-se **Contabilizado**.
+- **O que fazer:** retire o filtro **Por rever**, ou escolha **Associado** ou **Contabilizado** nos filtros.
+
+{/* Nota interna (DOCS-046, lote v7-ADM): visto no master 584213fd9 com o Contabilista; anexo pelo ecrã e PDF fictício. Falha provocada acrescentando um byte ao ficheiro no filestore da base do lote (sem SQL) e reposto; entrada archive_integrity_failed confirmada no registo. Recusa de apagar vista por clique na auditoria de 03/11, com o Contabilista; recusas de troca e nome só por chamada remota, porque a ficha não tem campos editáveis. Captura com a tabela estreitada e colunas Lançamento, Criado em e Conservar até escondidas só no recorte. Defeito: mensagem diz «Lançado», filtro é «Contabilizado». */}
+
+{/* Nota interna (lote v23-AB, master 97b34fac3, docs_demo_v23ab_test, porta 8480, utilizadores criados só com cada valor do campo Perfil): recusa do Remover provocada com o administrador num ficheiro meu (comprovativo-de-entrega.pdf) anexado à FT E26/2 desta cópia: mesmo texto, com «salvo prazo superior» e «o administrador pode purgá-lo». */}

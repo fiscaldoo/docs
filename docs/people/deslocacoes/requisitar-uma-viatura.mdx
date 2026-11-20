@@ -1,0 +1,107 @@
+---
+id: requisitar-uma-viatura
+slug: /people/requisitar-uma-viatura
+title: Como requisitar e aprovar uma viatura da empresa
+sidebar_label: Requisitar uma viatura
+description: "Como o trabalhador pede uma viatura da empresa, o responsável aprova e, no regresso, ficam registados os quilómetros feitos."
+keywords: [requisitar uma viatura, requisições de viaturas, requisicoes de viaturas, aprovar viatura, viatura da empresa, conta-quilómetros, registar o regresso, frota]
+doc_id: DOC-0262
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 255d77e63)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/o-meu-espaco/registar-uma-deslocacao, people/deslocacoes/mapas-mensais-de-deslocacoes]
+---
+
+{/* Nota interna (DOCS-046, lote v13-PPL): percorrido com demo.trabalhador e demo.rh. A viatura de exemplo foi criada por RPC (AA-00-AA, Renault Kangoo, 1000 km, responsável demo.rh). Os botões Aprovar e Recusar aparecem também a quem pede: ver LOTE_V13PPL. */}
+
+## Para que serve?
+
+Reserva uma viatura da empresa para uma deslocação, com a aprovação do responsável. Evita que duas pessoas contem com a mesma viatura e deixa registados os quilómetros feitos.
+
+## Quando utilizar?
+
+- O trabalhador vai precisar de uma viatura da empresa.
+- O responsável da viatura tem um pedido para decidir.
+- O trabalhador voltou e tem de indicar o conta-quilómetros.
+
+## Onde encontrar?
+
+- Quem pede: **O meu espaço › Deslocações e despesas › Requisitar uma viatura**.
+- Recursos Humanos: **Pessoas › Tempo de trabalho › Deslocações › Requisições de viaturas**, com os pedidos de todos.
+
+## Antes de começar
+
+- Qualquer trabalhador faz o pedido. Os passos foram feitos até ao fim com o perfil **Trabalhador**, para pedir e devolver, e com o **Gestor de RH**, responsável da viatura, para aprovar.
+- A viatura tem de estar na frota e aparecer na lista **Viatura**. Se não aparecer, peça a quem gere a frota.
+
+## Como utilizar
+
+### Pedir a viatura
+
+<StepByStep>
+
+1. Abra **O meu espaço › Deslocações e despesas › Requisitar uma viatura** e carregue em **Novo**.
+2. Escolha a **Viatura**. A **Matrícula** preenche-se sozinha.
+3. Indique o **Levantamento** e o **Regresso** (data e hora), o **Destino** e o **Motivo**.
+   ![Pedido em Rascunho: viatura AA-00-AA, levantamento às 09:00 e regresso às 18:00 de 16/11/2026, destino Porto, motivo Visita a um cliente](/images/people/requisitar-uma-viatura/01-pedido.png)
+4. Carregue em **Pedir**. O pedido recebe uma referência (aqui **VR/0001**) e o estado passa a **Por aprovar**.
+
+</StepByStep>
+
+### Aprovar ou recusar
+
+<StepByStep>
+
+1. O responsável da viatura recebe uma atividade para aprovar. Também pode abrir o pedido em **Pessoas › Tempo de trabalho › Deslocações › Requisições de viaturas**.
+2. Carregue em **Aprovar** ou **Recusar**. Ao aprovar, o estado passa a **Aprovada** e **Aprovada por** fica com o nome de quem aprovou.
+
+</StepByStep>
+
+### Registar o regresso
+
+<StepByStep>
+
+1. Abra o pedido em **Requisitar uma viatura**.
+2. Preencha o **Conta-quilómetros no regresso** (aqui, 1180).
+3. Carregue em **Registar o regresso**.
+
+</StepByStep>
+
+## Resultado esperado
+
+- O estado passa a **Devolvida** e **Quilómetros feitos** mostra a diferença: de 1000 km à saída para 1180 km no regresso dá **180,00**.
+- O conta-quilómetros da viatura na frota passa para 1180.
+
+![Pedido no estado Devolvida com o conta-quilómetros à saída de 1000, no regresso de 1180 e 180 quilómetros feitos](/images/people/requisitar-uma-viatura/02-devolvida.png)
+
+## Notas importantes
+
+- **Quem aprova.** Aprova o responsável da viatura ou, se a viatura não tiver responsável, quem gere a frota. Se quem pede é o condutor habitual da viatura, o pedido fica aprovado logo. Pendente de validação no ecrã: na demonstração só se viu o caso com responsável.
+- **Os botões Aprovar e Recusar também aparecem a quem pede**, mas só o responsável da viatura ou a gestão da frota os podem usar (veja «Problemas frequentes»).
+- **Deslocação.** Uma deslocação em viatura da empresa só se submete com um pedido aprovado dessa pessoa para esses dias. Pendente de validação no ecrã. Veja [Como registar uma deslocação e pedir as ajudas de custo](/people/registar-uma-deslocacao).
+- **Depois de pedir, os dados não se mudam.** Para mudar a viatura, as datas ou o destino, carregue em **Cancelar** e faça outro pedido.
+- **O que quem pede vê da viatura.** Quem não gere a frota não vê custos nem valores da viatura.
+- **Não há calendário por viatura.** Para saber se está livre, peça-a: a sobreposição é recusada.
+
+## Problemas frequentes
+
+### «A viatura já está requisitada de … a …»
+
+- **Sintoma:** ao carregar em **Pedir** aparece «A viatura já está requisitada de 16-11-2026 09:00 a 16-11-2026 18:00 (VR/0001). Como resolver: escolha outra viatura ou outras datas.»
+- **Causa:** outro pedido por aprovar ou aprovado cobre essas horas.
+- **O que fazer:** escolha outra viatura ou outras datas.
+
+### «… não tem conta-quilómetros no regresso»
+
+- **Sintoma:** ao carregar em **Registar o regresso** aparece «VR/0001 não tem conta-quilómetros no regresso. Como resolver: preencha o conta-quilómetros no regresso.»
+- **Causa:** o campo está vazio.
+- **O que fazer:** preencha **Conta-quilómetros no regresso** e carregue outra vez no botão.
+
+### «… é aprovada pelo responsável da viatura …»
+
+- **Sintoma:** quem pede carrega em **Aprovar** e aparece «VR/0003: é aprovada pelo responsável da viatura (RH (demonstração)) ou pelos gestores da frota, e nunca por quem a pede. Como resolver: peça-lhes que a aprovem.»
+- **Causa:** o botão aparece a todos, mas só o responsável da viatura ou a gestão da frota podem aprovar.
+- **O que fazer:** peça-lhes que aprovem.

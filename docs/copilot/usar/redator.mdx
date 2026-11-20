@@ -1,0 +1,90 @@
+---
+id: redator
+slug: /copilot/redator
+title: Como redigir cartas e e-mails com o Redator
+sidebar_label: Redigir com o Redator
+sidebar_position: 5
+description: "Escolher um dos seis modelos do Redator, dizer o que o texto tem de conter e rever o rascunho. Daqui nada é enviado."
+keywords: [redator, redigir, carta, e-mail, email, rascunho, lembrete de pagamento, escrever um texto, modelos de texto]
+doc_id: DOC-0288
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master a829e964b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [copilot/usar/conversa, copilot/usar/ler-documentos]
+---
+
+## Para que serve?
+
+O Redator escreve um rascunho de um e-mail ou de uma carta a partir do que lhe disser. Leia o texto, corrija-o e decida se o envia. Do Redator nada é enviado.
+
+## Quando utilizar?
+
+- Para pedir documentos em falta ou lembrar um pagamento a um cliente.
+- Para responder a um fornecedor, avisar a equipa de férias ou de um encerramento, ou escrever ao contabilista.
+- Para explicar um recibo a um trabalhador.
+
+## Onde encontrar?
+
+- **Copiloto › Agentes › Redator**.
+- Ícone **Copiloto** da barra de cima › **Escrever um texto**, que abre a mesma janela.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** ou **Contabilista certificado** (ou é o administrador): os dois têm **Copiloto › Agentes › Redator**. Os perfis **Administrativo**, **Auditor / ROC** e **Gerência** não têm este menu.
+- O administrador (ou quem tem o acesso extra **Administração fiscal**) ligou o interruptor **IA - Redator** em **Copiloto › Controlo › Interruptores**. Sem ele, a janela diz «Este agente está desligado…».
+- A empresa tem uma [ligação à IA](/copilot/ligar-a-uma-ia) pronta.
+- Feito a 5 de novembro de 2026, na Empresa Demonstração, Lda, com o perfil **Contabilista**.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Copiloto › Agentes › Redator**.
+2. Em **O que escrever**, escolha o modelo, por exemplo **Lembrar um cliente de um pagamento**.
+3. Em **Contacto**, escolha o cliente. No modelo **Explicar um recibo ao trabalhador**, escolha o recibo.
+4. Em **O que o texto tem de dizer**, escreva o que diria a um colega, com a fatura, o valor e a data.
+   ![Janela do Redator com o modelo Lembrar um cliente de um pagamento, o contacto e o texto preenchidos](/images/copilot/redator/01-janela-preenchida.png)
+5. Carregue em **Escrever o rascunho**.
+
+</StepByStep>
+
+## Resultado esperado
+
+<span className="fd-pending">Pendente de validação no ecrã: o rascunho e a passagem para a janela de e-mail. A demonstração é uma base de testes e o fiscaldoo não chama a IA a partir dela. O que está abaixo vem do guia do Copiloto e não foi visto.</span>
+
+- A janela mostra o assunto (**Resultado**) e o texto (**Resposta**), para rever.
+- **Abrir a janela de e-mail** passa o texto para um e-mail em branco, que só sai se o enviar.
+- Confira os valores e as datas: o Redator só deve usar o que foi escrito no pedido.
+
+## Notas importantes
+
+- **Os dados pessoais seguem as regras da ligação.** Um recibo tem dados de uma pessoa: com **Autorizar dados pessoais e sensíveis nesta ligação** desligado (o normal), seguem com valores fictícios. Veja [Privacidade e consentimentos](/copilot/privacidade-e-consentimentos).
+- Para mudar a ligação que o Redator usa, veja [Como escolher que ligação de IA cada agente usa](/copilot/escolher-a-ia-por-agente).
+- O pedido fica em **Copiloto › Controlo › Chamadas à IA**, também quando é recusado.
+
+## Problemas frequentes
+
+### «Escolha o cliente e escreva que documentos faltam…»
+
+- **Causa:** no modelo **Pedir documentos a um cliente**, faltam o contacto e os documentos. Nada foi enviado.
+- **O que fazer:** preencha **Contacto** e **O que o texto tem de dizer**.
+
+### «Escolha o recibo a explicar. Nada foi enviado para a IA.»
+
+- **Causa:** no modelo **Explicar um recibo ao trabalhador**, falta o recibo.
+- **O que fazer:** escolha o recibo e carregue outra vez em **Escrever o rascunho**.
+
+### «O texto ainda não tem nada para dizer, por isso nada foi enviado para a IA…»
+
+- **Causa:** **O que o texto tem de dizer** está vazio.
+- **O que fazer:** escreva o que o texto deve conter.
+
+### «A IA não é chamada a partir de um ambiente de teste. Nada foi enviado…»
+
+- **Causa:** está numa base de testes.
+- **O que fazer:** use a base de dados de produção. Nas bases de testes a IA só funciona se o administrador do sistema o permitir.
+
+{/* Nota interna (v13-COP): 4 mensagens por clique com o Contabilista. Opção inativa vista com o login de faturação. A arquitetura lista Administrativo neste artigo, mas o produto não o deixa: o artigo descreve o ecrã. O guia antigo (DeepSeek/Z.ai nunca em recibos) está desatualizado (DEC-1250/1251). Sem IA real. */}

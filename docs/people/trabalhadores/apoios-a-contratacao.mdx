@@ -1,0 +1,96 @@
+---
+id: apoios-a-contratacao
+slug: /people/apoios-a-contratacao
+title: Que apoios à contratação a empresa pode ter
+sidebar_label: Apoios à contratação
+description: "Como ver os apoios do Estado que o fiscaldoo deteta em cada contrato sem termo, pedi-los a tempo e registar a aprovação da Segurança Social."
+keywords: [apoios à contratação, apoios a contratacao, apoios do Estado, apoio ao primeiro emprego, desempregado de longa duração, referência do deferimento, pedido tardio, incentivo]
+doc_id: DOC-0246
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 589ecfd27)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/trabalhadores/contrato-de-trabalho, people/trabalhadores/cessacao-do-contrato]
+---
+
+{/* Nota interna (DOCS-046, lote v13-PPL; revisto no v17-FIS, master 00c68a6d8; revisto no lote v22-A, master d83bdf7ae, base docs_demo_v22a_test): no v22-A percorrido por clique com utilizadores criados só com o perfil Gestor de RH e só com o perfil Gerência (DEC-1777). Abrir o menu deteta os contratos: dois «1.º emprego» (01/01/2026 e 01/03/2026); o de 01/03/2026 foi pedido e aprovado com a referência DEF-2026-000123, o de 01/01/2026 ficou «Não se aplica»; o contrato de 02/11/2026 (registado no DOC-0241) foi pedido dentro do prazo e aprovado (incentivo desde 02/11/2026). O Gestor de RH não tem o campo da poupança na ficha. A recusa com ✗ é do v17-FIS (data de nascimento mudada por RPC na cópia e reposta), não repetida no v22-A. */}
+
+## Para que serve?
+
+Quando a empresa contrata alguém sem termo, pode ter direito a um apoio do Estado, mas há um prazo curto para o pedir. O fiscaldoo procura esses contratos, propõe o apoio provável e mostra a data limite, para o pedido não ficar esquecido. Quem decide e faz o pedido é sempre a empresa.
+
+O fiscaldoo **não envia nada** à Segurança Social nem ao IEFP: o pedido faz-se junto dessas entidades, e aqui fica o registo.
+
+## Quando utilizar?
+
+- Contratou alguém sem termo e quer saber se há apoio.
+- A Segurança Social respondeu ao pedido e quer registar a resposta.
+- O apoio proposto não se aplica e quer retirá-lo da lista de pendentes.
+
+## Onde encontrar?
+
+- **Pessoas › Contratos e saídas › Apoios à contratação**: os contratos com apoio proposto.
+- **Pessoas › Contratos e saídas › Apoios do Estado**: outros apoios à formação e à contratação que a empresa acompanhe. A **Gerência** abre a mesma lista em **Direção › Pessoas › Apoios do Estado**.
+
+## Antes de começar
+
+- O perfil é o **Gestor de RH**, que também aprova. Os passos foram feitos até ao fim com um utilizador só com esse perfil. A **Gerência** abre **Apoios do Estado** (em **Direção › Pessoas**), mas não tem **Apoios à contratação**: em **Pessoas › Contratos e saídas** só vê **Benefícios fiscais e aumentos**.
+- O contrato tem de existir e ser sem termo. Veja [Como registar um contrato de trabalho](/people/contrato-de-trabalho).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Pessoas › Contratos e saídas › Apoios à contratação**. Ao abrir, o fiscaldoo procura os contratos sem termo começados nos últimos 12 meses e acrescenta os que têm apoio provável. Cada linha mostra o **Trabalhador**, o **Apoio**, o **Início do contrato**, **Pedir até** e o **Estado**. As colunas **Pedido tardio** e **Alguma verificação falhou** ficam assinaladas quando se aplicam.
+   ![Lista Apoios à contratação com dois contratos e o apoio 1.º emprego: o de 01/01/2026 em Não se aplica e o de 01/03/2026 em Aprovado pela Segurança Social, com o pedido tardio assinalado](/images/people/apoios-a-contratacao/01-lista.png)
+2. Abra a linha e leia as **VERIFICAÇÕES (✓ SIM, ✗ NÃO, ? A APURAR)**. No exemplo: idade até 30 anos no início, sem contrato sem termo anterior na empresa, sem contrato sem termo noutro empregador (com **?**, porque é preciso perguntar ao trabalhador) e criação líquida de emprego. O **?** não se resolve sozinho: a resposta é sua.
+   ![Ficha do apoio aprovado: início do contrato 01/03/2026, pedir até 11/03/2026, pedido feito em 06/11/2026 e tardio, a referência do deferimento, o incentivo criado e as quatro verificações](/images/people/apoios-a-contratacao/02-ficha.png)
+3. Se o apoio se aplica, faça o pedido junto da entidade e carregue em **Pedido feito**. O **Estado** passa a **Pedido feito** e **Pedido feito em** fica com a data de hoje.
+4. Quando a Segurança Social responder, escreva o número em **Referência do deferimento** e carregue em **Aprovado pela Segurança Social**.
+5. Se o apoio não se aplica, carregue em **Não se aplica**, em qualquer altura antes de aprovar.
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, os apoios acompanham-se da mesma maneira: com o perfil **Gestor de RH**, **Pessoas › Contratos e saídas › Apoios à contratação** e **Apoios do Estado** têm as mesmas colunas, e a ficha do apoio tem os mesmos botões (**Pedido feito**, **Aprovado pela Segurança Social**, **Não se aplica**) e as mesmas **VERIFICAÇÕES (✓ SIM, ✗ NÃO, ? A APURAR)**. A **Gerência** abre **Apoios do Estado** em **Direção › Pessoas**, como no Community, e também não tem **Apoios à contratação**.
+
+{/* Nota interna (lote EE-11, DOCS-073 #4142, DEC-1794, master 589ecfd27, 12/11/2026): cópia Enterprise docs_ee_ee11_test no portátil (pg_dump da odoo20_ee_test, já em 589ecfd27; -i de hr_payroll, planning, hr_appraisal e hr_recruitment e -u de fiscaldoo_ux_kit e l10n_pt_fiscaldoo_demo; ee_neutralizar antes e construir), porta 8508, guarda de rede ligada; utilizadores criados por RPC na cópia, cada um só com um valor do campo Perfil: ee11_rh: Apoios à contratação (2 linhas detetadas, 1.º emprego: Eva Cristina Rocha e Gabriela Sousa Reis) e a ficha da 1.ª (Pedido feito, Aprovado pela Segurança Social, Não se aplica; VERIFICAÇÕES); Apoios do Estado vazio. Nenhum botão carregado. ee11_ger: Direção › Pessoas › Apoios do Estado com «Não há apoios do Estado…» e Novo; Pessoas › Contratos e saídas só com Benefícios fiscais e aumentos, nas duas cópias. Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee11_test (master 589ecfd27, porta 8518), com os mesmos utilizadores. Ver reports/LOTE_EE-11.md. */}
+
+## Resultado esperado
+
+- Depois de **Aprovado pela Segurança Social**, o **Estado** muda, a ficha fica sem botões e **Incentivo criado** aponta para o incentivo. O incentivo fica por confirmar e tem efeito nos salários depois de confirmado.
+- **Um pedido dentro do prazo** faz o incentivo começar no início do contrato: contrato de 02/11/2026, a pedir até 12/11/2026, pedido feito a 06/11/2026, incentivo a começar em 02/11/2026. **Um pedido tardio** faz com que comece no mês seguinte ao pedido. No exemplo: contrato de 01/03/2026, a pedir até 11/03/2026, pedido feito a 06/11/2026, incentivo a começar em 01/12/2026 (o nome do incentivo mostra a data como 2026-12-01).
+- Depois de **Não se aplica**, a linha fica na lista com esse estado, sem botões.
+
+## Notas importantes
+
+- **Prazo para pedir.** O limite mostrado em **Pedir até** são 10 dias a contar do início do contrato (no exemplo, 01/03/2026 dá 11/03/2026). Pendente de validação por contabilista certificado.
+- **Condições usadas na deteção.** As idades e as durações (30 e 45 anos; 12 e 25 meses de inscrição no centro de emprego) e o prazo de devolução de 24 meses vêm das regras carregadas no produto, com base no Decreto-Lei n.º 72/2017. Pendente de validação por contabilista certificado. A proposta é um ponto de partida: confirme sempre as condições junto da entidade.
+- **Situação contributiva.** O incentivo é criado por confirmar. O produto não assume que a empresa tem a situação regularizada.
+- **Depois de aprovado, o registo não se altera.** Se os dados estavam errados, termine o incentivo no contrato.
+- **Saídas.** Se a empresa cessar o contrato dentro do prazo do apoio, o aviso de devolução aparece na cessação. Pendente de validação no ecrã. Veja [Como tratar a saída de um trabalhador](/people/cessacao-do-contrato).
+- **Valor do apoio.** A ficha do **Gestor de RH** não mostra a poupança mensal do apoio.
+- **O que a lista não vê.** Só entram contratos sem termo com apoio detetado. Apoios a contratos a termo ou outros apoios locais não aparecem aqui.
+
+## Problemas frequentes
+
+### «Uma verificação falhou (✗)»
+
+- **Sintoma:** ao carregar em **Aprovado pela Segurança Social**, mesmo com a referência escrita, a janela diz «Uma verificação falhou (✗). O que aconteceu: o apoio parece não se aplicar. Como resolver: marque-o «Não se aplica» ou corrija os dados que falharam a verificação.»
+- **Causa:** uma das **VERIFICAÇÕES** está com **✗**. Por exemplo, a idade no início do contrato passa dos 30 anos. Um **?** não impede a aprovação.
+- **O que fazer:** se os dados estão errados, corrija-os na ficha do trabalhador e a verificação muda sozinha. Se estão certos, carregue em **Não se aplica**.
+
+### «Falta a referência do deferimento»
+
+- **Sintoma:** ao carregar em **Aprovado pela Segurança Social**, a janela diz «Falta a referência do deferimento. O que aconteceu: o incentivo precisa da referência dada pela Segurança Social. Como resolver: escreva-a em «Referência do deferimento» e aprove outra vez.»
+- **Causa:** o campo está vazio.
+- **O que fazer:** escreva o número dado pela Segurança Social e volte a carregar no botão.
+
+### «Não há apoios do Estado»
+
+- **Sintoma:** **Apoios do Estado** abre vazio (visto com a **Gerência** na empresa de demonstração), com «Não há apoios do Estado. Os apoios do Estado à formação e à contratação que a empresa pode pedir ficam listados aqui, com o prazo e os passos.»
+- **Causa:** a empresa ainda não tem nenhum apoio registado nesta lista. A lista abre com o filtro **Não encerrados**.
+- **O que fazer:** se está à procura de um contrato concreto, abra **Apoios à contratação**. A **Gerência** pode acrescentar um apoio em **Novo**.

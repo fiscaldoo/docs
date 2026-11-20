@@ -1,0 +1,106 @@
+---
+id: aprovar-ausencias
+slug: /people/aprovar-ausencias
+title: Como aprovar pedidos de férias e de ausência
+sidebar_label: Aprovar pedidos de férias e de ausência
+sidebar_position: 2
+description: Encontrar os pedidos de ausência por aprovar, confirmar que a prova está junta e aprovar, validar ou recusar cada um, sabendo que a Gerência decide só as férias anuais.
+keywords: [aprovar ausência, aprovar ausencia, aprovar férias, aprovar ferias, recusar ausência, recusar ausencia, pedidos de ausência, pedidos de ausencia, para aprovar, segunda aprovação, segunda aprovacao, validar ausência, voltar à aprovação, prova da ausência, anexar ficheiros, mapa de férias]
+doc_id: DOC-0251
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/ausencias-e-presencas/registar-uma-ausencia, people/ausencias-e-presencas/saldos-de-ferias]
+---
+
+## Para que serve?
+
+Uma ausência à espera de aprovação ainda não conta como decidida. Aprovar confirma-a; recusar fecha o pedido sem efeito. Alguns tipos de ausência pedem duas aprovações: a segunda chama-se **Validar**.
+
+## Quando utilizar?
+
+- Há pedidos no estado **Para Aprovar** e o mês está a acabar.
+- Chegou a prova de uma ausência que estava à espera dela.
+- Um pedido foi recusado por engano e tem de voltar a ser decidido.
+
+## Onde encontrar?
+
+**Pessoas › Férias e ausências › Pedidos de ausência**, com **Para Aprovar** escolhido no painel **ESTADO**, à esquerda. A **Gerência** decide as férias anuais em **Direção › Aprovar › Pedidos de ausência** (ver «Antes de começar»). Quem tem o perfil **Gerência** tem sempre esta entrada e decide as férias dos trabalhadores das empresas portuguesas a que tem acesso, mesmo sem ficha de trabalhador e sem estar indicada como aprovadora na ficha deles (separador **Pessoal**, secção **APROVADORES**, campo **Ausência**). Sem ficha de trabalhador, ao abrir a lista aparece o aviso «Não está associado a nenhum trabalhador na empresa atual, por isso não pode criar pedidos para si.»: não impede de decidir os pedidos dos outros.
+
+## Antes de começar
+
+- **Quem decide o quê.**
+  - O **Gestor de RH** decide todos os tipos e é o único que percorre todos os passos, até ao **Validar**.
+  - A **Gerência** só decide as **Férias anuais**: em **Direção › Aprovar › Pedidos de ausência**, a lista e o pedido **Para Aprovar** trazem **Aprovar** e **Recusar**. Se o pedido passar a **Segunda Aprovação**, só lhe resta **Recusar**: o **Validar** é do Gestor de RH. Não tem o menu **Férias e ausências** em **Pessoas**.
+  - As outras ausências (a **Dádiva de sangue**, o **Casamento**, a doença…) decide-as o Gestor de RH. A Gerência vê-as na mesma lista, sem **Aprovar** nem **Recusar**, e nem abertas têm esses botões. A **Dádiva de sangue** aparece-lhe só com o tipo **Ausência**.
+  - O perfil **Processador de salários** vê os pedidos em **Pessoas**, mas sem **Aprovar** nem **Recusar**, tal como o **Trabalhador**.
+- As **Férias anuais** que o **Gestor de RH** regista ficam aprovadas logo ao guardar: aparecem em **Pedidos de ausência** já no estado **Aprovado**, e também no **Mapa de férias**. Os pedidos que o trabalhador faz em **O meu espaço** chegam a **Para Aprovar**, e aí aparecem os outros tipos que pedem aprovação, como a **Dádiva de sangue**.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Pessoas › Férias e ausências › Pedidos de ausência**.
+2. No painel **ESTADO**, carregue em **Para Aprovar**. A lista mostra só os pedidos por decidir; cada um de **Férias anuais** traz os botões **Aprovar** e **Recusar** na linha (na linha de uma **Dádiva de sangue**, só o perfil Gestor de RH os tem).
+3. Abra o pedido, por exemplo as **Férias anuais** de Eva Cristina Rocha, de 09/11/2026 a 20/11/2026 (10 dias). Confira o trabalhador, o tipo de tempo e as datas.
+   ![Topo de um pedido de Férias anuais visto pela Gerência, no estado Para Aprovar, com os botões Aprovar e Recusar](/images/people/aprovar-ausencias/03-gerencia-ferias-para-aprovar.png)
+4. Se o tipo pede prova (por exemplo a **Dádiva de sangue**, que só o Gestor de RH decide), confirme que o documento está junto. Sem documento, o pedido mostra no topo o aviso «É obrigatório juntar um documento que justifique este tipo de ausência.».
+   - No separador **Lei portuguesa: comunicação, prova e efeito**, o campo **Documento de prova** mostra o ficheiro junto (no exemplo, `declaracao-dadiva-de-sangue.pdf`); **Anexar ficheiro** junta outro.
+   - Com o ficheiro junto, ou com a data escrita em **Prova entregue em**, o **Estado da prova** passa a **Entregue a tempo** e o aviso sai do pedido.
+   - Na **Dádiva de sangue**, o ficheiro é um dado de saúde: só quem tem também o acesso extra **Ver ausência médica** o junta. Sem esse acesso, **Anexar ficheiro** responde «Não se podem anexar ficheiros a esta ausência. O que aconteceu: um ficheiro desta ausência é um dado de saúde (RGPD, art. 9.º) e os colegas e chefias leem a ausência. Como resolver: peça ao acesso «Ver ausência médica» que o anexe (na ausência de um familiar, essa pessoa precisa também de um perfil que abra as ausências, como «RH»).» Nesse caso, escreva a data em **Prova entregue em** e peça o ficheiro a quem tem esse acesso.
+   - Se não há ficheiro nem data, não aprove: peça o documento e deixe o pedido em **Para Aprovar**.
+5. Carregue em **Aprovar**.
+6. Se o estado passou a **Segunda Aprovação**, o tipo pede uma segunda decisão (as **Férias anuais** de 10 dias do exemplo e a **Dádiva de sangue** pedem-na): aparecem **Validar**, **Voltar à aprovação** e **Recusar**. Carregue em **Validar**.
+   ![Pedido em Segunda Aprovação visto pela Gerência, só com o botão Recusar](/images/people/aprovar-ausencias/04-gerencia-segunda-aprovacao.png)
+   - A Gerência só tem **Recusar** neste passo: peça o **Validar** ao Gestor de RH.
+
+</StepByStep>
+
+Para recusar, carregue em **Recusar** no passo 5 ou no 6. O fiscaldoo não pede o motivo; se o quiser deixar escrito no pedido, use **Registar uma Nota**, por baixo do formulário.
+
+## No Enterprise
+
+No Odoo Enterprise, os pedidos aprovam-se da mesma maneira. Com a **Gerência**, em **Direção › Aprovar › Pedidos de ausência**, umas **Férias anuais** pedidas pelo trabalhador apareceram **Para Aprovar**, com **Aprovar** e **Recusar** na linha. **Aprovar** passou-as a **Segunda Aprovação**, só com **Recusar**, como no Community. Com o **Gestor de RH**, a lista **Pessoas › Férias e ausências › Pedidos de ausência** e o painel **ESTADO** são os mesmos.
+
+{/* Nota interna (lote EE-10, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): cópia Enterprise docs_ee_ee10b_test no portátil (pg_dump da odoo20_ee_test, -u dos módulos mudados até master e -i de hr_payroll, planning, hr_appraisal e hr_recruitment), porta 8504, guarda de rede ligada; utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): pedido de Férias anuais de Bruno Miguel Teixeira, 16/11 a 27/11/2026 (10 dias), criado por RPC com o utilizador Trabalhador ee10_trab; ee10_ger por clique em Direção › Aprovar › Pedidos de ausência: linha Para Aprovar com Aprovar e Recusar; Aprovar sem mensagem, linha em Segunda Aprovação só com Recusar; ee10_rh na lista Pedidos de ausência (colunas e botões iguais aos da cópia Community). Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee10_test (master e4dd4ae90, a do lote EE-10 interrompido) e com o texto do artigo. Ver reports/LOTE_EE-10.md. */}
+
+## Resultado esperado
+
+- O estado passa a **Aprovado**. No exemplo da **Dádiva de sangue**, depois de **Aprovar** e **Validar** com o Gestor de RH, fica só o botão **Voltar à aprovação**.
+- O histórico, no fundo do pedido, regista «Para Aprovar → Segunda Aprovação (Estado)», «Segunda Aprovação → Aprovado (Estado)» e «O seu pedido de *Dádiva de sangue* previsto para *05/11/2026 09:00* foi aceite».
+- Um pedido recusado fica **Recusado**. **Voltar à aprovação** põe-no outra vez em **Para Aprovar**, com **Aprovar** e **Recusar**.
+- As férias aprovadas ao guardar abrem-se no **Mapa de férias** e têm os botões **Voltar à aprovação** e **Recusar**, para as desfazer se for preciso.
+
+![Botões Voltar à aprovação e Recusar de umas férias aprovadas, abertas no Mapa de férias, com Recusar assinalado](/images/people/aprovar-ausencias/02-pedido-aprovado.png)
+
+## Notas importantes
+
+- **O campo Prova não é o documento.** **Prova** e **Prova pedida em** continuam em **Nenhuma pedida** mesmo com o ficheiro junto; o que muda é o **Estado da prova**. Antes de aprovar, leia o **Documento de prova** e o **Estado da prova**.
+- **Os trabalhadores fazem os pedidos em O meu espaço.** O pedido chega a **Para Aprovar** e leva a atividade «Aprovação de Ausência» atribuída à **Gerência** (veja [Como pedir férias ou outra ausência](/people/pedir-ferias)). Quem aprova abre o pedido e usa **Aprovar** ou **Recusar**, conforme o tipo (ver «Antes de começar»).
+
+{/* Nota interna (cor4, NF6-01; master f16f4a3e0): refeito no ecrã com Trabalhador (pedidos), Gerência, Gestor de RH e Salários. A Gerência decide só Férias anuais (can_approve/can_refuse falsos nos outros tipos; action_refuse devolve «este passo é de outro perfil…»); em Segunda Aprovação só tem Recusar. O HR-033 (#3506) já está em master: Documento de prova na ficha, Estado da prova «Entregue a tempo» com ficheiro ou data, aviso sai; o texto do P-01 foi retirado. O HR-034 (#3607) está em master mas a Gerência continua sem o menu Férias e ausências em Pessoas: manter a frase. Por validar no ecrã: a 2.ª captura («umas férias aprovadas ao guardar», 02-pedido-aprovado.png) é da ronda anterior (ba9c8bd7). */}
+
+## Problemas frequentes
+
+### O pedido não aparece em Para Aprovar
+
+- **Sintoma:** registou uma ausência e ela não está na lista filtrada.
+- **Causa:** o pedido ficou **Aprovado** ao guardar, e o histórico dele diz «A ausência foi aprovada automaticamente». É o caso das **Férias anuais** registadas pelo **Gestor de RH**.
+- **O que fazer:** no painel **ESTADO**, carregue em **Aprovado** (ou em **Tudo**) e escreva o nome do trabalhador na pesquisa. As férias também se veem em **Pessoas › Férias e ausências › Mapa de férias**; no exemplo, Hugo Miguel Santos, de 16/11/2026 a 27/11/2026, aparece nas duas listas.
+
+### Aparece «Erro de Validação» ao carregar em Aprovar
+
+- **Sintoma:** **Aprovar** abre uma janela e o pedido continua em **Para Aprovar**. Exemplo visto, com um pedido de um dia: «As férias de *Eva Cristina Rocha* de 27/10/2026 a 27/10/2026 têm 1.0 dias úteis, menos do que os 10.0 dias consecutivos de um período (CT art. 241.º/8 (gozo interpolado: no mínimo 10 dias úteis consecutivos)). O que aconteceu: períodos mais curtos são uma interpolação e precisam do acordo do empregador e do trabalhador (art. 241.º/8). Como resolver: assinale «Interpoladas, acordadas por escrito» quando o acordo existir, ou alargue o período.».
+- **Causa:** é um pedido de **Férias anuais** com menos de 10 dias úteis seguidos, que precisa do acordo escrito.
+- **O que fazer:** no pedido, assinale **Interpoladas, acordadas por escrito**, na secção **Lei portuguesa**, quando o acordo existir; se não existir, devolva o pedido para alargar o período. Veja também [Não consigo aprovar, recusar ou fazer avançar a ausência](/troubleshooting/ausencia-nao-avanca). <span className="fd-pending">Pendente de validação por contabilista certificado: a regra do art. 241.º/8 do Código do Trabalho que o ecrã cita.</span>
+
+{/* Nota interna (lote v23-AM, DOCS-069 #4052 e DOCS-066 #3947, master 8d5d6c606, docs_demo_v23am_test, porta 8502): «perfil Ver ausência médica» passou a acesso extra; a mesma recusa e o mesmo anexo aceite do registar-uma-ausencia, vistos por clique com perfil.rh e perfil.rhmed. */}
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Salários passou a Processador de salários e o Recursos Humanos a Gestor de RH; menus lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); Pessoas › Férias e ausências › Pedidos de ausência aberto por clique com o Processador de salários: 8 pedidos, nenhum botão na linha */}
+
+{/* Nota interna (lote v23-AU, master 09afad64d): na altura, a Gerência só tinha a entrada se fosse aprovadora de Ausência de alguém (HR-033, DEC-1453). Substituído pelo UX-155 (DEC-1827), ver a nota seguinte. */}
+
+{/* Nota interna (lote v23-BE, depois do comboio 188 com o UX-155 #4137, DEC-1827, master 7a46de91a, docs_demo_v23be_test, porta 8504): por clique com um utilizador criado por RPC só com o perfil Gerência, SEM ficha de trabalhador e sem ser aprovador de ninguém: Direção › Aprovar › Pedidos de ausência aparece (com Despesas por aprovar e Pagamentos a fornecedores) e abre com o aviso «Não está associado a nenhum trabalhador…»; o pedido de Férias anuais de Eva Cristina Rocha (09/11–20/11/2026, 10 dias, criado por RPC com o utilizador do Trabalhador da demonstração, como em O meu espaço) aparece em Para Aprovar com Aprovar e Recusar na linha e no pedido; Aprovar → Segunda Aprovação, só com Recusar; histórico «Para Aprovar → Segunda Aprovação (Estado)». Só se testou a Empresa Demonstração. As capturas 03 e 04 continuam iguais ao ecrã. */}

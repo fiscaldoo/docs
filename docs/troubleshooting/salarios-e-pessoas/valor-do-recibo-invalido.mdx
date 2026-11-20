@@ -1,0 +1,132 @@
+---
+id: valor-do-recibo-invalido
+slug: /troubleshooting/valor-do-recibo-invalido
+title: Um valor ou uma data do recibo não é aceite
+sidebar_label: Valor ou data do recibo recusados
+description: Porque o recibo recusa um período, uma data de serviço ou uma base negativa, porque o lote recusa o período, e como corrigir cada caso.
+keywords: [valor do recibo, data do recibo, período do recibo, periodo do recibo, superior a um ano, ano de rendimento, não é aceitável, nao e aceitavel, fim do período, fim do periodo, serviço até, servico ate, serviço desde, servico desde, fora do período, fora do periodo, base negativa, é negativa, e negativa, período do lote, periodo do lote, acaba antes de começar, acaba antes de comecar]
+doc_id: DOC-0400
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c643480c2)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado, payroll-pt/processar-e-pagar/recibo-de-vencimento]
+---
+
+## Sintoma
+
+Ao guardar um recibo em **Salários › Processar › Recibos de vencimento**, ou um lote em **Salários › Processar › Processar o mês**, abre-se **Erro de Validação** e o que escreveu não fica gravado.
+
+## Mensagem
+
+Vistas com o perfil **Processador de salários**, na Empresa Demonstração, Lda. Os nomes, as datas e os valores mudam com o seu caso.
+
+**Início do período** e **Fim do período**, num recibo novo:
+
+> «O período do recibo de «*Diogo Ferreira Lopes*» é superior a um ano (*01/11/2026 a 31/12/2027*). O que aconteceu: um recibo paga um período de processamento (um mês, ou os dias de um acerto final); o ano de rendimento, as tabelas e as declarações são os do ano em que termina. Como resolver: corrija as datas ou divida o pagamento em vários recibos.»
+
+![Janela Erro de Validação: o período do recibo é superior a um ano](/images/troubleshooting/valor-do-recibo-invalido/01-periodo-superior-a-um-ano.png)
+
+> «A operação não pode ser concluída: O fim do período não pode ser anterior ao seu início.»
+
+> «O ano de rendimento *1990* do recibo de «*Diogo Ferreira Lopes*» não é aceitável. O que aconteceu: um recibo pertence ao ano em que o seu período termina, e esse ano tem de estar entre 2000 e 2028; caso contrário não há tabela, taxa nem parâmetro para o calcular e um ano escrito por engano passava despercebido. Como resolver: corrija «Início do período» e «Fim do período».»
+
+**Serviço desde** e **Serviço até**, no separador **Datas e competência**:
+
+> ««Serviço até» (*10/11/2026*) do recibo de «*Bruno Miguel Teixeira*» é anterior a «Serviço desde» (*15/11/2026*). O que aconteceu: os dias ao serviço ficariam negativos. Como resolver: troque ou corrija as duas datas.»
+
+> ««Serviço desde» (*2026-10-15*) do recibo de «*Bruno Miguel Teixeira*» está fora do período 01/11/2026 a 30/11/2026. O que aconteceu: os dias ao serviço são a parte do período em que o trabalhador trabalhou para a empresa, por isso não podem cair fora dele. Como resolver: escolha uma data dentro do período ou esvazie o campo para tomar o período todo.»
+
+**Início do período** e **Fim do período**, num lote novo:
+
+> «O período do lote acaba antes de começar. O que aconteceu: a data de fim é anterior à de início. Como corrigir: corrija as datas.»
+
+![Janela Erro de Validação: o período do lote acaba antes de começar](/images/troubleshooting/valor-do-recibo-invalido/02-periodo-do-lote-ao-contrario.png)
+
+**Valor base**, numa linha do recibo:
+
+> «A base da linha «*BASE*» do recibo de *Carla Sofia Mendes* é negativa (*-100.0*). O que aconteceu: a base de uma percentagem é um valor de remuneração e não pode ser inferior a zero. Como resolver: indique zero ou uma base positiva; para anular um valor, crie um recibo corretivo.»
+
+**Quantidade**, numa linha contada em horas (por exemplo **Trabalho suplementar**), acima das horas que o período tem (24 horas por dia):
+
+> «A quantidade da linha «*Trabalho suplementar*» do recibo de «*Diogo Ferreira Lopes*» é de *1.000,00* horas, mais do que as *720* horas dos dias do período. O que aconteceu: ninguém pode trabalhar mais horas do que as que o período tem. Como resolver: corrija a quantidade.»
+
+**Validar**, com a retribuição abaixo do salário mínimo:
+
+> «A retribuição de *Ana Margarida Pinto* (*500,00 €*) está abaixo do salário mínimo que se aplica ao trabalhador (*920,00 €*) em *420,00 €*. O que aconteceu: a retribuição mínima mensal garantida (CT art. 273.º) conta a retribuição base, as diuturnidades e as outras prestações regulares pelo trabalho normal; ajudas de custo, subsídio de refeição e prestações de atribuição acidental ou por mais de um mês não contam (art. 274.º). Pagar menos é uma contra-ordenação muito grave. Como resolver: aumente a retribuição até ao mínimo ou marque as rubricas que contam («Conta para o salário mínimo»). Cálculo: salário mínimo legal 920,00 €.»
+
+## Causas verificadas
+
+- **O período é demasiado longo, ou está ao contrário.** Um recibo paga um período de processamento e não pode passar de um ano. O fim não pode ser anterior ao início.
+- **O período do lote está ao contrário.** O **Fim do período** do lote não pode ser anterior ao **Início do período**.
+- **O ano está fora do intervalo aceite.** O ano é o do **Fim do período**. Em 2026, o ecrã aceita de 2000 a 2028: na demonstração, 1990 e 2036 foram recusados.
+- **Os dias ao serviço saem do período.** **Serviço desde** e **Serviço até** têm de ficar dentro do período do recibo, e pela ordem certa.
+- **A retribuição fica abaixo do salário mínimo.** O **Calcular** não avisa; a recusa aparece em **Validar**. <span className="fd-pending">Pendente de validação por contabilista certificado: que rubricas contam para o salário mínimo em cada caso.</span>
+- **As horas de uma linha passam as do período.** Num recibo de novembro (30 dias), uma linha em horas não pode passar de 720.
+- **Quis abater um valor com um número negativo.** A base de uma linha não pode ser negativa: uma anulação faz-se com um recibo corretivo.
+
+## O que confirmar
+
+1. O ano escrito nas duas datas do período.
+2. Se os dias ao serviço são mesmo diferentes do período. Se não forem, deixe **Serviço desde** e **Serviço até** vazios.
+3. Se o valor negativo é um desconto que deve ter a sua própria rubrica, ou a anulação de um valor de um recibo já fechado.
+
+## Como resolver
+
+### O período ou o ano
+
+1. Carregue em **Fechar** na mensagem.
+2. Corrija **Início do período** e **Fim do período** e guarde. Na demonstração, estas duas datas só se escrevem antes de o recibo ser guardado pela primeira vez. Se já o guardou com as datas erradas, anule-o em **Ações › Anular** e crie outro. Para um pagamento de mais de um ano, faça um recibo por período, como a mensagem indica.
+
+### O período do lote
+
+Carregue em **Fechar**, corrija **Início do período** e **Fim do período** e guarde. Na demonstração, o lote gravou-se em **Rascunho**, com **Criar os recibos do mês** na barra.
+
+### Os dias ao serviço
+
+No separador **Datas e competência**, corrija as duas datas ou esvazie os campos para valer o período todo.
+
+### As horas de uma linha
+
+Corrija a **Quantidade** da linha para as horas que o trabalhador fez (por exemplo, as horas de trabalho suplementar do mês) e grave.
+
+**Quem faz:** Processador de salários.
+
+### A base de uma linha
+
+Escreva zero ou um valor positivo. Se o que quer é anular um valor de um recibo fechado: [Não consigo criar ou validar um recibo corretivo](/troubleshooting/recibo-corretivo).
+
+**Quem faz:** Processador de salários.
+
+### A retribuição abaixo do salário mínimo
+
+Se a retribuição está errada, registe uma versão nova do contrato com o valor certo: [Como alterar o salário de um trabalhador](/payroll-pt/alterar-o-salario). Se a retribuição está certa e faltam prestações na conta, marque nas rubricas **Conta para o salário mínimo**. Depois, no recibo, carregue em **Calcular** e em **Validar**.
+
+**Quem faz:** Administrador de Salários.
+
+### Uma quantidade errada que foi aceite
+
+O ecrã pode não recusar uma **Quantidade** errada. Na demonstração, com o **Valor base** a zero, uma quantidade de -1 e outra de 9.999 gravaram-se, e o recibo foi validado, só com o aviso «Linha sem explicação.». Confira as quantidades antes de validar: um recibo validado [já não se altera](/troubleshooting/recibo-validado-nao-se-altera).
+
+{/* Nota interna (DOC-0400): a recusa do lote pago não se cita, porque não há caminho no ecrã: o recibo não tem campo de lote, a lista de recibos de um lote pago é só de leitura e duplicar um recibo pago cria um rascunho sem lote (docs-aud-v16restos). Lote v18-B (master 00c68a6d8): recusa do salário mínimo por clique com o Administrador de Salários, depois de uma versão de contrato de 500,00 € criada por RPC na cópia. Não citadas porque um utilizador não chega lá: recibo fora do lote (o recibo não tem campo de lote) e horas a mais (o Trabalho suplementar da demonstração não é de quantidade manual). */}
+
+{/* Nota interna (DOCS-063 req. 46233, lote v23-X, 08/11/2026, master cebcb888d): com um utilizador criado só com o perfil Processador de salários, Salários › Processar › Recibos de vencimento › Novo: o recibo continua sem campo de lote (Linhas, Segurança Social e IRS, Datas e competência, Pagamento e obrigações), por isso a recusa do recibo fora do lote continua sem caminho. As horas a mais não foram repetidas neste lote. */}
+
+{/* Nota interna (DOCS-063 req. 46233, lote v23-AC, master 97b34fac3, docs_demo_v23ac_test, porta 8482): horas a mais provocadas por clique com um utilizador criado só com o perfil Processador de salários (Empresa Demonstração, Lda): recibo de novembro de Diogo Ferreira Lopes criado por RPC só na cópia, em Rascunho, com uma linha Trabalho suplementar de 10 horas; no ecrã, Quantidade 1000 e guardar: Erro de Validação citado (desde o PAY-085, a rubrica Trabalho suplementar também é conferida). O recibo ficou em Rascunho com as 10 horas. */}
+
+## Resultado esperado
+
+O recibo grava-se sem janela de erro e **Calcular** fica disponível. Depois, siga o [recibo de vencimento](/payroll-pt/recibo-de-vencimento).
+
+## Quando contactar o suporte
+
+- As datas estão certas e a recusa mantém-se.
+- Uma quantidade errada ficou num recibo já validado e não sabe como corrigir.
+
+## Informação a enviar
+
+- O nome do trabalhador e o período do recibo.
+- O texto completo da mensagem, copiado do ecrã.
+- O perfil com que entrou.

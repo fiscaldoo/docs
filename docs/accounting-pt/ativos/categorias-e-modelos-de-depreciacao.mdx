@@ -1,0 +1,102 @@
+---
+id: categorias-e-modelos-de-depreciacao
+slug: /accounting-pt/categorias-e-modelos-de-depreciacao
+title: Como configurar as categorias de ativos e os modelos de depreciação
+sidebar_label: Categorias e modelos de depreciação
+sidebar_position: 0
+description: Criar um modelo de depreciação (linha reta ou quotas degressivas, por anos ou por taxa), escolhê-lo na categoria de ativos e ver os ativos novos herdarem o método e a vida útil; o que o ecrã recusa.
+keywords: [categorias de ativos, modelo de depreciação, modelo de amortização, taxa DR 25/2009, linha reta, quotas degressivas, vida útil, taxa anual, limites de baixo valor, ativo de baixo valor, depreciação, amortização, configurar ativos]
+doc_id: DOC-0122
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7cd24fcc9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/ativos/registar-um-ativo, accounting-pt/ativos/processar-depreciacoes]
+---
+
+## Para que serve?
+
+Cada ativo tem uma **categoria** (onde estão as contas do balanço e dos gastos) e um **modelo de depreciação** (o método, os anos ou a taxa). Configurar isto uma vez evita preencher o mesmo em cada ativo: quando se escolhe a categoria num ativo novo, o ativo herda o modelo, o método e a vida útil. Em SNC, os ativos tangíveis depreciam-se e os intangíveis amortizam-se; a categoria diz a que classe pertence.
+
+## Quando utilizar?
+
+- Quando a empresa começa a usar ativos fixos, ou passa a ter um tipo de ativo novo.
+- Quando quer mudar o método ou os anos por omissão de uma categoria.
+- Não o use para registar um ativo nem para o depreciar: veja [registar um ativo](/accounting-pt/registar-um-ativo) e [processar depreciações](/accounting-pt/processar-depreciacoes).
+
+## Onde encontrar?
+
+- Categorias: **Contabilidade › Configurar › Bancos e ativos › Categorias de ativos**.
+- Modelos de depreciação: **Contabilidade › Lançar › Terceiros e ativos › O que há para fazer com os ativos?**, quadro **Listas de apoio › Modelos de depreciação**. O mesmo quadro tem as **Localizações dos ativos**.
+- Taxas de depreciação fiscais e Limites de baixo valor: listas de consulta (o mapeamento do produto põe-nas em **Configurar › Bancos e ativos**, mas o Contabilista certificado não as vê nesse menu na demonstração; abriram-se pelo endereço da ação).
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**. O **Contabilista** e o **Auditor / ROC** consultam as categorias e os modelos, mas não têm o botão **Novo** (confirmado no ecrã com os três perfis).
+- A empresa tem o plano de contas com as contas dos ativos (432, 435, 4385, 6425, etc.). A demonstração traz 4 categorias: **Edifícios e outras construções**, **Equipamento administrativo**, **Equipamento de transporte** (tangíveis, 43x) e **Programas de computador** (intangíveis, 44x).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Listas de apoio › Modelos de depreciação**. Numa empresa sem modelos a lista está vazia e diz «Aqui aparecem os modelos de amortização; crie um com «Novo», indicando o método e o número de anos, e escolha-o depois ao registar um ativo.» Carregue em **Novo**.
+   ![Lista de modelos de depreciação vazia, com o botão Novo](/images/accounting-pt/categorias-e-modelos-de-depreciacao/01-lista-de-modelos-vazia.png)
+2. Escreva o **Nome** (por exemplo «Equipamento, 8 anos linha reta»). Em **Método** pode escolher **Linha reta**, **Quotas degressivas, depois linear** ou **Quotas degressivas (sem passar a linear)**. Em **Definido por** escolha **Número de anos** (preencha os **Anos**) ou **Taxa anual** (preencha a **Taxa anual (%)**; os anos calculam-se). Aqui: Linha reta, Número de anos, 8.
+   ![Formulário do modelo com o nome Equipamento, 8 anos linha reta, o método Linha reta e 8 anos](/images/accounting-pt/categorias-e-modelos-de-depreciacao/02-modelo-novo.png)
+3. Grave. A **Vida útil (anos)** fica 8,00.
+   ![Modelo gravado com a vida útil de 8,00 anos](/images/accounting-pt/categorias-e-modelos-de-depreciacao/03-modelo-gravado.png)
+4. Nos dois métodos degressivos aparece o **Fator de saldo decrescente**, e a taxa pode ser a base (12,5 % dá 8 anos de vida útil). O fator tem de ser pelo menos 1 (1 equivale à taxa linear): com um valor menor o ecrã recusa e diz «O fator degressivo de “…” é no mínimo 1 (1 = a taxa linear). Corrija-o e grave de novo.»
+   ![Modelo de quotas degressivas com o fator de saldo decrescente e a taxa de 12,5 %](/images/accounting-pt/categorias-e-modelos-de-depreciacao/04-modelo-degressivo.png)
+5. Abra **Categorias de ativos** e a categoria **Equipamento administrativo**. Em **Taxa DR 25/2009 por omissão** escolha a taxa da tabela (por exemplo «[I-1565] Mobiliário») e em **Modelo de amortização por omissão** escolha o modelo criado. Grave. A categoria também tem a **Natureza fiscal**, **Um ativo por unidade**, o **Diário de ativos** e, no separador **Contas**, as contas do ativo, das depreciações acumuladas e dos gastos, da alienação e sinistros, e da revalorização e imparidade.
+   ![Categoria Equipamento administrativo com a taxa DR 25/2009 Mobiliário e o modelo Equipamento, 8 anos linha reta](/images/accounting-pt/categorias-e-modelos-de-depreciacao/05-categoria.png)
+6. Abra **Ativos fixos** e carregue em **Novo**: ao escolher a categoria **Equipamento administrativo**, o separador **Quadro contabilístico** passa a mostrar o **Modelo de depreciação** «Equipamento, 8 anos linha reta», o **Método contabilístico** Linha reta e a **Vida útil contabilística (anos)** 8,00, e as contas vêm da categoria.
+   ![Ativo novo da categoria Equipamento administrativo com o modelo, o método e a vida útil herdados](/images/accounting-pt/categorias-e-modelos-de-depreciacao/06-ativo-novo.png)
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, as categorias e os modelos de depreciação são os do fiscaldoo: **Categorias de ativos** tem as 4 categorias da demonstração, e **Modelos de depreciação**, nas **Listas de apoio** de **O que há para fazer com os ativos?**, tem **Novo** e as colunas **Método**, **Definido por**, **Vida útil (anos)** e **Taxa anual (%)** (visto com um utilizador só com o perfil **Contabilista certificado**). Os modelos de depreciação do próprio Enterprise não estão no menu.
+
+{/* Nota interna (lote EE-03, DOCS-073 #4142, DEC-1794, master e4dd4ae90, base Enterprise docs_ee_ee03_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0122. Contabilista certificado: Configurar › Bancos e ativos › Categorias de ativos com Novo, Criar categorias SNC por omissão e as colunas Classe SNC, Conta do ativo e Contas em falta (432, 435, 434, 443); Modelos de depreciação vazio com «Aqui aparecem os modelos de amortização…». O menu dos modelos do Enterprise só aparece em modo de programador (ponte). Nada criado. Ver reports/LOTE_EE-03.md. */}
+
+## Resultado esperado
+
+- O modelo aparece na lista com o método, a vida útil e a taxa; a categoria tem o modelo e a taxa por omissão; os ativos novos dessa categoria herdam o modelo, o método e a vida útil. Não há lançamentos contabilísticos nesta configuração: os lançamentos nascem quando se registam e processam os ativos ([processar depreciações](/accounting-pt/processar-depreciacoes)).
+- **Taxas fiscais** e **Limites de baixo valor** são só de consulta: o limite de baixo valor é lido da regra legal com data (na demonstração, 1.000,00 € de custo unitário, «DR 25/2009 art. 19.º n.º 1», em vigor desde 01/01/2010). <span className="fd-pending">Pendente de validação por contabilista certificado: se este limite e a taxa escolhida para cada categoria se aplicam à empresa.</span>
+  ![Lista de limites de baixo valor com o limite de 1.000,00 euros](/images/accounting-pt/categorias-e-modelos-de-depreciacao/10-limites.png)
+
+## Notas importantes
+
+<HelpCallout type="atencao" title="O ativo herda os valores da categoria ao ser criado">
+O modelo, o método e a vida útil aparecem no ativo quando se escolhe a categoria ou o modelo, e ficam **copiados** para o ativo. Se mudar depois os anos, a taxa ou o método de um modelo, ou o modelo por omissão da categoria, os ativos que já existem **não mudam**: só os ativos novos usam os valores novos. Se apagar um modelo que já está em uso, os ativos ficam sem modelo mas conservam o método e a vida útil. Se um ativo precisa de outro método ou de outros anos, altere-os no próprio ativo.
+</HelpCallout>
+
+- A **Taxa DR 25/2009** da categoria é a taxa da tabela fiscal; o **modelo** é o método contabilístico. São dois campos separados. <span className="fd-pending">Pendente de validação por contabilista certificado: como tratar a diferença entre a taxa do modelo e a taxa fiscal (ver [mapas fiscais dos ativos](/accounting-pt/mapas-fiscais-dos-ativos)).</span>
+- A lista de categorias tem a coluna **Contas em falta**, vazia nas 4 categorias da demonstração (não provocada).
+
+## Problemas frequentes
+
+### «Já existe um modelo de depreciação com este nome»
+
+- **Sintoma:** ao gravar: «A operação não pode ser concluída: Já existe um modelo de depreciação com este nome. Escolha outro nome ou edite o modelo existente.»
+- **O que fazer:** mude o nome ou edite o modelo que já existe.
+  ![Mensagem de nome de modelo repetido](/images/accounting-pt/categorias-e-modelos-de-depreciacao/07-erro-nome.png)
+
+### «precisa de um número de anos superior a zero»
+
+- **Sintoma:** com 0 anos: «O modelo “…” precisa de um número de anos superior a zero. Preencha os anos e grave de novo.»
+  ![Mensagem de anos iguais a zero](/images/accounting-pt/categorias-e-modelos-de-depreciacao/08-erro-anos.png)
+
+### «precisa de uma taxa anual acima de 0 e até 100»
+
+- **Sintoma:** com 150 %: «O modelo “…” precisa de uma taxa anual acima de 0 e até 100. Corrija a taxa e grave de novo.»
+  ![Mensagem de taxa acima de 100](/images/accounting-pt/categorias-e-modelos-de-depreciacao/09-erro-taxa.png)
+
+### Não vejo o botão Novo
+
+- **Causa:** cria e altera o Contabilista certificado (e o Administrador); os restantes perfis só leem categorias e modelos.
+
+{/* Nota interna (DOCS-046 v4-FC4, DOC-0122, master 52d1dd3ad, base docs_demo_v4fc4_test, Gestor de contabilidade; Contabilista e Auditor só leem, confirmado). Percorrido: modelo por anos, por taxa e degressivo; recusas de nome repetido, 0 anos e taxa 150; categoria com taxa DR25 [I-1565] e modelo; ativo novo herda modelo, método e vida útil 8. NÃO provocado: fator degressivo inválido (<1), arquivar/duplicar modelo, «Criar categorias SNC por omissão», categorias de outras empresas, ativo guardado e quadro de depreciação, localizações. Menus Taxas fiscais/Limites só em modo programador (não confirmado em modo programador: abertos por ação). A passagem do degressivo mostra «Taxa anual (%)» e «Vida útil» juntos. */}

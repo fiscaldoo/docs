@@ -1,0 +1,88 @@
+---
+id: motivo-de-regularizacao-de-iva
+slug: /troubleshooting/motivo-de-regularizacao-de-iva
+title: A nota de crédito pede um motivo de regularização de IVA
+sidebar_label: Motivo de regularização de IVA
+description: Porque uma nota de crédito que altera o valor ou o IVA não se confirma sem o motivo de regularização, e onde o escolher.
+keywords: [motivo de regularização de IVA, motivo de regularizacao de iva, nota de crédito pede motivo, nota de credito pede motivo, art. 78.º, artigo 78 CIVA, campo 40, campo 41, Há campos obrigatórios por preencher, Criar nota de crédito, alterar motivo depois de publicada]
+doc_id: DOC-0378
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master f671d6842)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/emitir-uma-nota-de-credito, accounting-pt/iva/declaracao-periodica-de-iva, troubleshooting/faturacao-e-at/nota-de-credito-sem-fatura-de-origem]
+---
+
+## Sintoma
+
+Ao criar uma nota de crédito a partir da fatura, a janela não avança. Ou ao carregar em **Confirmar** numa nota em rascunho abre-se **Operação inválida**. Ou quer mudar o motivo de uma nota já emitida e o campo não deixa escrever.
+
+## Mensagem
+
+Na janela **Criar nota de crédito**, com **Motivo** ou **Motivo da regularização de IVA** por preencher:
+
+> «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+
+Na nota em rascunho que indica a fatura de origem e não tem motivo, ao carregar em **Confirmar**:
+
+> «O documento *Rascunho de nota de crédito (NC de FT D26/32: Erro de preço)* altera o valor tributável ou o IVA, por isso vai ao campo 40 ou 41 da declaração periódica e precisa de um motivo de regularização de IVA. O art. 78.º do CIVA exige um motivo de uma lista fechada: escolha o motivo (por exemplo, art. 78.º n.º 2, anulação ou redução da operação) no campo «Motivo de regularização de IVA» do documento e publique-o de novo. As notas que só alteram menções (sem valor nem IVA) não precisam dele.»
+
+![Janela Operação inválida: a nota de crédito altera o valor tributável ou o IVA e precisa de um motivo de regularização de IVA](/images/troubleshooting/motivo-de-regularizacao-de-iva/01-falta-o-motivo.png)
+
+Com um motivo do sentido contrário ao da nota:
+
+> «O motivo «*Correção de erros materiais ou de cálculo, a favor do Estado*» (*CIVA art. 78.º n.º 6 (2.ª parte)*) regulariza o IVA no sentido «*A favor do Estado (campo 41)*», mas o documento *Rascunho de nota de crédito (NC de FT D26/32: Erro de preço)* tem o efeito contrário. Escolha um motivo do sentido certo (as notas de crédito de vendas e as notas de débito de compras são a favor do sujeito passivo; as notas de crédito de compras e as notas de débito de vendas são a favor do Estado).»
+
+As mensagens foram provocadas na base de demonstração, com o perfil **Contabilista**. <span className="fd-pending">Pendente de validação por contabilista certificado: os campos 40 e 41 e o artigo que a mensagem cita.</span>
+
+## Causas verificadas
+
+- **O campo ficou por preencher na janela.** **Motivo** e **Motivo da regularização de IVA** são obrigatórios: o primeiro diz porque se corrige a fatura, o segundo enquadra a regularização do IVA. O motivo **Correção de erros materiais ou de cálculo** pede também a data, e sem ela a janela não avança.
+- **O motivo foi apagado do rascunho.** A nota altera o valor ou o IVA e não se confirma sem ele.
+- **A nota foi criada com Novo e não indica a origem.** Nesse caso, a primeira recusa é a falta de origem, e o motivo só é pedido depois: veja [A nota de crédito não indica a fatura que corrige](/troubleshooting/nota-de-credito-sem-fatura-de-origem).
+- **O motivo é do sentido contrário.** Alguns motivos existem em duas versões, a favor do Estado e a favor do sujeito passivo, e a lista mostra as duas.
+- **A nota já está publicada.** Numa nota emitida, o motivo aparece só para leitura, porque alimenta a declaração periódica.
+
+## O que confirmar
+
+1. Se a nota altera mesmo o valor ou o IVA. Só as notas sem valor nem IVA dispensam o motivo.
+2. O que aconteceu: devolução, desconto, erro de preço ou de quantidade. O motivo a escolher depende disso: veja «Que motivo de IVA escolher» em [Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito).
+3. O estado da nota: **Rascunho** ou **Publicada**.
+
+## Como resolver
+
+### A nota está em rascunho
+
+1. Abra o separador **Outra Informação** da nota.
+2. Em **Motivo da regularização de IVA**, escolha o motivo da lista.
+3. Preencha os dados que esse motivo pedir, como a data de referência e a prova.
+4. Carregue em **Confirmar**.
+
+**Quem faz:** Faturação ou Contabilista.
+
+### A nota já está publicada
+
+O motivo já não se altera. Se está errado, peça a decisão ao contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: como corrigir uma nota de crédito publicada com o motivo de IVA errado.</span>
+
+### O motivo que quer usar não está na lista
+
+A lista só mostra os motivos em vigor na data da nota. O motivo **Correção de erros materiais ou de cálculo** termina a 30/06/2027 na tabela do produto. Numa nota com data posterior, deixa de ser oferecido.
+
+{/* Nota interna (DOC-0378): a recusa do motivo terminado (ERR-4685) e a do motivo de nota publicada (ERR-4683) não se conseguem provocar hoje no ecrã: a primeira precisa de uma nota com data depois de 30/06/2027; na segunda o campo é só de leitura. Citar a mensagem quando for possível. */}
+
+## Resultado esperado
+
+A nota fica **Publicada**, com o motivo, e segue para a [declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva). Na demonstração, a `NC D26/3`, de 123,00 €, da `FT D26/32`, foi recusada sem motivo e com o motivo a favor do Estado, e ficou publicada com **Correção de erros materiais ou de cálculo, a favor do sujeito passivo**.
+
+## Quando contactar o suporte
+
+- A mensagem pede o motivo numa nota sem valor nem IVA.
+- O separador **Outra Informação** de um rascunho não deixa escolher o motivo.
+
+## Informação a enviar
+
+- O número da nota, ou o da fatura de origem se a nota ainda estiver em rascunho.
+- O texto completo da mensagem, copiado do ecrã.
+- O motivo que queria usar e a data da nota.

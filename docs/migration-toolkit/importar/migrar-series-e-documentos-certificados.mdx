@@ -1,0 +1,195 @@
+---
+id: migrar-series-e-documentos-certificados
+slug: /migration-toolkit/migrar-series-e-documentos-certificados
+title: Como migrar as séries e os documentos certificados do programa anterior
+sidebar_label: Séries e documentos certificados
+description: Preparar as séries do fiscaldoo para um cliente que vem de outro programa de faturação certificado e trazer, para consulta, os documentos já emitidos com a assinatura do programa anterior, que depois nunca se alteram.
+keywords: [migração de séries, séries fiscais, programa anterior, documentos certificados, assinatura, ATCUD, continuar a série, série nova, importar faturas emitidas, Migração de documentos certificados, documento importado, Mudar para Rascunho, Portaria 363/2010]
+doc_id: DOC-0301
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master d7b8279e9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [migration-toolkit/importar/importar-documentos-em-aberto, migration-toolkit/planear/validar-a-migracao, fiscal-core/certificacao/series-documentais]
+---
+
+## Para que serve?
+
+Um cliente que passa para o fiscaldoo vem de um programa de faturação que já emitiu documentos certificados. Há duas tarefas, em dois ecrãs diferentes:
+
+1. **Migração de séries**: prepara, em rascunho, a série de cada tipo de documento que o cliente vai emitir no fiscaldoo, como **série nova** (o caminho recomendado) ou **continuando** a série do programa anterior.
+2. **Migração de documentos certificados**: traz para o fiscaldoo, só para consulta e para o SAF-T, os documentos que o programa anterior já emitiu, **com a assinatura que lhe deram**. O fiscaldoo nunca os volta a assinar e, depois de importados, **nunca os altera**.
+
+Nenhum dos dois ecrãs comunica nada à AT.
+
+## Quando utilizar?
+
+- Quando o cliente emitia faturas noutro programa e vai passar a emiti-las no fiscaldoo.
+- Quando o SAF-T de faturação do ano tem de incluir os documentos emitidos antes da mudança.
+- **Não use** para criar séries de um cliente que nunca faturou noutro programa: para esse caso veja as [séries documentais](/fiscal-core/series-documentais).
+- **Não use** a importação de documentos para os recibos e as guias que só quer arquivar: esses seguem outro caminho (ver [validar a migração](/migration-toolkit/validar-a-migracao)).
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Migração e importações › Migração de séries** e **Migração de documentos certificados**. Conferido abrindo o menu com um utilizador criado só com cada valor do campo **Perfil** e com o administrador:
+
+| Quem | Migração de séries | Migração de documentos certificados |
+|---|---|---|
+| **Administrador** | Vê e abre | Vê e abre |
+| **Contabilista certificado** | Vê e usa (percurso deste artigo) | Vê e usa (percurso deste artigo) |
+| **Contabilista**, **Auditor / ROC** | Não vê (o Auditor / ROC só tem **Registo de importações de dados** em **Migração e importações**) | Não vê |
+| **Gerência** | Não vê (não tem **Configurar**) | Não vê |
+| **Administrativo**, **Processador de salários** | Não vê (não têm a aplicação **Contabilidade**) | Não vê |
+
+## Antes de começar
+
+- O seu perfil é **Contabilista certificado**, ou é o administrador.
+- Escolha, no topo do ecrã, a empresa que está a migrar. As séries e os documentos ficam nessa empresa.
+- Para a série: tenha à mão, por cada tipo de documento, o identificador da série no programa anterior (em `FT A2026/123` é `A2026`). Se vai **continuar** a série, tenha também o número e a data do último documento emitido e o código de validação que a AT já deu a essa série.
+- Para os documentos: um ficheiro CSV em UTF-8, com ponto e vírgula entre as colunas, uma linha por documento. Colunas usadas neste exemplo (com dados inventados):
+
+  | document_no | invoice_date | system_entry_date | gross_total | hash | previous_hash | hash_control | atcud | customer_nif | customer_name | net_total | tax_rate |
+  |---|---|---|---|---|---|---|---|---|---|---|---|
+  | `FT A2026/1` | `2026-10-05` | `2026-10-05T10:15:00` | `123.00` | assinatura do documento | (vazio no primeiro) | `1` | `JFM7K2QX-1` | `599999985` | `Cliente Alfa, Lda` | `100.00` | `23` |
+  | `FT A2026/2` | `2026-10-12` | `2026-10-12T11:30:00` | `246.00` | assinatura do documento | assinatura do `FT A2026/1` | `1` | `JFM7K2QX-2` | `599999985` | `Cliente Alfa, Lda` | `200.00` | `23` |
+  | `FT A2026/3` | `2026-10-20` | `2026-10-20T16:05:00` | `61.50` | assinatura do documento | assinatura do `FT A2026/2` | `1` | `JFM7K2QX-3` | `599999985` | `Cliente Alfa, Lda` | `50.00` | `23` |
+
+  A data de entrada no sistema é a do programa anterior, tal como foi assinada, e nunca é convertida. Preencha `atcud` com o ATCUD que o programa anterior deu a cada documento: o fiscaldoo guarda-o tal como vem e usa-o no SAF-T. Se a coluna faltar ou vier vazia, **Validar** avisa (ver «Problemas frequentes») e o SAF-T levaria `0` nesse campo. O fiscaldoo nunca gera um ATCUD para estes documentos, porque a série é a do programa anterior. A coluna `customer_country` também se lê.
+- A **chave pública** do programa anterior, se a tiver (texto que começa por `-----BEGIN PUBLIC KEY-----`). Com ela, o fiscaldoo confirma que cada assinatura é mesmo do programa anterior; sem ela, só confere a forma da assinatura e marca-a como «não verificada». Nunca peça nem escreva a chave privada.
+
+## Como utilizar
+
+Se vai trazer os documentos já emitidos, pode fazer primeiro a Parte 2: a Parte 1 passa então a mostrar até onde vão os documentos importados de cada série e recusa um identificador que já lá aparece («O assistente só prepara séries em rascunho: nada é enviado à AT. Recusa um identificador já usado, incluindo os que aparecem nos documentos importados do programa antigo.», na faixa do assistente).
+
+### Parte 1: a série de cada tipo de documento
+
+<StepByStep>
+
+1. Abra **Migração de séries**. A janela explica as duas opções e traz a **Data de início das séries novas**: de outubro em diante, o primeiro dia do ano seguinte (na demonstração, a 08/11/2026, 01/01/2027); antes de outubro, hoje. Mude-a se o cliente vai começar a emitir noutra data.
+2. Carregue em **Adicionar uma linha** e escolha o **Tipo de documento** (por exemplo **[FT] Fatura**) e o **Diário** que o emite. Os documentos de transporte e de conferência não precisam de diário; os restantes sim.
+3. Em **O que fazer**, deixe **Série nova (recomendado)**. Escreva a **Série no programa anterior** (`A2026`): o **Identificador da série** é proposto com o ano da data de início (`A2027`) e pode alterá-lo. Um identificador nunca usado é o que a AT aceita para uma série nova.
+   ![Linha com o tipo Fatura, o diário Vendas, série nova, série anterior A2026 e identificador proposto A2027](/images/migration-toolkit/migrar-series-e-documentos-certificados/01-serie-nova.png)
+4. Para **continuar** a série do programa anterior, mude **O que fazer** para **Continuar a série do programa anterior**. O identificador passa a ser o antigo. Preencha o **Último número usado**, a **Data do último documento** e o **Código de validação da AT**.
+   ![Linha Fatura-recibo a continuar a série B2025, último número 321, último documento em 31/10/2026 e código de validação](/images/migration-toolkit/migrar-series-e-documentos-certificados/02-serie-continuada.png)
+5. Repita para cada tipo de documento. A coluna **Verificar** de cada linha diz o que está mal (ver «Problemas frequentes»); a coluna **Documentos importados** mostra, quando o **Identificador da série** é o de documentos já importados, até que número e data vão (na demonstração, «Os documentos importados desta série vão até ao número 3, com data de 20/10/2026.»).
+6. Carregue em **Criar as séries**. O produto abre a lista de **Séries fiscais** com as séries criadas, todas em **Rascunho** e com o **Ano** da data de início (2027). Na série continuada o **Próximo número** é o seguinte ao último usado (322), e o registo da série diz «Criada pelo assistente de migração: continua a série do programa anterior, depois do número 321.».
+   ![Lista de séries fiscais criadas: B2025 (próximo número 322, com código de validação), A2027 e C2027, todas em Rascunho](/images/migration-toolkit/migrar-series-e-documentos-certificados/05-series-criadas.png)
+
+</StepByStep>
+
+### Parte 2: os documentos já emitidos
+
+<StepByStep>
+
+1. Abra **Migração de documentos certificados** e carregue em **Novo**. A faixa do formulário diz «Os documentos mantêm a assinatura do software que os emitiu (Portaria 363/2010, art. 6.º): fica registada como veio, assinalada como importada. Este software nunca os volta a assinar e a sua própria cadeia de assinaturas recomeça na série nova.»
+2. Em **O que o ficheiro traz**, que abre com **Assinaturas de documentos já integrados**, escolha **Documentos certificados por outro software** (a terceira opção é **Distribuição analítica de documentos importados**). Preencha **Software de origem**, o **Número do certificado de origem** e o **NIF do emitente no ficheiro**, que é obrigatório e tem de ser o da empresa (na demonstração, 599999993).
+3. Em **Ficheiro de exportação (CSV)**, escolha o ficheiro e, em **Chave pública do software de origem**, cole a chave pública. **Nomes das colunas** e **Códigos de conta** ficam vazios neste exemplo.
+4. Carregue em **Validar**. Nada é escrito nos documentos neste passo. O formulário mostra **Válidos**, **Rejeitados**, **Duplicados** e o **Relatório** (no exemplo, «3 linhas: 3 válidas, 0 rejeitadas, 0 duplicadas. Assinaturas verificadas com a chave pública do software de origem.»). O relatório inclui as lacunas de numeração: o SAF-T do ano recusa uma lacuna sem justificação, e um documento anulado na origem tem de vir no ficheiro com o estado A e o seu número. O botão **Documentos** abre a lista, com o **Resultado**, a **Verificação** e o **Motivo** de cada linha.
+5. Quando o relatório for o esperado, carregue em **Importar as linhas válidas**. A janela avisa «Só as linhas válidas são registadas; as rejeitadas e duplicadas ficam no relatório com a razão. A cadeia de assinaturas deste software não é tocada. Continuar?»: carregue em **Confirmar**.
+6. O lote passa a **Importado**, com **Importados** 3 e **Importado por** e **Importado em** preenchidos (os **Válidos** passam a 0, porque já entraram). Os documentos ficam **Publicados** num diário com o tipo e a série do programa anterior (no exemplo, **FT A2026**), com o número, a data, o total, a assinatura (**Hash importado**) e o **ATCUD importado** do ficheiro.
+   ![Lista do lote depois de importado: três documentos FT A2026 com o resultado Importado e a assinatura verificada com a chave pública](/images/migration-toolkit/migrar-series-e-documentos-certificados/07-documentos-importados.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- Séries em **Rascunho**, uma por tipo de documento, com o identificador, o ano e, nas continuadas, o próximo número depois do último usado. Cada série leva uma nota a dizer como foi criada.
+- Documentos do programa anterior como faturas **Publicadas** num diário com o tipo e a série do programa anterior (no exemplo, o diário **FT A2026**, com `FT A2026/1`, `FT A2026/2` e `FT A2026/3`, de 123,00 €, 246,00 € e 61,50 €), cada um com o ATCUD do ficheiro (`JFM7K2QX-1` a `JFM7K2QX-3`), uma entrada no [registo de importações](/migration-toolkit/validar-a-migracao) (com a **Nota** «Documentos certificados por outro software: Programa de faturação anterior»), um evento **Documentos ou assinaturas de outro programa importados** em **Auditoria › Registos › Registo de auditoria** (com o **Motivo** «Documentos e assinaturas de outro programa registados como importados; a cadeia de assinaturas deste programa não foi tocada») e a cadeia de assinaturas do fiscaldoo intacta: o primeiro documento da série nova começa com a assinatura anterior vazia.
+
+### Um documento migrado nunca se altera
+
+Cada documento importado abre com a faixa «Documento importado de outro programa: mantém os dados e a assinatura com que veio e já não pode ser alterado. Para o corrigir, emita uma nota de crédito ou uma nota de débito.» Os campos que vêm do programa anterior, incluindo o **Hash importado**, o **ATCUD importado**, o **Lote de migração** e a caixa **Importado sem validação criptográfica**, estão só para leitura.
+
+![Fatura FT A2026/1 importada, com a faixa de documento importado, o Hash importado, o ATCUD importado JFM7K2QX-1 e o lote de migração](/images/migration-toolkit/migrar-series-e-documentos-certificados/08-documento-migrado.png)
+
+O que acontece a cada tentativa, provado na demonstração com o perfil Contabilista certificado:
+
+- **Mudar para Rascunho** não aparece. No topo ficam só **Imprimir**, **Emitir recibo**, **Nota de Crédito**, **Referências Multibanco** e **Ações** (com **Enviar**, **Pagar** e **Pré-visualizar**), e o documento continua **Publicada**. O número aparece uma só vez, no título e no caminho do cimo do ecrã (**Faturas › FT A2026/1**). Um documento emitido por outro programa tem número e assinatura próprios: este programa só o regista, por isso não o reabre (Portaria 363/2010, art. 6.º). Para o corrigir aqui, emita uma nota de crédito que se lhe refira, com o botão **Nota de Crédito** (CIVA, art. 36.º, n.º 6). {/* Nota interna (lote v23-AQ, depois do comboio 175 com o FIX-M189, master d277b0e80, docs_demo_v23aq_test): lote documentos_A2026.csv (FT A2026/1 a 3) criado, validado e importado por RPC na sessão de um utilizador só com o perfil Contabilista certificado; a FT A2026/1 aberta por clique com esse perfil: sem Mudar para Rascunho no topo nem em Ações (Enviar, Pagar, Pré-visualizar), caminho «Faturas / FT A2026/1» e título FT A2026/1 com o número uma só vez. A recusa «Repor a rascunho não é possível…» deixou de se ver no ecrã; a captura 09 foi refeita com o topo do documento. */}
+  ![Topo da fatura FT A2026/1 importada: os botões Imprimir, Emitir recibo, Nota de Crédito, Referências Multibanco e Ações, sem Mudar para Rascunho, e o número FT A2026/1 uma só vez](/images/migration-toolkit/migrar-series-e-documentos-certificados/09-documento-migrado-sem-rascunho.png)
+- O menu **Ações** (a engrenagem) de um documento migrado não tem **Anular documento certificado**: um documento do fiscaldoo tem. Um documento emitido por engano no programa anterior anula-se nesse programa, antes da exportação, e vem no ficheiro com o estado A. {/* Nota interna (lote v23-AN, depois do comboio 174 com o MIG-111, master a67618a71, docs_demo_v23an_test): lote documentos_A2026.csv (FT A2026/1 a 3, 123,00 €, 246,00 € e 61,50 €) validado e importado por clique com um utilizador só com o perfil Contabilista certificado; na FT A2026/1, a engrenagem tem Imprimir, Duplicar, Gerar Link Para Pagamento, Partilhar, Pagar, (Des)bloquear pagamento, Referências Multibanco, Provas de exportação e Regularizações da verba 2.42, sem Anular documento certificado; na FT D26/31, uma fatura do fiscaldoo criada para este lote, a mesma engrenagem tem Anular documento certificado. Mudar para Rascunho provocado por clique na FT A2026/1 (recusa e captura 09 novas); o documento ficou Publicado. O defeito MIG-111 (janela de anulação oferecida num documento migrado) já não se reproduz. */}
+- O menu **Ações** do documento não tem **Eliminar**, mas tem **Duplicar**: não o use num documento migrado, porque a cópia fica no diário do programa anterior. Uma fatura nova faz-se no diário do fiscaldoo (na demonstração, **Vendas**). O lote **Importado** também não tem **Eliminar**: o menu **Ações** do lote só tem **Duplicar**. {/* Nota interna: defeito novo AUD-V23U-01 (auditoria docs-aud-v23u, master cebcb888d): Duplicar da FT E2026/1 e Confirmar publicaram a FT E2026/4 no diário FT E2026, sem série do fiscaldoo, sem ATCUD e sem assinatura. */}
+- A correção faz-se com um documento novo do fiscaldoo que indica o documento que corrige (ver [emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito)). No documento migrado, carregue em **Nota de Crédito**. Na janela **Criar nota de crédito**, o **Diário** vem com o diário do programa anterior (no exemplo, **FT A2026**): mude-o para o diário que emite as notas de crédito no fiscaldoo (na demonstração, **Vendas**) antes de carregar em **Criar nota de crédito**. Assim, a nota de crédito sai na série de notas de crédito do fiscaldoo, com ATCUD e assinatura, e com a referência ao documento migrado («NC de FT …»). {/* Nota interna: defeito novo AUD-V23U-01. Com o diário proposto, a nota de crédito confirmada saiu RFTE2026/2026/00001, sem série, sem ATCUD e sem assinatura; com Vendas saiu NC D26/2 (série NC D26, ATCUD DEMONC2026-2, assinada), da FT E2026/3 (auditoria docs-aud-v23u, master cebcb888d). Lei: o documento retificativo refere a fatura que corrige (CIVA, art. 36.º, n.º 6, e art. 78.º); a lei não exige que a fatura tenha sido emitida no mesmo programa, por isso a marca de pendente saiu. Rever quando o defeito entrar em master. */}
+
+## Notas importantes
+
+<HelpCallout type="risco" title="As séries ficam em rascunho: falta comunicá-las à AT">
+Uma série nova só se pode usar depois de a AT lhe dar o código de validação, pedido no Portal das Finanças antes do primeiro documento. O assistente não comunica nada. <span className="fd-pending">Pendente de validação por contabilista certificado: a ativação de uma série migrada e o código de validação (a comunicação à AT não se faz na demonstração, que não liga à AT real).</span>
+</HelpCallout>
+
+- **Série nova ou continuar?** A série nova é a mais segura: numeração a começar em 1 e identificador novo. Continuar só se justifica se o cliente tiver mesmo de manter o identificador, e exige o número e a data exatos do último documento. Fale primeiro com o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: quando se pode continuar uma série do programa anterior.</span>
+- Uma série continuada para um ano diferente do do identificador (na demonstração, `B2025` criada com data de início 01/01/2027) fica com o **Ano** 2027 na lista. <span className="fd-pending">Pendente de validação por contabilista certificado: o ano da série continuada.</span>
+- O assistente cria **só** séries; não emite documentos nem comunica à AT. Na série continuada, **Comunicada em** fica vazio.
+- Um lote **Importado** nunca se altera nem se apaga. Se nenhuma linha puder entrar (por exemplo por o exercício estar fechado), **Importar as linhas válidas** não importa nada e o lote volta a **Rascunho** (ver «Problemas frequentes»).
+- A importação de documentos não cria nem altera séries do fiscaldoo; é por isso que a Parte 1 recusa depois um identificador que já aparece nos documentos importados.
+
+## Problemas frequentes
+
+### «Indique o identificador da série»
+
+- **Sintoma:** a linha fica com o aviso «Indique o identificador da série de [NC] Nota de crédito (por exemplo “A2027”): é por ele que a AT conhece a série e não pode ficar vazio.», e **Criar as séries** responde «Operação inválida. Não é possível criar a série de … Corrija a linha e crie as séries outra vez. Não foi criado nada.»
+- **O que fazer:** escreva o identificador (ou a **Série no programa anterior**, que o propõe).
+
+### «O identificador … já foi usado»
+
+- **Sintoma:** «O identificador “D26” já foi usado para [FT] Fatura nesta base de dados (série “FT D26”). A AT só aceita um identificador uma vez e a numeração nunca recomeça. Escolha outro identificador.» **Criar as séries** responde com a mesma frase e «Não foi criado nada.»
+- **O que fazer:** escolha um identificador novo para esse tipo de documento (por exemplo com o ano). O mesmo identificador pode existir para outro tipo de documento.
+
+### O identificador já aparece nos documentos importados
+
+- **Sintoma:** com **Série nova**, e depois de importar `FT A2026/1` a `FT A2026/3`, a linha com o identificador `A2026` diz «Os documentos importados desta série vão até ao número 3, com data de 20/10/2026. O identificador “A2026” já aparece em documentos importados do programa anterior. Uma série nova precisa de um identificador que nunca tenha sido usado: escolha outro (por exemplo com o ano) ou escolha continuar essa série.»
+  ![Linha com o identificador A2026 e o aviso de que já aparece em documentos importados](/images/migration-toolkit/migrar-series-e-documentos-certificados/03-identificador-ja-importado.png)
+- **O que fazer:** escolha outro identificador (`A2027`) ou passe a **Continuar a série do programa anterior**.
+
+### «O último número usado … é inferior a um número já importado»
+
+- **Sintoma:** ao continuar essa série com o último número 1: «O último número usado (1) é inferior a um número já importado do programa anterior (3). A numeração repetiria números: indique o último número real, pelo menos 3.»
+  ![Linha a continuar a série A2026 com o último número 1 e o aviso de que o mínimo é 3](/images/migration-toolkit/migrar-series-e-documentos-certificados/04-numero-abaixo-do-importado.png)
+- **O que fazer:** corrija para o último número real (3 ou mais) e a data do último documento (20/10/2026). Com 3 e 20/10/2026 a linha fica só com a informação dos documentos importados, sem aviso.
+
+### «A série … precisa de um diário certificado»
+
+- **Sintoma:** «Erro de Validação. A série “NC C2027” precisa de um diário certificado. Porquê: Só os documentos de transporte (GT, GR, GA, GC, GD) e de conferência (OR, PF, NE...) têm séries sem diário. Como resolver: Escolha o diário certificado que emite este tipo de documento.»
+- **O que fazer:** escolha o **Diário** da linha (para a nota de crédito, o diário **Vendas**) e carregue outra vez em **Criar as séries**.
+
+### O documento importado tem um NIF de cliente que não é válido
+
+Um documento importado de outro programa guarda o NIF do cliente tal como foi emitido, mesmo que esse número não seja um NIF português válido: o documento migrado nunca se altera (ver «Um documento migrado nunca se altera»). Ao gerar o SAF-T de faturação, o ficheiro declara esse cliente com o NIF que o documento traz, com um aviso, e nunca como **Consumidor final**. A mensagem do SAF-T diz que o documento emitido não muda: corrige-se a ficha do cliente para os documentos seguintes, e o que já foi emitido fica como saiu. Veja também [Como corrigir os erros de validação do SAF-T](/fiscal-core/corrigir-erros-do-saft), «NIF de um documento importado que não é válido».
+
+<span className="fd-pending">Pendente de validação no ecrã: a importação de um documento com NIF inválido e o aviso no SAF-T. Importar publica documentos certificados, e a sessão de produção deste artigo não os podia publicar nem importar. O comportamento vem do bilhete de entrega do MIG-128.</span>
+
+### Documentos rejeitados: «Assinatura inválida»
+
+- **Sintoma:** na lista de documentos, **Rejeitado**: «Assinatura inválida: não corresponde aos dados de FT A2026/2 (data, data de entrada no sistema, número, total e assinatura anterior) com a chave pública indicada. O documento foi alterado depois de assinado, ou a chave não é a do software de origem.» (aqui, o total do ficheiro foi mudado para 250,00 depois de assinado).
+  ![Lista com um documento rejeitado por assinatura inválida e dois duplicados, cada um com o motivo](/images/migration-toolkit/migrar-series-e-documentos-certificados/06-documentos-rejeitados.png)
+- **O que fazer:** peça uma nova exportação ao programa anterior; não corrija o total à mão. As outras linhas continuam a ser analisadas: num ficheiro `FT C2026/1` a `FT C2026/3` com o 2 alterado, o 1 e o 3 ficaram **Válidos** e o relatório acrescentou «Série FT C2026: faltam 1 número(s) entre 1 e 3: 2.»
+
+### Documentos duplicados
+
+- **Sintoma:** **Duplicado**: «O documento FT A2026/1 já está integrado nesta empresa (FT A2026/1 (FT A2026/1)): não é importado outra vez.»
+- **O que fazer:** nada: o documento já entrou. Importe só o que falta.
+
+### Falta o ATCUD
+
+- **Sintoma:** ao validar um ficheiro sem a coluna `atcud` (documentos de novembro de 2025), o relatório acrescenta «ATCUD: 2 documentos do ficheiro não têm ATCUD, embora seja obrigatório à sua data (veja o relatório de cada documento). O SAF-T iria comunicá-los com 0: preencha a coluna atcud e valide de novo antes de importar.» As linhas continuam **Válidas**.
+- **O que fazer:** peça ao programa anterior uma exportação com o ATCUD de cada documento e valide outra vez antes de importar.
+
+### «O exercício … está fechado»: «Nada foi importado»
+
+- **Sintoma:** com o ano de 2025 fechado na empresa, **Importar as linhas válidas** responde «Nada foi importado. Nenhum documento do ficheiro pôde ser importado (veja o motivo em cada linha). O lote voltou a Rascunho: corrija o ficheiro, carregue-o de novo e valide antes de importar.», e cada linha fica **Rejeitada** com «O exercício 2025 (01/01/2025 a 31/12/2025) está fechado: não pode criar o lançamento (novo, por gravar) datado de 03/11/2025. Porquê: um exercício fechado fica bloqueado para as contas já aprovadas não mudarem. Como resolver: lance-o num exercício aberto ou, se for mesmo necessário, peça ao administrador uma exceção com motivo (Contabilidade › Fechar › Fecho do exercício › Datas de bloqueio e exceções, com o modo programador ativo).» Logo a seguir ao aviso, o lote mostra **Rascunho** e só o botão **Validar**, e o **Relatório** conta as linhas recusadas: «2 linhas: 0 válidas, 2 rejeitadas, 0 duplicadas. …», com **Rejeitados** 2. {/* Nota interna (lote v23-AS, depois do comboio 177 com o FIX-M194, master d7b8279e9, docs_demo_v23as_test, 09/11/2026): por clique, com um utilizador só com o perfil Contabilista certificado, lote documentos_A2026.csv validado e importado (3 válidos, Importado) e lote documentos_A2025_sem_atcud.csv (novembro de 2025; a base de demonstração tem a contabilidade bloqueada até 31/12/2025) validado e importado: «Nada foi importado…», Rascunho, Válidos 0, Rejeitados 2 e o Relatório citado; cada linha com «O exercício 2025 … está fechado…». Em Auditoria › Registos › Registo de auditoria, o grupo «Documentos ou assinaturas de outro programa importados» com 1 registo e o Motivo citado; em Registo de importações de dados, a Nota citada. Em VALORES desse evento, algumas chaves ainda saem em inglês (Key, Source, Imported, Rejected): defeito no relatório do lote; o artigo não as cita. */} {/* Nota interna (lote v23-AN, depois do comboio 174 com o MIG-111, master a67618a71): lote documentos_A2025_sem_atcud.csv (novembro de 2025, exercício de 2025 fechado na cópia) importado por clique com o Contabilista certificado: «Nada foi importado…» e, sem recarregar, Rascunho com o botão Validar. O defeito V23U-02 já não se reproduz. */}
+- **O que fazer:** peça ao administrador a exceção com motivo e importe outra vez o mesmo lote, que voltou a **Rascunho**. <span className="fd-pending">Pendente de validação por contabilista certificado: reabrir um exercício fechado para trazer documentos do programa anterior.</span>
+
+### O ficheiro ou o formulário não são aceites
+
+- **Sintoma e causa:** ao carregar em **Validar**, o produto recusa:
+  - um ficheiro que não está em UTF-8: «O ficheiro não é texto UTF-8, por isso não se consegue ler. Exporte-o de novo do programa de origem como CSV em UTF-8 e carregue-o outra vez.»;
+  - um ficheiro só com o cabeçalho: «O ficheiro não tem linhas de documentos, por isso não há nada a validar. Confirme que o ficheiro tem cabeçalho e pelo menos uma linha de documento e carregue-o de novo.»;
+  - um ficheiro com 50 001 linhas: «O ficheiro tem mais de 50000 linhas: divida-o e importe cada parte num lote próprio.»;
+  - um NIF do emitente que não é o da empresa: «O NIF do emitente indicado (599999985) não é o NIF da empresa Empresa Demonstração, Lda (PT599999993): um ficheiro só é importado na empresa que emitiu os documentos. Escolha a empresa que emitiu os documentos, ou corrija o NIF indicado.»;
+  - o **NIF do emitente no ficheiro** vazio: «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **O que fazer:** corrija o ficheiro ou o campo e carregue outra vez em **Validar**.
+
+{/* Nota interna (DOCS-046 v4 MIG, #3616, master 52d1dd3a, base docs_demo_v4mig_test). Série: Empresa Demonstração (única com diários certificados na demonstração); três séries em rascunho criadas (B2025 continuada, A2027, C2027). Documentos: importados na «Empresa Migração Capturas, Lda» (3 FT A2025) e na demonstração (2 FT G2026, para os avisos da série). Ficheiros e chaves fictícios criados à parte. Defeitos da altura: V4MIG-01 (data de comunicação a «hoje» quando fica vazia) e V4MIG-02 (lote «Importado» com 0 importados fica fechado), ambos resolvidos no master cebcb888d (ver abaixo). v22-G e v23-A: NIF do cliente 599999985; lote importado na «Empresa Teste Portugal». */}
+{/* Nota interna (DOCS-046, lote v22-A, 06/11/2026, master d83bdf7ae, base docs_demo_v22a_test): tabela dos perfis revista por clique com utilizadores criados só com cada perfil (DEC-1777). */}
+{/* Nota interna (DOCS-046, lote v23-U, #3616, 08/11/2026, master cebcb888d, base docs_demo_v23u_test, porta 8462): artigo inteiro percorrido de novo por clique, tudo na Empresa Demonstração com um utilizador criado só com o perfil Contabilista certificado (DEC-1777). Tabela dos perfis: menus Configurar e Lançar lidos no ecrã com utilizadores só com Contabilista, Auditor, Gerência, Administrativo e Processador de salários, e com o admin (abre os dois ecrãs). Ficheiros sintéticos (par de chaves RSA de 1024 bits gerado em memória; só a chave pública ficou em ficheiro; cliente 599999985). Documentos: lote 1 FT A2026/1 a 3 (out./2026, com ATCUD JFM7K2QX-n) importado (3 válidos, 3 importados, diário FT A2026); lote 2 com o total do 2 mudado (1 rejeitado, 2 duplicados); lote 3 FT A2025/1 e 2 sem ATCUD (aviso do ATCUD; ao importar, 2025 fechado: «Nada foi importado», lote volta a Rascunho, V4MIG-02 resolvido); lote FT C2026 com outra chave para a lacuna (só validado); ficheiros Latin-1, só cabeçalho, 50 001 linhas, NIF errado e NIF vazio (recusas citadas). Séries: avisos D26, NC sem identificador, A2026 com série nova e continuada (1 e 3), NC sem diário; criadas B2025 (322, JJ4K7MZA, Comunicada em vazio: V4MIG-01 resolvido), A2027 e C2027 em Rascunho. Documento migrado: Mudar para Rascunho recusado; Anular documento recusado (FT A2026/3 antes e depois: Publicada, mesmo número, ATCUD e Hash importado); sem Eliminar; lote só com Duplicar. Nenhum documento já emitido da demonstração foi tocado. Não testado: ativar as séries (AT real), data de início anterior ao último documento, modos «Assinaturas de documentos já integrados» e «Distribuição analítica», moeda estrangeira, retenção e notas de crédito no ficheiro, emitir a nota de crédito de correção. Vídeo: não (corrente própria). */}

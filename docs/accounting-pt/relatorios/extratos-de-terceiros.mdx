@@ -1,0 +1,105 @@
+---
+id: extratos-de-terceiros
+slug: /accounting-pt/extratos-de-terceiros
+title: Como consultar e enviar o extrato de um cliente ou fornecedor
+sidebar_label: Extrato de um cliente ou fornecedor
+sidebar_position: 4
+description: Ver a conta corrente de um cliente ou fornecedor (faturas, recebimentos, pagamentos e saldo), só o que está por liquidar, exportá-la em PDF e enviá-la por email ao cliente.
+keywords: [extrato, extrato de cliente, extrato de fornecedor, conta corrente, conta-corrente, conta corrente de clientes, extrato de terceiros, saldo do cliente, saldo do fornecedor, enviar extrato, enviar extrato por email, enviar extrato por e-mail, circularização, circularizacao, aviso de vencimento, só pendentes, so pendentes, ATCUD]
+doc_id: DOC-0151
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/reconciliar-movimentos-bancarios, accounting-pt/relatorios/balancete]
+---
+
+## Para que serve?
+
+O extrato de terceiros é a conta corrente de cada cliente e fornecedor: as faturas, as notas de crédito, os recebimentos e os pagamentos, por data, com o saldo depois de cada movimento. Serve para responder a «quanto lhe devo?» ou «quanto me deve?» com os documentos à frente, e para mandar ao cliente o extrato da conta dele.
+
+Consultar ou enviar o extrato não cria lançamentos.
+
+## Quando utilizar?
+
+- Quando um cliente pergunta o que tem em aberto, ou um fornecedor diz que uma fatura não foi paga.
+- Para mandar aos clientes o extrato da conta corrente ou um aviso dos documentos vencidos.
+- No fecho, para conferir os saldos de clientes e fornecedores antes do [balancete](/accounting-pt/balancete).
+
+## Onde encontrar?
+
+- Consultar: **Contabilidade › Consultar › Terceiros › Extratos de terceiros**.
+- Enviar por e-mail: **Contabilidade › Consultar › Terceiros › Enviar extratos por e-mail**.
+- Com o perfil **Administrativo**: **Faturação › Receber › Extratos de clientes** (só clientes, sem o envio por e-mail).
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. Com ele faz todos os passos deste artigo, incluindo o envio (testado com o perfil Contabilista). A **Gerência** e o **Auditor / ROC** consultam o extrato mas não têm **Enviar extratos por email**. O perfil **Administrativo** consulta e exporta em PDF o extrato dos clientes.
+- Para enviar, o cliente tem um endereço de e-mail na ficha.
+- Os recebimentos e pagamentos estão reconciliados com as faturas ([Como reconciliar os movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios)); só assim **Só pendentes** mostra o que está mesmo por liquidar.
+- No exemplo, a Construções Marão, Lda, cliente da Empresa Demonstração, Lda, a 29/10/2026.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Consultar › Terceiros › Extratos de terceiros**. Abre no exercício corrente, com uma linha por cliente e fornecedor: nome, NIF, **Débito**, **Crédito** e **Saldo**. Um saldo positivo é o que o terceiro deve à empresa (o normal num cliente); um negativo, o que a empresa deve ao terceiro (num fornecedor, as faturas por pagar; num cliente, um recebimento que chegou antes da fatura ou uma nota de crédito por usar).
+2. Carregue em **Mais filtros**. Em **Pesquisar**, escreva parte do nome (no exemplo, `Marão`) e carregue em Enter. Marque **Desdobrar tudo** para ver os movimentos.
+   ![Extrato de terceiros com Mais filtros aberto: Pesquisar com Marão assinalado, Desdobrar tudo marcado, Só pendentes, Só saldos diferentes de zero, Série e ATCUD, Só movimentos por reconciliar, Contas Clientes e fornecedores e Mostrar valores em Unidades](/images/accounting-pt/extratos-de-terceiros/01-pesquisar-e-filtros.png)
+3. Leia os movimentos. Cada linha tem a **Data**, o **Diário**, a **Conta**, o **Documento**, o **Vencimento**, a **Reconciliação** (o número que liga a fatura ao recebimento, por exemplo `32 · MISC/2026/00002` na `FT D26/6`), o **Débito**, o **Crédito** e o **Saldo** acumulado. No exemplo, 3.115,67 € a débito, 2.008,67 € a crédito e 1.107,00 € em dívida. A meio, o **Saldo** fica em -1.107,00 € a 15/10/2026: o recebimento `MISC/2026/00141` desse dia é anterior à fatura que paga, a `FT D26/31` de 29/10/2026 (a **Reconciliação** `180` liga os dois). Durante esses dias, o cliente tinha pago adiantado.
+4. Para ver só o que está por liquidar, marque **Só pendentes**: no exemplo fica só a `FT D26/32` de 29/10/2026, 1.107,00 €. **Série e ATCUD** acrescenta as colunas **Série** e **Código ATCUD** (no exemplo, `D26` e o ATCUD da fatura). As outras opções: **Só saldos diferentes de zero**, **Só movimentos por reconciliar**, **Mostrar moeda estrangeira**, **Contas** (**Clientes e fornecedores**, **Só clientes**, **Só fornecedores**), **Incluir rascunhos** e as datas.
+5. Para tirar o extrato, carregue em **Exportar PDF**, ou em **Exportar** e escolha **Exportar PDF por terceiro (zip)** (um PDF por cliente ou fornecedor), **Exportar XLSX**, **Exportar CSV (formato PT)**, **Exportar CSV (técnico)**, **Exportar com opções…** ou **Imprimir**.
+6. Para o enviar ao cliente, abra **Contabilidade › Consultar › Terceiros › Enviar extratos por e-mail**. Na janela **Enviar extratos por e-mail**, em **Documento** escolha **Extrato de conta corrente** (ou **Aviso de vencimento (só documentos por liquidar)**), confirme o **Início do período** e o **Fim do período** (por omissão, de 01/01 até hoje) e, em **Clientes**, escolha o cliente. **Não deixe Clientes vazio se quer mandar só a um cliente:** a ajuda do campo diz «Vazio = todos os clientes da empresa com saldo (lote), até ao limite do sistema.». Com o campo vazio, **Enviar** manda o extrato a todos os clientes com saldo no período, sem pedir confirmação: o envio começa logo, em segundo plano («Os extratos estão a ser preparados em segundo plano. Pode fechar esta janela e continuar a trabalhar: aparece um aviso quando o envio terminar.»), e um e-mail enviado não se desfaz. Deixe **Só clientes com saldo** marcado para não mandar extratos a zero. O **Modelo de email** é **Extrato de clientes (conta corrente)**.
+   ![Janela Enviar extratos por e-mail com Documento Extrato de conta corrente, período de 01/01/2026 a 29/10/2026, o cliente Construções Marão, Lda, Só clientes com saldo marcado, o Modelo de e-mail e o botão Enviar assinalado](/images/accounting-pt/extratos-de-terceiros/02-enviar-extratos-por-email.png)
+7. Carregue em **Enviar**. A janela mostra o **N.º de envios**.
+   ![Janela Enviar extratos por e-mail com N.º de envios 1 e o botão Fechar](/images/accounting-pt/extratos-de-terceiros/03-resultado-do-envio.png)
+
+</StepByStep>
+
+## No Enterprise
+
+Nesta versão, no Odoo Enterprise, **Contabilidade › Consultar › Terceiros › Extratos de terceiros** abre o extrato de terceiros do próprio Enterprise, e não o ecrã dos passos 1 a 5 (visto com um utilizador só com o perfil **Contabilista**). As diferenças:
+
+- Abre no exercício corrente (**2026**), com **Tipo de conta: Parceiros comerciais** e uma linha por terceiro com **Débito**, **Crédito** e **Saldo**. Ao abrir um terceiro, as colunas são **Diário**, **Conta**, **Data**, **Data de Vencimento**, **Correspondência**, **Débito**, **Crédito**, **Moeda do Valor** e **Saldo**.
+- Para procurar um terceiro, escreva o nome na caixa **Pesquisar...** do topo (no exemplo, `Marão`). **Parceiros** filtra por terceiro ou por etiqueta.
+- Para ver só o que está por liquidar, em **Lançamentos feitos** marque **Lançamentos não reconciliados**: ficam só os terceiros com documentos em aberto. Nesta versão, este ecrã não tem **Série e ATCUD**.
+- **Imprimir** dá o PDF e a roda dentada ao lado do título dá o **XLSX**. Nesta versão, não tem o PDF por terceiro em zip nem o CSV no formato PT.
+
+O grupo **Terceiros** tem também **Extratos de clientes**, do Enterprise, com um botão **Enviar** próprio. Este artigo envia pela entrada **Enviar extratos por e-mail** (passos 6 e 7), que abre a mesma janela que no Community. O extrato do perfil **Administrativo**, em **Faturação › Receber › Extratos de clientes**, também é o mesmo.
+
+{/* Nota interna (lote EE-02, DOCS-073 #4142, DEC-1794, master 7a46de91a, base Enterprise docs_ee_ee02_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): Contabilista: Extratos de terceiros é, no Enterprise, o extrato de terceiros do Enterprise com os termos da ponte (UX-078, DEC-1239); a entrada do fiscaldoo está arquivada nesta edição. Pesquisa «Marão» deixou só a Construções Marão, Lda (saldo 0,00 € na cópia); Lançamentos não reconciliados deixou Cloud Services Inc., Maria João Ferreira (ENI), Padaria Aurora, Lda, Papelaria Central, Lda, Rui Matos e Parceiro desconhecido. A roda dentada tem XLSX e Copy to Documents. Enviar extratos por e-mail abriu a janela com Documento, Início do período, Fim do período, Clientes, Só clientes com saldo e Modelo de e-mail; nada se enviou. Administrativo: Faturação › Receber › Extratos de clientes no visualizador do fiscaldoo. Ver reports/LOTE_EE-02.md. */}
+
+## Resultado esperado
+
+- No ecrã, o saldo do cliente é o que ele deve (no exemplo, 1.107,00 € da `FT D26/32`).
+- Depois de **Enviar**, a janela diz **N.º de envios** `1`, e a mensagem «Extrato de conta corrente de Empresa Demonstração, Lda» fica na ficha do cliente, com o PDF em anexo («Exmos. Senhores Construções Marão, Lda, Enviamos em anexo o extrato da sua conta corrente…»).
+- O PDF enviado tem os mesmos movimentos e totais do ecrã para o período escolhido (no exemplo, 3.115,67 €, 2.008,67 € e 1.107,00 €, de 01/01/2026 a 29/10/2026).
+
+## Notas importantes
+
+- **O cliente vê os números internos.** O PDF leva as colunas **Diário**, **Conta** e **Reconciliação** e os números dos lançamentos de recebimento (`MISC/2026/00002`…), não os números dos recibos. Antes do primeiro envio, abra um PDF e confirme que a empresa aceita mandá-lo assim.
+- **O que o extrato não vê.** Só entram documentos publicados. Uma fatura do fornecedor que ainda não foi lançada, ou um recebimento que ainda não foi importado do banco, não aparece, e o saldo fica diferente do que o terceiro tem.
+- **Só clientes.** A janela de envio só tem **Clientes**; o extrato de um fornecedor exporta-se em PDF e envia-se à parte.
+
+## Problemas frequentes
+
+### «Não enviados: … sem endereço de email»
+
+- **Sintoma:** depois de **Enviar**, **N.º de envios** `0` e, em **Não enviados**, «Consumidor final: sem endereço de email».
+- **Quando aparece:** o cliente entra no envio (tem saldo no período, ou **Só clientes com saldo** está desmarcado) mas não tem e-mail na ficha.
+- **O que fazer:** abra a ficha do cliente, escreva o e-mail e envie de novo.
+
+### «Nenhum cliente corresponde ao período e às opções escolhidas»
+
+- **Sintoma:** depois de **Enviar**, **N.º de envios** `0` e, em **Não enviados**, «Nenhum cliente corresponde ao período e às opções escolhidas, por isso nada foi enviado. Alargue o período ou desligue «Só clientes com saldo».» (no exemplo, com o cliente **Consumidor final**, de saldo 0,00 €, e **Só clientes com saldo** marcado). O cliente sem saldo aparece na lista **Clientes** e escolhe-se na mesma; é no envio que fica de fora.
+- **O que fazer:** confirme o **Início do período** e o **Fim do período**. Se quer mesmo mandar o extrato a zero, desmarque **Só clientes com saldo** e envie de novo.
+
+### O saldo do extrato não bate com o do cliente
+
+- **O que confirmar:** o período (**De** e **até**), **Incluir rascunhos**, e os movimentos ainda não ligados a uma fatura (**Só movimentos por reconciliar**).
+
+{/* Nota interna (DOCS-035, DOC-0151; correção V2, NB2-07 a NB2-09): envio com Clientes vazio provocado como admin na Empresa Teste Filial (sem clientes com saldo, nada enviado): sem pedido de confirmação, mensagem do segundo plano e aviso final «Os extratos foram enviados. O extrato de 0 clientes ficou em fila…» (defeito P-V2-08 confirmado: não há confirmação antes do envio em lote). «Nenhum cliente corresponde…» provocado com o Contabilista e o Consumidor final. defeitos B2-08 (PDF ao cliente com Diário, Conta, Reconciliação e números MISC) e B2-09 (título «Enviar extratos por e-mail» na janela e «por email» no menu e no resultado) em reports/LOTE_B2.md. Email ficou em fila (sem servidor de correio na demonstração, guarda de rede ligada): mensagem e anexo vistos na ficha do cliente. */}
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); Faturação › Receber › Extratos de clientes aberto por clique com o Administrativo (Exportar PDF e Exportar, sem envio por e-mail) */}

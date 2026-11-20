@@ -1,0 +1,86 @@
+---
+id: a-aplicacao-pessoas
+slug: /people/a-aplicacao-pessoas
+title: Como se organiza a aplicação Pessoas e o painel de RH
+sidebar_label: A aplicação Pessoas
+sidebar_position: 1
+description: "Os menus da aplicação Pessoas, o que cada perfil vê e como ler os Indicadores de pessoas e o painel «O que há a tratar em RH?»."
+keywords: [pessoas, aplicação pessoas, aplicacao pessoas, painel de RH, indicadores, rotatividade, absentismo, a tratar, fichas completas, menus de pessoas]
+doc_id: DOC-0239
+article_type: conceito
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master acd623385)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [people/trabalhadores/criar-um-trabalhador, people/ausencias-e-presencas/aprovar-ausencias]
+---
+
+A aplicação **Pessoas** junta a ficha dos trabalhadores, os contratos, as ausências, a formação e os indicadores de RH. Abre-se nos **Indicadores de pessoas**: números das pessoas da empresa ativa e o que está pendente.
+
+## Os menus e quem os vê
+
+Cada perfil abre a aplicação **Pessoas** com os menus que lhe cabem. Conferido no ecrã com os perfis **Gestor de RH**, **Processador de salários** e **Gerência**:
+
+- **Gestor de RH**
+  - **Início**: **Indicadores de pessoas** e **O que há a tratar em RH?**.
+  - **Trabalhadores**: todos os ecrãs (**Trabalhadores**, **Departamentos**, **Organigrama**, **Documentos dos trabalhadores**, **Diretório**, **Pedidos dos trabalhadores**, **Confirmações dos trabalhadores**).
+  - **Contratos e saídas**, **Férias e ausências** e **Consultar** (**Inventário de competências**): sim.
+  - **Tempo de trabalho**: **Presenças**, **Escalas de turnos**, **Acordos de teletrabalho**, **Modo quiosque** e **Deslocações**.
+  - **Formação**: os blocos **Dia a dia** (**Ações de formação** e **Registo rápido**), **Horas e crédito de horas** (**Horas de formação do ano**, **Crédito de horas**, **Conta do crédito de horas** e **Lançamentos manuais**; não vê **Declarações na saída**) e **Configuração e painéis** (**Cursos**, **Formação obrigatória**, **Certificações**, **Painel de formação** e **Visão da direção**).
+- **Processador de salários**
+  - **Início**: só **Indicadores de pessoas** (não tem **O que há a tratar em RH?**).
+  - **Trabalhadores**: só **Documentos dos trabalhadores**, **Diretório** e **Pedidos dos trabalhadores**. Não tem a lista **Trabalhadores**.
+  - **Contratos e saídas**: **Contratos**, **Períodos experimentais**, **Estatuto de trabalhador-estudante**, **Cessações** e **Certificados de trabalho**.
+  - **Férias e ausências**: sim, mas sem os botões de decisão (ver [Como aprovar pedidos de férias e de ausência](/people/aprovar-ausencias)).
+  - **Tempo de trabalho**: só **Escalas de turnos**, **Acordos de teletrabalho** e **Deslocações**.
+  - **Formação**: **Ações de formação**; todo o bloco **Horas e crédito de horas** (**Horas de formação do ano**, **Crédito de horas**, **Conta do crédito de horas**, **Lançamentos manuais** e **Declarações na saída**); **Painel de formação** e **Visão da direção**.
+  - **Consultar**: **Rotatividade excessiva**.
+- **Gerência**
+  - **Início**: só **Indicadores de pessoas** (não tem **O que há a tratar em RH?**).
+  - **Trabalhadores**: só o **Diretório**.
+  - **Contratos e saídas**: só **Benefícios fiscais e aumentos**.
+  - **Formação**: no bloco **Horas e crédito de horas**, **Crédito de horas**, **Conta do crédito de horas**, **Lançamentos manuais** e **Declarações na saída** (não tem **Horas de formação do ano**); no bloco **Configuração e painéis**, **Painel de formação** e **Visão da direção**.
+  - Não tem **Férias e ausências**, **Tempo de trabalho**, **Consultar** nem **Deslocações**: decide as férias em **Direção › Aprovar › Pedidos de ausência**, mesmo sem ficha de trabalhador nem ser aprovadora indicada (veja [Como aprovar pedidos de férias e de ausência](/people/aprovar-ausencias)).
+
+Os menus **Configurar** e **Configuração de ausências e assiduidades** só existem para o administrador do sistema. O **Trabalhador** não tem a aplicação **Pessoas**: só **O meu espaço**.
+
+## Os Indicadores de pessoas
+
+Os filtros do topo são o período (**Este trimestre**, **Trimestre anterior**, **Este ano**, **Ano anterior**), o departamento e as pessoas. Há seis separadores: **Visão geral**, **A tratar**, **Qualidade dos dados**, **Pessoas**, **Ausências** e **Saídas e retenção**.
+
+![Indicadores das pessoas com os cartões Pessoas, Rotatividade, Absentismo, A tratar e Fichas completas](/images/people/a-aplicacao-pessoas/01-indicadores.png)
+
+- **Pessoas**, **Rotatividade** (saídas a dividir pelo efetivo médio), **Absentismo** (dias de ausência a dividir pelos dias úteis do período; as férias não são ausências), **A tratar** e **Fichas completas**. A explicação está em **Como se calculam os números**, por cima dos cartões.
+- Os valores em euros só aparecem para grupos de 5 ou mais pessoas.
+- **A tratar** lista cada pendência com o prazo, por exemplo «Férias por marcar: *22* de *22* dia(s) ainda por marcar» (em atraso desde 15/04/2026; o número baixa à medida que se marcam as férias) ou «Último dia para comunicar o fim de um termo certo».
+- **Qualidade dos dados** mostra o que está preenchido nas fichas (cada campo com a sua percentagem: no exemplo, a **Morada** está a 0 % e os outros campos a 100 %; os valores mudam à medida que as fichas se completam) e as fichas com mais falhas.
+
+## O que há a tratar em RH?
+
+**Início › O que há a tratar em RH?** é a lista das mesmas pendências, agrupada por tipo (**Contrato termina em breve**, **Férias por marcar**, **Saldo de férias alto**, **Formação em falta**, **Sem data de antiguidade**…). Abra um grupo para ver o trabalhador, o detalhe, a data, a gravidade e os dias ou as horas. O botão **Abrir registo**, no fim da linha, abre a ficha de onde vem a pendência (no contrato que termina em breve, a de Hugo Miguel Santos).
+
+## No Enterprise
+
+No Odoo Enterprise, a aplicação **Pessoas** abre com os mesmos menus para cada perfil (vistos com o **Gestor de RH**, o **Processador de salários** e a **Gerência**). O que muda é a lista das aplicações: o Enterprise junta as suas, que não fazem parte do fiscaldoo.
+
+- **Assinar** fica no lugar das assinaturas do fiscaldoo. O **Gestor de RH** e a **Gerência** têm a aplicação **Assinar** em vez de **Assinaturas**. O **Processador de salários** tem **Assinar › Documentos › Por assinar** em vez de **As minhas assinaturas**. O **Trabalhador** continua com **O meu espaço › As minhas assinaturas**. As confirmações dos trabalhadores também podem seguir pelo **Assinar** (ver [Como pedir ao trabalhador que confirme um documento](/people/enviar-documentos-para-confirmar#no-enterprise)).
+- **Planeamento** é o calendário de turnos do Enterprise (**Planeamento › Planeamento › Planeamento**, que abre em **O Meu Planeamento**). Têm-no o **Gestor de RH** e a **Gerência**; o **Processador de salários** não. Os horários que o fiscaldoo conta continuam a ser as **Escalas de turnos** de **Pessoas › Tempo de trabalho**: o que se marca no **Planeamento** não passa para lá. Na ficha do trabalhador, o grupo **PLANEAMENTO** (**Funções**, **Função por omissão**) só serve esta aplicação.
+- **Avaliações** tem as avaliações de desempenho e os **Objetivos** do Enterprise. O fiscaldoo não tem avaliações. O **Gestor de RH** tem a aplicação, com **Avaliações**, **Objetivos** e **Configurar**; o **Processador de salários** não a tem, e a **Gerência** do exemplo, sem trabalhadores a seu cargo, também não. Na ficha do trabalhador aparecem o campo **Data da Próxima Avaliação** e o botão **Metas**.
+- **Recrutamento** só aparece ao administrador: nenhum perfil do fiscaldoo recebe esta aplicação.
+
+O **Trabalhador** continua só com **O meu espaço**: não vê **Planeamento** nem **Assinar**, e vê a sua avaliação em **As minhas avaliações**, na aplicação **O meu espaço**.
+
+{/* Nota interna (lote EE-14, EEA-078 a64fa3fe3 em master acd623385, 12/11/2026): cópia Enterprise docs_ee_ee14_test (pg_dump da odoo20_ee_test; -i de hr_payroll, hr_appraisal e planning), porta 8524; utilizadores criados na cópia só com cada perfil (o Trabalhador ligado à ficha de Carla Sofia Mendes). Aplicações pelo load_menus: Gestor de RH «Salários, Pessoas, Despesas, Contactos, Planeamento, Discussões, Calendário, Assinar, Avaliações»; Processador de salários sem Planeamento nem Avaliações; Gerência com Planeamento e sem Avaliações; Trabalhador só O meu espaço, com «As minhas avaliações». Avaliações do Gestor de RH: Avaliações, Objetivos, Configurar. A regra de chefia e avaliador (DEC-1841) não se provou neste lote. */}
+{/* Nota interna (lote EE-10, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): cópia Enterprise docs_ee_ee10b_test no portátil (pg_dump da odoo20_ee_test, -u dos módulos mudados até master e -i de hr_payroll, planning, hr_appraisal e hr_recruitment), porta 8504, guarda de rede ligada; utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): lista das aplicações (menu principal) com ee10_rh, ee10_proc e ee10_ger: Salários, Pessoas, Despesas, Contactos, Planeamento, Discussões, Calendário, Assinar, Avaliações (a Gerência sem Despesas, Discussões e Calendário, e com Direção, Contabilidade, Faturação, Copiloto, Auditoria e EDI); ee10_trab só O meu espaço; Recrutamento só na lista do administrador. Menus de Pessoas iguais aos da cópia Community para os três perfis, tirando a Formação, que o UX-160 (comboio 192) reorganizou nas duas edições (a lista do corpo do artigo ainda é a de antes e fica para o lote da formação). O fiscaldoo não lê o Planeamento: nenhuma referência a planning no código de addons_fiscaldoo, community/custom_addons nem enterprise/custom_addons, além do grupo de gestão que nenhum perfil recebe (l10n_pt_fiscaldoo_ee_org). Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee10_test (master e4dd4ae90, a do lote EE-10 interrompido) e com o texto do artigo. Ver reports/LOTE_EE-10.md. */}
+
+## Notas importantes
+
+- Hoje os atalhos **Tratar**, **Planear** e **Completar** da caixa **Alertas** não abrem nenhum ecrã: use o separador **A tratar** ou o painel **O que há a tratar em RH?**.
+- Os números dependem da empresa ativa (canto superior direito).
+
+{/* Nota interna (DOCS-040 F3, corrigido na ronda F-cor, NF3-03/NF3-09): menus conferidos no master ba9c8bd7 com os perfis Gestor de RH, Salários e Gerência. F3-06 («Tratar»/«Planear»/«Completar» da caixa Alertas não navegam; cartão a abrir). O Gestor de RH não vê «Declarações na saída» (menu só para Salários e Gerência): confirmar se é intencional. O mapeamento dá «Pessoas › Início › Indicadores de pessoas» e o painel como dois ecrãs, aqui descritos como dois. */}
+
+{/* Nota interna (lote v23-AU, depois do comboio 181 com o UX-149 (6) e (7), master 09afad64d, docs_demo_v23au_test, porta 8504): menus de Pessoas lidos pelo load_menus, sem modo de programador, com utilizadores criados por RPC só com o perfil Gestor de RH, Processador de salários e Gerência: batem com as listas acima; o Processador passou a ter Início › Indicadores de pessoas (abre por clique). Na altura, a Gerência só tinha Direção › Aprovar › Pedidos de ausência quando era aprovadora de Ausência de alguém (HR-033); desde o UX-155 (comboio 188, lote v23-BE, master 7a46de91a) tem-na sempre, vista por clique com uma Gerência sem ficha de trabalhador. O resto do artigo (Indicadores e Painel de RH) não foi percorrido neste lote. */}
+
+{/* Nota interna (lote v23-BE, depois do comboio 188 com o I18N-041 #4146, master 7a46de91a, docs_demo_v23be_test, porta 8504): com um utilizador só Gestor de RH, Pessoas › Início › O que há a tratar em RH?: colunas Trabalhador, Detalhe, Data, Gravidade, Dias e Horas; o fim de cada linha é o botão «Abrir registo» (antes saía «Em aberto», que o artigo lia como estado); carregar nele na linha de Hugo Miguel Santos (Contrato termina em breve) abriu a ficha «Hugo Miguel Santos» por cima do painel. */}

@@ -1,0 +1,192 @@
+---
+id: importar-lancamentos
+slug: /migration-toolkit/importar-lancamentos
+title: Como importar lançamentos de um ficheiro CSV ou Excel
+sidebar_label: Lançamentos
+description: Trazer lançamentos contabilísticos do programa anterior a partir de um ficheiro CSV ou XLSX, ligar cada coluna ao campo certo, verificar o ficheiro antes de gravar e conferir os lançamentos criados.
+keywords: [importar lançamentos, lançamentos contabilísticos, importar movimentos, csv, xlsx, excel, migração, migracao, estorno, histórico migrado, historico migrado, diário de operações diversas, Importar lançamentos]
+doc_id: DOC-0299
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c643480c2)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [migration-toolkit/importar/importar-saldos-de-abertura, migration-toolkit/importar/importar-documentos-em-aberto, migration-toolkit/planear/validar-a-migracao]
+---
+
+{/* Nota interna (DOCS-046, #3616): risco alto. Só o Administrador e o Contabilista certificado importam (grupo «Migração / Importação fiscal»; o menu e o botão confirmados com utilizadores descartáveis por perfil). O artigo não tem vídeo. V4MIG-04 e V4MIG-05 revistos no DOCS-065 (master c643480c2): no passo das colunas só fica Verificar. v22-G (DOCS-064, #3900, master d83bdf7ae, base docs_demo_v22g_test, Administrador, Empresa Demonstração): o NIF de exemplo passou a 599999993 (o anterior era válido e podia ser real); cliente «Cliente Alfa, Lda» criado pela ficha com 599999993, ficheiro da tabela lido por clique: «2 lançamentos, 4 linhas, total 170,00 €», e o REG-ALFA-1 ficou com a linha 2111 Clientes gerais do Cliente Alfa, Lda (120,00 €). v23-A (DOCS-064, master 8fc9fd337, base docs_demo_v23a_test, Administrador): o cliente passou a 599999985, porque 599999993 é agora o NIF da própria Empresa Demonstração; ficheiro lido por clique: «2 lançamentos, 4 linhas, total 170,00 €» e a linha 2111 do REG-ALFA-1 com o Cliente Alfa, Lda, 120,00 €. */}
+
+## Para que serve?
+
+Quando uma empresa vem de outro programa, nem tudo cabe nos saldos de abertura ou nos documentos em aberto: rendas, seguros, regularizações, o diário de operações diversas do ano anterior. Este assistente lê um ficheiro com **uma linha por linha de lançamento**, junta as linhas que têm a mesma chave num só lançamento e cria-os no diário que o ficheiro indicar.
+
+Antes de gravar, o assistente confere tudo e diz, linha a linha, o que está mal. É tudo ou nada: com uma só linha errada, nada fica gravado.
+
+## Quando utilizar?
+
+- Para trazer lançamentos de um período já fechado no programa anterior, que precisa de ter em consulta (ver «Importar como histórico migrado»).
+- Para trazer lançamentos de diários de operações diversas do exercício em curso.
+- Para estornar, com o motivo da lista oficial, um lançamento que já está publicado.
+- **Não use** para faturas, notas de crédito, recibos ou outros documentos certificados: esses emitem-se na faturação, e o assistente recusa os diários de vendas e de compras. Para os trazer, ver [Migrar as séries e os documentos certificados](/migration-toolkit/migrar-series-e-documentos-certificados).
+- **Não use** para o balancete de abertura nem para as faturas em aberto de clientes e fornecedores: há assistentes próprios e usar os dois duplica os saldos (ver [Saldos de abertura](/migration-toolkit/importar-saldos-de-abertura) e [Documentos em aberto](/migration-toolkit/importar-documentos-em-aberto)).
+
+## Onde encontrar?
+
+**Contabilidade › Lançar › Lançamentos › Importar**, e carregue em **Importar lançamentos**.
+
+![Página Importar com o botão Importar lançamentos assinalado](/images/migration-toolkit/importar-lancamentos/01-menu-importar.png)
+
+## Antes de começar
+
+- Entra como administrador ou tem o perfil **Contabilista certificado**: o botão **Importar lançamentos** exige o acesso «Migração / Importação fiscal», que, dos valores do campo **Perfil**, só o **Contabilista certificado** traz (o administrador também o tem). Com o perfil **Contabilista**, **Auditor / ROC** ou **Administrativo** o botão não está disponível e a janela não abre: peça a quem tem um dos dois perfis que faça a importação. <span className="fd-pending">Pendente de validação por contabilista certificado: quem deve poder importar lançamentos.</span>
+- As contas do ficheiro existem no plano de contas da empresa, com o código completo (a conta «62» não serve, é preciso a conta onde se lança, por exemplo `6261`). As contas de clientes e fornecedores levam sempre o parceiro, que tem de existir já com o mesmo NIF.
+- O diário de cada lançamento é de **operações diversas**. Um lançamento só pode ter um diário, uma data e uma referência: todas as linhas com a mesma chave têm de ter os mesmos.
+- A data não está num período bloqueado. Se o exercício já está fechado, a importação é recusada, mesmo como **Histórico migrado**: importe antes de bloquear (ver «Problemas frequentes»).
+- O ficheiro é CSV (vírgula ou ponto e vírgula) ou XLSX, com a primeira linha de cabeçalho. Os montantes não levam sinal: o débito e o crédito são colunas separadas. Exemplo, com dados inventados (cada linha da tabela é uma linha do ficheiro; grave com ponto e vírgula entre colunas):
+
+  | Lançamento | Data | Diário | Referência | Conta | Parceiro | Descrição | Débito | Crédito |
+  |---|---|---|---|---|---|---|---|---|
+  | `E1` | `05/03/2026` | `OD` | `RENDA-03` | `6261` | | Renda do escritório de março | `50,00` | |
+  | `E1` | `05/03/2026` | `OD` | `RENDA-03` | `121` | | Renda do escritório de março | | `50,00` |
+  | `E2` | `20/03/2026` | `OD` | `REG-ALFA-1` | `2111` | `599999985` | Regularização do Cliente Alfa | `120,00` | |
+  | `E2` | `20/03/2026` | `OD` | `REG-ALFA-1` | `7888` | | Regularização do Cliente Alfa | | `120,00` |
+
+  A coluna **Lançamento** é a chave: o mesmo valor em todas as linhas do mesmo lançamento (aqui `E1` e `E2`). O `E2` passa a rendimento um saldo credor do Cliente Alfa, um pagamento a mais que não vai ser devolvido. Uma venda ou uma prestação de serviços (contas 71 e 72) nunca se lança assim, porque precisa de fatura. A data escreve-se `05/03/2026` ou `2026-03-05`.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Em **Importar lançamentos**, carregue em **Escolher ficheiro** e escolha o ficheiro. Se o ficheiro não tiver a coluna do diário, escolha o **Diário** na janela (só aparecem diários de operações diversas). Em **Modo**, deixe **Criar em rascunho** para rever os lançamentos antes de os publicar, ou escolha **Criar e publicar**. Carregue em **Ler o ficheiro**.
+   ![Janela Importar lançamentos com o ficheiro escolhido, o modo Criar em rascunho e o botão Ler o ficheiro assinalado](/images/migration-toolkit/importar-lancamentos/02-ficheiro-escolhido.png)
+2. A janela mostra cada coluna do ficheiro, um exemplo do conteúdo e o campo para onde vai. Já vem preenchida quando os nomes das colunas são reconhecidos; corrija o que estiver trocado. A chave do lançamento, a data, a conta, o débito e o crédito são obrigatórios. Carregue em **Verificar**.
+   ![Janela com as colunas do ficheiro e o campo de destino de cada uma, com o botão Verificar assinalado](/images/migration-toolkit/importar-lancamentos/03-colunas.png)
+3. Nada é gravado neste passo. Sem erros, a janela diz «2 lançamentos, 4 linhas, total 170,00 €. Nada fica gravado até carregar em Importar.» e mostra **N.º de linhas** 4, **N.º de lançamentos** 2 e **N.º de erros** 0. Confira estes números com o ficheiro (50,00 € mais 120,00 €) e carregue em **Importar**. Se houver erros, o botão **Importar** não aparece (ver «Problemas frequentes»).
+   ![Verificação sem erros: 2 lançamentos, 4 linhas, total 170,00 €, com o botão Importar assinalado](/images/migration-toolkit/importar-lancamentos/04-verificacao-sem-erros.png)
+4. Na pergunta «Os lançamentos vão ser criados. Isto não se desfaz em bloco: cada lançamento estorna-se individualmente. Continuar?», carregue em **Confirmar**.
+   ![Pergunta de confirmação com o botão Confirmar assinalado](/images/migration-toolkit/importar-lancamentos/05-confirmar.png)
+5. A janela diz «2 lançamentos criados (Criar em rascunho).» Carregue em **Ver lançamentos**.
+   ![Janela com a mensagem 2 lançamentos criados e o botão Ver lançamentos assinalado](/images/migration-toolkit/importar-lancamentos/06-concluido.png)
+6. Abra cada lançamento, confira as linhas com o ficheiro e carregue em **Publicar**. O lançamento passa a **Publicada** e recebe o número seguinte do diário (na demonstração, `OD/2026/00139` para o `RENDA-03`). Em rascunho aparece uma faixa a avisar quantos dias passaram desde o fim do mês a que o lançamento respeita (limite do CIRC, art. 123.º, n.º 3): é um aviso e nada é bloqueado. A lista que abre em **Ver lançamentos** mostra a data, o número, o diário, a referência, o parceiro, o total e o estado de cada lançamento; as linhas só se veem dentro do lançamento.
+   ![Lançamento OD/2026/00139 publicado, no diário Operações Diversas, com a referência RENDA-03, a conta 6261 a débito e a conta 121 a crédito, ambas de 50,00 €, e os totais iguais](/images/migration-toolkit/importar-lancamentos/07-lancamento-publicado.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- Dois lançamentos no diário **Operações Diversas**, com a data, a referência e a descrição do ficheiro, no estado que escolheu em **Modo**. As linhas criadas são as do ficheiro:
+
+  | Lançamento | Conta | Parceiro | Débito | Crédito |
+  |---|---|---|---|---|
+  | `RENDA-03` | `6261` Rendas e alugueres | | 50,00 € | |
+  | | `121` Depósitos à ordem | | | 50,00 € |
+  | `REG-ALFA-1` | `2111` Clientes gerais | Cliente Alfa, Lda | 120,00 € | |
+  | | `7888` Outros não especificados | | | 120,00 € |
+
+- O tipo de transação SAF-T de cada lançamento fica **N — Normal**. <span className="fd-pending">Pendente de validação por contabilista certificado: tipo de transação SAF-T dos lançamentos importados.</span>
+- Cada lançamento ficou com uma nota a dizer quem o importou e de que ficheiro, e a importação fica no [registo de importações](/migration-toolkit/validar-a-migracao), com o nome do ficheiro e **Registos criados** 2.
+
+## Opções do assistente
+
+### Importar como histórico migrado
+
+Para trazer os lançamentos dos anos anteriores como arquivo, marque **Histórico migrado** antes de **Ler o ficheiro**. A janela deixa de mostrar o **Diário** e o **Modo**: os lançamentos ficam sempre publicados no diário **Histórico migrado**, com os números `HMIG/2025/00001` e seguintes, qualquer que seja o diário do ficheiro. Na demonstração, um ficheiro com dois lançamentos de 2025 deu «2 lançamentos criados (Criar e publicar)».
+
+![Janela Importar lançamentos com a opção Histórico migrado marcada e os campos Diário e Modo escondidos](/images/migration-toolkit/importar-lancamentos/10-historico-migrado.png)
+
+Para consultar o que foi importado assim, ver [Consultar o histórico do programa anterior](/migration-toolkit/consultar-historico-migrado). Importe o histórico antes de bloquear o período a que pertence.
+
+### Estornar um lançamento publicado
+
+Acrescente ao ficheiro as colunas **Estorno de** (o número do lançamento publicado, por exemplo `OD/2026/00001`) e **Motivo do estorno**, com o código do catálogo: `return` (devolução de mercadorias), `price_error` (erro de preço), `quantity_error` (erro de quantidade ou de artigo), `cancellation` (anulação da operação), `discount` (desconto ou abatimento concedido) ou `other` (outro, a descrever). Para `other` acrescente a coluna **Descrição do estorno**, até 50 carateres: sem ela o assistente diz «O motivo “Outro (descrever)” precisa de uma descrição (até 50 carateres).» As colunas de linhas são as de um lançamento normal, com os montantes invertidos.
+
+Na demonstração, o ficheiro com o lançamento `E10` (débito `121` e crédito `6261`, ambos de 50,00 €, a 31/03/2026), **Estorno de** `OD/2026/00139` e o motivo `cancellation` criou um lançamento em rascunho, ligado a `OD/2026/00139`, com o motivo «Anulação da operação»; publicado, ficou `OD/2026/00140`. Só se estorna um lançamento já publicado; faturas, pagamentos e linhas de banco estornam-se na própria ficha.
+
+### Outras colunas que pode ligar
+
+No segundo passo, a lista **Vai para** oferece ainda: **País do parceiro**, **Chave do parceiro de origem**, **Data de vencimento**, **Imposto da linha**, **Imposto que originou a linha**, **Etiquetas fiscais**, **Etiquetas fiscais do sistema de origem**, **Moeda**, **Montante em moeda**, **Artigo** e **Tipo de transação SAF-T**.
+
+- **Moeda** e **Montante em moeda**: o montante em moeda vai sem sinal, o sinal segue o débito e o crédito. Na demonstração, a linha de `92,00` a débito com `USD` e `100,00` ficou com 92,00 € e 100,00 USD, e a conta de clientes com vencimento a 10/05/2026. O assistente **não converte**: o euro é o que está nas colunas **Débito** e **Crédito**. <span className="fd-pending">Pendente de validação por contabilista certificado: a taxa de câmbio a usar nos lançamentos em moeda estrangeira.</span>
+- **Imposto da linha**, **Imposto que originou a linha** e **Etiquetas fiscais** só se preenchem se o programa anterior as tiver; mexem no IVA e, por isso, deixe-as vazias quando não tem a certeza. <span className="fd-pending">Pendente de validação por contabilista certificado: preenchimento das colunas de imposto e das etiquetas fiscais num lançamento importado.</span>
+
+## Notas importantes
+
+<HelpCallout type="risco" title="Os lançamentos importados não se desfazem em bloco">
+Cada lançamento estorna-se individualmente, como diz a pergunta de confirmação. Com **Criar em rascunho** pode ainda apagar ou corrigir antes de publicar; com **Criar e publicar** e com o **Histórico migrado** já não. Prefira rascunho até ter conferido o primeiro ficheiro.
+</HelpCallout>
+
+- É tudo ou nada: uma linha errada e nada é gravado.
+- O assistente trata uma célula que comece por `=`, `+`, `-` ou `@` como texto, nunca como fórmula.
+- Um lançamento com o mesmo diário, a mesma referência e a mesma data de outro que já existe é recusado, para não duplicar. Por isso o mesmo ficheiro importado duas vezes na mesma empresa dá um erro por lançamento.
+- Com a coluna **Parceiro** vazia numa conta de terceiros, o lançamento não é aceite: o extrato do cliente e o SAF-T precisam do parceiro.
+
+## Problemas frequentes
+
+### Vários problemas no mesmo ficheiro
+
+- **Sintoma:** «Foram encontrados 8 problema(s) no ficheiro. Nada foi gravado. Corrija no ficheiro as linhas listadas abaixo e leia-o outra vez; a importação só corre quando o ficheiro não tem problemas.» A janela lista, por linha do ficheiro (a linha 1 é o cabeçalho), o lançamento e o que está mal. **N.º de linhas** fica a 0.
+  ![Verificação com 8 problemas listados por linha do ficheiro](/images/migration-toolkit/importar-lancamentos/08-erros-do-ficheiro.png)
+- **O que fazer:** corrija o ficheiro, carregue em **Voltar** e escolha-o outra vez. As mensagens seguintes são as que viu no ficheiro de teste.
+
+### «A conta … não existe»
+
+- **Sintoma:** «A conta “999999” não existe em *empresa*. Verifique o código no plano de contas.» O mesmo acontece com um código incompleto, como `62`.
+- **O que fazer:** confirme o código em **Plano de contas** e crie a conta se faltar.
+
+### «O lançamento … não está equilibrado»
+
+- **Sintoma:** «O lançamento “E3” não está equilibrado: débito 20,00, crédito 15,00, diferença 5,00. Um lançamento desequilibrado nunca é gravado; corrija os montantes.»
+- **O que fazer:** some o débito e o crédito das linhas com a mesma chave, ache a diferença e corrija o montante ou acrescente a linha em falta.
+
+### «A data … não é válida»
+
+- **Sintoma:** «A data “31/02/2026” não é válida. Use AAAA-MM-DD ou DD/MM/AAAA.» A mensagem aparece em cada linha do lançamento.
+- **O que fazer:** escreva uma data que exista, como `05/03/2026` ou `2026-03-05`.
+
+### «A data … está num período bloqueado»
+
+- **Sintoma:** «A data 10/12/2025 está num período bloqueado (Data de bloqueio geral (31/12/2025)). Não se pode importar nada aí; altere a data ou peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)».»
+  ![Verificação com a data 10/12/2025 num período bloqueado](/images/migration-toolkit/importar-lancamentos/09-periodo-bloqueado.png)
+- **O que fazer:** use uma data posterior ao bloqueio. Marcar **Histórico migrado** não resolve: na demonstração a mesma mensagem apareceu com a opção marcada. Se o lançamento tem mesmo de ficar nesse período, fale com o contabilista certificado antes de mexer nas datas de bloqueio (veja [Não consigo lançar num período bloqueado ou num exercício fechado](/troubleshooting/periodo-bloqueado)). <span className="fd-pending">Pendente de validação por contabilista certificado: alterar uma data de bloqueio para importar lançamentos.</span>
+
+{/* Nota interna (lote v23-Q, #3947, master 808f8ca1f, docs_demo_v23q_test, porta 8452): provocado no ecrã com um utilizador criado só com o perfil Contabilista certificado (DEC-1777): ficheiro com o lançamento E9 de 10/12/2025, Ler o ficheiro e Verificar; a mensagem diz agora «peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)»» (antes «peça ao Responsável fiscal»), mesmo a quem já tem esse perfil. Captura 09 refeita. As duas frases do artigo que mandavam pedir ao Responsável fiscal que alterasse a data de bloqueio passaram a remeter para o artigo do período bloqueado, sem prometer quem a altera. */}
+
+### «A conta … é de terceiros e precisa de parceiro» ou parceiro não encontrado
+
+- **Sintoma:** «A conta 2111 é de terceiros e precisa de parceiro (extrato de cliente ou fornecedor e SAF-T). Preencha o parceiro nesta linha.» Com um NIF que não existe: «Não foi encontrado nenhum parceiro para “510000000” (NIF ou nome exato). Crie primeiro o parceiro.»
+- **O que fazer:** preencha a coluna **Parceiro** com o NIF e, se o parceiro não existir, crie-o antes.
+
+### «Não existe nenhum diário com o código …» ou diário que não é de operações diversas
+
+- **Sintoma:** «Não existe nenhum diário com o código “XYZ” em *empresa*.» Com um diário de vendas: «O diário FT não é um diário de operações diversas. As faturas, os recibos e os outros documentos certificados emitem-se na faturação e nunca se importam como lançamentos.»
+- **O que fazer:** use o código de um diário de operações diversas (aqui `OD`) ou escolha o **Diário** na janela.
+
+### «Já existe um lançamento com o mesmo diário, a referência …»
+
+- **Sintoma:** «Já existe um lançamento com o mesmo diário, a referência “RENDA-03” e a mesma data (Rascunho de lançamento (RENDA-03)). Importá-lo outra vez duplicava-o.»
+- **O que fazer:** se o lançamento anterior estava certo, não importe outra vez. Se estava errado, apague o rascunho ou estorne o publicado antes de repetir.
+
+### «A linha tem débito e crédito ao mesmo tempo»
+
+- **Sintoma:** «A linha tem débito e crédito ao mesmo tempo. Separe-a em duas linhas.» O mesmo vale para uma linha sem nenhum dos dois, e para um montante que não é número positivo.
+- **O que fazer:** separe a linha em duas, uma a débito e outra a crédito. Na coluna **Montante em moeda**, a mensagem «O montante em moeda “-100,00” não é válido. Use um número positivo: o sinal segue o débito/crédito.» pede o valor sem sinal.
+
+### «Escolha primeiro um ficheiro CSV ou XLSX.» ou «O ficheiro não tem linhas de dados»
+
+- **Sintoma:** ao carregar em **Ler o ficheiro** sem ficheiro escolhido, a janela diz «Escolha primeiro um ficheiro CSV ou XLSX.». Com um ficheiro que só tem a linha de cabeçalho: «O ficheiro não tem linhas de dados. Precisa de uma linha de cabeçalho e de pelo menos uma linha de lançamento.»
+- **O que fazer:** escolha o ficheiro em **Escolher ficheiro** e confirme que, por baixo do cabeçalho, tem as linhas dos lançamentos.
+
+### Linhas do mesmo lançamento em diários ou com referências diferentes
+
+- **Sintoma:** «As linhas do lançamento “E1” estão em diários diferentes. Um lançamento está num só diário.» Na mesma linha aparece também «O lançamento não tem diário: ponha o código do diário no ficheiro ou escolha um diário no assistente.». Com referências diferentes: «As linhas do lançamento “E2” têm referências diferentes. Use a mesma referência em todas as linhas.»
+- **O que fazer:** dê o mesmo diário e a mesma referência a todas as linhas com a mesma chave, ou use chaves diferentes para lançamentos diferentes.
+
+{/* Nota interna (lote v23-AH, DOCS-069 #4052, master 97b34fac3, docs_demo_v23ah_test, porta 8492): as quatro mensagens vistas por clique com o administrador na Empresa Teste Portugal (Ler o ficheiro e Verificar; nada gravado), com um ficheiro só com o cabeçalho e outro com o E1 em MISC e AJU e o E2 com as referências LIMP-03 e LIMP-03B. Vinham do guia congelado Migração/importar-lancamentos-csv-xlsx.md. */}
+
+### Estorno sem motivo ou com o número errado
+
+- **Sintoma:** «Um estorno precisa do seu motivo (código do catálogo de motivos de estorno). Preencha «Motivo do estorno (código)».» Com um número que não existe, ou que ainda está em rascunho: «O lançamento a estornar “OD/2026/00099” não foi encontrado entre os publicados, ou o número é ambíguo.»
+- **O que fazer:** preencha o código do motivo e confira o número em **Lançamentos contabilísticos**. Publique primeiro o lançamento a estornar.
+
+{/* Nota interna (v23-T, DOC-0299, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

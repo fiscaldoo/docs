@@ -1,0 +1,78 @@
+---
+id: ativar-as-aplicacoes
+slug: /getting-started/ativar-as-aplicacoes
+title: Como ativar a faturação e as aplicações do fiscaldoo
+sidebar_label: Ativar a faturação e as aplicações
+sidebar_position: 1
+description: Ligar nas Definições os pacotes do fiscaldoo de que a empresa precisa, a começar pela faturação certificada, e guardar para os instalar.
+keywords: [ativar, ativar faturação, ativar faturacao, instalar, instalar módulos, instalar modulos, aplicações, aplicacoes, pacotes, fiscaldoo · Certificação, fiscaldoo certificacao, definições, definicoes, começar, comecar, desinstalar, desligar pacote]
+doc_id: DOC-0006
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/certificacao/series-documentais]
+---
+
+## Para que serve?
+
+O fiscaldoo está dividido em pacotes: faturação certificada, guias de transporte, ponto de venda, fecho de contas, salários, Copiloto e outros. Cada pacote liga-se com um interruptor nas Definições do Odoo. Ao guardar, o Odoo instala o pacote e tudo aquilo de que ele precisa.
+
+Para faturar, o primeiro pacote a ligar é **Faturação certificada, IVA e SAF-T**; depois falta preparar a empresa (artigo seguinte). Os outros ligam-se quando a empresa precisar deles. Os pacotes ligam-se para a base de dados inteira, e servem todas as empresas que ela tiver.
+
+## Quando utilizar?
+
+- Numa base de dados nova, antes de emitir o primeiro documento.
+- Quando a empresa passa a precisar de outra área, por exemplo guias de transporte, ponto de venda ou salários.
+- Para ver que pacotes estão ligados na base de dados.
+
+## Onde encontrar?
+
+**Definições › fiscaldoo · Certificação** (na lista da esquerda das Definições)
+
+## Antes de começar
+
+- Precisa de acesso às **Definições** do Odoo, que só o administrador da base de dados tem. Os perfis do dia a dia (**Administrativo**, **Contabilista**, **Contabilista certificado**, **Auditor / ROC**) não veem esta aplicação.
+- Escolha uma altura sem ninguém a trabalhar: guardar pode demorar alguns minutos, sobretudo se ligar vários pacotes de uma vez.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a aplicação **Definições** e, na lista da esquerda, carregue em **fiscaldoo · Certificação**.
+   ![Lista da esquerda das Definições com fiscaldoo · Certificação assinalado](/images/getting-started/ativar-as-aplicacoes/01-separador-fiscaldoo-certificacao.png)
+2. No bloco **Faturação**, marque **Faturação certificada, IVA e SAF-T**. O texto por baixo de cada interruptor diz o que o pacote traz e o que instala também.
+   ![Interruptor Faturação certificada, IVA e SAF-T marcado, com o texto do que o pacote traz](/images/getting-started/ativar-as-aplicacoes/02-interruptor-faturacao-certificada.png)
+3. Marque os outros pacotes de que a empresa já precisa. Os blocos são **Começar**, **Faturação**, **EDI e Peppol**, **Contabilidade**, **Declarações e relatórios**, **Salários e recursos humanos**, **Copiloto** e **Outros**.
+4. Carregue em **Guardar**, no canto superior esquerdo.
+5. Espere que a página volte a carregar. Não feche nem atualize a janela entretanto: o próprio ecrã avisa «Ao carregar em Guardar, o Odoo instala o que ligou e prepara a base de dados. Pode demorar alguns minutos (mais se ligar vários pacotes de uma vez): espere que a página recarregue e não feche nem atualize a janela.» <span className="fd-pending">Pendente de validação no ecrã: na base de demonstração todos os pacotes já estão instalados, por isso a instalação de um pacote novo não se pôde ver.</span>
+
+</StepByStep>
+
+## Resultado esperado
+
+- Os pacotes que ligou ficam marcados quando volta a abrir **fiscaldoo · Certificação**.
+- As aplicações que eles trazem aparecem no menu das aplicações (por exemplo **Faturação** e **Contabilidade**, com a faturação certificada).
+- Com a faturação certificada instalada, o fim da página **fiscaldoo · Certificação** passa a ter sete grupos de atalhos: **Configurar a certificação: séries e chaves**, **Configurar a certificação: comunicação com a AT**, **Configurar a certificação: SAF-T**, **Configurar a certificação: estado**, **Configurar a certificação: contabilista e cópias de segurança**, **Configurar a segurança: cofre de credenciais** e **Configurar os dados: migração e importações**. Os três primeiros são o ponto de partida do artigo seguinte.
+
+Ligar os pacotes não chega para emitir documentos certificados: falta preparar a empresa. Continue em [Como preparar a empresa para emitir documentos certificados](/fiscal-core/preparar-a-faturacao-certificada).
+
+## Notas importantes
+
+- Instalar o fiscaldoo põe o Odoo também em português de Portugal, de que os pacotes precisam.
+- O primeiro bloco, **Começar**, tem o **Assistente «Configurar a empresa»**, que pergunta em linguagem simples os dados da empresa e prepara o resto: abre-se depois em **Contabilidade › Configurar › Geral › Configurar a empresa**.
+
+## Problemas frequentes
+
+### Desliguei um pacote e o Odoo não deixa guardar
+
+- **Sintoma:** ao carregar em **Guardar** abre-se a janela **Operação inválida**: «O pacote não pode ser desinstalado. O que aconteceu: ia remover … que contém faturas e notas de crédito certificadas (53); recibos certificados (15); … Porquê: a lei obriga a conservar estes registos e desinstalar o pacote apagá-los-ia. Como resolver: deixe o pacote instalado (não se perde nada) e deixe de o usar; …»
+- **Causa:** o pacote guarda registos que a lei manda conservar (documentos certificados, ficheiros SAF-T, comunicações com a AT, apuramentos de IVA, declarações de salários). Desinstalá-lo apagava-os.
+- **O que fazer:** carregue em **Fechar** e depois em **Descartar**. O pacote continua instalado e nada se perde; se já não o usa, deixe de o usar.
+
+### Não vejo a aplicação Definições
+
+- **Causa:** o seu utilizador não é administrador da base de dados.
+- **O que fazer:** peça ao administrador da base de dados que ligue o pacote.

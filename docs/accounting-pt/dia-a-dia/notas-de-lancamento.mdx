@@ -1,0 +1,97 @@
+---
+id: notas-de-lancamento
+slug: /accounting-pt/notas-de-lancamento
+title: Como emitir notas de lançamento a débito ou a crédito
+sidebar_label: Notas de lançamento
+sidebar_position: 8
+description: Registar uma nota de lançamento a débito (NLD) ou a crédito (NLC), o documento interno que acerta a conta corrente de um cliente ou fornecedor sem fatura e sem IVA.
+keywords: [nota de lançamento, nota de lancamento, NLD, NLC, nota de lançamento a débito, nota de lançamento a crédito, conta corrente, acerto de conta corrente, juros de mora, documento interno]
+doc_id: DOC-0068
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c2bf63c34)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/dia-a-dia/lancamentos-contabilisticos, accounting-pt/dia-a-dia/dividir-uma-linha]
+---
+
+## Para que serve?
+
+Uma nota de lançamento é um lançamento contabilístico **interno** que acerta a conta corrente de um cliente ou de um fornecedor. A **nota a débito (NLD)** aumenta o que o terceiro deve à empresa (ou diminui o que a empresa lhe deve); a **nota a crédito (NLC)** faz o contrário. Cada uma tem o seu diário e a sua numeração (`NLD/2026/00001`, `NLC/2026/00001`).
+
+Não é um documento fiscal: não tem IVA nem artigos, não é comunicada à AT e só aparece no razão. É o próprio ecrã que o diz, numa faixa no topo.
+
+## Quando utilizar?
+
+- Para acertos da conta corrente que não pedem fatura nem nota de crédito: no exemplo, debitar a um cliente juros de mora de 25,00 €.
+- **Não** use uma nota de lançamento quando a operação tem IVA ou quando o cliente precisa de um documento fiscal: emita uma fatura ou uma [nota de crédito](/fiscal-core/emitir-uma-nota-de-credito).
+- <span className="fd-pending">Pendente de validação por contabilista certificado: em que acertos a nota de lançamento chega como suporte (por exemplo, juros de mora, que não entram no valor tributável do IVA) e em que casos o cliente tem de receber um documento emitido pelo programa de faturação.</span>
+
+## Onde encontrar?
+
+- **Contabilidade › Lançar › Lançamentos › Notas de lançamento a débito**
+- **Contabilidade › Lançar › Lançamentos › Notas de lançamento a crédito**
+
+Cada menu mostra só as notas do seu tipo. Na pesquisa dos lançamentos contabilísticos, o filtro **Notas de lançamento (NLC/NLD)** mostra as duas.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista** (ou superior). O **Administrativo** não pode criar notas: não tem a aplicação **Contabilidade** (ver «Problemas frequentes»).
+- Saiba o cliente ou o fornecedor, o valor e a conta de contrapartida. No exemplo: cliente Clínica Dentária Sorriso, SA, 25,00 € de juros de mora, contrapartida `7918 De outros financiamentos concedidos`. <span className="fd-pending">Pendente de validação por contabilista certificado: a conta de rendimento dos juros de mora (7918 ou outra da 79/78) na prática da empresa.</span>
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Notas de lançamento a débito** e carregue em **Novo**. O **Diário** já vem como **Notas de lançamento a débito** e a faixa azul diz «Nota de lançamento a débito (NLD) Lançamento contabilístico interno: ajusta a conta corrente de um cliente ou fornecedor. Não é um documento fiscal, não é comunicado à Autoridade Tributária e só aparece no razão.».
+2. Escreva a **Data** (`31/10/2026`) e, em **Referência**, o motivo (`Juros de mora da FT D26/5 (30 dias)`).
+3. Em **Linhas de lançamento**, acrescente a linha do cliente: a conta a receber do cliente (no exemplo, `2111 Clientes gerais`), **Parceiro** `Clínica Dentária Sorriso, SA`, **Débito** `25,00`. Na linha do cliente o parceiro é obrigatório. Se a empresa usa [contas correntes individuais](/accounting-pt/contas-individuais-de-terceiros), use a conta do próprio cliente, a que está na ficha dele (por exemplo, `21110010 Clínica Dentária Sorriso, SA`): a `2111` é recusada com «A conta 2111 é agregadora; escolha uma conta de movimento. Só se pode lançar em contas de movimento (o SAF-T e o SNC não admitem lançamentos em contas agregadoras).», e a conta de outro cliente também: «A conta … é a conta individual de … e não pode receber itens de ….».
+4. Acrescente a contrapartida: conta `7918 De outros financiamentos concedidos`, **Crédito** `25,00`. Não ponha impostos nem artigos.
+   ![Nota de lançamento a débito em rascunho com a faixa azul NLD, o número NLD/2026/00001, o Diário Notas de lançamento a débito, a Data 31/10/2026 e a Referência dos juros de mora](/images/accounting-pt/notas-de-lancamento/01-aviso-nota-a-debito.png)
+5. Carregue em **Publicar**.
+
+</StepByStep>
+
+Para uma **nota a crédito**, faça o mesmo em **Notas de lançamento a crédito**, com a linha do cliente ou do fornecedor a **crédito**.
+
+## Resultado esperado
+
+- A nota fica **Publicada** com o número `NLD/2026/00001`. As linhas, conferidas no razão:
+
+| Conta | Parceiro | Débito | Crédito |
+|---|---|---|---|
+| 2111 Clientes gerais | Clínica Dentária Sorriso, SA | 25,00 € | |
+| 7918 De outros financiamentos concedidos | | | 25,00 € |
+
+- Os 25,00 € entram no extrato de conta corrente do cliente e ficam em aberto até serem recebidos e reconciliados, como qualquer outro valor a receber.
+- A nota não aparece na faturação nem nas comunicações à AT.
+
+## Notas importantes
+
+- **O sentido é verificado.** Uma NLD tem de debitar a conta corrente (sem crédito líquido nas contas de clientes e fornecedores) e uma NLC tem de a creditar. O estorno de uma nota não tem de cumprir esta regra, porque inverte a nota que anula.
+- **Sem IVA nem artigos.** Uma linha com imposto ou artigo é recusada.
+- **Corrigir uma nota publicada:** estorne-a ([Como estornar um lançamento](/accounting-pt/estornar-um-lancamento)) e emita uma nota nova.
+
+## Problemas frequentes
+
+### «… não pode ser guardado como … uma nota a crédito tem de creditar a conta corrente…»
+
+- **Sintoma:** ao gravar uma nota em **Notas de lançamento a crédito** com o cliente a débito: ««Rascunho de lançamento (…)» não pode ser guardado como Credit journal note (NLC): uma nota a crédito tem de creditar a conta corrente (sem débito líquido nas contas de clientes/fornecedores). Uma nota de lançamento ajusta a conta corrente de um cliente ou fornecedor sem emitir fatura: tem linhas de parceiro (211/221) e uma contrapartida, sem produtos nem IVA. Se precisa de um documento fiscal, crie antes uma fatura ou uma nota de crédito.» (O nome do tipo aparece em inglês.)
+- **O que fazer:** se quer debitar o cliente, use **Notas de lançamento a débito**; senão, troque os lados das linhas.
+
+{/* Nota interna (DOCS-046 v5-ACC, V5ACC-02): o nome do tipo na mensagem sai em inglês («Credit journal note (NLC)»); quando o defeito fechar, atualizar a citação. */}
+
+### «Falta indicar o cliente ou o fornecedor…»
+
+- **Sintoma:** «Falta indicar o cliente ou o fornecedor: 1 linha(s) numa conta de terceiros não o têm — 2111 (…).»
+- **O que fazer:** preencha o **Parceiro** na linha da conta 211 ou 221.
+
+### «Não tem permissão para criar uma nota de lançamento (NLC/NLD)…»
+
+- **Causa:** o perfil (por exemplo, **Administrativo**) não é **Contabilista** ou superior.
+- **O que fazer:** peça a nota a um Contabilista.
+
+{/* Nota interna (DOCS-046 v5-ACC, DOC-0068, master 6fb7ee1d4, base docs_demo_v5acc_test): menu, Novo com o diário NLD proposto, faixa, Publicar e número NLD/2026/00001 (lançamento 581) no ecrã com o Contabilista; recusas (NLC a débito, sem parceiro, Faturação) provadas por RPC com esses perfis, mensagens do servidor. */}
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo; menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); Notas de lançamento a débito e a crédito só do Contabilista, do Contabilista certificado e do administrador */}

@@ -1,0 +1,76 @@
+---
+id: escolher-a-ia-por-agente
+slug: /copilot/escolher-a-ia-por-agente
+title: Como escolher que ligação de IA cada agente usa
+sidebar_label: Escolher a IA de cada agente
+sidebar_position: 3
+description: "Dizer a cada agente do Copiloto que ligação de IA usa, o que acontece quando não escolhe nenhuma e o que a escolha não muda nos dados pessoais."
+keywords: [escolher ligação, agente, agentes e ligações, agentes e ligacoes, ligação por omissão, ligacao por omissao, várias ligações, fornecedor de IA]
+doc_id: DOC-0281
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master a829e964b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [copilot/configurar/ligar-a-uma-ia, copilot/configurar/privacidade-e-consentimentos]
+---
+
+## Para que serve?
+
+Uma empresa pode ter várias [ligações à IA](/copilot/ligar-a-uma-ia), cada uma com o seu fornecedor, modelo e limite. Aqui diz qual delas cada agente usa: por exemplo, uma para ler faturas e outra para as dúvidas legais.
+
+## Quando utilizar?
+
+- Quer que uma tarefa use um fornecedor ou um modelo diferente das outras.
+- Quer separar o gasto de uma tarefa, com o limite próprio de uma ligação.
+
+## Onde encontrar?
+
+**Copiloto › Ligações às IAs › Agentes e ligações**.
+
+## Antes de começar
+
+- É o administrador do sistema (ou tem o acesso extra **Administração fiscal**). O **Contabilista** não vê esta entrada.
+- As ligações já estão criadas. Veja [Como ligar o Copiloto a um fornecedor de IA](/copilot/ligar-a-uma-ia).
+- Feito a 5 de novembro de 2026, na Empresa Demonstração, Lda, com ligações sem chave: nenhuma IA foi chamada.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Copiloto › Ligações às IAs › Agentes e ligações**. A lista tem uma linha por agente da empresa (12 na demonstração).
+2. Na linha do agente, carregue na coluna **Ligação à IA** e escolha a ligação. Deixe em branco para usar a **Ligação por omissão**.
+3. Carregue em **Guardar**. A coluna **Ligação usada** passa a dizer a ligação que o agente vai usar.
+   ![Lista Agentes e ligações: o Ajudante e o Leitor de documentos têm ligação própria; os outros usam a ligação por omissão](/images/copilot/escolher-a-ia-por-agente/01-agentes-e-ligacoes.png)
+
+</StepByStep>
+
+Os agentes criados pelo gabinete não estão nesta lista: escolhem a ligação na própria ficha (veja [Como criar e usar agentes do gabinete](/copilot/agentes-do-gabinete)).
+
+## Resultado esperado
+
+Cada agente usa a ligação de **Ligação usada**. Uma linha sem **Ligação à IA** acompanha a ligação por omissão: se esta mudar, o agente muda também.
+
+## Notas importantes
+
+- **Escolher não liga o agente.** O interruptor continua em **Copiloto › Controlo › Interruptores**; a coluna **Ligado** só o mostra.
+- **A chave é uma por fornecedor e por empresa.** As ligações do mesmo fornecedor partilham-na.
+- **Qualquer ligação pode servir qualquer agente, incluindo o Revisor de salários.** O que muda é o que segue para a IA: com **Autorizar dados pessoais e sensíveis nesta ligação** desligado (o normal), os dados pessoais seguem com valores fictícios. Os dados sobre saúde, filiação sindical ou greves só seguem tal como estão com esta opção ligada. Só a empresa a liga, ligação a ligação, ao declarar que tem a base legal e os consentimentos assinados. Veja [Privacidade e consentimentos](/copilot/privacidade-e-consentimentos). Credenciais e segredos reconhecidos no pedido nunca seguem.
+- **As regras agendadas não têm linha própria:** usam a ligação do agente **IA - Classificador**.
+
+## Problemas frequentes
+
+A lista guarda a escolha sem avisar. Os dois casos abaixo só aparecem quando o agente é usado.
+
+### «O fornecedor DeepSeek tem os servidores fora da UE… por isso está DESLIGADO e não foi enviado nada»
+
+- **Causa:** a ligação é de um fornecedor que pede consentimento (Z.ai ou DeepSeek) e a empresa ainda não o deu.
+- **O que fazer:** dê o consentimento na ligação ou escolha outra ligação para o agente.
+
+### «Não há no cofre nenhuma chave de API deste fornecedor para a empresa…»
+
+- **Causa:** a ligação escolhida não tem chave.
+- **O que fazer:** escreva a chave na ligação.
+
+{/* Nota interna (v13-COP): visto com admin. Ligações criadas por RPC, sem chave (o servidor da demonstração não tem chave de cifra do cofre). A ligação por omissão da captura é a AMÁLIA, sem chave, para ver o ecrã pronto sem qualquer pedido real. DeepSeek no Revisor de salários guardada por clique sem recusa (COP-050, DEC-1250/1251): o guia antigo está desatualizado. Regras: registo de chamadas com agente ai_classifier. */}

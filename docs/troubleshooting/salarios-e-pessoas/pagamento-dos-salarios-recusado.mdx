@@ -1,0 +1,120 @@
+---
+id: pagamento-dos-salarios-recusado
+slug: /troubleshooting/pagamento-dos-salarios-recusado
+title: Não consigo pagar os salários ou gerar o ficheiro de transferências
+sidebar_label: Pagamento dos salários recusado
+description: Porque o Ficheiro de transferências é recusado (sem pagamentos, lote por contabilizar), o percurso até ao ficheiro, o que fazem Banco executou e Marcar como pago, e como se repõe um lote marcado como pago por engano.
+keywords: [ficheiro de transferências, ficheiro de transferencias, não há pagamentos para pôr num ficheiro, nao ha pagamentos, gerar pagamentos, banco executou, marcar como pago, pagar salários, pagar salarios, ficheiro de pagamento, transferência dos ordenados, transferencia dos ordenados, pagamento recusado, não estão contabilizados, ainda não é possível fazer o ficheiro, contabilizar, repor para validado, marcado como pago por engano]
+doc_id: DOC-0403
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master d7b8279e9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado, payroll-pt/processar-e-pagar/pagar-os-salarios, troubleshooting/salarios-e-pessoas/recibo-nao-e-contabilizado]
+---
+
+## Sintoma
+
+No lote de salários, **Ficheiro de transferências** abre **Operação inválida** em vez de descarregar o ficheiro, **Marcar como pago** pede uma confirmação que não esperava, ou o lote ficou **Pago** sem o banco ter feito as transferências.
+
+## Mensagem
+
+Vistas no lote **Salários de outubro de 2026** da Empresa Demonstração, Lda, com o perfil **Processador de salários**, pela ordem em que aparecem.
+
+**Ficheiro de transferências** com o lote **Validado**, antes de **Gerar pagamentos**:
+
+> «Não há pagamentos para pôr num ficheiro. O que aconteceu: o lote não tem nenhum pagamento por transferência gerado e à espera do banco. Como resolver: use primeiro «Gerar pagamentos».»
+
+![Janela Operação inválida: não há pagamentos para pôr num ficheiro, use primeiro Gerar pagamentos](/images/troubleshooting/pagamento-dos-salarios-recusado/01-ficheiro-sem-pagamentos.png)
+
+**Ficheiro de transferências** depois de **Gerar pagamentos**, com o lote ainda por contabilizar:
+
+> «Ainda não é possível fazer o ficheiro de transferências. O que aconteceu: 8 recibos não estão contabilizados, e a transferência bancária é um pagamento da Contabilidade que liquida o lançamento do recibo. São eles: *Ana Margarida Pinto* (sem lançamento contabilístico); *Bruno Miguel Teixeira* (sem lançamento contabilístico); … *Hugo Miguel Santos* (sem lançamento contabilístico). Como resolver: peça a um utilizador com o acesso extra «Administrador de Salários» para usar «Contabilizar» no lote e carregue de novo em «Ficheiro de transferências».»
+
+A lista traz um nome por recibo por contabilizar: no exemplo, os 8 do lote.
+
+![Janela Operação inválida: ainda não é possível fazer o ficheiro de transferências porque os 8 recibos não estão contabilizados](/images/troubleshooting/pagamento-dos-salarios-recusado/02-ficheiro-recibos-nao-contabilizados.png)
+
+**Marcar como pago**, com os pagamentos gerados e antes de o banco os executar. A janela **Marcar como pago** avisa, e ao confirmar o fiscaldoo recusa:
+
+> «Vai marcar como pagos 8 recibos do lote «Salários de outubro de 2026» (líquido total 10.382,03 €), com a data de pagamento *09/11/2026*. 8 pagamentos estão gerados mas o banco ainda não os executou (10.382,03 €): os recibos só podem ser marcados como pagos depois de o banco os executar. Use «Banco executou» quando o banco confirmar o ficheiro de transferências. Um utilizador com o acesso extra «Administrador de Salários» pode desfazer isto com «Repor para Validado» enquanto nenhum pagamento estiver contabilizado na Contabilidade.»
+
+![Janela Marcar como pago: os pagamentos estão gerados mas o banco ainda não os executou](/images/troubleshooting/pagamento-dos-salarios-recusado/03-marcar-como-pago-antes-do-banco.png)
+
+Ao carregar em **Marcar como pago** nessa janela, com o lote ainda por contabilizar, abre-se **Operação inválida**: «O pagamento ainda não pode ser executado. O que aconteceu: o(s) recibo(s) «*Ana Margarida Pinto (01/10/2026 — 31/10/2026)*», … «*Hugo Miguel Santos (01/10/2026 — 31/10/2026)*» não estão contabilizados, e um salário não se paga sem o respetivo lançamento contabilístico. Como corrigir: peça a um utilizador com o acesso extra «Administrador de Salários» que use «Contabilizar» no recibo e execute outra vez.» O lote fica **Validado**. Depois de **Contabilizar**, com os pagamentos gerados e antes de **Banco executou**, a janela **Marcar como pago** já não tem o botão de confirmar: só tem **Anular** e manda usar **Banco executou**:
+
+> «8 recibos do lote «Salários de outubro de 2026» estão contabilizados e os seus pagamentos já estão gerados, à espera do banco (líquido 10.382,03 €), por isso o lote não se pode marcar como pago aqui: fica pago quando o banco os executar. Como resolver: feche esta janela e use «Banco executou» quando o banco confirmar o ficheiro de transferências. Não use «Registar pagamento» nestes recibos: seriam pagos duas vezes. Não é preciso motivo.»
+
+![Janela Marcar como pago só com Anular: os 8 recibos estão contabilizados e os pagamentos à espera do banco; use Banco executou e não Registar pagamento](/images/troubleshooting/pagamento-dos-salarios-recusado/08-marcar-como-pago-a-espera-do-banco.png)
+
+Nesse caso, siga «Pagar o lote até ao ficheiro de transferências», abaixo. {/* Nota interna (lote v23-AS, depois do comboio 177 com o PAY-134, master d7b8279e9, docs_demo_v23as_test, 09/11/2026): lote de outubro de 2026 criado, calculado e validado por RPC (administrador) na cópia; por clique, Gerar pagamentos com um utilizador só com o perfil Processador de salários (a janela Marcar como pago com o lote por contabilizar continua igual à da captura 03) e Contabilizar com o utilizador da demonstração que só tem o acesso extra Administrador de Salários; depois, Marcar como pago aberto pelos dois: a janela citada, só com Anular (captura 08). */}
+
+## Causas verificadas
+
+- **O lote não está contabilizado.** O ficheiro liquida o lançamento dos salários, por isso só sai depois de **Contabilizar**, que é de quem tem o acesso extra **Administrador de Salários**. A recusa «Ainda não é possível…» diz quais os recibos que faltam.
+- **Ainda não há pagamentos gerados.** O ficheiro leva os pagamentos por transferência do lote; sem **Gerar pagamentos** a resposta é «Não há pagamentos…».
+- **Os botões dependem do estado do lote.** Com o lote **Calculado** não há botões de pagamento: aparecem quando o lote fica **Validado** (**Gerar pagamentos**, **Ficheiro de transferências**, **Banco executou**, **Marcar como pago**). Com o lote **Pago**, **Banco executou** e **Marcar como pago** desaparecem, e ficam **Gerar pagamentos**, **Ficheiro de transferências** e **Fechar**.
+- **Marcar como pago carregado antes do banco.** Com os pagamentos gerados, o fiscaldoo recusa se o lote está por contabilizar e, com o lote contabilizado, a janela só tem **Anular** (mensagens acima). Sem pagamentos gerados, a janela **Marcar como pago** avisa que os 8 recibos ficam pagos por pagamentos **manuais** (10.382,03 € no total, sem movimento bancário), pede o **Motivo** (por exemplo, «pago em numerário») e só então marca. Foi o que aconteceu no lote de novembro de 2026 da demonstração: o lote ficou **Pago** sem o banco ter feito nada.
+- Há recusas que não foram provocadas: pagamentos acima do líquido do recibo, recibo não validado, empresa sem diário de banco, parte em espécie maior do que a parte em dinheiro. <span className="fd-pending">Pendente de validação no ecrã: estas recusas não foram provocadas (a demonstração tem um só diário de banco e recibos sem rendimentos em espécie).</span>
+
+## O que confirmar
+
+1. O estado do lote, no topo à direita, e se já foi contabilizado (o botão **Contabilizar** só aparece a quem tem o acesso extra **Administrador de Salários**).
+2. Em **Salários › Pagar › Pagamentos de salários**, se o lote já tem pagamentos e em que estado estão.
+3. Se o banco já fez as transferências. **Banco executou** e **Marcar como pago** dizem ao fiscaldoo que o dinheiro saiu.
+
+## Como resolver
+
+### Pagar o lote até ao ficheiro de transferências
+
+Feito no lote de outubro de 2026, com o perfil indicado em cada passo:
+
+1. **Processador de salários:** com o lote **Calculado**, carregue em **Validar**. O lote fica **Validado**.
+2. **Com o acesso extra Administrador de Salários:** carregue em **Contabilizar**. Se for recusado por falta de um modelo de contabilização, siga [O recibo não é contabilizado](/troubleshooting/recibo-nao-e-contabilizado).
+3. **Processador de salários:** carregue em **Gerar pagamentos** (não mostra mensagem) e depois em **Ficheiro de transferências**. Na demonstração, o fiscaldoo descarregou o ficheiro «Salários de outubro de 2026.xml» (transferências SEPA), com 8 transferências e 10.382,03 € no total, o líquido dos 8 recibos. O Processador de salários faz estes dois passos num lote contabilizado, sem **Sem acesso**.
+4. Envie o ficheiro ao banco, pela aplicação do banco.
+5. Quando o banco fizer as transferências, o **Processador de salários** carrega em **Banco executou**. Abre-se a janela **Confirmação**: «Confirme que o banco executou as transferências do ficheiro. Os pagamentos ficam executados hoje e os recibos pagos.». Carregue em **Confirmar**.
+   ![Janela Confirmação de Banco executou, com o botão Confirmar assinalado](/images/troubleshooting/pagamento-dos-salarios-recusado/04-banco-executou.png)
+6. Os 8 recibos passaram a **Pago**, com o pagamento na data do dia. O lote continua **Validado**: carregue em **Marcar como pago**. A janela diz que todos os recibos «já foram pagos pelo banco» e que, ao confirmar, só o próprio lote passa a **Pago** e fica o evento de auditoria, sem criar nenhum pagamento. Confirme, e o lote passa a **Pago**.
+   ![Janela Marcar como pago: todos os recibos já foram pagos pelo banco, o lote passa a Pago e não é criado nenhum pagamento](/images/troubleshooting/pagamento-dos-salarios-recusado/05-marcar-como-pago-depois-do-banco.png)
+
+Se o Processador de salários gerar os pagamentos antes de o lote estar contabilizado, o ficheiro é recusado com a lista dos recibos por contabilizar. Depois de **Contabilizar**, o mesmo ficheiro sai sem refazer os pagamentos.
+
+### O lote ficou Pago e o banco ainda não pagou
+
+Um lote **Pago** por engano repõe-se: só quem tem o acesso extra **Administrador de Salários** o faz, no lote **Pago**, com **Repor para Validado**.
+
+1. Abra o lote e carregue em **Repor para Validado**. A janela diz: «8 recibos do lote «…» (líquido total … €) voltam a «Validado» e os pagamentos executados ficam anulados. Só é possível enquanto nenhum pagamento estiver contabilizado na Contabilidade nem reconciliado com o banco, e fica registado no registo de auditoria com o seu motivo.»
+   ![Janela Repor para Validado, com o campo Motivo e o botão Repor para Validado](/images/troubleshooting/pagamento-dos-salarios-recusado/06-repor-para-validado.png)
+2. Escreva o **Motivo** (sem ele, a janela dá «Há campos obrigatórios por preencher.») e carregue em **Repor para Validado**. No lote de novembro de 2026 da demonstração, marcado como pago sem pagamentos gerados, o lote voltou a **Validado**, com **Banco executou** e **Marcar como pago** outra vez na barra.
+
+O lote de outubro de 2026, com os pagamentos já contabilizados na Contabilidade, **não** se repõe. A recusa lista cada pagamento (por exemplo «o pagamento de Ana Margarida Pinto (01/10/2026 — 31/10/2026) já está contabilizado na Contabilidade (PBNK1/2026/00040)») e acaba: «Como resolver: desfaça primeiro o pagamento na Contabilidade (desreconcilie-o ou cancele-o), ou corrija o recibo com um recibo corretivo.»
+
+![Janela Operação inválida: o lote não pode voltar a Validado porque os pagamentos já estão contabilizados](/images/troubleshooting/pagamento-dos-salarios-recusado/07-repor-recusado.png)
+
+<HelpCallout type="atencao" title="Marcar como pago só depois de pagar">
+Use **Marcar como pago** depois de **Banco executou**, ou quando pagou de facto fora do ficheiro (por exemplo em numerário), com o motivo escrito. Com os pagamentos gerados, o fiscaldoo não deixa marcar o lote como pago até o banco os executar: use **Banco executou**.
+</HelpCallout>
+
+## Resultado esperado
+
+- Com o lote contabilizado, **Ficheiro de transferências** descarrega o ficheiro, feito pelo **Processador de salários**.
+- Depois de **Banco executou** e **Marcar como pago**, o lote fica **Pago** e cada recibo também.
+- Um lote **Pago** por engano, sem pagamentos contabilizados, volta a **Validado** com **Repor para Validado**.
+
+## Quando contactar o suporte
+
+- **Gerar pagamentos** ou **Ficheiro de transferências** dão **Sem acesso** ao **Processador de salários** num lote contabilizado.
+- **Repor para Validado** é recusado e os pagamentos não estão contabilizados nem reconciliados.
+- O ficheiro sai sem um trabalhador que tem pagamento gerado.
+
+## Informação a enviar
+
+- O lote, a empresa e o estado.
+- O texto completo da mensagem, copiado do ecrã.
+- Uma captura de **Pagamentos de salários** filtrada pelo lote.
+- O perfil com que entrou.
+
+{/* Nota interna (lote v23-AO, DOCS-069 #4052, master a67618a71, docs_demo_v23ao_test, 09/11/2026): UX-147. Recusa do Ficheiro de transferências (8 recibos) e janela Marcar como pago antes de Banco executou vistas por clique com um utilizador só com o perfil Processador de salários, no lote de outubro de 2026 criado e validado por RPC na cópia, com os pagamentos gerados por clique; capturas 02 e 03 refeitas (a data de pagamento da janela é a do dia). Contabilizar visto só com o acesso extra Administrador de Salários. */}

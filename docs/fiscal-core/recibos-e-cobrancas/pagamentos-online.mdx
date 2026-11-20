@@ -1,0 +1,120 @@
+---
+id: pagamentos-online
+slug: /fiscal-core/pagamentos-online
+title: Como receber pagamentos online (Multibanco, MB WAY, cartão)
+sidebar_label: Pagamentos online
+sidebar_position: 6
+description: Ligar o prestador de pagamentos (Eupago ou ifthenpay) em modo de teste com o simulador, preencher a conta e a comissão, ter uma segunda conta para outra série de faturas, ver o que o cliente vê e consultar o estado de um pedido.
+keywords: [pagamentos online, receber pagamentos, multibanco, mb way, cartão, cartao, eupago, ifthenpay, prestador de pagamentos, simulador, modo de teste, cofre de credenciais, conta no prestador, segunda conta, comissão do prestador, comissao do prestador, pagar fatura online]
+doc_id: DOC-0045
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/reconciliar-pagamentos-online, fiscal-core/recibos-e-cobrancas/referencias-multibanco]
+---
+
+## Para que serve?
+
+Permite que o cliente pague uma fatura pela página da fatura, com uma referência **Multibanco**, com **MB WAY** ou com **cartão**, através de um prestador de pagamentos (**Eupago** ou **ifthenpay**). O prestador vem desligado e a usar o **simulador**: nada é enviado a nenhum prestador real até alguém o ligar de propósito. Este artigo mostra como preparar o prestador, o que o cliente vê e como o contabilista acompanha o pedido. O que se faz depois de o dinheiro chegar ao banco está em [reconciliar os pagamentos online recebidos](/accounting-pt/reconciliar-pagamentos-online).
+
+## Quando utilizar?
+
+- Quando a empresa quer que os clientes paguem as faturas online, sem esperar por uma transferência.
+- Quando a empresa tem **duas contas no mesmo prestador** (por exemplo, uma por série de faturas). Atenção: na versão atual, a página da fatura do cliente **não** escolhe a conta pelo diário da fatura (ver «Várias contas» em Notas importantes); não conte com este campo para separar as entidades dos clientes.
+- **Não** serve para emitir uma referência Multibanco ao balcão ou por prestações, nem para importar o ficheiro de cobranças do banco: veja [cobrar com referências Multibanco](/fiscal-core/referencias-multibanco).
+
+## Onde encontrar?
+
+- Ficha do prestador: **Contabilidade › Reconciliar › Pagamentos online › O que há para fazer com os pagamentos online? › Listas de apoio › Pagamentos online**. O Administrador também a abre em **Vendas › Configurar › Pagamentos online**.
+- Chaves do prestador: **Contabilidade › Configurar › Cofre de credenciais › Credenciais**.
+- Avisos do prestador: **Contabilidade › Reconciliar › Pagamentos online › Avisos de pagamentos online** (fora do administrador, só com o modo programador ativo).
+
+## Antes de começar
+
+- O seu perfil é **Administrador**. Só o Administrador altera um prestador: o **Contabilista certificado**, a **Gerência**, o **Contabilista** e o **Auditor / ROC** abrem a ficha e leem, e o **Contabilista** pode consultar o estado de um pedido. O perfil **Administrativo** não tem acesso à ficha: recebe «Sem acesso».
+- A empresa tem de ter o país fiscal Portugal e as faturas têm de estar em euros: o prestador não é oferecido a outras empresas nem a outras moedas.
+- Precisa da **conta de gasto das comissões** (classe 62) e do **IVA da comissão** tal como vêm na fatura do prestador. Em produção precisa também das chaves do prestador, guardadas no cofre. Este artigo não usa chaves nem contas reais: tudo o que se vê foi feito com o simulador.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Listas de apoio › Pagamentos online**. A lista mostra os prestadores da empresa (Eupago e ifthenpay), cada um **Test** e **Publicada** ou **Não Publicada**. A demonstração traz uma conta de cada já publicada e outra de reserva, não publicada.
+   ![Lista de prestadores de pagamento, com o Eupago e o ifthenpay publicados e os de reserva não publicados](/images/fiscal-core/pagamentos-online/01-lista-de-prestadores.png)
+2. Abra o **Eupago**. Com **Live** desligado e **Usar o simulador** ligado, a ficha mostra a faixa **MODO DE TESTE** e as formas de pagamento **Cartão de crédito / débito**, **MB WAY** e **Multibanco** ligadas. No grupo **Conta no prestador** preencha:
+   - **Credenciais no cofre**: só se a empresa tiver mais de uma conta neste prestador; escreva a descrição da entrada do cofre desta conta (passo 5). Vazio, usa a única entrada da empresa.
+   - **Diários de faturas de cliente**: as séries cujas referências e pagamentos devem passar por esta conta. Vazio, é a conta por omissão. Hoje a escolha só separa as contas na ficha (um diário por conta); na página da fatura do cliente o pedido sai da conta por omissão (ver Notas importantes).
+   - **Perguntar ao prestador de quantos em quantos minutos**: de quanto em quanto tempo o fiscaldoo pergunta ao prestador se um cliente já pagou (10 por omissão).
+   - **Conta de gasto das comissões** e **IVA da comissão**: onde se lança a comissão que o prestador retém. Sem estes dois campos não se consegue lançar a transferência do prestador. <span className="fd-pending">Pendente de validação por contabilista certificado: a conta e o IVA a usar na comissão de cada prestador.</span>
+   - **Última consulta do estado** só se lê.
+   ![Ficha do Eupago com o simulador ligado, a conta 2, o diário de faturas EDI, a conta de comissões 6225 e o IVA de 23 %](/images/fiscal-core/pagamentos-online/02-conta-2-publicada.png)
+3. Para **ligar** o prestador carregue em **Não publicado**: passa a **Publicado**. Em modo de teste e com o simulador, o cliente já vê os três métodos na página da fatura. O mesmo vale para o **ifthenpay**, que tem os mesmos campos.
+4. Se a empresa tem **duas contas no mesmo prestador**, a segunda (a conta de reserva da lista) preenche-se como no passo 2, com **Credenciais no cofre** e pelo menos um **Diário de faturas de cliente**, e só então se publica. Se a primeira conta já é a conta por omissão (sem diários), a segunda tem de ter diários, senão a ficha não deixa publicar (ver «Problemas frequentes»). Cada diário só pode estar numa conta. Lembre-se do aviso em «Várias contas» nas Notas importantes: a ficha aceita esta configuração, mas o cliente não é encaminhado por ela.
+5. As chaves do prestador guardam-se em **Cofre de credenciais › Credenciais › Novo**. Em **Portal** escolha o tipo do prestador (**Eupago - chave da API**, **Eupago - chave dos avisos (webhook)**, ou os do ifthenpay: **chave Multibanco**, **chave MB WAY**, **chave do cartão**, **chave do back office** e **chave anti-phishing (aviso)**) e escreva em **Descrição** o mesmo texto que pôs em **Credenciais no cofre**. O segredo guarda-se cifrado e nunca volta a aparecer no ecrã. <span className="fd-pending">Pendente de validação no ecrã: preencher e gravar uma chave verdadeira do prestador, porque esta demonstração não pode usar chaves nem contas reais e o simulador não as pede.</span>
+   ![Nova entrada do cofre com o tipo Eupago - chave da API, a empresa e o campo do segredo](/images/fiscal-core/pagamentos-online/05-cofre-eupago.png)
+
+</StepByStep>
+
+## O que o cliente vê
+
+1. Na página da fatura (a ligação que o cliente recebe), o cliente carrega em **Pagar Agora**, escolhe **Multibanco**, **MB WAY** ou **Cartão de crédito / débito** e carrega em **Pagar**.
+   ![Janela Pagar da fatura FT D26/32, de 123,00 euros, com os três métodos e o Multibanco escolhido](/images/fiscal-core/pagamentos-online/06-cliente-escolhe-multibanco.png)
+2. No Multibanco, a página mostra a **Entidade**, a **Referência**, o **Valor** (fixo) e **Pagar até**. Aqui: entidade 11249, referência 275 100 172, 123,00 €, até 02/12/2026. A entidade e a referência são do simulador; não servem para pagar nada.
+   ![Página do pagamento Multibanco com entidade, referência, valor e data limite](/images/fiscal-core/pagamentos-online/07-cliente-referencia.png)
+3. Enquanto o prestador não confirmar, a página da fatura diz «O seu pagamento foi processado mas aguarda aprovação.» e o botão **Pagar Agora** desaparece.
+   ![Página da fatura com o aviso de que o pagamento aguarda aprovação](/images/fiscal-core/pagamentos-online/08-fatura-aguarda-pagamento.png)
+
+## Como acompanhar um pedido
+
+1. Na ficha do prestador, carregue no botão **Transactions** (o contador mostra os pedidos e o valor). A lista abre filtrada por **Confirmado**, por isso aparece vazia enquanto nenhum cliente pagou: retire o filtro para ver os pedidos pendentes.
+2. Abra o pedido: tem o **Valor**, o **Cliente**, o **Prestador**, o **Método de Pagamento** e o estado (**Pendente** até pagar). O Administrador, o Contabilista e o Contabilista certificado veem o botão **Consultar agora**, que pergunta já ao prestador se o cliente pagou. O pedido só passa a **Confirmado** se o prestador o confirmar.
+   ![Pedido FT D26/32 pendente, com o botão Consultar agora](/images/fiscal-core/pagamentos-online/09-pedido-de-pagamento.png)
+3. Com o simulador, a resposta é «Resposta do prestador. Ainda não está pago: o prestador continua à espera do cliente.» O fiscaldoo recusa uma segunda consulta passados poucos segundos.
+   ![Mensagem Resposta do prestador depois de carregar em Consultar agora](/images/fiscal-core/pagamentos-online/10-consultar-agora.png)
+4. Os avisos que o prestador envia quando o cliente paga ficam em **Avisos de pagamentos online** (só consulta). Na demonstração está vazia: «Ainda não foi recebido nenhum aviso de pagamento».
+   ![Lista de avisos de pagamentos online vazia](/images/fiscal-core/pagamentos-online/11-avisos.png)
+
+## Resultado esperado
+
+- O prestador publicado em modo de teste oferece **Multibanco**, **MB WAY** e **cartão** na página das faturas em euros da empresa; cada pedido aparece no painel «O que há para fazer com os pagamentos online?» (por pagar) e na lista de pedidos do prestador.
+- O pedido fica **Pendente** até o prestador avisar que o cliente pagou. Aí a fatura passa a paga e o dinheiro chega ao banco mais tarde, numa transferência única do prestador, sem a comissão: o que fazer a seguir está em [reconciliar os pagamentos online recebidos](/accounting-pt/reconciliar-pagamentos-online). <span className="fd-pending">Pendente de validação no ecrã: o pagamento efetivo de um cliente e a fatura a passar a paga. Com o simulador o prestador responde sempre «ainda não está pago», e para fazer pagar um pedido de teste seria preciso um prestador real (mesmo em sandbox), o que esta demonstração não pode usar.</span>
+
+## Notas importantes
+
+<HelpCallout type="atencao" title="Produção só com o simulador desligado e as chaves no cofre">
+Não ligue **Live** sem desligar **Usar o simulador**: o ecrã recusa, porque nada seria cobrado. Só passe a produção depois de confirmar com o contabilista certificado as chaves no cofre, a conta de comissões e o IVA da comissão.
+</HelpCallout>
+
+<HelpCallout type="atencao" title="Várias contas: a escolha por diário não se aplica na página da fatura do cliente">
+O campo **Diários de faturas de cliente** foi pensado para que uma fatura use a conta da sua série. Na demonstração, o cliente abriu a página da fatura FT E26/1, da série FTE (diário da segunda conta), e pediu o pagamento por Multibanco: o pedido (ainda **Pendente**, nada foi pago) saiu da conta por omissão (entidade 11249), não da segunda conta. Até isto estar corrigido, não conte com o campo para separar as entidades dos clientes e não o use como a única separação entre duas empresas ou duas séries com contas distintas no prestador.
+</HelpCallout>
+
+- Os pagamentos online só funcionam para empresas com país fiscal Portugal e em euros.
+- A demonstração traz, além da conta publicada, uma conta de reserva (**Não Publicada**) de cada prestador. Se publicar uma segunda conta, dê-lhe um nome que a distinga (por exemplo «Eupago - conta 2»): duas contas com o mesmo nome «Eupago» confundem-se nas listas.
+
+## Problemas frequentes
+
+### «A empresa já tem uma conta por omissão neste prestador»
+
+- **Sintoma:** ao publicar a segunda conta sem escolher diários: «Erro de Validação. A empresa já tem uma conta por omissão neste prestador. Escolha os diários de faturas desta conta, ou despublique a outra, para que cada diário tenha uma só conta.»
+- **O que fazer:** escolha os **Diários de faturas de cliente** da segunda conta e publique de novo. Se o mesmo diário já estiver na outra conta, o ecrã pede para o retirar de uma delas.
+  ![Mensagem de que a empresa já tem uma conta por omissão neste prestador](/images/fiscal-core/pagamentos-online/03-erro-conta-por-omissao.png)
+
+### «A produção não pode usar o simulador»
+
+- **Sintoma:** ao ligar **Live** com o simulador ligado: «Erro de Validação. A produção não pode usar o simulador, porque nada seria cobrado. Desligue o simulador e preencha as credenciais no cofre, ou mantenha o prestador em modo de teste.»
+- **O que fazer:** mantenha o modo de teste, ou desligue o simulador e preencha as chaves no cofre.
+  ![Mensagem de que a produção não pode usar o simulador](/images/fiscal-core/pagamentos-online/04-erro-producao-com-simulador.png)
+
+### Não consigo alterar o prestador
+
+- **Causa:** só o Administrador altera o prestador. Os outros perfis leem a ficha e recebem «Não tem permissão para alterar «Prestador de pagamento»». A Faturação nem a abre: «Não tem acesso a «Prestador de pagamento»».
+
+### A lista de pedidos do prestador aparece vazia
+
+- **Causa:** a lista abre com o filtro **Confirmado**. Retire-o para ver os pedidos pendentes.
+
+{/* Nota interna (DOCS-046 v4-FC4, DOC-0045, master 52d1dd3ad, base docs_demo_v4fc4_test, perfil Administrador para a ficha, o cofre e a consulta; leitura confirmada com Gestor de contabilidade, Contabilista, Auditor e Gerência; Faturação sem acesso). Percorrido: ficha Eupago (simulador, MODO DE TESTE), segunda conta com cofre «Conta 2 (EDI)», diário FTE, conta 6225 e IVA 23 %, publicar sem diários (erro) e com diários (BNK-034: já não dá o erro de leitura V3A3-09), Live com simulador (erro), portal do cliente (Multibanco), «Consultar agora». O botão aparece como «Consultar agora». NÃO percorrido: chaves reais no cofre (proibido), MB WAY e cartão no portal (o simulador responde mas o pagamento não se confirma), pagamento efetivo do cliente, ifthenpay no ecrã (mesma vista do Eupago, não aberta no portal), transferência do prestador (DOC-0116). Defeitos: V4FC4-04 (pedido de FT E26/1, diário da conta 2, saiu da conta por omissão; o código escolhe a conta por diário só quando recebe o identificador da fatura, a página da fatura do cliente não o passa), V4FC4-05 (textos em inglês: Live?, Transactions, Payment History, Payment, Test Mode, Payment method, Sign In). Menu «Pagamentos online» em Configurar › Bancos e ativos só em modo programador. Faturas criadas na demo: FT E26/1 (FTE, 95,40 €) e pedidos em FT D26/31 e FT D26/32. */}

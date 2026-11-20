@@ -1,0 +1,77 @@
+---
+id: revalorizacao-recusada
+slug: /troubleshooting/revalorizacao-recusada
+title: A revalorização do ativo não é aceite
+sidebar_label: Revalorização recusada
+sidebar_position: 40
+description: A janela de revalorização recusa o lançamento quando os valores não mudam, faltam depreciações ou falta a conta de excedente. Os ativos intangíveis não aparecem nesta janela.
+keywords: [revalorização, revalorizacao, ativo, nada a lançar, nada a lancar, excedente de revalorização, 58x, processe os períodos, NCRF 7, NCRF 6, intangível, intangivel, tangível, tangivel]
+doc_id: DOC-0383
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master f671d6842)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/ativos/revalorizar-ativos, troubleshooting/contabilidade-e-iva/depreciacoes-nao-sao-processadas]
+---
+
+## Sintoma
+
+Na janela **Revalorizar classe de ativos** (**Contabilidade › Lançar › Terceiros e ativos › O que há para fazer com os ativos?** › **Listas de apoio** › **Revalorizações** › **Revalorizar uma classe de ativos**), abre-se a janela **Operação inválida** ao carregar em **Calcular** ou em **Confirmar**, e nada é lançado. Ou a categoria que procura não aparece na lista **Categoria**.
+
+## Mensagem
+
+Copiadas do ecrã, com o perfil **Contabilista**. As partes em itálico mudam de caso para caso.
+
+- Ao carregar em **Confirmar**, com os valores iguais aos da quantia escriturada:
+  > «Nada a lançar: todos os valores revalorizados são iguais à quantia escriturada do ativo.»
+
+  ![Janela Operação inválida com a frase Nada a lançar](/images/troubleshooting/revalorizacao-recusada/01-nada-a-lancar.png)
+
+- Ao carregar em **Calcular**, com depreciações em atraso:
+  > «Processe os períodos contabilísticos de “*Telemóveis da equipa comercial*” até *05/11/2026* antes da revalorização: a quantia escriturada depende deles.»
+
+- Ao carregar em **Confirmar**, numa categoria sem conta de excedente:
+  > «A categoria “*Equipamento de transporte*” precisa de conta de excedente de revalorização (58x) antes de a revalorização ser lançada. Defina-a em Contabilidade › Configurar › Bancos e ativos › Categorias de ativos (só o contabilista certificado ou o administrador o podem fazer; peça-lhes) e calcule de novo.»
+
+- Ao carregar em **Carregar ativos**, sem **Justificação**, num aviso no canto do ecrã:
+  > «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+
+## Causas verificadas
+
+- **A coluna «Valor revalorizado» não mudou.** Ao carregar os ativos, o valor vem igual à quantia escriturada: se não o alterar, não há variação a lançar.
+- **Faltam depreciações até à data da revalorização.** A quantia escriturada só está certa com os períodos processados. A frase indica um ativo em atraso.
+- **A categoria não tem a conta 58x.** O excedente vai para capital próprio, por isso a conta tem de estar definida na categoria. Com um **Valor revalorizado** diferente, a janela mostra este aviso depois de **Calcular**, e só **Confirmar** o trava. Com os valores iguais, a frase que aparece é «Nada a lançar».
+- **A categoria é de ativos intangíveis.** Na lista **Categoria** só aparecem as categorias de ativos fixos tangíveis (classe 43). **Programas de computador**, por exemplo, não aparece e não há frase de recusa. Nesta janela não se revalorizam intangíveis (NCRF 6).
+- **O ativo não se escolhe sozinho.** A janela carrega todos os ativos em uso da categoria e as linhas não se apagam, porque a revalorização é da classe inteira (NCRF 7). Um ativo em rascunho ou abatido não entra na lista.
+
+## O que confirmar
+
+1. Se escreveu um valor diferente em **Valor revalorizado** em pelo menos uma linha.
+2. Se os períodos do ativo indicado na frase estão processados até à data da revalorização.
+3. Se a categoria tem conta de excedente, em **Contabilidade › Configurar › Bancos e ativos › Categorias de ativos**.
+
+## Como resolver
+
+Quem faz: o **Contabilista**, salvo indicação em contrário.
+
+1. Em «Nada a lançar», escreva o valor da avaliação na coluna **Valor revalorizado** e carregue em **Calcular** e em **Confirmar**.
+2. Em «Processe os períodos», processe as depreciações ([As depreciações não são processadas](/troubleshooting/depreciacoes-nao-sao-processadas)) e carregue de novo em **Calcular**.
+3. Em «precisa de conta de excedente», peça ao **Contabilista certificado** ou ao **Administrador** que defina a conta na categoria. Depois abra a janela de novo e calcule.
+4. Num ativo intangível com perda de valor, registe uma perda por imparidade, em vez de uma revalorização. <span className="fd-pending">Pendente de validação por contabilista certificado: o tratamento de cada caso concreto.</span>
+
+## Resultado esperado
+
+Abre-se a lista **Revalorizações**, com a linha nova. O caminho completo está em [Como revalorizar ativos](/accounting-pt/revalorizar-ativos).
+
+## Quando contactar o suporte
+
+- Os períodos estão processados e a mesma frase volta a aparecer.
+- Uma categoria de ativos tangíveis não aparece na lista **Categoria**.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com a frase completa, a categoria e a data da revalorização.
+
+{/* Nota interna (DOCS-046, v13-TS): 4 frases por clique. Não provocadas por clique e por isso não citadas: intangível (ERR-0592/0782: a categoria não aparece na lista), «faltam os ativos» (ERR-0787/0790: as linhas não têm botão de apagar), «Carregue primeiro os ativos» (ERR-0789: Calcular só aparece depois de carregar), ativo fora de uso (ERR-0773) e categoria sem ativos em uso (ERR-0785: a tentativa com uma categoria nova criada por RPC não chegou à frase). ERR-0712 é da reversão de imparidade, não desta janela. */}

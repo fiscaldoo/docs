@@ -1,0 +1,86 @@
+---
+id: importar-pagamentos-e-extratos-migrados
+slug: /migration-toolkit/importar-pagamentos-e-extratos-migrados
+title: Como importar pagamentos e extratos bancários do programa anterior
+sidebar_label: Importar pagamentos e extratos
+description: Liga os pagamentos e os extratos antigos aos lançamentos já publicados, sem alterar valores, para completar a reconciliação.
+keywords: [importar pagamentos, importar extratos, pagamentos migrados, extratos migrados, extratos bancários, extratos bancarios, programa anterior, migração, migracao, reconciliação, reconciliacao, Importar extratos bancários migrados, Importar pagamentos migrados, lotes de pagamento]
+doc_id: DOC-0303
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [migration-toolkit/historico/consultar-historico-migrado, migration-toolkit/importar/importar-ativos]
+---
+
+## Para que serve?
+
+Traz os extratos bancários e os pagamentos do programa anterior e liga-os aos lançamentos que já estão no fiscaldoo. Os valores dos lançamentos não mudam: acrescenta-se o que falta para a reconciliação ficar completa.
+
+## Quando utilizar?
+
+- Já importou os lançamentos do programa anterior e quer ver os extratos de cada banco.
+- Quer que os recebimentos e os pagamentos antigos apareçam como pagamentos.
+- Não use para lançamentos novos: um extrato ou pagamento só se liga a um lançamento já publicado. Para extratos atuais, siga a importação normal do banco.
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Outras definições › Arquivo** › **Importar extratos bancários migrados** e **Importar pagamentos migrados**. O Administrador vê estes dois menus sem o modo programador; os outros perfis só com ele.
+
+## Antes de começar
+
+- **Perfil:** **Administrador**. O **Contabilista certificado** consegue importar com o modo de programador ativo. O **Contabilista** não vê estes menus, mesmo em modo de programador.
+- **Empresa:** escolha a empresa certa no canto superior. O ficheiro é lido só nessa empresa.
+- **Lançamentos:** têm de estar publicados, cada um com uma só linha na conta do banco do diário.
+- **Ficheiro de extratos** (CSV ou XLSX), com a primeira linha de títulos: `extrato`, `diario`, `data`, `saldo inicial`, `saldo final`, `lancamento`, `valor` e, se quiser, `descricao` e `por reconciliar`.
+- **Ficheiro de pagamentos** (CSV ou JSON), com `pagamento`, `lancamento`, `diario` e, se quiser, `tipo`, `valor`, `moeda`, `data` e `referencia`.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Importar extratos bancários migrados** e escolha o ficheiro em **Ficheiro**.
+2. Carregue em **Verificar**. Nada fica guardado neste passo.
+3. Leia o resumo e os avisos. Se houver problemas, carregue em **Voltar**, corrija o ficheiro e escolha-o de novo.
+4. Carregue em **Importar** e, à pergunta «Os extratos vão ser criados e ligados aos lançamentos. Continuar?», em **Confirmar**.
+5. Carregue em **Ver extratos** para os conferir.
+6. Abra **Importar pagamentos migrados**, escolha o ficheiro em **Ficheiro de pagamentos** e carregue em **Conferir**.
+7. Carregue em **Importar** e, à pergunta «Os pagamentos serão criados sobre os lançamentos que já existem. Continuar?», em **Confirmar**.
+
+</StepByStep>
+
+![Janela de importação de extratos no passo de verificação, com o resumo, o aviso de saldo e o botão Importar](/images/migration-toolkit/importar-pagamentos-e-extratos-migrados/01-conferir-extrato.png)
+
+![Janela de importação de pagamentos com 1 linha a ligar e o aviso de lançamento em aberto](/images/migration-toolkit/importar-pagamentos-e-extratos-migrados/02-conferir-pagamentos.png)
+
+## No Enterprise
+
+No Odoo Enterprise, as duas janelas são as mesmas, no mesmo menu (visto com o administrador): **Importar extratos bancários migrados** com **Ficheiro**, **Verificar** e **Fechar**, e **Importar pagamentos migrados** com **Ficheiro de pagamentos**, **Ficheiro de lotes**, **Conferir** e **Fechar**. Com um lançamento que não existe, a verificação dos extratos recusou o ficheiro com «Foram encontrados 1 problema(s). Nada foi guardado: corrija as linhas indicadas e leia o ficheiro de novo.», e a dos pagamentos recusou a linha e deu as **Linhas recusadas (CSV)** para descarregar.
+
+A importação até ao fim também é a mesma. Com dois recebimentos publicados (**121 Depósitos à ordem** a débito e **2111 Clientes gerais** a crédito), trazidos do programa anterior por **Importar lançamentos** com **Histórico migrado**, a verificação dos extratos disse «1 extratos, 1 linhas ligadas a lançamentos já publicados.», com o aviso do saldo final, e **Ver extratos** mostrou o extrato **Reconciliado**. A dos pagamentos disse «1 pagamentos e 0 lotes ligados a lançamentos já publicados; 0 já tinham sido importados; 0 linhas recusadas», com o aviso de que a linha do cliente continua em aberto, e **Ver pagamentos** abriu o pagamento **Pago**. As linhas dos dois lançamentos ficaram iguais.
+
+{/* Nota interna (lote EE-05, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee05_test (cópia da odoo20_ee_test com EE_FASE=construir), 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0303. Administrador: Contabilidade › Configurar › Outras definições › Arquivo › Importar extratos bancários migrados e Importar pagamentos migrados (textos das janelas iguais aos do Community). Ficheiros meus com o lançamento BNK1/2026/99999 (não existe): extratos «Linha 2: O lançamento "BNK1/2026/99999" não foi encontrado como lançamento publicado do diário BNK1 nem do histórico migrado (HMIG).» com Voltar e Fechar; pagamentos «1 linhas de pagamentos: 0 a ligar, 0 já importadas, 0 lotes a criar, 1 linhas recusadas. Ainda nada foi guardado.», com rejected_migrated_payments.csv, Importar, Voltar e Fechar. Auditoria (docs-aud-ee05, master c60255305, cópia docs_ee_audee05_test, administrador): os dois lançamentos HMIG/2026/00001 e 00002 (31/03/2026, 250,00 € e 120,50 €, 121 D / 2111 C Papelaria Central, Lda) vieram por clique de Importar lançamentos com Histórico migrado; o campo Diário dos Lançamentos contabilísticos não oferece o Banco, por isso não há lançamento manual no BNK1 pelo ecrã. Extrato EXT-2026-03 de 31/03/2026, 0,00 € a 250,00 €, Reconciliado (aviso: razão da 121 a 31/03/2026 28.693,43 €, número desta base); pagamento PAG-2026-0001 Pago; linhas dos lançamentos iguais antes e depois. As duas recusas repetidas por clique. Ver reports/LOTE_EE-05.md. */}
+
+## Resultado esperado
+
+- **Extratos:** o resumo diz «1 extratos, 1 linhas ligadas a lançamentos já publicados.» e **Ver extratos** mostra o extrato de 31/03/2026, com saldo inicial 0,00 €, saldo final 250,00 € e o estado **Reconciliado**.
+- **Pagamentos:** o resumo diz «1 pagamentos e 0 lotes ligados a lançamentos já publicados; 0 já tinham sido importados; 0 linhas recusadas», e o botão **Ver pagamentos** abre-os.
+
+As linhas dos lançamentos ficam iguais: no exemplo, o lançamento de 250,00 € continua com 250,00 € a débito em **121 Depósitos à ordem** e 250,00 € a crédito em **2111 Clientes gerais**.
+
+## Notas importantes
+
+- **Um aviso não bloqueia.** Avisa, por exemplo, que o saldo final do extrato difere do razão da conta. Confirme com o contabilista certificado se a diferença é esperada. <span className="fd-pending">Pendente de validação por contabilista certificado: como tratar um saldo que difere do razão.</span>
+- **Uma importação só de pagamentos não reconcilia.** Um lançamento com a linha do cliente em aberto continua em aberto, e o aviso diz-lho.
+- **O mesmo extrato é recusado** se o importar outra vez.
+
+## Problemas frequentes
+
+- **Sintoma:** «Linha 2: O lançamento “BNK1/2026/00109” tem 120.5 na conta de banco, o ficheiro diz 50.00. A linha de extrato tem de ter o valor do lançamento.» **Causa:** o valor do ficheiro difere do lançamento. **O que fazer:** corrija o ficheiro. Nada foi guardado.
+- **Sintoma:** «Linha 2: O extrato “EXT-2026-03” já existe no diário BNK1. Importá-lo outra vez duplicava-o.» e «O lançamento “BNK1/2026/00108” já pertence a uma linha de extrato bancário.» **Causa:** o extrato já foi importado. **O que fazer:** retire-o do ficheiro.
+- **Sintoma:** em **Ver extratos**, o estado é **Com problemas**. **Causa:** o saldo inicial não corresponde ao saldo final do extrato anterior do mesmo diário. **O que fazer:** confira os saldos com o programa anterior e fale com o contabilista certificado.
+- **Sintoma:** «Ficheiro de pagamentos, linha 2 (PAG-2026-0002): O ficheiro diz 99.0 mas a linha de banco do lançamento “BNK1/2026/00109 (REC-MIG-2)” tem 120.5 EUR. O pagamento tem de ter o valor do lançamento.» **Causa:** o valor é diferente. **O que fazer:** carregue em **Voltar** e corrija o ficheiro.
+
+{/* Nota interna (DOCS-046, lote v16-NOVOS, master 255d77e63): percorrido por clique com admin até ao último passo; 4 de 4 mensagens de erro por clique. Lançamentos BNK1/2026/00108 e 00109 criados por RPC. Gestor de contabilidade e Contabilista só em load_menus com modo de programador (2 e 0 menus); na auditoria, o Gestor percorreu a importação por clique, com o modo de programador ligado à mão, e comparou as linhas antes e depois (BNK1/2026/00110 e 00111): iguais. Não provocados: ficheiro de lotes, transferências internas e XLSX. A importação normal do banco não tem ligação aqui porque não se confirmou o artigo. */}

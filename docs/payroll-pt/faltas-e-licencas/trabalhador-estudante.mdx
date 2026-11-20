@@ -1,0 +1,109 @@
+---
+id: trabalhador-estudante
+slug: /payroll-pt/trabalhador-estudante
+title: Como registar o estatuto de trabalhador-estudante
+sidebar_label: Trabalhador-estudante
+sidebar_position: 8
+description: Registar o estatuto de trabalhador-estudante de um ano letivo, ver a dispensa semanal para aulas e tratar as faltas a que ele dá direito.
+keywords: [registar, estatuto, trabalhador-estudante, trabalhador estudante, estatuto de trabalhador-estudante, dispensa para aulas, prova escolar, ano letivo, aproveitamento, art. 90, art. 94]
+doc_id: DOC-0199
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master acd623385)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/faltas-e-licencas/faltas]
+---
+
+## Para que serve?
+
+Guarda o estatuto de trabalhador-estudante de cada ano letivo e mostra as horas de dispensa semanal para aulas a que o trabalhador tem direito. No fim do ano, o resultado escolar diz se os direitos continuam.
+
+## Quando utilizar?
+
+- Quando o trabalhador entrega a prova de que estuda, no início de cada ano letivo.
+- No fim do ano letivo, para escrever o resultado.
+- Quando o contrato acaba a meio do ano letivo.
+- Não use este registo para marcar um dia de falta: cada falta regista-se à parte, em [Ausências](/payroll-pt/faltas).
+
+## Onde encontrar?
+
+- **Pessoas › Contratos e saídas › Estatuto de trabalhador-estudante**.
+- Na ficha do trabalhador: **⋮** › **Estatuto de trabalhador-estudante**.
+
+## Antes de começar
+
+- O seu perfil é **Gestor de RH**, ou tem o acesso extra **Administrador de Salários**.
+- Tem a data em que o trabalhador entregou a prova do estatuto e o horário escolar.
+- Saiba se o IRCT ou o contrato dão mais horas do que a lei.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra a lista e carregue em **Novo**. Sem registos, a lista diz «Os estatutos de trabalhador-estudante aparecem aqui; registe um em «Novo».»
+2. Escolha o **Trabalhador**. Preencha **Ano letivo desde** e **Ano letivo até**, por exemplo 15/09/2026 e 31/07/2027.
+3. Em **Prova do estatuto entregue em**, escreva a data em que recebeu a prova.
+4. Confirme as **Horas semanais normais**. A **Dispensa semanal para aulas (horas)** calcula-se sozinha.
+5. Se o IRCT ou o contrato derem mais horas, preencha **Dispensa semanal acordada (horas)** e o **Instrumento do acordo**. Carregue em **Guardar**.
+   ![Estatuto do ano letivo de 15/09/2026 a 31/07/2027, com 40 horas semanais e 6 horas de dispensa para aulas](/images/payroll-pt/trabalhador-estudante/01-estatuto-do-ano-letivo.png)
+6. No fim do ano letivo, em **Resultado do ano letivo**, escolha **Aprovado (art. 94.º/4)**, **Conta como aprovado (art. 94.º/5)** ou **Sem aproveitamento**. Fica **Ainda não conhecido** até lá.
+7. Se o contrato acabar a meio do ano, preencha **Contrato terminou em**.
+
+</StepByStep>
+
+**Exemplo.** Com 40 horas semanais, a dispensa legal para aulas é de 6 horas por semana. Com o **Resultado** em **Sem aproveitamento**, **Direitos de aulas cessados** fica marcado. **Outros direitos cessados** só se marca depois de dois anos seguidos ou três interpolados sem aproveitamento.
+
+## No Enterprise
+
+No Odoo Enterprise, o estatuto regista-se da mesma maneira, com o perfil **Gestor de RH** e o mesmo menu. A ficha tem os mesmos campos e, com 40 **Horas semanais normais**, a **Dispensa semanal para aulas (horas)** fica em 6,00. As três recusas de «Problemas frequentes» são as mesmas.
+
+O **⋮** › **Estatuto de trabalhador-estudante** está na ficha do trabalhador, que pode procurar pelo nome na lista **Fichas dos trabalhadores**.
+
+{/* Nota interna (lote EE-14, EEA-084 d4aaabab0 e EEA-083 ed9a8f6c3 em master acd623385, cópia Enterprise docs_ee_ee14_test, porta 8524, 12/11/2026): por clique com utilizadores criados na cópia só com o perfil Gestor de RH e só com o perfil Processador de salários mais o acesso extra Administrador de Salários: em Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores, «Bruno» + Enter deixou 1 cartão, sem «Erro de Acesso», e a ficha abriu pelo cartão. O ⋮ da ficha já não tem «Salary Increase» para nenhum dos dois; o Gestor de RH tem «Fim da colaboração». A ficha do administrador chama-se «Administrador (demonstração)» (DEMO-003). O ⋮ do Gestor de RH tem «Estatuto de trabalhador-estudante». */}
+
+{/* Nota interna (lote EE-09, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 12/11/2026): conferido numa cópia local da base Enterprise (docs_ee_ee09_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Gestor de RH: lista vazia com a mesma frase; Novo com Bruno Miguel Teixeira, 15/09/2026 a 31/07/2027 e 40 h: Dispensa 6,00 (descartado sem guardar). Recusa da dispensa acordada de 4 h, ano sobreposto e Sem aproveitamento (Direitos de aulas cessados marcado, Outros não) com os direitos do Gestor de RH numa transação desfeita. A mensagem diz hoje «(4 h)», não «(4.0 h)» (texto do mesmo módulo nas duas edições): corrigido no corpo. No Enterprise, procurar o trabalhador pelo nome na barra de pesquisa da lista Fichas dos trabalhadores abre «Erro de Acesso» (campo reservado ao grupo «Folha de Salários / Assistant») e a lista não filtra, com os três perfis de salários; no Community filtra: defeito no relatório do lote. O ⋮ da ficha tem as mesmas entradas do Community e «Salary Increase» (EEA-083). Menus e vistas destes ecrãs comparados, perfil a perfil, com uma cópia da demonstração Community (docs_demo_ee09_test, 2c8d358c0, porta 8524): iguais. Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-09.md. */}
+
+## Resultado esperado
+
+| Horas semanais normais | Dispensa semanal para aulas |
+| --- | --- |
+| de 20 a menos de 30 | 3 horas |
+| de 30 a menos de 34 | 4 horas |
+| de 34 a menos de 38 | 5 horas |
+| 38 ou mais | 6 horas |
+
+Fonte: Código do Trabalho, art. 90.º, n.º 3, texto lido no portal PGDL a 16/10/2026, regras guardadas em **Salários › Configurar › Legislação › Parâmetros legais**, em vigor desde 01/01/2026.
+
+As faltas do trabalhador-estudante têm tipos próprios em **Ausências**: veja [Como registar faltas](/payroll-pt/faltas). São **Dispensa do trabalho para frequentar aulas (trabalhador-estudante, art. 90.º/2)**, **Prova em estabelecimento de ensino (trabalhador-estudante)** e **Licença sem retribuição do trabalhador-estudante (art. 92.º/2)**.
+
+## Notas importantes
+
+- **O estatuto não mexe no recibo.** O recibo só muda pelas ausências registadas e aprovadas, conforme o tipo.
+- **O fiscaldoo não confere o horário escolar** nem conta as horas de dispensa já usadas. O registo mostra o direito, não o gasto.
+- **Cada ano letivo é um registo novo.** A lei exige a prova do estatuto em cada ano (art. 94.º).
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o efeito no recibo de cada tipo de falta do trabalhador-estudante, quando o IRCT dispõe de outra forma.</span>
+
+## Problemas frequentes
+
+### A dispensa acordada é recusada
+
+- **Mensagem:** «A dispensa acordada (4 h) é inferior à legal (6.0 h, CT art. 90.º/3). O que aconteceu: um instrumento não pode dar ao trabalhador-estudante menos do que o Código (art. 3.º/3). Como resolver: escreva 6.0 h ou mais, ou limpe o campo.»
+- **Causa:** o valor acordado é menor do que o da lei.
+- **O que fazer:** escreva um valor igual ou maior, ou limpe o campo.
+
+### Não guarda: campos a vermelho
+
+- **Mensagem:** «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+- **Causa:** escreveu horas em **Dispensa semanal acordada (horas)** sem o **Instrumento do acordo**.
+- **O que fazer:** preencha o instrumento ou limpe as horas.
+
+### Dois anos letivos sobrepostos
+
+- **Mensagem:** «… já tem um estatuto de trabalhador-estudante nestas datas. O que aconteceu: dois anos letivos sobrepõem-se. Como resolver: termine o ano letivo anterior no dia antes de este começar.»
+- **Causa:** as datas apanham um registo que já existe.
+- **O que fazer:** corrija as datas, em qualquer dos dois.
+
+{/* Nota interna (DOCS-046, lote v13-PAY, master 56504fe86): por clique com Administrador de Salários (Pessoas): registo, 3 recusas, Sem aproveitamento e volta a Ainda não conhecido. Tipos de falta confirmados em pt.payroll.absence.type por RPC e na lista do formulário. */}

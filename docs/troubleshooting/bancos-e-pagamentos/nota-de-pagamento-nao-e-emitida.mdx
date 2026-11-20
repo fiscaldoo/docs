@@ -1,0 +1,119 @@
+---
+id: nota-de-pagamento-nao-e-emitida
+slug: /troubleshooting/nota-de-pagamento-nao-e-emitida
+title: Não consigo emitir a nota de pagamento a fornecedores
+sidebar_label: Nota de pagamento não é emitida
+description: Porque a nota de pagamento não se cria, não se confere ou não se emite (fatura já paga, separação de funções, botões em falta, valor diferente do que está em dívida) e o que fazer em cada caso.
+keywords: [nota de pagamento, não consigo emitir, nao consigo emitir, emitir nota de pagamento, conferir, aprovar, pronto a pagar, separação de funções, separacao de funcoes, outra pessoa, tesouraria, pagar a fornecedores, fatura já paga, montante em dívida, pagamentos parciais, Criar notas de pagamento, NLP]
+doc_id: DOC-0358
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/pagar-a-fornecedores, troubleshooting/bancos-e-pagamentos/debito-direto-rejeitado]
+---
+
+## Sintoma
+
+Quer pagar a um fornecedor com uma nota de pagamento e a nota não se cria, os botões **Conferir** ou **Aprovar (pronto a pagar)** não aparecem, ou **Emitir nota de pagamento** abre **Operação inválida**.
+
+O caminho normal está em [Como pagar a fornecedores (notas de pagamento e ficheiro SEPA)](/accounting-pt/pagar-a-fornecedores). Os exemplos foram feitos na Empresa Demonstração, Lda, com dois utilizadores com o perfil **Contabilista** e um acesso extra de **Tesouraria** cada (em **Ajustes avançados**): um com **Tesouraria: Gestor**, que criou e emitiu a nota, e outro com **Tesouraria: Aprovador**, que a conferiu e aprovou. As faturas são a `FTF/2026/00044` de 600,00 € e a `FTF/2026/00039` de 800,00 USD.
+
+## Mensagem
+
+### A fatura já está paga, ou não é de fornecedor
+
+Em **Ações › Criar notas de pagamento**, ao carregar em **Criar notas de pagamento**:
+
+> «Só faturas de fornecedor lançadas e com montante em dívida podem ser pagas por uma nota de pagamento. Retire: FTF/2026/00045 (SEG 2026/118).»
+
+![Janela Operação inválida: só faturas de fornecedor lançadas e com montante em dívida podem ser pagas por uma nota de pagamento](/images/troubleshooting/nota-de-pagamento-nao-e-emitida/01-fatura-ja-paga.png)
+
+O mesmo texto aparece com uma fatura de cliente: a opção também está em **Ações** na lista de faturas de clientes, mas ali não serve.
+
+### Falta o diário
+
+Se a janela não tiver **Diário de pagamento**, aparece no canto do ecrã:
+
+> «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+
+### Foi a mesma pessoa que criou a nota
+
+Em **Conferir**, com o utilizador que criou a nota:
+
+> «Separação de funções: criou NLP/00001, por isso tem de ser outra pessoa a conferi-la e aprová-la.»
+
+![Janela Operação inválida: quem criou a nota de pagamento não a pode conferir nem aprovar](/images/troubleshooting/nota-de-pagamento-nao-e-emitida/02-separacao-conferir.png)
+
+### Foi a mesma pessoa que aprovou a nota
+
+Em **Emitir nota de pagamento**, com o utilizador que a aprovou:
+
+> «Separação de funções: aprovou NLP/00001, por isso tem de ser outra pessoa a emiti-la.»
+
+![Janela Operação inválida: quem aprovou a nota de pagamento não a pode emitir](/images/troubleshooting/nota-de-pagamento-nao-e-emitida/03-separacao-emitir.png)
+
+### A nota foi recusada sem motivo
+
+Em **Recusar / bloquear**, a janela **Bloquear nota de pagamento** pede o **Motivo**. Sem ele, ao carregar em **Bloquear**, aparece o mesmo aviso de campos obrigatórios por preencher.
+
+### O valor em dívida mudou depois de criar a nota
+
+Em **Emitir nota de pagamento**, depois de a fatura ter recebido um pagamento de 100,00 USD por outro caminho (botão **Pagar** na fatura):
+
+> «O montante de NLP/00002 (800.0) é diferente do montante em dívida das suas faturas (700.0). A nota de pagamento não suporta pagamentos parciais: corrija o montante ou as faturas.»
+
+![Janela Operação inválida: o montante da nota é diferente do montante em dívida das suas faturas](/images/troubleshooting/nota-de-pagamento-nao-e-emitida/04-valor-diferente-do-devido.png)
+
+## Causas verificadas
+
+- **A nota não se cria:** a fatura já está paga, ou não é de fornecedor, ou falta o diário.
+- **A nota não avança:** os botões **Conferir** e **Aprovar (pronto a pagar)** não aparecem, foi a mesma pessoa que criou ou que aprovou a nota, ou a nota foi recusada sem motivo.
+- **A nota não se emite:** o valor em dívida mudou depois de criar a nota.
+
+Com o perfil **Contabilista** sozinho, sem acesso extra de **Tesouraria**, a nota em **Rascunho** só mostra **Imprimir nota de pagamento**, **Pré-visualizar lançamento** e **Cancelar**. O perfil **Contabilista certificado** mostra também **Conferir** e **Recusar / bloquear** e, depois de conferir, **Reabrir**, que devolve a nota a **Em análise** (também numa nota **Bloqueado**). O perfil **Gerência** mostra **Recusar / bloquear** e, depois de conferida a nota, **Aprovar (pronto a pagar)**.
+
+## O que confirmar
+
+1. A coluna **Valor em Dívida** da janela, antes de carregar: uma fatura paga aparece com 0,00 €.
+2. O perfil ou o acesso extra de quem autoriza os pagamentos: confere o perfil **Contabilista certificado** ou quem tem **Tesouraria: Gestor** ou **Tesouraria: Aprovador**; aprova o perfil **Gerência** ou quem tem **Tesouraria: Aprovador**.
+3. Quem criou e quem aprovou a nota.
+4. O que foi pago na fatura.
+
+## Como resolver
+
+- **A fatura já está paga, ou não é de fornecedor:** retire a fatura que a mensagem indica.
+- **Falta o diário:** escolha o diário (no exemplo, **Banco**) e carregue de novo.
+- **Os botões Conferir e Aprovar não aparecem:** **Conferir** aparece ao perfil **Contabilista certificado** e a quem tem o acesso extra **Tesouraria: Gestor** ou **Tesouraria: Aprovador**; **Aprovar (pronto a pagar)**, ao perfil **Gerência** e a quem tem **Tesouraria: Aprovador**. O perfil **Contabilista** não os traz: peça a quem tem um destes perfis, ou peça ao administrador que dê o acesso extra a quem autoriza os pagamentos. No exemplo, depois de **Conferir**, o **Aprovador** viu **Aprovar (pronto a pagar)** e o **Gestor** só **Recusar / bloquear** e **Reabrir**; depois de aprovar, apareceu **Emitir nota de pagamento** aos dois.
+- **Foi a mesma pessoa que criou a nota:** peça a outra pessoa, com o perfil certo, que confira e aprove. A regra é a da separação de funções: não a contorne com um utilizador partilhado.
+- **Foi a mesma pessoa que aprovou a nota:** peça a outra pessoa que emita.
+- **A nota foi recusada sem motivo:** escreva o motivo, ou carregue em **Descartar** se não quer bloquear a nota.
+- **O valor em dívida mudou depois de criar a nota:** uma nota paga sempre o valor total em dívida. Veja o que foi pago na fatura. Se o pagamento está certo, deixe esta nota de parte e pague o resto de outra forma, como explica [Como pagar a fornecedores (notas de pagamento e ficheiro SEPA)](/accounting-pt/pagar-a-fornecedores). Se o pagamento foi um engano, fale com o contabilista.
+
+## Resultado esperado
+
+No exemplo, a nota `NLP/00001` foi criada e emitida pelo utilizador com o nível **Tesouraria: Gestor** e conferida e aprovada pelo utilizador com o nível **Tesouraria: Aprovador**: a `FTF/2026/00044` ficou **Paga**, a nota passou a **Reconciliado** com o número `PBNK1/2026/00040`, e a barra ficou só com **Imprimir nota de pagamento** e **Anular nota de pagamento**.
+
+## Casos que este artigo não cobre
+
+A mistura de moedas numa nota, as notas de crédito de fornecedor e as notas em lotes de pagamentos têm mensagens próprias, que não foram provocadas neste artigo. Se a sua mensagem não está aqui, siga o que ela indica e fale com o contabilista.
+
+Para cobrar a clientes por débito direto, veja [O débito direto foi rejeitado ou o lote não é gerado](/troubleshooting/debito-direto-rejeitado).
+
+## Quando contactar o suporte
+
+Se a mensagem continua depois de seguir o que ela indica, [peça suporte](/troubleshooting/como-pedir-suporte).
+
+## Informação a enviar
+
+- A nota de pagamento e as faturas que ela paga.
+- O texto completo da mensagem.
+- O perfil com que entrou.
+
+{/* Nota interna (DOCS-046, lote v22-B, 06/11/2026, master d83bdf7ae, base docs_demo_v22b_test): refeito com utilizadores de um só perfil criados na cópia (Contabilista + Tesouraria: Gestor; Contabilista + Tesouraria: Aprovador; Contabilista sozinho; Contabilista Certificado / Gestor fiscal sozinho). Por clique: criação da nota pela lista de faturas de fornecedores (Ações › Criar notas de pagamento), recusa de conferir do criador, botões de cada perfil, recusa de emitir do aprovador, emissão (FTF/2026/00044 Paga). O texto antigo dizia que só o Gestor conferia: o Aprovador também confere. Não refeitas neste lote: fatura já paga, diário em falta, bloquear sem motivo e valor em dívida mudado (FTF/2026/00039). */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): nota de pagamento própria criada por clique (FTF/2026/00044, Contabilista + Tesouraria: Gestor), em revisão: botões vistos com utilizadores só Contabilista, só Contabilista certificado (Conferir, conferiu por clique) e só Gerência (Aprovar depois de conferida). */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AZ, 10/11/2026, master bfedd3b23, docs_demo_v23az_test, porta 8508, DEF-QA7-c-01): alinhado com pagar-a-fornecedores. Nota própria da FTF/2026/00044 criada por clique pelo Contabilista sozinho; só Contabilista certificado: Conferir, depois Reabrir (volta a Em análise), e Reabrir também numa nota Bloqueado pela Gerência; só Gerência: Aprovar (pronto a pagar) depois de conferida; Contabilista emitiu (PBNK1/2026/00040). */}

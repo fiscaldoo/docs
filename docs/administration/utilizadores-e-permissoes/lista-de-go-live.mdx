@@ -1,0 +1,71 @@
+---
+id: lista-de-go-live
+slug: /administration/lista-de-go-live
+title: Como usar a lista de go-live antes de arrancar
+sidebar_label: Lista de go-live
+sidebar_position: 4
+description: A lista que confere, antes de a empresa começar a trabalhar a sério, a moeda, o idioma, a chave de assinatura, a série certificada e os utilizadores e módulos de teste.
+keywords: [go-live, lista de go-live, arrancar, produção, producao, módulos de demonstração, utilizadores de demonstração, antes de arrancar]
+doc_id: DOC-0314
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7a3b55244)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/utilizadores-e-permissoes/perfis-e-permissoes, administration/utilizadores-e-permissoes/ver-como]
+---
+
+## Para que serve?
+
+A lista de go-live junta num ecrã o que deve estar feito antes de a empresa emitir documentos a sério. Cada linha está **Feito** ou **A fazer**. A lista só mostra: não corrige nada.
+
+## Quando utilizar?
+
+- Na véspera de arrancar com uma empresa nova.
+- Depois de uma migração, para ver o que ficou por limpar.
+- Não use a lista em lugar do [guia de primeira configuração](/getting-started/configurar-uma-empresa-nova).
+
+## Onde encontrar?
+
+**Definições › Utilizadores e empresas › Lista de go-live**.
+
+## Antes de começar
+
+Entre como administrador do sistema. Feito a 8 de novembro de 2026, numa base de demonstração, com a **Empresa Demonstração, Lda** escolhida no canto superior direito.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Definições › Utilizadores e empresas › Lista de go-live**.
+2. Leia cada linha. As **A fazer** são as que impedem o arranque.
+   ![Lista de go-live com duas linhas A fazer e cinco Feito](/images/administration/lista-de-go-live/01-lista.png)
+3. Faça cada **A fazer** no sítio próprio e abra a lista outra vez para conferir.
+4. Carregue em **Fechar**.
+
+</StepByStep>
+
+## Resultado esperado
+
+Uma lista sem nenhuma linha **A fazer**. Na demonstração, a lista tem sete linhas:
+
+- **Feito:** a moeda da empresa é o euro; a empresa já não é a empresa por omissão; o idioma Português (Portugal) está ativo; há uma chave de assinatura ativa; há uma série certificada ativa.
+- **A fazer:** desinstalar os módulos de teste, de demonstração ou franceses (aqui, `l10n_pt_fiscaldoo_demo`) e arquivar ou eliminar os utilizadores de demonstração (aqui, dez).
+
+## Notas importantes
+
+- **Numa base de demonstração, as duas linhas ficam sempre «A fazer»**: é o esperado, e não se arquivam os utilizadores de uma demonstração.
+- **A chave e a série contam só na empresa escolhida no canto superior direito.** Na demonstração, com a **Empresa Teste Portugal**, as duas linhas passam a **A fazer**: «Esta empresa não tem nenhuma chave de assinatura ativa: crie-a com o assistente de chaves (nunca copie uma chave de teste).» e «Esta empresa não tem nenhuma série certificada ativa: crie a série e comunique-a à Autoridade Tributária.»
+- **A chave e a série contam como feitas** se existirem e estiverem ativas. A lista não diz se foram comunicadas à AT: veja [Como comunicar as faturas à AT](/fiscal-core/comunicar-faturas-a-at).
+
+## Problemas frequentes
+
+### A lista diz «A fazer» mas já fiz
+
+- **Causa:** a lista foi aberta antes da alteração, ou a alteração não foi na empresa certa.
+- **O que fazer:** feche a janela e abra-a de novo, e confirme a empresa no canto superior direito.
+
+{/* Nota interna (DOCS-040, lote F4): visto com admin. A afirmação «refaz a conta sempre que abre» não foi testada com uma alteração (arquivar utilizadores de demonstração estragaria a demonstração): marcar pendente se a auditoria exigir. O link /getting-started/configurar-uma-empresa-nova existe como configurar-uma-empresa-nova.mdx; confirmar o slug na compilação. */}
+
+{/* Nota interna (lote v23-AK, DOCS-069 #4052, master 7a3b55244, docs_demo_v23ak_test): lista aberta por clique com o administrador a 08/11/2026, primeiro com a Empresa Teste Portugal (4 A fazer: módulo, utilizadores, chave e série) e depois com a Empresa Demonstração, Lda (2 A fazer e 5 Feito); módulo l10n_pt_fiscaldoo_demo e 10 utilizadores demo.* (demo.admsalarios e demo.tesouraria a mais); captura 01 refeita. */}

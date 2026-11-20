@@ -1,0 +1,117 @@
+---
+id: adaptabilidade
+slug: /payroll-pt/adaptabilidade
+title: Como controlar a adaptabilidade do tempo de trabalho
+sidebar_label: Adaptabilidade
+sidebar_position: 9
+description: Marcar a adaptabilidade no contrato com o período de referência e ver as semanas em que o trabalhador passou do limite.
+keywords: [controlar, adaptabilidade, tempo, trabalho, controlo da adaptabilidade, período de referência, periodo de referencia, horário em média, horario em media, art. 204, art. 205, art. 206, art. 207]
+doc_id: DOC-0192
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/tempo-de-trabalho/banco-de-horas, payroll-pt/tempo-de-trabalho/turnos, payroll-pt/tempo-de-trabalho/verificar-presencas]
+---
+
+## Para que serve?
+
+Na adaptabilidade, o horário conta em média num período: há semanas com mais horas e outras com menos. O fiscaldoo guarda o regime no contrato, recusa o que a lei não permite e lista as semanas acima do limite, a partir das presenças.
+
+## Quando utilizar?
+
+- Quando há acordo escrito com o trabalhador, instrumento coletivo ou regime de grupo que define o horário em média.
+- Periodicamente, para ver as semanas acima do limite.
+- Não use para horas a compensar mais tarde num saldo: veja [Como gerir um banco de horas](/payroll-pt/banco-de-horas).
+
+## Onde encontrar?
+
+- Regime: **Salários › Preparar › Trabalhadores e contratos › Fichas dos trabalhadores** › abrir a ficha › separador **Trabalho** › secção **Tempo de trabalho**.
+- Controlo: **Salários › Preparar › O que há para fazer este mês?** › **Listas de apoio** › **Preparar o mês** › **Controlo da adaptabilidade**.
+
+## Antes de começar
+
+- Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador.
+- Tem o acordo escrito ou a referência do instrumento coletivo.
+- O **Local de trabalho habitual** está preenchido e o contrato tem uma versão a começar no início do regime, se a versão atual cobrir um mês com recibo validado ou pago: crie-a com o botão **+** do histórico do contrato. Veja [Como alterar o salário](/payroll-pt/alterar-o-salario).
+- As presenças do período estão registadas: sem elas, o controlo não vê nada.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Na ficha, em **Regime de horário**, escolha **Adaptabilidade (média)**.
+2. Em **Tipo de adaptabilidade**, escolha **Coletiva (IRCT, art. 204.º)**, **Individual (acordo escrito, art. 205.º)** ou **Grupal (art. 206.º)**.
+3. Em **Fundamento de um horário mais longo**, escreva o acordo ou a proposta aceite, por exemplo «Acordo escrito de 20/10/2026».
+4. Em **Período de referência (semanas)**, escreva o número de semanas. Se for um caso do art. 207.º, n.º 2, escolha também **Caso do período de referência mais longo (art. 207.º/2)**. Carregue em **Guardar**.
+   ![Secção Tempo de trabalho: Adaptabilidade, período de referência de 17 semanas, tipo individual, com o acordo escrito](/images/payroll-pt/adaptabilidade/01-adaptabilidade-no-contrato.png)
+5. Abra **Controlo da adaptabilidade**. Deixe **Trabalhador** vazio para controlar todos, ou escolha um. Acerte **De** e **Até**: as datas vêm de 1 de janeiro até hoje. No exemplo, com **Até** a 05/11/2026, a semana de 02/11/2026 ficou de fora; com 01/11/2026 a 30/11/2026, apareceu.
+6. Carregue em **Correr o controlo**. A lista mostra só as semanas acima do limite, com **Semana (segunda-feira)**, **Horas trabalhadas**, **Limite da semana** e **Referência legal**.
+   ![Controlo de novembro de 2026: 1 semana acima do limite, com 56 horas trabalhadas para um limite de 50](/images/payroll-pt/adaptabilidade/02-semana-acima-do-limite.png)
+
+</StepByStep>
+
+**Exemplo.** Um trabalhador com adaptabilidade individual, 17 semanas, trabalhou 10 horas de segunda a sexta e 6 horas no sábado, na semana de 02/11/2026:
+
+10 × 5 + 6 = **56 horas**. O limite é 50, por isso o controlo mostra: «1 trabalhadores em adaptabilidade controlados, 1 semanas acima do limite.»
+
+## No Enterprise
+
+No Odoo Enterprise, a adaptabilidade regista-se e controla-se da mesma maneira, com o acesso extra **Administrador de Salários**: os mesmos campos na secção **Tempo de trabalho** da ficha (**Regime de horário**, **Fundamento de um horário mais longo** e os que aparecem com a adaptabilidade) e o mesmo **Controlo da adaptabilidade**, com **Correr o controlo**. Tal como no Community, uma versão do contrato que já cobre um mês com recibo pago recusa a mudança do **Regime de horário** e pede uma versão nova.
+
+Com o exemplo (adaptabilidade individual, 17 semanas, 56 horas na semana de 02/11/2026), o controlo mostrou «1 trabalhadores em adaptabilidade controlados, 1 semanas acima do limite.». As presenças de 10 horas do exemplo também pediram o motivo do trabalho suplementar (ver «Notas importantes»).
+
+{/* Nota interna (lote EE-08, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee08_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8508/8509), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Processador com o acesso Administrador de Salários: secção Tempo de trabalho da ficha e Controlo da adaptabilidade (Trabalhador, De, Até, Correr o controlo, colunas Semana (segunda-feira), Horas trabalhadas, Limite da semana, Referência legal). Por RPC com os direitos desse perfil, numa transação desfeita no fim: a escrita na versão de 01/01/2026 foi recusada («… já está em vigor e Período de referência (semanas), Regime de horário não pode ser alterado…»); versão nova de 01/11/2026 com adaptabilidade individual e 17 semanas; presenças de 02/11 a 07/11/2026 (10 h × 5 + 6 h) aceites só com o motivo do trabalho suplementar; controlo de 01/11 a 30/11/2026: 1 semana com 56 horas. Comparado com uma cópia da demonstração Community (docs_demo_ee08_test, 2c8d358c0, porta 8518). Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-08.md. */}
+
+## Resultado esperado
+
+- A versão do contrato fica com o regime, o tipo e o período de referência.
+- O controlo diz quantos trabalhadores viu e quantas semanas passaram do limite.
+- Uma semana sem linha não passou do limite semanal. O controlo não calcula a média do período de referência nem paga trabalho suplementar: confira a média com o contabilista no fim do período.
+
+## Notas importantes
+
+Fonte: Código do Trabalho, arts. 204.º a 207.º, texto lido na PGDL a 04/11/2026.
+
+| Tipo | Por dia | Por semana | Período de referência | Lei |
+| --- | --- | --- | --- | --- |
+| Coletiva | mais 4 horas | até 60 horas | até 12 meses, como o instrumento fixar | arts. 204.º e 207.º, n.º 1 |
+| Individual | mais 2 horas | até 50 horas | 4 meses, ou 6 nos casos do art. 207.º, n.º 2 | arts. 205.º e 207.º |
+
+- **Na coletiva,** o período normal não pode passar de 50 horas em média num período de dois meses (art. 204.º, n.º 2).
+- **Na individual,** o acordo pode nascer de uma proposta escrita do empregador (art. 205.º, n.º 4). Em semanas com menos de 40 horas, a redução pode ir até duas horas por dia ou, se for acordada, em dias ou meios dias, mantendo o subsídio de refeição (art. 205.º, n.º 3).
+- **Na grupal,** o fiscaldoo pede a origem e a percentagem de trabalhadores abrangidos (art. 206.º). Este caso não foi percorrido neste artigo.
+- **Presenças.** Hoje, uma presença de 9 ou 10 horas dentro do limite diário pede o motivo do trabalho suplementar, mesmo com a adaptabilidade no contrato. Confirme com o contabilista como tratar estas horas.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o tratamento das horas acima do período normal diário em adaptabilidade; a média no fim do período de referência; e a contagem do período em feriados e a compensação em descanso.</span>
+
+## Problemas frequentes
+
+### Ao guardar: «não tem acordo que a sustente»
+
+- **Mensagem:** «A adaptabilidade de … não tem acordo que a sustente. O que aconteceu: o art. 205.º exige o acordo escrito (e o art. 206.º/2 a proposta aceite). Como resolver: preencha «Fundamento de um horário mais longo» com o acordo ou a proposta.»
+- **O que fazer:** preencha esse campo.
+
+### Ao guardar: o período de referência é recusado
+
+- **Mensagem:** «O período de referência de … (18 semanas) é mais longo do que os 4 meses que a lei admite aqui (CT art. 207.º/1 (na falta de IRCT, período de quatro meses; texto lido a 2026-10-15)). O que aconteceu: um IRCT pode fixar até 12 meses; sem ele o período é de quatro meses, ou seis nos casos do art. 207.º/2. Como resolver: reduza o período ou, nos casos do art. 207.º/2, escreva o caso em «Caso do período de referência mais longo».»
+- **O que fazer:** escreva 17 semanas, no máximo, indique o caso ou, se um instrumento coletivo fixar o período, indique-o em **Instrumento de regulamentação coletiva (IRCT)**: com ele, a regra admite até 12 meses.
+
+### Ao registar a presença: «produz trabalho suplementar e não tem motivo»
+
+- **Causa:** a presença passou do horário do dia.
+- **O que fazer:** em **Motivo do trabalho suplementar**, indique o motivo real, e confirme a situação com o contabilista.
+
+### Ao guardar: «já está em vigor e … não pode ser alterado»
+
+- **Mensagem:** «O contrato de … (versão de 2026-11-01) já está em vigor e Período de referência (semanas) não pode ser alterado. O que aconteceu: a classificação, o enquadramento na Segurança Social e o horário de um contrato já aplicado nunca são reescritos (CT art. 147.º/3: uma alteração mantém a antiguidade e é auditável). Como resolver: registe uma versão NOVA do contrato, a começar no dia em que a alteração produz efeitos.»
+- **O que fazer:** crie a versão nova com o botão **+** do histórico do contrato e altere o regime nela.
+
+### O controlo não mostra nenhuma semana
+
+- **Causa:** nenhuma semana passou do limite, o período **De** e **Até** não apanha a semana inteira, ou o contrato não está em **Adaptabilidade (média)** nessa data.
+- **O que fazer:** confira as datas e a versão do contrato em vigor na semana.
+
+{/* Nota interna (DOCS-046, lote v13-PAY2, master cf8052b9e): contrato e controlo por clique com Administrador de Salários; 2 recusas por clique. RPC: 6 presenças com motivo, porque por RPC a mensagem da presença sai em inglês. Coletiva e grupal não percorridas no contrato: só a opção visível. Auditoria 05/11, master 255d77e63: exemplo de 56 h e falta de acordo por clique; adaptabilidade com pergunta ao contabilista (sal-84). Auditoria 05/11, master 00c68a6d8 (PAY-107), por clique numa versão de 01/12/2026: 18 semanas recusadas e aceites com o IRCT. */}

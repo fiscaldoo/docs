@@ -1,0 +1,89 @@
+---
+id: importar-saft-falhou
+slug: /troubleshooting/importar-saft-falhou
+title: A importação do SAF-T de outro programa falhou
+sidebar_label: A importação do SAF-T falhou
+description: O que quer dizer «Ficheiro Rejeitado», uma conta ou um cliente que «não consta da lista», «período bloqueado» e a linha da tabela de impostos numa importação de um ficheiro SAF-T, e o que corrigir.
+keywords: [importação SAF-T falhou, importacao SAF-T falhou, SAF-T rejeitado, Ficheiro Rejeitado, Com erros, AuditFile, não consta da lista de contas, nao consta da lista de contas, conta em falta, cliente em falta, período bloqueado, periodo bloqueado, data de bloqueio, tabela de impostos, outro NIF, mapeamento, importar SAF-T]
+doc_id: DOC-0369
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 25deacc94)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [migration-toolkit/importar/importar-um-saft, troubleshooting/acesso-e-dados/importacao-falhou]
+---
+
+{/* Nota interna (v23-T2, DOC-0369, master cebcb888d, docs_demo_v23t2_test): aviso de só consulta lido com um utilizador só com o perfil Auditor / ROC numa importação vazia criada pelo CC (RPC); a lista não tem Novo para o Auditor. O CC tem os três acessos (has_group). A recusa do Validar por acesso em falta não se provoca com um só valor do campo Perfil (o único perfil com a importação fiscal, o CC, tem os outros dois acessos): descrita sem citar; o texto de master diz «acessos» onde dizia «perfis». */}
+{/* Nota interna (DOCS-046, #3616, lote v12-P2): provocado na docs_demo_v12p2_test, master a060fe441, com o administrador do sistema na Empresa Demonstração, Lda, com ficheiros inventados, sem confirmar a importação. ERR-4307 provocado na auditoria (master 46345c597), com um utilizador só com Migração / Importação fiscal. Não provocados: perfis de mapeamento e a importação de documentos certificados (ERR-4283, 4285, 4287, 4288): esses ficam para o artigo dos documentos. Revisto no lote v14-REV (DOCS-063, master cf8052b9e, docs_demo_v14rev_test), com o SAFT-172: conta e cliente em falta, tabela de impostos não comparada e aviso de só consulta provocados por clique. Fornecedor e produto em falta não foram provocados. */}
+
+## Sintoma
+
+Em **Contabilidade › Configurar › Migração e importações › Importar ficheiro SAF-T**, a importação fica no estado **Com erros**, com «Ficheiro: Rejeitado» e o número de problemas no **Relatório**, ou a pré-visualização diz que há lançamentos recusados. Nada foi escrito na contabilidade.
+
+![Barra de estados da importação com Com erros assinalado, entre Novo, Validado e Pré-visualizado](/images/troubleshooting/importar-saft-falhou/01-importacao-com-erros.png)
+
+![Bloco Relatório da importação com Ficheiro: Rejeitado 3 e o botão Abrir o relatório por tipo e resultado](/images/troubleshooting/importar-saft-falhou/02-relatorio-ficheiro-rejeitado.png)
+
+## Mensagem
+
+As mensagens do ficheiro estão em **Abrir o relatório por tipo e resultado** ou em **Descarregar o relatório (XLSX)**. As da pré-visualização estão no texto de **Pré-visualizar** e em **Erros e avisos**.
+
+- Conta ou cliente em falta, no **Validar**. Há uma linha por cada um, todas de uma vez:
+  > A conta "999" é usada no ficheiro (2 vez(es), por exemplo em TransactionID 2026-03-10 DIA1 T-0001, TransactionID 2026-03-11 DIA1 T-0002; o primeiro na linha 1, coluna 3375) mas não consta da lista de contas do ficheiro. Acrescente esta conta ao plano de contas no sistema que gerou o ficheiro, ou corrija a conta nesses lançamentos, e importe-o de novo.
+
+  ![Relatório da importação, grupo Ficheiro › Rejeitado: a linha da conta 999 usada 2 vezes no ficheiro e que não consta da lista de contas](/images/troubleshooting/importar-saft-falhou/03-relatorio-conta-em-falta.png)
+- Lançamentos recusados na pré-visualização:
+  > Também recusados, a razão está no log: 3 lançamentos num período bloqueado e 0 num diário certificado (a data nunca é alterada).
+- Saldos de abertura recusados na pré-visualização:
+  > O lançamento de abertura seria recusado. A data 31/12/2024 está num período bloqueado (data de bloqueio 2025-12-31): o registo não foi importado e a sua data não foi alterada. Desbloqueie o período ou importe um período posterior.
+- Impostos sem correspondência na pré-visualização:
+  > BLOQUEADO: estes impostos não existem na empresa ou têm outra taxa; crie-os ou corrija-os primeiro: IVA PT NOR 17.00%.
+- Acesso em falta, ao carregar em **Validar**: a recusa diz que a importação exige também os acessos **Administrador de contabilidade** e **Criação de contactos**, porque cria contas, parceiros e lançamentos em nome de quem importa.
+- Quem só pode consultar as importações vê no topo da importação:
+  > Pode consultar as importações mas não as executar: importar um ficheiro exige o perfil «Contabilista certificado (assina, fecha períodos)» (inclui a migração e a importação fiscal) (e também os acessos Administrador de contabilidade e Criação de contactos). Peça ao administrador que lhe dê o perfil.
+
+## Causas verificadas
+
+- **Referência em falta no ficheiro.** Um lançamento usa uma conta que não está na lista de contas do ficheiro, ou um cliente que não está na lista de clientes. A mensagem diz qual é, quantas vezes é usado e onde está o primeiro.
+- **Período bloqueado.** A data dos saldos de abertura ou dos lançamentos é anterior à data de bloqueio da empresa. O programa recusa e não muda a data. No exemplo, um ficheiro de 2025 numa empresa bloqueada até 31/12/2025 cria 0 lançamentos.
+- **Imposto sem correspondência.** A tabela de impostos do ficheiro tem um imposto que a empresa não tem, ou tem outra taxa. A importação nunca cria impostos. O programa só compara os impostos com **Produtos** ou **Documentos de venda (SalesInvoices)** marcados, e o **Validar** desmarca-os se o ficheiro não os trouxer. Sem eles, o texto de **Pré-visualizar** diz «Tabela de impostos: 1 entradas no ficheiro, não comparadas com os impostos da empresa porque não se importam Produtos nem Documentos de venda. A comparação só se faz quando um deles é importado, e nunca se cria nenhum imposto.»: não é um erro.
+- **Acesso em falta.** Quem importa precisa da importação fiscal e também dos acessos **Administrador de contabilidade** e **Criação de contactos**. O perfil **Contabilista certificado** tem os três. Sem eles, o **Validar** recusa e a importação fica em **Novo**. Quem só consulta (por exemplo, o perfil **Auditor / ROC**, que não tem o menu e chega à importação por uma ligação) vê o aviso e não tem **Novo**, os botões da importação nem forma de carregar um ficheiro.
+- **Ficheiro de outra empresa.** O NIF do ficheiro não é o da empresa escolhida. Esta e as outras recusas do ficheiro, como a codificação, estão em [Como importar um ficheiro SAF-T de outro programa](/migration-toolkit/importar-um-saft).
+
+## O que confirmar
+
+- **Empresa:** a empresa no topo do ecrã é a do ficheiro? Compare com o **NIF no ficheiro**.
+- **Datas:** o **Início do período do ficheiro** é posterior à data de bloqueio da empresa? Com a data de abertura, conte o último dia do ano anterior.
+- **Contas e clientes:** no programa de origem, todas as contas e clientes usados nos lançamentos saem nas listas do ficheiro?
+- **Impostos:** a empresa tem os impostos com a mesma taxa? Veja em **Erros e avisos**.
+
+## Como resolver
+
+1. **Conta ou cliente em falta:** envie as mensagens ao fornecedor do programa anterior, que trazem o código e o lançamento. Ele acrescenta a conta ou o cliente às listas do ficheiro, ou corrige os lançamentos. Importe o ficheiro corrigido numa importação nova. Não edite o ficheiro à mão.
+2. **Período bloqueado:** a mensagem dá duas saídas: desbloquear o período ou importar um período posterior. Desbloquear é uma decisão do contabilista certificado e faz-se com uma exceção à data de bloqueio, com motivo e prazo: veja [Como bloquear períodos e gerir exceções](/accounting-pt/datas-de-bloqueio), que diz que perfil ou acesso extra pede cada data. <span className="fd-pending">Pendente de validação por contabilista certificado: quando se pode desbloquear um período para receber um histórico.</span>
+3. **Imposto sem correspondência:** crie ou corrija o imposto em **Contabilidade › Configurar › Geral › Impostos**, e carregue em **Validar** e em **Pré-visualizar** outra vez.
+4. **Outra empresa:** mude para a empresa do ficheiro no topo do ecrã, e importe aí.
+5. **Perfil em falta:** peça ao administrador do sistema os perfis que a mensagem indica, e carregue em **Validar** outra vez.
+
+## Resultado esperado
+
+O **Validar** deixa o estado em **Validado**, e **Pré-visualizar** deixa-o em **Pré-visualizado**, sem erros em «Erros encontrados». Só **Confirmar a importação** escreve na contabilidade. Enquanto não confirmar, pode corrigir e repetir sem efeito na contabilidade.
+
+## Quando contactar o suporte
+
+Contacte o suporte se o fornecedor do programa anterior confirmar que o ficheiro cumpre o esquema oficial e o **Validar** continuar a recusá-lo, ou se a pré-visualização recusar lançamentos sem indicar a razão.
+
+## Informação a enviar
+
+- A empresa e o NIF, o programa de origem e o período do ficheiro.
+- O relatório, em **Descarregar o relatório (XLSX)**.
+- O texto de **Pré-visualizar**, se chegou a esse passo.
+- Não envie o ficheiro SAF-T por um canal sem proteção: tem dados de clientes e fornecedores.
+
+{/* Nota interna (v23-T, DOC-0369, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-AW, 09/11/2026, master 25a465133, docs_demo_v23aw_test, porta 8504): sem nome de grupo: o desbloqueio remete para datas-de-bloqueio, que diz o que cada data pede. */}
+
+{/* Nota interna (DOCS-005 #3400, lote CAP-01, 10/11/2026, master ce51f2d47, docs_demo_cap01_test, porta 8504): por clique com um utilizador criado na cópia só com o perfil Contabilista certificado: importação nova com o ficheiro inventado referencias-em-falta.xml do lote v14-REV (NIF da empresa trocado para 599999993), Validar → Com erros, Registo 3, Relatório «Ficheiro: Rejeitado 3» (capturas 01 e 02); Abrir o relatório por tipo e resultado, grupo Ficheiro › Rejeitado: conta 999, conta 888 e cliente C9, textos iguais aos citados (captura 03). A coluna Chave mostra «file». A importação ficou na cópia em Com erros; nada foi confirmado nem eliminado. */}

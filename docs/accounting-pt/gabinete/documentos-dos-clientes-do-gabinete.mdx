@@ -1,0 +1,110 @@
+---
+id: documentos-dos-clientes-do-gabinete
+slug: /accounting-pt/documentos-dos-clientes-do-gabinete
+title: Como tratar os documentos recebidos dos clientes do gabinete
+sidebar_label: Documentos recebidos dos clientes
+sidebar_position: 4
+description: Ver os documentos que os clientes enviam por e-mail ou pelo portal, perceber o que falta enviar e lançar cada rascunho de fatura de fornecedor.
+keywords: [documentos recebidos, clientes do gabinete, caixa de entrada, e-mail do diário de compras, portal do cliente, o que chegou e o que falta, rascunho de fatura de fornecedor]
+doc_id: DOC-0176
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/gabinete/empresas-clientes-em-dia, copilot/usar/ler-documentos, accounting-pt/compras/fatura-de-fornecedor]
+---
+
+## Para que serve?
+
+Os clientes do gabinete enviam as faturas por e-mail ou pelo portal. Cada documento chega como **rascunho de fatura de fornecedor** na empresa certa, com o ficheiro em anexo, e fica à espera de uma pessoa o conferir e lançar. O ecrã **O que chegou e o que falta** mostra, por cliente e por mês, quantos documentos entraram.
+
+## Quando utilizar?
+
+- Para tratar o que os clientes enviaram desde a última vez.
+- Para saber que clientes ainda não enviaram nada este mês.
+- **Não** conta como lançado o que está em rascunho: só passa à contabilidade quando a fatura é confirmada.
+
+## Onde encontrar?
+
+- **Contabilidade › Lançar › Compras › Documentos recebidos dos clientes do gabinete** (Contabilista).
+- **Contabilidade › Consultar › Terceiros › O que chegou e o que falta** (Contabilista).
+- **Contabilidade › Configurar › Sistema e segurança › Gabinete e empresas clientes › Caixa de entrada do gabinete** (e-mails com ficheiros que chegam ao endereço do gabinete; a empresa cliente é decidida por regras escritas, não pela IA; ver o passo 7).
+
+Os três só existem com o [Modo gabinete](/accounting-pt/gabinete-de-contabilidade) ligado; na demonstração vem desligado.
+
+## Antes de começar
+
+- Perfil: **Contabilista**. O exemplo é a Empresa Demonstração, a 01/11/2026.
+- O [Modo gabinete](/accounting-pt/gabinete-de-contabilidade) ligado pelo administrador (na demonstração vem desligado).
+- Cada empresa cliente tem o seu endereço de e-mail (o do diário de compras) e uma página no portal para o cliente.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Lançar › Compras › Documentos recebidos dos clientes do gabinete**. A lista abre filtrada em **Por tratar** e mostra **Recebido em**, **Recebido por** (E-mail ou Portal), **Enviado por**, **Parceiro** e **Estado**. Na demonstração, a lista **Por tratar** vem vazia («Ainda não há documentos recebidos dos clientes»): o que os clientes enviarem aparece aqui em **Rascunho**.
+   ![Lista de documentos recebidos, filtrada em Por tratar e ainda vazia](/images/accounting-pt/documentos-dos-clientes-do-gabinete/02-documentos-recebidos.png)
+2. Retire o filtro **Por tratar** para ver também o que já foi tratado: na demonstração aparecem os dois documentos já **Publicada**, recebidos a 06/11/2026 (um por e-mail e um pelo portal).
+3. Abra o rascunho. É uma fatura de fornecedor com o ficheiro em anexo. Se algum ficheiro não foi aceite, o histórico diz-o, em português. No exemplo, um e-mail para o endereço do diário de compras da Empresa Demonstração com um programa (`programa.exe`), um PDF de 11 MB (`fatura-grande.pdf`) e duas fotografias (`talao.gif` e `talao.webp`) deu dois rascunhos, um por fotografia, e o histórico do primeiro diz: «Ficheiros não aceites: «programa.exe»: só se aceitam ficheiros PDF, imagens (PNG, JPG, WEBP, GIF) e XML. «fatura-grande.pdf»: o ficheiro é maior do que 10 MB.»
+   ![Histórico do rascunho: Ficheiros não aceites, com programa.exe e um PDF maior do que 10 MB](/images/accounting-pt/documentos-dos-clientes-do-gabinete/03-ficheiros-nao-aceites.png)
+4. Preencha ou confira o fornecedor, a data, as linhas e os impostos e carregue em **Confirmar**; o lançamento segue o [procedimento normal de uma fatura de fornecedor](/accounting-pt/fatura-de-fornecedor). Para ler o PDF com ajuda do Copiloto, veja [Como ler documentos](/copilot/ler-documentos).
+5. Abra **Consultar › Terceiros › O que chegou e o que falta**. Abre filtrado em **Nada recebido** e no mês corrente: se todos os clientes enviaram algo, mostra «Todos os clientes enviaram algo este mês». Retire os filtros para ver os últimos 12 meses: a Empresa Demonstração tem em 01/11/2026 **1** por e-mail, **1** pelo portal, **2** recebidos; em 01/10/2026, nada recebido.
+   ![Documentos recebidos por mês e por canal](/images/accounting-pt/documentos-dos-clientes-do-gabinete/01-o-que-chegou.png)
+6. **Quando é o cliente a enviar pelo portal.** O cliente entra com o seu utilizador de portal (a primeira vez, o ecrã diz «A palavra-passe que recebeu é temporária. Escolha uma nova para continuar.») e abre `/my/documentos`, **Enviar documentos ao seu contabilista**. Escolhe o ficheiro e carrega em **Enviar**. Um PDF válido é aceite («Recebido: fatura-exemplo.pdf. O seu contabilista vai tratar deles.») e passa a **Recebido** em **O que recebemos de si**. Um ficheiro recusado mostra o motivo e não entra: `programa.exe` dá «'programa.exe': só se aceitam ficheiros PDF, imagens (PNG, JPG, WEBP, GIF), XML, CSV e OFX.» (por baixo do campo do ficheiro, a página diz «PDF, imagens (PNG, JPG, WEBP, GIF), XML, CSV ou OFX. Até 10 ficheiros de 10 MB cada.»), um PDF vazio dá «o ficheiro está vazio.» e um ficheiro de texto com a extensão .pdf dá «o conteúdo não é um ficheiro PDF válido.».
+   ![Portal do cliente: programa.exe recusado, só se aceitam PDF, imagens (PNG, JPG, WEBP, GIF), XML, CSV e OFX](/images/accounting-pt/documentos-dos-clientes-do-gabinete/04-portal-ficheiro-recusado.png)
+   ![Portal do cliente: o PDF foi recebido e aparece na lista como Recebido](/images/accounting-pt/documentos-dos-clientes-do-gabinete/05-portal-enviado.png)
+   O documento enviado entra na lista do passo 1 com **Recebido por** **Portal**, em **Rascunho**, e conta em **Pelo portal** no ecrã do passo 5.
+7. **A caixa de entrada do gabinete.** Abra **Configurar › Sistema e segurança › Gabinete e empresas clientes › Caixa de entrada do gabinete**. A lista abre filtrada em **Por atribuir**; retire o filtro para ver tudo. Cada linha é um e-mail com ficheiros, com o **Remetente**, a **Empresa cliente**, a **Confiança** e o **Estado** (**Por atribuir**, **Por processar** ou **Processado**). Abra um e-mail: o campo **Porquê esta empresa** diz como a empresa foi escolhida. No exemplo, um e-mail de geral@demonstracao.example.invalid com um PDF onde está o NIF da Empresa Demonstração ficou atribuído a essa empresa, com **95 %** e **Por processar**; um e-mail do mesmo remetente de duas empresas, sem NIF, ficou **Por atribuir** com **0 %** (diz que o remetente está ligado a várias empresas e nenhum NIF as distingue).
+   ![E-mail por atribuir: a empresa cliente fica em branco para a escolher](/images/accounting-pt/documentos-dos-clientes-do-gabinete/06-caixa-por-atribuir.png)
+   Num e-mail **Por atribuir**, escolha a **Empresa cliente** e carregue em **Atribuir à empresa escolhida**; passa a **Por processar**. Só aceita empresas portuguesas em que a pessoa trabalhe: com outra, o ecrã diz «Só pode atribuir o e-mail a uma empresa portuguesa em que trabalhe. Não foi alterado nada.» Num e-mail **Por processar**, carregue em **Criar os rascunhos** e confirme («Os rascunhos são criados com as suas permissões e nada é validado»). Uma fatura com o código QR da AT é lida sem IA e fica **Rascunho criado. Nada foi validado: confira-o com o documento antes de lançar.**; esse rascunho aparece na lista do passo 1 como **E-mail**.
+   ![E-mail processado: o rascunho foi criado a partir do código QR, sem IA](/images/accounting-pt/documentos-dos-clientes-do-gabinete/07-caixa-processado.png)
+
+</StepByStep>
+
+## Resultado esperado
+
+- Cada documento aparece uma vez, com o canal e quem enviou.
+- Um mês com **0** em **Recebido** é um cliente a quem pedir os documentos.
+
+## Notas importantes
+
+- A contagem é **por data de entrada no produto** (a data em que o rascunho foi criado), não pela data da fatura.
+- No portal aceitam-se PDF, imagens (PNG, JPG, WEBP e GIF), XML, CSV e OFX; pelo endereço do diário de compras, PDF, imagens (PNG, JPG, WEBP e GIF) e XML. O ficheiro é recusado se vazio, maior que 10 MB, ou se o conteúdo não corresponder ao tipo. Cada mensagem aceita no máximo 10 ficheiros.
+- **Faturas enviadas para o endereço do diário de compras.** Cada e-mail com uma fatura dá um rascunho de fatura de fornecedor, com o ficheiro ligado ao rascunho, seja um PDF ou uma fotografia (PNG, JPG, WEBP ou GIF). Um e-mail com várias fotografias dá um rascunho por ficheiro: no exemplo do passo 3, `talao.gif` e `talao.webp` deram dois rascunhos, cada um com a imagem ao lado da fatura. Os dois aparecem em **Documentos recebidos dos clientes do gabinete**, em **Por tratar**, com **Recebido por** **E-mail**, e os dois contam em **O que chegou e o que falta**: depois desse e-mail, a linha de 01/11/2026 da Empresa Demonstração passa de **1** para **3** em **Por e-mail** e de **2** para **4** em **Recebido**. O Contabilista abre-o sem erro e vê o ficheiro ao lado da fatura. Em **Contabilidade › Lançar › Compras › Faturas de fornecedores**, o filtro **Recebidas por e-mail** mostra só estes rascunhos. As notas do histórico saem em português, e a coluna **E-mail** da lista diz como o rascunho foi lido.
+  - **PDF com texto:** chega já lido, como pelo botão **Carregar fatura (PDF, foto ou QR)**, sem IA. No exemplo, o PDF da Papelaria Central, Lda dá o rascunho com a **Referência** FT P2026/412, a data 03/11/2026 e o total 49,20 €; a coluna **E-mail** diz **Lido do ficheiro (sem IA)** e a nota diz «Recebida por e-mail de geral@papelaria.example.invalid em 09/11/2026 06:26:07. Lida do texto do PDF, sem IA. Nada foi validado: confira antes de lançar.». A ficha avisa «Esta fatura foi preenchida a partir de um PDF. Confira o fornecedor, a data, os valores e o IVA com o PDF e carregue em «Confirmar a revisão». Até lá não pode ser confirmada.»
+  - **Fornecedor que só existe noutra empresa:** o rascunho nunca fica com um contacto de outra empresa. No exemplo, um PDF com texto de um fornecedor registado só na Empresa Demonstração, enviado para o endereço do diário de compras de outra empresa da demonstração, deu um rascunho dessa empresa com a **Referência** FT P2026/412 e sem fornecedor. O separador **Leitura do PDF** diz «Não existe nenhum contacto com o NIF 599990058 nesta empresa: crie o fornecedor nesta empresa e escolha-o na fatura.» O mesmo acontece quando o e-mail vem do endereço registado nesse contacto da outra empresa: no exemplo, o mesmo PDF enviado de geral@papelaria.example.invalid (a Papelaria Central, Lda só existe como contacto da Empresa Demonstração) deu o rascunho na empresa do diário que o recebeu, sem fornecedor, e o histórico explica porquê: «O remetente do e-mail (geral@papelaria.example.invalid) é um contacto de outra empresa, por isso não foi ligado a este rascunho. Escolha você o fornecedor desta empresa.» Crie o fornecedor nessa empresa, escolha-o na fatura e acrescente as linhas.
+  - **Fotografia:** com a leitura pela IA desligada, como na demonstração, a coluna **E-mail** diz **IA desligada** e a nota diz «Recebida por e-mail de geral@papelaria.example.invalid em 09/11/2026 06:26:09. A leitura pela IA está desligada ou por configurar nesta empresa, por isso o rascunho fica com o ficheiro anexado para o preencher. Peça ao administrador para a configurar em Copiloto › Ligações às IAs › Definições da IA.».
+    O rascunho fica com o fornecedor (pelo remetente) e o resto por preencher. Com o Copiloto desligado na empresa, o botão **Ler com a IA** responde «O Copiloto está desligado para a empresa “Empresa Demonstração, Lda”. Nada foi feito. Peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que o ligue: Copiloto › Controlo › Interruptores.» <span className="fd-pending">Pendente de validação no ecrã: a leitura de uma fotografia pela IA e que o botão **Ler com a IA** já não pede a data da fatura antes de ler, porque é a leitura que a preenche. Também por validar no ecrã: **Ler com a IA** num rascunho que repete uma fatura que já existe (mesmo fornecedor e mesma referência) mostra o aviso «Esta fatura já existia…» e abre o rascunho que fica. Numa base de testes a IA nunca é chamada, nem pelo simulador.</span> {/* Auditoria docs-aud-v23as (09/11/2026, master d7b8279e9, cópia nova da base-mãe): por clique, com um utilizador só com o perfil Contabilista, o rascunho da fotografia, sem data da fatura, respondeu ao Ler com a IA com a mensagem citada, sem «Campos inválidos». O simulador da IA só responde a Testar a ligação: numa base de testes a leitura é recusada antes de sair do servidor, por isso a leitura que preenche a data não se pôde ver. */} {/* Nota interna (lote v23-AS, depois dos comboios 176 e 177 com o FIX-M192 e o COP-065, master d7b8279e9, docs_demo_v23as_test, 09/11/2026): na cópia, domínio de e-mail demonstracao.example criado por RPC (admin) e ligado à Empresa Demonstração e ao diário Compras; dois e-mails de geral@papelaria.example.invalid entregues por RPC com o método do servidor de correio (mail.thread.message_process, admin): um PDF com texto sintético (FT P2026/412, 03/11/2026, 49,20 €) e uma fotografia JPG. Leitura pela IA desligada, como na base de demonstração; nenhuma IA foi chamada, nem simulada (o docs_base.sh não liga o simulador). Por clique, com um utilizador só com o perfil Contabilista: filtro Recebidas por e-mail com os dois rascunhos e a coluna E-mail; o do PDF lido (fornecedor, referência, data, 49,20 €, aviso de revisão, notas citadas, sem «Erro ao importar»); o da fotografia sem data, com Ler com a IA a responder com o Copiloto desligado, sem pedir a data. O defeito do lote v23-AQ (could not serialize) já não se reproduz. */}
+- A **Caixa de entrada do gabinete** é outro canal e tem duas condições, que só o administrador (ou quem tem o acesso extra **Administração fiscal**) cumpre:
+  1. Em **Copiloto › Ligações às IAs › Definições da IA**, marcar **Empresa do gabinete?** na empresa do gabinete (só uma). Sem isso, o e-mail é recusado: «Nenhuma empresa foi escolhida como gabinete da caixa de entrada. Nada foi guardado.»
+  2. Em **Copiloto › Controlo › Interruptores**, ligar, para essa empresa, o **Copiloto (interruptor geral da empresa)**, a **Ligação à IA (chamadas ao fornecedor de IA)** e **IA - Caixa de entrada do gabinete**. Estes interruptores estão marcados «Para fora» no ecrã: ligam-se por decisão da empresa. Quem não as pode ligar recebe uma mensagem a pedir que fale com o administrador.
+  Com tudo desligado, a lista está vazia e o ecrã explica porquê.
+- **A empresa cliente nunca é decidida pela IA.** Decidem o remetente (tem de ser conhecido: endereço da empresa, de um contacto ou de um utilizador da empresa) e os NIF escritos no e-mail e nos documentos: sendo conhecido o remetente e aparecendo o NIF de uma das suas empresas, a escolha é essa (95 %); sem NIF e com uma só empresa, 80 %; com várias empresas ou com um remetente desconhecido, o e-mail fica **Por atribuir**. Só a leitura de um ficheiro que não tem código QR pode usar a IA, e o texto do e-mail nunca lhe é enviado. A IA continua desligada na base de demonstração («Base de testes: a IA não é chamada»), por isso não se testou a leitura de documentos sem QR.
+- Na demonstração não há servidor de e-mail ligado (a rede está bloqueada): a chegada dos e-mails do exemplo (e da caixa de entrada) foi simulada com o mesmo método que o servidor de e-mail chama. O envio real depende de o domínio de e-mail estar configurado no Odoo.
+
+## Problemas frequentes
+
+### O cliente diz que enviou e não vejo nada
+
+- **Causa:** a lista abre em **Por tratar**; ou o ficheiro foi recusado; ou o e-mail não foi para o endereço do diário de compras da empresa certa.
+- **O que fazer:** retire o filtro, procure o rascunho e leia o histórico. Peça ao cliente que reenvie em PDF.
+
+### «Só pode atribuir o e-mail a uma empresa portuguesa em que trabalhe»
+
+- **Causa:** a empresa escolhida em **Empresa cliente** não é uma das empresas em que a pessoa trabalha (o campo oferece-a na mesma).
+- **O que fazer:** escolha uma das suas empresas ou peça ao administrador que lhe dê acesso à empresa do cliente.
+
+### Ficheiros não aceites
+
+- **Causa:** o tipo, o tamanho ou o conteúdo do ficheiro.
+- **O que fazer:** peça ao cliente um PDF ou uma fotografia (PNG, JPG, WEBP ou GIF).
+
+{/* Nota interna (DOCS-046 corretor, DOC-0176, risco normal): NV3I-04 corrigida em docs_demo_v3a5cor_test (master b1c81051). Portal provado com o utilizador de portal cliente.demo@exemplo.example (criado por RPC na empresa 4; troca de palavra-passe obrigatória feita no ecrã): exe, vazio e falso recusados com as mensagens do artigo, PDF aceite, entra como Portal, conta em O que chegou e o que falta. Caixa de entrada: empresa do gabinete = Empresa Teste Portugal marcada em Definições da IA e 3 interruptores ligados com o admin (único com Administração fiscal testado); 4 e-mails simulados com arxi.copilot.inbox.message_new (PDF com QR e NIF, PDF só com NIF da Papelaria, sem NIF, remetente desconhecido; o .exe sozinho é recusado). Atribuição manual: Livraria recusada («Só pode atribuir…», o admin não trabalha na Livraria), Empresa Demonstração aceite; «Criar os rascunhos» no e-mail com QR criou o rascunho sem IA. NÃO testada a leitura de documento sem QR (IA). Defeitos: V3A5-13 «Porquê esta empresa» aparece em inglês no e-mail simulado («known sender and the tax number…»); V3A5-14 o campo Empresa cliente oferece empresas em que a pessoa não trabalha e só falha ao atribuir; o ecrã do portal mostra «Choose Files / No file chosen» em inglês (letra do navegador). */}
+
+{/* Nota interna (v23-T, DOC-0176, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}
+
+{/* Nota interna (lote v23-AU, depois do comboio 181 com o COP-066, master 09afad64d, docs_demo_v23au_test, porta 8504): na cópia, por RPC com o administrador: Modo gabinete ligado nas Definições (a base-mãe vem com ele desligado: sem ele o Contabilista não tem os três menus), domínio de e-mail demonstracao.example nas empresas 3 e 2 e nos endereços dos dois diários de compras, e-mails fictícios entregues com mail.thread.message_process (o caminho do bilhete), um portal criado para o cliente (cliente.v23au, senha trocada só em memória). B-01: e-mail com programa.exe, fatura-grande.pdf (11 MB), talao.gif e talao.webp para a Empresa Demonstração: nota em português com «10 MB», lida por clique com um utilizador só com o perfil Contabilista (captura 03). B-03: talao.gif e talao.webp deram dois rascunhos com a imagem à direita (por clique). B-02: PDF com texto (NIF do emitente só na Empresa Demonstração, remetente desconhecido) para o diário da outra empresa: rascunho com FT P2026/412, sem fornecedor, separador Leitura do PDF com a frase citada, por clique com o Contabilista com as duas empresas. Defeito: se o remetente do e-mail é o endereço de um contacto de outra empresa (geral@papelaria.example.invalid), o e-mail não dá rascunho nenhum («Ups! Existem algumas inconsistências de empresa…», parceiro de outra empresa). Portal: programa.exe recusado com a frase citada, por clique (captura 04 refeita, recortada ao título e à recusa); a ajuda por baixo do campo continua sem WEBP e GIF. B-04 (Ler com a IA num repetido): pendente, porque a leitura pela IA não corre na cópia (o docs_base.sh não liga o simulador da leitura). Fica por refazer (anterior a este lote): os números dos passos 1, 2 e 5 e as capturas 01 e 02 não são os da base-mãe de hoje (a base-mãe tem só dois documentos Publicada de 06/11/2026, um por e-mail e um pelo portal, e nenhum rascunho). */}
+
+{/* Nota interna (lote v23-AV, depois do comboio 183 com o COP-067, master 25a465133, docs_demo_v23av_test, porta 8504, 09/11/2026): cópia nova da base-mãe; Modo gabinete ligado por clique pelo administrador (Contabilidade › Configurar › Geral › Definições, estava desligado). Antes de criar qualquer dado, com um utilizador só com o perfil Contabilista (só a Empresa Demonstração), por clique: passo 1 vazio com «Ainda não há documentos recebidos dos clientes» (captura 02), passo 2 com os dois Publicada de 06/11/2026, passo 5 com «Todos os clientes enviaram algo este mês» e, sem filtros, 01/11/2026 1/1/2 e outubro 0/0/0 (captura 01). Depois, por RPC com o administrador: domínio de e-mail demonstracao.example nas empresas 3 e 2 e nos endereços dos dois diários de compras; dois e-mails fictícios entregues com mail.thread.message_process (o caminho do bilhete), ambos de geral@papelaria.example.invalid (contacto só da Empresa Demonstração): (1) programa.exe, fatura-grande.pdf de 11 MB, talao.gif e talao.webp para a Empresa Demonstração: dois rascunhos, os dois em Por tratar com Recebido por E-mail e contados (3/1/4), nota sem «.;» (captura 03 refeita); (2) o PDF com texto (FT P2026/412) para o diário da outra empresa: rascunho nessa empresa, sem fornecedor, com a nota citada e a frase da Leitura do PDF, lidos por clique com o Contabilista com as duas empresas ligadas no seletor. Portal: utilizador de portal criado por RPC (senha trocada só em memória); a ajuda por baixo do campo já tem WEBP e GIF. Nenhum documento da base foi alterado. */}

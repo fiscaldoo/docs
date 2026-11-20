@@ -1,0 +1,133 @@
+---
+id: banco-de-horas
+slug: /payroll-pt/banco-de-horas
+title: Como gerir um banco de horas
+sidebar_label: Banco de horas
+sidebar_position: 8
+description: Registar o regime de banco de horas de um trabalhador, os depósitos e as devoluções, ver o saldo e pagar horas em dinheiro no recibo.
+keywords: [gerir, banco, horas, bancos de horas, banco de horas, saldo de horas, compensação, compensacao, referendo, art. 208]
+doc_id: DOC-0191
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/tempo-de-trabalho/trabalho-suplementar, payroll-pt/tempo-de-trabalho/adaptabilidade, payroll-pt/processar-e-pagar/processar-o-mes]
+---
+
+## Para que serve?
+
+Num banco de horas, o trabalhador faz mais horas em alguns dias e recebe-as depois: em menos tempo de trabalho, em férias mais longas ou em dinheiro. O fiscaldoo guarda o regime, cada movimento e o saldo, recusa o que passa dos limites da lei e leva ao recibo as horas pagas em dinheiro.
+
+## Quando utilizar?
+
+- Quando o instrumento coletivo aplicável prevê o banco de horas, ou quando o regime foi aprovado em referendo.
+- Cada vez que há horas a depositar ou a devolver.
+- Não use para trabalho suplementar: veja [Como registar o trabalho suplementar](/payroll-pt/trabalho-suplementar). O banco de horas individual, por acordo só entre a empresa e o trabalhador, já não existe na lei.
+
+## Onde encontrar?
+
+**Salários › Preparar › O que há para fazer este mês?** › **Listas de apoio** › **Preparar o mês** › **Bancos de horas**.
+
+## Antes de começar
+
+- O seu perfil é **Gestor de RH**, ou tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador.
+- Tem a referência do instrumento coletivo ou o resultado do referendo, e as compensações que ele permite.
+- Há um banco por trabalhador e por período.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Bancos de horas** e carregue em **Novo**. Escolha o **Trabalhador**.
+2. Em **Origem do regime**, escolha **Por IRCT (art. 208.º)**, **Grupo, por IRCT (art. 208.º-B/1)** ou **Grupo, por referendo (art. 208.º-B/2)**.
+3. Preencha **De** e **Até**. No regime por instrumento coletivo, escreva **Instrumento de regulamentação coletiva (IRCT)**. Nos de grupo, escreva **Trabalhadores abrangidos ou a favor (%)**.
+4. Marque pelo menos uma compensação: **Compensação: redução do tempo de trabalho**, **Compensação: férias mais longas** ou **Compensação: pagamento em dinheiro**. Preencha **Aviso do trabalho suplementar (dias)**, como diz o instrumento coletivo.
+5. Se o instrumento coletivo for mais exigente do que a lei, preencha **IRCT: aumento diário (h)**, **IRCT: limite semanal (h)** ou **IRCT: limite anual (h)**. **Limite de aumento diário (h)**, **Limite semanal (h)** e **Limite anual (h)** mostram o que está em vigor.
+6. Guarde. Em **Movimentos**, carregue em **Adicionar uma linha** e preencha **Data**, **Movimento** e **Horas**. As opções são **Horas depositadas no banco**, **Redução do tempo de trabalho**, **Férias mais longas** e **Pago em dinheiro**. Em **Nota**, não escreva dados pessoais nem de saúde. Guarde. **Saldo (horas)** atualiza-se.
+   ![Banco de horas por instrumento coletivo com 4 movimentos em novembro de 2026 e saldo de 2 horas](/images/payroll-pt/banco-de-horas/01-banco-com-movimentos.png)
+7. Para pagar horas em dinheiro, registe **Pago em dinheiro** com uma data do mês a pagar e carregue em **Calcular** no recibo desse mês. A linha **Banco de horas pago em dinheiro** entra sozinha.
+   ![Linhas do recibo de novembro, com Banco de horas pago em dinheiro: 3 horas e 16,62 €](/images/payroll-pt/banco-de-horas/02-recibo-com-horas-pagas.png)
+
+</StepByStep>
+
+**Exemplo.** Um trabalhador com 960,00 € e 40 horas por semana, em novembro de 2026:
+
+| Data | Movimento | Horas | Efeito no saldo |
+| --- | --- | --- | --- |
+| 03/11/2026 | Horas depositadas no banco | 3 | +3 |
+| 04/11/2026 | Horas depositadas no banco | 4 | +4 |
+| 10/11/2026 | Redução do tempo de trabalho | 2 | −2 |
+| 20/11/2026 | Pago em dinheiro | 3 | −3 |
+| | **Saldo (horas)** | | **2** |
+
+No recibo, as 3 horas pagas valem 3 × 5,538462 € = **16,62 €**. O valor da hora é o normal: 960,00 € × 12 ÷ (52 × 40). **Como foi calculado?** indica «IRS: sujeito. Segurança Social: sujeito.»
+
+## No Enterprise
+
+No Odoo Enterprise, o banco de horas gere-se da mesma maneira. Com o perfil **Gestor de RH**, ou com o acesso extra **Administrador de Salários**, **Bancos de horas** (no painel **O que há para fazer este mês?**, em **Preparar o mês**) tem **Novo**, e a ficha tem os mesmos campos, os mesmos limites e os **Movimentos**. O **Processador de salários** sem esse acesso vê a lista, sem **Novo**.
+
+Com os movimentos do exemplo, o **Saldo (horas)** ficou em 2, e o recibo de novembro de 2026, só calculado, teve a linha de 16,62 € das 3 horas pagas em dinheiro, como no Community.
+
+{/* Nota interna (lote EE-08, DOCS-073 #4142, DEC-1794, master 2c8d358c0, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee08_test: cópia da odoo20_ee_test, já com os módulos de 2c8d358c0, com a aplicação de salários do Enterprise (hr_payroll) instalada; portas 8508/8509), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado. Processador com o acesso Administrador de Salários: lista com Novo e a ficha nova com Origem do regime, IRCT, De, Até, as três compensações, Aviso do trabalho suplementar (dias), os limites do IRCT e da lei, Saldo (horas) e Movimentos (Data, Movimento, Horas, Efeito no saldo (h), Nota); Processador de salários sem esse acesso: lista sem Novo. O Gestor de RH também tem Novo (igual no Community: ver o relatório). O banco e o cálculo foram feitos por RPC com os direitos de cada perfil, numa transação desfeita no fim: movimentos do exemplo no trabalhador de 960,00 €, Saldo 2, lote de novembro calculado pelo Processador de salários com a linha de 16,62 €. Comparado com uma cópia da demonstração Community (docs_demo_ee08_test, 2c8d358c0, porta 8518). Caminhos do artigo conferidos com o verificador do test_doc_paths na cópia Enterprise (0 erros). Ver reports/LOTE_EE-08.md. */}
+
+## Resultado esperado
+
+- O banco mostra os limites em vigor e o saldo.
+- Só as horas **Pago em dinheiro** chegam ao recibo. As outras devoluções mudam apenas o saldo.
+- No recibo final, o saldo positivo aparece na linha **Saldo do banco de horas no fim do contrato**.
+
+## Notas importantes
+
+Fonte: Código do Trabalho, arts. 208.º e 208.º-B, texto lido na PGDL a 04/11/2026.
+
+| Origem do regime | Por dia | Por semana | Por ano | Lei |
+| --- | --- | --- | --- | --- |
+| Instrumento coletivo | mais 4 horas | até 60 horas | 200 horas | art. 208.º, n.º 2 |
+| Referendo | mais 2 horas | até 50 horas | 150 horas | art. 208.º-B, n.º 3 |
+
+- **Limite anual afastado.** O instrumento coletivo pode afastá-lo para evitar reduzir o número de trabalhadores, por um período até 12 meses (art. 208.º, n.º 3). Use **Limite anual dispensado pelo IRCT**.
+- **Referendo.** O regime dura no máximo 4 anos (art. 208.º-B, n.º 4, alínea b).
+- **Compensação.** O instrumento coletivo regula-a: redução do tempo, aumento das férias ou dinheiro (art. 208.º, n.º 4).
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: o valor da hora paga sem acréscimo de trabalho suplementar, que **Como foi calculado?** também marca como por validar; e a sujeição a IRS e a Segurança Social.</span>
+
+## Problemas frequentes
+
+### Ao guardar: «não tem compensação»
+
+- **Mensagem:** «O banco de horas de … não tem compensação. O que aconteceu: o art. 208.º/4-a exige pelo menos uma entre a redução do tempo, as férias mais longas ou o pagamento em dinheiro. Como resolver: assinale pelo menos uma compensação.»
+- **O que fazer:** marque a compensação que o instrumento coletivo prevê.
+
+### Ao guardar: «mais do que as 4.0 horas por dia»
+
+- **Mensagem:** «As horas depositadas no banco de … em 03/11/2026 são mais do que as 4.0 horas por dia que a lei permite. O que aconteceu: o período normal só pode crescer tanto (CT art. 208.º/2, 208.º-B/3). Como resolver: deposite menos horas nesse dia.»
+- **O que fazer:** corrija as horas. O que passar do limite pode ser trabalho suplementar: confirme com o contabilista.
+
+### Ao guardar: a semana passa do limite
+
+- **Mensagem:** «A semana de 09/11/2026 de … teria 64.0 horas e a lei permite até 60.0. O que aconteceu: o período normal semanal (40.0 h) mais as horas do banco não pode passar o limite. Como resolver: deposite menos horas no banco nessa semana.»
+- **O que fazer:** reduza as horas dessa semana.
+
+### Ao guardar: «não tem esse saldo»
+
+- **Mensagem:** «… não tem esse saldo no banco de horas. O que aconteceu: as horas devolvidas são mais do que as horas depositadas até 20/11/2026. Como resolver: corrija as horas.»
+- **O que fazer:** confira a data e as horas. O saldo conta só o que foi depositado até essa data.
+
+### Referendo: «dura mais de 4 anos ou não tem fim»
+
+- **Mensagem:** «O banco de horas de grupo de … dura mais de 4 anos ou não tem fim. O que aconteceu: o art. 208.º-B/4-b limita o período do regime aprovado por referendo. Como resolver: preencha uma data de fim que seja no máximo 4 anos depois do início.»
+- **O que fazer:** corrija **Até**.
+
+### Referendo: a percentagem é recusada
+
+- **Mensagem:** «O banco de horas de grupo de … tem 0.0 % dos trabalhadores e a lei exige pelo menos 65.0 %. O que aconteceu: os arts. 206.º/1 e 208.º-B/6 fixam o mínimo. Como resolver: corrija a percentagem ou não aplique o regime ao grupo.»
+- **O que fazer:** escreva a percentagem real de **Trabalhadores abrangidos ou a favor (%)**. Abaixo do mínimo, não aplique o regime.
+
+### Ao guardar: «Há campos obrigatórios por preencher»
+
+- **Causa:** no regime por instrumento coletivo, falta a referência.
+- **O que fazer:** preencha **Instrumento de regulamentação coletiva (IRCT)**.
+
+{/* Nota interna (DOCS-046, lote v13-PAY2, master cf8052b9e): por clique com Administrador de Salários: regime por IRCT e por referendo, 6 recusas, 4 movimentos, recibo. Linha do saldo no recibo final vinda do guia do produto, não percorrida: exige cessação e recibo final. Limite anual (200 h) e férias mais longas não percorridos. */}

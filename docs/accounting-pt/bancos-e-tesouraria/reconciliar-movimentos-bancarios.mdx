@@ -1,0 +1,132 @@
+---
+id: reconciliar-movimentos-bancarios
+slug: /accounting-pt/reconciliar-movimentos-bancarios
+title: Como reconciliar os movimentos bancários
+sidebar_label: Reconciliar os movimentos bancários
+sidebar_position: 2
+description: Ligar cada movimento do extrato à fatura, ao pagamento ou ao gasto a que corresponde, com as correspondências sugeridas, a escolha à mão ou um lançamento direto, e conferir o que fica por tratar.
+keywords: [reconciliar, reconciliação bancária, reconciliacao bancaria, conciliar, conciliação bancária, conciliacao bancaria, movimentos do banco, linhas do banco, movimentos bancarios, extrato, o que há para fazer com os bancos, o que ha para fazer com os bancos, lançamento direto, lancamento direto, comissões bancárias, comissoes bancarias, taxas bancárias, sugerir correspondências]
+doc_id: DOC-0110
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise, com diferenças
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/importar-extrato-bancario, accounting-pt/dia-a-dia/lancamentos-contabilisticos]
+---
+
+## Para que serve?
+
+Reconciliar é dizer ao Odoo a que corresponde cada movimento do banco: o recebimento de uma fatura de cliente, o pagamento de uma fatura de fornecedor, ou um gasto que só aparece no extrato (uma comissão, o imposto do selo). Enquanto um movimento não está reconciliado, o dinheiro está na conta do banco, mas a fatura continua em aberto ou o gasto ainda não foi lançado.
+
+## Quando utilizar?
+
+- Logo a seguir a importar um extrato ([Como importar o extrato bancário](/accounting-pt/importar-extrato-bancario)).
+- Antes de fechar o mês: o painel **O que há para fazer com os bancos?** mostra quantos **Movimentos do banco por reconciliar** faltam.
+- Para lançar as comissões, os juros e os impostos que o banco cobra diretamente na conta: é por aqui, e não por um lançamento manual, que se lançam os acertos à conta do banco ([Como fazer um lançamento contabilístico manual](/accounting-pt/lancamentos-contabilisticos)).
+
+## Onde encontrar?
+
+**Contabilidade › Reconciliar › Bancos e caixa › Reconciliação bancária**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**. Com ele faz todos os passos deste artigo (testado com o perfil Contabilista).
+- Os movimentos já estão no Odoo: importou o extrato.
+- As faturas a que os movimentos correspondem estão lançadas e confirmadas. Um recebimento de uma fatura que ainda não existe fica por reconciliar.
+- O exemplo continua o de [Como importar o extrato bancário](/accounting-pt/importar-extrato-bancario): na Empresa Demonstração, Lda, a 29/10/2026, **6 movimentos por tratar**, entre eles o recebimento de 1.107,00 € da Construções Marão (`FT D26/31`), a comissão de -12,50 € de 20/10/2026, a transferência de -123,00 € para a Papelaria Central e o imposto do selo de -0,50 €.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Reconciliar › Bancos e caixa › Reconciliação bancária**. À esquerda, os movimentos por tratar, com a contagem e os totais **A entrar** e **A sair**. Por cima, os filtros **Por reconciliar**, **Reconciliada** e **Todas**, o diário (**Todos os diários**, **Banco**, **Recibos (RG)**), as datas **De** e **Até** e a ordem. Carregue num movimento: à direita aparecem a **Data**, o **Montante**, o **Diário**, o **Parceiro** e o **Estado** **Por reconciliar**.
+   ![Lista de 4 movimentos por tratar, com A entrar 380,00 € e A sair -136,00 €: imposto do selo -0,50 €, transferência para a Papelaria Central -123,00 €, transferência recebida sem referência 380,00 € e comissão de setembro -12,50 €](/images/accounting-pt/reconciliar-movimentos-bancarios/01-movimentos-por-tratar.png)
+2. **Recebimento de um cliente.** Escolha `TRF CONSTRUCOES MARAO LDA FT D26/31` (1.107,00 €) e carregue em **Sugerir correspondências**. Abre-se **Sugestões para «…»**, com o **Parceiro identificado** (Construções Marão, Lda) e as sugestões por ordem de **Confiança**. No exemplo há duas, com o mesmo valor: `FT D26/31` com **Alta** («valor exato dentro de 30 dias, número do documento na descrição, nome do parceiro na descrição») e `FT D26/32` com **Média** (só o valor e o nome). Confira o número na descrição do banco e carregue em **Aceitar** na linha certa (`FT D26/31`). O ecrã diz «Esta linha do banco já está reconciliada.» e a fatura passa a paga.
+3. **Pagamento a um fornecedor, escolhendo à mão.** Volte a **Reconciliação bancária** e escolha `TRF SEPA PAPELARIA CENTRAL LDA FT A2026/318` (-123,00 €). Por baixo dos botões estão os separadores **Recibos**, **Pagamentos**, **Contabilidade** e **Operações manuais**, cada um com os documentos em aberto que pode escolher. Em **Pagamentos** há duas faturas de 123,00 €: `FTF/2026/00046` da Papelaria Central, Lda (**Correspondência provável**, **Valor exato**) e `FTF/2026/00048` de outro fornecedor (só **Valor exato**). Marque a caixa da `FTF/2026/00046` e carregue em **Confirmar reconciliação**. Quando o Odoo tem uma correspondência sugerida, mostra-a também em cima, num quadro **Correspondência sugerida** com o botão **Reconciliar**, que faz o mesmo.
+   ![Movimento de -123,00 € da Papelaria Central com o quadro Correspondência sugerida FTF/2026/00046, os botões Sugerir correspondências, Reconciliar num clique, Registar pagamento e reconciliar e Lançamento direto, e o separador Pagamentos com FTF/2026/00046 e FTF/2026/00048](/images/accounting-pt/reconciliar-movimentos-bancarios/02-correspondencia-sugerida.png)
+4. **Uma comissão do banco.** Escolha `COMISSAO MANUTENCAO CONTA` (-12,50 €) e carregue em **Lançamento direto**. Na janela **Lançamento direto a partir da linha do banco**, em **Modelo de reconciliação**, escolha **Taxas bancárias**: a **Conta** passa a `6888 Outros não especificados` e a **Descrição do lançamento** a «Taxas bancárias». Deixe o **IVA** vazio. Carregue em **Lançar e reconciliar**.
+   ![Janela Lançamento direto com a linha de extrato BNK1/2026/00073 de -12,50 € e, em Lançamento, o Modelo de reconciliação Taxas bancárias assinalado, a Conta 6888 Outros não especificados, o IVA vazio e o botão Lançar e reconciliar](/images/accounting-pt/reconciliar-movimentos-bancarios/03-lancamento-direto.png)
+5. **Um gasto sem modelo.** Para o imposto do selo (`IMPOSTO DO SELO S/ COMISSAO`, -0,50 €), carregue em **Lançamento direto**, deixe o **Modelo de reconciliação** vazio e escolha a **Conta** (no exemplo, `6812 Impostos indiretos`); carregue em **Lançar e reconciliar**.
+6. Confira a contagem: no exemplo, passa de 6 para **2 movimentos por tratar** (a transferência recebida sem referência, 380,00 €, e a comissão de setembro, -12,50 €).
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, **Contabilidade › Reconciliar › Bancos e caixa › Reconciliação bancária** abre o ecrã de reconciliação do Enterprise, **Correspondência bancária**, em vez do ecrã deste artigo (visto com um utilizador só com o perfil **Contabilista**):
+
+- Os movimentos estão numa só lista e os já reconciliados têm um visto verde. Para ver só os que faltam, abra as opções da pesquisa e escolha o filtro **Não reconciliado**.
+- Cada movimento tem os botões **Definir parceiro** e **Definir conta** (num ecrã mais estreito, **Parceiro** e **Conta**) e um botão **⋮** com **Reconciliar** e **Transferências Internas**, entre outras. Não há **Sugerir correspondências** nem **Lançamento direto**.
+- **Novo** acrescenta um movimento escrito à mão e **Enviar** carrega um ficheiro do banco. Para importar o extrato, use [Como importar o extrato bancário](/accounting-pt/importar-extrato-bancario).
+
+<span className="fd-pending">Pendente de validação no ecrã: nesta versão, escolher a conta em **Definir conta** é recusado com a janela **Operação inválida** («Esta linha não pode ser modificada (…) — pertence a um lançamento já publicado (…)»). Por isso não se reconciliou nenhum movimento neste ecrã, e o recebimento de um cliente e o pagamento a um fornecedor ficaram por ver. Esta parte é completada quando a correção entrar.</span>
+
+{/* Nota interna (lote EE-01, DOCS-073 #4142, DEC-1794, master ce51f2d47, base Enterprise docs_ee_ee01_test, 10/11/2026): Definir conta provado num movimento criado na cópia com Novo (-0,50 €, «IMPOSTO DO SELO S/ COMISSAO»), escolhendo 6812 na janela «Pesquisar: Conta»: recusa «Operação inválida» citada acima, lançamento BNK1/2026/00106. Defeito no relatório do lote (a guarda de imutabilidade do fiscaldoo trava a reconciliação do Enterprise). Textos em inglês no ecrã: filtro «Cash In», no ⋮ «Upload Bills», «Manage Models» e «Delete Transaction», e «Add & Close» no Novo. Rever esta secção quando a correção entrar. */}
+
+## Resultado esperado
+
+- Cada movimento reconciliado sai de **Por reconciliar** e aparece em **Reconciliada**.
+- **Cada reconciliação gera um lançamento no diário de operações diversas**, que tira o valor da conta de passagem `120001 Conta Transitória` (onde a importação o pôs) e o leva para o cliente, o fornecedor ou o gasto. No exemplo, conferido no razão:
+
+| Movimento | Lançamento | Débito | Crédito |
+|---|---|---|---|
+| Recebimento `FT D26/31`, 1.107,00 € | `OD/2026/…` | `120001 Conta Transitória` 1.107,00 | `2111 Clientes gerais` (Construções Marão) 1.107,00 |
+| Pagamento `FTF/2026/00046`, 123,00 € | `OD/2026/…` | `2211 Fornecedores gerais` (Papelaria Central) 123,00 | `120001 Conta Transitória` 123,00 |
+| Comissão, 12,50 € | `OD/2026/…` | `6888 Outros não especificados` 12,50 | `120001 Conta Transitória` 12,50 |
+| Imposto do selo, 0,50 € | `OD/2026/…` | `6812 Impostos indiretos` 0,50 | `120001 Conta Transitória` 0,50 |
+
+- A `FT D26/31` e a `FTF/2026/00046` ficam pagas. A conta `120001` fica a zero para estes movimentos.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a conta das comissões bancárias (o modelo **Taxas bancárias** usa `6888 Outros não especificados`; há quem use `6268 Outros serviços` ou `6988 Outros gastos de financiamento`) e o tratamento das comissões em IVA (isentas, CIVA art. 9.º, n.º 27) e em imposto do selo.</span>
+
+{/* Nota interna (DOCS-021, DOC-0110): video=sim na arquitetura; quando a DOCS-006 gravar este episódio, «## Vídeo demonstrativo» fica neste ponto. Este artigo foi feito na Community (ecrã de reconciliação do fiscaldoo); o Enterprise está na secção «No Enterprise» (lote EE-01). */}
+
+## Notas importantes
+
+- **Os botões que o artigo não usou.** **Reconciliar num clique** aceita de uma vez a correspondência sugerida; use-o só depois de ler a sugestão. Sem uma correspondência segura, recusa com «Nenhum item em aberto é uma correspondência plausível desta linha …» e não reconcilia nada: escolha então o documento num dos separadores. **Registar pagamento e reconciliar** cria o pagamento de uma fatura e reconcilia-o com o movimento. O separador **Operações manuais** e **Restringir por data** servem para procurar documentos que a sugestão não encontrou.
+- **Duas faturas com o mesmo valor.** A sugestão compara o valor, a data (uma janela de 30 dias) e o texto do banco. Com dois documentos do mesmo valor, escolha pelo número ou pelo nome na descrição, nunca só pelo valor.
+- **O IVA no lançamento direto.** A lista **IVA** começa pelas retenções na fonte (IRS 23 %, 16,5 %…). Uma comissão bancária não leva IVA nem retenção: deixe o campo vazio, a não ser que o contabilista certificado diga o contrário.
+- **Se reconciliou mal, desfaça a reconciliação.** No primeiro filtro escolha **Reconciliada**, carregue no movimento e carregue em **Desfazer reconciliação** (o botão **Documentos reconciliados**, ao lado, mostra primeiro o que a reconciliação ligou). A janela **Desfazer a reconciliação** mostra o movimento e os documentos e pede o **Motivo**. Carregue de novo em **Desfazer reconciliação**: o movimento volta a **Por reconciliar** e a contar em **movimentos por tratar**. Nada se apaga: o lançamento da reconciliação fica e é estornado por outro, com a data de hoje e a referência «Anular reconciliação: …». Feito com o perfil **Contabilista**; o perfil **Contabilista certificado** também tem o botão. Um pagamento registado a partir do movimento mantém-se, ainda por reconciliar com o banco, e a fatura continua paga. No exemplo, a `TRF SEPA Papelaria Central, Lda - FT PAP/2026/118` (-492,00 €): o lançamento `OD/2026/00008` (`120003 Pagamentos Pendentes` a débito e `120001 Conta Transitória` a crédito, 492,00 €) foi estornado por um lançamento novo, `OD/2026/…` (as mesmas contas, ao contrário); o pagamento `PBNK1/2026/00001` manteve-se e a fatura `FTF/2026/00037` continuou **paga**. Depois volte a reconciliar o movimento com o documento certo.
+  ![Janela Desfazer a reconciliação com o movimento TRF SEPA Equipamentos e Mobiliário Lusitano de -246,00 €, os documentos reconciliados, o Motivo e o botão Desfazer reconciliação](/images/accounting-pt/reconciliar-movimentos-bancarios/05-desfazer-reconciliacao.png)
+- **Um movimento que não se reconcilia.** Um movimento que não corresponde a nada (por exemplo, uma comissão cobrada duas vezes e estornada pelo banco) não se lança só para sair da lista. Abra a ficha da linha em **Contabilidade › Reconciliar › Bancos e caixa › O que há para fazer com os bancos?**, quadro **Listas de apoio**, **Linhas do banco**. **Ignorar** abre a janela **Ignorar ou marcar como duplicada**, com a linha e a **Justificação**; ao **Confirmar**, o **Estado da reconciliação** passa a **Ignorado** e a justificação fica na ficha. **Marcar como duplicado** abre a mesma janela, mas pede a **Linha original** em vez da justificação; ao **Confirmar**, o estado passa a **Duplicado** e a ficha mostra **Duplicado de** com essa linha. **Voltar a por classificar** desfaz e o estado volta a **Por classificar**. Feito com o perfil **Contabilista**, numa linha criada para isso.
+- **O que esta lista não vê.** Só aparecem os movimentos que já foram importados. Um movimento que o banco fez e que ainda não está num extrato importado não conta para **movimentos por tratar**.
+
+## Problemas frequentes
+
+### «Nenhum item em aberto corresponde a esta linha»
+
+- **Sintoma:** em **Sugerir correspondências**, **N.º de sugestões** 0 e «Nenhum item em aberto corresponde a esta linha: verifique o valor, a janela de datas na configuração de bancos ou a descrição.» (no exemplo, `TRF RECEBIDA - REF DESCONHECIDA`, 380,00 €).
+- **Causa:** o banco não diz de quem é o dinheiro e não há fatura em aberto com esse valor nos 30 dias.
+- **O que fazer:** procure o cliente pelo valor no separador **Recibos** ou em **Operações manuais**. Se a fatura ainda não foi emitida, deixe o movimento por reconciliar até ser. Não o lance numa conta de gastos ou rendimentos só para o tirar da lista.
+
+### O botão Confirmar reconciliação não reage
+
+- **Causa:** nenhum documento está marcado na lista do separador.
+- **O que fazer:** marque a caixa à esquerda do documento e carregue de novo.
+
+### O movimento e os documentos diferem
+
+- **Sintoma:** ao carregar em **Confirmar reconciliação**, «O movimento e os documentos diferem em …, fora da tolerância: escolha reconciliação parcial (o resto fica em aberto) ou abate (com conta e motivo), ou selecione outros documentos.»
+- **Causa:** o valor do documento marcado não é o do movimento.
+- **O que fazer:** marque o documento certo. Se o banco pagou mesmo outro valor, siga uma das opções da mensagem.
+
+### A janela Desfazer a reconciliação não aceita o motivo
+
+- **Sintoma:** sem motivo, «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»; com menos de 5 carateres, «Escreva porque é que a reconciliação é desfeita (pelo menos 5 carateres).».
+- **O que fazer:** escreva o motivo, com pelo menos 5 carateres. Fica guardado com a operação.
+
+### «Escreva a justificação para ignorar esta linha»
+
+- **Sintoma:** na janela **Ignorar ou marcar como duplicada**, ao **Confirmar** com menos de 5 carateres, janela **Operação inválida**: «Escreva a justificação para ignorar esta linha (pelo menos 5 carateres).»
+- **O que fazer:** escreva porque é que o movimento não se reconcilia. Fica na ficha da linha.
+
+### «Escolha primeiro a conta de transferências»
+
+- **Sintoma:** na ficha da linha, **Transferência entre contas próprias** abre a janela **Operação inválida**: «Escolha primeiro a conta de transferências na configuração de bancos (Contabilidade › Configurar › Bancos e ativos › Outras definições de contas e extratos): as transferências entre contas próprias passam por ela.»
+- **Causa:** a empresa ainda não tem a **Conta de transferências**.
+- **O que fazer:** peça a quem configura a contabilidade que a escolha nesse ecrã e repita.
+  <span className="fd-pending">Pendente de validação por contabilista certificado: que conta usar para as transferências entre contas próprias.</span>
+
+{/* Nota interna (DOCS-021, DOC-0110; v8-TS6, DOCS-046, master 8c5a23228, base docs_demo_v8ts6_test): a linha sem desfazer deixou de ser verdade: Desfazer reconciliação provado por clique. Sem botão Voltar a rascunho no lançamento OD com Contabilista e Gestor de contabilidade. Mantém-se F5-05: lista IVA com retenções primeiro e repetidas. As contas das 4 linhas da tabela foram reconfirmadas por clique em docs_demo_audv10_test: recebimento 120001/2111, pagamento 2211/120001, comissão 6888/120001, gasto sem modelo 6812/120001 (outros valores); os números e os valores do exemplo vêm de docs_demo_loteb1_test. */}

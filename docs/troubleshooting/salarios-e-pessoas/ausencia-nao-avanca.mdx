@@ -1,0 +1,69 @@
+---
+id: ausencia-nao-avanca
+slug: /troubleshooting/ausencia-nao-avanca
+title: Não consigo aprovar, recusar ou fazer avançar a ausência
+sidebar_label: Ausência não avança
+description: "Quem aprova ou recusa um pedido de ausência no fiscaldoo e porque o estado do pedido não se muda à mão."
+keywords: [aprovar ausência, recusar ausência, não consigo aprovar, estado da ausência, Para Aprovar, Segunda Aprovação, voltar à aprovação, Aprovar e Recusar]
+doc_id: DOC-0388
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master ce51f2d47)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/salarios-e-pessoas/ausencia-recusada, people/ausencias-e-presencas/aprovar-ausencias]
+---
+
+## Sintoma
+
+Um pedido de ausência ou de férias fica em **Para Aprovar** e a pessoa que o abre não tem os botões **Aprovar** e **Recusar**, o estado no topo não muda quando se carrega nele, ou **Aprovar** abre uma janela de erro e o pedido fica onde estava.
+
+## Mensagem
+
+Quando o perfil não decide, não aparece nenhuma mensagem de erro: os botões não existem e os passos do estado (**Para Aprovar**, **Segunda Aprovação**, **Aprovado**) estão desativados.
+
+Quando o botão existe e o pedido não avança, a janela **Erro de Validação** diz, por exemplo:
+
+> «As férias de *Eva Cristina Rocha* de 27/10/2026 a 27/10/2026 têm 1.0 dias úteis, menos do que os 10.0 dias consecutivos de um período (CT art. 241.º/8 (gozo interpolado: no mínimo 10 dias úteis consecutivos)). […] Como resolver: assinale «Interpoladas, acordadas por escrito» quando o acordo existir, ou alargue o período.»
+
+![Estado do pedido com os passos Aprovado, Segunda Aprovação e Para Aprovar, sem botões de decisão](/images/troubleshooting/ausencia-nao-avanca/01-estado-bloqueado.png)
+
+## Causas verificadas
+
+- **O perfil não decide, ou o tipo de ausência não é dele.** Testado com um pedido de **Férias anuais** em **Para Aprovar** e com uma **Dádiva de sangue**:
+  - **Gestor de RH:** vê **Aprovar** e **Recusar** na linha da lista e no pedido. As **Férias anuais** ficam logo **Aprovado**; depois só ficam **Voltar à aprovação** e **Recusar**.
+  - **Trabalhador:** vê o pedido em **As minhas ausências**, sem botões.
+  - **Processador de salários:** vê o pedido em **Pessoas › Férias e ausências › Pedidos de ausência**, sem botões.
+  - **Gerência:** decide só as **Férias anuais**, em **Direção › Aprovar › Pedidos de ausência**, onde a lista e o pedido têm **Aprovar** e **Recusar** (a atividade «Aprovação de Ausência» chega-lhe também). Não tem o menu **Férias e ausências** em **Pessoas**: quem o procura lá não encontra os botões. Quando o pedido passa a **Segunda Aprovação**, a Gerência só tem **Recusar**: o **Validar** é do Gestor de RH.
+  - **Outras ausências (a Gerência):** a **Dádiva de sangue**, o **Casamento**, a doença… decide-as o Gestor de RH. A Gerência vê-as em **Direção › Aprovar › Pedidos de ausência** sem **Aprovar** nem **Recusar**, e o ecrã recusa se tentar decidir: «Não pode recusar esta ausência. O que aconteceu: este passo é de outro perfil. Quem pode: quem tem o acesso extra «Administrador de Salários» e, em algumas ausências, outros perfis (os Recursos Humanos, o processador de salários quando a empresa o permitir na configuração de salários). Como resolver: peça a quem tem o acesso extra «Administrador de Salários».»
+- **As férias são um período curto.** Um pedido de **Férias anuais** com menos de 10 dias úteis seguidos (por exemplo, um dia, a 27/10/2026) não passa de **Para Aprovar**: **Aprovar** abre a janela **Erro de Validação** acima, seja qual for o perfil que aprova. <span className="fd-pending">Pendente de validação por contabilista certificado: a regra do art. 241.º/8 do Código do Trabalho que o ecrã cita.</span>
+- **O estado não se escreve à mão.** Os passos do estado estão desativados em todos os perfis: muda-se só com os botões do pedido.
+
+## O que confirmar
+
+1. O perfil com que entrou.
+2. O estado do pedido (**Para Aprovar**, **Segunda Aprovação**, **Aprovado**, **Recusado**) e os botões que vê.
+
+## Como resolver
+
+- **Faz o Gestor de RH:** abra o pedido em **Pessoas › Férias e ausências › Pedidos de ausência** e use **Aprovar** ou **Recusar**. Se o estado passar a **Segunda Aprovação**, carregue em **Validar**. Para desfazer, **Voltar à aprovação**. Passos completos em [Como aprovar pedidos de férias e de ausência](/people/aprovar-ausencias).
+- **Faz a Gerência (só férias anuais):** abra **Direção › Aprovar › Pedidos de ausência** e use **Aprovar** ou **Recusar** na linha ou no pedido de **Férias anuais**. Se o pedido passar a **Segunda Aprovação**, peça ao Gestor de RH que carregue em **Validar**. Em qualquer outro tipo de ausência (por exemplo a **Dádiva de sangue**), peça ao Gestor de RH.
+- **Janela «Erro de Validação» em Aprovar:** assinale **Interpoladas, acordadas por escrito**, no separador **Lei portuguesa**, quando o acordo existir, ou alargue o período (passos em [Como aprovar pedidos de férias e de ausência](/people/aprovar-ausencias)).
+- **Pede ao RH** o trabalhador e os Salários, que não têm estes botões.
+
+## Resultado esperado
+
+O pedido fica **Aprovado** (ou **Recusado**) e o trabalhador vê o estado em **As minhas ausências**.
+
+## Quando contactar o suporte
+
+O Gestor de RH não vê **Aprovar** nem **Recusar** num pedido **Para Aprovar**, ou a Gerência não os vê num pedido de **Férias anuais**, ou o **Erro de Validação** continua depois de seguir a janela.
+
+## Informação a enviar
+
+O perfil, o trabalhador, o tipo de tempo, as datas, o estado do pedido e os botões que vê.
+
+{/* Nota interna (cor4, NF6-01; master f16f4a3e0): provado com a Gerência numa base com os pedidos de Eva Cristina Rocha: Férias anuais de 10 dias com Aprovar e Recusar, Segunda Aprovação só com Recusar; Dádiva de sangue sem botões e action_refuse devolve a mensagem «este passo é de outro perfil…». O Gestor de RH tem os botões em todos. O perfil Salários não tem botões (o título do cartão diz «o administrador de salários aprova»). O HR-034 (#3607) está em master, mas a Gerência continua sem o menu Férias e ausências em Pessoas. */}
+
+{/* Nota interna (DOCS-066 #3947, lote v23-BA, master ce51f2d47, docs_demo_v23ba_test, 10/11/2026, DEF-QA8-c-02): a mensagem «Não pode recusar esta ausência…» citada é a do pt_PT.po de master (l10n_pt_fiscaldoo_payroll, hr_leave_absence.py); com uma ausência criada para isto, a Gerência recebeu antes «Não tem acesso a este registo de «Ausências»», porque não vê esse pedido. «Salários» passou a «Processador de salários», o valor do campo Perfil. */}

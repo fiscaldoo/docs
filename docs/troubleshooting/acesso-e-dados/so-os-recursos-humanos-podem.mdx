@@ -1,0 +1,69 @@
+---
+id: so-os-recursos-humanos-podem
+slug: /troubleshooting/so-os-recursos-humanos-podem
+title: Aparece «Só os Recursos Humanos podem…»
+sidebar_label: "«Só os Recursos Humanos…»"
+sidebar_position: 7
+description: Os indicadores das pessoas, as confirmações em papel, os pedidos de alteração de morada e os dados pessoais dos trabalhadores são dos Recursos Humanos (e, em alguns casos, da Gerência e dos Salários).
+keywords: [só os recursos humanos, so os recursos humanos, recursos humanos, RH, indicadores das pessoas, pedido de alteração de dados pessoais, confirmação em papel, dados pessoais, gerência, perfil de recursos humanos, sem permissão]
+doc_id: DOC-0414
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [troubleshooting/acesso-e-dados/sem-permissao, troubleshooting/acesso-e-dados/so-o-administrador-de-salarios-pode]
+---
+
+## Sintoma
+
+Com um perfil que não é o dos Recursos Humanos, abrir os indicadores das pessoas ou decidir um pedido de um trabalhador é recusado com uma mensagem que nomeia o perfil que o faz: **Gestor de RH**, **Processador de salários** ou **Gerência**.
+
+## Mensagem
+
+Copiadas da base de demonstração em português, provocadas pela integração (no ecrã, o menu ou o botão não aparece a quem não tem o perfil: [Não vejo um menu ou um botão](/troubleshooting/nao-vejo-um-menu)):
+
+- Com o perfil **Administrativo**, ao pedir os indicadores das pessoas:
+  > «Não pode ver os indicadores das pessoas. O que aconteceu: o seu perfil não abre este ecrã. Como resolver: peça ao administrador o perfil «Processador de salários», «Gestor de RH» ou «Gerência».»
+- Com o perfil **Processador de salários** ou **Gerência**, ao decidir o pedido de um trabalhador para mudar a morada:
+  > «Não pode decidir este pedido. O que aconteceu: o seu perfil não decide uma alteração de morada ou de contacto de emergência. Como resolver: peça a um utilizador com o perfil «Gestor de RH» que o abra e decida.»
+- Com o perfil **Gestor de RH**, ao decidir o pedido para mudar o IBAN (o pedido nem aparece na lista do Gestor de RH):
+  > «Não pode decidir este pedido. O que aconteceu: o seu perfil não decide uma alteração de IBAN. Como resolver: peça a um utilizador com o perfil «Processador de salários» que o abra e decida.»
+- No ecrã, quem abre a ligação de um pedido que não lhe cabe recebe **Sem acesso**: com o **Processador de salários**, num pedido de morada, «Não tem acesso a este registo de «Pedido de alteração de dados pessoais». Quem faz: «Gestor de RH». […]»; com o **Gestor de RH**, num pedido de IBAN, o mesmo texto com «Quem faz: «Processador de salários». […]»; com a **Gerência**, «Não tem acesso a «Pedido de alteração de dados pessoais». Quem faz: «Processador de salários», «Gestor de RH» ou «Trabalhador». […]».
+
+## Causas verificadas
+
+- Os **indicadores das pessoas** (**Pessoas › Início › Indicadores de pessoas**) aparecem aos perfis **Processador de salários**, **Gestor de RH** e **Gerência**.
+- Em **O meu espaço › Os meus dados**, o trabalhador pede para mudar o IBAN, a morada ou o contacto de emergência. O **Processador de salários** decide o IBAN; o **Gestor de RH** decide a morada e o contacto. Cada perfil só vê os pedidos que lhe cabem ([O que posso fazer no O meu espaço](/people/o-meu-espaco)).
+- Os dados pessoais dos trabalhadores (por exemplo, o NIF) alteram-se pelos Recursos Humanos.
+
+## O que confirmar
+
+1. O tipo de pedido: o IBAN é do **Processador de salários**; a morada e o contacto de emergência são do **Gestor de RH**.
+2. Quem na empresa tem o perfil **Gestor de RH** ou **Processador de salários**.
+
+## Como resolver
+
+- **Peça a quem tem o perfil.** A pessoa abre o pedido e decide.
+- **Se a tarefa passa a ser sua:** o administrador escolhe o perfil no separador **Perfil** da sua ficha ([Como dar a cada utilizador o perfil certo](/administration/perfis-e-permissoes)).
+
+**Quem faz:** o **Gestor de RH** ou o **Processador de salários**; ou o administrador, que dá o perfil.
+
+## Resultado esperado
+
+Com o perfil certo, o pedido abre e pode ser aprovado ou recusado. O trabalhador vê a decisão em **Os meus dados**.
+
+## Quando contactar o suporte
+
+- A mensagem aparece a um utilizador que já tem o perfil nomeado.
+
+## Informação a enviar
+
+Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com o tipo de pedido e a mensagem completa.
+
+{/* Nota interna (DOCS-040, F5-03): as mensagens «só o RH aprova…» e «só os Salários aprovam…» do código nunca chegam ao utilizador, porque a regra de acesso esconde o pedido a quem não o pode decidir. Não foram provocadas: «Só os recursos humanos podem registar uma confirmação na sala ou em papel» (pendente de validação: a demonstração não tem nenhuma confirmação por registar) e «Só os recursos humanos podem revogar a declaração». A da revogação da declaração nunca aparece: a regra de acesso recusa antes, com «Não tem permissão para criar «Revogar a declaração…»», tal como no F5-03. */}
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): as três mensagens provocadas de novo pela integração (RPC) com utilizadores criados só com um valor do campo Perfil: indicadores (fiscaldoo.hr.dashboard) com o Administrativo; decidir (Aprovar) um pedido de morada com o Processador de salários e com a Gerência, e um de IBAN com o Gestor de RH. Os dois pedidos (morada e IBAN, IBAN de exemplo do Banco de Portugal) foram criados por RPC pelo trabalhador da demonstração na cópia. Lista dos pedidos lida com cada perfil: o Processador só vê o de IBAN, o Gestor de RH só o de morada; Pessoas › Trabalhadores › Pedidos dos trabalhadores aparece ao Processador de salários, ao Gestor de RH e ao administrador */}
+
+{/* Nota interna (lote v23-AU, depois do comboio 181 com o UX-149 (5) e (7), master 09afad64d, docs_demo_v23au_test, porta 8504): utilizadores criados por RPC só com um valor do campo Perfil; dois pedidos do trabalhador da demonstração (morada e IBAN de exemplo do Banco de Portugal) criados por RPC. Por RPC: indicadores com o Administrativo; Aprovar o pedido de morada com o Processador de salários e com a Gerência (a mesma mensagem) e o de IBAN com o Gestor de RH: as três mensagens citadas. Por clique: Pessoas › Início › Indicadores de pessoas abre ao Processador de salários; a ligação de cada pedido dá as três mensagens «Sem acesso» citadas (Processador, Gestor de RH, Gerência). */}

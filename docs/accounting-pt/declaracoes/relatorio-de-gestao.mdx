@@ -1,0 +1,123 @@
+---
+id: relatorio-de-gestao
+slug: /accounting-pt/relatorio-de-gestao
+title: Como preparar o relatório de gestão e a declaração de responsabilidade
+sidebar_label: Relatório de gestão e declaração
+sidebar_position: 7
+description: Criar o relatório de gestão de um ano, escrever as secções que o artigo 66.º do Código das Sociedades Comerciais pede, registar quem assina a declaração do artigo 65.º, finalizar e imprimir ou exportar para Word.
+keywords: [relatório de gestão, declaração de responsabilidade, declaração do órgão de gestão, artigo 66.º CSC, artigo 65.º CSC, assinaturas dos administradores, finalizar o relatório de gestão, exportar relatório de gestão para Word, prestação de contas, quotas próprias, proposta de aplicação de resultados]
+doc_id: DOC-0166
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 2c8d358c0)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/declaracoes/saft-de-contabilidade, accounting-pt/declaracoes/calendario-fiscal]
+---
+
+## Para que serve?
+
+Com as contas do ano, a administração aprova um **relatório de gestão** e uma **declaração** em que todos os administradores assumem a responsabilidade por ele. O fiscaldoo guarda um relatório por empresa e por ano, já com as secções que a lei pede, os números-chave do Balanço e da Demonstração de Resultados, a lista de quem assina e a possibilidade de o imprimir ou exportar para Word.
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: as secções, a declaração do artigo 65.º e a dispensa das microentidades (artigo 66.º, n.º 6, do Código das Sociedades Comerciais) tal como o ecrã as aplica, descritas abaixo, e os números do artigo 65.º que as mensagens citam (n.º 3 e n.º 4).</span>
+
+## Quando utilizar?
+
+- No fecho do ano, antes de entregar as contas: o relatório acompanha o Balanço e a Demonstração de Resultados.
+- Quando a administração precisa de um documento com as assinaturas de todos os administradores (ou o motivo de quem recusa).
+- **Não** serve para entregar a IES: a entrega faz-se no painel da IES, onde o relatório de gestão aparece apenas como um dos documentos «Antes de entregar».
+
+## Onde encontrar?
+
+**Contabilidade › Declarar › Declarações anuais › O que há para fazer com as declarações anuais?**, no grupo **Antes de entregar**, linha **Relatório de gestão e declaração**. Perfil **Contabilista**. A lista não tem item próprio no menu.
+
+![Painel das declarações anuais com a linha Relatório de gestão e declaração, no grupo Antes de entregar](/images/accounting-pt/relatorio-de-gestao/02-painel.png)
+
+## Antes de começar
+
+- Perfil do exemplo: **Contabilista**. Quem **reabre** um relatório já finalizado é o perfil **Contabilista certificado**; o Auditor / ROC só consulta.
+- Exemplo: Empresa Demonstração, Lda, ano de 2025, com Balanço e Demonstração de Resultados já lançados. Os administradores do exemplo chamam-se «Gerente A» e «Gerente B».
+- A empresa precisa de ter o **ano** (exercício fiscal) criado: numa empresa sem anos, o seletor do ano aparece vazio (ver «Problemas frequentes»).
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra o painel das declarações anuais e carregue em **Relatório de gestão e declaração**. Numa empresa sem relatórios aparece a lista vazia: «Aqui aparece o relatório de gestão de cada ano; cria-se um com «Novo», escolhendo a empresa e o ano.»
+   ![Lista vazia com a mensagem sobre como criar o primeiro relatório de gestão](/images/accounting-pt/relatorio-de-gestao/01-lista-vazia.png)
+2. Carregue em **Novo**, escolha o **Exercício Fiscal** (2025) e guarde. O ecrã preenche as datas de início e de fim e cria de uma vez as **11 secções** da lista: 2 do n.º 1 do artigo 66.º, 8 do n.º 5 (alíneas a a h) e a **Declaração do órgão de gestão** (artigo 65.º). Só pode haver **um relatório por empresa e ano**. O botão **Acrescentar secções em falta** repõe uma secção que falte; num relatório novo não acrescenta nada.
+3. Leia os **Números-chave (do Balanço e da Demonstração de Resultados)**: Total do ativo 209.804,16 €, Total do capital próprio 131.104,16 €, Total do passivo 78.700,00 €, Vendas e serviços prestados 279.000,00 €, Resultado antes de impostos e Resultado líquido do período, ambos 31.104,16 €. Os números **calculam-se ao abrir e ao imprimir**: nunca ficam guardados, por isso acompanham sempre as contas. A segunda coluna é o ano anterior (0,00 € no exemplo, porque a demonstração não tem lançamentos de 2024).
+   ![Números-chave e lista das 11 secções do relatório de gestão de 2025](/images/accounting-pt/relatorio-de-gestao/03-numeros-e-seccoes.png)
+4. Abra cada secção com um clique. A janela mostra a **Base legal**, o que escrever («O que escrever») e o texto para preencher; guarde.
+   - A **Proposta de aplicação de resultados** já vem com um texto-modelo com o resultado do ano (31.104,16 €) e um espaço «(indicar a aplicação: reserva legal, reservas livres, dividendos, resultados transitados)». Substitua o espaço: se escrever por baixo, o texto-modelo continua no documento.
+   - A **Declaração do órgão de gestão** também vem escrita («Os membros do órgão de gestão de … declaram que são responsáveis pela elaboração e apresentação do relatório de gestão…»). Releia-a e ajuste-a à entidade.
+   - Uma secção que fica **vazia** sai no documento com o título e a frase «Esta secção ainda não tem texto: preencha-a ou escreva que não se aplica.» (ver «Notas importantes»).
+   ![Janela de uma secção com a base legal e a orientação do que escrever](/images/accounting-pt/relatorio-de-gestao/07-seccao.png)
+5. No quadro **Assinaturas do órgão de gestão (art. 65.º, n.º 3)**, carregue em **Adicionar uma linha** por cada gerente ou administrador **em funções** e escolha o **Estado**: **Por assinar**, **Assinou** ou **Recusou assinar**. Quem recusa tem de ter o **Motivo da recusa**. Quem cessou funções antes da apresentação deixa a caixa **Em funções** desmarcada e não assina.
+   ![Quadro de assinaturas: um administrador a assinar e outro que recusou, com o motivo](/images/accounting-pt/relatorio-de-gestao/04-assinaturas.png)
+6. Carregue em **Finalizar**. O estado passa de **Em preparação** a **Finalizado**; o texto, as secções e as assinaturas **deixam de poder ser alterados** e aparece o botão **Reabrir** para quem tem esse direito.
+   ![Relatório finalizado com o botão Reabrir e o estado Finalizado](/images/accounting-pt/relatorio-de-gestao/08-finalizado.png)
+7. Carregue em **Imprimir o relatório de gestão** (PDF, nome «Relatório de gestão - 2025.pdf») ou em **Exportar para Word** («Relatório de gestão 2025.docx»). O PDF tem o cabeçalho da empresa, os números-chave, as secções e a declaração, com uma linha «(nome e assinatura)» por pessoa do quadro, seguida do nome e do estado (por exemplo «Gerente A - assinou»).
+
+</StepByStep>
+
+## No Enterprise
+
+No Odoo Enterprise, o relatório de gestão é o mesmo (visto com um utilizador só com o perfil **Contabilista**). **Novo** com o **Exercício Fiscal** `2025` cria as 11 secções, com os mesmos **Números-chave (do Balanço e da Demonstração de Resultados)** do exemplo, os botões **Imprimir o relatório de gestão**, **Exportar para Word**, **Acrescentar secções em falta** e **Finalizar**, e o quadro **ASSINATURAS DO ÓRGÃO DE GESTÃO (ART. 65.º, N.º 3)**. Um segundo relatório para o mesmo ano é recusado: «A operação não pode ser concluída: Já existe um relatório de gestão para esta empresa e exercício.»
+
+{/* Nota interna (lote EE-04, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee04_test, cópia da odoo20_ee_test com EE_FASE=construir, 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0166. Contabilista: lista vazia na cópia com a mesma frase; relatório de 2025 criado no ecrã na cópia (Total do ativo 209.804,16 €, Total do capital próprio 131.104,16 €, Total do passivo 78.700,00 €, Vendas e serviços prestados 279.000,00 €, resultados 31.104,16 €; 11 secções de CSC art. 66.º n.º 1 a CSC art. 65.º Declaração do órgão de gestão); segundo Novo para 2025 recusado com o Erro de Validação citado (por clique). Não feitos no Enterprise: assinaturas, Finalizar, Reabrir, PDF e Word. Ver reports/LOTE_EE-04.md. */}
+
+## Resultado esperado
+
+- Um relatório **Finalizado** por empresa e ano, com os números das contas, o texto das secções e todos os administradores em funções com o estado de assinatura registado.
+- Um PDF (ou Word) para os administradores assinarem à mão ou digitalmente, fora do fiscaldoo.
+
+## Notas importantes
+
+- **O PDF mostra o estado registado no quadro.** Se a pessoa assinou no quadro, o PDF diz-o, mesmo que a assinatura em papel ainda não exista. Registe **Assinou** só depois de assinado. <span className="fd-pending">Pendente de validação por contabilista certificado: o formato das assinaturas e o que a lei exige no documento entregue.</span>
+- **Secções vazias saem no documento com um aviso.** Por baixo do título de cada secção sem texto, o PDF escreve «Esta secção ainda não tem texto: preencha-a ou escreva que não se aplica.». Antes de imprimir a versão que os administradores vão assinar, escreva em cada secção o que houve ou que não se aplica (por exemplo «Não existem sucursais.»).
+- **Microentidades.** Numa empresa com o referencial de microentidade, o ecrã avisa: «Esta empresa é uma microentidade: o artigo 66.º n.º 6, do Código das Sociedades Comerciais dispensa as microentidades do relatório de gestão SÓ SE a informação sobre ações ou quotas próprias… A dispensa depende da dimensão legal da empresa…». **Finalizar** exige a secção das ações ou quotas próprias preenchida (ver «Problemas frequentes»). <span className="fd-pending">Pendente de validação por contabilista certificado: a dispensa em cada caso.</span>
+- **Quem pode o quê.** O Contabilista cria, escreve e finaliza; **Reabrir** só aparece ao perfil Contabilista certificado (não aparece ao Contabilista nem ao Auditor); o Auditor / ROC não tem o menu **Declarar** (só a aplicação **Auditoria**): por uma ligação direta, abre o relatório e vê as secções, sem botão **Novo** e sem poder editar o texto. Depois de reaberto, o relatório volta a **Em preparação** com as assinaturas e o texto como estavam.
+- **Os números não ficam guardados.** Calculam-se do Balanço e da Demonstração de Resultados sempre que abre ou imprime o relatório, mesmo depois de **Finalizado**. Por isso, depois de finalizar, imprima e guarde o PDF do dia: um PDF impresso mais tarde pode trazer números diferentes se as contas do ano mudarem.
+
+## Problemas frequentes
+
+### «Acrescente, nas Assinaturas, os gerentes ou administradores em funções na data de apresentação: o artigo 65.º, n.º 4, do Código das Sociedades Comerciais manda assinar os que estão em funções.»
+
+- **Causa:** carregou em **Finalizar** com o quadro de assinaturas vazio (ou sem ninguém em funções).
+- **O que fazer:** acrescente os administradores em funções e, se algum não estiver, desmarque **Em funções**.
+   ![Janela Operação inválida: o relatório não se finaliza sem os gerentes ou administradores em funções nas Assinaturas](/images/accounting-pt/relatorio-de-gestao/09-erro-sem-assinaturas.png)
+
+### «O relatório de gestão não se pode finalizar: Gerente A ainda não assinou. Abra as Assinaturas e marque cada pessoa como assinou ou, se alguém recusar, como recusou, com o motivo (artigo 65.º, n.º 3).»
+
+- **Causa:** há administradores em funções com o estado **Por assinar**.
+- **O que fazer:** passe cada um a **Assinou** ou a **Recusou assinar** (com motivo) e volte a finalizar.
+   ![Janela de erro: o relatório não se pode finalizar porque um administrador ainda não assinou](/images/accounting-pt/relatorio-de-gestao/05-erro-por-assinar.png)
+
+### «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+
+- **Causa:** pôs um administrador em **Recusou assinar** e deixou vazio o **Motivo da recusa** (o campo fica a vermelho).
+- **O que fazer:** escreva o motivo ou passe o estado a **Por assinar**.
+   ![Quadro de assinaturas com o motivo da recusa a vermelho por preencher](/images/accounting-pt/relatorio-de-gestao/06-recusa-sem-motivo.png)
+
+### «Preencha a secção das ações ou quotas próprias (ou indique que não houve)…»
+
+- **Causa:** a empresa tem o referencial de microentidade e a secção está vazia.
+- **O que fazer:** escreva que não houve, por exemplo «Durante o ano não foram adquiridas nem alienadas ações ou quotas próprias.»
+
+### Não consigo editar o relatório
+
+- **Causa:** está **Finalizado**. Abrir uma secção mostra só a base legal e a orientação, sem o texto para editar.
+- **O que fazer:** peça a quem tem o perfil Contabilista certificado para carregar em **Reabrir**; corrija e finalize outra vez.
+
+### Não consigo escolher o ano ao criar o relatório
+
+- **Causa:** a empresa não tem nenhum exercício fiscal criado. O seletor mostra **Sem registos**.
+- **O que fazer:** crie primeiro o ano da empresa (na configuração do exercício) e volte ao relatório.
+
+{/* Nota interna (DOCS-046, lote v6-P1, DOC-0166, risco alto): refeito a 03/11/2026 em docs_demo_v6p1_test (8166), master 8f78854ec: demo.contabilista (cria, assina, erros, finaliza, PDF e Word descarregados, PDF lido), demo.gestor_contabilidade (Reabrir e finalizar), demo.auditor (só lê, sem Novo). Microentidade provocada mudando o referencial da empresa como administrador e reposto. O relatório de 2025 FICA finalizado, com Gerente A «Assinou» e Gerente B «Recusou assinar». Secções: o texto-modelo da Proposta e da Declaração vem da 4.ª ronda do v3-A5 e foi relido na base. Capturas sem nomes de pessoas. */}
+
+{/* Nota interna (v23-T, DOC-0166, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}
+
+{/* Nota interna (lote v23-BI, DOCS-063 #3853, master 2c8d358c0, docs_demo_v23bi_test, 11/11/2026): com o Contabilista, por clique, relatório de 2025 criado na cópia (a base-mãe não tem nenhum); Finalizar sem assinaturas dá a mensagem do art. 65.º, n.º 4 (captura 09); com «Gerente A» Por assinar, a mensagem cita agora o n.º 3 (captura 05 refeita); PDF impresso e lido (pdftotext): cada secção vazia traz «Esta secção ainda não tem texto: preencha-a ou escreva que não se aplica.». O relatório da cópia ficou Em preparação. */}

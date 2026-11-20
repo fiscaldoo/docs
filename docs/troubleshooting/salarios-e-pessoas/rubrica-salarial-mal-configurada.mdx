@@ -1,0 +1,160 @@
+---
+id: rubrica-salarial-mal-configurada
+slug: /troubleshooting/rubrica-salarial-mal-configurada
+title: "Não consigo guardar uma rubrica salarial: campos que não se combinam"
+sidebar_label: Rubrica salarial recusada
+description: O que quer dizer cada recusa ao guardar uma rubrica salarial ou um modelo de contabilização (referência legal, versões sobrepostas, prémio de assiduidade, retenção própria, contas) e como a corrigir.
+keywords: [rubrica salarial, rubrica não guarda, rubrica nao guarda, não consigo guardar rubrica, nao consigo guardar rubrica, regra salarial, origem da quantidade, referência legal, referencia legal, tipo de fonte, versões sobrepostas, versoes sobrepostas, valor fixo ou percentagem, prémio de assiduidade, premio de assiduidade, parcela da cessação, parcela da cessacao, valor ligado, retenção própria, retencao propria, modelo de contabilização, modelo de contabilizacao, conta a débito, conta a debito, conta a crédito, conta a credito, conta 2722, conta 231]
+doc_id: DOC-0408
+article_type: problema
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 7f41ce71b)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [payroll-pt/configurar/rubricas-salariais, troubleshooting/salarios-e-pessoas/processamento-de-salarios-bloqueado]
+---
+
+## Sintoma
+
+Em **Salários › Configurar › Rubricas › Rubricas salariais**, a janela da versão fecha sem problema, mas ao guardar a rubrica abre-se a janela **Erro de Validação** ou **Operação inválida**. Ou a janela da versão não fecha e há um campo a vermelho.
+
+<HelpCallout type="nota" title="O botão da janela da versão ainda não guarda">
+**Guardar & Fechar** só põe a versão na lista da rubrica. As combinações de campos são verificadas quando guarda a rubrica. Enquanto a recusa não estiver resolvida, a rubrica e a versão ficam por guardar.
+</HelpCallout>
+
+## Mensagem
+
+As mensagens abaixo foram provocadas no ecrã com o acesso **Administrador de Salários**, numa rubrica de exemplo da categoria «Vencimento / Retribuição base». Nas mensagens, a rubrica que está a guardar aparece pelo código, não pelo nome.
+
+**Campos obrigatórios.** Na rubrica, o **Nome** e o **Código**. Na janela da versão, **Válido desde** e **Categoria**. Numa rubrica nova, preencha o **Nome** e o **Código** e guarde a rubrica antes de carregar em **Adicionar uma linha**: sem isso, a janela da versão abre com o campo **Rubrica** vazio e a vermelho, e **Guardar & Fechar** não fecha. Com a origem «Duodécimo de um subsídio», também **Duodécimo de**. Com a origem «Férias na cessação», também **Parcela da cessação**. O campo em falta fica a vermelho e, ao guardar a rubrica vazia, sai o aviso:
+
+> «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.»
+
+**Código repetido**, ao guardar a rubrica (janela **Erro de Validação**):
+
+> «O código «PRPROD» já é usado pela rubrica «Prémio de produtividade». Escolha outro código.»
+
+**Falta a referência legal.** É a primeira recusa de uma rubrica nova, porque o **Tipo de fonte** vem preenchido com «Regra legal»:
+
+> «Uma versão legal ou de instrumento coletivo precisa da sua referência. Preencha «Referência legal» (diploma/artigo ou acordo e publicação).»
+
+![Janela Erro de Validação: a versão legal precisa da referência legal](/images/troubleshooting/rubrica-salarial-mal-configurada/01-referencia-legal.png)
+
+**Duas versões ao mesmo tempo:**
+
+> «A rubrica «TDPJZO» já tem uma versão de Regra da empresa em vigor nesse período (desde 01/01/2026). Versões da mesma fonte não podem sobrepor-se: feche a anterior («Válido até») e comece a nova no dia seguinte.»
+
+![Janela Erro de Validação: já existe uma versão da mesma fonte em vigor nesse período](/images/troubleshooting/rubrica-salarial-mal-configurada/02-versoes-sobrepostas.png)
+
+**Alterar uma versão que já começou** (janela **Operação inválida**):
+
+> «A(s) versão(ões) de «TDPJZO» já começou(aram) (desde 2026-01-01) e não pode(m) ser editada(s): o histórico nunca é reescrito. Feche a atual com «Válido até» e crie uma nova versão a começar no dia seguinte.»
+
+**Datas trocadas:**
+
+> «O fim da vigência não pode ser anterior ao seu início. Corrija «Válido até».»
+
+**Valor fixo e percentagem ao mesmo tempo:**
+
+> «Uma versão tem um valor fixo OU uma percentagem, não ambos. Limpe um deles.»
+
+**Prémio de assiduidade.** Sem **Valor fixo**:
+
+> «Um prémio de assiduidade precisa do valor mensal completo em «Valor fixo» e não tem percentagem. Como resolver: preencha o prémio completo e limpe «Percentagem».»
+
+Com uma tolerância de –1 dias ou uma perda de 150 % por dia:
+
+> «Um prémio de assiduidade precisa de uma tolerância de zero ou mais dias e de uma parte perdida por dia acima de 0 e até 100 %. Como resolver: corrija «Dias de ausência tolerados» e «Prémio perdido por dia (%)».»
+
+![Janela Erro de Validação: a tolerância e a parte perdida por dia do prémio de assiduidade estão fora dos limites](/images/troubleshooting/rubrica-salarial-mal-configurada/03-premio-assiduidade.png)
+
+**Campos que ficaram de outra origem.** Depois de preencher os campos de uma origem e de escolher outra, os campos deixam de se ver, mas o valor fica lá:
+
+> ««Dias de ausência tolerados» e «Prémio perdido por dia» só se aplicam à origem da quantidade «Prémio de assiduidade». Como resolver: limpe-os ou mude a origem da quantidade.»
+
+> «A regra «TDHW6N» tem uma parcela da cessação mas não é uma regra de férias na cessação. Como corrigir: apague a parcela ou escolha «Férias na cessação».»
+
+**Origem «Valor ligado ao recibo (payroll_w2e)»:**
+
+> «Uma rubrica ligada ao recibo tem de dizer que valor leva. Como resolver: preencha «Valor ligado».»
+
+![Janela Erro de Validação: a rubrica ligada ao recibo tem de dizer que valor leva](/images/troubleshooting/rubrica-salarial-mal-configurada/04-valor-ligado.png)
+
+**Retenção própria de IRS** numa rubrica que não a pode ter:
+
+> «A rubrica «TD9HNN» não pode ter retenção de IRS própria. O que aconteceu: a retenção autónoma (CIRS art. 99.º-C) só existe para o trabalho suplementar, para os subsídios de férias e de Natal e para as remunerações de anos anteriores, e a categoria «Vencimento / Retribuição base» não é nenhuma delas. Como resolver: escolha «Conforme a categoria» em «Regime de retenção de IRS», ou ponha a rubrica na categoria do trabalho suplementar, do subsídio de férias ou de Natal ou das remunerações de anos anteriores.»
+
+![Janela Erro de Validação: esta rubrica não pode ter retenção de IRS própria](/images/troubleshooting/rubrica-salarial-mal-configurada/05-retencao-propria.png)
+
+**Conta errada no modelo de contabilização** (**Salários › Configurar › Rubricas › Modelos de contabilização**). A mesma conta a débito e a crédito:
+
+> «A conta de débito e a de crédito do modelo da rubrica «PAY_ACCR_HOLIDAYS» são a mesma (631 Remunerações dos órgãos sociais). O que aconteceu: um lançamento que debita e credita a mesma conta não tem efeito. Como corrigir: escolha duas contas diferentes.»
+
+Uma conta de bancos a crédito:
+
+> «O modelo da rubrica «PAY_ACCR_HOLIDAYS» credita a conta de bancos ou caixa 12 Depósitos à ordem. O que aconteceu: o lançamento da folha só regista o que é devido; um crédito ao banco sem pagamento mostraria dinheiro que nunca saiu da conta e os recibos pareceriam pagos. Como resolver: credite a conta dos valores a pagar (para o líquido, uma subconta de 231 «Remunerações a pagar» diferente da debitada); o pagamento salda-a e é reconciliado com o extrato do banco.»
+
+Uma rubrica de acréscimo creditada na 231:
+
+> «O acréscimo «PAY_ACCR_HOLIDAYS» não pode ser creditado na conta 2311 Aos órgãos sociais. O que aconteceu: as férias e os subsídios ainda não processados são acréscimos de gastos (conta 2722) e a 231 só se usa quando as remunerações são processadas. Como resolver: escolha a conta 2722 «Credores por acréscimos de gastos».»
+
+![Janela Erro de Validação: um acréscimo não pode ser creditado numa conta 231](/images/troubleshooting/rubrica-salarial-mal-configurada/06-acrescimo-na-231.png)
+
+## Causas verificadas
+
+- **O Tipo de fonte ficou em «Regra legal».** Uma rubrica própria da empresa não tem diploma para indicar, e a recusa só desaparece com a referência ou com outro tipo de fonte.
+- **Já há uma versão da mesma fonte nesse período.** Duas versões de fontes iguais não podem coincidir no tempo.
+- **A versão já começou.** Uma versão com **Válido desde** já passado não muda de valores: só pode ser fechada.
+- **Os campos da origem anterior ficaram preenchidos** depois de mudar a **Origem da quantidade**. Não se veem, mas contam.
+- **A origem «Valor ligado ao recibo (payroll_w2e)» não se consegue usar nesta janela.** A mensagem pede o campo **Valor ligado**, que não aparece no formulário.
+{/* Nota interna (DOCS-046): defeito do produto para o Gestor: link_kind não está em nenhuma vista XML. Rever esta causa quando o campo aparecer. */}
+- **As contas do modelo de contabilização estão fechadas a este utilizador.** Só com o acesso extra **Administrador de Salários**, **Conta a débito** e **Conta a crédito** ficam só de leitura e obrigatórias, por isso o modelo não se consegue guardar. Com o mesmo acesso extra e acesso de leitura à contabilidade, os campos abrem e as três recusas de contas aparecem.
+- **A conta escolhida não serve para aquela rubrica**, como dizem as mensagens. <span className="fd-pending">Pendente de validação por contabilista certificado: a conta certa de cada rubrica e o tratamento dos acréscimos em 2722.</span>
+
+## O que confirmar
+
+1. Se a janela de erro apareceu ao guardar a rubrica ou o modelo: é aí que a mensagem nomeia o campo.
+2. O **Tipo de fonte**, a **Referência legal**, **Válido desde** e **Válido até** da versão.
+3. A **Origem da quantidade** e se alguma vez esteve escolhida outra nesta versão.
+4. As versões que a rubrica já tem na lista, com as datas e o tipo de fonte de cada uma.
+5. O **Regime de retenção de IRS** e a **Categoria** da versão. As opções do regime são «Como a categoria indica (por omissão)», «Retenção própria, nunca somada à remuneração mensal (art. 99.º-C/5 do CIRS)», «Só a pedido do trabalhador (art. 99.º-C/3 do CIRS)» e «Rendimentos exclusivamente variáveis (art. 100.º do CIRS)».
+
+## Como resolver
+
+**O que pode fazer sozinho, com o acesso Administrador de Salários:**
+
+1. **Referência legal.** Se a rubrica é da empresa, escolha **Tipo de fonte** › «Regra da empresa»: a versão guarda-se sem referência. Se a rubrica vem da lei ou de um instrumento coletivo, preencha a **Referência legal**.
+2. **Versões sobrepostas ou versão já começada.** Abra a versão em vigor na lista, preencha **Válido até** (no exemplo, 31/12/2026) e carregue em **Guardar**. Guarde a rubrica. Depois, em **Adicionar uma linha**, crie a versão nova com **Válido desde** no dia seguinte (01/01/2027) e guarde a rubrica outra vez.
+3. **Datas e valores.** Corrija **Válido até**. Deixe só o **Valor fixo** ou só a **Percentagem**. No prémio de assiduidade, indique o valor completo em **Valor fixo**, deixe a **Percentagem** vazia, a tolerância em zero ou mais dias e a perda por dia acima de 0 e até 100 %.
+4. **Campos do prémio de assiduidade depois de mudar de origem.** Volte a escolher «Prémio de assiduidade», ponha **Dias de ausência tolerados** e **Prémio perdido por dia (%)** a 0, escolha a origem certa e guarde.
+5. **Parcela da cessação depois de mudar de origem.** A lista só tem as quatro parcelas, sem opção vazia. Carregue em **Descartar todas as alterações**, o ícone junto ao nome da rubrica, e crie a versão de novo, já com a origem certa.
+6. **Valor ligado ao recibo.** Não use esta origem: descarte as alterações da mesma maneira e escolha outra. Se precisa mesmo dela, contacte o suporte.
+7. **Retenção própria de IRS.** Escolha «Como a categoria indica (por omissão)» em **Regime de retenção de IRS** (a mensagem chama-lhe «Conforme a categoria»), ou mude a **Categoria**. <span className="fd-pending">Pendente de validação por contabilista certificado: a que rubricas se aplica a retenção autónoma do art. 99.º-C do CIRS.</span>
+
+**O que pede a outra pessoa:**
+
+- **As contas do modelo de contabilização:** peça ao contabilista certificado as contas certas, e a quem administra o programa um utilizador com acesso às duas áreas (salários e, pelo menos, leitura da contabilidade).
+
+Para o que cada campo da rubrica faz, siga [Como criar e configurar uma rubrica salarial](/payroll-pt/rubricas-salariais).
+
+## Resultado esperado
+
+- A rubrica guarda-se sem janela de erro e a versão fica na lista, com as datas, o tipo de fonte, o tipo e a categoria (no exemplo, 01/01/2026 a 31/12/2026, «Regra da empresa», «Abono», «Vencimento / Retribuição base», e a seguinte desde 01/01/2027).
+- O modelo de contabilização guarda-se com as contas diferentes (no exemplo, a crédito a 2722 «Credores por acréscimos de gastos»).
+- Se a rubrica se guarda mas o recibo é recusado, siga [O processamento dos salários está bloqueado](/troubleshooting/processamento-de-salarios-bloqueado).
+
+## Quando contactar o suporte
+
+- Precisa de uma rubrica com a origem «Valor ligado ao recibo (payroll_w2e)».
+- A mesma mensagem continua depois de corrigir o campo que ela nomeia.
+- Uma versão fechada com **Válido até** continua a dar a mensagem de versões sobrepostas.
+
+## Informação a enviar
+
+- O nome e o código da rubrica, ou a rubrica do modelo de contabilização.
+- O **Tipo de fonte**, a **Origem da quantidade**, as datas e a categoria da versão.
+- O texto completo da mensagem, copiado do ecrã.
+- O perfil com que entrou.
+
+{/* Nota interna (lote v23-BK, DOCS-064 #3900 req. 46431, master acd623385, cópia docs_demo_v23bk_test): a mensagem do código repetido citava a rubrica «Rubrica de ensaio E», criada numa cópia de um lote antigo. Provocada de novo por clique com um utilizador do perfil Processador de salários com o acesso Administrador de Salários: rubrica «Prémio de produtividade» (PRPROD) guardada e uma segunda, «Prémio de assiduidade», com o mesmo código. Janela Erro de Validação. */}

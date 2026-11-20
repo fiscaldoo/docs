@@ -1,0 +1,81 @@
+---
+id: seguranca-e-comunicacao
+slug: /administration/seguranca-e-comunicacao
+title: Como confirmar a segurança e as comunicações da localização
+sidebar_label: Segurança e comunicação
+sidebar_position: 4
+description: Onde ficam, nas Definições da contabilidade, o ambiente (teste ou produção), o cofre de credenciais, os grupos do produto, a ligação à Autoridade Tributária e o Raio-X de permissões.
+keywords: [segurança e comunicação, definições, ambiente de teste, cofre de credenciais, grupos do produto, autoridade tributária, credenciais da AT, configuração, seguranca, comunicacao]
+doc_id: DOC-0316
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 584213fd9)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [administration/seguranca-e-arquivo/cofre-de-credenciais, administration/seguranca-e-arquivo/registo-de-auditoria, administration/utilizadores-e-permissoes/raio-x-de-permissoes, fiscal-core/at-e-saft/ligar-a-at]
+---
+
+## Para que serve?
+
+A secção **Localização PT: Segurança e comunicação** das Definições junta num só sítio o que decide se a empresa comunica ou não para fora: o ambiente, o cofre das palavras-passe, os grupos de utilizadores do produto e a ligação à Autoridade Tributária e Aduaneira (AT).
+
+Nesta secção não se escolhe nada: cada bloco diz o estado e leva, por ligação, ao ecrã onde se configura.
+
+## Quando utilizar?
+
+- Depois de instalar o produto, para confirmar o ambiente e a ligação à AT.
+- Para chegar depressa ao cofre, aos grupos ou ao Raio-X sem procurar nos menus.
+- Não use esta secção para escrever palavras-passe: as palavras-passe e as chaves nunca aparecem aqui.
+
+## Onde encontrar?
+
+**Contabilidade › Configurar › Geral › Definições**, secção **Localização PT: Segurança e comunicação**.
+
+## Antes de começar
+
+- O perfil é o do administrador do sistema. Feito a 3 de novembro de 2026 numa base de demonstração (ambiente de teste). Nenhum valor do campo **Perfil** tem o menu **Definições** (nem o **Contabilista certificado**): só o administrador.
+- O estado é o da empresa ativa, no canto superior direito. Confirme-a primeiro.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › Geral › Definições** e desça até **Localização PT: Segurança e comunicação**.
+2. Em **Ambiente**, leia **Ambiente atual**. Na demonstração diz **Ambiente de teste**, com a nota «Os ambientes de teste nunca contactam a Autoridade Tributária, os bancos nem a SIBS, e não abrem portais.».
+3. Em **Cofre de credenciais**, leia «Configurada no servidor» e o número de entradas da empresa.
+   Carregue em **Abrir o cofre** para ver as credenciais ou em **Registo de acessos** para ver quem abriu ou alterou o cofre.
+   ![Blocos Ambiente e Cofre de credenciais, com Ambiente de teste, Configurada no servidor, 0 entradas e as ligações Abrir o cofre e Registo de acessos](/images/administration/seguranca-e-comunicacao/01-ambiente-e-cofre.png)
+4. Em **Grupos**, carregue em **Grupos do produto**. Abre-se a lista **Grupos**, com 39 linhas: primeiro os grupos de acesso (não são os valores do campo **Perfil**), com o **Âmbito** e o **Nome** (por exemplo **Administração fiscal**, **Auditor / ROC**, **Gerência**, **Responsável fiscal** e os de salários), e no fim as permissões soltas, sem âmbito.
+5. Em **Autoridade Tributária (AT)**, leia o estado da ligação e o modo de envio. Carregue em **Credenciais e certificado da AT** para os alterar.
+   ![Bloco Autoridade Tributária com Test: configurado, certificado válido até 31/10/2031, e Simulado: nada é enviado à Autoridade Tributária](/images/administration/seguranca-e-comunicacao/02-autoridade-tributaria.png)
+6. Em **Raio-X de permissões**, carregue em **Abrir o Raio-X**: ver [Como ver as permissões efetivas](/administration/raio-x-de-permissoes).
+
+</StepByStep>
+
+## Resultado esperado
+
+Cada bloco mostra o seu estado e cada ligação abre o ecrã certo. Numa empresa com a AT configurada, o bloco diz «Test: configurado, certificado válido até 31/10/2031» e «Simulado: nada é enviado à Autoridade Tributária». O [cofre](/administration/cofre-de-credenciais) diz «Ainda não há credenciais no cofre.» enquanto não guardar nada, e o **Registo de acessos** diz «Ainda ninguém abriu nem alterou o cofre de credenciais.».
+
+## Notas importantes
+
+- **Emitir não é comunicar.** O estado da ligação à AT só decide a comunicação; a emissão de documentos tem as suas próprias condições.
+- **«0 entradas» no cofre com a AT configurada é normal.** As credenciais da AT têm lista própria (**Credenciais da AT**, uma linha na demonstração) e não contam nas entradas do cofre.
+- **O cofre tem um limite:** quem instala módulos, usa a consola do servidor ou acede à base de dados tem poder total sobre a instalação, e o ecrã di-lo.
+- <span className="fd-pending">Pendente de validação no ecrã: o que o bloco **Ambiente** mostra em produção, porque a demonstração só corre em teste.</span>
+
+## Problemas frequentes
+
+### O bloco da AT diz «Não configurado para» a empresa
+
+- **Causa:** a empresa ativa não tem credenciais da AT (visto com **Empresa Teste Portugal**). O envio continua a dizer «Simulado» num ambiente de teste.
+- **O que fazer:** confirme que a empresa ativa é a certa e, se for, [ligue a empresa à AT](/fiscal-core/ligar-a-at).
+
+### O ambiente diz «Ambiente de teste» e nada chega à AT
+
+- **Causa:** num ambiente de teste, o produto nunca contacta a Autoridade Tributária, os bancos nem a SIBS, e não abre portais (é o que o próprio ecrã diz).
+- **O que fazer:** este ecrã não muda o ambiente. Peça a quem administra a instalação que confirme que está na base de produção.
+
+{/* Nota interna (DOCS-046, lote v7-ADM): visto no master 584213fd9 com o administrador, nas empresas Demonstração e Teste Portugal; os cinco botões abertos. A lista Grupos passou de 4 para 39 linhas, por isso caiu a NV3P-09. Título mudado para «Como confirmar» na auditoria de 03/11, também na arquitetura e no mapa: a secção só mostra estado, sem nenhum campo (NV3P-13). Capturas com a secção estreitada a uma coluna, conteúdo igual ao ecrã. */}
+
+{/* Nota interna (v23-T, DOC-0316, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

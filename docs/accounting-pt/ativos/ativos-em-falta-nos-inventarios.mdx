@@ -1,0 +1,94 @@
+---
+id: ativos-em-falta-nos-inventarios
+slug: /accounting-pt/ativos-em-falta-nos-inventarios
+title: Como ver os ativos que faltaram em dois inventários seguidos
+sidebar_label: Ativos em falta nos inventários
+sidebar_position: 7
+description: Encontrar os ativos em uso que não foram encontrados nas duas últimas contagens físicas fechadas, ver o histórico das contagens na ficha e decidir se o bem deve ser abatido.
+keywords: [abates sugeridos, ativos em falta, ativo não encontrado, ativo nao encontrado, não encontrados nos últimos inventários, inventário físico, histórico de inventários, ler com a câmara, abate de ativos, auto de abate]
+doc_id: DOC-0437
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 97b34fac3)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/ativos/inventario-fisico-dos-ativos, accounting-pt/ativos/abater-ou-vender-um-ativo, accounting-pt/ativos/registar-um-ativo]
+---
+
+## Para que serve?
+
+Depois de cada contagem física, o fiscaldoo guarda na ficha do ativo o resultado de cada campanha. Um ativo em uso que não foi encontrado em duas campanhas fechadas seguidas fica assinalado: aparece no filtro **Não encontrados nos últimos inventários** da lista de ativos e a ficha mostra um aviso. Assim sabe que bens tem de procurar, ou de levar ao contabilista certificado para decidir o abate.
+
+Nada é abatido sozinho. O abate faz-se em [Como abater ou vender um ativo](/accounting-pt/abater-ou-vender-um-ativo).
+
+## Quando utilizar?
+
+- Fechou a segunda contagem física do ano e quer saber que bens continuam a faltar.
+- Vai preparar o fecho e quer limpar da contabilidade os bens que já não existem.
+
+## Onde encontrar?
+
+- **Contabilidade › Lançar › Terceiros e ativos › Ativos fixos**, com o filtro **Não encontrados nos últimos inventários**.
+- Na ficha do ativo, separador **O que aconteceu**, grupo **Inventários**.
+
+## Antes de começar
+
+- O seu perfil é **Contabilista**: vê a lista, o filtro, o aviso e o histórico da ficha. Provado com um utilizador criado só com esse perfil.
+- Há pelo menos duas campanhas de inventário físico **fechadas** na empresa (ver [Como fazer o inventário físico dos ativos](/accounting-pt/inventario-fisico-dos-ativos)). Uma campanha **Em curso** ainda não conta.
+- Feito a 8 de novembro de 2026 na `Empresa Demonstração, Lda`: duas campanhas fechadas, «Inventário de junho de 2026» e «Inventário de novembro de 2026», com 6 ativos esperados e 5 encontrados em cada uma; a **Impressora multifunções** (AF/00007) faltou nas duas.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Lançar › Terceiros e ativos › Ativos fixos**. A lista abre com o filtro **Em uso**.
+2. Abra os filtros (a seta no fim da caixa de pesquisa) e escolha **Não encontrados nos últimos inventários**. A lista fica só com os ativos em uso que faltaram nas duas últimas campanhas fechadas, seguidas. Sem o filtro **Em uso**, entram também os ativos parados.
+   ![Lista Ativos fixos com os filtros Em uso e Não encontrados nos últimos inventários: só a Impressora multifunções, AF/00007, em uso](/images/accounting-pt/ativos-em-falta-nos-inventarios/01-filtro-nao-encontrados.png)
+3. Abra o ativo. Por cima da ficha aparece o aviso «Não encontrado nos últimos 2 inventários seguidos: verifique se deve ser abatido (nada é abatido sozinho).». O número diz quantas campanhas seguidas o bem já faltou.
+   ![Aviso amarelo na ficha: Não encontrado nos últimos 2 inventários seguidos, verifique se deve ser abatido](/images/accounting-pt/ativos-em-falta-nos-inventarios/02-aviso-na-ficha.png)
+4. Abra o separador **O que aconteceu** e desça até **Inventários**. Cada linha é uma campanha, com o **Resultado** do bem nessa contagem.
+   ![Grupo Inventários da ficha: Inventário de novembro de 2026 e Inventário de junho de 2026, ambos Não encontrado](/images/accounting-pt/ativos-em-falta-nos-inventarios/03-inventarios-da-ficha.png)
+5. Procure o bem. Se o encontrar, registe-o na próxima campanha. Se não existe, leve o caso ao contabilista certificado e, com a decisão, faça o abate em [Como abater ou vender um ativo](/accounting-pt/abater-ou-vender-um-ativo).
+
+</StepByStep>
+
+### Contar com a câmara do telemóvel
+
+Na janela **Registar contagens** de uma campanha em curso, o campo **Ler com a câmara** escolhe o ativo sem escrever o código:
+
+- Num telemóvel ou tablet, o campo tem o botão **Ler código de barras**. A ajuda do campo diz: «Num telemóvel ou tablet, o botão junto a este campo abre a câmara e lê a etiqueta (QR ou código de barras); ao carregar em Registar, a etiqueta é registada como código lido.»
+- Num computador não há botão: escreva parte do nome, por exemplo `Mobiliário`, escolha o ativo e carregue em **Registar**. **Último resultado** mostra «Encontrado: Mobiliário de escritório».
+
+![Janela Registar contagens físicas da campanha Inventário de novembro de 2026, com os campos Localização encontrada, Ler com a câmara e Código lido, e o último resultado Encontrado: Mobiliário de escritório](/images/accounting-pt/ativos-em-falta-nos-inventarios/04-ler-com-a-camara.png)
+
+## O que diz a lei
+
+- **SNC, NCRF 7 (Ativos fixos tangíveis):** um bem sai do balanço (desreconhece-se) quando é alienado ou quando já não se esperam benefícios económicos futuros do seu uso ou alienação. Um bem que desapareceu está neste caso, mas a decisão é do contabilista certificado. *Pendente de validação por contabilista certificado.*
+- **Código do IRC, art. 31.º-B, n.os 3 e 6 (redação do Decreto-Lei n.º 49/2025, em vigor desde 1 de julho de 2025):** quando a desvalorização excecional e o abate físico, o desmantelamento, o abandono ou a inutilização do bem acontecem no mesmo período de tributação, o valor líquido fiscal pode contar como gasto desse período se: o abate se provar por um auto assinado por duas testemunhas; o auto levar uma relação de cada bem (descrição, ano e custo de aquisição, valor líquido contabilístico e valor líquido fiscal); e o local, a data, a hora e o valor líquido fiscal forem comunicados ao serviço de finanças da área (ou à Unidade dos Grandes Contribuintes) com, pelo menos, 15 dias de antecedência. O n.º 6 manda guardar estes documentos no processo de documentação fiscal. Conferido a 8 de novembro de 2026 no Código do IRC publicado no Portal das Finanças. Se o bem desapareceu e não houve abate físico, confirme com o contabilista certificado como o tratar. *Pendente de validação por contabilista certificado.*
+
+O fiscaldoo não faz o auto nem a comunicação: são documentos à parte do abate no ecrã.
+
+## Resultado esperado
+
+- O filtro **Não encontrados nos últimos inventários** mostra só os bens que faltaram nas duas últimas campanhas fechadas.
+- Na campanha seguinte, se o bem for encontrado, sai do filtro e o aviso desaparece da ficha quando essa campanha é fechada. No exemplo, a Impressora multifunções lida no «Inventário de dezembro de 2026» deixou o filtro ao fechar a campanha.
+
+## Notas importantes
+
+- **O que a lista não vê:** ativos em preparação, fechados ou abatidos; ativos que faltaram em campanhas não seguidas (uma campanha em que o bem foi encontrado recomeça a contagem); e bens que a campanha não esperava (por exemplo, fora das localizações escolhidas).
+- **Contar não gera lançamentos.** O bem só sai da contabilidade com o abate.
+
+## Problemas frequentes
+
+### O filtro não mostra nenhum ativo, mas há bens em falta
+
+- **Causa:** a segunda campanha ainda está **Em curso**, ou o bem foi encontrado numa campanha pelo meio. Só contam campanhas **Fechado**, seguidas.
+- **O que fazer:** feche a campanha em **Inventário físico dos ativos** (**Fechar campanha** e, na janela «Depois de fechada, as contagens não podem ser alteradas. Continuar?», **Confirmar**) e volte à lista.
+
+### «Leia ou escreva o código da etiqueta antes de registar a contagem.»
+
+- **Causa:** carregou em **Registar** na janela **Registar contagens** sem escolher nada em **Ler com a câmara** nem escrever em **Código lido**.
+- **O que fazer:** feche a janela **Operação inválida**, escolha o ativo ou escreva o código e carregue outra vez em **Registar**.
+
+{/* Nota interna (lote v23-AA, #4052 DOCS-069, tema que só a pasta congelada tinha: Ativos/sugestao-de-categoria-e-abates-sugeridos.md; master 97b34fac3, docs_demo_v23aa_test, porta 8478). Percorrido com um utilizador só com o Perfil Contabilista (aa.contab). Campanha 1 (junho) por RPC como aa.contab; campanha 2 (novembro) por clique: Novo, Iniciar campanha, Registar contagens com Ler com a câmara (Mobiliário, Edifício) e Código lido (AF/00005, AF/00006, ZZ-999 sem ficha), Registar vazio recusado, Fechar campanha com Confirmar; filtro, aviso e grupo Inventários vistos por clique. Campanha 3 (dezembro, por RPC) leu a AF/00007: com a campanha Em curso o contador ficou em 2, ao fechar passou a 0 e o filtro ficou vazio. Campanha 4 (janeiro de 2027, por RPC) ficou Em curso para ver o botão Ler código de barras em emulação de telemóvel e a ajuda do campo. O menu «Abates sugeridos» (Contabilidade › Lançar › Terceiros e ativos) só aparece em modo programador (UX-055, classe R «detail») e nenhum botão o abre: o artigo usa o filtro da lista, que dá o mesmo resultado; defeito no LOTE_V23-AA. A sugestão de categoria do guia antigo já está em registar-um-ativo (DOC-0121) e a folha de contagem em inventario-fisico-dos-ativos (DOC-0127). A leitura real com a câmara não foi feita (navegador sem câmara). */}

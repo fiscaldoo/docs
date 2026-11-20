@@ -1,0 +1,96 @@
+---
+id: prazos-de-pagamento
+slug: /fiscal-core/prazos-de-pagamento
+title: Como definir um prazo de pagamento (por exemplo 60 dias)
+sidebar_label: Prazos de pagamento
+sidebar_position: 10
+description: Criar um prazo de pagamento (por exemplo 60 dias), pô-lo na ficha do cliente e ver a data de vencimento que ele dá às faturas.
+keywords: [prazo de pagamento, prazos de pagamento, condições de pagamento, condicoes de pagamento, termos de pagamento, data de vencimento, vencimento, 30 dias, 60 dias, pronto pagamento, desconto por pagamento antecipado]
+doc_id: DOC-0031
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master c2bf63c34)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [fiscal-core/faturacao/clientes, fiscal-core/faturacao/emitir-uma-fatura-certificada, fiscal-core/recibos-e-cobrancas/avisos-de-cobranca]
+---
+
+## Para que serve?
+
+O prazo de pagamento diz quando a fatura vence. Escolhido na ficha do cliente, passa sozinho para cada fatura nova desse cliente, e o fiscaldoo calcula a data de vencimento a partir da data da fatura.
+
+A data de vencimento é a que conta para os atrasos: os [avisos de cobrança](/fiscal-core/avisos-de-cobranca) e as listas de faturas vencidas usam-na.
+
+## Quando utilizar?
+
+- Quando combina com um cliente um prazo que ainda não existe na lista (por exemplo, 60 dias).
+- Quando quer que um cliente tenha sempre o mesmo prazo, sem o escolher fatura a fatura.
+
+A base já traz prazos habituais, entre eles **Pagamento Imediato**, **15 Dias**, **30 Dias**, **45 dias** e **Fim do Mês Seguinte**. Antes de criar um, veja se já existe.
+
+## Onde encontrar?
+
+- Lista dos prazos: **Contabilidade › Configurar › Geral › Condições de pagamento**. O ecrã que abre chama-se **Termos de Pagamento**: é a mesma lista.
+- Prazo do cliente: **Faturação › Clientes e artigos › Clientes**, abra o cliente, separador **Vendas e Compras**, campo **Termos de Pagamento** (há um para as vendas e outro, mais abaixo, para as compras).
+- Prazo da fatura: na fatura, campo **Condições de pagamento**. Enquanto a fatura não tem prazo, o campo aparece vazio, com o nome **Termos de Pagamento**, ao lado de **Data de Vencimento** (depois de «ou»).
+
+## Antes de começar
+
+- Para criar ou alterar prazos, o seu perfil é **Contabilista certificado** ou **Administrador**. Os passos 1 a 5 foram feitos com o **Contabilista certificado**. O **Contabilista** e o **Administrativo** não têm o menu **Condições de pagamento**.
+- Para escolher o prazo na ficha do cliente e na fatura (passos 6 e 7) chega o perfil **Administrativo**, com que esses passos foram feitos.
+
+## Como utilizar
+
+<StepByStep>
+
+1. Abra **Contabilidade › Configurar › Geral › Condições de pagamento** e carregue em **Novo**.
+2. Em **Termos de Pagamento**, escreva o nome, tal como o quer ver na fatura (no exemplo, «60 dias»).
+3. Em **CONDIÇÕES DE PAGAMENTO** já há uma linha com 100 % do valor. Em **Ao fim de**, escreva o número de dias (60) e deixe **dias após a data da fatura**. As outras contagens possíveis são **dias após o fim do mês**, **dias após o final do próximo mês** e **Dias do final do mês no dia**.
+   ![Linha do prazo 60 dias: Vencido 100 % Percentagem, Ao fim de 60 dias após a data da fatura](/images/fiscal-core/prazos-de-pagamento/01-linha-60-dias.png)
+4. Confira **PRÉ-VISUALIZAR**: com uma fatura de exemplo de 1.000,00 € de 02/11/2026, o ecrã mostra «1ª parcela de 1.000,00 € que vence em 01/01/2027».
+   ![Pré-visualização do prazo: 1ª parcela de 1.000,00 € que vence em 01/01/2027](/images/fiscal-core/prazos-de-pagamento/02-pre-visualizar.png)
+5. Grave. O prazo aparece na lista **Termos de Pagamento**.
+6. **Ponha o prazo no cliente.** Abra **Faturação › Clientes e artigos › Clientes**, abra o cliente e o separador **Vendas e Compras**. No primeiro **Termos de Pagamento** (o das vendas), escolha o prazo e grave.
+   ![Ficha do cliente, separador Vendas e Compras, com Termos de Pagamento 60 dias](/images/fiscal-core/prazos-de-pagamento/03-cliente-prazo.png)
+7. **Confira numa fatura nova.** Em **Faturação › Faturar › Faturas de clientes**, carregue em **Novo** e escolha o cliente: o campo **Condições de pagamento** vem preenchido com o prazo da ficha. Pode trocá-lo nessa fatura, antes de a emitir.
+   ![Fatura nova da Padaria Aurora, Lda com Condições de pagamento 60 dias](/images/fiscal-core/prazos-de-pagamento/04-fatura-prazo.png)
+
+</StepByStep>
+
+**Prazo em várias parcelas.** Carregue em **Adicionar uma linha** para cada parcela. Em **Vencido**, cada linha leva uma **Percentagem** ou um valor **Fixo**; as percentagens têm de somar 100 %. É o caso de **30% Agora, Balanço 60 Dias**, que já vem na base.
+
+## Resultado esperado
+
+- O prazo novo está na lista e pode ser escolhido em qualquer cliente e em qualquer fatura.
+- As faturas novas do cliente trazem o prazo da ficha e, quando são emitidas, a data de vencimento é a data da fatura mais os dias do prazo. No exemplo da demonstração, a `FT D26/30` da Papelaria Central, Lda, de 19/09/2026, com o prazo **30 Dias**, vence a 19/10/2026.
+
+## Notas importantes
+
+- **Sem desconto por pagamento antecipado, o prazo não mexe nos valores nem no IVA.** Só decide a data de vencimento. Os valores da fatura ficam iguais. Com desconto, veja a nota seguinte.
+- **Desconto por pagamento antecipado.** A caixa com esse nome, no cimo do prazo, junta um desconto se o cliente pagar até um certo dia (campos **%**, **se pago em** … **dias** e **Imposto reduzido**). A pré-visualização mostra, por exemplo, «Desconto por pagamento antecipado: 980,00 € se pago até 12/11/2026». Quando o prazo tem este desconto, o nome do prazo e o desconto também seguem no SAF-T de faturação de cada fatura. O campo **Imposto reduzido** decide como o desconto mexe no IVA: este artigo não trata esse caso. <span className="fd-pending">Pendente de validação por contabilista certificado: a escolha em Imposto reduzido e o tratamento do IVA do desconto de pronto pagamento.</span>
+- **Nomes diferentes para a mesma coisa.** O menu e a fatura (depois de o prazo estar preenchido) dizem **Condições de pagamento**; a lista, a ficha do cliente e o campo vazio da fatura dizem **Termos de Pagamento**. São o mesmo prazo.
+
+{/* Nota interna (DOCS-046, lote v5-FC, master 6fb7ee1d4): passos 1-5 com demo.gestor_contabilidade (prazo «60 dias» criado na docs_demo_v5fc_test); 6-7 com demo.faturacao (Padaria Aurora com 60 dias; fatura nova descartada, sem emitir). Menu visto no load_menus: Gestor de contabilidade e admin sim; Contabilista e Faturação não. Erro da soma provocado com 50 %. */}
+
+## Problemas frequentes
+
+### Aparece «As condições de pagamento devem ter ao menos uma linha de percentagem e a soma das percentagens deve ser 100%.»
+
+- **Sintoma:** ao gravar o prazo, o ecrã recusa com esta mensagem.
+- **Causa:** as linhas em **Percentagem** não somam 100 %, ou não há nenhuma linha em percentagem (só valores **Fixo**). No exemplo, a mensagem apareceu com a única linha a 50 %.
+- **O que fazer:** corrija as percentagens até somarem 100 %, ou acrescente uma linha em **Percentagem** com o resto, e grave outra vez.
+
+### Não vejo o menu Condições de pagamento
+
+- **Sintoma:** em **Contabilidade › Configurar › Geral** não há **Condições de pagamento**.
+- **Causa:** o seu perfil é **Contabilista** ou **Administrativo**. Estes perfis usam os prazos, mas não os criam.
+- **O que fazer:** escolha um prazo que já exista, na ficha do cliente ou na fatura. Para criar um novo, peça ao **Contabilista certificado** ou ao **Administrador**.
+
+### A fatura nova não traz o prazo do cliente
+
+- **Sintoma:** o campo **Condições de pagamento** da fatura (ou **Termos de Pagamento**, se estiver vazio) fica vazio ou com outro prazo.
+- **Causa:** o prazo foi posto no **Termos de Pagamento** das compras, e não no das vendas, ou a ficha não foi gravada.
+- **O que fazer:** abra o cliente, separador **Vendas e Compras**, e confirme o primeiro **Termos de Pagamento**. Na fatura em rascunho, escolha o prazo à mão.
+
+{/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo (os passos feitos antes com o utilizador de faturação da demonstração, que hoje tem o perfil Administrativo, com o mesmo grupo de faturação); menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); Condições de pagamento só do Contabilista certificado e do administrador */}
