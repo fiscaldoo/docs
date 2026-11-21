@@ -9,7 +9,7 @@ doc_id: DOC-0118
 article_type: tarefa
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master c60255305)"
+fiscaldoo_version: "20.0 (master 3172279f9)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [accounting-pt/bancos-e-tesouraria/pendentes-de-reconciliacao, accounting-pt/bancos-e-tesouraria/pagar-a-fornecedores, accounting-pt/bancos-e-tesouraria/movimentos-de-caixa]
@@ -65,9 +65,9 @@ No Odoo Enterprise, os dois caminhos e os dois mapas são os mesmos (visto com u
 
 A lista mostra um grupo por meio e, dentro de cada meio, **Recebimentos** e **Pagamentos**, com o número de registos e o montante.
 
-![Linhas agrupadas: Transferência bancária com 15 recebimentos de 27.713,14 € e 7 pagamentos de 3.985,10 €, e Outro com 5 recebimentos de 578,46 €](/images/accounting-pt/recebimentos-e-pagamentos-por-meio/03-linhas-por-meio.png)
+![Linhas agrupadas por meio e sentido: Transferência bancária com 54 registos (15 recebimentos de 27.713,14 € e 39 pagamentos de 40.957,16 €) e Outro com 5 registos de 578,46 €](/images/accounting-pt/recebimentos-e-pagamentos-por-meio/03-linhas-por-meio.png)
 
-No exemplo, de 01/01/2026 a 04/11/2026, o XLSX mostra o mesmo em totais: 20 recebimentos de 28.291,60 €, 7 pagamentos de 3.985,10 € e um líquido de 24.306,50 €. Estes dados só se consultam: não geram lançamentos.
+Na demonstração tal como a recebe, de 01/01/2026 até hoje, o XLSX mostra o mesmo em totais: 20 recebimentos de 28.291,60 €, 39 pagamentos de 40.957,16 € e um líquido de −12.665,56 €. Estes dados só se consultam: não geram lançamentos.
 
 ## O que cada meio conta
 
@@ -79,7 +79,29 @@ No exemplo, de 01/01/2026 a 04/11/2026, o XLSX mostra o mesmo em totais: 20 rece
 | **Transferência bancária** | Todos os outros pagamentos de um diário de banco |
 | **Outro** | Os restantes, por exemplo o dinheiro em caixa |
 
-Um pagamento com cartão registado num diário de banco conta como **Transferência bancária**. O produto decide o meio pelo diário e pela origem do pagamento, não pela forma como o cliente pagou. Visto no ecrã com um pagamento por cartão de crédito de 123,00 € registado no diário de banco (numa linha de método de pagamento com o mecanismo SAF-T **CC**): a lista contou-o como **Transferência bancária**; um recebimento no diário de **Caixa** de 3.198,00 € ficou em **Outro**. Os meios **Multibanco**, **Débito direto** e **Cheque** não se provocaram nesta ronda: a demonstração não tem referências Multibanco pagas, lotes de débito direto nem cheques cobrados.
+Um pagamento com cartão registado num diário de banco conta como **Transferência bancária**. O produto decide o meio pelo diário e pela origem do pagamento, não pela forma como o cliente pagou. Visto no ecrã com um pagamento por cartão de crédito de 123,00 € registado no diário de banco (numa linha de método de pagamento com o mecanismo SAF-T **CC**): a lista contou-o como **Transferência bancária**; um recebimento no diário de **Caixa** de 3.198,00 € ficou em **Outro**.
+
+### Ver os três meios que a demonstração não traz
+
+A demonstração não tem referências Multibanco pagas, lotes de débito direto enviados nem cheques cobrados, por isso estes três meios só aparecem depois de o leitor os criar. O exemplo a seguir usa três faturas novas, emitidas por esta ordem no diário **Vendas** (as primeiras que a demonstração recebe, `FT D26/31`, `FT D26/32` e `FT D26/33`), cada uma por um meio. Os passos de cada meio estão nos artigos próprios, que são a fonte única: [Como emitir e receber referências Multibanco](/fiscal-core/referencias-multibanco), [Como cobrar por débito direto SEPA](/fiscal-core/debitos-diretos-lotes) e [Como registar e acompanhar cheques](/fiscal-core/cheques). Aqui fica só o que cada um faz à lista, visto com o perfil **Contabilista**:
+
+| Fatura | Meio | O que se fez | Linha na lista |
+|---|---|---|---|
+| `FT D26/31`, 477,00 € | **Multibanco** | Emitida uma referência de valor fixo e importado o ficheiro de cobranças com o pagamento desse valor | Recibo `RG D26/16`, 477,00 €, na data do pagamento |
+| `FT D26/32`, 381,60 € | **Débito direto** | Mandato ativo do cliente, lote criado, validado e marcado como enviado | Lote `SDD/00001`, 381,60 €, na **data de cobrança do lote** |
+| `FT D26/33`, 286,20 € | **Cheque** | Recibo `RG D26/17`, cheque `CHQ/00001` ligado a ele, depositado e cobrado | Cheque `CHQ/00001`, 286,20 €, na data em que foi marcado como cobrado |
+
+Com estas três faturas, **Abrir as linhas** (de 01/01/2026 a 31/12/2026) passa a mostrar cinco grupos: **Multibanco** com 1 registo de 477,00 €, **Débito direto** com 1 registo de 381,60 €, **Transferência bancária** com 54 registos, **Cheque** com 1 registo de 286,20 € e **Outro** com 5 registos. O XLSX acompanha: 23 recebimentos de 29.436,40 € e 39 pagamentos de 40.957,16 €.
+
+![Linhas agrupadas por meio depois das três faturas do exemplo: Multibanco 477,00 €, Débito direto 381,60 €, Transferência bancária 68.670,30 €, Cheque 286,20 € e Outro 578,46 €](/images/accounting-pt/recebimentos-e-pagamentos-por-meio/05-os-tres-meios.png)
+
+- **Multibanco.** O pagamento do exemplo entrou pelo ficheiro de cobranças e ficou num recibo (`RG`) do diário de recibos: conta como **Multibanco** porque veio de uma referência, não pelo diário.
+- **Débito direto.** O lote só conta depois de **Marcar como enviado**, e conta na **data de cobrança** que lhe deu, mesmo que ainda não tenha chegado. No exemplo, a data de cobrança foi 07/12/2026: com **Até** em «hoje» (21/11/2026), o **Débito direto** não aparece; com **Até** a 31/12/2026, aparece. <span className="fd-pending">Pendente de validação no ecrã: o que acontece à linha quando o banco rejeita ou devolve a cobrança (ver [Devoluções de débitos diretos](/fiscal-core/devolucoes-de-debitos-diretos)); a regra do produto é deixar de a contar, mas não se provocou aqui.</span>
+- **Cheque.** Só conta depois de **Cobrado**, na data da cobrança, e com o montante do lançamento da cobrança; o pagamento do recibo a que o cheque está ligado não conta duas vezes, e por isso o recibo `RG D26/17` não aparece em **Transferência bancária** nem em **Outro**. Um cheque em carteira ou no banco não conta (visto: um segundo cheque registado e depositado deixou a lista com um só cheque).
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: se um débito direto marcado como enviado, mas ainda por chegar à data de cobrança, deve contar como recebimento do período no mapa entregue ao contabilista. O ecrã conta-o; a decisão contabilística é do contabilista.</span>
+
+{/* Nota interna (lote 105, master 3172279f9, base docs_demo_l105_test, porta 10152, 21/11/2026): documentos NOVOS criados só na cópia, por chamada à API (os mesmos métodos dos botões), com o perfil Contabilista: FT D26/31 477,00 € (Clínica Dentária Sorriso, SA; referência 00000 000000132, ficheiro de cobranças com o valor, RG D26/16), FT D26/32 381,60 € (Padaria Aurora, Lda; IBAN de demonstração com dígitos de controlo válidos, mandato RUM/00001 CORE, lote SDD/00001 a 07/12/2026, enviado), FT D26/33 286,20 € (Escola de Condução Rota, Lda; RG D26/17, cheque CHQ/00001 depositado e cobrado). Antes disto, na cópia acabada de fazer e ainda sem nenhum documento meu: lista com Transferência bancária 54 registos 68.670,30 € (15 recebimentos 27.713,14 € e 39 pagamentos 40.957,16 €) e Outro 5 registos 578,46 €; XLSX 20 recebimentos 28.291,60 €, 39 pagamentos 40.957,16 €, líquido −12.665,56 € (a captura 03 e estes números são os da base-mãe). Com as três faturas: XLSX Multibanco 1 477,00, Débito direto 1 381,60, Cheque 1 286,20, total 23 recebimentos 29.436,40 € (a captura 05 é desta fase). A configuração das contas dos cheques (carteira 120002, banco 120001, diário Operações Diversas) e o identificador de credor SEPA de demonstração (PT91ZZZ123456789) foram postos na cópia. Defeito visto na importação: a nota diz «Recibo RG D26/16 emitido e rereconciliado.» (repetição de «re»). */}
 
 ## Ver só os recebimentos, por cliente
 
@@ -91,7 +113,7 @@ No exemplo, o total de 2026 é 28.291,60 €, o mesmo valor dos recebimentos aci
 
 ## Notas importantes
 
-- A lista não tem total no rodapé, porque somar recebimentos e pagamentos não daria um saldo. Use os totais de **Recebimentos** e de **Pagamentos** dentro de cada meio, ou o **Líquido** do XLSX: o total da linha do meio soma os dois sentidos (no exemplo, 31.698,24 € na **Transferência bancária**).
+- A lista não tem total no rodapé, porque somar recebimentos e pagamentos não daria um saldo. Use os totais de **Recebimentos** e de **Pagamentos** dentro de cada meio, ou o **Líquido** do XLSX: o total da linha do meio soma os dois sentidos (na demonstração, 68.670,30 € na **Transferência bancária**: 27.713,14 € de recebimentos mais 40.957,16 € de pagamentos).
 - A lista vê só o que foi registado como pagamento. Não vê faturas por pagar nem movimentos do banco por reconciliar.
 - Os valores estão na moeda da empresa.
 
@@ -109,7 +131,7 @@ Visto no ecrã, em dois recebimentos de uma fatura nova de 3.198,00 €: no diá
 
 **«A data inicial *31/10/2026* é depois da data final *01/10/2026*.»** As datas estão trocadas. Carregue em **Fechar**, corrija **De** e **Até**, e volte a carregar no botão.
 
-**Falta um meio na lista.** Só aparecem os meios com movimentos no período. Alargue as datas. Se estiver a usar **Mostrar**, confirme que escolheu **Recebimentos e pagamentos**.
+**Falta um meio na lista.** Só aparecem os meios com movimentos no período, e o débito direto conta na data de cobrança do lote: com **Até** em «hoje», um lote que cobra daqui a duas semanas não aparece. Alargue as datas. Se estiver a usar **Mostrar**, confirme que escolheu **Recebimentos e pagamentos**.
 
 **Os valores são mais baixos do que os do extrato do banco.** Há movimentos por reconciliar, que aqui ainda não contam. Veja os [pendentes de reconciliação](/accounting-pt/pendentes-de-reconciliacao).
 

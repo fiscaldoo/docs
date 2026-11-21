@@ -5,7 +5,7 @@ title: Como preparar a empresa para emitir documentos certificados
 sidebar_label: Preparar a faturação certificada
 sidebar_position: 0
 description: O que tem de estar pronto antes da primeira fatura certificada — pacote ligado, dados da empresa, certificado do programa, ligação à AT, séries e perfis — e onde se confirma cada ponto.
-keywords: [preparar faturação certificada, preparar faturacao certificada, primeira fatura, começar a faturar, comecar a faturar, certificação, certificacao, certificado de software, certificado do programa, chave de assinatura de teste, plataforma fiscaldoo, prontidão, prontidao, comunicações com a AT, comunicacoes com a at, configurar a certificação, configurar a certificacao]
+keywords: [preparar faturação certificada, preparar faturacao certificada, primeira fatura, começar a faturar, comecar a faturar, certificação, certificacao, certificado de software, certificado do programa, fiscaldoo simulada, base de teste, plataforma fiscaldoo, prontidão, prontidao, comunicações com a AT, comunicacoes com a at, configurar a certificação, configurar a certificacao]
 doc_id: DOC-0011
 article_type: tarefa
 odoo_versions: ["20.0"]
@@ -71,8 +71,8 @@ Para comunicar:
 
 ## Notas importantes
 
-<HelpCallout type="atencao" title="A chave de teste não serve para documentos reais">
-Numa base de dados de teste (o nome tem a palavra «test»), o ecrã diz «Base de teste: uma fiscaldoo simulada assina com uma chave fictícia e o certificado 9999.». Esses documentos não têm valor legal. Nunca use uma base de testes para faturar a clientes.
+<HelpCallout type="atencao" title="Uma base de teste é assinada por uma fiscaldoo simulada">
+Numa base de dados de teste (o nome tem a palavra «test»), não há chave nenhuma para carregar: em **Definições › Faturação**, no bloco **Certificação PT**, o ecrã diz «Base de teste: uma fiscaldoo simulada assina com uma chave fictícia e o certificado 9999.». Os documentos assim assinados não têm valor legal. Nunca use uma base de testes para faturar a clientes: numa base de produção, quem assina é a fiscaldoo verdadeira, com a chave do produtor, que nunca chega à sua base de dados. <span className="fd-pending">Pendente de validação no ecrã: o que acontece numa base de produção (assinatura pela fiscaldoo verdadeira) não se viu, porque a demonstração só tem a base de teste.</span>
 </HelpCallout>
 
 - O subutilizador da AT tem de ter, no Portal das Finanças, o perfil de cada serviço que vai usar: **WSE** para as séries, **WFA** para as faturas e **WDT** para as guias de transporte. O fiscaldoo não o consegue verificar, e a coluna **O que falta** lembra-o em cada linha.

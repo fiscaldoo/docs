@@ -53,7 +53,7 @@ Se a fatura não tem código QR (por exemplo, é de um fornecedor estrangeiro) o
 4. Carregue em **Abrir os rascunhos**. Cada fatura é um rascunho de fatura de fornecedor, com o ficheiro anexado.
    ![Lista com os cinco rascunhos criados, de 20/10/2026 a 24/10/2026](/images/accounting-pt/ler-o-qr-da-fatura/74-04-rascunhos-preparados.png)
 5. Abra o rascunho e confira o que foi lido. O separador **O que o Copiloto leu** guarda a **Chave da fatura no Copiloto** (`NIF do emitente|tipo|número|ATCUD`) e o texto lido: fornecedor, número, data, ATCUD e a base e o IVA por taxa.
-   ![Separador O que o Copiloto leu com a chave da fatura, o fornecedor e a base à taxa normal de 200,00 € com IVA de 46,00 €](/images/accounting-pt/ler-o-qr-da-fatura/74-05-o-que-o-copiloto-leu.png)
+   ![Separador O que o Copiloto leu com a chave da fatura, com o NIF do emitente tapado, o fornecedor e a base à taxa normal de 200,00 € com IVA de 46,00 €](/images/accounting-pt/ler-o-qr-da-fatura/74-05-o-que-o-copiloto-leu.png)
 6. Em **Linhas da Fatura**, confira a linha. O Copiloto cria **uma linha por taxa de IVA**, com a descrição «Base à taxa normal (Continente, lida do código QR)», o preço (200,00 €), o imposto `23%` e uma **conta** que ele escolhe. O código QR não diz o que foi comprado: a conta é a que o fornecedor já tinha nas suas faturas, por isso **troque-a** se não for a certa.
    ![Linha da fatura lida do código QR, com a conta 435, o imposto 23 % e IVA dedutível 44,16 €](/images/accounting-pt/ler-o-qr-da-fatura/74-06-linha-lida-do-qr.png)
 7. Carregue em **Confirmar**. No exemplo trocámos a conta para `6233 Material de escritório` (o QR vinha de um candeeiro de secretária). A fatura passa a **Publicada** com o número `FTF/2026/00062`.

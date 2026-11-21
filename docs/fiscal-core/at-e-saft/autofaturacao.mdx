@@ -9,7 +9,7 @@ doc_id: DOC-0055
 article_type: tarefa
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master 78c1ec1ac)"
+fiscaldoo_version: "20.0 (master 3172279f9)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [fiscal-core/at-e-saft/gerar-o-saft, fiscal-core/at-e-saft/corrigir-erros-do-saft, fiscal-core/certificacao/series-documentais]
@@ -87,11 +87,13 @@ Precisa de uma série para as faturas e de outra para as notas de crédito, cada
 3. Em **Data da Fatura de Fornecedor**, ponha uma data igual ou posterior ao início da série.
 4. Em **Adicionar uma linha**, escolha o **Artigo** e preencha a **Quantidade** e o **Preço**. Confirme os **Impostos**.
 5. Carregue em **Confirmar**. O documento recebe o número, o ATCUD e a assinatura, e já não se altera.
-   ![Fatura FT AF26/4 emitida, com a série FT AF26, o ATCUD e o fornecedor](/images/fiscal-core/autofaturacao/03-fatura-emitida.png)
+   ![Fatura FT AF26/1 emitida, com a série FT AF26, o ATCUD e o fornecedor, com o NIF dele tapado](/images/fiscal-core/autofaturacao/03-fatura-emitida.png)
 
 </StepByStep>
 
-A fatura `FT AF26/4`, de 250,00 € mais IVA a 23%, gerou estas linhas no razão:
+O ATCUD da captura (`AFTESTE26-1`) é um exemplo: a série da cópia de teste foi ativada com um código de validação escrito à mão, que não vem da AT. Numa empresa real, o código de validação da série é o que a AT devolve ao comunicar a série, e o ATCUD que aparece na sua fatura é esse código seguido do número.
+
+A fatura `FT AF26/1` (a primeira da série `AF26`, de 250,00 € mais IVA a 23% de 10 unidades de um artigo de mercadorias a 25,00 €) gerou estas linhas no razão, conferidas no ecrã:
 
 | Conta | Débito | Crédito |
 |---|---|---|
@@ -121,7 +123,7 @@ Visto no ecrã numa cópia de teste, com um diário de autofaturação e uma sé
 1. Em **O que há para fazer com o SAF-T?**, abra **Autofaturação** e carregue em **Novo**.
 2. Preencha **Data de início** e **Data de fim**. Em **Parceiros**, escolha alguns, ou deixe vazio para todos os que têm acordo ou documentos no período. Guarde.
 3. Carregue em **Gerar os ficheiros** e confira os contadores: **Ficheiros no ZIP**, **Ficheiros inválidos (fora do ZIP)** e **Parceiros sem documentos**.
-   ![Contadores da corrida: 2 ficheiros no ZIP, 1 ficheiro inválido fora do ZIP e 0 parceiros sem documentos](/images/fiscal-core/autofaturacao/05-corrida-por-parceiro.png)
+   ![Contadores da corrida de novembro: 1 ficheiro no ZIP, 0 ficheiros inválidos fora do ZIP e 0 parceiros sem documentos, com a linha do fornecedor Quinta Exemplo, Lda em Gerado](/images/fiscal-core/autofaturacao/05-corrida-por-parceiro.png)
 4. Na lista, o fornecedor com **Inválido** fica fora do ZIP, com o motivo: carregue em **Abrir a exportação** para ver o que corrigir. Os outros têm o nome do ficheiro em **Ficheiro no ZIP**.
 5. Carregue em **Descarregar o ZIP**.
 
@@ -135,34 +137,36 @@ Abrimos os dois ficheiros de novembro. A fatura de autofaturação e uma venda n
 
 | Documento | Ficheiro | Tipo | Estado do documento | Indicador de autofaturação |
 |---|---|---|---|---|
-| `FT AF26/4` (diário de autofaturação) | Modo S | FT | S | 1 |
-| `FT D26/35` (venda normal) | Modo F | FT | N | 0 |
+| `FT AF26/1` (diário de autofaturação) | Modo S | FT | S | 1 |
+| `FT D26/31` (venda normal) | Modo F | FT | N | 0 |
 
 - O acordo continua a contar na ficha do parceiro: no ficheiro do modo F, a lista de clientes mostra o parceiro com acordo com o indicador 1.
 - No ficheiro do modo S, o cabeçalho (`Header`) é do fornecedor: o NIF, o nome e a morada dele. A lista de clientes (`Customer`) tem só a sua empresa, com o NIF, a morada e o indicador de autofaturação 1, e cada fatura aponta para ela. O exercício e a identificação do programa continuam a ser os da sua empresa, e o nome do ficheiro leva o NIF da sua empresa. Só entra o que saiu do diário de autofaturação, e o fornecedor não entra como cliente.
-  Na demonstração, a 18/11/2026, o ficheiro de novembro do fornecedor **Quinta Exemplo, Lda** (NIF `599999950`, fictício, de Braga), com uma fatura de 250,00 € mais IVA, saiu com o NIF e a morada dele no cabeçalho e com a **Empresa Demonstração, Lda** (NIF `599999993`) como único cliente.
+  Na demonstração, a 21/11/2026, o ficheiro de novembro do fornecedor **Quinta Exemplo, Lda** (NIF `599999950`, fictício, de Braga), com uma fatura de 250,00 € mais IVA, saiu com o NIF e a morada dele no cabeçalho e com a **Empresa Demonstração, Lda** (NIF `599999993`) como único cliente.
 - A fatura de autofaturação não entra no ficheiro de faturação do modo F.
 
 ## Notas importantes
 
-- **Envio à AT.** A fatura de autofaturação não tem o botão **Comunicar à AT**. Uma venda normal a um parceiro com acordo comunica-se como as outras. No exemplo, a `FT D26/35` ficou **Aceite (simulado)** em **Comunicações à AT (faturas e histórico)**, e o **Pedido** leva `"self_billing": false`: não vai marcada como autofaturação. A demonstração usa o simulador da AT; nada chegou à AT real.
+- **Envio à AT.** A fatura de autofaturação não tem o botão **Comunicar à AT**. Uma venda normal a um parceiro com acordo comunica-se como as outras. Num exemplo anterior, a venda normal ficou **Aceite (simulado)** em **Comunicações à AT (faturas e histórico)**, e o **Pedido** leva `"self_billing": false`: não vai marcada como autofaturação. A demonstração usa o simulador da AT; nada chegou à AT real. <span className="fd-pending">Pendente de validação no ecrã: a comunicação desta venda ao simulador da AT não se repetiu nesta ronda, porque a cópia não tem as credenciais de teste da AT (a série também não se comunicou: ativou-se com um código escrito à mão).</span>
 - **Entrega do ficheiro.** <span className="fd-pending">Pendente de validação por contabilista certificado: se o ficheiro do modo S se entrega à AT, a quem e em que prazo.</span>
 - **Ficheiros antigos.** Se gerar de novo um período passado, o ficheiro novo sai com a regra de hoje. O ficheiro antigo fica guardado e nenhum documento muda.
-- **PDF.** O PDF traz o título «Fatura - Autofaturação FT AF26/4».
+- **PDF.** O PDF traz o título «Fatura - Autofaturação FT AF26/1».
 - **Retirar o acordo.** As faturas já emitidas neste diário continuam a entrar no ficheiro do modo S desse fornecedor. Fale com o contabilista certificado antes de retirar um acordo.
 
 ## Problemas frequentes
 
 - **Sintoma:** ao carregar em **Confirmar**, «A fatura ainda não pode ser publicada: há linhas que não cumprem as regras da Autoridade Tributária. - Linha 1 (Linha livre): escolha um produto ou serviço com «Referência interna». A Autoridade Tributária exige um código de produto em cada linha da fatura. […] Corrija as linhas indicadas e confirme outra vez. Nada foi publicado e nenhum número foi usado.»
   **Solução:** escolha em cada linha um artigo com referência interna e a unidade de medida, e confirme de novo.
-- **Sintoma:** ao gerar o ficheiro, o estado fica **Inválido**, com a mensagem «A linha 1 do lançamento “FT AF26/1” não tem artigo: escolha um artigo na coluna «Produto» dessa linha (uma linha com texto livre não pode ser comunicada à Autoridade Tributária).»
+- **Sintoma:** ao gerar o ficheiro, o estado fica **Inválido**, com a mensagem «A linha 1 do lançamento “FT AF26/2” não tem artigo: escolha um artigo na coluna «Produto» dessa linha (uma linha com texto livre não pode ser comunicada à Autoridade Tributária).»
   **Solução:** acontece com uma fatura emitida antes de o programa recusar estas linhas, e o documento confirmado já não se altera. Fale com o contabilista certificado. Se ele o indicar, anule-a com **Anular documento certificado**: gerado de novo, o ficheiro sai **Gerado**, com a fatura anulada e o artigo genérico `SERV`.
 - **Sintoma:** o ficheiro fica **Inválido**, com «Não há documentos de autofaturação de “…” neste período, pelo que não foi feito nenhum ficheiro de autofaturação. […] Como resolver: Confirme o fornecedor e as datas. Só contam os documentos confirmados no diário de autofaturação; retirar o acordo não faz desaparecer faturas já emitidas.»
   **Solução:** confirme o fornecedor, as datas e o diário de cada fatura, e gere de novo.
 - **Sintoma:** em **Autofaturação**, «Estes parceiros não têm acordo de autofaturação nem documentos de autofaturação no período, por isso não se pode fazer o SAF-T (PT) de modo S para eles: Sapataria. Registe o acordo no parceiro (CIVA art. 36.º n.º 11) ou retire-os da seleção.»
   **Solução:** faça o que a mensagem indica.
+- **Sintoma:** ao confirmar a fatura, «A autofatura «Rascunho de fatura de fornecedor» não pode ser publicada: o fornecedor «Quinta Exemplo, Lda» não tem o acordo prévio por escrito registado. Porquê: A autofatura só é válida com um acordo prévio por escrito com o fornecedor (CIVA, art. 36.º n.º 11): o acordo tem de estar registado no contacto, com a sua data, e ser anterior ou igual à data da fatura. Como resolver: Abra o contacto do fornecedor, separador «Localização PT», secção «Autofaturação»: marque «Acordo de autofaturação» e preencha a data do acordo […]; depois publique a fatura outra vez. Nada foi publicado e nenhum número foi gasto.» Visto com uma fatura datada de 31/10/2026 e um acordo com data de 02/11/2026.
+  **Solução:** corrija a data da fatura para o dia do acordo ou depois, ou a data do acordo na ficha do fornecedor, se o acordo escrito for anterior. A data do acordo vem do documento assinado: não a altere para fazer passar a fatura. <span className="fd-pending">Pendente de validação por contabilista certificado: se uma autofatura anterior à data do acordo pode ser regularizada, e como.</span>
 - **Sintoma:** ao confirmar a fatura, «O documento “(ainda sem número)” tem a data 31/10/2026, anterior à data de início prevista da série “FT AF26” (04/11/2026).»
-  **Solução:** ponha uma data igual ou posterior ao início da série, ou peça a um utilizador com o perfil **Contabilista certificado** que comunique uma série que cubra essa data.
+  **Solução:** ponha uma data igual ou posterior ao início da série, ou peça a um utilizador com o perfil **Contabilista certificado** que comunique uma série que cubra essa data. <span className="fd-pending">Pendente de validação no ecrã: esta mensagem não se voltou a ver. Na cópia, com a série ativada à mão e o início previsto a 21/11/2026, uma fatura datada de 05/11/2026 publicou-se sem a recusa; a recusa foi vista noutro lote com a série comunicada à AT.</span>
 - **Sintoma:** ao confirmar uma nota de crédito, «O diário “Autofaturação de compras” não tem uma única série fiscal ativa do tipo [NC] Nota de crédito para o exercício 2026».
   **Solução:** crie e comunique a série das notas de crédito deste diário, em **Configurar › Séries fiscais**.
 - **Sintoma:** ao carregar em **Confirmar** a fatura de autofaturação, o programa recusa se o fornecedor não tem um NIF português válido ou não tem a morada completa (rua, localidade, código postal e país). A recusa diz o quê, porquê e como, e acrescenta que nada foi emitido e nenhum número foi usado. Com o NIF genérico de consumidor final (999999990), a recusa diz que é o número genérico de consumidor final e pede o NIF verdadeiro do fornecedor.
@@ -173,6 +177,8 @@ Abrimos os dois ficheiros de novembro. A fatura de autofaturação e uma venda n
   **Solução:** na ficha, falta a **Data do acordo de autofaturação**. No **Gerar SAF-T**, falta o **Parceiro de autofaturação**.
 
 Outros erros do ficheiro: [Como corrigir os erros do SAF-T](/fiscal-core/corrigir-erros-do-saft).
+
+{/* Nota interna (lote 105, master 3172279f9, docs_demo_l105_test, porta 10152, 21/11/2026): refeito o exemplo para a base-mãe: a primeira fatura da série nova é FT AF26/1 (a FT AF26/4 vinha de faturas de recusa criadas pelo produtor em lotes anteriores) e a primeira venda normal nova é FT D26/31 (na cópia foi D26/34, porque a cópia já tinha FT D26/31 a /33 de outro exemplo; o ficheiro F lido na cópia: FT D26/31 a /34 com InvoiceStatus N, sem nenhuma FT AF, e a Quinta Exemplo na lista de clientes com SelfBillingIndicator 1). Criado por chamada à API na cópia: fornecedor Quinta Exemplo, Lda (NIF 599999950, acordo AC-2026/01 de 02/11/2026), diário AUTOF, série AF26 (início previsto 21/11/2026; a comunicação à AT recusou por faltarem as credenciais de teste da AT na cópia, por isso ativou-se com um código escrito à mão), FT AF26/1 (250,00 + 57,50 = 307,50; razão 311 / 2432 / 2211 conferido). Por clique com o Contabilista: Gerar SAF-T modo S (captura 04, «Gerar com 1 documentos», ficheiro SAFT-PT_599999993_2026_11_S.xml lido: cabeçalho Quinta Exemplo, Customer 599999993, SelfBillingIndicator 1, InvoiceNo FT AF26/1, estado S, GrossTotal 307.50, 1 entrada); com o Gestor de contabilidade, a corrida por parceiro (captura 05: 1 ficheiro no ZIP). Captura 03: NIF do fornecedor tapado a cinzento. O ATCUD da captura 03 é o código escrito à mão (AFTESTE26-1), não vem da AT. */}
 
 {/* Nota interna (lote 96, SAFT-177, master 78c1ec1ac, docs_demo_lote96_test, 18/11/2026): diário AUTOF, série AF26 (ativada na cópia com um código escrito à mão, sem credenciais da AT na cópia), fornecedores Quinta Exemplo, Lda (599999950, com morada) e Horta Sem NIF Exemplo (sem NIF), faturas FT AF26/1 e 2, tudo pela integração com o Contabilista certificado. Por clique com um utilizador só Contabilista: Gerar SAF-T, S, novembro: ficheiro da Quinta com o Header do fornecedor e o Customer PT-29 = Empresa Demonstração (SelfBillingIndicator 1, as duas linhas CustomerID), FiscalYear 2026; sem rua (retirada e reposta na cópia) e sem NIF: as duas janelas Aviso citadas. O «((vazio))» com parênteses duplos é do ecrã (defeito no relatório do lote). A fatura a um fornecedor sem NIF emitiu-se. */}
 

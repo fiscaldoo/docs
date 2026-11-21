@@ -57,6 +57,20 @@ Ler esta verificação serve para preparar o SAF-T, a IES e o balanço: o saldo 
 
 </StepByStep>
 
+### O aviso «Hierarquia das contas»
+
+Entre o **Resumo** e os blocos, a verificação pode mostrar uma faixa amarela com o título **Hierarquia das contas**. Só aparece quando há motivo; na demonstração apareceu, com este texto: «A colação da base de dados é en_US.UTF-8 e não C. Mudar a conta-mãe de uma conta pode voltar a estragar a hierarquia e o Balancete pode repetir contas. Crie as bases novas com colação C e, depois de mudar contas-mãe, recalcule os caminhos como acima.»
+
+![Faixa Hierarquia das contas, com o aviso da colação en_US.UTF-8, por baixo do Resumo](/images/accounting-pt/plano-de-contas-snc/77-03-hierarquia-das-contas.png)
+
+- **O que significa.** O produto lê a hierarquia das contas (qual é a conta-mãe de qual) a partir de um caminho guardado na base de dados. Numa base cuja colação não é a **C**, mudar a conta-mãe de uma conta pode deixar esse caminho desatualizado, e então o Balancete pode repetir contas ou mostrar uma classe a zero. A faixa também avisa quando encontra contas com o caminho já desatualizado, e diz quantas são.
+- **O que fazer.** A faixa só avisa: não corrige nada, e o que ela pede é trabalho técnico (criar as bases novas com colação C e recalcular os caminhos), não do contabilista. Peça-o ao administrador técnico. A expressão «como acima» da faixa refere-se a uma frase que só aparece quando há contas com o caminho desatualizado; no caso da demonstração, só a colação vem avisada.
+- **O que não é.** Não é um erro das suas contas nem do SNC, e a verificação continua a mostrar os blocos por baixo como sempre.
+
+<span className="fd-pending">Pendente de validação no ecrã: o efeito no Balancete (contas repetidas ou uma classe a zero) depois de mudar uma conta-mãe numa base com esta colação, e a frase da faixa com o número de contas desatualizadas, não se provocaram aqui.</span>
+
+{/* Nota interna (lote 105, master 3172279f9, docs_demo_l105_test, 21/11/2026): faixa vista por clique com o Gestor de contabilidade (Configurar › Plano e regras legais › Comparar o plano com o SNC); o Contabilista não chegou ao menu por clique neste teste. Defeito: a frase «recalcule os caminhos como acima» fica sem o «acima» quando só a colação é avisada. */}
+
 ### Os blocos da verificação
 
 | Bloco | O que lista | O que fazer |
