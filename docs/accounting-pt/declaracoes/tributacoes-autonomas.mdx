@@ -10,7 +10,7 @@ doc_id: DOC-0160
 article_type: tarefa
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master 78c1ec1ac)"
+fiscaldoo_version: "20.0 (master e261a9215)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [accounting-pt/declaracoes/modelo-22]
@@ -36,6 +36,7 @@ As **tributações autónomas** são um imposto à parte, sobre certas despesas 
 - Assistente das ajudas de custo: **Contabilidade › Declarar › IRC › O que há para fazer com o IRC?**, botão **Tributação autónoma das ajudas de custo**. Perfil **Contabilista**.
 - Categoria por omissão de uma conta: **Contabilidade › Configurar › Geral › Plano de contas**, campo **Tributação autónoma (por omissão)**. Perfil **Contabilista certificado**: o perfil **Contabilista** não tem o **Plano de contas** neste menu.
 - Viatura: aplicação **Frota**, separador **Informações fiscais**, zona **Tributação autónoma (IRC)**. Quem escreve aqui o **Custo de aquisição (tributação autónoma)** e a **Origem do custo** (o valor dado pelo locador, nas viaturas alugadas) é quem tem o acesso **Frota (gestor)**. O **Contabilista** e o **Contabilista certificado** abrem a ficha da viatura e só leem estes dois campos; se o custo faltar, pedem-no à Frota. Na demonstração nenhum perfil traz o acesso à Frota: o exemplo usou um utilizador só com esse acesso e o administrador.
+- Contas de gastos com viaturas: o campo **Exige veículo** da conta vem marcado nas contas de combustíveis, nas que têm categoria de tributação autónoma de viaturas e nas que têm «VLP» no nome, e a linha da fatura de compra nessas contas passa a pedir o **Veículo**. Visto na demonstração: só a `6242 Combustíveis` o tem marcado. O produto só marca, nunca desmarca: um contabilista certificado pode desmarcar uma conta. <span className="fd-pending">Pendente de validação no ecrã: a recusa da fatura de compra sem veículo numa conta com **Exige veículo** (a fatura de teste com a `6242` pediu primeiro a categoria de despesa do artigo 21.º do CIVA, e a mensagem do veículo não se chegou a ver).</span>
 
 ## Antes de começar
 
@@ -193,3 +194,5 @@ No Odoo Enterprise, a tributação autónoma é a mesma (visto com um utilizador
 {/* Nota interna (lote 96, ACC-286, master 78c1ec1ac, docs_demo_lote96_test, porta 8596, 18/11/2026, utilizador só Contabilista): assistente aberto pelo botão do painel O que há para fazer com o IRC? (a entrada Declarar › IRC › Tributação autónoma das ajudas de custo existe, mas não aparece no menu do Contabilista). A mãe não tem recibos com ajudas de custo: base 0,00 em 2026, por isso os valores 197,67/9,88/29,65 são do exemplo antigo; as taxas e as notas foram vistas no ecrã: 5,00 sem caixa; 15,00 com a caixa; 5,00 com Início de atividade 01/03/2025; 5,00 com Lucro + Obrigações; captura 03 refeita (só a coluna dos campos). Modelo 22 de 2026 criado por clique (action-1553/2): com ele o assistente deu 15,00 com a caixa por marcar. Subcontas 6311, 6321 e 62511 lidas por RPC com o Contabilista certificado (categoria 7). Portagens: FTF/2026/00049 de 05/11/2026 (Categoria de despesa Portagens, 6251, 20,00 € + IVA, sem viatura) lançada por RPC com o Contabilista; aviso lido por clique depois de Calcular a tributação autónoma. */}
 
 {/* Nota interna (lote 99, FIX-M253, master 73d6a5fed, docs_demo_99_test, porta 9784, 19/11/2026): a demonstração não tem viaturas; criada por RPC na cópia a viatura AA-00-AA (Renault Clio, Empresa Demonstração) e o utilizador l99.frota (só o grupo Frota/Gestor, senha mudada no ecrã na 1.ª entrada e só em memória). Por clique, na ficha da viatura › Informações fiscais: l99.frota vê os campos Custo de aquisição (tributação autónoma) e Origem do custo editáveis; demo.contabilista abre a ficha sem erro e vê os dois campos só de leitura (0,00 €); lido por script que testa se o campo tem caixa de escrita. Não se escreveu nenhum custo. */}
+
+{/* Nota interna (lote 104, FIX-M306 (d), master e261a9215, docs_demo_104_test, 21/11/2026): contas com «Exige veículo» (is_vehicle_account) lidas por RPC na cópia: só a 6242; fatura de fornecedor de teste na 6242 (não publicada, recusada pela categoria de despesa CIVA art. 21.º antes de qualquer verificação do veículo). */}

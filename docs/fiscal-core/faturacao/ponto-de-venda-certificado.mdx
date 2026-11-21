@@ -31,7 +31,7 @@ O ponto de venda é o ecrã de caixa da loja. Em Portugal, cada venda paga gera 
 
 ## Antes de começar
 
-- O seu perfil é **Administrativo**. Os passos foram feitos do princípio ao fim com este perfil, incluindo fechar a caixa. Os perfis **Contabilista** e **Contabilista certificado** também têm a aplicação **Ponto de venda**; confere os documentos em **Contabilidade**.
+- O seu perfil é **Administrativo**, com o acesso **Ponto de Venda** (valor **Utilizador**), que o administrador dá nos **Ajustes avançados** do utilizador, no grupo **VENDAS**. Nenhum perfil dá a aplicação **Ponto de venda** sozinho: um utilizador novo só com o perfil **Administrativo**, **Contabilista** ou **Contabilista certificado** não a vê. Os passos foram feitos do princípio ao fim com este perfil e este acesso, incluindo fechar a caixa. Quem tem o acesso e o perfil **Contabilista** ou **Contabilista certificado** confere os documentos em **Contabilidade**.
 - A loja está ligada a um diário certificado de faturas simplificadas ou de faturas-recibo. Sem ele, **Abrir a caixa** recusa: veja [Problemas frequentes](#problemas-frequentes).
 - Tem na gaveta o dinheiro do fundo de caixa, para o contar.
 
@@ -154,3 +154,5 @@ Cada venda fica paga logo que é validada: a saída do cliente fica reconciliada
 {/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo (os passos feitos antes com o utilizador de faturação da demonstração, que hoje tem o perfil Administrativo, com o mesmo grupo de faturação); menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); Ponto de venda › Painel do Administrativo, do Contabilista e do Contabilista certificado; Configurar só do administrador. NÃO refeito: a recusa de «Abrir a caixa» (diário não certificado) não foi provocada de novo; em master o texto manda hoje pedir a «um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)»» e não ao «responsável fiscal»: fica para o lote seguinte */}
 
 {/* Nota interna (DOCS-066 #3947, lote v23-BA, master ce51f2d47, docs_demo_v23ba_test, 10/11/2026, DEF-QA8-c-02): por clique com um utilizador criado só com o perfil Administrativo, em Ponto de venda › Painel › Abrir a caixa, num ponto de venda criado para isto com o diário «Vendas» (FT): a mensagem é a citada, com outro nome de ponto de venda; não abriu sessão. */}
+
+{/* Nota interna (lote 104, FIX-M302, master e261a9215, 21/11/2026): o perfil já não traz o grupo Ponto de Venda por omissão (utilizadores novos só com Administrativo, Contabilista e Contabilista certificado não têm a aplicação: menus lidos pelo ecrã); o utilizador Faturação (demonstração) tem Ponto de Venda / Utilizador porque a demonstração lho dá. O resto do artigo não foi repetido neste lote. */}

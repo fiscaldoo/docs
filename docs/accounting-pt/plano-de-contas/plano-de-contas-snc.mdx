@@ -9,7 +9,7 @@ doc_id: DOC-0077
 article_type: conceito
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master 7f41ce71b)"
+fiscaldoo_version: "20.0 (master e261a9215)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [accounting-pt/plano-de-contas/referencial-contabilistico, accounting-pt/plano-de-contas/taxonomias]
@@ -50,26 +50,60 @@ Ler esta verificação serve para preparar o SAF-T, a IES e o balanço: o saldo 
 <StepByStep>
 
 1. Abra **Configurar › Plano e regras legais › Comparar o plano com o SNC**. Cada vez que abre, o fiscaldoo corre a verificação e cria um registo novo, com a data de agora.
-2. Leia o **Resumo**: uma frase com os totais. Na demonstração: «0 conta(s) de movimento sem conta-mãe, 1 agregadora(s) sem filhas, 21 conta(s) com código fora do plano oficial, 0 conta(s) de movimento sem taxonomia, 9 agregadora(s) com taxonomia e 0 taxonomia(s) que não condiz(em) com o código da conta.»
-3. Percorra os sete blocos por baixo e compare cada um com o total do resumo (os totais batem com as listas: 21 códigos fora do plano, na lista **Códigos fora do plano oficial**).
+2. Leia o **Resumo**: uma frase com os totais. Na demonstração: «0 conta(s) de movimento sem conta-mãe, 0 agregadora(s) sem filhas, 5 conta(s) com código fora do plano oficial, 0 conta(s) de movimento sem taxonomia, 9 agregadora(s) com taxonomia, 0 taxonomia(s) que não condiz(em) com o código da conta e 0 conta(s) de movimento com subcontas pelo código.»
+3. Percorra os blocos por baixo e compare cada um com o total do resumo (os totais batem com as listas: 5 códigos fora do plano, na lista **Códigos fora do plano oficial**).
    ![Verificação do plano de contas SNC com o resumo e os blocos de contas](/images/accounting-pt/plano-de-contas-snc/77-02-resultado-da-comparacao.png)
 4. Corrija o que justificar na ficha de cada conta (ver «Resultado esperado») e abra a verificação de novo para confirmar.
 
 </StepByStep>
 
-### Os sete blocos
+### Os blocos da verificação
 
 | Bloco | O que lista | O que fazer |
 |---|---|---|
 | **Contas de movimento sem pai** | Contas onde se lança que não estão por baixo de nenhuma conta-mãe. | Indique a **Conta superior** na ficha da conta. |
-| **Agregadoras sem filhas** | Contas de agrupamento (que só somam) sem nenhuma conta por baixo. Na demonstração: `238 Outras operações`. | Crie subcontas ou confirme que não é preciso. |
+| **Agregadoras sem filhas** | Contas de agrupamento (que só somam) sem nenhuma conta por baixo. Na demonstração, a lista traz a `238 Outras operações` com a nota «não é um defeito»: as subcontas oficiais `2381` e `2382` são, no plano nativo, a `23311`, a `23312`, a `23321` e a `23322` (taxonomias S61 a S64 do SAF-T), e o resumo conta 0. | Crie subcontas ou confirme que não é preciso. |
 | **Contas de movimento que são conta-mãe de outras** | Contas com lançamentos que têm outra conta por baixo. | Só se relata; o plano nativo pode trazer algumas. |
+| **Contas de movimento com subcontas pelo código** | Contas onde se lança cujo código é o começo do código de outras contas (a `2433` com a `24331` por baixo, por exemplo). Ver «Contas de movimento com subcontas pelo código» mais abaixo. | Lance na subconta e passe o saldo antigo com o assistente de reclassificação. |
 | **Contas de movimento sem taxonomia do SAF-T** | Contas onde se lança sem taxonomia. | Escolha a taxonomia: [Como atribuir as taxonomias SNC às contas](/accounting-pt/taxonomias). |
 | **Contas agregadoras que ainda têm taxonomia** | Contas de agrupamento com taxonomia de movimento (na demonstração: `11 Caixa`, `12`, `13`, `1431`, `51`, `53`, `54`, `56` e `89`). | Relata; a decisão de retirar a taxonomia é do contabilista certificado. |
 | **Contas de movimento cuja taxonomia não condiz com o código** | Contas com uma taxonomia que a AT não publica para esse código. | Escolha uma taxonomia que condiga. |
-| **Códigos fora do plano oficial** | Códigos que o plano oficial do SNC não tem. Na demonstração: as subcontas `111`, `121`, `131`, as contas de trânsito `120001` a `120003` e as que criou à mão, como `622710`. | Uma subconta de detalhe própria é normal (fica marcada **Extensão própria do plano SNC**); confirme as outras. |
+| **Códigos fora do plano oficial** | Códigos que o plano oficial do SNC não tem. Na demonstração: `112 Caixa`, `113 Caixa do ponto de venda`, `122 Recibos (RG)`, `999001` e `999002` (as duas últimas, das diferenças de caixa da demonstração, que já existia). As contas que o produto acrescenta de propósito, com justificação escrita, já não aparecem aqui (ver «As contas que o produto acrescenta ao Código de Contas»). | Uma subconta de detalhe própria é normal (fica marcada **Extensão própria do plano SNC**); confirme as outras. |
 
 A verificação **não vê** o que está certo nas contas que lista: por exemplo, não confere os saldos nem se o código de uma conta nova faz sentido contabilístico. Um bloco com «Nenhuma» só diz que a regra desse bloco não encontrou casos.
+
+### Contas de movimento com subcontas pelo código
+
+O Código de Contas lê-se pelo **código**: uma conta cujo código é o começo do código de outra conta é a conta-mãe dessa (a `2433` é mãe da `24331`). O SAF-T não admite movimentos numa conta que tem subcontas (Portaria n.º 302/2016, Anexo I, 2.1.2.8). Por isso, o fiscaldoo recusa **lançamentos novos** numa conta onde se lança e que tem subcontas pelo código, e o bloco **Contas de movimento com subcontas pelo código** lista-as.
+
+Visto no ecrã, numa cópia da demonstração: criou-se a conta `24331 IVA liquidado: operações de exemplo` (tipo passivo corrente), e a verificação passou a dizer «1 conta(s) de movimento com subcontas pelo código» e a listar «2433 — IVA - Liquidado (24331)». Um lançamento novo na `2433` foi recusado ao ser gravado: «A conta 2433 tem subcontas (24331) e não recebe lançamentos novos. O que aconteceu: o código dela é o começo do código de outras contas, por isso no SNC é a conta-mãe delas, e o SAF-T não admite movimentos numa conta que tem subcontas (Portaria 302/2016, Anexo I, 2.1.2.8). Como resolver: lance numa subconta (por exemplo a 24331). Para passar o saldo que a conta já tem, peça a (…) um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» (…) que use o menu «Reclassificar conta de 1.º grau» (escreva o nome na pesquisa dos menus): passa os lançamentos em rascunho e lança uma correção nova; os lançamentos já publicados não mudam.» Lançar na subconta `24331` foi aceite. **Cuidado:** o IVA liquidado das faturas de venda lança-se na `2433`, por isso, com a `24331` criada à mão por baixo dela, gravar uma fatura de venda com IVA a 23 % foi recusado com a mesma mensagem. Crie uma subconta da `2433` só depois de decidir com o contabilista certificado onde vai lançar o IVA liquidado. <span className="fd-pending">Pendente de validação por contabilista certificado: se este bloqueio das faturas de venda é o comportamento pretendido para uma subconta criada à mão (defeito possível do produto, a reportar).</span> Para passar o saldo antigo da `2433`, veja [Como criar uma conta ou reclassificar uma conta de 1.º grau](/accounting-pt/criar-e-alterar-contas).
+
+**O que não conta como subconta**, e por isso continua a receber lançamentos (a regra vale só para lançamentos novos dos utilizadores, e não recusa a importação de SAF-T nem de dados de outro programa, nem o apuramento do IVA):
+
+- as contas individuais de clientes, fornecedores e bancos (a `2111` continua a receber lançamentos);
+- as contas de terceiros por baixo da `211` e da `221`;
+- as contas técnicas que a configuração da empresa indica: a conta de pagamentos pendentes de um método de pagamento (a `1211` e a `1212` ao lado da `121`), a conta de transferências internas, a base do IVA de caixa e a conta de transição de uma taxa de IVA de caixa (por exemplo a `24331` quando a empresa adere ao IVA de caixa);
+- as extensões do produto da lista abaixo que nascem «ao lado» de uma conta de movimento (a `62511` ao lado da `6251`, a `6311` ao lado da `631`, a `6321` ao lado da `632`, a `24321`, a `24322` e a `24323` ao lado da `2432`, e a `231290` ao lado da `2312`).
+
+<span className="fd-pending">Pendente de validação no ecrã: a recusa e a aceitação de cada uma destas exceções (só se provou a recusa na `2433` e a aceitação na `24331` de exemplo). Pendente de validação por contabilista certificado: a lista das contas que não contam como subcontas.</span>
+
+### As contas que o produto acrescenta ao Código de Contas
+
+O produto acrescenta 31 contas que a Portaria n.º 218/2015 não prevê: o plano de uma empresa nova traz quase todas; a `24331` só nasce quando a empresa adere ao regime de caixa e a `231290` é criada à parte, pelo assistente de contas dos salários. Cada uma tem a sua justificação escrita no produto, e a verificação deixa de as dar como «fora do plano oficial»:
+
+| Contas | Porquê |
+|---|---|
+| `111`, `121`, `131`, `511`, `531`, `541`, `561`, `891` | Subcontas de movimento das contas de 1.º grau `11`, `12`, `13`, `51`, `53`, `54`, `56` e `89`: o SAF-T não representa uma conta de 1.º grau com movimentos (Portaria 302/2016, Anexo I, 2.1.2.8). Herdam nome, tipo e taxonomia da conta de 1.º grau. |
+| `120001`, `120002`, `120003`, `143101` | Contas técnicas do Odoo (suspenso do diário de banco, recebimentos e pagamentos por conciliar, fundos em trânsito), sem equivalente no Código de Contas. Ficam sob a `12` e a `1431`. |
+| `2412`, `24121`, `24122`, `2413`, `2415`, `2416` | Subdivisão da `241` (IRC) por papel: pagamentos por conta, pagamentos adicionais por conta, retenções na fonte sofridas, imposto estimado e IRC apurado. A Portaria só chega à `241`: são subcontas à escolha, a confirmar pelo contabilista. |
+| `24321`, `24322`, `24323` | IVA dedutível por natureza (existências, ativos fixos, outros bens e serviços), ao lado da `2432`, que continua a receber as compras isentas, ao estrangeiro e a autoliquidação. Alimentam a declaração periódica de IVA por natureza do IVA dedutível. |
+| `24331` | Transição do IVA de caixa (IVA liquidado por receber), criada quando a empresa adere ao regime de caixa (Decreto-Lei n.º 71/2013). |
+| `62511`, `6311`, `6321` | Compensação por deslocação em viatura própria e ajudas de custo pagas fora dos salários (CIRC, art. 88.º, n.º 9), ao lado da `6251`, da `631` e da `632`. |
+| `68881`, `68882`, `68883`, `68888` | Subcontas da `6888` por natureza: multas, coimas e juros por infrações, despesas não documentadas, encargos não devidamente documentados e outros não especificados (esta recebe as diferenças de caixa). |
+| `76262` | Programas de computador: conta do núcleo da localização para as reversões de imparidade de intangíveis. |
+| `231290` | Remunerações em processamento: conta de passagem do bruto dos salários, ao lado da `2312`, que continua a receber o líquido a pagar ao pessoal. |
+
+<span className="fd-pending">Pendente de validação por contabilista certificado: a justificação de cada extensão, a correspondência das contas `24321` a `24323` com o campo 20 a 24 da declaração periódica de IVA e se cada subconta à escolha é a que o gabinete quer usar.</span>
 
 ### Variante do plano para o SNC-ME e o SNC-ESNL
 
@@ -81,11 +115,13 @@ Numa empresa no regime geral, a janela abre com **SNC (regime geral)** e **Aplic
 
 No Odoo Enterprise, a verificação do plano é a mesma: **Comparar o plano com o SNC** abre o registo **Verificação do plano de contas SNC**, com o **Resumo** e os blocos por baixo, e o grupo **Plano e regras legais** tem as mesmas entradas (visto com um utilizador só com o perfil **Contabilista certificado**). **Aplicar variante do plano** também não aparece no menu deste perfil sem o modo de programador.
 
+{/* Nota interna (lote 104, FIX-M306 v2, master e261a9215, docs_demo_104_test, porta 10116, 21/11/2026): verificação aberta por clique com um utilizador só com o perfil Contabilista certificado: resumo de hoje «0 … 5 conta(s) com código fora do plano oficial … e 0 conta(s) de movimento com subcontas pelo código», fora do plano 112, 113, 122, 999001, 999002 (a mãe não foi migrada para as 7888/6888: só empresas novas). Conta 24331 criada na cópia por RPC (id 2462); o resumo passou a 1 e o bloco a «2433 — IVA - Liquidado (24331)»; lançamento novo na 2433 recusado com a mensagem citada (com «peça a a um utilizador» duplicado no texto do produto: defeito); a 24331 aceita. Tabela das 31 extensões lida de coa/data/snc_product_extensions.csv de master (dado do produto, texto próprio). */}
+
 {/* Nota interna (lote EE-03, DOCS-073 #4142, DEC-1794, master e4dd4ae90, base Enterprise docs_ee_ee03_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0077. Contabilista certificado: Resumo «0 conta(s) de movimento sem conta-mãe, 1 agregadora(s) sem filhas, 19 conta(s) com código fora do plano oficial…» (a base Enterprise tem menos contas criadas à mão do que a demonstração Community: 19 em vez de 21); Agregadoras sem filhas 238; Plano e regras legais com Ajustes manuais dos relatórios, Comparar o plano com o SNC, Contas do inventário, Gerar linhas das demonstrações, Ligação das contas às demonstrações e Procurar anomalias nas contas. Ver reports/LOTE_EE-03.md. */}
 
 ## Resultado esperado
 
-A verificação não gera lançamentos e não altera o plano: é uma fotografia do momento. Quando corrige uma conta, a verificação seguinte mostra o total novo. Exemplo: ao criar `622710` e recodificar uma conta para `622720`, o total de **códigos fora do plano oficial** passou de 19 para 21 e a lista mostra as duas contas novas.
+A verificação não gera lançamentos e não altera o plano: é uma fotografia do momento. Quando corrige uma conta, a verificação seguinte mostra o total novo. Exemplo: ao criar `24331` por baixo da `2433`, o total de **contas de movimento com subcontas pelo código** passou de 0 para 1 e a lista mostra «2433 — IVA - Liquidado (24331)».
 
 ## Notas importantes
 

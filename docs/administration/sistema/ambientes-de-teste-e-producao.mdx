@@ -9,11 +9,13 @@ doc_id: DOC-0324
 article_type: conceito
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master 255d77e63)"
+fiscaldoo_version: "20.0 (master e261a9215)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [migration-toolkit/planear/planear-a-migracao]
 ---
+
+{/* Nota interna (lote 104, KEY-001, master e261a9215, docs_demo_104_test, 21/11/2026): linha das chaves e nota final alinhadas com chaves-de-assinatura (lote 103): a instalação já não tem chaves de assinatura nem de teste; vivem na fiscaldoo. O simulador (certificado 9999, versão 1) e o texto «Base de teste: …» foram vistos no ecrã (Definições › Faturação › Certificação PT). «A chave de API só assina para a base registada» vem do código do cliente (cabeçalho X-Database-Uuid): sem prova no ecrã, a demonstração não chega à fiscaldoo. */}
 
 {/* Nota interna (DOCS-046, lote v13-PPL): Credenciais da AT percorridas com admin na base de testes: lista, ficha, opções do Ambiente e uma ficha nova, que começa em Teste. As mensagens da secção «Mensagens de recusa» NÃO foram provocadas: provocá-las é tentar um envio à AT de produção, o que o brief proíbe. Vêm do guia Operação/ambientes-de-teste-e-producao.md. Ver LOTE_V13PPL. */}
 
@@ -47,10 +49,10 @@ O menu **Credenciais da AT** só aparece a quem tem esse direito. Foi percorrido
 | **Comunicação à AT** | Só o simulador local, com as mensagens dos manuais da AT | A que o responsável ligar de propósito |
 | **Rede** | Só a própria máquina: o resto é bloqueado antes de sair | Normal |
 | **Correio, bancos, SIBS, pagamentos** | Nunca | Se estiverem ligados |
-| **Chaves de assinatura** | Só as de teste, que não servem para documentos reais | As de produção |
+| **Quem assina os documentos** | Uma fiscaldoo simulada, com uma chave fictícia e o certificado 9999: os documentos não servem para nada na lei | A fiscaldoo verdadeira, com a chave de API da instalação |
 | **Valor fiscal dos documentos** | Nenhum | Total: corrigem-se com nota de crédito, e não se apagam |
 
-A separação está **no servidor**, e não só no ecrã: ninguém a contorna por engano, nem com um clique. Pendente de validação no ecrã: na demonstração só se viu o simulador da AT; as outras linhas vêm do guia de operação.
+A separação está **no servidor**, e não só no ecrã: ninguém a contorna por engano, nem com um clique. Visto no ecrã: o simulador da AT e a fiscaldoo simulada, que numa base de testes diz «Base de teste: uma fiscaldoo simulada assina com uma chave fictícia e o certificado 9999.» ([Como ligar a instalação à fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)). <span className="fd-pending">Pendente de validação no ecrã: as outras linhas (rede, correio, bancos, SIBS, pagamentos), que vêm do guia de operação.</span>
 
 ## O que decide para onde segue um envio à AT
 
@@ -73,7 +75,7 @@ Este caminho não foi feito até ao fim na demonstração, porque exigiria crede
 
 - **Nunca copie dados reais para uma base de testes** sem os neutralizar antes (nomes, NIF, contactos, IBAN).
 - **Para reproduzir um problema**, restaure uma cópia numa base nova com «test» no nome. Para o planeamento de cópias e ensaios, veja [Como preparar a migração de outro programa para o fiscaldoo](/migration-toolkit/planear-a-migracao).
-- **Uma base de testes nunca recebe a chave de assinatura de produção.**
+- **Uma base de testes assina com a fiscaldoo simulada, nunca com a de produção.** A chave privada de produção nunca sai da fiscaldoo, e a chave de API só assina para a base com que foi registada. Por isso uma cópia de produção restaurada numa base com «test» no nome passa a assinar com a fiscaldoo simulada. <span className="fd-pending">Pendente de validação no ecrã: que a chave de API só assina para a base registada e que a cópia de produção restaurada passa a assinar com a simulada (só se viu a fiscaldoo simulada numa base de testes; a demonstração não chega à fiscaldoo verdadeira).</span>
 - **Resultados simulados.** Em teste, os resultados aparecem como simulados, por exemplo **Aceite (simulado)**, com o **Ambiente** **Teste**.
 - **O que este artigo não cobre.** Um servidor de testes ligado aos endereços de testes da AT é uma operação do suporte técnico, e não uma configuração do utilizador.
 

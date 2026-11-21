@@ -10,7 +10,7 @@ doc_id: DOC-0410
 article_type: problema
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master 54a9f5f03)"
+fiscaldoo_version: "20.0 (master e261a9215)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [troubleshooting/acesso-e-dados/sem-permissao, administration/utilizadores-e-permissoes/perfis-e-permissoes, troubleshooting/acesso-e-dados/so-o-responsavel-fiscal-pode]
@@ -30,10 +30,8 @@ Exemplos copiados da base de demonstração em português:
   > «Só o administrador pode reabrir um exercício fiscal.»
 - Com os perfis **Contabilista** e **Contabilista certificado**, no ecrã **Copiloto**, por baixo de **IA desligada**:
   > «O Copiloto está desligado nesta empresa. Peça ao administrador para ligar a IA.»
-- Com o perfil **Contabilista certificado**, ao criar uma chave de assinatura (pela integração):
-  > «Não tem permissão para alterar «Chave RSA de assinatura da certificação PT (só a parte pública e metadados)». … Quem faz: quem tem o acesso extra «Administração fiscal». Só o administrador dá esse acesso (Definições › Utilizadores e empresas › Utilizadores, «Ajustes avançados» do utilizador).»
 
-As duas primeiras dizem «o administrador» porque nenhum valor do campo **Perfil** dá este acesso.
+As duas dizem «o administrador» porque nenhum valor do campo **Perfil** dá este acesso.
 
 ## Causas verificadas
 
@@ -62,3 +60,5 @@ Feita por quem tem Administração fiscal, a operação passa e fica registada e
 ## Informação a enviar
 
 Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/como-pedir-suporte), com o exercício ou o registo em causa e a mensagem completa.
+
+{/* Nota interna (lote 104, KEY-001, master e261a9215): retirado o 3.º exemplo (criar uma chave de assinatura pela integração, mensagem «Chave RSA de assinatura da certificação PT…»): a chave e o modelo já não existem na instalação (as chaves vivem na fiscaldoo, DEC-1993). Os dois exemplos que ficam não mudaram no produto (reabrir exercício e Copiloto desligado, mensagens do ecrã). Mensagem «Só o administrador pode reabrir um exercício fiscal.» e «O Copiloto está desligado nesta empresa. Peça ao administrador para ligar a IA.» não foram repetidas neste lote. */}

@@ -9,11 +9,15 @@ doc_id: DOC-0001
 article_type: conceito
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master 3a28c9b91)"
+fiscaldoo_version: "20.0 (master e261a9215)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [getting-started/o-fiscaldoo/edicoes-e-versoes-suportadas, getting-started/primeira-configuracao/requisitos-e-instalacao, administration/utilizadores-e-permissoes/perfis-e-permissoes]
 ---
+
+{/* Nota interna (lote 104, FIX-M302, master e261a9215, 21/11/2026): apps por perfil conferidas com utilizadores novos só com o valor do campo Perfil e o menu que o ecrã carrega: Administrativo = Vendas, Faturação, Despesas, EDI, Painéis (sem Ponto de venda nem Ausência); Contabilista = + Contabilidade, Copiloto; Gestor de RH = Salários, Pessoas, Despesas (+ Assinaturas). */}
+
+{/* Nota interna (lote 104, KEY-001, master e261a9215, 21/11/2026): secção «A certificação» alinhada com chaves-de-assinatura; Estado da certificação aberto com o administrador na cópia (Certificado n.º 9999/AT., «A fiscaldoo assina com a versão 1 da chave.»). */}
 
 {/* Nota interna (DOCS-046, #3616, lote v12-P2): corrige NV3P-03, NV3P-11 e NV3P-15 (aud-v3ppl). Cada linha da tabela corresponde a menus abertos na docs_demo_v12p2_test, master a060fe441. Certificado n.º 2790: memória do projeto e DEC-992; o número não é constante de código (DEC-766) e regista-se por empresa; na demonstração o PDF sai com o número de teste. */}
 
@@ -42,8 +46,8 @@ Para trazer dados de outro programa, os menus estão em **Contabilidade › Conf
 
 O fiscaldoo é um programa de faturação certificado pela Autoridade Tributária e Aduaneira (AT), com o n.º 2790.
 
-- O número fica registado no programa, por empresa, e sai no rodapé de cada documento: «Processado por programa certificado n.º …/AT». Numa base de testes, sai um número de teste.
-- Sem o certificado, a chave de assinatura e as séries, a empresa não emite documentos certificados. O estado vê-se em **Contabilidade › Configurar › Sistema e segurança › Estado da certificação**, que diz o que falta a cada empresa.
+- O número do certificado vem da fiscaldoo, que o dá à instalação, e sai no rodapé de cada documento: «Processado por programa certificado n.º …/AT». Numa base de testes, a fiscaldoo é simulada e o número é o 9999, de teste.
+- A chave de assinatura não está na instalação: quem assina cada documento é a fiscaldoo, a plataforma do produtor do programa, e o administrador liga a instalação a ela com uma chave de API ([Como ligar a instalação à fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)). Sem essa ligação e sem uma série certificada ativa, a empresa não emite documentos certificados. O estado vê-se em **Contabilidade › Configurar › Sistema e segurança › Estado da certificação**, que diz o que falta, com a linha «A fiscaldoo assina com a versão 1 da chave.» quando a fiscaldoo responde.
 - O que é preciso fazer está em [Preparar a faturação certificada](/fiscal-core/preparar-a-faturacao-certificada).
 
 ## A quem se destina
@@ -59,15 +63,15 @@ O menu de aplicações muda com o perfil. Na empresa de demonstração, sem cont
 | Perfil | Aplicações que vê |
 | --- | --- |
 | **Trabalhador** | **O meu espaço** |
-| **Administrativo** | **Vendas**, **Ponto de venda**, **Faturação**, **Despesas**, **Ausência**, **EDI**, **Painéis** |
-| **Contabilista** | **Contabilidade**, **Vendas**, **Ponto de venda**, **Faturação**, **Copiloto**, **Despesas**, **Ausência**, **EDI**, **Painéis** |
+| **Administrativo** | **Vendas**, **Faturação**, **Despesas**, **EDI**, **Painéis** |
+| **Contabilista** | **Contabilidade**, **Vendas**, **Faturação**, **Copiloto**, **Despesas**, **EDI**, **Painéis** |
 | **Contabilista certificado** | as do **Contabilista** e **Auditoria** |
 | **Gestor de RH** | **Salários**, **Pessoas**, **Despesas** |
 | **Processador de salários** | **Salários**, **Pessoas**, **Despesas** |
 | **Auditor / ROC** | **Contabilidade**, **Faturação**, **Copiloto**, **Auditoria**, **EDI** |
 | **Gerência** | **Direção**, **Contabilidade**, **Salários**, **Pessoas**, **Faturação**, **Copiloto**, **Auditoria**, **EDI** |
 
-O administrador do sistema vê todas as aplicações, incluindo **Definições**. A lista dos perfis está em [Perfis e permissões](/administration/perfis-e-permissoes).
+O **Ponto de venda**, as **Presenças**, o **Helpdesk**, o **Planeamento**, a **Manutenção** e o **Website** já não vêm com nenhum perfil: só aparecem a quem tem o grupo próprio. <span className="fd-pending">Pendente de validação no ecrã: o **Helpdesk**, o **Planeamento**, a **Manutenção** e o **Website** (a demonstração não os tem instalados).</span> O administrador do sistema vê todas as aplicações, incluindo **Definições**. A lista dos perfis está em [Perfis e permissões](/administration/perfis-e-permissoes).
 
 ## O que o fiscaldoo não faz
 

@@ -9,7 +9,7 @@ doc_id: DOC-0078
 article_type: tarefa
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master 2c8d358c0)"
+fiscaldoo_version: "20.0 (master e261a9215)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [accounting-pt/plano-de-contas/plano-de-contas-snc, accounting-pt/plano-de-contas/taxonomias, accounting-pt/dia-a-dia/estornar-um-lancamento, accounting-pt/fecho/datas-de-bloqueio]
@@ -86,16 +86,20 @@ Abra **Configurar › Plano e regras legais › Ferramentas das contas › Hist�
 
 ![Histórico de alterações de contas com as duas recodificações da conta Formação profissional](/images/accounting-pt/criar-e-alterar-contas/78-06-historico-de-alteracoes.png)
 
-### Reclassificar uma conta de 1.º grau
+### Reclassificar uma conta de 1.º grau, ou uma conta com subcontas pelo código
+
+O assistente serve duas situações: uma conta de 1.º grau (código de 2 algarismos) e uma conta de movimento que passou a ter subcontas pelo código, como a `2433` depois de criada a `24331` por baixo ([Como comparar o plano com o SNC](/accounting-pt/plano-de-contas-snc)). Nos dois casos, o fiscaldoo recusa lançamentos novos na conta e o assistente passa o que a conta já tem para a subconta. A janela chama-se **Reclassificar conta de 1.º grau** ao abrir e **Reclassificar conta para uma subconta** depois de usada.
 
 <StepByStep>
 
-1. Abra **Configurar › Plano e regras legais › Ferramentas das contas › Reclassificar conta de 1.º grau** (modo programador).
-2. Em **Conta de 1.º grau**, escolha a conta; a lista só oferece contas de 2 algarismos significativos, por exemplo `12 Depósitos à ordem`. A **Subconta de movimento** preenche-se com a existente (`121`) e, se faltar, é criada ao reclassificar.
+1. Abra **Contabilidade › Configurar › Plano e regras legais › Ferramentas das contas › Reclassificar conta de 1.º grau**, com o perfil **Contabilista certificado**. As mensagens do produto mandam procurar o nome na pesquisa dos menus.
+2. Em **Conta de 1.º grau**, escolha a conta, por exemplo `12 Depósitos à ordem` ou, com a `24331` criada, a `2433 IVA - Liquidado`. Em **Subconta de movimento**, escolha a subconta (`121` ou `24331`); numa conta de 1.º grau, preenche-se com a existente e, se faltar, é criada ao reclassificar.
 3. Escreva o **Motivo** e carregue em **Reclassificar**. A janela mostra antes o que vai acontecer: **Linhas de lançamento em rascunho a mover**, **Linhas já lançadas (ficam)** e **Diários que usam a conta**, e a opção **Passar o saldo lançado com um lançamento de correção** (vem por assinalar, e só tem efeito se houver linhas já lançadas). Numa conta de 1.º grau sem movimentos, como a `12 Depósitos à ordem` do passo 2, os três contadores estão a 0.
    ![Janela Reclassificar conta de 1.º grau com 12 Depósitos à ordem e a subconta 121](/images/accounting-pt/criar-e-alterar-contas/78-07-reclassificar-1-grau.png)
 4. O resultado diz quantas linhas e diários passaram para a subconta e quantas linhas já lançadas ficam na conta de 1.º grau. No exemplo: «0 linha(s) de lançamento em rascunho e 0 diário(s) passaram para 121. 0 linha(s) já lançada(s) ficam em 12: não podem ser alteradas (contabilidade certificada) e o SAF-T recusa essa conta enquanto estiverem no período — pergunte ao contabilista certificado como tratá-las.» A subconta `121 Depósitos à ordem` já existia, por isso não foi criada nenhuma conta.
    ![Resultado da reclassificação da conta 12: 0 linhas em rascunho e 0 diários passaram para a subconta 121 e 0 linhas já lançadas ficam na 12](/images/accounting-pt/criar-e-alterar-contas/78-09-resultado.png)
+5. **Conta com subcontas pelo código, com saldo.** Numa cópia da demonstração, com a `24331` criada por baixo da `2433`, que tinha 59 linhas lançadas, escolheu-se a `2433`, a subconta `24331`, o motivo «Passar o saldo da 2433 para a subconta 24331» e marcou-se **Passar o saldo lançado com um lançamento de correção**. A janela mostrava 0 linhas em rascunho, **59** linhas já lançadas e 0 diários. Depois de **Reclassificar**, disse «0 linha(s) em rascunho e 0 diário(s) passaram para a 24331. O saldo das 59 linha(s) lançada(s) da 2433 foi passado pelo lançamento de correção OD/2026/00139 (o número é o desta cópia; o seu será o seguinte da série); as linhas lançadas ficam como estavam.». O lançamento de correção, publicado em **Operações Diversas** com a data do dia e o texto «Correção», tem duas linhas: **2433** a débito 1.493,90 € e **24331** a crédito 1.493,90 €. As 59 linhas antigas não mudaram.
+   ![Janela de reclassificação com a conta 2433, a subconta 24331, o motivo escrito, 0 linhas em rascunho, 59 já lançadas e a opção de passar o saldo com um lançamento de correção marcada](/images/accounting-pt/criar-e-alterar-contas/80-reclassificar-2433.png)
 
 </StepByStep>
 
@@ -104,7 +108,9 @@ Abra **Configurar › Plano e regras legais › Ferramentas das contas › Hist�
 - **Conta nova:** existe no plano com a conta superior certa, a taxonomia escolhida e a marca «Extensão própria do plano SNC». Não há lançamentos.
 - **Recodificação:** o código muda, o saldo e os lançamentos mantêm-se (a conta `622720` continua com os 100,00 € de `OD/2026/00105`, a débito, com a contrapartida a crédito em `111 Caixa`) e há uma linha nova no histórico.
 - **Reclassificação:** as linhas em rascunho e os diários passam para a subconta (no exemplo, 0 e 0, e a subconta `121` já existia). As linhas **já lançadas nunca são alteradas** (a contabilidade é certificada): ficam na conta de 1.º grau e o SAF-T continua a recusar essa conta enquanto estiverem no período. Há uma opção **Passar o saldo lançado com um lançamento de correção**, que cria um lançamento novo, com a data de hoje, a passar o saldo para a subconta.
-- **O que não foi possível provar no ecrã.** Uma conta de 1.º grau só pode ter linhas se já as tinha antes: o fiscaldoo recusa lançar nela («A conta 12 é agregadora; escolha uma conta de movimento (121). Só se pode lançar em contas de movimento (o SAF-T e o SNC não admitem lançamentos em contas agregadoras).»), tanto em rascunho como publicado, e por isso não se criam linhas de teste. A passagem de linhas em rascunho e o lançamento de correção das linhas lançadas ficam descritos pelo texto do ecrã e não foram corridos. <span className="fd-pending">Pendente de validação no ecrã: a reclassificação com linhas em rascunho e lançadas e o lançamento de correção (só há dados assim em bases migradas). Pendente de validação por contabilista certificado: como tratar as linhas já lançadas.</span>
+- **O que não foi possível provar no ecrã.** Uma conta de 1.º grau só pode ter linhas se já as tinha antes: o fiscaldoo recusa lançar nela («A conta 12 é agregadora; escolha uma conta de movimento (121). Só se pode lançar em contas de movimento (o SAF-T e o SNC não admitem lançamentos em contas agregadoras).»), tanto em rascunho como publicado, e por isso não se criam linhas de teste. O lançamento de correção das linhas já lançadas foi provado com a `2433` e a `24331` (passo 5). <span className="fd-pending">Pendente de validação no ecrã: a passagem de linhas em rascunho (a demonstração não tem rascunhos nestas contas). Pendente de validação por contabilista certificado: como tratar as linhas já lançadas.</span>
+{/* Nota interna (lote 104, FIX-M306, master e261a9215, docs_demo_104_test, 21/11/2026): assistente aberto por clique com o Contabilista certificado (menu Ferramentas das contas › Reclassificar conta de 1.º grau; título da janela com o nome antigo ao abrir e «Reclassificar conta para uma subconta» depois de usada: o menu e a janela têm nomes diferentes, cartão aberto pelo integrador), conta 24331 criada por RPC na cópia, 2433 (59 linhas lançadas na base-mãe; a cópia do produtor tinha 62 por causa de faturas de teste, refeito na auditoria), saldo passado pelo lançamento OD/2026/00139 (D 2433 1.493,90; C 24331 1.493,90; conferido nas linhas), depois um lançamento novo OD/2026/00140 na 24331 contra a 121 aceite. */}
+
 {/* Nota interna (NV3A-14): na versão anterior o motivo era «a demonstração não tem»; o motivo certo é que o produto impede lançar numa conta de 1.º grau (provado a 01/11 pelo ORM com o Responsável fiscal). Provado no ecrã: assistente com a conta 14 (criada em Plano de contas), contadores a 0, subconta 141 criada, recusa sem conta («Escolha a conta de 1.º grau a reclassificar»). As contas de teste 14 e 141 ficam na base de demonstração do corretor. */}
 
 ## Notas importantes
@@ -156,6 +162,11 @@ Um código fora do plano oficial do SNC (por exemplo `629100`, quando a AT só p
 
 - **Causa:** a janela **Reclassificar conta de 1.º grau** foi confirmada sem conta ou sem motivo.
 - **O que fazer:** escolha a conta, escreva o motivo e carregue de novo em **Reclassificar**.
+
+### «A conta 2433 tem subcontas (24331) e não recebe lançamentos novos»
+
+- **Sintoma:** ao gravar um lançamento numa conta de movimento que tem subcontas pelo código (a `2433` com a `24331`): «A conta 2433 tem subcontas (24331) e não recebe lançamentos novos. O que aconteceu: o código dela é o começo do código de outras contas, por isso no SNC é a conta-mãe delas, e o SAF-T não admite movimentos numa conta que tem subcontas (Portaria 302/2016, Anexo I, 2.1.2.8). Como resolver: lance numa subconta (por exemplo a 24331). (…)»
+- **O que fazer:** lance na subconta. Para passar o saldo que a conta já tem, o **Contabilista certificado** usa o assistente acima.
 
 ### «A conta … é uma conta de 1.º grau e não pode receber lançamentos»
 

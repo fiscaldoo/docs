@@ -10,7 +10,7 @@ doc_id: DOC-0017
 article_type: tarefa
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master 2c8d358c0)"
+fiscaldoo_version: "20.0 (master e261a9215)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [fiscal-core/certificacao/integridade-dos-documentos, fiscal-core/certificacao/conformidade-contabilistica, fiscal-core/at-e-saft/gerar-o-saft]
@@ -70,9 +70,9 @@ Nem todos os perfis veem as 20 verificações: o perfil **Contabilista certifica
 | Área | O que verifica | Se precisa de atenção |
 |---|---|---|
 | Política de cópias de segurança | Cópia de segurança registada recentemente | Faça a cópia da base de dados e registe-a em **Contabilidade › Configurar › Sistema e segurança › Registo das cópias de segurança** (o produto não faz nem verifica a cópia: só vê se há registo) |
-| Dados de certificação | Certificado de software da AT em vigor | Contacte o seu fornecedor do fiscaldoo: o certificado é do programa e não se regista no ecrã normal |
+| Dados de certificação | Certificado de software da AT em vigor | O certificado é do programa e quem o dá é a fiscaldoo: a instalação só o pergunta. Se a linha falhar, leia a mensagem da fiscaldoo e veja [Como ligar a instalação à fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura). Na demonstração diz «Certificado n.º 9999/AT.» |
 | Dados de certificação | Contabilidade organizada respondida | O **Contabilista certificado** responde na ficha da empresa, separador **Localização PT**, botão **Alterar a obrigatoriedade de programa certificado**. Nada fica bloqueado enquanto estiver por responder |
-| Dados de certificação | Chave de assinatura ativa | Peça ao seu fornecedor do fiscaldoo: a chave de assinatura não se carrega no ecrã normal |
+| Dados de certificação | Chave de assinatura ativa | A chave de assinatura vive na fiscaldoo, não na instalação, e já não se carrega no ecrã. A linha diz «A fiscaldoo assina com a versão 1 da chave.» quando tudo está bem; se falhar, o que fazer é «Verifique a ligação à fiscaldoo nas Definições. Sem ela nenhum documento se pode assinar.» (ver [Como ligar a instalação à fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)). <span className="fd-pending">Pendente de validação no ecrã: esta linha em **Precisa de atenção** no autodiagnóstico. Com a ligação à fiscaldoo por configurar ou sem resposta, a janela não chega a abrir (ver «Problemas frequentes»). Em **Contabilidade › Configurar › Sistema e segurança › Estado da certificação** as linhas «Certificado de software da AT em vigor» e «Chave de assinatura ativa» aparecem, nesse caso, em **Precisa de atenção** com a mensagem da fiscaldoo (visto no ecrã).</span> |
 | Integridade e integralidade (9) | Débitos iguais aos créditos, totais dos documentos, série em todo o documento certificado, séries da empresa e do diário, linhas da empresa, cadeia de assinaturas, numeração sem falhas, número, série e ATCUD coincidem | Veja [a integridade dos documentos](/fiscal-core/integridade-dos-documentos) |
 | Prontidão do SAF-T (7) | Plano de contas e taxonomia, tipo de lançamento, totais de controlo, saldos de abertura, números de ficheiro, ficheiros mestre, lançamentos e documentos | Veja [como gerar o SAF-T](/fiscal-core/gerar-o-saft) |
 
@@ -85,7 +85,7 @@ Nem todos os perfis veem as 20 verificações: o perfil **Contabilista certifica
 ## Notas importantes
 
 <HelpCallout type="aviso" title="O que o diagnóstico não prova">
-**OK** quer dizer que o produto não encontrou diferenças nos lançamentos do período (nesta demonstração, 325 lançamentos desde 1 de janeiro, a 1 de novembro); não é uma declaração de conformidade. A conformidade com a lei e a obrigatoriedade de programa certificado devem ser confirmadas com o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: obrigatoriedade de programa certificado por contabilidade organizada.</span>
+**OK** quer dizer que o produto não encontrou diferenças nos lançamentos do período (nesta demonstração, 389 lançamentos desde 1 de janeiro, a 21 de novembro); não é uma declaração de conformidade. A conformidade com a lei e a obrigatoriedade de programa certificado devem ser confirmadas com o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: obrigatoriedade de programa certificado por contabilidade organizada.</span>
 </HelpCallout>
 
 - O período é sempre do início do ano até hoje: faltas de anos anteriores não entram. Para o resto, use [a conformidade contabilística](/fiscal-core/conformidade-contabilistica).
@@ -93,6 +93,12 @@ Nem todos os perfis veem as 20 verificações: o perfil **Contabilista certifica
 - A janela mostra os nomes das colunas **Área** e **Verificar** cortados em ecrãs de 1366 px. Os nomes completos estão na tabela acima.
 
 ## Problemas frequentes
+
+### A janela não abre e diz «Operação inválida»
+
+- **Sintoma:** em vez do autodiagnóstico, abre-se uma janela **Operação inválida** com uma mensagem da fiscaldoo, por exemplo «Os documentos são assinados pela fiscaldoo, mas a ligação não está configurada: preencha o endereço e a chave de API nas Definições. Nada foi assinado.» ou «A fiscaldoo não respondeu (…). Nada foi assinado. Porquê: a ligação à fiscaldoo falhou ou excedeu o tempo. Como resolver: verifique a ligação à internet deste servidor e tente de novo dentro de uns minutos; se persistir, contacte o suporte da fiscaldoo.».
+- **Causa:** o diagnóstico verifica a cadeia de assinaturas e precisa de falar com a fiscaldoo, e a ligação não está configurada ou não responde. Visto no ecrã numa cópia da demonstração em que se desligou o simulador da fiscaldoo.
+- **O que fazer:** peça ao administrador para ver a chave de API e a ligação ([Como ligar a instalação à fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)) e abra o diagnóstico de novo. Numa base de demonstração o simulador responde sempre e isto não acontece.
 
 ### Não vejo a aplicação Auditoria
 
@@ -111,6 +117,8 @@ Nem todos os perfis veem as 20 verificações: o perfil **Contabilista certifica
 - **Sintoma:** na demonstração, a conformidade mostra 4 buracos na série **D26** das guias de transporte e o autodiagnóstico dá **OK** em «Numeração sem falhas».
 - **Causa:** o autodiagnóstico e a conformidade dão respostas diferentes para a mesma numeração. Não se sabe porquê: o âmbito de cada um não está confirmado.
 - **O que fazer:** não use o «Numeração sem falhas» do autodiagnóstico para concluir que não há buracos; em caso de dúvida na numeração, confie na [conformidade](/fiscal-core/conformidade-contabilistica) e [justifique a lacuna](/fiscal-core/justificar-lacunas-de-numeracao).
+
+{/* Nota interna (lote 104, KEY-001, master e261a9215, docs_demo_104_test, 21/11/2026): aberto por clique com utilizadores só com o perfil Contabilista certificado (20 verificações, 18 OK e 2 a atenção: cópia de segurança e contabilidade organizada), Auditor / ROC e Gerência (13). As linhas Dados de certificação dizem «Certificado n.º 9999/AT.» e «A fiscaldoo assina com a versão 1 da chave.» (simulador). Com allow_test_database ligado na cópia (reposto) e sem chave de API, ou com chave fictícia e endereço http://127.0.0.1:1 sem servidor, a janela inteira recusa (Operação inválida) com as duas mensagens citadas; a linha em Precisa de atenção não se consegue ver (o texto do que fazer vem do produto). */}
 
 {/* Nota interna (DOCS-046 / NV3B-01 a 03, master f16f4a3e0, base docs_demo_v3bcor_test): o Auditor e a Gerência veem 13 verificações e só «Fechar» (as 7 de Prontidão do SAF-T não correm para estes perfis): CERT-138 vai decidir se passam a ver as 20; atualizar o artigo quando entrar. O Contabilista e a Faturação não têm a aplicação Auditoria (mensagem «Sem acesso» só por ligação direta). Perfil Responsável fiscal (V3FC-01, V3FC-02): «Numeração sem falhas» OK no SVAT contra «Buracos na numeração: 4» (série D26 das guias de transporte) no painel de conformidade; limitação de âmbito, não confirmada no código (V3FC-01); colunas Área e Verificar cortadas a 1366 px. Janela feita só com a empresa de demonstração; empresa vazia não testada (pendente de sucessor). */}
 
