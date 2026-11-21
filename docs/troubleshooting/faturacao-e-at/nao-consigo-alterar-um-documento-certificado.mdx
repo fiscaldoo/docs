@@ -110,35 +110,7 @@ Se a fatura nova não for igual à anulada nas linhas, nos valores e nos imposto
 
 **Outros dados do cliente: nota de crédito e fatura nova.** Quando a diferença é outra (visto com outro cliente), a janela mostra o **Tipo de correção** **Outros dados do cliente**, pede a **Prova da regularização** e emite a nota de crédito. Sem a prova, a recusa é: «A nota de crédito que corrige a fatura FT D26/34 vai ao campo 40 da declaração de IVA (CIVA art. 78.º n.º 2) e precisa, antes de confirmar, de: a "Prova da regularização" (como o cliente foi informado da correção, CIVA art. 78.º n.º 5). Nada foi criado. Preencha-os nesta janela e confirme outra vez.» Neste caminho a fatura nova é uma fatura como as outras: visto com a data do IVA escrita à mão (05/12/2026), manteve-se ao confirmar. <span className="fd-pending">Pendente de validação por contabilista certificado: se, neste caminho, a data do IVA da fatura nova deve também ficar presa à da fatura corrigida.</span>
 
-**Quem faz:** Administrativo ou Contabilista, para **Outros dados do cliente**. Para **Só o NIF** o Administrativo e o Contabilista são recusados: «Corrigir só o NIF da fatura … faz-se anulando a fatura, o que o seu perfil não pode fazer. Porquê: Anular um documento certificado está reservado ao Contabilista certificado, ao Responsável fiscal e ao administrador. Como resolver: Peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que abra esta fatura e use «Corrigir os dados do cliente». Nada foi alterado.» (mensagem lida por chamada ao servidor com os perfis Faturação e Contabilista).
-
-### Nome, morada ou NIF do cliente
-
-Há dois sítios a corrigir, e às vezes os dois:
-
-- **a fatura emitida**, se saiu para o cliente errado ou com dados errados: **Corrigir os dados do cliente**, a seguir;
-- **a ficha do cliente**, se o nome ou o NIF foram mal escritos na ficha: **Correção auditada**, mais abaixo. Só muda a ficha, para os documentos seguintes; as faturas já emitidas com o dado errado corrigem-se com **Corrigir os dados do cliente**.
-
-Para um NIF ou uma morada errados, o Ofício-Circulado 25120/2026 manda anular a fatura e emitir outra, sem nota de crédito: [Como corrigir uma fatura](/fiscal-core/corrigir-uma-fatura). O botão **Corrigir os dados do cliente**, descrito abaixo, segue o ofício para o NIF (anula a fatura e prepara a nova, sem nota de crédito) e, para as outras diferenças, emite uma nota de crédito total e prepara uma fatura nova. <span className="fd-pending">Em preparação: a morada errada ainda segue o caminho da nota de crédito; até lá, anule a fatura e emita outra. Pendente de validação por contabilista certificado: quando usar este botão.</span>
-
-#### Corrigir a fatura: Corrigir os dados do cliente
-
-Com o perfil **Administrativo**, na fatura abra **Ações** e escolha **Corrigir os dados do cliente**; com os perfis **Contabilista** e **Contabilista certificado**, **Corrigir os dados do cliente** é um botão da fatura.
-
-![Menu Ações de uma fatura emitida, com a opção Corrigir os dados do cliente](/images/troubleshooting/nao-consigo-alterar-um-documento-certificado/02-acoes-corrigir-os-dados-do-cliente.png)
-
-A janela **Corrigir os dados do cliente** mostra o **Cliente na fatura emitida** e traz já preenchidos o **Motivo** («Correção dos dados do cliente», que pode mudar), o **Cliente corrigido** (o mesmo cliente: escolha o certo, ou corrija antes o contacto), o **Motivo da regularização de IVA** e a **Data de referência da regularização** (a data de hoje). O motivo de IVA não se escolhe: vem como «Anulação ou redução da operação (invalidade, resolução, rescisão, redução do contrato, devolução de mercadorias, abatimentos ou descontos)» e a janela explica: «A nota de crédito que anula a fatura é uma regularização de IVA a favor do sujeito passivo (CIVA art. 78.º n.º 2, campo 40 da declaração de IVA); a fatura nova liquida o IVA de novo. O motivo é definido por este passo: preencha a data e a prova (como o cliente foi informado da correção).»
-
-Confira a data e preencha a **Prova da regularização** (por exemplo, o e-mail enviado ao cliente com a fatura nova). Sem a prova, a janela recusa com «Há campos obrigatórios por preencher. Preencha os campos assinalados a vermelho para poder guardar.». Carregue em **Emitir nota de crédito e preparar fatura nova**: a nota de crédito da fatura inteira é emitida com esse motivo de IVA e abre-se a fatura nova em rascunho, com o cliente corrigido. Confira-a e carregue em **Confirmar**. Na demonstração, com o perfil **Administrativo**, a `FT D26/40` (12,30 €, à «Papelaria Exemplo, Lda») deu a `NC D26/4` de 12,30 € (711 Mercadorias a débito 10,00 €, 2433 IVA - Liquidado a débito 2,30 €, 2111 Clientes gerais a crédito 12,30 €) e a fatura nova `FT D26/42`, à «Oficina Exemplo, Lda», confirmada pelo mesmo perfil. <span className="fd-pending">Pendente de validação por contabilista certificado: o motivo de IVA e o campo da declaração que a janela define numa correção dos dados do cliente.</span>
-
-{/* Nota interna (DEC-1322, correção do E1): parágrafo revisto a 29/10/2026 no master d88933a51 (base docs_demo_lotee1b_test): o #3416 já está em master e a janela define o motivo de IVA. Alterado depois de aprovado: precisa de nova aprovação humana. */}
-
-A fatura emitida mantém os dados com que saiu.
-
-**A data do IVA da fatura nova.** A fatura nova que substitui a corrigida fica sempre com a data do IVA de cada linha igual à da fatura corrigida: o período do IVA já entregue não muda (Informação vinculativa n.º 26393). Se alguém escrever outra data no rascunho (o perfil **Contabilista certificado** pode editá-la), ao confirmar a data volta à da fatura corrigida e fica uma nota no histórico da fatura. Se o par, a fatura corrigida e a nova, não for igual em base, IVA e data do IVA, a fatura nova não se confirma. A janela **Corrigir os dados do cliente** mostra o **Tipo de correção** (na demonstração, **Outros dados do cliente**).
-<span className="fd-pending">Pendente de validação no ecrã: a data do IVA da fatura nova e a recusa quando o par difere; exigem emitir a nota de crédito e confirmar a fatura nova, e a sessão de produção não podia confirmar documentos. A janela foi aberta e fechada sem emitir nada, com o perfil Contabilista certificado, numa fatura da base.</span>
-
-**Quem faz:** Administrativo (em **Ações**), Contabilista ou Contabilista certificado (botão da fatura).
+**Quem faz:** Administrativo ou Contabilista, para **Outros dados do cliente**. Para **Só o NIF** o Administrativo e o Contabilista são recusados: «Corrigir só o NIF da fatura … faz-se anulando a fatura, o que o seu perfil não pode fazer. Porquê: Anular um documento certificado está reservado ao Contabilista certificado, ao Responsável fiscal e ao administrador. Como resolver: Peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que abra esta fatura e use «Corrigir os dados do cliente». Nada foi alterado.» (mensagem lida por chamada ao servidor, com um utilizador só com o perfil Administrativo e outro só com o perfil Contabilista).
 
 #### Corrigir a ficha: Correção auditada
 

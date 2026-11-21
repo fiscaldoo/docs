@@ -50,7 +50,7 @@ O perfil é o de **Contabilista certificado**, que vê os dois menus. Feito a 10
 
 ## Resultado esperado
 
-Numa empresa pronta a emitir, as linhas dizem **OK**: na demonstração, «Certificado n.º 9876/AT», «Existe uma chave de assinatura ativa», «11 série(s) ativa(s), todas com o código de validação da Autoridade Tributária», «36 imposto(s) de IVA de vendas e 63 de compras» e «10 PDF guardados verificados, todos com o seu ficheiro». Este último número muda: conta as cópias certificadas que o fiscaldoo vai guardando (ao abrir um documento emitido e, em segundo plano, dos documentos recentes). Logo a seguir a arrancar uma base, pode mostrar 0 durante uns minutos.
+Numa empresa pronta a emitir, as linhas dizem **OK**: na demonstração, «Certificado n.º 9999/AT» (o da fiscaldoo simulada da demonstração), «A fiscaldoo assina com a versão 1 da chave», «11 série(s) ativa(s), todas com o código de validação da Autoridade Tributária», «36 imposto(s) de IVA de vendas e 63 de compras» e «10 PDF guardados verificados, todos com o seu ficheiro». Este último número muda: conta as cópias certificadas que o fiscaldoo vai guardando (ao abrir um documento emitido e, em segundo plano, dos documentos recentes). Logo a seguir a arrancar uma base, pode mostrar 0 durante uns minutos.
 
 ## Notas importantes
 
@@ -66,9 +66,9 @@ Visto com uma empresa ainda por configurar (**Empresa Teste Portugal**). Cada li
 
 | Mensagem do ecrã | O que fazer |
 |---|---|
-| «Não há nenhuma chave de assinatura ativa.» | «Peça ao administrador que crie a chave. Sem ela nenhum documento pode ser assinado.» |
+| «Não há nenhuma chave de assinatura ativa.» (texto do produto antes de a assinatura passar para a fiscaldoo) | A linha **Chave de assinatura ativa** diz hoje «A fiscaldoo assina com a versão … da chave». Se a fiscaldoo não responder, veja [A fatura não é assinada](/troubleshooting/chave-de-assinatura-expirada). |
 | «Não há nenhuma série fiscal ativa.» | «Crie e comunique a série em Contabilidade › Configurar › Faturação certificada › Séries fiscais.» |
-| «Não existe certificado de software da AT em vigor para a empresa…» | «…pelo que este documento não pode ser assinado nem impresso. Peça ao administrador para registar o certificado.» |
+| «Não existe certificado de software da AT em vigor para a empresa…» | «…pelo que este documento não pode ser assinado nem impresso. Peça ao administrador para registar o certificado.» Hoje o certificado vem da fiscaldoo: o administrador confere-o em **Definições › Faturação** (linha **Certificado de software da AT em vigor**) e, se faltar, é um assunto do suporte da fiscaldoo. <span className="fd-pending">Pendente de validação no ecrã: estas duas mensagens de uma empresa sem chave e sem certificado, que a demonstração (fiscaldoo simulada) já não dá.</span> |
 
 ### «Contabilidade organizada respondida: Por responder»
 

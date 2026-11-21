@@ -57,6 +57,14 @@ O orçamento não faz lançamentos contabilísticos: serve só para comparar.
 
 </StepByStep>
 
+## No Enterprise
+
+No Odoo Enterprise, os orçamentos são o **Orçamento analítico** do próprio Enterprise, em **Contabilidade › Consultar › Análise**. Os menus **Orçamentos** e **Relatório de orçamento versus realizado** deste artigo são do Comunitário e não existem no Enterprise: os passos, os botões, os estados e os valores do exemplo acima não se aplicam ali.
+
+<span className="fd-pending">Pendente de validação no ecrã do Enterprise: o caminho, os passos do Orçamento analítico e os perfis que o veem. Esta secção segue o que o produto diz do Enterprise; a base de demonstração desta ronda é só Comunitário.</span>
+
+{/* Nota interna (lote 103, FIX-EE011-COP #4485): texto pedido pelo bilhete fix_ee011_txt («Orçamento analítico» do Enterprise em Contabilidade › Consultar › Análise; os menus Orçamentos e Relatório de orçamento versus realizado do Comunitário não existem no Enterprise, DEC-1036 (2)). Nomes dos dois menus lidos no registo de menus da ponte Enterprise (l10n_pt_fiscaldoo_ee: «Orçamento analítico» e «Relatório de orçamentos»). Sem base Enterprise nesta ronda: nada visto no ecrã do Enterprise. DÚVIDA PARA O GESTOR: a mesma ponte marca estes dois menus como «só em modo de programador» (UX-061, lista _DEBUG_ONLY, com o comentário «os orçamentos usados são os nossos», que a DEC-1036 (2) contraria): se for assim, um Contabilista no Enterprise não chega aos orçamentos por clique. Quando existir a secção, retirar o artigo de REPLACED_IN_ENTERPRISE em fiscaldoo_copilot_helper/tests/test_doc_paths.py. Auditoria do lote 103: a secção ficou reduzida ao que o bilhete fix_ee011_txt diz (o «Orçamento analítico» em Contabilidade › Consultar › Análise; os dois menus do Comunitário não existem no Enterprise); o segundo menu («Relatório de orçamentos»), os estados do Enterprise e a frase das faturas de fornecedor saíram por não estarem no bilhete nem terem prova no ecrã. */}
+
 ## Resultado esperado
 
 - O orçamento aparece na lista como **Confirmado** e as suas linhas entram no relatório. Os valores do relatório batem com os da linha do orçamento: Operações tem 17.000,00 € orçamentado e 12.390,00 € realizado nos dois ecrãs.

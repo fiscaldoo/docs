@@ -1,15 +1,15 @@
 ---
 id: chave-de-assinatura-expirada
 slug: /troubleshooting/chave-de-assinatura-expirada
-title: "A fatura não é assinada: a chave de assinatura não está configurada, não se consegue ler, não é válida ou não corresponde"
-sidebar_label: A chave de assinatura não assina
-description: O que fazer quando, ao confirmar uma fatura, o fiscaldoo diz que a chave de assinatura do programa não está configurada no servidor, que não a consegue ler, que não é válida ou que a chave privada não corresponde à versão da chave de assinatura.
-keywords: [A chave de assinatura do programa não está configurada neste servidor, a chave de assinatura nao esta configurada, Não foi possível ler a chave de assinatura do programa, nao foi possivel ler a chave de assinatura, a chave de assinatura do programa neste servidor não é válida, chave nao e valida, não corresponde à versão da chave de assinatura, nao corresponde a versao, não é possível assinar documentos, nao e possivel assinar documentos, Nada foi emitido, chave do produtor, mudança de servidor, chave de assinatura, chave privada, versão da chave, assinatura, chave expirou, chave expirada, chave retirada, rotação da chave, Gerar chave de assinatura de TESTE, Operação inválida, assinar faturas]
+title: "A fatura não é assinada: a fiscaldoo não responde, não tem chave ativa ou a ligação não está configurada"
+sidebar_label: A fatura não é assinada
+description: O que fazer quando, ao confirmar uma fatura, o fiscaldoo diz que a fiscaldoo não respondeu, que a ligação não está configurada, que não há chave de assinatura ativa ou que a chave de API foi recusada.
+keywords: [A fiscaldoo não respondeu, Nada foi assinado, a ligação não está configurada, preencha o endereço e a chave de API, a fiscaldoo recusou a chave de API, a fiscaldoo ainda não tem uma chave de assinatura ativa, chave de assinatura retirada, a hora de assinatura do documento não corresponde, não é possível assinar documentos, plataforma fiscaldoo, chave de assinatura, chave de API, assinatura, Ainda não é possível confirmar, o documento não foi assinado e o seu número não foi gasto]
 doc_id: DOC-0334
 article_type: problema
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master c643480c2)"
+fiscaldoo_version: "20.0 (master e36178712)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [fiscal-core/faturacao/emitir-uma-fatura-certificada, fiscal-core/certificacao/integridade-dos-documentos, troubleshooting/faturacao-e-at/serie-ativa-em-falta-ou-repetida]
@@ -17,68 +17,69 @@ related: [fiscal-core/faturacao/emitir-uma-fatura-certificada, fiscal-core/certi
 
 ## Sintoma
 
-Ao carregar em **Confirmar** numa fatura (ou noutro documento de venda), aparece a janela **Operação inválida** a dizer que a chave de assinatura não está configurada, que não se consegue ler, que não é válida ou que a chave privada não corresponde à versão da chave de assinatura. Em todos os casos, «Nada foi emitido». A fatura continua em **Rascunho**, sem número. Acontece com qualquer perfil que emita faturas, em todas as faturas da empresa, até o problema ser resolvido no servidor.
+Ao carregar em **Confirmar** numa fatura (ou noutro documento de venda), abre a janela **Ainda não é possível confirmar** com uma frase que começa por «A fiscaldoo…» ou «Os documentos são assinados pela fiscaldoo, mas…», e que termina com «Nada foi assinado.». A fatura continua em **Rascunho**, sem número. Acontece com qualquer perfil que emita faturas, em todas as faturas da empresa, até o problema ser resolvido.
 
-Cada fatura emitida pelo fiscaldoo é assinada com a chave de assinatura do programa. A chave tem duas partes: a pública, guardada no fiscaldoo, que serve para verificar as assinaturas; e a privada, guardada num ficheiro do servidor, fora da base de dados, que serve para assinar. As duas têm de ser da mesma versão.
+Cada documento certificado é assinado pela fiscaldoo, a plataforma do produtor do programa, e não pela instalação do cliente. Se a fiscaldoo não responde, ou não aceita a instalação, não há assinatura e por isso não há documento ([Como ligar a instalação à fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)).
 
 ## Mensagem
 
-Quando a chave privada do servidor é de outra versão:
+Quando a instalação ainda não tem a chave de API da fiscaldoo:
 
-> «A chave privada instalada neste servidor não corresponde à versão *1* da chave de assinatura, por isso não é possível assinar documentos (a assinatura nunca poderia ser verificada com esta versão). Nada foi emitido. Contacte o suporte: o administrador do sistema tem de instalar a chave privada da versão *1*, ou registar uma nova versão da chave de assinatura (rotação de chaves) com a chave pública da que está instalada.»
+> «Os documentos são assinados pela fiscaldoo, mas a ligação não está configurada: preencha o endereço e a chave de API nas Definições. Nada foi assinado.»
 
-![Janela Operação inválida: a chave privada instalada neste servidor não corresponde à versão 2 da chave de assinatura](/images/troubleshooting/chave-de-assinatura-expirada/01-chave-nao-corresponde.png)
+![Janela Ainda não é possível confirmar: os documentos são assinados pela fiscaldoo, mas a ligação não está configurada](/images/troubleshooting/chave-de-assinatura-expirada/01-ligacao-nao-configurada.png)
 
-Quando o servidor não tem nenhuma chave privada:
+Quando o servidor não chega à fiscaldoo:
 
-> «A chave de assinatura do programa não está configurada neste servidor, por isso não é possível assinar documentos. Nada foi emitido. Contacte o suporte: o administrador do sistema tem de instalar a chave do produtor.»
+> «A fiscaldoo não respondeu (…). Nada foi assinado. Porquê: a ligação à fiscaldoo falhou ou excedeu o tempo. Como resolver: verifique a ligação à internet deste servidor e tente de novo dentro de uns minutos; se persistir, contacte o suporte da fiscaldoo.»
 
-![Janela Operação inválida: a chave de assinatura do programa não está configurada neste servidor](/images/troubleshooting/chave-de-assinatura-expirada/02-chave-nao-configurada.png)
+Em ambos os casos a janela acrescenta: «Cada documento certificado é assinado pela fiscaldoo com a chave do produtor do software; sem ela o documento não pode ser assinado e nenhum número é usado. O administrador do sistema verifica a ligação à fiscaldoo em Definições › Faturação › Certificação PT.»
 
-Quando o servidor sabe onde está a chave privada, mas o ficheiro não está lá ou não se consegue ler:
+As duas mensagens foram provocadas na base de demonstração, com o perfil **Administrativo**, ao confirmar uma fatura de 123,00 € à Padaria Aurora, Lda (um rascunho criado para isto), com o endereço da fiscaldoo apontado a uma porta sem servidor e, na segunda, a chave de API preenchida. Na janela, o texto entre parênteses da segunda mensagem é o detalhe técnico do erro de ligação.
 
-> «Não foi possível ler a chave de assinatura do programa neste servidor, por isso não é possível assinar documentos. Nada foi emitido. Contacte o suporte: o administrador do sistema tem de verificar o ficheiro da chave.»
+As outras mensagens da fiscaldoo têm o mesmo formato (o que aconteceu, porquê, como resolver):
 
-Quando o ficheiro existe, mas o que tem lá dentro não é uma chave:
+- «A fiscaldoo recusou a chave de API desta instância. Verifique-a nas Definições.»
+- «A fiscaldoo ainda não tem uma chave de assinatura ativa. Nada foi assinado. Porquê: a plataforma ainda não publicou uma chave de assinatura para esta instalação. Como resolver: contacte o suporte da fiscaldoo para ativar uma chave e tente de novo.»
+- «A versão … da chave de assinatura da fiscaldoo está retirada. Porquê: uma chave retirada só serve para verificar documentos já assinados e não pode assinar. Como resolver: use a versão de chave ativa ou contacte o suporte da fiscaldoo se nenhuma estiver ativa.»
+- «A hora de assinatura do documento não corresponde ao texto a assinar. O documento não foi assinado e o seu número não foi gasto. Porquê: a data e a hora do texto a assinar não são as do documento no fuso horário da empresa. Como resolver: verifique o fuso horário da empresa e confirme o documento de novo.»
+- «A fiscaldoo assinou o documento … há mais de 24 horas com outros dados e não o volta a assinar. Contacte o suporte fiscaldoo. O documento não foi assinado e o seu número não foi gasto.»
 
-> «A chave de assinatura do programa neste servidor não é válida, por isso não é possível assinar documentos. Nada foi emitido. Contacte o suporte: o administrador do sistema tem de instalar uma chave válida.»
+<span className="fd-pending">Pendente de validação no ecrã: estas cinco mensagens. Só a plataforma verdadeira as dá e a demonstração é simulada; o texto é o do produto.</span>
 
-As quatro mensagens foram provocadas na base de demonstração, com o perfil **Administrativo**, ao confirmar uma fatura de 147,60 € à Clínica Dentária Sorriso, SA. O número em itálico é a versão da chave da empresa.
-
-{/* Nota interna (DOCS-056, #3762, 03/11/2026): as quatro mensagens copiadas do ecrã em docs_demo_v6p1b_test (master cf08b95ce, porta 8171), com chaves de TESTE descartáveis: sem indicação de chave, ficheiro inexistente, ficheiro que não é uma chave e chave de outra chave de teste. Já não mostram nomes técnicos nem o sítio do ficheiro (CERT-134b entrou). «A versão N da chave de assinatura está retirada…» não foi provocada. V6P1-06 saiu com o FIX-M140: a 1.ª mensagem já não fala em reativar; as quatro revistas no ecrã com demo.faturacao e chaves de teste descartáveis (auditoria DOCS-065, master c643480c2). */}
+{/* Nota interna (lote 103, KEY-001 #4477, master e36178712, docs_demo_103_test, porta 10080): artigo refeito. O anterior descrevia a chave privada num ficheiro do servidor, a rotação de versões e o botão Gerar da chave de teste, que já não existem. Visto por clique com o perfil Administrativo (utilizador da cópia só com esse perfil): as duas primeiras mensagens, na janela «Ainda não é possível confirmar»; a seguir repôs-se o simulador e o mesmo rascunho confirmou-se (FT D26/31, da cópia). Uma 1.ª tentativa, num rascunho sem artigo nas linhas, mostrou também a frase «A(s) linha(s) 1 não têm um artigo com referência interna…» junto com a da fiscaldoo: confirma que a janela junta tudo o que falta. */}
 
 ## Causas verificadas
 
-- **A chave de assinatura mudou de versão e o servidor ficou com o ficheiro antigo** (ou o contrário). Uma chave nova retira a anterior: a anterior deixa de assinar, mas continua a verificar os documentos que assinou. Se o ficheiro da chave privada não acompanha a mudança, nenhum documento se assina. Na demonstração, a chave da Empresa Demonstração, Lda estava na versão 1 e o servidor passou a ter a chave privada de outra chave de teste; a fatura foi recusada com a 1.ª mensagem.
-- **O servidor não tem chave privada.** O servidor arrancou sem a indicação de onde está a chave e não encontrou nenhuma. É o caso típico depois de mudar de servidor, de reinstalar ou de repor uma cópia sem o ficheiro da chave. Na demonstração, arrancada sem essa indicação e com o ficheiro retirado do sítio, a fatura foi recusada com a 2.ª mensagem.
-- **O ficheiro da chave privada não está onde o servidor o procura, ou o servidor não o consegue ler.** O servidor tem a indicação do sítio, mas o ficheiro não está lá ou não tem permissão para o ler. Na demonstração, com um sítio indicado onde não havia ficheiro, a fatura foi recusada com a 3.ª mensagem.
-- **O ficheiro não tem uma chave.** O ficheiro existe, mas está danificado ou é outra coisa. Na demonstração, com um ficheiro de texto no lugar da chave, a fatura foi recusada com a 4.ª mensagem.
+- **A instalação não está registada na fiscaldoo.** Falta a **Chave de API da fiscaldoo** (por exemplo, numa instalação nova, depois de mudar de servidor ou de repor uma cópia de segurança sem a chave). Na demonstração, a chave vazia deu a 1.ª mensagem.
+- **O servidor não chega à fiscaldoo.** A ligação à internet falhou, ou a fiscaldoo está indisponível. Na demonstração, com a chave preenchida e o endereço apontado a uma porta sem servidor, deu a 2.ª mensagem.
+- **A fiscaldoo recusou a instalação ou não tem chave ativa para ela.** É o caso das mensagens da lista acima: só o suporte da fiscaldoo as resolve.
 
-A chave de assinatura não tem data de fim: não «expira» por passar o tempo. Os certificados e chaves que expiram com a data são os da comunicação com a AT (o **Cofre de chaves** e as **Credenciais da AT**), que não impedem a assinatura das faturas. <span className="fd-pending">Pendente de validação no ecrã: as mensagens de certificado da comunicação expirado (por exemplo «A chave da empresa … expirou em … e não pode ser usada») não se provocam na demonstração, que tem um certificado válido até 29/10/2027.</span>
+A chave de assinatura não tem data de fim para o cliente: não «expira» por passar o tempo, e quem a renova é a fiscaldoo. Os certificados e chaves que expiram com a data são os da comunicação com a AT (o **Cofre de chaves** e as **Credenciais da AT**), que não impedem a assinatura das faturas.
 
 ## O que confirmar
 
-1. A mensagem: se fala da **versão** da chave (1.ª mensagem), de chave **não configurada** (2.ª), de **ler** o ficheiro (3.ª) ou de chave **não válida** (4.ª).
+1. A mensagem: se diz que a **ligação não está configurada** (falta a chave de API), que a fiscaldoo **não respondeu** (falha de ligação) ou outra da lista.
 2. Se o problema é de todas as faturas da empresa. Experimente confirmar outra fatura em rascunho: a recusa repete-se.
-3. Se houve uma mudança no servidor nesse dia (atualização, reposição de uma cópia de segurança, mudança de máquina, chave nova). É isso que o suporte vai perguntar.
+3. Se houve uma mudança no servidor nesse dia (atualização, reposição de uma cópia de segurança, mudança de máquina, alteração da rede ou da firewall).
 
-Nenhum perfil da empresa consegue resolver isto no ecrã: o ficheiro da chave privada está no servidor, fora do fiscaldoo, e a chave de assinatura é do produtor do programa.
+Nenhum perfil da empresa, exceto o administrador do sistema, consegue resolver isto no ecrã.
 
 ## Como resolver
 
-### Numa base de produção
-
 1. Não tente outra vez a mesma fatura em ciclo nem crie faturas noutro programa para contornar: o problema é de todas as faturas. O que a lei prevê, se a paragem passar do prazo de emissão, está mais abaixo.
-2. Contacte o suporte do fiscaldoo (ou quem gere o servidor) com os dados de «Informação a enviar». O suporte instala no servidor a chave privada certa (na 1.ª mensagem, a da versão que ela indica).
-3. Depois de o suporte confirmar, abra a fatura em rascunho e carregue de novo em **Confirmar**.
+2. O administrador do sistema abre **Definições › Faturação**, bloco **Certificação PT**, e carrega em **Ver na fiscaldoo se esta empresa pode assinar**. A resposta confirma se a ligação funciona e se a empresa pode assinar.
+3. Se a ligação não está configurada, o administrador regista a instalação no portal da fiscaldoo e guarda a chave de API ([Como ligar a instalação à fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)). Se a fiscaldoo não responde, verifica a ligação do servidor à internet e repete passados uns minutos.
+4. Se persistir, contacte o suporte do fiscaldoo com os dados de «Informação a enviar».
+5. Depois de resolvido, abra a fatura em rascunho e carregue de novo em **Confirmar**.
 
 <HelpCallout type="atencao" title="As faturas já emitidas não mudam">
-As faturas emitidas antes do problema continuam verificáveis com a versão da chave com que foram assinadas, mesmo depois de essa versão ser retirada. Na demonstração, depois da mudança de chave, **Definições › fiscaldoo · Certificação › Verificar integridade › Abrir** respondeu «Tudo certo: os … documentos verificados têm a assinatura, a numeração e a cadeia intactas.», incluindo os documentos assinados com a versão 1, já retirada. Não as anule nem as emita de novo por causa desta mensagem.
+As faturas emitidas antes do problema continuam verificáveis com a versão da chave com que foram assinadas. A instalação guarda uma cópia, só de leitura, das chaves públicas e dos certificados da última resposta da fiscaldoo: com a fiscaldoo em baixo, os documentos antigos continuam a verificar-se e a imprimir-se e o SAF-T continua a exportar-se; só os documentos novos precisam da fiscaldoo. Não anule as faturas emitidas nem as emita de novo por causa destas mensagens. <span className="fd-pending">Pendente de validação no ecrã: a leitura com a fiscaldoo em baixo, que depende de uma resposta anterior verdadeira da fiscaldoo (a demonstração é simulada e não a guarda).</span>
 </HelpCallout>
 
-**Quem faz:** o suporte ou o administrador do servidor. A empresa confirma de novo quando o suporte disser.
+**Quem faz:** o administrador do sistema e, se persistir, o suporte da fiscaldoo. A empresa confirma de novo quando for dito.
 
-#### Se a paragem passar do prazo de emissão
+### Se a paragem passar do prazo de emissão
 
 Enquanto o programa não assina, não emite faturas. A lei prevê esse caso (Despacho n.º 8632/2014, ponto 2.4, «Integração de documentos processados manualmente em impressos emitidos em tipografias autorizadas, nos casos de inoperacionalidade do programa»):
 
@@ -89,32 +90,19 @@ A paragem não suspende o prazo de emissão da fatura (CIVA, art. 36.º, n.º 1,
 
 {/* Nota interna (correção da aud-v2e, NE1b-05, 30/10/2026): pontos 2.4, 2.4.1, 2.4.2 e 2.4.3 conferidos no texto oficial do Diário da República (research/_fontes/despacho_8632_2014/despacho_8632_2014_dre.txt). Pergunta 1 da auditoria aud-v2e ao CC (juntar às perguntas_cc). Ligar ao artigo próprio do documento manual quando existir. */}
 
-### Numa base de testes
-
-Numa base de testes (o nome da base tem «test»), o administrador pode gerar uma chave de teste nova em **Definições › fiscaldoo · Certificação › Configurar a certificação: séries e chaves › Chave de assinatura e certificado de software de TESTE › Gerar**. Na janela **Gerar chave de assinatura de TESTE**, escolha em **Empresa** a empresa que dá a mensagem. O servidor tem um só ficheiro de chave privada: as empresas que usam outra chave mantêm o registo da sua versão, mas deixam de assinar neste servidor. A opção **Registar também um certificado de software de TESTE?** vem marcada.
-
-Na demonstração:
-
-- gerar com **Empresa** vazio retirou a chave do produtor (versão 1), criou a versão 2 do produtor e trocou o ficheiro do servidor, e a Empresa Demonstração, Lda, que tem chave própria, passou a dar a 1.ª mensagem;
-- gerar com **Empresa** = Empresa Demonstração, Lda criou a versão 3 dessa empresa, e a fatura seguinte foi assinada com ela; as empresas que usavam a chave do produtor ficaram sem assinar.
-
-Uma chave de teste nunca vale para um documento real.
-
-**Quem faz:** o administrador, só numa base de testes.
-
 ## Resultado esperado
 
-- **Confirmar** emite a fatura com o número e o ATCUD da série. Na demonstração, depois de reposta no servidor a chave certa, a fatura recusada foi confirmada como `FT D26/35`, tal como tinha sido emitida a `FT D26/33` antes da mudança.
-- Os lançamentos são os de qualquer fatura (no exemplo, 2111 Clientes gerais D 147,60 € / 721 Prestações de serviços C 120,00 € / 2433 IVA - Liquidado C 27,60 €). Enquanto a fatura é recusada, não se lança nada.
+- **Confirmar** emite a fatura com o número e o ATCUD da série. Na demonstração, depois de reposta a ligação, o mesmo rascunho foi confirmado como `FT D26/31`.
+- Os lançamentos são os de qualquer fatura (no exemplo, 2111 Clientes gerais D 123,00 € / 721 Prestações de serviços C 100,00 € / 2433 IVA - Liquidado C 23,00 €). Enquanto a fatura é recusada, não se lança nada e o número não se gasta.
 
 ## Quando contactar o suporte
 
-- Sempre que aparecer uma destas mensagens numa base de produção.
-- A mensagem mudou depois da intervenção do suporte (por exemplo, de «não está configurada» ou «ler» para «versão»).
+- Sempre que a mensagem seja uma da lista de «A fiscaldoo recusou…», «ainda não tem uma chave de assinatura ativa», «está retirada» ou «assinou o documento … há mais de 24 horas».
+- A ligação do servidor à internet está certa e a fiscaldoo continua a não responder.
 
 ## Informação a enviar
 
-- A mensagem completa, copiada da janela (inclui a versão da chave, se a mensagem a tiver).
+- A mensagem completa, copiada da janela.
 - A empresa e a hora da primeira recusa.
 - O número da última fatura emitida antes do problema.
 - O que mudou no servidor nesse dia, se souber.

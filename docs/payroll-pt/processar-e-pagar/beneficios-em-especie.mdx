@@ -31,7 +31,7 @@ Não use este ecrã para o teletrabalho: tem **Acordos de teletrabalho**, em **P
 
 ## Onde encontrar?
 
-- **Salários › Preparar › Trabalhadores e contratos › Benefícios em espécie**
+- **Salários › Processar › Cessões de salário e rendimentos em espécie › Benefícios em espécie**
 - **Salários › Processar › Cessões de salário e rendimentos em espécie › Ocorrências de rendimentos em espécie**
 - **Salários › Configurar › Rubricas › Regras de benefícios** (só o **Administrador de Salários**)
 
@@ -49,7 +49,7 @@ Não use este ecrã para o teletrabalho: tem **Acordos de teletrabalho**, em **P
 
 <StepByStep>
 
-1. Abra **Salários › Preparar › Trabalhadores e contratos › Benefícios em espécie** e carregue em **Novo**.
+1. Abra **Salários › Processar › Cessões de salário e rendimentos em espécie › Benefícios em espécie** e carregue em **Novo**.
 2. Em **Trabalhador**, escolha o trabalhador, por exemplo Ana Margarida Pinto. Em **Regra do benefício**, escolha a regra: **Tipo** e **Valorização** preenchem-se sozinhos.
 3. Em **De**, escreva `01/10/2026`. Deixe **Até** vazio enquanto a viatura estiver atribuída.
 4. Escreva **Valor de mercado a 1 de janeiro (viatura)**, `24000`, **Custo de aquisição (viatura)**, `30000`, e **Acordo escrito de uso pessoal (viatura)**, `Acordo de viatura 1/2026`. Confirme a opção de **Porque é que a viatura é de uso pessoal?**. Guarde.
@@ -98,7 +98,7 @@ Para contabilizar o lote, cada rubrica precisa de um modelo de contabilização:
 
 ## No Enterprise
 
-No Odoo Enterprise, os benefícios em espécie atribuem-se e calculam-se da mesma maneira: com o perfil **Processador de salários**, **Salários › Preparar › Trabalhadores e contratos › Benefícios em espécie** abre a mesma lista, com **Novo**, e o recibo de **Salários › Processar › Recibos de vencimento** tem os mesmos separadores: **Linhas**, **Segurança Social e IRS**, **Datas e competência** e **Pagamento e obrigações**.
+No Odoo Enterprise, os benefícios em espécie atribuem-se e calculam-se da mesma maneira: com o perfil **Processador de salários**, **Salários › Processar › Cessões de salário e rendimentos em espécie › Benefícios em espécie** abre a mesma lista, com **Novo**, e o recibo de **Salários › Processar › Recibos de vencimento** tem os mesmos separadores: **Linhas**, **Segurança Social e IRS**, **Datas e competência** e **Pagamento e obrigações**.
 
 {/* Nota interna (lote EE-07, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): conferido no ecrã numa cópia local da base Enterprise (docs_ee_ee07b_test: cópia da odoo20_ee_test com a aplicação de salários do Enterprise (hr_payroll) instalada e o código de master; portas 8510/8511), com utilizadores criados na cópia, cada um só com um valor do campo Perfil e o acesso extra indicado: Processador de salários em Benefícios em espécie (lista com Novo; colunas Trabalhador, Regra do benefício, De, Até e Valor mensal) e num recibo de setembro de 2026 (Imprimir recibo, Retificar e os quatro separadores). Caminhos do artigo conferidos com o verificador do test_doc_paths na mesma cópia (0 erros). Ver reports/LOTE_EE-07.md. */}
 

@@ -1102,8 +1102,8 @@
    "slug": "chaves-de-assinatura",
    "caminho": "fiscal-core/chaves-de-assinatura",
    "url": "https://docs.fiscaldoo.pt/fiscal-core/chaves-de-assinatura",
-   "titulo": "Como carregar e renovar a chave de assinatura dos documentos",
-   "resumo": "Mostra onde está a chave, como se renova antes de expirar e o que acontece aos documentos antigos.",
+   "titulo": "Como ligar a instalação à fiscaldoo, que assina os documentos",
+   "resumo": "Mostra como registar a instalação, guardar a chave de API, ver se a empresa pode assinar e o que acontece se a fiscaldoo não responder.",
    "tipo": "tarefa",
    "perfis": [
     "Consultor Odoo",
@@ -17564,8 +17564,8 @@
    "slug": "chave-de-assinatura-expirada",
    "caminho": "troubleshooting/chave-de-assinatura-expirada",
    "url": "https://docs.fiscaldoo.pt/troubleshooting/chave-de-assinatura-expirada",
-   "titulo": "A chave de assinatura expirou ou foi retirada",
-   "resumo": "Mostra como carregar a chave nova sem afetar os documentos já assinados.",
+   "titulo": "A fatura não é assinada: a fiscaldoo não responde, não tem chave ativa ou a ligação não está configurada",
+   "resumo": "Mostra o que fazer quando a fiscaldoo, que assina os documentos, não responde, e como isso não afeta os documentos já assinados.",
    "tipo": "problema",
    "perfis": [
     "Administrador",
