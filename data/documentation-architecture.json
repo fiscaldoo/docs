@@ -496,7 +496,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0002",
@@ -647,7 +647,7 @@
    ],
    "visibilidade": "pública",
    "nota": "Funde os 5 glossários e o dicionário das dicas (auditoria 5.4: glossários a fundir).",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0005",
@@ -1137,7 +1137,7 @@
    ],
    "visibilidade": "interna",
    "decisao_visibilidade": "DEC-1287: a chave de assinatura é do produtor e vive no servidor; procedimento interno, fora do portal público",
-   "estado": "Interno (DEC-1287), fora do portal"
+   "estado": "Pendente de aprovação humana"
   },
   {
    "id": "DOC-0015",
@@ -1183,7 +1183,7 @@
    ],
    "visibilidade": "pública",
    "nota": "Documento exigido à certificação do programa (n.º 2790); sem menu próprio.",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0016",
@@ -1539,7 +1539,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0023",
@@ -1603,7 +1603,7 @@
    ],
    "visibilidade": "pública",
    "aviso": "Operação irreversível com efeito fiscal.",
-   "estado": "Pendente de aprovação humana",
+   "estado": "Pronto para auditoria",
    "fonte_unica": "referência: anular um documento certificado"
   },
   {
@@ -1705,7 +1705,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0026",
@@ -1755,7 +1755,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0027",
@@ -3146,7 +3146,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0055",
@@ -3193,7 +3193,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0056",
@@ -3240,7 +3240,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0057",
@@ -3340,7 +3340,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0059",
@@ -3386,7 +3386,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0060",
@@ -3429,7 +3429,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0061",
@@ -3479,7 +3479,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0062",
@@ -3531,7 +3531,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0063",
@@ -3860,7 +3860,7 @@
    ],
    "visibilidade": "pública",
    "aviso": "Prazo legal de escrituração (CIRC, art. 123.º).",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0070",
@@ -4648,7 +4648,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0086",
@@ -4706,7 +4706,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0087",
@@ -4961,7 +4961,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0092",
@@ -5115,7 +5115,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0095",
@@ -5646,7 +5646,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0106",
@@ -6706,7 +6706,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0126",
@@ -8462,7 +8462,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0160",
@@ -8511,7 +8511,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0161",
@@ -8707,7 +8707,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0165",
@@ -10748,7 +10748,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0204",
@@ -12455,7 +12455,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0237",
@@ -13938,7 +13938,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0265",
@@ -15754,7 +15754,7 @@
    ],
    "visibilidade": "pública",
    "aviso": "Risco fiscal: a numeração e o ATCUD têm de continuar sem falhas.",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0302",
@@ -15957,7 +15957,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0306",
@@ -16049,7 +16049,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0308",
@@ -16280,7 +16280,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0313",
@@ -16325,7 +16325,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0314",
@@ -17201,7 +17201,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana",
+   "estado": "Pronto para auditoria",
    "mensagens_de_erro": {
     "total": 29,
     "por_impacto": {
@@ -18229,7 +18229,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana",
+   "estado": "Pronto para auditoria",
    "mensagens_de_erro": {
     "total": 22,
     "por_impacto": {
@@ -22660,7 +22660,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana",
+   "estado": "Pronto para auditoria",
    "mensagens_de_erro": {
     "total": 24,
     "por_impacto": {
@@ -26510,7 +26510,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   },
   {
    "id": "DOC-0448",
@@ -26556,7 +26556,7 @@
     "20.0"
    ],
    "visibilidade": "pública",
-   "estado": "Pendente de aprovação humana"
+   "estado": "Pronto para auditoria"
   }
  ],
  "percursos": [

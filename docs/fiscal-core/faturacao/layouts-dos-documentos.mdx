@@ -10,7 +10,7 @@ doc_id: DOC-0446
 article_type: tarefa
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master a81f2ab5e)"
+fiscaldoo_version: "20.0 (master e538214d9)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [fiscal-core/faturacao/emitir-uma-fatura-certificada, fiscal-core/certificacao/manual-do-programa-certificado, administration/utilizadores-e-permissoes/perfis-e-permissoes]
@@ -95,6 +95,26 @@ No fim do painel, **Elementos trancados** lista o que a lei fixa: pode vê-los, 
 
 Para emitir a fatura, veja [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada). Sobre a 2.ª via, veja o [Manual do programa certificado](/fiscal-core/manual-do-programa-certificado).
 
+## Números de série e lotes na fatura
+
+Se vende artigos seguidos por número de série ou por lote, a fatura pode imprimir, depois dos totais, a lista do que foi entregue. É uma opção do inventário, não do layout: o layout só decide onde cabe.
+
+<StepByStep>
+
+1. Abra **Definições › Inventário** e, em **Rastreabilidade**, ligue **Lotes & Números de Série**.
+2. No bloco **Valoração**, ligue **Mostrar lotes e números de série nas faturas** (o texto de ajuda diz: «Imprime, depois dos totais da fatura e da nota de crédito, uma tabela com os números de série e os lotes dos artigos entregues. Um documento já emitido reimprime-se como foi emitido. O ficheiro SAF-T leva sempre os números de série de cada linha, com ou sem esta opção.») e carregue em **Guardar**.
+   ![Definições do Inventário, blocos Rastreabilidade e Valoração, com a opção Mostrar lotes e números de série nas faturas ligada e assinalada](/images/fiscal-core/layouts-dos-documentos/12-opcao-numeros-de-serie.png)
+3. Venda os artigos, valide a entrega e crie e confirme a fatura a partir da encomenda. No PDF da fatura, depois dos totais, aparece uma tabela **Artigo**, **Quantidade**, **N.º de série / lote**, com um número por linha: dois portáteis seguidos por número de série saem em duas linhas, `NB14-0001` e `NB14-0002`, e três unidades de uma tinta seguida por lote saem numa linha só, com o lote `TNT-L001`.
+   ![Segunda página do PDF da fatura FT D26/31: depois dos totais, a tabela Artigo, Quantidade e N.º de série / lote com NB14-0001, NB14-0002 e TNT-L001](/images/fiscal-core/layouts-dos-documentos/13-tabela-numeros-de-serie.png)
+
+</StepByStep>
+
+- **Só entra o que veio das entregas.** Uma fatura de um artigo seguido por número de série sem entrega (por exemplo, uma fatura escrita à mão, sem encomenda) não mostra números: visto numa fatura de um portátil criada à mão, que saiu numa só página e sem tabela. A tabela não deixa escolher os números na fatura.
+- **A tabela ocupa espaço.** O bloco dos totais, a tabela, o quadro do IVA e o ATCUD com o código QR passam juntos para a página seguinte quando não cabem na atual. <span className="fd-pending">Pendente de validação: numa fatura de exemplo de duas linhas, a primeira página ficou só com as linhas e o resto passou para a segunda página, o que não era o esperado numa fatura tão curta (defeito já em cartão, FIX-M367). Não conte com este desenho enquanto o cartão não estiver fechado.</span>
+- **Os documentos emitidos antes desta versão** reimprimem como foram emitidos, sem a tabela, porque a segunda via tem de ser igual ao original (Despacho n.º 8632/2014, ponto 2.2.15). <span className="fd-pending">Pendente de validação no ecrã: a reimpressão de uma fatura emitida antes da opção, que a demonstração não tem com números de série.</span>
+- **O orçamento e a encomenda não mostram esta tabela** (visto no PDF da encomenda `S00005`, sem nenhum número de série), e o texto de ajuda da opção diz que só a fatura e a nota de crédito a imprimem. <span className="fd-pending">Pendente de validação no ecrã: a guia de transporte certificada (não aberta), a nota de crédito com a tabela, os oito modelos (visto só o modelo em uso na demonstração) e o desenho a várias páginas com muitas linhas com números de série.</span>
+- **No ficheiro SAF-T** vão os números de série e não os lotes: ver [Como gerar o ficheiro SAF-T de faturação](/fiscal-core/gerar-o-saft), «Números de série no ficheiro».
+
 ## O que o fiscaldoo não deixa mudar
 
 O editor só deixa escolher o que não mexe no que a lei fixa. Não há posição livre: um documento fiscal não se desenha à mão.
@@ -172,3 +192,5 @@ Depois de validado, o fiscaldoo imprime uma fatura já emitida da empresa com o 
 
 - **Causa:** o layout ainda está em **Rascunho**, ou o **PDF impresso** ainda está **Em espera**: o botão só aparece depois de a verificação acabar.
 - **O que fazer:** valide o layout e, passado um ou dois minutos, abra-o de novo. Se a verificação do PDF não passar, o layout diz porquê: corrija numa **Nova versão** e valide-a.
+
+{/* Nota interna (lote 107, FAT-159 #4534, master e538214d9, docs_demo_lote107_test, porta 10428, 24/11/2026): cópia da base-mãe. Inventário ligado na demonstração; por clique (administrador) ligaram-se «Lotes & Números de Série» e «Mostrar lotes e números de série nas faturas» (esta aparece no bloco «Valoração», não em «Rastreabilidade» como diz o cartão). Por RPC criaram-se na cópia os artigos «Portátil de exemplo NB14» (série) e «Tinta de exemplo TNT» (lote), stock por ajuste de inventário, encomenda S00005 (2 portáteis e 3 tintas), guia GT D26/5 (emitida; o código da AT escrito à mão no assistente «Registar o código da AT à mão» só para poder validar a entrega: nada foi comunicado), entrega validada e fatura FT D26/31 de 1.303,80 € (PDF «PDF da fatura»: 2 páginas, tabela na 2.ª, captura 13 do PDF a 200 ppp). Fatura FT D26/32 de um portátil sem entrega: 1 página, sem tabela. Documentos novos que a cópia passa a ter a mais do que a base-mãe: 2 faturas FT (D26/31 e D26/32), 1 guia (GT D26/5), 1 fatura de compra (FTF/2026/00046) e 1 encomenda (S00005); os números do artigo são os da base-mãe. Ficou por ver a nota de crédito e os 8 modelos. */}

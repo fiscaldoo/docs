@@ -9,7 +9,7 @@ doc_id: DOC-0098
 article_type: tarefa
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master 7a46de91a)"
+fiscaldoo_version: "20.0 (master e538214d9)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [accounting-pt/iva/campos-da-declaracao-de-iva, accounting-pt/iva/declaracao-periodica-de-iva, accounting-pt/iva/taxas-e-isencoes-de-iva]
@@ -116,6 +116,8 @@ As linhas vêm de todas as faturas com **0% EU** ou **0% EU S**, e a coluna **Pr
 
 - **Sintoma:** a coluna **Problema** de uma linha tem texto e o **Número de problemas** é maior do que 0.
 - **Causa:** o NIF do cliente falta, é português (não é uma operação intracomunitária) ou tem o formato ou o dígito de controlo errado.
-- **O que fazer:** o NIF de um cliente com faturas emitidas não se altera na ficha: o fiscaldoo recusa com «… já é usado em documentos certificados, por isso o seu NIF (…) não pode ser alterado aqui …» e manda pedir a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que o corrija com o botão **Correção auditada** da ficha. Depois da correção, crie a declaração de novo e carregue em **Gerar linhas**. <span className="fd-pending">Pendente de validação no ecrã: na demonstração nenhum cliente com 0% EU tem o NIF errado, e o NIF de um cliente com faturas emitidas não se altera para provocar o caso.</span>
+- **O que fazer:** o NIF de um cliente com faturas emitidas não se altera na ficha: o fiscaldoo recusa com «… já é usado em documentos certificados, por isso o seu NIF (…) não pode ser alterado aqui …» e a frase final depende de quem lê. Com o perfil **Contabilista certificado**, que tem o botão **Correção auditada** na ficha do cliente, diz «Se foi um erro de escrita, corrija-o com a correção auditada (botão «Correção auditada» na ficha); caso contrário, crie um registo novo.» Com o perfil **Contabilista**, que não tem o botão, diz «Se foi um erro de escrita, peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que o corrija com a correção auditada (botão «Correção auditada» na ficha); caso contrário, crie um registo novo.» (as duas frases lidas ao gravar o NIF de um cliente com faturas emitidas e vistas com os dois perfis, e o botão confirmado na ficha do cliente de cada um). Depois da correção, crie a declaração de novo e carregue em **Gerar linhas**. <span className="fd-pending">Pendente de validação no ecrã: a correção do NIF de um cliente 0% EU com o botão **Correção auditada** até à nova **Gerar linhas** (na demonstração nenhum cliente 0% EU tem o NIF errado, e a correção grava um registo de auditoria).</span>
 
 {/* Nota interna (DOCS-066 #3947, lote v23-BA, master ce51f2d47, docs_demo_v23ba_test, 10/11/2026, regra do check-perfis): por clique com um utilizador criado só com o perfil Administrativo, ao mudar o NIF da Papelaria Central, Lda e guardar: a recusa manda pedir a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» a correção com o botão «Correção auditada»; nada foi gravado. */}
+
+{/* Nota interna (lote 107, FIX-M343b #4508, master e538214d9, docs_demo_lote107_test, 24/11/2026): recusa de alteração do NIF do cliente «Padaria Aurora, Lda» (documentos certificados) lida por RPC com utilizadores criados na cópia só com o perfil Contabilista certificado e só com o perfil Contabilista (e com o administrador, que lê a frase de quem pode); botão «Correção auditada» visto na ficha do cliente por clique com o Contabilista certificado e ausente com o Contabilista. Na empresa (parceiro da empresa) a recusa tem as mesmas duas frases. Nenhum NIF ficou alterado. */}

@@ -10,7 +10,7 @@ doc_id: DOC-0079
 article_type: tarefa
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master 7f41ce71b)"
+fiscaldoo_version: "20.0 (master e538214d9)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [accounting-pt/plano-de-contas/criar-e-alterar-contas, accounting-pt/plano-de-contas/taxonomias]
@@ -45,7 +45,7 @@ Os **clientes e fornecedores novos** recebem a conta sozinhos, no seu primeiro d
 ## Onde encontrar?
 
 - **A opção:** em **Definições**, secção **Empresas**, **Gerir empresas**. Abra a empresa, separador **Contabilidade**, grupo **Contas de clientes e fornecedores**, caixa **Contas correntes individuais**.
-- **O assistente:** **Contabilidade › Configurar › Plano e regras legais › Ferramentas das contas › Contas individuais dos parceiros existentes** (fora do administrador, só com o modo programador).
+- **O assistente:** **Contabilidade › Configurar › Plano e regras legais › Ferramentas das contas › Contas individuais dos parceiros existentes** (o administrador vê-o na barra; o Contabilista certificado chega a ele pela pesquisa de menus: tecla «/», «Contas individuais»; o Contabilista não o acha).
 
 ## Antes de começar
 
@@ -139,3 +139,5 @@ Com os mesmos dados do exemplo:
 {/* Nota interna (DOCS-065 req. 46421, lote v23-I, master 5228a94bd). Duas cópias da base-mãe v2, com o saldo inicial de 300,00 € da Clínica e a opção ligada por RPC (admin) antes do assistente; assistente por clique com um utilizador criado só com o perfil Contabilista certificado, com o modo de programador. docs_demo_v23i2_test: opção ligada, captura 01, Resultado copiado da janela, OD/2026/00139 (Clínica) e OD/2026/00140 (121 C / 12110001 D 33.159,53). docs_demo_v23i_test: opção desligada, Resultado copiado, só OD/2026/00141 (banco); 2.ª corrida ligada: OD/2026/00142 (Clínica), «0 cliente(s)…» e 9 documentos em aberto (a cópia tinha mais 2 faturas de fornecedor do DOC-0354). Cartão Banco lido no painel antes e depois nas duas: Saldo contabilístico 32.792,03 €, Saldo bancário −39.140,47 €, Diferença −71.932,50 €, sem mudança (a linha Operações diversas do cartão passou de 151.000,00 € para 33.159,53 €). Linhas dos lançamentos e saldos de 2026 das contas lidos por RPC, não no ecrã do Balancete. O aviso amarelo de diários que já deixaram saldo na 121 (bases tratadas antes do ACC-269) não se provoca numa cópia nova: fica fora do artigo. */}
 
 {/* Nota interna (DOCS-046, lote v23-K, 07/11/2026, master a3603e0f2, base docs_demo_v23k_test na 8434, base-mãe v2): captura 01 refeita sem o ícone do modo de programador: caminho seguido com um utilizador só com o perfil Contabilista certificado e o modo de programador, e a mesma ação aberta depois sem ele. Na base-mãe v2 a opção Contas correntes individuais vem desligada (o assistente só dizia para a ligar): foi ligada por RPC (administrador) nesta cópia. Contadores 24, 19 e 1 lidos antes de publicar as faturas FT D26/31 e FT D26/32, que depois deram contas individuais a dois clientes. */}
+
+{/* Nota interna (lote 107, DEC-1086/UX-118, master e538214d9, docs_demo_lote107_test, 24/11/2026): pesquisa de menus com um utilizador só Contabilista certificado: «Contas individuais» acha «Configurar › Plano e regras legais › Ferramentas das contas › Contas individuais dos parceiros existentes»; só Contabilista: «Nenhum menu encontrado». O assistente em si não foi refeito neste lote. */}

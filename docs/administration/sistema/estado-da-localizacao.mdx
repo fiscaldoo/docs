@@ -10,7 +10,7 @@ doc_id: DOC-0322
 article_type: tarefa
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master 2c8d358c0)"
+fiscaldoo_version: "20.0 (master e538214d9)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [fiscal-core/certificacao/autodiagnostico-da-certificacao, administration/sistema/processos-automaticos, administration/seguranca-e-arquivo/seguranca-e-comunicacao]
@@ -34,7 +34,7 @@ O **Estado da localização** responde a duas perguntas: a empresa ativa está p
 
 ## Antes de começar
 
-O perfil é o de **Contabilista certificado**, que vê os dois menus. Feito a 10 de novembro de 2026. O **Contabilista** não os tem. O resultado é o da empresa ativa, no canto superior direito.
+O perfil é o de **Contabilista certificado**, que vê os dois menus. Feito a 10 de novembro de 2026. O **Contabilista** não os tem. O perfil **Auditor / ROC**, que só lê, também consegue abrir estes ecrãs (e o **Estado do IVA (PT)**), mas só por uma ligação direta: a aplicação **Auditoria** não tem um menu para eles, e a pesquisa de menus não os acha. <span className="fd-pending">Pendente de validação por contabilista certificado: se o Auditor / ROC deve ter um menu para estes ecrãs.</span> O resultado é o da empresa ativa, no canto superior direito.
 
 ## Como utilizar
 
@@ -70,6 +70,11 @@ Visto com uma empresa ainda por configurar (**Empresa Teste Portugal**). Cada li
 | «Não há nenhuma série fiscal ativa.» | «Crie e comunique a série em Contabilidade › Configurar › Faturação certificada › Séries fiscais.» |
 | «Não existe certificado de software da AT em vigor para a empresa…» | «…pelo que este documento não pode ser assinado nem impresso. Peça ao administrador para registar o certificado.» Hoje o certificado vem da fiscaldoo: o administrador confere-o em **Definições › Faturação** (linha **Certificado de software da AT em vigor**) e, se faltar, é um assunto do suporte da fiscaldoo. <span className="fd-pending">Pendente de validação no ecrã: estas duas mensagens de uma empresa sem chave e sem certificado, que a demonstração (fiscaldoo simulada) já não dá.</span> |
 
+### «A chave de API guardada desta instalação não se consegue abrir neste servidor»
+
+- **Causa:** a chave de API da fiscaldoo está guardada no cofre, mas este servidor não tem a chave de segurança que a protegeu (falta ou é diferente, por exemplo depois de restaurar a base de dados noutro servidor). Os ecrãs **Estado da localização** e **Estado da certificação** abrem na mesma e mostram a linha **Certificado de software da AT em vigor** (e a **Chave de assinatura ativa**) em **Precisa de atenção**, com «A chave de API guardada desta instalação não se consegue abrir neste servidor, por isso nada foi assinado nem verificado com a fiscaldoo. Porquê: … Como resolver: Peça ao administrador do sistema para repor neste servidor a chave de segurança do servidor original, ou para colar outra vez a chave de API em Definições › Faturação › Certificação PT.»
+- **O que fazer:** é do administrador do sistema; o pormenor está em [Como fazer o autodiagnóstico da certificação](/fiscal-core/autodiagnostico-da-certificacao), «A chave de API guardada desta instalação não se consegue abrir neste servidor».
+
 ### «Contabilidade organizada respondida: Por responder»
 
 - **Causa:** ninguém disse ainda se a empresa tem contabilidade organizada. O ecrã avisa que «Nada fica bloqueado».
@@ -80,3 +85,5 @@ Visto com uma empresa ainda por configurar (**Empresa Teste Portugal**). Cada li
 {/* Nota interna (lote v23-AK, DOCS-069 #4052, master 7a3b55244, docs_demo_v23ak_test, 08/11/2026): exemplo do passo 3 lido no ecrã com um utilizador só com o perfil Contabilista certificado: l10n_pt_fiscaldoo_base (20.0.1.31.54); nenhum módulo com «arxi» na lista. */}
 
 {/* Nota interna (DOCS-066 #3947, lote v23-AZ, 10/11/2026, master bfedd3b23, docs_demo_v23az_test, porta 8508, DEF-QA7-c-01): mensagens da Empresa Teste Portugal lidas por clique com o administrador (Contabilidade › Configurar › Sistema e segurança › Estado da localização): «Peça ao administrador que crie a chave…» e «…pelo que este documento não pode ser assinado nem impresso. Peça ao administrador para registar o certificado.», iguais ao pt_PT.po do l10n_pt_fiscaldoo_cert. Com um utilizador só Contabilista certificado (Empresa Demonstração), os dois menus abertos por clique: seis linhas (nova: Os PDF certificados guardados estão legíveis), sem botões no topo (o Novo já não aparece), l10n_pt_fiscaldoo_base 20.0.1.31.73. Captura 01 refeita numa cópia acabada de fazer, sem documentos meus: 0 PDF logo a seguir ao arranque, 10 um minuto depois (tarefa em segundo plano); a captura antiga tinha a frase com «o Responsável fiscal». Só Contabilista: sem os dois menus. */}
+
+{/* Nota interna (lote 107, QA2311-PLAT-FIX / DEF-QA2311-PLAT-01, master e538214d9, docs_demo_lote107_test, porta 10429, 24/11/2026): utilizador criado na cópia só com o perfil Auditor / ROC: as ligações diretas /odoo/action-<id> dos três painéis (localização 510, certificação 979, IVA 1265, ids desta cópia) abriram sem «Não tem permissão para criar» e mostraram o bloco Configuração com a linha a vermelho do cofre ilegível; a barra da app Auditoria (Registos, Integridade, Conferências, Pacote do auditor) e a pesquisa de menus («Estado», «Estado da localização», «Estado do IVA») não têm entrada para eles. Isto é um buraco de menu do produto, não um defeito de permissão: reportado no relatório do lote. */}

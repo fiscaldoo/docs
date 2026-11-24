@@ -10,7 +10,7 @@ doc_id: DOC-0327
 article_type: conceito
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master 7a46de91a)"
+fiscaldoo_version: "20.0 (master e538214d9)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [troubleshooting/geral/mensagens-do-sistema, troubleshooting/geral/como-pedir-suporte]
@@ -69,6 +69,14 @@ Use um utilizador próprio para a ligação: esta permissão inclui a faturaçã
 
 Cada chamada corre numa só empresa, a do utilizador. Um documento ou um cliente de outra empresa responde `NOT_FOUND` ou `PARTNER_NOT_FOUND`, como se não existisse: o programa nunca fica a saber o que há nas outras empresas. Se um identificador que vê no ecrã dá `NOT_FOUND`, confirme primeiro a empresa.
 
+## A língua das mensagens e do PDF
+
+A língua depende da porta por onde o programa entra.
+
+- **A API de faturação** (os códigos deste artigo) responde sempre em português: com ou sem língua no pedido, a mensagem de um NIF inválido vem em português (visto com o contexto vazio e com `en_US`).
+- **As chamadas diretas ao fiscaldoo por XML-RPC ou JSON-RPC** (gravar uma fatura, confirmar, ler dados) devolvem as mensagens de recusa na língua que o pedido traz em `context`, e **sem língua saem em inglês**, mesmo que o utilizador da ligação tenha o português como língua. Para receber as mensagens em português, envie `context: {'lang': 'pt_PT'}` em cada pedido. Visto por XML-RPC, ao gravar uma fatura de compra com a data de receção num período cuja declaração de IVA já foi entregue: sem língua, «The receipt date 20/06/2026 is in a period whose VAT return (2026/6) was already delivered…»; com `{'lang': 'pt_PT'}`, «A data de receção 20/06/2026 está num período cuja declaração periódica de IVA (2026/6) já foi entregue…»; com `{'lang': 'en_US'}`, em inglês. Por exemplo: `models.execute_kw(db, uid, password, 'account.move', 'create', [valores], {'context': {'lang': 'pt_PT'}})`.
+- **O PDF certificado que o programa guarda ao emitir** (fatura, recibo, guia, documento de trabalho) sai na língua do parceiro do documento, ou em português se o parceiro não tiver língua, sem depender da língua do pedido: não é preciso enviar `lang` para o PDF sair certo. As mensagens de erro continuam a seguir o `context.lang`. <span className="fd-pending">Pendente de validação no ecrã: esta regra do PDF só vale a partir do comboio 238 (FIX-M366), que ainda não está na versão deste artigo (master e538214d9); antes, o PDF de um parceiro sem língua podia sair em inglês quando a fatura era emitida por RPC.</span>
+
 ## Nas descargas de ficheiros
 
 Um relatório ou um mapa aberto por um endereço direto responde de outra forma, com uma página de texto simples e o código no fim:
@@ -92,3 +100,5 @@ Siga [Como pedir ajuda ao suporte e que informação enviar](/troubleshooting/co
 {/* Nota interna (DOCS-066 #3947, lote v23-BA, master ce51f2d47, docs_demo_v23ba_test, 10/11/2026, DEF-QA8-c-02): ACCESS_DENIED conferido no pt_PT.po de master (l10n_pt_fiscaldoo_cert): «Peça ao administrador que a dê ao utilizador de integração.». */}
 
 {/* Nota interna (lote v23-BE, depois do comboio 188 com o FAT-155 #4147, master 7a46de91a, docs_demo_v23be_test, porta 8504): respostas pedidas por chamada JSON-RPC (sem ecrã: é a API) com um utilizador criado por RPC só na cópia (perfil Administrativo + Integração API, em português), cliente Papelaria Central, Lda: create_invoice com 2 × Material de escritório (kit) sem price_unit → OK, rascunho com a linha a 85,00, 170,00 sem IVA, total 209,10; linha só com nome e sem preço → PRICE_REQUIRED (texto acima, nada gravado); linha com price_unit 0 → OK, rascunho a 0,00; post_invoice desse rascunho → ZERO_TOTAL (texto acima, continua rascunho). Os dois rascunhos foram apagados no fim. O gerador tools/doc_catalogo_erros_gerar.py de master já tem os dois códigos. */}
+
+{/* Nota interna (lote 107, FIX-M359 #4536 e FIX-M366 #4545, master e538214d9, docs_demo_lote107_test, porta 10428, 24/11/2026): l10n_pt.api.validate_vat('12345678') sem contexto e com en_US: a mesma frase em português (JSON-RPC, administrador). XML-RPC (/xmlrpc/2/object, execute_kw, administrador, lang do utilizador pt_PT): create de account.move de compra com receção em 20/06/2026 e 23 % com context {}, {'lang':'pt_PT'} e {'lang':'en_US'}: inglês, português, inglês. O FIX-M359 e o FIX-M366 ainda não estão em master (comboio 238): a regra do PDF fica pendente. Não há artigo geral de integração por RPC: o texto vive neste, o único da API; o Gestor decide se merece artigo próprio. */}

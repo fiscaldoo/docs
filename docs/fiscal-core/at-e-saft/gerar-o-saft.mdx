@@ -10,7 +10,7 @@ doc_id: DOC-0052
 article_type: tarefa
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master a67618a71)"
+fiscaldoo_version: "20.0 (master e538214d9)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [fiscal-core/at-e-saft/comunicar-a-faturacao-mensal, fiscal-core/at-e-saft/corrigir-erros-do-saft, fiscal-core/faturacao/clientes, fiscal-core/faturacao/artigos]
@@ -86,6 +86,17 @@ O vídeo mostra os passos 1 a 7: abrir **Gerar SAF-T**, escolher o modo **F — 
 - O ficheiro do mês entrega-se à AT dentro do prazo. Na demonstração, o resumo **O que há para fazer com o SAF-T?** dava como prazo do ficheiro de setembro de 2026 o dia 6 de outubro de 2026. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo legal da comunicação mensal da faturação e regra quando o dia calha num feriado.</span>
 - O **Tipo de produto do SAF-T** de cada artigo e o NIF de cada cliente entram no ficheiro: [Como criar um artigo com o IVA e o tipo certos](/fiscal-core/artigos) e [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes).
 
+## Números de série no ficheiro
+
+Em cada linha de fatura, de guia de transporte ou de documento de trabalho com um artigo seguido por **número de série**, o ficheiro leva o nó `ProductSerialNumber`, com um `SerialNumber` por número, mesmo que a opção **Mostrar lotes e números de série nas faturas** das Definições esteja desligada. Visto no ficheiro de novembro da demonstração, gerado depois de uma venda de dois portáteis: a linha da fatura `FT D26/31` e a da guia `GT D26/5` trazem `<ProductSerialNumber><SerialNumber>NB14-0001</SerialNumber><SerialNumber>NB14-0002</SerialNumber></ProductSerialNumber>`, a seguir à descrição; o registo ficou **Gerado**, com 0 erros e 0 avisos.
+
+- **Só números de série, nunca lotes.** A tinta vendida por lote (`TNT-L001`) não aparece no ficheiro: o esquema do SAF-T (PT) 1.04_01 não tem campo para o lote.
+- **Só o que veio das entregas.** Uma fatura de um artigo seguido por número de série sem entrega (escrita à mão) não leva `ProductSerialNumber`: visto na `FT D26/32`.
+- **Cada número tem no máximo 100 caracteres.** Um número mais comprido é cortado e o ficheiro sai com um aviso. <span className="fd-pending">Pendente de validação no ecrã: o corte e o aviso, que não se provocaram.</span>
+- **É informação do ficheiro, não uma obrigação do produto.** <span className="fd-pending">Pendente de validação por contabilista certificado: se a lei obriga a declarar os números de série no SAF-T (CIVA, art. 36.º, n.º 5, alínea b), sobre a denominação usual dos bens); até haver resposta, trate-os como informação opcional.</span>
+
+A tabela que a fatura imprime está em [Como mudar o aspeto das faturas](/fiscal-core/layouts-dos-documentos), «Números de série e lotes na fatura».
+
 ## Problemas frequentes
 
 ### Falta a identificação do programa
@@ -133,3 +144,5 @@ O vídeo mostra os passos 1 a 7: abrir **Gerar SAF-T**, escolher o modo **F — 
 
 - **Causa:** o **Modo** foi mudado para **C — Contabilidade** (a janela abre em **F — Faturação**).
 - **O que fazer:** gere de novo com **F — Faturação** (passo 2). O ficheiro de contabilidade tem o seu próprio uso e prazo.
+
+{/* Nota interna (lote 107, FAT-159 #4534, master e538214d9, docs_demo_lote107_test, porta 10428, 24/11/2026): ficheiro gerado como Contabilista certificado por clique (janela Gerar SAF-T aberta; as datas foram postas por RPC no assistente porque o campo Data de referência não se deixou escrever pelo guião): SAFT-PT_599999993_2026_11_F.xml, estado Gerado, 0 erros e 0 avisos; ProductSerialNumber em SalesInvoices (FT D26/31) e em MovementOfGoods (GT D26/5), nenhum em FT D26/32 (sem entrega), lote TNT-L001 ausente; não se validou o ficheiro contra o XSD fora do produto (o produto valida-o ao gerar). Não se viu o WorkingDocuments. */}
