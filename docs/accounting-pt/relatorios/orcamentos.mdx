@@ -10,7 +10,7 @@ doc_id: DOC-0155
 article_type: tarefa
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master 2c8d358c0)"
+fiscaldoo_version: "20.0 (master 8f4f948ef)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [accounting-pt/relatorios/demonstracao-de-resultados, accounting-pt/relatorios/balancete]
@@ -59,10 +59,24 @@ O orçamento não faz lançamentos contabilísticos: serve só para comparar.
 
 ## No Enterprise
 
-No Odoo Enterprise, os orçamentos são o **Orçamento analítico** do próprio Enterprise, em **Contabilidade › Consultar › Análise**. Os menus **Orçamentos** e **Relatório de orçamento versus realizado** deste artigo são do Comunitário e não existem no Enterprise: os passos, os botões, os estados e os valores do exemplo acima não se aplicam ali.
+No Odoo Enterprise, os orçamentos são o **Orçamento analítico** do próprio Enterprise. Os menus **Orçamentos** e **Relatório de orçamento versus realizado** deste artigo são do Comunitário e não existem no Enterprise: os passos, os botões, os estados e os valores do exemplo acima não se aplicam ali. Os dois menus do Enterprise estão à vista, sem modo de programador:
 
-<span className="fd-pending">Pendente de validação no ecrã do Enterprise: o caminho, os passos do Orçamento analítico e os perfis que o veem. Esta secção segue o que o produto diz do Enterprise; a base de demonstração desta ronda é só Comunitário.</span>
+- **Contabilidade › Consultar › Análise › Orçamento analítico**
+- **Contabilidade › Consultar › Análise › Relatório de orçamentos**
 
+![Menu Consultar do Enterprise, grupo Análise, com Orçamento analítico e Relatório de orçamentos assinalados](/images/accounting-pt/orcamentos/07-menu-analise-enterprise.png)
+
+**Quem vê o quê.** Visto por clique com um utilizador de cada perfil: o **Contabilista certificado**, o **Contabilista**, o **Auditor / ROC** e a **Gerência** veem os dois menus; o **Administrativo** não os vê, porque não tem a aplicação **Contabilidade**. O **Contabilista certificado** abre a lista e a ficha editáveis (botões **Novo**, **Aberto** e **Cancelar Orçamento**). <span className="fd-pending">Pendente de validação no ecrã do Enterprise: o que o **Contabilista**, o **Auditor / ROC** e a **Gerência** podem fazer na ficha (o produto diz que o Contabilista, o Responsável fiscal e o administrador criam, alteram e confirmam, e que o Auditor e a Gerência só leem: o orçamento abre sem campos editáveis e, ao carregar em **Aberto** ou **Cancelar Orçamento**, aparece «Sem acesso» a dizer que o perfil é só de leitura); o **Trabalhador**, que não se experimentou.</span>
+
+**O ecrã é o do Enterprise.** A lista **Orçamentos** tem as colunas **Nome do Orçamento**, **Data Inicial**, **Responsável** e **Estado** e os botões **Novo** e **Gerar**. A ficha tem os estados **Rascunho**, **Aberto** e **Concluído**, os botões **Aberto** (confirma) e **Cancelar Orçamento**, o atalho **Relatório de orçamentos** e os campos **Nome do Orçamento**, **Responsável**, **Tipo de orçamento** (por omissão **Despesa**) e **Período**, com as **Linhas do Orçamento** por conta analítica e a coluna **Compromissos**. Não há **Criar revisão**, nem os estados **Confirmado** e **Revisto**, nem **Teórico**, **Realizado**, **Desvio** e **Alerta** do Comunitário. No Enterprise, os orçamentos do Comunitário não se instalam e o orçamento não faz lançamentos.
+
+![Lista Orçamentos do Enterprise com os botões Novo e Gerar](/images/accounting-pt/orcamentos/08-lista-orcamentos-enterprise.png)
+
+![Ficha do orçamento do Enterprise com os botões Aberto e Cancelar Orçamento e os estados Rascunho, Aberto e Concluído](/images/accounting-pt/orcamentos/09-ficha-orcamento-enterprise.png)
+
+**O relatório.** O **Relatório de orçamentos** abre com o filtro **Orçamentado** e a tabela dinâmica por orçamento e conta analítica; um orçamento em rascunho não aparece até ser confirmado. As medidas chamam-se **Compromissos** (valor orçamentado), **Liquidação** (valor a liquidar previsto, editável, que é a base de **Atingido (%)**), **Comprometido** (encomendas por faturar mais o faturado), **Atingido** (faturas lançadas) e **Teórico** (o devido até hoje, pelos dias decorridos), e os filtros **Orçamentado** e **Num orçamento**. <span className="fd-pending">Pendente de validação no ecrã do Enterprise: confirmar um orçamento e ver o relatório, os nomes das medidas e dos filtros e o valor depois de confirmar (3.000,00 € no exemplo do produto): esta cópia só chegou à lista e à ficha, e os nomes e os valores vêm das notas do produto (EEA-095 e EEA-096).</span>
+
+{/* Nota interna (lote 106, EEA-095 e EEA-096, master 8f4f948ef, base Enterprise docs_ee_l106_test, computador 2, porta 8511, 23/11/2026): cópia da base-modelo Enterprise com o módulo account_budget instalado só na cópia (não vinha); utilizadores criados na cópia só com cada perfil. Menus Contabilidade › Consultar › Análise › Orçamento analítico e Relatório de orçamentos à vista, sem modo de programador, para Contabilista certificado, Contabilista, Auditor / ROC e Gerência; o Administrativo não tem a aplicação. Lista e ficha abertas por clique com o Contabilista certificado. NÃO visto: criar e confirmar um orçamento, o relatório, e as permissões de escrita por perfil. Capturas 07 a 09. Com a secção escrita, a exceção REPLACED_IN_ENTERPRISE de test_doc_paths.py (DEC-2002) pode sair quando o Gestor aprovar; o aviso de pendente ainda não deve sair. */}
 {/* Nota interna (lote 103, FIX-EE011-COP #4485): texto pedido pelo bilhete fix_ee011_txt («Orçamento analítico» do Enterprise em Contabilidade › Consultar › Análise; os menus Orçamentos e Relatório de orçamento versus realizado do Comunitário não existem no Enterprise, DEC-1036 (2)). Nomes dos dois menus lidos no registo de menus da ponte Enterprise (l10n_pt_fiscaldoo_ee: «Orçamento analítico» e «Relatório de orçamentos»). Sem base Enterprise nesta ronda: nada visto no ecrã do Enterprise. DÚVIDA PARA O GESTOR: a mesma ponte marca estes dois menus como «só em modo de programador» (UX-061, lista _DEBUG_ONLY, com o comentário «os orçamentos usados são os nossos», que a DEC-1036 (2) contraria): se for assim, um Contabilista no Enterprise não chega aos orçamentos por clique. Quando existir a secção, retirar o artigo de REPLACED_IN_ENTERPRISE em fiscaldoo_copilot_helper/tests/test_doc_paths.py. Auditoria do lote 103: a secção ficou reduzida ao que o bilhete fix_ee011_txt diz (o «Orçamento analítico» em Contabilidade › Consultar › Análise; os dois menus do Comunitário não existem no Enterprise); o segundo menu («Relatório de orçamentos»), os estados do Enterprise e a frase das faturas de fornecedor saíram por não estarem no bilhete nem terem prova no ecrã. */}
 
 ## Resultado esperado

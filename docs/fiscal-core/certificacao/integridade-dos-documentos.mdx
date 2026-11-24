@@ -10,7 +10,7 @@ doc_id: DOC-0016
 article_type: tarefa
 odoo_versions: ["20.0"]
 editions: Community e Enterprise
-fiscaldoo_version: "20.0 (master d7b8279e9)"
+fiscaldoo_version: "20.0 (master 8f4f948ef)"
 validation: pendente
 approval_state: Pendente de aprovação humana
 related: [fiscal-core/certificacao/series-documentais, fiscal-core/certificacao/preparar-a-faturacao-certificada]
@@ -75,9 +75,23 @@ Se um dos ecrãs mostrar um problema, não tente corrigir o documento nem a base
 
 ## Problemas frequentes
 
+### O relatório diz que as assinaturas não foram verificadas
+
+- **Sintoma:** o relatório abre, mas por cima da tabela há uma faixa amarela: «As assinaturas dos documentos não foram verificadas: a fiscaldoo, que dá as chaves que as verificam, não pode ser contactada neste momento. Veja nas linhas a vermelho como resolver e volte a executar o relatório.» Cada série e cada diário tem **0** em **Verificados** e **0** em **Problemas**, e o **Resultado** diz **Não verificado**, com o **Detalhe**: «As assinaturas não foram verificadas: a fiscaldoo, que dá as chaves que as verificam, não pode ser contactada neste momento. Como resolver: Peça ao administrador que registe esta instalação no portal da fiscaldoo e que cole a chave de API que o portal dá em Definições › Faturação › Certificação PT.»
+  ![Relatório de integridade com a faixa amarela e as séries FT D26 e NC D26 em Não verificado, com 0 verificados e 0 problemas](/images/fiscal-core/integridade-dos-documentos/03-nao-verificado.png)
+- **Causa:** as chaves que verificam as assinaturas vêm da fiscaldoo, e a instalação não está registada no portal ou a fiscaldoo não responde (e a instalação ainda não tem a cópia local das chaves). **Não verificado** não é uma cadeia quebrada: nada se bloqueia nem se altera, e nenhum documento conta como verificado. O **Imprimir PDF** e o **Exportar XLSX** saem com a mesma indicação.
+- **O que fazer:** peça ao administrador que registe a instalação no portal da fiscaldoo e cole a chave de API em **Definições › Faturação › Certificação PT** (é o «como resolver» do ecrã; ver [Como ligar a instalação à fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)). Depois carregue em **Executar**. Se a causa for a ligação à internet do servidor, a mensagem diz-o e pede para a verificar. <span className="fd-pending">Pendente de validação no ecrã: o texto «A fiscaldoo não respondeu…» (instalação registada mas sem resposta), que exige uma chave de API verdadeira no cofre, e o relatório com a cópia local das chaves, porque a demonstração tem a fiscaldoo simulada e nenhuma chave de API.</span>
+
+### O histórico anterior à certificação do diário
+
+- **Sintoma:** a dúvida é se os lançamentos que já existiam antes de o diário ser certificado aparecem como adulterados.
+- **O que o produto faz:** o histórico selado com o hash nativo do Odoo antes de o diário ser certificado, sem série nem assinatura, verifica-se com esse hash e aparece **Verificados**, com «Os lançamentos têm o hash correto». O mesmo vale para um diário certificado por uma versão antiga do programa, que ainda não tinha o marcador do início da certificação. Só aparece **Corrompido** se um lançamento foi mesmo alterado.
+- **Visto no ecrã:** na demonstração, todos os diários certificados (e nenhum tem marcador de início da certificação) aparecem **Verificados**, e a faixa do topo diz «Tudo certo: os 53 documentos verificados têm a assinatura, a numeração e a cadeia intactas.». <span className="fd-pending">Pendente de validação no ecrã: um diário com lançamentos sem série anteriores à certificação, que a demonstração não tem (os diários certificados só têm documentos assinados) e que não se cria pelo ecrã.</span>
+
 ### O relatório mostra menos documentos do que esperava
 
 - **Causa:** o filtro **De**/**Até**, **Diários** ou **Série** está preenchido, ou está noutra empresa.
 - **O que fazer:** limpe os filtros, confirme a empresa no canto superior direito e carregue em **Executar**.
 
+{/* Nota interna (lote 106, KEY-005, FIX-M348 e FIX-M350, master 8f4f948ef, docs_demo_l106c_test, porta 10303, 23/11/2026, base-mãe acabada de copiar: 53 documentos, FT D26 com 30): com o parâmetro allow_test_database ligado na cópia (reposto no fim) e sem chave de API, o relatório abriu com a faixa e 14 linhas (7 séries e 7 diários) em «Não verificado» com 0 verificados e 0 problemas; PDF e XLSX com a mesma indicação (uma só célula «Não verificado» no XLSX, porque o texto é partilhado); com o interruptor desligado, «Tudo certo: os 53 documentos…» e os 7 diários «Verificados». O texto «A fiscaldoo não respondeu…» não se viu (precisa de chave de API no cofre). */}
 {/* Nota interna (lote v23-AN, depois do comboio 174 com o CERT-148, master a67618a71, docs_demo_v23an_test): com um utilizador só com o perfil Auditor / ROC, Auditoria › Integridade › Verificar integridade dos documentos abriu já corrido (54 documentos); De, Até, Diários, Série e a caixa da cadeia nativa editáveis; ao mudar De e Até o resultado desapareceu e só ficaram Executar e Fechar; De 01/08/2026 a 31/10/2026 deu 9 documentos; Série FT D26 deu 31 documentos e as 7 linhas da cadeia nativa dos diários (achado do CERT-148, a decidir pelo Gestor); sem a cadeia nativa, só a linha FT D26; Exportar XLSX e Imprimir PDF descarregaram ficheiro. A Série e os Diários não oferecem criar com um nome que não existe. Captura 01 refeita com o Contabilista certificado. Auditoria docs-aud-v23an (09/11/2026, cópia nova da base de demonstração em a67618a71, utilizador só com o perfil Contabilista certificado): os 54 documentos e a FT D26 com 31 incluíam a FT D26/31 que o lote criou; na base de demonstração são 53 e 30, e a captura 01 foi refeita com esses números. Os Controlos de integridade e integralidade (passo 5, captura 02) não se refizeram neste lote. */}
