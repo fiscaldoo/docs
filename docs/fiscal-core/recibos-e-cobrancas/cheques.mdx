@@ -65,8 +65,8 @@ Lançamentos gerados na demonstração, conferidos nas linhas de cada um (os do 
 | Passo | Débito | Crédito |
 |---|---|---|
 | Recibo (`RG D26/16`) | 120002 Recebimentos Pendentes, 147,60 € | 2111 Clientes gerais, 147,60 € |
-| Depositar (`OD/2026/00104`) | 120001 Conta Transitória, 147,60 € | 120002 Recebimentos Pendentes, 147,60 € |
-| Cobrado (`OD/2026/00105`) | 120002 Recebimentos Pendentes, 147,60 € | 120001 Conta Transitória, 147,60 € |
+| Depositar (`OD/2026/00336`) | 120001 Conta Transitória, 147,60 € | 120002 Recebimentos Pendentes, 147,60 € |
+| Cobrado (`OD/2026/00337`) | 120002 Recebimentos Pendentes, 147,60 € | 120001 Conta Transitória, 147,60 € |
 
 No fim, a dívida do cliente está paga, a 120001 fica a zero e a 120002 fica com 147,60 € a débito, à espera da linha do extrato: esse saldo sai na [reconciliação bancária](/accounting-pt/reconciliar-movimentos-bancarios). <span className="fd-pending">Pendente de validação por contabilista certificado: tratamento contabilístico do cheque em carteira.</span>
 
@@ -83,14 +83,14 @@ O exemplo é um cheque de 143,10 € da Padaria Aurora, Lda, ligado ao recibo `R
 
    | Lançamento | Débito | Crédito |
    |---|---|---|
-   | Depósito (`OD/2026/00106`) | 120001 Conta Transitória, 143,10 € | 120002 Recebimentos Pendentes, 143,10 € |
-   | Devolução (`OD/2026/00107`) | 120002 Recebimentos Pendentes, 143,10 € | 120001 Conta Transitória, 143,10 € |
-   | Reversão do recebimento (`OD/2026/00108`) | 2111 Clientes gerais, 143,10 € | 120002 Recebimentos Pendentes, 143,10 € |
+   | Depósito (`OD/2026/00338`) | 120001 Conta Transitória, 143,10 € | 120002 Recebimentos Pendentes, 143,10 € |
+   | Devolução (`OD/2026/00339`) | 120002 Recebimentos Pendentes, 143,10 € | 120001 Conta Transitória, 143,10 € |
+   | Reversão do recebimento (`OD/2026/00340`) | 2111 Clientes gerais, 143,10 € | 120002 Recebimentos Pendentes, 143,10 € |
 
    ![Cheque CHQ/00002 devolvido por falta de provisão, com os lançamentos do depósito, da devolução e da reversão do recebimento](/images/fiscal-core/cheques/08-cheque-devolvido.png)
 4. Com despesas, a ficha mostra a **Nota de débito das despesas de devolução**. Fica em **rascunho**, sem número nem efeito na contabilidade, até a abrir e emitir. No exemplo, despesas de 15,00 € deram um total de 18,45 €: 2111 Clientes gerais a débito 18,45 €, 721 a crédito 15,00 € e 2433 a crédito 3,45 € de IVA. <span className="fd-pending">Pendente de validação por contabilista certificado: se as despesas do banco debitadas ao cliente levam IVA e se devem ir para a conta 721.</span>
 5. Se o motivo é **Falta de provisão** ou **Outro motivo**, aparece **Apresentar de novo**; nos outros motivos, o cheque fica só como histórico. Carregue nele: abre-se um cheque novo, **Em carteira** (aqui `CHQ/00003`, com os mesmos dados e o **Ciclo** 2), e o devolvido fica como histórico.
-6. O cheque novo volta a baixar a dívida: `OD/2026/00109` debita 120002 Recebimentos Pendentes e credita 2111 Clientes gerais, 143,10 €, e a fatura `FT D26/28` volta a **paga**. Continue no passo 4 de «Como utilizar»: **Depositar** e **Cobrado** (`OD/2026/00110` e `OD/2026/00111`).
+6. O cheque novo volta a baixar a dívida: `OD/2026/00341` debita 120002 Recebimentos Pendentes e credita 2111 Clientes gerais, 143,10 €, e a fatura `FT D26/28` volta a **paga**. Continue no passo 4 de «Como utilizar»: **Depositar** e **Cobrado** (`OD/2026/00342` e `OD/2026/00343`).
 
 ### Sustar o pagamento de um cheque emitido
 
@@ -123,7 +123,7 @@ No Odoo Enterprise, os cheques são os mesmos do fiscaldoo. Em **Contabilidade �
 Depois de **Cobrado** ou **Devolvido** não há botão para desfazer, e um cheque que saiu da carteira já não se altera. Confirme o estado com o extrato do banco antes de carregar em **Cobrado**.
 </HelpCallout>
 
-- **Anular depósito**, num cheque **No banco**, devolve-o a **Em carteira** e cria a reversão do depósito (no teste, `OD/2026/00113`: 120002 a débito e 120001 a crédito).
+- **Anular depósito**, num cheque **No banco**, devolve-o a **Em carteira** e cria a reversão do depósito (no teste, `OD/2026/00345`: 120002 a débito e 120001 a crédito).
 - **Anular**, num cheque **Em carteira**, passa-o a **Anulado**, sem lançamento. Um cheque nunca se elimina.
 - **Pré-datado:** com **Pré-datado para** preenchido, a ficha avisa, por exemplo, «Cheque pré-datado: pode ser depositado a partir de 13/11/2026 (daqui a 10 dias).» e **Depositar** recusa até essa data.
   ![Cheque pré-datado em carteira, com o aviso da data a partir da qual pode ser depositado](/images/fiscal-core/cheques/03-cheque-pre-datado.png)

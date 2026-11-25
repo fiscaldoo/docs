@@ -68,7 +68,7 @@ Antes de gravar, o assistente confere tudo e diz, linha a linha, o que está mal
    ![Pergunta de confirmação com o botão Confirmar assinalado](/images/migration-toolkit/importar-lancamentos/05-confirmar.png)
 5. A janela diz «2 lançamentos criados (Criar em rascunho).» Carregue em **Ver lançamentos**.
    ![Janela com a mensagem 2 lançamentos criados e o botão Ver lançamentos assinalado](/images/migration-toolkit/importar-lancamentos/06-concluido.png)
-6. Abra cada lançamento, confira as linhas com o ficheiro e carregue em **Publicar**. O lançamento passa a **Publicada** e recebe o número seguinte do diário (na demonstração, `OD/2026/00139` para o `RENDA-03`). Em rascunho aparece uma faixa a avisar quantos dias passaram desde o fim do mês a que o lançamento respeita (limite do CIRC, art. 123.º, n.º 3): é um aviso e nada é bloqueado. A lista que abre em **Ver lançamentos** mostra a data, o número, o diário, a referência, o parceiro, o total e o estado de cada lançamento; as linhas só se veem dentro do lançamento.
+6. Abra cada lançamento, confira as linhas com o ficheiro e carregue em **Publicar**. O lançamento passa a **Publicada** e recebe o número seguinte do diário (na demonstração, `OD/2026/00336` para o `RENDA-03`). Em rascunho aparece uma faixa a avisar quantos dias passaram desde o fim do mês a que o lançamento respeita (limite do CIRC, art. 123.º, n.º 3): é um aviso e nada é bloqueado. A lista que abre em **Ver lançamentos** mostra a data, o número, o diário, a referência, o parceiro, o total e o estado de cada lançamento; as linhas só se veem dentro do lançamento.
    ![Lançamento OD/2026/00139 publicado, no diário Operações Diversas, com a referência RENDA-03, a conta 6261 a débito e a conta 121 a crédito, ambas de 50,00 €, e os totais iguais](/images/migration-toolkit/importar-lancamentos/07-lancamento-publicado.png)
 
 </StepByStep>
@@ -101,7 +101,7 @@ Para consultar o que foi importado assim, ver [Consultar o histórico do program
 
 Acrescente ao ficheiro as colunas **Estorno de** (o número do lançamento publicado, por exemplo `OD/2026/00001`) e **Motivo do estorno**, com o código do catálogo: `return` (devolução de mercadorias), `price_error` (erro de preço), `quantity_error` (erro de quantidade ou de artigo), `cancellation` (anulação da operação), `discount` (desconto ou abatimento concedido) ou `other` (outro, a descrever). Para `other` acrescente a coluna **Descrição do estorno**, até 50 carateres: sem ela o assistente diz «O motivo “Outro (descrever)” precisa de uma descrição (até 50 carateres).» As colunas de linhas são as de um lançamento normal, com os montantes invertidos.
 
-Na demonstração, o ficheiro com o lançamento `E10` (débito `121` e crédito `6261`, ambos de 50,00 €, a 31/03/2026), **Estorno de** `OD/2026/00139` e o motivo `cancellation` criou um lançamento em rascunho, ligado a `OD/2026/00139`, com o motivo «Anulação da operação»; publicado, ficou `OD/2026/00140`. Só se estorna um lançamento já publicado; faturas, pagamentos e linhas de banco estornam-se na própria ficha.
+Na demonstração, o ficheiro com o lançamento `E10` (débito `121` e crédito `6261`, ambos de 50,00 €, a 31/03/2026), **Estorno de** `OD/2026/00336` e o motivo `cancellation` criou um lançamento em rascunho, ligado a `OD/2026/00336`, com o motivo «Anulação da operação»; publicado, ficou `OD/2026/00337`. Só se estorna um lançamento já publicado; faturas, pagamentos e linhas de banco estornam-se na própria ficha.
 
 ### Outras colunas que pode ligar
 
