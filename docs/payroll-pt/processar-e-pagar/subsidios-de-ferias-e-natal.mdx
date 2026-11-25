@@ -45,11 +45,11 @@ O acerto dos subsídios de quem sai da empresa faz-se no lote do tipo **Acerto f
 1. Abra **Salários › Processar › Processar o mês** e carregue em **Novo**.
 2. Em **Tipo**, escolha **Natal** ou **Férias**. As opções são **Normal**, **Férias**, **Natal**, **Acerto final**, **Corretivo** e **Simulação**. O **Nome** preenche-se sozinho, por exemplo «Natal de dezembro de 2026».
 3. Em **Início do período** e **Fim do período**, escolha as datas. O último dia útil do período é a data de vencimento dos recibos; no subsídio de Natal, tem de ser até 15 de dezembro (ver «Notas importantes»).
-4. Guarde e carregue em **Criar os recibos do mês**. No lote de Natal entra cada trabalhador com contrato no período (7 no exemplo); no lote de Férias, só quem tem férias aprovadas a começar no período.
+4. Guarde e carregue em **Criar os recibos do mês**. No lote de Natal entra cada trabalhador com contrato no período (23 no exemplo); no lote de Férias, só quem tem férias aprovadas a começar no período.
 5. Carregue em **Calcular**. O lote passa a **Calculado** e a lista mostra o **Líquido a receber** de cada recibo e o total.
    ![Lote Natal de dezembro de 2026 calculado, com o Tipo Natal, 7 recibos e o total de 8.232,88 €](/images/payroll-pt/subsidios-de-ferias-e-natal/01-lote-de-natal-calculado.png)
 6. Abra o recibo de um trabalhador e, na linha **Subsídio de Natal** (ou **Subsídio de férias**), carregue em **Como foi calculado?**. Confira a base, a proporção e o que já foi pago em duodécimos.
-7. Carregue em **Validar** (demora alguns segundos). O lote e os recibos passam a **Validado** e o total mantém-se: 8.232,88 € no exemplo. O lote paga só o subsídio: a viatura de uso pessoal e a prestação de um adiantamento em curso ficam para o recibo normal do mês, que se cria à parte, no lote **Normal** de dezembro. Os dois lotes de dezembro convivem: nenhum mostra o aviso de recibo duplicado. Depois, contabilize e pague como o lote do mês: ver [Como processar os salários do mês](/payroll-pt/processar-o-mes) e [Como pagar os salários](/payroll-pt/pagar-os-salarios).
+7. Carregue em **Validar** (demora alguns segundos). O lote e os recibos passam a **Validado** e o total mantém-se: 25.769,48 € no exemplo. O lote paga só o subsídio: a viatura de uso pessoal e a prestação de um adiantamento em curso ficam para o recibo normal do mês, que se cria à parte, no lote **Normal** de dezembro. Os dois lotes de dezembro convivem: nenhum mostra o aviso de recibo duplicado. Depois, contabilize e pague como o lote do mês: ver [Como processar os salários do mês](/payroll-pt/processar-o-mes) e [Como pagar os salários](/payroll-pt/pagar-os-salarios).
 
 </StepByStep>
 
@@ -109,7 +109,7 @@ No Odoo Enterprise, os subsídios de férias e de Natal pagam-se da mesma maneir
 
 ### «Criar os recibos do mês» diz «Não há nada a criar»
 
-- **Mensagem:** «Não há nada a criar. Todos os 7 trabalhadores com contrato no período deste lote (01/12/2026 a 31/12/2026) já têm recibo. Se o período não for o mês que quer, corrija as datas do lote.»
+- **Mensagem:** «Não há nada a criar. Todos os 23 trabalhadores com contrato no período deste lote (01/12/2026 a 31/12/2026) já têm recibo. Se o período não for o mês que quer, corrija as datas do lote.»
 - **Causa:** os trabalhadores já têm um recibo nesse período, noutro lote do mesmo tipo (no exemplo, um segundo lote de Natal de dezembro).
 - **O que fazer:** confirme as férias aprovadas e as datas do lote. Não apague recibos de outro lote para fazer espaço: fale com o Administrador de Salários.
 
@@ -117,7 +117,7 @@ No Odoo Enterprise, os subsídios de férias e de Natal pagam-se da mesma maneir
 
 - **Mensagem:** a mensagem «Recibos criados» e o aviso **Trabalhadores deixados de fora do lote** dizem quem ficou de fora e porquê, por exemplo: «Ficaram de fora porque o contrato terminou antes deste período: …» e «Ficaram de fora porque o recibo final já paga o subsídio de Natal: …».
 - **Causa:** a primeira frase é de quem já tinha saído antes do período, por cessação confirmada. A segunda é de quem sai dentro do período: o recibo final paga o subsídio de Natal proporcional.
-- **O que fazer:** nada no lote. Os outros recibos criam-se na mesma. O subsídio de quem sai faz-se no recibo final: ver [Saída de um trabalhador](/people/cessacao-do-contrato). Sem cessação confirmada não há aviso: no exemplo, Hugo Miguel Santos, com o contrato a termo até 30/11/2026, fica de fora e a mensagem diz só «7 recibos criados; 0 trabalhadores já tinham recibo.»
+- **O que fazer:** nada no lote. Os outros recibos criam-se na mesma. O subsídio de quem sai faz-se no recibo final: ver [Saída de um trabalhador](/people/cessacao-do-contrato). Sem cessação confirmada não há aviso: no exemplo, Hugo Miguel Santos, com o contrato a termo até 30/11/2026, fica de fora e a mensagem diz só «23 recibos criados; 0 trabalhadores já tinham recibo.»
 
 ### «Criar os recibos do mês» diz «Nenhum recibo criado»
 

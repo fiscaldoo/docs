@@ -37,7 +37,7 @@ O ecrã **O que há para fazer este mês?** tem também, no bloco **Preparar o m
 ## Antes de começar
 
 - O seu perfil é **Processador de salários**, com ou sem o acesso extra **Administrador de Salários**. Com ou sem esse acesso, faz todos os passos.
-- A empresa tem a dimensão registada: sem ela, o contador mostra «Limite desconhecido» e o limite anual não se aplica. O **Administrador de Salários** regista-a em **Salários › Configurar › Empresa › Dimensão da empresa** › **Novo**: confirme a **Empresa**, escreva **Válido desde** `01/01/2026`, deixe **Dimensão** em **Microempresa (menos de 10 trabalhadores)** e guarde. Na demonstração, depois de a registar, os 8 trabalhadores mostraram logo o limite (175 horas, e 87,50 para a Gabriela, que trabalha a tempo parcial). Ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios).
+- A empresa tem a dimensão registada: sem ela, o contador mostra «Limite desconhecido» e o limite anual não se aplica. O **Administrador de Salários** regista-a em **Salários › Configurar › Empresa › Dimensão da empresa** › **Novo**: confirme a **Empresa**, escreva **Válido desde** `01/01/2026`, escreva `24` em **Trabalhadores em média** (a **Dimensão** fica **Pequena empresa (10 a menos de 50)**) e guarde. Na demonstração, depois de a registar, os 24 trabalhadores mostraram logo o limite (175 horas, e 87,50 para a Gabriela, que trabalha a tempo parcial). Ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios).
   ![Dimensão da empresa: Empresa Demonstração, válida desde 01/01/2026, microempresa](/images/payroll-pt/trabalho-suplementar/00-dimensao-da-empresa.png)
 - O trabalhador tem horário no contrato, para o fiscaldoo saber as horas planeadas do dia.
 
@@ -71,7 +71,7 @@ O horário do trabalhador (ver «Antes de começar») confere-se no mesmo sítio
 ## Resultado esperado
 
 - O dia fica registado e validado como presença do trabalhador, com as horas da janela a substituir o horário desse dia.
-- Na lista **Trabalho suplementar**, a linha do trabalhador mostra **Suplementar do ano (horas)** 2,0000, **Contado no limite (horas)** 2,0000, **Limite anual (horas)** 175,00 e **Estado** **Dentro do limite**. A **Nota** diz «2 de 175 horas (CT art. 228.º/1-a (Microempresa (menos de 10 trabalhadores))).».
+- Na lista **Trabalho suplementar**, a linha do trabalhador mostra **Suplementar do ano (horas)** 2,0000, **Contado no limite (horas)** 2,0000, **Limite anual (horas)** 175,00 e **Estado** **Dentro do limite**. A **Nota** diz «2 de 175 horas (CT art. 228.º/1-a (Pequena empresa (10 a menos de 50))).».
 - O registo não gera lançamentos contabilísticos. As horas são pagas no recibo de novembro, quando [processar os salários do mês](/payroll-pt/processar-o-mes); o valor entra nos custos com o pessoal quando esse recibo for contabilizado.
 
 ### O que o recibo de novembro mostra
@@ -89,7 +89,7 @@ Na contabilidade, o lançamento do lote de novembro (SAL/2026/00006, 30/11/2026)
 
 ## Notas importantes
 
-- **O limite anual depende da dimensão da empresa.** O contador usa a dimensão em vigor: numa microempresa, 175 horas por ano (CT art. 228.º/1-a, como diz a **Nota**). Numa média ou grande empresa aplica-se a alínea b) do mesmo artigo. As horas de **Força maior** contam à parte. <span className="fd-pending">Pendente de validação por contabilista certificado: limites do art. 228.º do Código do Trabalho por dimensão e para tempo parcial.</span>
+- **O limite anual depende da dimensão da empresa.** O contador usa a dimensão em vigor: numa microempresa ou pequena empresa, 175 horas por ano (CT art. 228.º/1-a, como diz a **Nota**). Numa média ou grande empresa aplica-se a alínea b) do mesmo artigo. As horas de **Força maior** contam à parte. <span className="fd-pending">Pendente de validação por contabilista certificado: limites do art. 228.º do Código do Trabalho por dimensão e para tempo parcial.</span>
 - **Quanto se paga.** O pagamento é calculado no processamento do mês, com acréscimos que mudam a partir do **Limiar do segundo escalão (horas)** (100 horas no ano, no contador). <span className="fd-pending">Pendente de validação por contabilista certificado: percentagens do art. 268.º do Código do Trabalho antes e depois das 100 horas, e retenção de IRS do trabalho suplementar.</span>
 - **O registo visado conta.** Com **Pagar 2 horas quando o registo do suplementar não é visado (art. 231.º)** ligado nas definições de salários, um dia sem **O trabalhador visou o registo** paga duas horas de suplementar. Vem desligado. <span className="fd-pending">Pendente de validação por contabilista certificado: a base desta sanção antes de a ligar.</span>
 
