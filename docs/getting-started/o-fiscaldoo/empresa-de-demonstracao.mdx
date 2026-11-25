@@ -38,14 +38,14 @@ Na base de demonstração usada para este artigo (21 de novembro de 2026), a Emp
 - 37 documentos de venda emitidos em 2026 (de janeiro a novembro: 30 faturas, 4 faturas simplificadas, 2 faturas-recibo e 1 nota de débito), 1 nota de crédito e 45 faturas de fornecedores;
 - 9 trabalhadores, com salários processados (veja [Quanto custa cada trabalhador à empresa](/management/custos-com-pessoas));
 - contas bancárias, o Balanço e a Demonstração de resultados de 2026, o calendário fiscal e as declarações;
-- séries de faturação de teste (por exemplo, a fatura **FT D26/30**, com o ATCUD `DEMOFT2026-30`) e a fiscaldoo simulada, que assina com uma chave fictícia e o certificado 9999 ([Como ligar a instalação à fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)).
+- séries de faturação de teste (por exemplo, a fatura **FT D26/30**, com o ATCUD `DEMOFT2026-30`) e o fiscaldoo simulado, que assina com uma chave fictícia e o certificado 9999 ([Como ligar a instalação ao fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)).
 
 Os documentos têm ATCUD começado por «DEMO»: não são documentos fiscais válidos.
 
 ## Antes de começar
 
 - Precisa de uma base de dados de testes com a demonstração instalada. Quem a instala é o administrador do sistema ou o parceiro fiscaldoo: na lista de **Aplicações**, sem o filtro **Aplicações**, o módulo chama-se **fiscaldoo · Instalação — Empresa de demonstração**.
-- A demonstração só se instala numa base de testes com «test» no nome (por exemplo `formacao_test`): é esse nome que faz o fiscaldoo usar o simulador da AT e a fiscaldoo simulada, que assina com uma chave fictícia. Nunca a peça numa base de clientes: cria uma empresa fictícia, com documentos assinados de teste que não são válidos para a AT. Por isso este artigo não dá os passos da instalação.
+- A demonstração só se instala numa base de testes com «test» no nome (por exemplo `formacao_test`): é esse nome que faz o fiscaldoo usar o simulador da AT e o fiscaldoo simulado, que assina com uma chave fictícia. Nunca a peça numa base de clientes: cria uma empresa fictícia, com documentos assinados de teste que não são válidos para a AT. Por isso este artigo não dá os passos da instalação.
 - O administrador define a senha do utilizador de demonstração que vai usar (abaixo) e dá-lha.
 
 ## Como utilizar
@@ -78,7 +78,7 @@ Os documentos têm ATCUD começado por «DEMO»: não são documentos fiscais v�
 
 No Odoo Enterprise, a demonstração é a mesma (visto com o administrador numa base Enterprise de testes com a demonstração instalada). O módulo **fiscaldoo · Instalação — Empresa de demonstração** aparece em **Aplicações**, sem o filtro **Aplicações**. A base tem as mesmas três empresas (**Empresa Teste Portugal**, **Empresa Teste Filial** e **Empresa Demonstração, Lda**), o administrador entra na **Empresa Teste Portugal** e cada perfil abre no seu ecrã (veja [O que aparece no ecrã inicial de cada perfil](/getting-started/ecra-inicial-por-perfil#no-enterprise)).
 
-{/* Nota interna (lote 104, KEY-001, master e261a9215, docs_demo_104_test, 21/11/2026): linhas das chaves alinhadas com chaves-de-assinatura (lote 103): a instalação não tem chaves de teste; quem assina, mesmo na demonstração, é a fiscaldoo simulada (certificado 9999). Contagens da cópia lidas por RPC (company_id 3, estado publicado): 30 FT, 4 FS, 2 FR, 1 ND, 1 nota de crédito, 45 faturas de fornecedores, 9 trabalhadores; a FT D26/33 já não existe, a última FT é a D26/30 (ATCUD DEMOFT2026-30). */}
+{/* Nota interna (lote 104, KEY-001, master e261a9215, docs_demo_104_test, 21/11/2026): linhas das chaves alinhadas com chaves-de-assinatura (lote 103): a instalação não tem chaves de teste; quem assina, mesmo na demonstração, é o fiscaldoo simulado (certificado 9999). Contagens da cópia lidas por RPC (company_id 3, estado publicado): 30 FT, 4 FS, 2 FR, 1 ND, 1 nota de crédito, 45 faturas de fornecedores, 9 trabalhadores; a FT D26/33 já não existe, a última FT é a D26/30 (ATCUD DEMOFT2026-30). */}
 
 {/* Nota interna (lote EE-13, DOCS-073 #4142, req 46633, DEC-1794, master 7f41ce71b, base Enterprise docs_ee_ee13_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee13_test): DOC-0003. A arquitetura marca a demonstração «Só Community»: o módulo está instalado na odoo20_ee_test e aparece em Aplicações nas duas cópias. Na base Enterprise de referência faltam o utilizador Tesouraria (demonstração) (só o cria a instalação da demonstração, ACC-214 de 01/11, depois de a base Enterprise ter sido construída) e uma fatura FS POS26/1; tem mais uma fatura FT do que a Community. Por isso o texto não diz «os mesmos utilizadores». A instalação da demonstração no Enterprise não foi repetida. Ver reports/LOTE_EE-13.md. */}
 
