@@ -4,8 +4,8 @@ slug: /getting-started/ligar-ao-fiscaldoo
 title: Como ligar a sua base de dados ao fiscaldoo
 sidebar_label: Ligar a base de dados ao fiscaldoo
 sidebar_position: 1
-description: Ativar uma instância no painel do fiscaldoo e ligar a sua base de dados Odoo ao serviço de certificação, passo a passo — ambiente, NIF e UUID da base de dados, chave de API e conector, e o autoteste final.
-keywords: [ligar ao fiscaldoo, ativar instância, ativar instancia, instância nova, instancia nova, chave de API, chave de api, conector, database uuid, uuid da base de dados, NIF, painel, assistente de instalação, autoteste, l10n_pt_arxi_signing_ws, ligar base de dados ao fiscaldoo]
+description: Ligar a sua base de dados Odoo ao serviço de certificação do fiscaldoo, dos dois lados — no Odoo (copiar o UUID, colar a chave de API) e no painel (ativar a instância com o NIF e o UUID, obter a chave) — e o autoteste final.
+keywords: [ligar ao fiscaldoo, ativar instância, ativar instancia, instância nova, instancia nova, chave de API, chave de api, conector, database uuid, uuid da base de dados, NIF, painel, assistente de instalação, autoteste, certificação PT, registar instância, ligar base de dados ao fiscaldoo]
 doc_id: DOC-0450
 article_type: tarefa
 odoo_versions: ["20.0"]
@@ -20,9 +20,13 @@ related: [getting-started/primeira-configuracao/requisitos-e-instalacao, adminis
 
 Para ligar a sua base de dados Odoo ao serviço de certificação do fiscaldoo. Esta ligação é o que permite ao seu Odoo assinar documentos, comunicar séries à Autoridade Tributária e usar o cofre de credenciais.
 
-A ligação faz-se a partir do **Painel** do fiscaldoo: ativa-se uma **instância** (uma ligação entre a sua empresa e uma base de dados Odoo), o painel devolve uma **chave de API**, e essa chave cola-se no **conector** dentro do Odoo. A mesma conta pode ter mais do que uma instância ligada.
+A ligação tem **dois lados** e faz-se em três momentos:
 
-Este artigo é para quem administra a instalação: consultor, parceiro ou administrador técnico.
+1. **No Odoo**, copia-se o **UUID** da base de dados.
+2. **No painel** do fiscaldoo, ativa-se uma **instância** com o NIF e esse UUID; o painel devolve uma **chave de API**.
+3. **De volta ao Odoo**, cola-se a chave e confirma-se a ligação.
+
+A mesma conta pode ter mais do que uma instância ligada. Este artigo é para quem administra a instalação: consultor, parceiro ou administrador técnico.
 
 ## Quando utilizar?
 
@@ -32,29 +36,36 @@ Este artigo é para quem administra a instalação: consultor, parceiro ou admin
 
 ## Onde encontrar?
 
-- **No Painel do fiscaldoo:** separador **Instâncias**.
-- **No seu Odoo:** o UUID da base de dados, em **Definições → Geral → Base de dados → UUID da base de dados** (com o modo de programador ligado), e a configuração do conector.
+- **No Odoo:** **Definições → Contabilidade**, secção **Certificação PT**, no bloco **«fiscaldoo: assinatura e certificado de software»** (é preciso ser administrador).
+- **No painel do fiscaldoo:** separador **Instâncias**.
 
 ## Antes de começar
 
 Tenha à mão:
 
-- **Acesso ao Painel** do fiscaldoo, na sua conta.
+- **Acesso de administrador ao Odoo** e **acesso ao painel** do fiscaldoo.
 - O **NIF** da empresa (9 dígitos).
-- O **UUID da base de dados** Odoo onde o conector vai correr. Encontra-o no Odoo, em **Definições → Geral → Base de dados → UUID da base de dados**, com o **modo de programador** ligado.
 - Saber **onde corre o Odoo** deste cliente (servidor próprio, Odoo.sh ou Docker do parceiro).
+
+O **UUID da base de dados** não precisa de o procurar à parte: aparece nas próprias definições de certificação, no passo 1 abaixo.
 
 ## Como utilizar
 
-### 1. Abrir as Instâncias e ativar uma nova
+### 1. No Odoo: copiar o UUID da base de dados
 
-No Painel, abra o separador **Instâncias**. Se ainda não ligou nenhuma base de dados, verá a lista vazia. Carregue em **+ Ativar instância nova**.
+Abra **Definições → Contabilidade** e desça até à secção **Certificação PT**, bloco **«fiscaldoo: assinatura e certificado de software»**. Aí encontra o campo **«Database UUID desta instância»** — copie esse valor.
+
+Para saltar direto para o painel no passo certo, pode carregar no botão **«Registar esta instância na fiscaldoo»**, que abre o painel já na ativação.
+
+### 2. No painel: abrir as Instâncias e ativar uma nova
+
+No painel, abra o separador **Instâncias**. Se ainda não ligou nenhuma base de dados, verá a lista vazia. Carregue em **+ Ativar instância nova**.
 
 ![Separador Instâncias do painel, com o texto a explicar que são as instalações Odoo ligadas à certificação, o botão Ativar instância nova e a mensagem Ainda sem nenhuma instância ligada a esta conta](/images/getting-started/ligar-ao-fiscaldoo/01-instancias-sem-instancia.png)
 
-### 2. Indicar onde corre o Odoo (Ambiente)
+### 3. Indicar onde corre o Odoo (Ambiente)
 
-O assistente de instalação tem quatro passos: **Ambiente, Módulos, Ativação e Autoteste**. No primeiro, escolha **onde corre o Odoo deste cliente**:
+O assistente tem quatro passos: **Ambiente, Módulos, Ativação e Autoteste**. No primeiro, escolha **onde corre o Odoo deste cliente**:
 
 - **Odoo.sh** — a ligação faz-se por submódulo git, sem acesso SSH do lado do fiscaldoo.
 - **Servidor próprio** — instalador por SSH autorizado, com um procedimento repetível.
@@ -64,22 +75,22 @@ Escolha a opção que corresponde à instalação e carregue em **Continuar**.
 
 ![Passo 1 do assistente, Ambiente, com a pergunta Onde corre o Odoo deste cliente e as três opções Odoo.sh, Servidor próprio e Docker do parceiro, com Servidor próprio selecionado e o botão Continuar](/images/getting-started/ligar-ao-fiscaldoo/02-assistente-ambiente.png)
 
-### 3. Confirmar os módulos
+### 4. Confirmar os módulos
 
 No passo **Módulos**, confirme os módulos que vão ser instalados e avance para a **Ativação**.
 
-### 4. Ativar com o NIF e o UUID da base de dados
+### 5. Ativar com o NIF e o UUID da base de dados
 
 No passo **Ativação**, indique:
 
 - **O seu NIF** — 9 dígitos, com ou sem o prefixo PT e espaços.
-- **O database.uuid da base de dados Odoo** — o UUID que copiou do Odoo (Definições → Geral → Base de dados → UUID da base de dados, em modo de programador).
+- **O database.uuid da base de dados Odoo** — o UUID que copiou do Odoo no passo 1.
 
 Carregue em **Confirmar e ativar**.
 
 ![Passo 3 do assistente, Ativação, a explicar que a ativação se liga ao NIF e ao UUID da base de dados, com os campos O seu NIF e database.uuid da base de dados Odoo e os botões Confirmar e ativar e Voltar](/images/getting-started/ligar-ao-fiscaldoo/03-assistente-ativacao.png)
 
-### 5. Guardar a chave de API e ligá-la ao conector
+### 6. Copiar a chave de API
 
 Quando a instância fica ativa, o painel mostra a **chave de API**.
 
@@ -87,13 +98,26 @@ Quando a instância fica ativa, o painel mostra a **chave de API**.
 Copie-a antes de sair deste ecrã. O serviço guarda apenas o **hash** da chave, nunca o valor em claro — se a perder, terá de ativar a instância de novo.
 :::
 
-Cole a chave na configuração do **conector** dentro do seu Odoo (módulo `l10n_pt_arxi_signing_ws`). Para obter o conector, use o botão **Fazer download do pacote** (ou a área **Pacotes** do painel). O ecrã mostra também o `instance_id` e o `database_uuid` da ligação.
+Copie a chave. O ecrã mostra também o `instance_id` e o `database_uuid` da ligação, e o botão **Fazer download do pacote** (o conector a instalar no Odoo, caso ainda não o tenha).
 
 ![Passo 3 do assistente com a instância já ativada, a caixa a avisar que a chave de API só aparece uma vez, e os valores instance_id, api_key (oculta) e database_uuid, com os botões Fazer download do pacote, Continuar para o autoteste e Voltar](/images/getting-started/ligar-ao-fiscaldoo/04-assistente-chave-api.png)
 
-### 6. Autoteste
+### 7. No Odoo: colar a chave e confirmar a ligação
 
-No passo **Autoteste**, o painel confirma que tudo está a responder, com os mesmos sinais da página **Estado**:
+Volte às **Definições → Contabilidade → Certificação PT → «fiscaldoo: assinatura e certificado de software»** no Odoo e:
+
+1. Cole a chave no campo **«Chave de API da fiscaldoo»** e **guarde** as definições.
+2. Carregue em **«Ver na fiscaldoo se esta empresa pode assinar»** para confirmar a ligação.
+
+Quando a ligação fica boa, preenchem-se sozinhos o **número do certificado** (Certificate number) e a **impressão digital da chave** (Key fingerprint).
+
+:::note O nome do conector
+O painel refere o conector como `l10n_pt_arxi_signing_ws`. No Odoo, a chave cola-se nas **definições de certificação** descritas acima; não precisa de abrir nenhum ecrã técnico com esse nome.
+:::
+
+### 8. Autoteste no painel
+
+No passo **Autoteste** do painel, confirma-se que tudo está a responder, com os mesmos sinais da página **Estado**:
 
 - a instância está ativa na identidade;
 - o conector do Odoo está a ligar-se;
@@ -102,26 +126,27 @@ No passo **Autoteste**, o painel confirma que tudo está a responder, com os mes
 - a identidade e as licenças respondem;
 - a instalação está verificada.
 
-O sinal **A aguardar o conector Odoo ligar-se** fica amarelo até o conector no Odoo se ligar com a chave de API que colou no passo anterior.
+O sinal **A aguardar o conector Odoo ligar-se** fica amarelo até o Odoo se ligar com a chave que colou no passo 7.
 
 ![Passo 4 do assistente, Autoteste, com a lista de sinais: instância ativa na identidade, a aguardar o conector Odoo, serviço de assinatura a responder, cofre de credenciais AT a responder, identidade e licenças a responder e instalação verificada](/images/getting-started/ligar-ao-fiscaldoo/05-assistente-autoteste.png)
 
 ## Resultado esperado
 
-A base de dados fica ligada ao fiscaldoo. No separador **Instâncias** do painel, a instância passa a aparecer como **Ativa**, com a data em que foi criada. A partir daqui, o Odoo pode assinar documentos e comunicar à AT.
+A base de dados fica ligada ao fiscaldoo. No separador **Instâncias** do painel, a instância passa a aparecer como **Ativa**, com a data em que foi criada. No Odoo, as definições de certificação mostram o número do certificado e a impressão digital da chave. A partir daqui, o Odoo pode assinar documentos e comunicar à AT.
 
 ![Separador Instâncias com uma instância no estado Ativa, a data de criação e o botão Eliminar](/images/getting-started/ligar-ao-fiscaldoo/06-instancia-ativa.png)
 
 ## Notas importantes
 
-- **A chave de API aparece uma só vez.** Guarde-a no momento. O painel fica só com o hash; não há forma de a ver outra vez.
-- **O UUID da base de dados** só é visível com o **modo de programador** ligado, em Definições → Geral → Base de dados.
+- **A chave de API aparece uma só vez.** Guarde-a no momento. O painel fica só com o hash; não há forma de a ver outra vez. No Odoo, o campo da chave mostra-se sempre tapado.
+- **O UUID da base de dados** está nas definições de certificação do Odoo (passo 1); não é preciso o modo de programador para o ver aí.
+- **O endereço da plataforma** vem preenchido por omissão (`https://api.fiscaldoo.pt`) e só aparece em modo de programador — normalmente não se mexe.
 - **Uma conta pode ter várias instâncias.** Pode ligar mais do que uma base de dados, a qualquer momento, repetindo o assistente.
 - **Eliminar uma instância** corta a ligação dessa base de dados ao serviço — use o botão **Eliminar** só quando tiver a certeza.
 
 ## Problemas frequentes
 
-- **O autoteste fica preso em «A aguardar o conector Odoo ligar-se».** O conector ainda não se ligou com a chave. Confirme que instalou o pacote do conector no Odoo e que colou lá a chave de API correta.
-- **Não encontro o UUID da base de dados.** Ligue o modo de programador (Definições → Geral, ao fundo) e volte a Definições → Geral → Base de dados.
-- **Perdi a chave de API.** Ative a instância de novo para gerar uma chave nova e volte a colá-la no conector.
+- **O autoteste fica preso em «A aguardar o conector Odoo ligar-se».** O Odoo ainda não se ligou com a chave. Confirme que colou a **Chave de API da fiscaldoo** nas definições de certificação e que guardou.
+- **Carreguei em «Ver na fiscaldoo se esta empresa pode assinar» e deu erro.** Confirme a chave (copie-a de novo) e que o NIF e o UUID usados no painel são os desta base de dados.
+- **Perdi a chave de API.** Ative a instância de novo no painel para gerar uma chave nova e volte a colá-la no Odoo.
 - **Problemas a ativar?** Use o **Fale connosco** no painel.
