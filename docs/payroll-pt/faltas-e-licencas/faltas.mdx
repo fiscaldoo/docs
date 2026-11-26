@@ -18,7 +18,7 @@ related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/processar-e-p
 
 ## Para que serve?
 
-Uma falta só mexe no recibo quando a lei manda perder a retribuição. O fiscaldoo decide-o pelo **tipo** da falta: escolhido o tipo e aprovada a ausência, o recibo do mês desconta as horas perdidas sozinho, e o subsídio de alimentação desse dia deixa de ser pago.
+Uma falta só mexe no recibo quando a lei manda perder a retribuição. O Fiscaldoo decide-o pelo **tipo** da falta: escolhido o tipo e aprovada a ausência, o recibo do mês desconta as horas perdidas sozinho, e o subsídio de alimentação desse dia deixa de ser pago.
 
 ## Quando utilizar?
 
@@ -37,7 +37,7 @@ Os tipos de falta e o efeito de cada um estão em **Salários › Configurar ›
 ## Antes de começar
 
 - O perfil que regista e aprova a falta é o dos Recursos Humanos (perfil **Gestor de RH**, com a gestão de todas as ausências): é ele que escolhe o trabalhador em **Trabalhador**. Com o perfil **Processador de salários**, o formulário da ausência abre, mas **Trabalhador** fica a cinzento e vazio, sem se poder escolher, e a ausência não se guarda (ver «Problemas frequentes»).
-- O lote do mês da falta ainda não está validado. Uma falta de um mês já pago não altera o recibo: o fiscaldoo avisa e prepara um recibo corretivo (ver «Notas importantes»).
+- O lote do mês da falta ainda não está validado. Uma falta de um mês já pago não altera o recibo: o Fiscaldoo avisa e prepara um recibo corretivo (ver «Notas importantes»).
 - O contrato do trabalhador tem o horário: as horas perdidas contam-se por ele (8 horas num dia de 8 horas).
 
 ## Como utilizar
@@ -94,7 +94,7 @@ Registar uma falta não gera lançamentos contabilísticos. O desconto chega à 
 
 ## No Enterprise
 
-No Odoo Enterprise, este artigo faz-se da mesma maneira: com o perfil **Gestor de RH**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
+No Odoo Enterprise, este artigo faz-se da mesma maneira: com o perfil **Gestor de RH**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do Fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
 
 {/* Nota interna (lote EE-06, DOCS-073 #4142, DEC-1794, master ce51f2d47, 10/11/2026): conferido numa cópia Enterprise da demonstração (docs_ee_ee06_test, computador 2) com utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): Gestor de RH em Salários › Preparar › Ausências e presenças › Ausências (Novo e Nova ausência em grupo); Administrador de Salários em Salários › Configurar › Empresa › Faltas e feriados › Tipos de falta. Menus e vistas comparados, perfil a perfil, com uma cópia Community do mesmo master (docs_demo_ee06_test). Ver reports/LOTE_EE-06.md. */}
 
@@ -109,7 +109,7 @@ No Odoo Enterprise, este artigo faz-se da mesma maneira: com o perfil **Gestor d
 ## Notas importantes
 
 - **Falta num mês incompleto (admissão ou saída a meio do mês).** Cada dia de falta vale a retribuição mensal do contrato a dividir pelo divisor da empresa (30, dias do mês ou horas), e não a retribuição proporcional do mês; o teto do art. 256.º continua a ser o do mês ao serviço. Exemplo do programador: admissão a 16/05, 960,00 €, 2 faltas injustificadas, método 1/30: 2 × 960,00 ÷ 30 = 64,00 € (a retribuição do período é 480,00). Visto no ecrã, no recibo em rascunho do lote de novembro de 2026 de um trabalhador admitido a 16/11/2026 com 960,00 € por mês e 2 faltas injustificadas (17 e 18/11): **Retribuição base** 480,00 € e **Retribuição perdida por faltas** de 16,00 horas, −64,00 € (2 × 960,00 ÷ 30), com a Segurança Social do trabalhador sobre 416,00 € (480,00 − 64,00). O exemplo da admissão a 16/05 é o do programador e usa o mesmo método (1/30).
-- **Uma falta de um mês já pago não altera o recibo pago.** Ao aprovar uma falta injustificada a 28/10/2026, com outubro já pago, o fiscaldoo mostra o aviso «Falta num mês já pago. A falta de «Fábio Nuno Carvalho» tem dias num mês já pago (outubro 2026) e esse recibo está fechado: não é alterado. O que aconteceu: a diferença ficou escrita no recibo corretivo … em rascunho. Como resolver: abra-o a partir do campo «Recibos corretivos» da falta, confira o valor e valide-o…». O recibo corretivo de outubro de Fábio, em **Rascunho**, tem **Retribuição perdida por faltas** de −48,33 € (8,00 horas) e **Subsídio de alimentação** de −6,15 € (−1 dia), líquido −54,48 €. Fica por validar e pagar com o Processador de salários; ver [Como corrigir um recibo já processado](/payroll-pt/corrigir-um-processamento). O recibo de novembro não desconta esta falta.
+- **Uma falta de um mês já pago não altera o recibo pago.** Ao aprovar uma falta injustificada a 28/10/2026, com outubro já pago, o Fiscaldoo mostra o aviso «Falta num mês já pago. A falta de «Fábio Nuno Carvalho» tem dias num mês já pago (outubro 2026) e esse recibo está fechado: não é alterado. O que aconteceu: a diferença ficou escrita no recibo corretivo … em rascunho. Como resolver: abra-o a partir do campo «Recibos corretivos» da falta, confira o valor e valide-o…». O recibo corretivo de outubro de Fábio, em **Rascunho**, tem **Retribuição perdida por faltas** de −48,33 € (8,00 horas) e **Subsídio de alimentação** de −6,15 € (−1 dia), líquido −54,48 €. Fica por validar e pagar com o Processador de salários; ver [Como corrigir um recibo já processado](/payroll-pt/corrigir-um-processamento). O recibo de novembro não desconta esta falta.
 - **Duas faltas no mesmo dia.** Registar outra ausência que coincide com uma aprovada é recusado: «Erro de Validação. Um trabalhador já tem uma ausência marcada que coincide com este período: Carla Sofia Mendes de 05/11/2026 até 05/11/2026 - Aprovado.»
 - **Atrasos.** Os atrasos registam-se na ficha do trabalhador, no menu da engrenagem, em **Atrasos**; **Salários › Preparar** não tem uma entrada própria. <span className="fd-pending">Pendente de validação no ecrã: registo de um atraso e efeito no recibo; o item **Atrasos** existe na ficha, mas a janela não abriu na tentativa feita nesta versão do artigo.</span>
 - **Faltas justificadas pedem prova.** Nos tipos que a exigem aparece o bloco **Prova** (**Prova pedida em**, **Prova devida até**, **Prova entregue em**, **Estado da prova**). Guarde a referência da prova.

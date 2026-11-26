@@ -52,7 +52,7 @@ As três mensagens foram provocadas na base de demonstração.
 
 - **Cada série serve um só ano.** O ano da série é o **Exercício** da ficha. Uma fatura de 2027 precisa de uma série de 2027, ativa, no diário da fatura. Ter as séries de 2026 ativas não chega.
 - **A série do ano existe mas não está ativa.** Se a série foi criada mas ainda não tem código de validação, a mensagem é outra: veja [A série não tem código de validação da AT](/troubleshooting/serie-sem-codigo-de-validacao).
-- **Só pode haver uma série ativa por diário, tipo de documento e ano.** Para as guias e os orçamentos, que não têm diário, a regra é uma por empresa, tipo e ano. O fiscaldoo recusa ativar a segunda, mesmo que já tenha código de validação.
+- **Só pode haver uma série ativa por diário, tipo de documento e ano.** Para as guias e os orçamentos, que não têm diário, a regra é uma por empresa, tipo e ano. O Fiscaldoo recusa ativar a segunda, mesmo que já tenha código de validação.
 
 ## O que confirmar
 
@@ -81,14 +81,14 @@ Crie as séries do ano seguinte antes de 1 de janeiro: assim a primeira fatura d
 
 ### Há uma série ativa a mais (perfil Contabilista certificado)
 
-Na maior parte dos casos, a série nova não é precisa: continue a usar a série ativa e deixe a nova em **Rascunho**. Se a série nova já foi comunicada à AT (tem código de validação), a AT tem-na registada e por usar. No fiscaldoo, uma série em **Rascunho** com código tem, em **Ações**, só **Cancelar**, que não comunica nada à AT; **Anular na AT** só aparece nas **Ações** de uma série ativa. <span className="fd-pending">Pendente de validação por contabilista certificado: série comunicada à AT por engano e nunca usada: deixá-la em rascunho no fiscaldoo, ou anulá-la na AT.</span>
+Na maior parte dos casos, a série nova não é precisa: continue a usar a série ativa e deixe a nova em **Rascunho**. Se a série nova já foi comunicada à AT (tem código de validação), a AT tem-na registada e por usar. No Fiscaldoo, uma série em **Rascunho** com código tem, em **Ações**, só **Cancelar**, que não comunica nada à AT; **Anular na AT** só aparece nas **Ações** de uma série ativa. <span className="fd-pending">Pendente de validação por contabilista certificado: série comunicada à AT por engano e nunca usada: deixá-la em rascunho no Fiscaldoo, ou anulá-la na AT.</span>
 
-Uma série com código de validação já não se apaga: ao eliminá-la, o fiscaldoo responde «A série “*FT X26*” não pode ser eliminada. Porquê: Já não é um rascunho por usar (tem código de validação ou foi ativada), e o seu histórico tem de ser mantido. Como resolver: Cancele antes a série.»
+Uma série com código de validação já não se apaga: ao eliminá-la, o Fiscaldoo responde «A série “*FT X26*” não pode ser eliminada. Porquê: Já não é um rascunho por usar (tem código de validação ou foi ativada), e o seu histórico tem de ser mantido. Como resolver: Cancele antes a série.»
 
 Se a série nova é para outro canal, crie-a num diário próprio. Se a série antiga deixou mesmo de ser usada, feche-a com **Ações › Finalizar na AT** e só depois ative a nova. Finalizar não se desfaz e comunica à AT o último número usado: leia antes o aviso «Terminar uma série não se desfaz» em [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais).
 
 <HelpCallout type="risco" title="Não termine a série que está a usar">
-Terminar ou finalizar a série ativa só para abrir lugar a outra acaba a numeração dessa série para sempre. **Terminar** e **Cancelar** só mexem no fiscaldoo: para a AT a série continua ativa. Decida com o contabilista certificado antes de fechar uma série a meio do ano. <span className="fd-pending">Pendente de validação por contabilista certificado: quando se justifica fechar uma série a meio do ano e abrir outra.</span>
+Terminar ou finalizar a série ativa só para abrir lugar a outra acaba a numeração dessa série para sempre. **Terminar** e **Cancelar** só mexem no Fiscaldoo: para a AT a série continua ativa. Decida com o contabilista certificado antes de fechar uma série a meio do ano. <span className="fd-pending">Pendente de validação por contabilista certificado: quando se justifica fechar uma série a meio do ano e abrir outra.</span>
 </HelpCallout>
 
 ## Resultado esperado
@@ -101,7 +101,7 @@ Terminar ou finalizar a série ativa só para abrir lugar a outra acaba a numera
 
 - A mensagem diz que não há série, mas a lista **Séries fiscais** mostra uma série **Ativa** desse tipo, desse ano e desse diário.
 - O botão **Criar a série em falta** não aparece ao Contabilista certificado.
-- A AT aceitou a série nova, mas o fiscaldoo não a ativa e não há outra ativa no mesmo diário.
+- A AT aceitou a série nova, mas o Fiscaldoo não a ativa e não há outra ativa no mesmo diário.
 
 ## Informação a enviar
 

@@ -20,7 +20,7 @@ related: [accounting-pt/fecho/fechar-o-mes, accounting-pt/fecho/simular-o-result
 
 ## Para que serve?
 
-O fecho do exercício apura o resultado do ano, passa-o para resultados transitados e fecha o ano para novas alterações. O fiscaldoo reúne tudo num painel, o **Fecho do exercício**, com os passos pela ordem legal e as verificações que as contas devem cumprir.
+O fecho do exercício apura o resultado do ano, passa-o para resultados transitados e fecha o ano para novas alterações. O Fiscaldoo reúne tudo num painel, o **Fecho do exercício**, com os passos pela ordem legal e as verificações que as contas devem cumprir.
 
 O fecho é feito uma vez por ano. Os fechos mensais preparam-no: ver [Como fechar a contabilidade do mês](/accounting-pt/fechar-o-mes).
 
@@ -79,13 +79,13 @@ O fecho é feito uma vez por ano. Os fechos mensais preparam-no: ver [Como fecha
 3. Com o administrador (ou com o acesso extra **Administração fiscal**), em **Aprovar as contas**, carregue em **Fazer agora**. Preencha a **Data da aprovação** (vem a de hoje) e a **Ata / número**, por exemplo `Ata n.º 12`, e carregue em **Confirmar**. Com o perfil **Contabilista certificado**, o painel diz «Só o administrador pode fazer este passo.» A data do exemplo, 31/03/2027, é posterior à da demonstração: use a data real da ata.
 4. Em **Passar o resultado para resultados transitados**, carregue em **Fazer agora**. Se o exercício seguinte ainda não existir, a janela diz «O exercício seguinte ainda não existe. Será criado de 01/01/2027 a 31/12/2027.» Carregue em **Confirmar**. O lançamento fica com a data da aprovação e o exercício seguinte fica **Aberto**. O painel passa a abrir nesse exercício: para continuar, volte a escolher **2026 · Fechado** em **Exercício**.
    ![Painel de 2026 com todos os passos feitos até aos resultados transitados e o próximo passo Entregar a IES / SAF-T](/images/accounting-pt/fechar-o-exercicio/07-transferido.png)
-5. Entregue a IES e o SAF-T no Portal das Finanças ([Como preparar e entregar a IES](/accounting-pt/ies)). Depois, em **Entregar a IES / SAF-T**, carregue em **Fazer agora**. O fiscaldoo não entrega nada neste passo, só regista: na janela **Registar submissão**, escreva a **Referência da submissão** e confirme a **Data da submissão**. A janela avisa: «Um exercício submetido nunca pode ser reaberto e nenhuma exceção permite lançamentos nele.» Carregue em **Confirmar**.
+5. Entregue a IES e o SAF-T no Portal das Finanças ([Como preparar e entregar a IES](/accounting-pt/ies)). Depois, em **Entregar a IES / SAF-T**, carregue em **Fazer agora**. O Fiscaldoo não entrega nada neste passo, só regista: na janela **Registar submissão**, escreva a **Referência da submissão** e confirme a **Data da submissão**. A janela avisa: «Um exercício submetido nunca pode ser reaberto e nenhuma exceção permite lançamentos nele.» Carregue em **Confirmar**.
 
 </StepByStep>
 
 ## No Enterprise
 
-No Odoo Enterprise, o exercício fecha-se no mesmo **Painel do fecho do exercício**, com os mesmos passos, os mesmos botões (**Iniciar o fecho**, **Fechar o exercício**, **Simular o resultado**, **Abrir a ficha do exercício** e **Datas de bloqueio**) e a mesma coluna **O que dizem as contas**. No menu **Fechar** do **Contabilista certificado**, todas as entradas são do fiscaldoo: o apuramento de resultados e o fecho fazem-se pelos passos deste painel.
+No Odoo Enterprise, o exercício fecha-se no mesmo **Painel do fecho do exercício**, com os mesmos passos, os mesmos botões (**Iniciar o fecho**, **Fechar o exercício**, **Simular o resultado**, **Abrir a ficha do exercício** e **Datas de bloqueio**) e a mesma coluna **O que dizem as contas**. No menu **Fechar** do **Contabilista certificado**, todas as entradas são do Fiscaldoo: o apuramento de resultados e o fecho fazem-se pelos passos deste painel.
 
 {/* Nota interna (lote EE-02, DOCS-073 #4142, DEC-1794, master 7a46de91a, base Enterprise docs_ee_ee02_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): Contabilista certificado: painel do exercício 2026 · Aberto, «O fecho ainda não começou.»; Simular o resultado abriu a janela «Isto é uma SIMULAÇÃO: não se lança nada…» com a Demonstração de resultados provisória da cópia. Iniciar o fecho não se carregou: o exercício da cópia ficou como estava. Menu Fechar deste perfil: Apuramento do IVA, Depreciações do mês, Está tudo em ordem?, Fechar o mês e Painel do fecho do exercício. Ver reports/LOTE_EE-02.md. */}
 

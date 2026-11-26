@@ -18,7 +18,7 @@ related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/processar-e-p
 
 ## Para que serve?
 
-Quando a empresa recebe uma notificação de penhora do salário de um trabalhador, tem de reter todos os meses a parte penhorável e entregá-la a quem a notificação indica. O fiscaldoo guarda a penhora, calcula em cada recibo a parte que se pode reter (deixando ao trabalhador o mínimo que a lei protege) e acompanha quanto falta reter até ao montante do crédito.
+Quando a empresa recebe uma notificação de penhora do salário de um trabalhador, tem de reter todos os meses a parte penhorável e entregá-la a quem a notificação indica. O Fiscaldoo guarda a penhora, calcula em cada recibo a parte que se pode reter (deixando ao trabalhador o mínimo que a lei protege) e acompanha quanto falta reter até ao montante do crédito.
 
 ## Quando utilizar?
 
@@ -32,7 +32,7 @@ Quando a empresa recebe uma notificação de penhora do salário de um trabalhad
 
 ## Antes de começar
 
-- O **Processador de salários** regista a notificação (estado **Recebida**). **Validar** e **Ativar** são do **Administrador de Salários**: com o Processador, o fiscaldoo recusa (ver «Problemas frequentes»).
+- O **Processador de salários** regista a notificação (estado **Recebida**). **Validar** e **Ativar** são do **Administrador de Salários**: com o Processador, o Fiscaldoo recusa (ver «Problemas frequentes»).
 - Tenha à mão a notificação: número do processo, exequente, agente de execução, data da notificação, montante do crédito e para onde depositar.
 - O contacto de quem recebe o dinheiro existe em **Contactos**. Se não existir, peça a quem tem o perfil **Contabilista** para o criar em **Contactos**, com **Novo**.
 - A rubrica **Penhora de retribuição** tem modelo de contabilização. Se não tiver, crie-o como explica [Como contabilizar o processamento](/payroll-pt/contabilizar-os-salarios), com **Conta a débito** 231290, **Conta a crédito** 2781 e **Parceiro** **Outro terceiro**.
@@ -81,7 +81,7 @@ Um recibo de outro lote do mesmo mês só conta depois de calculado: calcule pri
 
 ## No Enterprise
 
-No Odoo Enterprise, este artigo faz-se da mesma maneira: com o perfil **Processador de salários** e, para **Validar** e **Ativar**, o acesso extra **Administrador de Salários**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
+No Odoo Enterprise, este artigo faz-se da mesma maneira: com o perfil **Processador de salários** e, para **Validar** e **Ativar**, o acesso extra **Administrador de Salários**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do Fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
 
 {/* Nota interna (lote EE-06, DOCS-073 #4142, DEC-1794, master ce51f2d47, 10/11/2026): conferido numa cópia Enterprise da demonstração (docs_ee_ee06_test, computador 2) com utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): Processador de salários em Salários › Preparar › Descontos e empréstimos › Penhoras; Acerto com credores só com o Administrador de Salários, nas duas edições. Menus e vistas comparados, perfil a perfil, com uma cópia Community do mesmo master (docs_demo_ee06_test). Ver reports/LOTE_EE-06.md. */}
 

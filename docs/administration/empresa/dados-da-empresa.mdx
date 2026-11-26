@@ -18,7 +18,7 @@ related: [fiscal-core/certificacao/preparar-a-faturacao-certificada, accounting-
 
 ## Para que serve?
 
-Os dados da empresa saem em todos os documentos que emite e no cabeçalho do SAF-T: nome, morada, NIF e, nas sociedades, a conservatória, o número de matrícula e o capital social. Outros dados não se imprimem, mas mudam o que o fiscaldoo faz: a **Região fiscal** decide o Anexo R da declaração periódica, a **Periodicidade do IVA** escolhe os períodos dessa declaração, e o **Regime de IVA**, a **Contabilidade organizada** e o **Volume de negócios do ano anterior** entram nas verificações do produto.
+Os dados da empresa saem em todos os documentos que emite e no cabeçalho do SAF-T: nome, morada, NIF e, nas sociedades, a conservatória, o número de matrícula e o capital social. Outros dados não se imprimem, mas mudam o que o Fiscaldoo faz: a **Região fiscal** decide o Anexo R da declaração periódica, a **Periodicidade do IVA** escolhe os períodos dessa declaração, e o **Regime de IVA**, a **Contabilidade organizada** e o **Volume de negócios do ano anterior** entram nas verificações do produto.
 
 Estes dados estão na ficha da empresa, em dois separadores. Cada empresa da base de dados tem a sua ficha e preenche-se à parte.
 
@@ -46,16 +46,16 @@ Estes dados estão na ficha da empresa, em dois separadores. Cada empresa da bas
 <StepByStep>
 
 1. Abra **Definições › Utilizadores e empresas › Empresas** e abra a sua empresa.
-2. No separador **Informação geral**, confirme o **Nome da Empresa**, o **Endereço** (rua, código postal, cidade, país **Portugal**), o **NIF** e a **Moeda** (EUR). Nesta versão, quando o fiscaldoo propõe o concelho, a nota «Proposta: concelho …» fica na linha do **NIF** e aperta-a: o número do NIF não se lê neste separador.
+2. No separador **Informação geral**, confirme o **Nome da Empresa**, o **Endereço** (rua, código postal, cidade, país **Portugal**), o **NIF** e a **Moeda** (EUR). Nesta versão, quando o Fiscaldoo propõe o concelho, a nota «Proposta: concelho …» fica na linha do **NIF** e aperta-a: o número do NIF não se lê neste separador.
    ![Separador Informação geral da Empresa Demonstração, Lda com o endereço e a linha do NIF apertada pela nota Proposta: concelho Porto (código 1312), sem o número à vista](/images/administration/dados-da-empresa/01-informacao-geral.png)
    {/* Nota interna (lote v23-D, master 2bfd78d1a, docs_demo_v23d_test, admin a 1100 px): defeito UX-128 #3995 (V23B-02), ainda por corrigir. Captura feita assim de propósito, para não esconder o problema. Quando o UX-128 entrar em master: refazer a captura 01 com o NIF 599999993 assinalado e tirar a frase «Nesta versão…». */}
 3. Abra o separador **Localização PT**. Tem 14 grupos; este artigo trata os três primeiros, a **Forma jurídica** e o IVA de caixa, que toda a empresa revê. Em **IDENTIFICAÇÃO FISCAL**:
    - **Região fiscal**: **Continente**, **Açores** ou **Madeira**. Decide o anexo das regiões (Anexo R) na declaração periódica; a taxa por omissão só muda com a opção das taxas regionais ([Como configurar o IVA da empresa](/accounting-pt/configurar-o-iva), passo 2); vem sugerida pelo código postal;
    - **CAE**: o código da atividade principal, com 5 algarismos;
    - **Entidade fiscal**: deixe como vem, a não ser que a empresa declare por estabelecimento;
-   - **Volume de negócios do ano anterior**: o do ano civil anterior. Com ele e com a resposta seguinte, o fiscaldoo diz se o programa certificado é obrigatório; altera-o o administrador, que é quem abre esta ficha (o perfil **Contabilista certificado** tem a permissão, mas não chega a esta ficha).
+   - **Volume de negócios do ano anterior**: o do ano civil anterior. Com ele e com a resposta seguinte, o Fiscaldoo diz se o programa certificado é obrigatório; altera-o o administrador, que é quem abre esta ficha (o perfil **Contabilista certificado** tem a permissão, mas não chega a esta ficha).
    ![Grupo Identificação fiscal com a região fiscal Continente, o CAE 46900 e Contabilidade organizada Não definido](/images/administration/dados-da-empresa/02-identificacao-fiscal.png)
-4. Em **Contabilidade organizada**, escolha **Sim, obrigada a ter contabilidade organizada** ou **Não (regime simplificado ou dispensada)**. Enquanto ficar **Não definido**, o ecrã avisa que o fiscaldoo «não consegue dizer se o programa certificado é obrigatório por esse motivo e só avisa: nada fica bloqueado».
+4. Em **Contabilidade organizada**, escolha **Sim, obrigada a ter contabilidade organizada** ou **Não (regime simplificado ou dispensada)**. Enquanto ficar **Não definido**, o ecrã avisa que o Fiscaldoo «não consegue dizer se o programa certificado é obrigatório por esse motivo e só avisa: nada fica bloqueado».
 5. Em **REGISTO COMERCIAL**, preencha a **Conservatória do registo comercial**, o **Número de matrícula** e o **Capital social**. Se a empresa usa um nome diferente da firma, escreva-o em **Nome comercial**.
    ![Grupo Registo comercial com a conservatória, o número de matrícula e o capital social de 5.000,00 €](/images/administration/dados-da-empresa/03-registo-comercial.png)
 6. Em **IVA**, confira o **Regime de IVA** e a **Periodicidade do IVA** (veja «Os campos do IVA», abaixo). Mude-os na janela **Configuração fiscal**, que pede as confirmações da lei: [Como configurar o IVA da empresa](/accounting-pt/configurar-o-iva). Num ano com lançamentos publicados, a ficha recusa a mudança da periodicidade.
@@ -72,7 +72,7 @@ Estes dados estão na ficha da empresa, em dois separadores. Cada empresa da bas
 
 ## Os campos do IVA
 
-| Campo | Opções no ecrã | O que muda no fiscaldoo |
+| Campo | Opções no ecrã | O que muda no Fiscaldoo |
 |---|---|---|
 | **Regime de IVA** | **Regime normal**, **Isento (art. 9.º do CIVA)**, **Isento (art. 53.º do CIVA)**, **Sujeito passivo misto (com e sem direito a dedução)** | O misto liga o cálculo do pró-rata. Um regime de isenção pede **Regime de IVA desde** e põe o imposto da isenção nas linhas das faturas novas: na demonstração, na **Empresa Teste Filial** com **Isento (art. 53.º do CIVA)**, o rascunho de uma fatura com o artigo `[KIT-CAN]` veio com **M10 – IVA – regime de isenção** e 0,00 € de IVA. Só o perfil **Contabilista certificado** (ou o administrador) o altera e cada alteração fica no registo de auditoria. |
 | **Periodicidade do IVA** | **Mensal**, **Trimestral** (vazia numa empresa isenta) | Decide os períodos da [declaração periódica de IVA](/accounting-pt/declaracao-periodica-de-iva). |
@@ -89,7 +89,7 @@ Numa empresa com um regime de isenção, as linhas novas vêm com o imposto da i
 
 {/* Nota interna (correção da auditoria única, RU-04, 31/10/2026): a caixa de risco dizia que o regime «não muda sozinho as taxas das faturas», contra a tabela e a caixa «Empresa isenta»; passou a dizer o mesmo que elas (o efeito foi visto no ecrã na ronda única, nota seguinte). */}
 
-{/* Nota interna (ronda única, 31/10/2026, master 27cebe13a, base docs_demo_ronda_test): VAT-062 em master (comboio 103): com a Empresa Teste Filial em Isento (art. 53.º do CIVA) desde 01/01/2026 (janela Configuração fiscal PT, administrador com o perfil Responsável fiscal; notificação «Guardado. A empresa não tem periodicidade do IVA: está isenta e não entrega declaração periódica.»), o rascunho de uma fatura com o [KIT-CAN] trouxe M10 e 0,00 € de IVA, sem faixa. O aviso antigo («o fiscaldoo ainda deixa emitir com IVA») saiu. O rótulo do art. 53.º já não diz «pequenos retalhistas» (VAT-067). Não emiti fatura na Filial. */}
+{/* Nota interna (ronda única, 31/10/2026, master 27cebe13a, base docs_demo_ronda_test): VAT-062 em master (comboio 103): com a Empresa Teste Filial em Isento (art. 53.º do CIVA) desde 01/01/2026 (janela Configuração fiscal PT, administrador com o perfil Responsável fiscal; notificação «Guardado. A empresa não tem periodicidade do IVA: está isenta e não entrega declaração periódica.»), o rascunho de uma fatura com o [KIT-CAN] trouxe M10 e 0,00 € de IVA, sem faixa. O aviso antigo («o Fiscaldoo ainda deixa emitir com IVA») saiu. O rótulo do art. 53.º já não diz «pequenos retalhistas» (VAT-067). Não emiti fatura na Filial. */}
 
 ## Notas importantes
 

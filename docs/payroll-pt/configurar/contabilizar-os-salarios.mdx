@@ -18,7 +18,7 @@ related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/processar-e-p
 
 ## Para que serve?
 
-Depois de validar o lote do mês, os salários têm de entrar na contabilidade: o gasto com o pessoal, o IRS retido e as contribuições a entregar ao Estado e o líquido a pagar aos trabalhadores. O fiscaldoo faz esse lançamento sozinho a partir dos recibos, no diário de salários, desde que cada rubrica com valor tenha um **modelo de contabilização**: a regra que diz a que conta vai o débito e a que conta vai o crédito.
+Depois de validar o lote do mês, os salários têm de entrar na contabilidade: o gasto com o pessoal, o IRS retido e as contribuições a entregar ao Estado e o líquido a pagar aos trabalhadores. O Fiscaldoo faz esse lançamento sozinho a partir dos recibos, no diário de salários, desde que cada rubrica com valor tenha um **modelo de contabilização**: a regra que diz a que conta vai o débito e a que conta vai o crédito.
 
 Os modelos configuram-se uma vez e servem todos os meses. O lançamento de cada mês faz-se no lote, com **Contabilizar**, e é obrigatório antes do ficheiro de transferências: o pagamento dos salários liquida esse lançamento.
 
@@ -39,7 +39,7 @@ Os modelos configuram-se uma vez e servem todos os meses. O lançamento de cada 
 - Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador: só quem o tem vê o menu **Configurar** e o botão **Contabilizar**. O perfil **Processador de salários**, sem este acesso, não os vê.
 - Escolha a empresa no seletor do canto superior direito: noutra empresa, como a **Empresa Teste Portugal** da demonstração, a lista **Modelos de contabilização** aparece vazia e não existe o lote de salários. Escolha **Empresa Demonstração, Lda**.
 - Com o acesso **Administrador de Salários**, também escolhe as contas e o diário de um modelo, mesmo sem o perfil **Contabilista**. {/* Nota interna (auditoria docs-aud-v23ak, 08/11/2026): visto no ecrã com um utilizador sem valor no campo Perfil e só com o acesso Administrador de Salários: Conta a débito, Conta a crédito e Diário de salários editáveis, com a lista de contas. O produto liga estes campos ao acesso de leitura aos diários, que o Contabilista e o Administrador de Salários têm. */}
-- As contas de cada rubrica foram decididas com o contabilista certificado. O fiscaldoo não escolhe contas por si.
+- As contas de cada rubrica foram decididas com o contabilista certificado. O Fiscaldoo não escolhe contas por si.
 - O lote do mês está **Validado**.
 
 ## Como utilizar
@@ -93,7 +93,7 @@ A conta 231290 fica a zero: os rendimentos (12.528,63 €) são iguais ao IRS, �
 ## Notas importantes
 
 - **O modo muda o detalhe, não os totais.** Em **Agregado por lote**, quem só vê a contabilidade não vê quanto recebeu cada trabalhador: esse detalhe fica nos Salários. Em **Por trabalhador**, as linhas do líquido, do IRS e das contribuições levam o trabalhador. Os totais por conta são os mesmos. Mudar a opção vale para os lotes ainda por contabilizar.
-- **Um modelo vale por datas.** O fiscaldoo procura o modelo vigente no último dia do mês do lote. Para mudar de conta a meio do ano, preencha **Válido até** no modelo antigo e crie um novo com **Válido desde** no dia seguinte, em vez de alterar o antigo.
+- **Um modelo vale por datas.** O Fiscaldoo procura o modelo vigente no último dia do mês do lote. Para mudar de conta a meio do ano, preencha **Válido até** no modelo antigo e crie um novo com **Válido desde** no dia seguinte, em vez de alterar o antigo.
 - **Contabilizar é obrigatório antes de pagar.** O ficheiro de transferências é recusado enquanto o lote não estiver contabilizado. Ver [Como pagar os salários](/payroll-pt/pagar-os-salarios).
 - Este artigo não trata a ligação aos salários do Odoo Enterprise (ponte própria). <span className="fd-pending">Pendente de validação no ecrã: diferenças na edição Enterprise.</span>
 

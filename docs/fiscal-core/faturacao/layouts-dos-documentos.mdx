@@ -18,7 +18,7 @@ related: [fiscal-core/faturacao/emitir-uma-fatura-certificada, fiscal-core/certi
 
 ## Para que serve?
 
-O **layout** é o aspeto com que os documentos saem em PDF: o modelo, o tipo e o tamanho da letra, as cores, o logótipo, o texto do rodapé, as colunas das linhas, a posição do código QR e a ordem dos blocos. Prepara-se no **editor visual**, onde a folha muda à medida que escolhe. Cada layout é uma versão: o fiscaldoo valida-a e verifica o PDF impresso, e só depois se põe em uso. Pôr um layout em uso não muda os documentos já emitidos.
+O **layout** é o aspeto com que os documentos saem em PDF: o modelo, o tipo e o tamanho da letra, as cores, o logótipo, o texto do rodapé, as colunas das linhas, a posição do código QR e a ordem dos blocos. Prepara-se no **editor visual**, onde a folha muda à medida que escolhe. Cada layout é uma versão: o Fiscaldoo valida-a e verifica o PDF impresso, e só depois se põe em uso. Pôr um layout em uso não muda os documentos já emitidos.
 
 O layout nunca mexe no que a lei fixa: o ATCUD, o código QR, a assinatura e os valores vêm sempre do documento, e o editor mostra, à parte, os **elementos trancados** que não se movem.
 
@@ -51,15 +51,15 @@ Os dois caminhos abrem a mesma lista. Só os vê quem tem a permissão **Gerir l
 2. O editor tem, à esquerda, o painel com as escolhas e, à direita, a folha, que muda ao mesmo tempo. Em cima escreva o **Nome** do layout, por exemplo `Fatura moderna QR no topo`. Os separadores **Fatura**, **Nota de crédito**, **Recibo**, **Guia de transporte** e **Fatura com várias páginas** mudam só a folha de exemplo, para ver como o mesmo layout fica em cada documento. **Anular** e **Refazer** desfazem e repõem a última escolha.
    ![Editor visual: o nome do layout, os separadores dos documentos, os botões Ver PDF e Gravar como versão nova, o painel com o Modelo, o Tipo de letra e o Tamanho da letra e a folha de exemplo](/images/fiscal-core/layouts-dos-documentos/02-editor-visual.png)
 3. No painel, escolha o **Modelo** (**Clássico**, **Moderno** ou **Compacto**) e o **Tipo de letra** (Lato, Roboto, Open Sans, Montserrat, Oswald ou Raleway).
-4. Em **Tamanho da letra**, escolha a letra do título, do texto, da tabela, do cliente, dos dados da empresa e do rodapé, com a barra ou escrevendo o número. Cada uma tem um mínimo e um máximo para tudo continuar legível (ver «O que o fiscaldoo não deixa mudar»). **Usar os tamanhos do modelo** repõe os do modelo escolhido.
+4. Em **Tamanho da letra**, escolha a letra do título, do texto, da tabela, do cliente, dos dados da empresa e do rodapé, com a barra ou escrevendo o número. Cada uma tem um mínimo e um máximo para tudo continuar legível (ver «O que o Fiscaldoo não deixa mudar»). **Usar os tamanhos do modelo** repõe os do modelo escolhido.
 5. Em **Cores**, escolha a **Cor principal** e a **Segunda cor** e escreva o **Texto do rodapé**, por exemplo «Pagamento por transferência bancária. Obrigado pela preferência.». Em **Tamanhos do logótipo e dos espaços**, mude a **Altura do logótipo (mm)** e o **Espaço entre blocos (mm)**, ou puxe pelo canto do logótipo na folha.
 6. Em **Código QR**, escolha **No fim (com os totais)** ou **No topo (primeira página)**. O ATCUD fica sempre imediatamente acima do código, e a frase «Processado por programa certificado n.º …/AT» por baixo dele. No exemplo, o código QR passa para o topo da folha.
    ![Painel do editor, secção Código QR, com a escolha No topo (primeira página) assinalada](/images/fiscal-core/layouts-dos-documentos/03-codigo-qr-no-topo.png)
    ![Folha do editor com o ATCUD, o código QR e a linha do programa certificado por baixo do cabeçalho, antes dos dados do cliente](/images/fiscal-core/layouts-dos-documentos/05-folha-com-qr-no-topo.png)
 7. Em **Colunas das linhas**, arraste uma coluna na folha, use as setas ou puxe pela aresta entre duas colunas para mudar a largura; a **Descrição**, a **Qtd.**, o **Preço**, os **Impostos** e o **Valor** não se escondem, porque a lei os pede (CIVA, art. 36.º, n.º 5): ao tentar, o editor diz «Colunas pedidas pela lei: trancado.». Só a **Desc.%** se pode esconder, e o editor avisa que «uma coluna escondida aqui continua a imprimir-se num documento que tenha uma linha com desconto». Em **Cabeçalho e rodapé**, ponha o logótipo, os dados da empresa e o texto do rodapé no **Início**, no **Centro** ou no **Fim** da sua zona. Em **Ordem dos blocos**, arraste um bloco ou use as setas: **Cliente**, **Título e datas**, **Linhas**, **Totais, ATCUD e código QR** e **Notas e pagamento**, cada um uma só vez, com os totais sempre depois das linhas.
-8. Carregue em **Ver PDF** para ver o PDF exato: o fiscaldoo imprime uma fatura já emitida da empresa com as escolhas que fez, ainda sem gravar. Confira o ATCUD, o código QR e a frase do programa certificado.
+8. Carregue em **Ver PDF** para ver o PDF exato: o Fiscaldoo imprime uma fatura já emitida da empresa com as escolhas que fez, ainda sem gravar. Confira o ATCUD, o código QR e a frase do programa certificado.
    ![Janela PDF aberta pelo botão Ver PDF: a fatura simplificada FS POS26/1 impressa com o layout, com o ATCUD, o código QR e a frase Processado por programa certificado por baixo](/images/fiscal-core/layouts-dos-documentos/07-ver-pdf.png)
-9. Carregue em **Gravar como versão nova**. O fiscaldoo grava e valida o layout, e a janela diz «Versão 2 gravada e validada. A seguir verifica-se o PDF impresso; depois pode usá-la.» (o número é o da versão seguinte da sua empresa). A ficha do layout fica **Validado** e o **PDF impresso** **Em espera**: «O PDF impresso está a ser verificado em segundo plano. Volte a carregar daqui a pouco.»
+9. Carregue em **Gravar como versão nova**. O Fiscaldoo grava e valida o layout, e a janela diz «Versão 2 gravada e validada. A seguir verifica-se o PDF impresso; depois pode usá-la.» (o número é o da versão seguinte da sua empresa). A ficha do layout fica **Validado** e o **PDF impresso** **Em espera**: «O PDF impresso está a ser verificado em segundo plano. Volte a carregar daqui a pouco.»
    ![Layout Validado, com a mensagem de que o PDF impresso está a ser verificado em segundo plano](/images/fiscal-core/layouts-dos-documentos/04-validado-pdf-em-espera.png)
 10. Daqui a um ou dois minutos, abra de novo o layout. Com o **PDF impresso** **Verificado**, aparece o botão **Usar este layout**. Carregue nele.
     ![Barra do layout Validado com o botão Usar este layout assinalado](/images/fiscal-core/layouts-dos-documentos/05-usar-este-layout.png)
@@ -115,7 +115,7 @@ Se vende artigos seguidos por número de série ou por lote, a fatura pode impri
 - **O orçamento e a encomenda não mostram esta tabela** (visto no PDF da encomenda `S00005`, sem nenhum número de série), e o texto de ajuda da opção diz que só a fatura e a nota de crédito a imprimem. <span className="fd-pending">Pendente de validação no ecrã: a guia de transporte certificada (não aberta), a nota de crédito com a tabela, os oito modelos (visto só o modelo em uso na demonstração) e o desenho a várias páginas com muitas linhas com números de série.</span>
 - **No ficheiro SAF-T** vão os números de série e não os lotes: ver [Como gerar o ficheiro SAF-T de faturação](/fiscal-core/gerar-o-saft), «Números de série no ficheiro».
 
-## O que o fiscaldoo não deixa mudar
+## O que o Fiscaldoo não deixa mudar
 
 O editor só deixa escolher o que não mexe no que a lei fixa. Não há posição livre: um documento fiscal não se desenha à mão.
 
@@ -133,7 +133,7 @@ Ao **Validar**, o servidor recusa ainda:
 - **Um logótipo que não é uma imagem PNG ou JPEG.**
 - **O ATCUD fora do sítio e um código QR pequeno.** O ATCUD vai imediatamente acima do código QR (Portaria n.º 195/2020, art. 4.º, n.º 3), o código QR vai na primeira ou na última página (art. 6.º, n.º 3) e tem pelo menos 30 mm. O editor só deixa escolher entre o fim e o topo; o servidor recusa o resto se chegar por outra via.
 
-Depois de validado, o fiscaldoo imprime uma fatura já emitida da empresa com o layout e lê o PDF: o ATCUD e o código QR legível e igual ao do documento, com 30 mm ou mais, e que nenhum texto fica por cima de outro: um layout cujo PDF tenha texto sobreposto é recusado, com a indicação dos sítios. <span className="fd-pending">Pendente de validação no ecrã: a recusa por texto sobreposto não se conseguiu provocar com as escolhas que o editor permite.</span>
+Depois de validado, o Fiscaldoo imprime uma fatura já emitida da empresa com o layout e lê o PDF: o ATCUD e o código QR legível e igual ao do documento, com 30 mm ou mais, e que nenhum texto fica por cima de outro: um layout cujo PDF tenha texto sobreposto é recusado, com a indicação dos sítios. <span className="fd-pending">Pendente de validação no ecrã: a recusa por texto sobreposto não se conseguiu provocar com as escolhas que o editor permite.</span>
 
 <span className="fd-pending">Pendente de validação por contabilista certificado: a leitura do Despacho n.º 8632/2014, pontos 2.2.2, 2.2.11, 2.2.12 e 2.2.15, e da Portaria n.º 195/2020, arts. 4.º e 6.º, aplicada pelo layout.</span>
 
@@ -186,7 +186,7 @@ Depois de validado, o fiscaldoo imprime uma fatura já emitida da empresa com o 
 ### O botão «Gravar como versão nova» está desativado
 
 - **Causa:** uma letra, a altura do logótipo ou o espaço entre blocos está fora dos limites. A folha diz qual, por exemplo «A letra do título tem de estar entre 12 e 28 pt (o número do documento tem de continuar legível); 3 não é permitido.»
-- **O que fazer:** escreva um valor dentro dos limites (ver «O que o fiscaldoo não deixa mudar») ou carregue em **Usar os tamanhos do modelo**.
+- **O que fazer:** escreva um valor dentro dos limites (ver «O que o Fiscaldoo não deixa mudar») ou carregue em **Usar os tamanhos do modelo**.
 
 ### O botão «Usar este layout» não aparece
 

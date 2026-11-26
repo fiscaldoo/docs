@@ -20,7 +20,7 @@ related: [accounting-pt/declaracoes/saft-de-contabilidade, accounting-pt/relator
 
 O **Pacote do auditor** junta num só ficheiro ZIP o que um auditor ou um revisor oficial de contas costuma pedir de um período: os ficheiros SAF-T já gerados, o balancete, o razão e o registo de auditoria. **Só junta o que já existe:** não gera nada novo na contabilidade nem altera dados. O ficheiro faz-se no seu computador e não é enviado a ninguém.
 
-Há ainda um segundo ficheiro, os **registos de controlo de um ano** (registo de auditoria, importações fiscais e cópias de segurança), que o fiscaldoo guarda 10 anos e que só se cria depois de o ano acabar.
+Há ainda um segundo ficheiro, os **registos de controlo de um ano** (registo de auditoria, importações fiscais e cópias de segurança), que o Fiscaldoo guarda 10 anos e que só se cria depois de o ano acabar.
 
 ## Quando utilizar?
 
@@ -61,7 +61,7 @@ Há ainda um segundo ficheiro, os **registos de controlo de um ano** (registo de
 
 ## No Enterprise
 
-No Odoo Enterprise, a janela **Pacote do auditor** é a mesma (visto com um utilizador só com o perfil **Auditor / ROC** e outro só com o perfil **Contabilista certificado**, a quem a janela diz «Sem os salários: o seu perfil não os lê.»). Muda o ZIP: além do que o passo 4 descreve, traz a pasta **enterprise**, com a exportação dos relatórios do Enterprise para o mesmo período: **balancete.csv**, **razao_geral.csv**, **balanco_snc.csv**, **demonstracao_resultados_snc.csv**, **recebimentos_vencidos.csv** e **pagamentos_vencidos.csv**. O **balancete.csv** e o **razao.csv** da raiz continuam a ser os do fiscaldoo, com as colunas do **Balancete (formato PT)** e do razão deste produto. **Exportar os registos de controlo de um ano** abre a mesma janela.
+No Odoo Enterprise, a janela **Pacote do auditor** é a mesma (visto com um utilizador só com o perfil **Auditor / ROC** e outro só com o perfil **Contabilista certificado**, a quem a janela diz «Sem os salários: o seu perfil não os lê.»). Muda o ZIP: além do que o passo 4 descreve, traz a pasta **enterprise**, com a exportação dos relatórios do Enterprise para o mesmo período: **balancete.csv**, **razao_geral.csv**, **balanco_snc.csv**, **demonstracao_resultados_snc.csv**, **recebimentos_vencidos.csv** e **pagamentos_vencidos.csv**. O **balancete.csv** e o **razao.csv** da raiz continuam a ser os do Fiscaldoo, com as colunas do **Balancete (formato PT)** e do razão deste produto. **Exportar os registos de controlo de um ano** abre a mesma janela.
 
 {/* Nota interna (lote 106, FIX-M340, master 8f4f948ef, docs_demo_l106_test, porta 10302, 23/11/2026): Gerar pacote por clique com utilizadores criados na cópia só com cada perfil: Auditor / ROC com o acesso extra Auditor de Salários (abre sem aviso; ZIP: saft/, saft_gerados.csv, balancete.csv, razao.csv, registos_auditoria.csv e salarios_auditoria.csv), Auditor / ROC sozinho (aviso «Sem os salários: o seu perfil não os lê.»; ZIP sem o ficheiro), Gerência (com o ficheiro) e Contabilista certificado (aviso; sem o ficheiro). O Auditor com o acesso extra recusa alterar um contacto («Não pode alterar contactos: o seu perfil (Auditor) é só de leitura…»). Captura 06 nova. */}
 

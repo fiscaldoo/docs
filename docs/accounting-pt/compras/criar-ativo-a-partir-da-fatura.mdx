@@ -3,7 +3,7 @@ id: criar-ativo-a-partir-da-fatura
 slug: /accounting-pt/criar-ativo-a-partir-da-fatura
 title: Como criar o ativo a partir da fatura de fornecedor
 sidebar_label: Criar o ativo a partir da fatura
-description: Ao publicar uma fatura de fornecedor com uma linha numa conta de ativos fixos (43, 44 ou 45), o fiscaldoo cria a ficha do ativo em rascunho; ver como a abrir, completar e pôr em uso.
+description: Ao publicar uma fatura de fornecedor com uma linha numa conta de ativos fixos (43, 44 ou 45), o Fiscaldoo cria a ficha do ativo em rascunho; ver como a abrir, completar e pôr em uso.
 keywords: [ativo a partir da fatura, criar ativo fixo, ficha do ativo, ativos fixos, fatura de fornecedor, imobilizado, um ativo por unidade, categoria de ativo fixo, conta 43, conta 44, conta 45, ativo em rascunho, botão Ativos fixos]
 doc_id: DOC-0076
 article_type: tarefa
@@ -17,7 +17,7 @@ related: [accounting-pt/ativos/registar-um-ativo, accounting-pt/compras/fatura-d
 
 ## Para que serve?
 
-Quando lança uma fatura de um bem que vai durar mais de um ano (um computador, uma viatura, um programa), o fiscaldoo prepara sozinho a ficha do ativo fixo: traz o valor, o fornecedor, a data da fatura e a categoria. Poupa-lhe escrever tudo outra vez e evita esquecer um bem comprado. A ficha nasce **Em preparação**: o fiscaldoo nunca a põe em uso sozinho, porque a data de início de utilização e a vida útil são decisões suas.
+Quando lança uma fatura de um bem que vai durar mais de um ano (um computador, uma viatura, um programa), o Fiscaldoo prepara sozinho a ficha do ativo fixo: traz o valor, o fornecedor, a data da fatura e a categoria. Poupa-lhe escrever tudo outra vez e evita esquecer um bem comprado. A ficha nasce **Em preparação**: o Fiscaldoo nunca a põe em uso sozinho, porque a data de início de utilização e a vida útil são decisões suas.
 
 ## Quando utilizar?
 
@@ -50,7 +50,7 @@ Se o bem não vem de uma fatura publicada (por exemplo, já estava na empresa), 
    ![Fatura publicada com o botão Ativos Fixos assinalado no topo](/images/accounting-pt/criar-ativo-a-partir-da-fatura/76-01-fatura-botao-ativos-fixos.png)
 3. Carregue em **Ativos Fixos**. A lista mostra uma ficha por linha de investimento, com o **Código** (`AF/00017`), o **Nome**, a **Categoria**, a data da fatura em **Adquirido em**, o **Custo** (380,00 €) e o estado **Em preparação**. Se a fatura tem 3 unidades e a categoria tem **Um ativo por unidade** ligado, nascem 3 fichas, `Cadeira ergonómica (1/3)`, `(2/3)` e `(3/3)`, cada uma com 150,00 €; sem essa opção nasce uma ficha só, com o valor total da linha.
    ![Lista com as três fichas Cadeira ergonómica (1/3), (2/3) e (3/3), de 150,00 € cada, Em preparação](/images/accounting-pt/criar-ativo-a-partir-da-fatura/76-02-fichas-em-preparacao.png)
-4. Abra a ficha. Confira o **Nome**, a **Categoria**, o **Fornecedor** e a **Fatura de origem**. Se aparecer a faixa «Sugestão a partir da descrição: · [II-2240] Computadores», é o código da taxa do DR 25/2009 que o fiscaldoo propõe pelo nome: carregue em **Usar a sugestão** só se o código é o do bem.
+4. Abra a ficha. Confira o **Nome**, a **Categoria**, o **Fornecedor** e a **Fatura de origem**. Se aparecer a faixa «Sugestão a partir da descrição: · [II-2240] Computadores», é o código da taxa do DR 25/2009 que o Fiscaldoo propõe pelo nome: carregue em **Usar a sugestão** só se o código é o do bem.
    ![Ficha AF/00017 Em preparação, com a faixa de sugestão da taxa DR 25/2009 e a Fatura de origem](/images/accounting-pt/criar-ativo-a-partir-da-fatura/76-03-ficha-em-preparacao.png)
 5. Escreva a **Data de início de utilização** (em **Geral**) e, em **Quadro contabilístico**, a **Vida útil contabilística (anos)**. Depois carregue em **Pôr em uso**. O resto da ficha (quotas, taxa fiscal, plano) é igual ao de qualquer ativo: veja [Como registar um ativo fixo](/accounting-pt/registar-um-ativo).
 
@@ -58,7 +58,7 @@ Se o bem não vem de uma fatura publicada (por exemplo, já estava na empresa), 
 
 ## Resultado esperado
 
-- Uma ficha **Em preparação** por linha de investimento (ou por unidade), ligada à fatura e à linha, com o valor da linha sem IVA. Ao criar a ficha, o fiscaldoo copia o IVA que deduziu na fatura para o **Quadro fiscal** (no exemplo do computador de 1.450,00 €, **IVA deduzido na aquisição** 333,50 €, «Da fatura de compra»).
+- Uma ficha **Em preparação** por linha de investimento (ou por unidade), ligada à fatura e à linha, com o valor da linha sem IVA. Ao criar a ficha, o Fiscaldoo copia o IVA que deduziu na fatura para o **Quadro fiscal** (no exemplo do computador de 1.450,00 €, **IVA deduzido na aquisição** 333,50 €, «Da fatura de compra»).
 - A fatura em si lança-se como qualquer fatura de compra: no exemplo, `FTF/2026/00052` (1.450,00 € + 333,50 € de IVA):
 
 | Conta | Débito | Crédito |
@@ -70,7 +70,7 @@ Se o bem não vem de uma fatura publicada (por exemplo, já estava na empresa), 
 - Criar a ficha **não lança depreciações**. As quotas só entram na contabilidade depois de a ficha estar **Em uso** e de o mês ser processado.
 - Depois de **Pôr em uso** (ficha do computador, início 23/10/2026, vida útil de 3 anos), o plano tem quotas anuais: a de 2026 é de 120,83 € (3 meses), as de 2027 e 2028 de 483,33 € e 483,34 €, e a de 2029 de 362,50 €. O ativo passa a **Em uso** com **Valor líquido** 1.450,00 €.
 
-### Que categoria escolhe o fiscaldoo
+### Que categoria escolhe o Fiscaldoo
 
 1. A **Categoria de ativo fixo** que estiver na ficha da **conta** (em **Plano de contas**, separador **Contabilidade**; o menu **Plano de contas** é do perfil **Contabilista certificado**). Na demonstração, com a conta `437 Outros ativos fixos tangíveis` ligada a **Equipamento de transporte**, a ficha do `Empilhador elétrico` nasceu com essa categoria.
 2. Se a conta não a tem, a categoria cuja conta de ativo seja essa conta, desde que seja uma só: a conta `435` dá **Equipamento administrativo** e a `443` dá **Programas de computador**.
@@ -121,7 +121,7 @@ A opção está em cada **Categoria de ativos**. Ligada, uma linha com quantidad
 ### A ficha tem o nome «…, linha 1» e a sugestão de taxa está errada
 
 - **Sintoma:** a ficha chama-se com a **Referência da fatura** seguida de «, linha 1», e a faixa sugere uma taxa que não tem nada a ver com o bem (no teste, «[I-1245] Equipamentos de centrais: Linhas de AT e suportes»).
-- **Causa:** a linha da fatura não tinha descrição. O fiscaldoo dá à ficha a referência da fatura e o número da linha, e a sugestão procura-se nesse nome.
+- **Causa:** a linha da fatura não tinha descrição. O Fiscaldoo dá à ficha a referência da fatura e o número da linha, e a sugestão procura-se nesse nome.
 - **O que fazer:** escreva o nome do bem na ficha, antes de carregar em **Usar a sugestão**, ou escolha o código certo em **Quadro fiscal › Taxa DR 25/2009**. Da próxima vez, descreva a linha da fatura.
 
 ### «O ativo “…” não pode ser posto em uso: falta(m) data de início de utilização, vida útil contabilística maior que zero»

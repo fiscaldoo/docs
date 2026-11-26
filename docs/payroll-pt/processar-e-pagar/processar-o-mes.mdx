@@ -18,7 +18,7 @@ related: [payroll-pt/processar-e-pagar/pagar-os-salarios, payroll-pt/configurar/
 
 ## Para que serve?
 
-Todos os meses, os salários fazem-se num **lote**: um registo com um recibo por trabalhador. O fiscaldoo cria os recibos a partir do contrato de cada trabalhador, calcula a Segurança Social, a retenção de IRS e o líquido, e no fim fecha os recibos para não mudarem depois de pagos e declarados.
+Todos os meses, os salários fazem-se num **lote**: um registo com um recibo por trabalhador. O Fiscaldoo cria os recibos a partir do contrato de cada trabalhador, calcula a Segurança Social, a retenção de IRS e o líquido, e no fim fecha os recibos para não mudarem depois de pagos e declarados.
 
 O ponto de partida é o ecrã **O que há para fazer este mês?**, que abre ao entrar na aplicação Salários. Mostra os 9 passos do mês, cada um com o estado **Feito**, **A fazer** ou **Bloqueado**, e o botão para o processar. Por baixo dos passos vêm os números do mês: **Recibos por terminar**, **Salários por pagar**, **Faltas por aprovar** e **Declarações por entregar**, e as tabelas **Trabalhadores**, **Custo dos salários (recibos processados)**, **Ausências do mês, em dias**, **Horas extra do ano** e **Parentalidade e família**. As três primeiras tabelas comparam o mês escolhido com o mês anterior e com o mesmo mês do ano anterior. **Horas extra do ano** e **Parentalidade e família** não têm essa comparação. Num mês ainda sem lote, aparece «Este mês ainda não tem lote de processamento. Próximo passo: processar o mês.»
 
@@ -64,7 +64,7 @@ O mesmo ecrã está em **Salários › Preparar › O que há para fazer este m�
 
 {/* Nota interna (DOCS-022): vídeo previsto (video=sim, corrente DOCS-006): processar o lote de outubro, de «Processar outubro» até «Validar». Entra como secção «Vídeo demonstrativo» depois de «Resultado esperado» quando existir. */}
 
-**Exemplo.** No recibo de outubro de Ana Margarida Pinto (casada, único titular, 2 dependentes), o fiscaldoo calculou sozinho:
+**Exemplo.** No recibo de outubro de Ana Margarida Pinto (casada, único titular, 2 dependentes), o Fiscaldoo calculou sozinho:
 
 - **Retribuição base** 2.400,00 € e **Subsídio de alimentação** 129,15 € (21 dias × 6,15 €): bruto 2.529,15 €.
 - **Segurança Social (trabalhador)**: 11 % de 2.400,00 € = 264,00 €. O subsídio de alimentação ficou fora da base; o recibo indica «1 excluída(s) pelo CRC art. 48.º».
@@ -72,11 +72,11 @@ O mesmo ecrã está em **Salários › Preparar › O que há para fazer este m�
 - **Líquido a receber**: 2.529,15 € − 264,00 € − 171,00 € = 2.094,15 €.
 - A empresa paga ainda 23,75 % de 2.400,00 € = 570,00 € à Segurança Social, que não sai do salário. O recibo mostra o **Custo total para a empresa**: 3.099,15 €.
 
-O que entra na base da Segurança Social e do IRS, o valor diário do subsídio de alimentação e o arredondamento da retenção ao euro inferior são regras que o fiscaldoo aplica sozinho. <span className="fd-pending">Pendente de validação por contabilista certificado: limite do subsídio de alimentação excluído da base (CRC art. 48.º e CIRS) e arredondamento da retenção (CIRS art. 99.º-E).</span>
+O que entra na base da Segurança Social e do IRS, o valor diário do subsídio de alimentação e o arredondamento da retenção ao euro inferior são regras que o Fiscaldoo aplica sozinho. <span className="fd-pending">Pendente de validação por contabilista certificado: limite do subsídio de alimentação excluído da base (CRC art. 48.º e CIRS) e arredondamento da retenção (CIRS art. 99.º-E).</span>
 
 ## No Enterprise
 
-No Odoo Enterprise, este artigo faz-se da mesma maneira: com o perfil **Processador de salários**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)). No lote de outubro de 2026 da demonstração Enterprise, **Criar os recibos do mês** deu a mesma mensagem, «Recibos criados. 8 recibos criados; 0 trabalhadores já tinham recibo.», e o lote validado tem o mesmo líquido total, 10.382,03 €. Para confirmar o horário dos contratos no Enterprise, ver [Como registar e pagar trabalho suplementar](/payroll-pt/trabalho-suplementar#no-enterprise).
+No Odoo Enterprise, este artigo faz-se da mesma maneira: com o perfil **Processador de salários**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do Fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)). No lote de outubro de 2026 da demonstração Enterprise, **Criar os recibos do mês** deu a mesma mensagem, «Recibos criados. 8 recibos criados; 0 trabalhadores já tinham recibo.», e o lote validado tem o mesmo líquido total, 10.382,03 €. Para confirmar o horário dos contratos no Enterprise, ver [Como registar e pagar trabalho suplementar](/payroll-pt/trabalho-suplementar#no-enterprise).
 
 {/* Nota interna (lote EE-06, DOCS-073 #4142, DEC-1794, master ce51f2d47, 10/11/2026): conferido numa cópia Enterprise da demonstração (docs_ee_ee06_test, computador 2) com utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): Processador de salários por clique: O que há para fazer este mês? › Outubro de 2026 › Processar outubro › Criar os recibos do mês › Calcular › Validar (lote novo da cópia, Validado); Mês contra o mês anterior. Menus e vistas comparados, perfil a perfil, com uma cópia Community do mesmo master (docs_demo_ee06_test). Ver reports/LOTE_EE-06.md. */}
 
@@ -108,7 +108,7 @@ No Odoo Enterprise, este artigo faz-se da mesma maneira: com o perfil **Processa
 
 - **Sintoma:** com o calendário feito, **Criar os recibos do mês** cria os recibos (6 na demonstração, com salário mínimo, IRS e Segurança Social por calcular), mas **Calcular** abre «Operação inválida O recibo «*Nome do trabalhador* (01/01/2027 — 31/01/2027)» não pode ser calculado nem validado: as tabelas legais de 2027 ainda não estão publicadas. O que aconteceu: calcular agora usaria valores em falta ou desatualizados (salário mínimo, IRS, Segurança Social) e daria montantes errados. Como resolver: aguarde o pacote de atualização legal de 2027 e instale-o; a vigilância da lei marca o ano como confirmado.» **Validar** num recibo em **Rascunho** dá a mesma recusa.
   ![Recusa de Calcular: as tabelas legais de 2027 ainda não estão publicadas](/images/payroll-pt/processar-o-mes/06-tabelas-2027-por-publicar.png)
-- **Causa:** o fiscaldoo não calcula recibos de um ano sem o pacote legal desse ano. O salário mínimo de 2027 que existe na demonstração (970,00 €) é só uma previsão e nenhum recibo o lê ([Como atualizar o salário mínimo](/payroll-pt/salario-minimo)).
+- **Causa:** o Fiscaldoo não calcula recibos de um ano sem o pacote legal desse ano. O salário mínimo de 2027 que existe na demonstração (970,00 €) é só uma previsão e nenhum recibo o lê ([Como atualizar o salário mínimo](/payroll-pt/salario-minimo)).
 - **O que fazer:** nada a corrigir no lote. Os recibos ficam em **Rascunho** e o líquido que mostram é provisório (por exemplo 2.523,00 € para a Ana, sem descontos). Calcule quando o pacote de atualização legal de 2027 estiver instalado.
 
 ### Depois de validar aparece «Conta contabilística de cada rubrica com valor (Bloqueia o fecho)»

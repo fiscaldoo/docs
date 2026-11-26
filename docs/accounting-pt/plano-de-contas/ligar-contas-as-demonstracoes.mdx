@@ -22,7 +22,7 @@ Os menus deste artigo são de configuração e raramente se usam. **Procurar ano
 
 ## Para que serve?
 
-O balanço e a demonstração de resultados têm as linhas (rubricas) da Portaria 220/2015. Cada linha soma as contas cujas **taxonomias** a tabela oficial põe nessa rubrica. O fiscaldoo gera essas somas sozinho: da primeira vez que a demonstração é aberta, e de novo quando muda o referencial da empresa.
+O balanço e a demonstração de resultados têm as linhas (rubricas) da Portaria 220/2015. Cada linha soma as contas cujas **taxonomias** a tabela oficial põe nessa rubrica. O Fiscaldoo gera essas somas sozinho: da primeira vez que a demonstração é aberta, e de novo quando muda o referencial da empresa.
 
 Este artigo serve para três coisas que o dia a dia não pede:
 
@@ -45,7 +45,7 @@ Em **Contabilidade › Configurar › Plano e regras legais**:
 - **Gerar linhas das demonstrações**: abre a janela **Gerar linhas das demonstrações**.
 - **Registo de geração de linhas**: a lista de todas as gerações da empresa ativa (o título do ecrã é **Registo de geração de rubricas**). Só o administrador a tem na barra; o Contabilista certificado vê o registo de cada geração que faz, porque abre sozinho no fim (ver «Resultado esperado»).
 - **Procurar anomalias nas contas**: abre a janela **Verificar plano**.
-- **Ligação das contas às demonstrações**: a tabela oficial, com 2792 ligações com o filtro **Taxonomia S** (título **Mapeamento taxonomia → demonstração**). Para cada taxonomia mostra o **Modelo de demonstração**, o **Lado do saldo** (débito ou crédito), a **Demonstração**, o **Nome da rubrica (AT)**, a **Versão da tabela** e o **Válido desde**. É para consultar: vem com o fiscaldoo, e o Contabilista certificado e o Auditor / ROC não têm o botão **Novo**.
+- **Ligação das contas às demonstrações**: a tabela oficial, com 2792 ligações com o filtro **Taxonomia S** (título **Mapeamento taxonomia → demonstração**). Para cada taxonomia mostra o **Modelo de demonstração**, o **Lado do saldo** (débito ou crédito), a **Demonstração**, o **Nome da rubrica (AT)**, a **Versão da tabela** e o **Válido desde**. É para consultar: vem com o Fiscaldoo, e o Contabilista certificado e o Auditor / ROC não têm o botão **Novo**.
 
 ## Antes de começar
 
@@ -95,7 +95,7 @@ Na Empresa Demonstração, com o plano de hoje (códigos do SNC sem zeros de enc
 
 ## No Enterprise
 
-No Odoo Enterprise, as entradas de **Contabilidade › Configurar › Plano e regras legais** são as mesmas e as demonstrações continuam a ser as do fiscaldoo: **Contabilidade › Consultar › Demonstrações financeiras › Balanço** abre o **Balanço (SNC)** (visto com um utilizador só com o perfil **Contabilista certificado**). **Procurar anomalias nas contas** com **Verificar plano** deu **Anomalia** 0, e **Ligação das contas às demonstrações** abre com o filtro **Taxonomia S** e 2792 ligações.
+No Odoo Enterprise, as entradas de **Contabilidade › Configurar › Plano e regras legais** são as mesmas e as demonstrações continuam a ser as do Fiscaldoo: **Contabilidade › Consultar › Demonstrações financeiras › Balanço** abre o **Balanço (SNC)** (visto com um utilizador só com o perfil **Contabilista certificado**). **Procurar anomalias nas contas** com **Verificar plano** deu **Anomalia** 0, e **Ligação das contas às demonstrações** abre com o filtro **Taxonomia S** e 2792 ligações.
 
 Muda a lista **Relatório** de **Gerar linhas das demonstrações**: abre com os relatórios do próprio Enterprise (**Balanço**, **Extrato de Fluxos de Caixa**, **Resumo Executivo**, **Razão** e outros), que não têm linhas ligadas à Portaria 220/2015: com o **Balanço** do Enterprise, as linhas ligadas são 0 e **Regenerar** recusa com «O relatório «Balanço» não tem nenhuma linha ligada a uma rubrica da Portaria 220/2015, pelo que não há nada a regenerar.». Escreva `Balanço (SNC)` no campo e escolha **Balanço (SNC) (PT)**: as **Linhas do relatório ligadas a uma rubrica da Portaria 220/2015** passam a 56. **Regenerar** abriu o **Registo de geração de rubricas** com 43 linhas regeneradas, como no Community.
 

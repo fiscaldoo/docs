@@ -4,7 +4,7 @@ slug: /administration/lista-de-go-live
 title: Como usar a lista de go-live antes de arrancar
 sidebar_label: Lista de go-live
 sidebar_position: 4
-description: A lista que confere, antes de a empresa começar a trabalhar a sério, a moeda, o idioma, se o fiscaldoo pode assinar, a série certificada e os utilizadores e módulos de teste.
+description: A lista que confere, antes de a empresa começar a trabalhar a sério, a moeda, o idioma, se o Fiscaldoo pode assinar, a série certificada e os utilizadores e módulos de teste.
 keywords: [go-live, lista de go-live, arrancar, produção, producao, módulos de demonstração, utilizadores de demonstração, antes de arrancar]
 doc_id: DOC-0314
 article_type: tarefa
@@ -40,7 +40,7 @@ Entre como administrador do sistema. Feito a 21 de novembro de 2026, numa base d
 
 1. Abra **Definições › Utilizadores e empresas › Lista de go-live**.
 2. Leia cada linha. As **A fazer** são as que impedem o arranque.
-   ![Lista de go-live com duas linhas A fazer e cinco Feito, uma delas «O fiscaldoo tem uma chave de assinatura ativa»](/images/administration/lista-de-go-live/01-lista.png)
+   ![Lista de go-live com duas linhas A fazer e cinco Feito, uma delas «O Fiscaldoo tem uma chave de assinatura ativa»](/images/administration/lista-de-go-live/01-lista.png)
 3. Faça cada **A fazer** no sítio próprio e abra a lista outra vez para conferir.
 4. Carregue em **Fechar**.
 
@@ -50,14 +50,14 @@ Entre como administrador do sistema. Feito a 21 de novembro de 2026, numa base d
 
 Uma lista sem nenhuma linha **A fazer**. Na demonstração, a lista tem sete linhas:
 
-- **Feito:** a moeda da empresa é o euro; a empresa já não é a empresa por omissão; o idioma Português (Portugal) está ativo; «O fiscaldoo tem uma chave de assinatura ativa.»; há uma série certificada ativa para esta empresa.
+- **Feito:** a moeda da empresa é o euro; a empresa já não é a empresa por omissão; o idioma Português (Portugal) está ativo; «O Fiscaldoo tem uma chave de assinatura ativa.»; há uma série certificada ativa para esta empresa.
 - **A fazer:** desinstalar os módulos de teste, de demonstração ou franceses (aqui, `l10n_pt_fiscaldoo_demo`) e arquivar ou eliminar os utilizadores de demonstração (aqui, dez).
 
 ## Notas importantes
 
 - **Numa base de demonstração, as duas linhas ficam sempre «A fazer»**: é o esperado, e não se arquivam os utilizadores de uma demonstração.
 - **A série conta só na empresa escolhida no canto superior direito.** Na demonstração, com a **Empresa Teste Portugal**, a linha da série passa a **A fazer**: «Esta empresa não tem nenhuma série certificada ativa: crie a série e comunique-a à Autoridade Tributária.»
-- **A linha da chave pergunta ao fiscaldoo.** Já não há chaves de assinatura na instalação: quem assina é o fiscaldoo ([Como ligar a instalação ao fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)). A linha fica **Feito** («O fiscaldoo tem uma chave de assinatura ativa.») quando o fiscaldoo pode assinar. Quando não pode, fica **A fazer** com a mensagem do fiscaldoo. Numa base de testes o fiscaldoo é simulado e a linha está sempre **Feito**. Numa instalação sem a chave de API guardada (provou-se numa base de teste em que se desligou o simulador), a linha disse «Os documentos são assinados pelo fiscaldoo, mas a ligação não está configurada: preencha o endereço e a chave de API nas Definições. Nada foi assinado.»: guarde a chave de API nas Definições (o artigo acima tem os passos) e abra a lista outra vez.
+- **A linha da chave pergunta ao fiscaldoo.** Já não há chaves de assinatura na instalação: quem assina é o Fiscaldoo ([Como ligar a instalação ao Fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)). A linha fica **Feito** («O Fiscaldoo tem uma chave de assinatura ativa.») quando o Fiscaldoo pode assinar. Quando não pode, fica **A fazer** com a mensagem do fiscaldoo. Numa base de testes o Fiscaldoo é simulado e a linha está sempre **Feito**. Numa instalação sem a chave de API guardada (provou-se numa base de teste em que se desligou o simulador), a linha disse «Os documentos são assinados pelo Fiscaldoo, mas a ligação não está configurada: preencha o endereço e a chave de API nas Definições. Nada foi assinado.»: guarde a chave de API nas Definições (o artigo acima tem os passos) e abra a lista outra vez.
 - **A série conta como feita** se existir e estiver ativa. A lista não diz se foi comunicada à AT: veja [Como comunicar as faturas à AT](/fiscal-core/comunicar-faturas-a-at).
 
 ## Problemas frequentes
@@ -67,7 +67,7 @@ Uma lista sem nenhuma linha **A fazer**. Na demonstração, a lista tem sete lin
 - **Causa:** a lista foi aberta antes da alteração, ou a alteração não foi na empresa certa.
 - **O que fazer:** feche a janela e abra-a de novo, e confirme a empresa no canto superior direito.
 
-{/* Nota interna (lote 104, KEY-001, master e261a9215, docs_demo_104_test, porta 10116, 21/11/2026): lista aberta com o administrador (Definições › Utilizadores e empresas › Lista de go-live): Empresa Demonstração, Lda = 2 A fazer e 5 Feito (frase nova «O fiscaldoo tem uma chave de assinatura ativa.»); Empresa Teste Portugal = série A fazer; com o parâmetro allow_test_database ligado (só na cópia, reposto) e sem chave de API, a linha da chave diz a frase da ligação não configurada. Captura 01 refeita. */}
+{/* Nota interna (lote 104, KEY-001, master e261a9215, docs_demo_104_test, porta 10116, 21/11/2026): lista aberta com o administrador (Definições › Utilizadores e empresas › Lista de go-live): Empresa Demonstração, Lda = 2 A fazer e 5 Feito (frase nova «O Fiscaldoo tem uma chave de assinatura ativa.»); Empresa Teste Portugal = série A fazer; com o parâmetro allow_test_database ligado (só na cópia, reposto) e sem chave de API, a linha da chave diz a frase da ligação não configurada. Captura 01 refeita. */}
 
 {/* Nota interna (DOCS-040, lote F4): visto com admin. A afirmação «refaz a conta sempre que abre» não foi testada com uma alteração (arquivar utilizadores de demonstração estragaria a demonstração): marcar pendente se a auditoria exigir. O link /getting-started/configurar-uma-empresa-nova existe como configurar-uma-empresa-nova.mdx; confirmar o slug na compilação. */}
 
