@@ -17,12 +17,12 @@ related: [fiscal-core/faturacao-eletronica/encomendas-edi, fiscal-core/transport
 ---
 
 <HelpCallout type="risco" title="Nesta versão, só a conta de testes da Saphety">
-O fiscaldoo só liga ao ambiente de testes da Saphety (veja [Como ligar o EDI e a Saphety](/fiscal-core/ligar-o-edi)): um aviso «Aceite» foi aceite por esse ambiente e não chegou ao retalhista. Avise o retalhista da expedição pela via habitual.
+O Fiscaldoo só liga ao ambiente de testes da Saphety (veja [Como ligar o EDI e a Saphety](/fiscal-core/ligar-o-edi)): um aviso «Aceite» foi aceite por esse ambiente e não chegou ao retalhista. Avise o retalhista da expedição pela via habitual.
 </HelpCallout>
 
 ## Para que serve?
 
-O aviso de expedição diz ao retalhista, por EDI, o que vai a caminho: os artigos, as quantidades e a guia que os acompanha. O fiscaldoo constrói-o a partir da guia de transporte emitida. A guia não muda.
+O aviso de expedição diz ao retalhista, por EDI, o que vai a caminho: os artigos, as quantidades e a guia que os acompanha. O Fiscaldoo constrói-o a partir da guia de transporte emitida. A guia não muda.
 
 ## Quando utilizar?
 
@@ -64,7 +64,7 @@ O aviso de expedição diz ao retalhista, por EDI, o que vai a caminho: os artig
 
 - **Um aviso aceite nunca se envia outra vez.** Depois de **Aceite**, o botão deixa de aparecer.
 - **Guia anulada depois do aviso.** O retalhista já recebeu o aviso; avise-o e, se a mercadoria ainda segue, emita uma guia nova. Não há mensagem EDI de anulação.
-- **Paletes (SSCC).** Se o cliente pede o código das paletes (**O cliente pede o SSCC das paletes**), o código é lido do nome da embalagem. O fiscaldoo ainda não gera o SSCC nem a etiqueta da palete.
+- **Paletes (SSCC).** Se o cliente pede o código das paletes (**O cliente pede o SSCC das paletes**), o código é lido do nome da embalagem. O Fiscaldoo ainda não gera o SSCC nem a etiqueta da palete.
 - Na demonstração, o aviso foi aceite pelo simulador do operador, não pela Saphety real. O formato do aviso que cada retalhista aceita confirma-se com a Saphety.
 
 {/* Nota interna (lote v23-AR, #4052, master d277b0e80, docs_demo_v23ar_test, porta 8508): por RPC, como administrador, só na cópia: S00004 (orçamento em rascunho da base-mãe, 35,61 €) duplicado para S00005 e confirmado; guia DEM/OUT/00005 emitida como GT D26/5 (início do transporte +30 min, AA-00-AA, transportador a própria empresa); código AT fictício DEMO-AT-0005 pelo assistente Registar o código da AT à mão (nada foi enviado à AT). Por clique, com um utilizador só com o Perfil Administrativo: botão Enviar aviso de expedição (captura 01), mensagem «Aviso de expedição. Aceites: 1, à espera ou recusados: 0. Veja o detalhe no painel EDI.», estado Aceite sem o botão (captura 02), Troca de documentos › Mensagens com a linha DESADV|GT D26/5 Aceite. Entrega e fatura não foram feitas neste lote (são do DOC-0061). Auditoria docs-aud-v23ar (master b605851c7): com um utilizador só com o Perfil Contabilista, a guia mostra Imprimir guia e Enviar aviso de expedição, e o envio foi aceite numa guia só da cópia (GT D26/6); a leitura «sem botões» foi feita antes de a barra carregar. O Contabilista certificado não foi conferido. */}

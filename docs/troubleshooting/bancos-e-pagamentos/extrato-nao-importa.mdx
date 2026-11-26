@@ -41,7 +41,7 @@ O caminho normal está em [Como importar o extrato bancário](/accounting-pt/imp
 
 ![Janela Operação inválida: ficheiro OFX sem saldo final](/images/troubleshooting/extrato-nao-importa/03-ofx-sem-saldo.png)
 
-**CSV com títulos de colunas que o fiscaldoo não reconhece** (colunas «Referencia», «Texto» e «Valor EUR»):
+**CSV com títulos de colunas que o Fiscaldoo não reconhece** (colunas «Referencia», «Texto» e «Valor EUR»):
 
 > «Modelo Genérico PT - CSV (deteção automática): Não foi reconhecida nenhuma linha de cabeçalho nas primeiras 30 linhas (separadores tentados: ;, ,, TAB, |). São precisas uma coluna com a data do movimento e uma com o montante (ou débito e crédito), com os títulos habituais (p. ex. Data Mov., Descrição, Débito, Crédito, Montante, Saldo). Ajuste os títulos das colunas do ficheiro ou crie um modelo com o assistente (Contabilidade › Reconciliar › Bancos e caixa, painel «O que há para fazer com os bancos?», ligação «Modelos de importação de extratos»).»
 
@@ -49,9 +49,9 @@ O caminho normal está em [Como importar o extrato bancário](/accounting-pt/imp
 
 ## Causas verificadas
 
-- **O ficheiro está incompleto ou estragado.** Falta um saldo, um campo obrigatório ou um movimento é ilegível. Acontece com ficheiros editados à mão, cortados ao copiar ou exportados com uma opção errada no site do banco. O fiscaldoo confere o ficheiro inteiro antes de importar: não entra metade.
+- **O ficheiro está incompleto ou estragado.** Falta um saldo, um campo obrigatório ou um movimento é ilegível. Acontece com ficheiros editados à mão, cortados ao copiar ou exportados com uma opção errada no site do banco. O Fiscaldoo confere o ficheiro inteiro antes de importar: não entra metade.
 - **Os saldos do ficheiro não batem com os movimentos.** O saldo inicial mais os movimentos tem de dar o saldo final. Se não dá, falta ou sobra um movimento no ficheiro.
-- **O CSV não tem títulos de colunas reconhecidos.** Sem **Modelo de importação**, o fiscaldoo usa o **Genérico PT - CSV (deteção automática)**, que procura uma coluna de data e uma de montante (ou débito e crédito) pelos títulos habituais. Um CSV com «Data», «Descricao» e «Montante» foi reconhecido e chegou à revisão com «Importar 1 movimento»; um com «Referencia», «Texto» e «Valor EUR» foi recusado.
+- **O CSV não tem títulos de colunas reconhecidos.** Sem **Modelo de importação**, o Fiscaldoo usa o **Genérico PT - CSV (deteção automática)**, que procura uma coluna de data e uma de montante (ou débito e crédito) pelos títulos habituais. Um CSV com «Data», «Descricao» e «Montante» foi reconhecido e chegou à revisão com «Importar 1 movimento»; um com «Referencia», «Texto» e «Valor EUR» foi recusado.
 - **A conta, o período ou o ficheiro não servem**: o ficheiro é de outra conta, tem movimentos num período bloqueado, ou já foi importado. Estes três casos estão em [Importar o extrato bancário, Problemas frequentes](/accounting-pt/importar-extrato-bancario), com a mensagem de cada um.
 
 <span className="fd-pending">Pendente de validação no ecrã: as recusas de um ficheiro Norma 43, QIF ou Excel, de um modelo de importação com formato de data errado e de uma moeda diferente da do diário não foram provocadas nesta ronda.</span>
@@ -70,14 +70,14 @@ O caminho normal está em [Como importar o extrato bancário](/accounting-pt/imp
 4. Volte a **Importar extrato** e carregue em **Rever o ficheiro**.
 
 <HelpCallout type="risco" title="Não corrija o ficheiro do banco à mão">
-Um saldo ou um movimento mudado à mão faz o saldo do banco no fiscaldoo deixar de conferir com o banco. Peça ao banco o ficheiro certo.
+Um saldo ou um movimento mudado à mão faz o saldo do banco no Fiscaldoo deixar de conferir com o banco. Peça ao banco o ficheiro certo.
 </HelpCallout>
 
 
 ## Resultado esperado
 
 - **Rever o ficheiro** abre o ecrã de revisão, com o formato detetado, a conta, os saldos e as linhas a importar. Siga [Como importar o extrato bancário](/accounting-pt/importar-extrato-bancario) a partir do passo 5.
-- Nada fica importado enquanto a recusa se mantém: o fiscaldoo não cria extratos parciais.
+- Nada fica importado enquanto a recusa se mantém: o Fiscaldoo não cria extratos parciais.
 
 ## Quando contactar o suporte
 

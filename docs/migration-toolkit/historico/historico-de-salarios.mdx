@@ -19,13 +19,13 @@ related: [migration-toolkit/historico/consultar-historico-migrado, migration-too
 
 ## Para que serve?
 
-Quando uma empresa muda de programa de salários a meio do ano, o fiscaldoo precisa de saber **quanto já foi pago a cada trabalhador** para a declaração anual de rendimentos e retenções ao trabalhador ficar certa. Este assistente lê o ficheiro exportado pelo programa anterior, com **trabalhadores, versões do contrato e recibos de vencimento**, valida-o linha a linha e importa só as linhas válidas.
+Quando uma empresa muda de programa de salários a meio do ano, o Fiscaldoo precisa de saber **quanto já foi pago a cada trabalhador** para a declaração anual de rendimentos e retenções ao trabalhador ficar certa. Este assistente lê o ficheiro exportado pelo programa anterior, com **trabalhadores, versões do contrato e recibos de vencimento**, valida-o linha a linha e importa só as linhas válidas.
 
 Os recibos importados ficam **só de leitura**, marcados como do programa anterior. Nada se recalcula, não se gera DMR nem declaração à Segurança Social do passado, e não se cria nenhum lançamento contabilístico (a contabilidade vem do razão migrado).
 
 ## Quando utilizar?
 
-- Quando a empresa começa a processar salários no fiscaldoo depois de já ter pago salários no mesmo ano ou nos anos anteriores, e precisa desses recibos para os totais anuais.
+- Quando a empresa começa a processar salários no Fiscaldoo depois de já ter pago salários no mesmo ano ou nos anos anteriores, e precisa desses recibos para os totais anuais.
 - Para ter à mão, em consulta, os recibos do programa anterior.
 - **Não use** para processar salários novos: ver [Recibo de vencimento](/payroll-pt/recibo-de-vencimento).
 - **Não use** para dados de saúde, de filiação sindical ou de greve: um ficheiro com colunas, chaves ou rubricas desses tipos é recusado por inteiro. As quotas sindicais entram como uma rubrica do tipo `union`.
@@ -87,7 +87,7 @@ Os recibos importados ficam **só de leitura**, marcados como do programa anteri
 
 ## Onde estão os recibos importados
 
-Os recibos do programa anterior não se misturam com os que o fiscaldoo processa: a lista **Recibos de vencimento** só mostra os processados aqui. Quem processa os salários encontra os antigos por três caminhos (vistos com um utilizador só com o perfil **Processador de salários**, depois de importar o ficheiro de exemplo):
+Os recibos do programa anterior não se misturam com os que o Fiscaldoo processa: a lista **Recibos de vencimento** só mostra os processados aqui. Quem processa os salários encontra os antigos por três caminhos (vistos com um utilizador só com o perfil **Processador de salários**, depois de importar o ficheiro de exemplo):
 
 - **Salários › Processar › Recibos antigos (versão anterior)**: a lista dos recibos importados, com os totais no fim (no exemplo, 2 recibos, 2.200,00 € brutos e 1.778,00 € líquidos). Não tem **Novo**: não se criam recibos aqui.
 - O painel **O que há para fazer este mês?**, que abre ao entrar em **Salários**: o cartão **Recibos antigos (versão anterior)** mostra o número (no exemplo, 2) e «Recibos trazidos do programa usado antes: só de leitura.», e carregar nele abre a mesma lista.
@@ -100,7 +100,7 @@ O número conta só os recibos da empresa em que está a trabalhar: na demonstra
 
 ## No Enterprise
 
-No Odoo Enterprise, a importação do histórico é a do fiscaldoo, na mesma aplicação **Salários** (visto com o administrador). O ficheiro de exemplo deu «5 linhas: 5 válidas, 0 recusadas, 0 já existentes.», com a rubrica `100` sem correspondência. Depois de **Importar** e **Confirmar**, o lote ficou **Importado**, sem botões e com o aviso de que faz parte do histórico, e a lista dos recibos importados mostrou os dois recibos de 1.100,00 € brutos, 121,00 € de Segurança Social, 90,00 € de IRS e 889,00 € líquidos. Na base Enterprise de teste, os salários do próprio Enterprise não estão instalados.
+No Odoo Enterprise, a importação do histórico é a do Fiscaldoo, na mesma aplicação **Salários** (visto com o administrador). O ficheiro de exemplo deu «5 linhas: 5 válidas, 0 recusadas, 0 já existentes.», com a rubrica `100` sem correspondência. Depois de **Importar** e **Confirmar**, o lote ficou **Importado**, sem botões e com o aviso de que faz parte do histórico, e a lista dos recibos importados mostrou os dois recibos de 1.100,00 € brutos, 121,00 € de Segurança Social, 90,00 € de IRS e 889,00 € líquidos. Na base Enterprise de teste, os salários do próprio Enterprise não estão instalados.
 
 {/* Nota interna (lote EE-05, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, base Enterprise docs_ee_ee05_test (cópia da odoo20_ee_test com EE_FASE=construir), 11/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0305. Administrador: Salários › Configurar › Migração › Importar histórico de salários; Novo, Software anterior «Programa de salários anterior 12.3», ficheiro /exemplos/historico-de-salarios.json; Validar → «5 linhas: 5 válidas, 0 recusadas, 0 já existentes.» e a rubrica 100 (1, 1.100,00); Importar → «Importar as linhas válidas? Os recibos são criados só de leitura e não se alteram depois.» → Confirmar; lote Importado com o aviso do artigo; Recibos do software anterior 1-2 / 2, total 2.200,00 / 242,00 / 180,00 / 1.778,00. Trabalhadora Teresa Exemplo Lima criada na cópia, fora dos números do artigo. hr_payroll e a ponte l10n_pt_fiscaldoo_ee_payroll por instalar nesta base. Ver reports/LOTE_EE-05.md. Lote 96: a lista mudou de lugar e de nome no Community (UX-167, Processar › Recibos antigos (versão anterior)); o lugar no Enterprise não foi visto de novo, por isso o texto acima já não cita o caminho. */}
 

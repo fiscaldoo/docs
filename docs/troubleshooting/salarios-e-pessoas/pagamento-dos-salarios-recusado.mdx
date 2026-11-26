@@ -37,7 +37,7 @@ A lista traz um nome por recibo por contabilizar: no exemplo, os 8 do lote.
 
 ![Janela Operação inválida: ainda não é possível fazer o ficheiro de transferências porque os 8 recibos não estão contabilizados](/images/troubleshooting/pagamento-dos-salarios-recusado/02-ficheiro-recibos-nao-contabilizados.png)
 
-**Marcar como pago**, com os pagamentos gerados e antes de o banco os executar. A janela **Marcar como pago** avisa, e ao confirmar o fiscaldoo recusa:
+**Marcar como pago**, com os pagamentos gerados e antes de o banco os executar. A janela **Marcar como pago** avisa, e ao confirmar o Fiscaldoo recusa:
 
 > «Vai marcar como pagos 8 recibos do lote «Salários de outubro de 2026» (líquido total 10.382,03 €), com a data de pagamento *09/11/2026*. 8 pagamentos estão gerados mas o banco ainda não os executou (10.382,03 €): os recibos só podem ser marcados como pagos depois de o banco os executar. Use «Banco executou» quando o banco confirmar o ficheiro de transferências. Um utilizador com o acesso extra «Administrador de Salários» pode desfazer isto com «Repor para Validado» enquanto nenhum pagamento estiver contabilizado na Contabilidade.»
 
@@ -56,14 +56,14 @@ Nesse caso, siga «Pagar o lote até ao ficheiro de transferências», abaixo. {
 - **O lote não está contabilizado.** O ficheiro liquida o lançamento dos salários, por isso só sai depois de **Contabilizar**, que é de quem tem o acesso extra **Administrador de Salários**. A recusa «Ainda não é possível…» diz quais os recibos que faltam.
 - **Ainda não há pagamentos gerados.** O ficheiro leva os pagamentos por transferência do lote; sem **Gerar pagamentos** a resposta é «Não há pagamentos…».
 - **Os botões dependem do estado do lote.** Com o lote **Calculado** não há botões de pagamento: aparecem quando o lote fica **Validado** (**Gerar pagamentos**, **Ficheiro de transferências**, **Banco executou**, **Marcar como pago**). Com o lote **Pago**, **Banco executou** e **Marcar como pago** desaparecem, e ficam **Gerar pagamentos**, **Ficheiro de transferências** e **Fechar**.
-- **Marcar como pago carregado antes do banco.** Com os pagamentos gerados, o fiscaldoo recusa se o lote está por contabilizar e, com o lote contabilizado, a janela só tem **Anular** (mensagens acima). Sem pagamentos gerados, a janela **Marcar como pago** avisa que os 8 recibos ficam pagos por pagamentos **manuais** (10.382,03 € no total, sem movimento bancário), pede o **Motivo** (por exemplo, «pago em numerário») e só então marca. Foi o que aconteceu no lote de novembro de 2026 da demonstração: o lote ficou **Pago** sem o banco ter feito nada.
+- **Marcar como pago carregado antes do banco.** Com os pagamentos gerados, o Fiscaldoo recusa se o lote está por contabilizar e, com o lote contabilizado, a janela só tem **Anular** (mensagens acima). Sem pagamentos gerados, a janela **Marcar como pago** avisa que os 8 recibos ficam pagos por pagamentos **manuais** (10.382,03 € no total, sem movimento bancário), pede o **Motivo** (por exemplo, «pago em numerário») e só então marca. Foi o que aconteceu no lote de novembro de 2026 da demonstração: o lote ficou **Pago** sem o banco ter feito nada.
 - Há recusas que não foram provocadas: pagamentos acima do líquido do recibo, recibo não validado, empresa sem diário de banco, parte em espécie maior do que a parte em dinheiro. <span className="fd-pending">Pendente de validação no ecrã: estas recusas não foram provocadas (a demonstração tem um só diário de banco e recibos sem rendimentos em espécie).</span>
 
 ## O que confirmar
 
 1. O estado do lote, no topo à direita, e se já foi contabilizado (o botão **Contabilizar** só aparece a quem tem o acesso extra **Administrador de Salários**).
 2. Em **Salários › Pagar › Pagamentos de salários**, se o lote já tem pagamentos e em que estado estão.
-3. Se o banco já fez as transferências. **Banco executou** e **Marcar como pago** dizem ao fiscaldoo que o dinheiro saiu.
+3. Se o banco já fez as transferências. **Banco executou** e **Marcar como pago** dizem ao Fiscaldoo que o dinheiro saiu.
 
 ## Como resolver
 
@@ -73,7 +73,7 @@ Feito no lote de outubro de 2026, com o perfil indicado em cada passo:
 
 1. **Processador de salários:** com o lote **Calculado**, carregue em **Validar**. O lote fica **Validado**.
 2. **Com o acesso extra Administrador de Salários:** carregue em **Contabilizar**. Se for recusado por falta de um modelo de contabilização, siga [O recibo não é contabilizado](/troubleshooting/recibo-nao-e-contabilizado).
-3. **Processador de salários:** carregue em **Gerar pagamentos** (não mostra mensagem) e depois em **Ficheiro de transferências**. Na demonstração, o fiscaldoo descarregou o ficheiro «Salários de outubro de 2026.xml» (transferências SEPA), com 8 transferências e 10.382,03 € no total, o líquido dos 8 recibos. O Processador de salários faz estes dois passos num lote contabilizado, sem **Sem acesso**.
+3. **Processador de salários:** carregue em **Gerar pagamentos** (não mostra mensagem) e depois em **Ficheiro de transferências**. Na demonstração, o Fiscaldoo descarregou o ficheiro «Salários de outubro de 2026.xml» (transferências SEPA), com 8 transferências e 10.382,03 € no total, o líquido dos 8 recibos. O Processador de salários faz estes dois passos num lote contabilizado, sem **Sem acesso**.
 4. Envie o ficheiro ao banco, pela aplicação do banco.
 5. Quando o banco fizer as transferências, o **Processador de salários** carrega em **Banco executou**. Abre-se a janela **Confirmação**: «Confirme que o banco executou as transferências do ficheiro. Os pagamentos ficam executados hoje e os recibos pagos.». Carregue em **Confirmar**.
    ![Janela Confirmação de Banco executou, com o botão Confirmar assinalado](/images/troubleshooting/pagamento-dos-salarios-recusado/04-banco-executou.png)
@@ -95,7 +95,7 @@ O lote de outubro de 2026, com os pagamentos já contabilizados na Contabilidade
 ![Janela Operação inválida: o lote não pode voltar a Validado porque os pagamentos já estão contabilizados](/images/troubleshooting/pagamento-dos-salarios-recusado/07-repor-recusado.png)
 
 <HelpCallout type="atencao" title="Marcar como pago só depois de pagar">
-Use **Marcar como pago** depois de **Banco executou**, ou quando pagou de facto fora do ficheiro (por exemplo em numerário), com o motivo escrito. Com os pagamentos gerados, o fiscaldoo não deixa marcar o lote como pago até o banco os executar: use **Banco executou**.
+Use **Marcar como pago** depois de **Banco executou**, ou quando pagou de facto fora do ficheiro (por exemplo em numerário), com o motivo escrito. Com os pagamentos gerados, o Fiscaldoo não deixa marcar o lote como pago até o banco os executar: use **Banco executou**.
 </HelpCallout>
 
 ## Resultado esperado

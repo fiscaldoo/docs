@@ -25,7 +25,7 @@ Abre um recibo de vencimento já validado ou pago e quer mudar um valor, apagá-
 
 Visto com o perfil **Processador de salários** em recibos de outubro de 2026 da Empresa Demonstração, Lda, criados para este exemplo: o lote **Salários de outubro de 2026**, com 8 recibos, contabilizado num só lançamento (`SAL/2026/00005`) e com os recibos já pagos. A demonstração só traz recibos até setembro, e esses não se mexem; o leitor repete o exemplo processando outubro em **Salários › Processar › Processar o mês** (criar os recibos, calcular, validar, contabilizar e registar o pagamento do lote: ver [Como processar o mês](/payroll-pt/processar-o-mes)). Aberto o recibo de Carla Sofia Mendes (01/10/2026 — 31/10/2026), o aviso do topo é o citado acima e o menu **Ações** (a engrenagem ao lado do título) tem **Recibo**, **Duplicar**, **Eliminar** e **Anular recibo**; na barra há **Imprimir recibo**, **Retificar** e **Ações** (o botão **Corrigir o IRS retido** só aparece com o acesso extra **Administrador de Salários** e ao administrador).
 
-Em **Ações › Eliminar** o ecrã pergunta primeiro «Adeus, registo! Quer mesmo fazer desaparecer este registo?»; depois de **Eliminar**, o fiscaldoo recusa com uma janela **Operação inválida**:
+Em **Ações › Eliminar** o ecrã pergunta primeiro «Adeus, registo! Quer mesmo fazer desaparecer este registo?»; depois de **Eliminar**, o Fiscaldoo recusa com uma janela **Operação inválida**:
 
 > «O recibo «*Carla Sofia Mendes (01/10/2026 — 31/10/2026)*» não pode ser eliminado: está «Pago» (ou foi validado). O que aconteceu: um recibo processado é um documento legal que fica para registo. Como corrigir: corrija-o com um recibo corretivo (ação «Retificar»); só se eliminam rascunhos.»
 
@@ -45,7 +45,7 @@ Com os pagamentos do lote já contabilizados na Contabilidade, **Repor para Vali
 
 ## Causas verificadas
 
-- **O recibo validado é um documento legal.** A partir de **Validado**, o recibo já foi (ou vai ser) entregue ao trabalhador, pago e declarado. O fiscaldoo não deixa recalcular, apagar nem mudar o trabalhador, o período ou o tipo. Só um recibo em **Rascunho** se apaga.
+- **O recibo validado é um documento legal.** A partir de **Validado**, o recibo já foi (ou vai ser) entregue ao trabalhador, pago e declarado. O Fiscaldoo não deixa recalcular, apagar nem mudar o trabalhador, o período ou o tipo. Só um recibo em **Rascunho** se apaga.
 - **Um recibo pago é o fim do ciclo.** O recibo segue **Rascunho** › **Validado** › **Pago**. Do estado **Pago** não sai, nem para **Anulado**; o que se repõe, com **Repor para Validado** e um motivo, é o lote inteiro, enquanto os pagamentos não estiverem contabilizados.
 - **O lançamento é do lote todo.** Quando o lote é contabilizado num só lançamento, um recibo não se anula sozinho, porque estornar o lançamento levaria os outros recibos. A mensagem fala em «Repor para Validado» no lote; só funciona enquanto nenhum pagamento estiver contabilizado ou reconciliado.
 - **O mesmo vale para o que o recibo já usou.** Uma penhora depositada, uma quota sindical entregue ao sindicato, o que se descontou a favor de um cessionário e uma cessação com o recibo final validado deixam de se desfazer. Cada um recusa com uma mensagem própria que manda corrigir com um recibo corretivo (a secção «Quando já houve um depósito ou uma entrega», mais abaixo, mostra-as).
@@ -63,7 +63,7 @@ Com os pagamentos do lote já contabilizados na Contabilidade, **Repor para Vali
 1. Abra o recibo em **Salários › Processar › Recibos de vencimento**.
 2. Carregue em **Retificar**. Abre-se a janela com o campo **Motivo da correção**.
    ![Janela do recibo corretivo com o campo Motivo da correção e o botão Preparar o corretivo assinalado](/images/troubleshooting/recibo-validado-nao-se-altera/03-retificar-motivo.png)
-3. Escreva o motivo e carregue em **Preparar o corretivo**. O fiscaldoo compara o recibo com o contrato, o horário e as presenças de hoje e prepara o corretivo com a diferença.
+3. Escreva o motivo e carregue em **Preparar o corretivo**. O Fiscaldoo compara o recibo com o contrato, o horário e as presenças de hoje e prepara o corretivo com a diferença.
 
 Se nada mudou nesses dados, a janela **Operação inválida** responde: «Nada mudou desde que este recibo foi fechado. O que aconteceu: o contrato, o horário, as presenças e os incentivos da Segurança Social do período estão como estavam. Como resolver: não é preciso fazer nada; para pagar outra coisa crie um recibo corretivo à mão.» Visto no recibo pago de Carla Sofia Mendes de outubro de 2026, com o motivo «Conferir o recibo com o contrato»; não ficou nenhum recibo novo.
 

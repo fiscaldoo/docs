@@ -31,7 +31,7 @@ Não use uma justificação para esconder um documento que existe e não foi imp
 
 **Contabilidade › Configurar › Faturação certificada › Justificações de lacunas de numeração**.
 
-Numa série do fiscaldoo, as justificações dessa série também se veem no separador **Justificações de lacunas** da série (**Contabilidade › Configurar › Faturação certificada › Séries fiscais**, abrir a série).
+Numa série do Fiscaldoo, as justificações dessa série também se veem no separador **Justificações de lacunas** da série (**Contabilidade › Configurar › Faturação certificada › Séries fiscais**, abrir a série).
 
 ## Antes de começar
 
@@ -47,7 +47,7 @@ Numa série do fiscaldoo, as justificações dessa série também se veem no sep
 3. Numa série importada do programa anterior, preencha **Tipo de documento (software anterior)** (por exemplo `FT`) e **Identificador da série (software anterior)** (por exemplo `2026`). Deixe **Série** vazia: é só para as séries do fiscaldoo.
 4. Em **Primeiro número** e **Último número**, escreva o intervalo em falta. Para um só número, escreva o mesmo nos dois. Uma justificação cobre no máximo 100000 números; para mais, faça várias.
 5. Em **Motivo**, explique o que aconteceu aos números e onde está a prova, para que um auditor o perceba.
-6. Confira os números e o motivo e carregue no botão de guardar: o ícone da nuvem, no topo, ao lado do nome da ficha (ao passar o rato, diz «Guardar manualmente»). **Justificado por** e **Justificado em** já vêm preenchidos na ficha nova, com o seu nome e a data e a hora. Para desistir, carregue no **X** ao lado da nuvem («Descartar todas as alterações»): nada fica gravado. Depois de guardada, a ficha já não mostra a nuvem nem o **X**. Se o fiscaldoo recusar, abre-se a janela **Erro de Validação** com a mensagem e a ficha continua aberta (veja «Problemas frequentes»).
+6. Confira os números e o motivo e carregue no botão de guardar: o ícone da nuvem, no topo, ao lado do nome da ficha (ao passar o rato, diz «Guardar manualmente»). **Justificado por** e **Justificado em** já vêm preenchidos na ficha nova, com o seu nome e a data e a hora. Para desistir, carregue no **X** ao lado da nuvem («Descartar todas as alterações»): nada fica gravado. Depois de guardada, a ficha já não mostra a nuvem nem o **X**. Se o Fiscaldoo recusar, abre-se a janela **Erro de Validação** com a mensagem e a ficha continua aberta (veja «Problemas frequentes»).
    ![Ficha Justificação de lacuna de numeração da série preenchida com o tipo FT, o identificador 2026, os números 3 a 5 e o motivo, Justificado por e Justificado em já preenchidos, e o botão de guardar (nuvem) assinalado ao lado do X de descartar](/images/fiscal-core/justificar-lacunas-de-numeracao/04-ficha-guardar.png)
 7. Volte à lista: carregue em **Justificações de lacunas de numeração**, no caminho do topo.
 
@@ -60,7 +60,7 @@ Numa série do fiscaldoo, as justificações dessa série também se veem no sep
 - A justificação aparece na lista, com o tipo, o identificador, os números, o motivo, **Justificado por** e **Justificado em**. Na demonstração: `FT`, `2026`, de 3 a 5, registada pelo perfil do exemplo a 31/10/2026.
 - Não se cria nenhum lançamento contabilístico, e nenhum documento muda.
 - No ficheiro SAF-T de faturação do mês, os números justificados deixam de contar como falha (exemplo abaixo).
-- O relatório de integridade (**Auditoria › Integridade › Verificar integridade dos documentos**) verifica só as séries do fiscaldoo: uma série importada não aparece nele, nem antes nem depois da justificação. A lacuna de uma série importada vê-se no importador, no ficheiro SAF-T e no ecrã seguinte.
+- O relatório de integridade (**Auditoria › Integridade › Verificar integridade dos documentos**) verifica só as séries do Fiscaldoo: uma série importada não aparece nele, nem antes nem depois da justificação. A lacuna de uma série importada vê-se no importador, no ficheiro SAF-T e no ecrã seguinte.
 - **Auditoria › Integridade › Controlos de integridade e integralidade** mostra a lacuna de uma série importada enquanto não tiver justificação, nas datas escolhidas em **De** e **Até**. Na demonstração, com o perfil do exemplo, de 01/01/2026 a 31/10/2026 e antes da justificação, o ecrã contou **Diferenças** 1, com a linha **Falha na numeração** `FT 2026/3-5`: «Série FT 2026: os números 3 a 5 faltam e não têm justificação.». Em **O que fazer**: «Esta série vem do programa anterior. Verifique se o documento ficou de fora da importação e, se ficou, importe-o; se nunca existiu, use o botão «Justificações de lacunas de numeração» abaixo e crie uma com Novo (tipo de documento FT, série 2026, os números em falta e o motivo). Nunca reutilize o número.». O botão **Justificações de lacunas de numeração**, no fundo da janela, abre a lista deste artigo; só aparece quando há uma lacuna destas por justificar. Com a justificação de 3 a 5 registada, o mesmo ecrã respondeu «Sem diferenças: os 328 lançamentos de Empresa Demonstração, Lda entre 01/01/2026 e 31/10/2026 estão equilibrados, os totais batem certo, as séries são coerentes e a cadeia de assinaturas e a numeração estão intactas.», sem o botão. Este ecrã não diz se o ficheiro SAF-T passa: confira-o no ficheiro SAF-T de faturação do mês (exemplo abaixo).
 
   ![Controlos de integridade e integralidade de 01/01/2026 a 31/10/2026 com 1 diferença: a linha Falha na numeração FT 2026/3-5, os números 3 a 5 da série FT 2026 sem justificação, e o botão Justificações de lacunas de numeração no fundo da janela](/images/fiscal-core/justificar-lacunas-de-numeracao/07-controlos-lacuna-importada.png)
@@ -71,11 +71,11 @@ Numa série do fiscaldoo, as justificações dessa série também se veem no sep
 
 Na demonstração, as faturas `FT 2026/1`, `FT 2026/2`, `FT 2026/6` e `FT 2026/7` do programa anterior, de 2 a 5 de janeiro de 2026, foram importadas no fiscaldoo. Os números 3 a 5 nunca foram emitidos. Ao validar o ficheiro, o importador avisou: «Série FT 2026: faltam 3 número(s) entre 1 e 7: 3, 4, 5.», mas não parou a importação.
 
-1. **Antes:** **Gerar SAF-T** com **F — Faturação** e janeiro de 2026 contou 7 documentos (as 3 faturas do fiscaldoo e as 4 importadas) e o registo ficou **Inválido**, com 1 erro: «Série “2026” (FT): faltam os números 3 a 5 entre 1 e 7 e não têm justificação registada.» A sugestão do erro manda registar a justificação neste menu, com o tipo `FT`, a série `2026`, os números em falta e o motivo.
+1. **Antes:** **Gerar SAF-T** com **F — Faturação** e janeiro de 2026 contou 7 documentos (as 3 faturas do Fiscaldoo e as 4 importadas) e o registo ficou **Inválido**, com 1 erro: «Série “2026” (FT): faltam os números 3 a 5 entre 1 e 7 e não têm justificação registada.» A sugestão do erro manda registar a justificação neste menu, com o tipo `FT`, a série `2026`, os números em falta e o motivo.
    ![Registo da exportação SAF-T de janeiro de 2026, modo F — Faturação, no estado Inválido, com N.º de erros 1 e Erros por tipo Regra semântica (SVAT): 1](/images/fiscal-core/justificar-lacunas-de-numeracao/02-saft-janeiro-invalido.png)
 2. **Depois:** com a justificação de 3 a 5 registada, **Regenerar** criou um registo novo **Gerado**, com **N.º de erros** 0 e **N.º de avisos** 0. A nota de controlo conta os mesmos 7 documentos.
    ![Registo novo da exportação SAF-T de janeiro de 2026 no estado Gerado, com N.º de erros 0 e N.º de avisos 0](/images/fiscal-core/justificar-lacunas-de-numeracao/03-saft-janeiro-gerado.png)
-3. **A lacuna aceite fica à vista.** Nas mensagens do registo novo, o fiscaldoo escreve: «Numeração: foram aceites 3 lacuna(s) nas séries porque cada uma tem uma justificação registada. Porquê: uma lacuna com justificação não é um erro, mas fica aqui à vista para que quem entrega o ficheiro saiba que foi aceite. Veja os motivos no menu «Justificações de lacunas de numeração».» O número conta os números em falta aceites (3, 4 e 5), não as justificações: no exemplo há uma só. Antes de entregar o ficheiro, confirme na lista das justificações que todas as lacunas aceites têm um motivo que o contabilista certificado conhece.
+3. **A lacuna aceite fica à vista.** Nas mensagens do registo novo, o Fiscaldoo escreve: «Numeração: foram aceites 3 lacuna(s) nas séries porque cada uma tem uma justificação registada. Porquê: uma lacuna com justificação não é um erro, mas fica aqui à vista para que quem entrega o ficheiro saiba que foi aceite. Veja os motivos no menu «Justificações de lacunas de numeração».» O número conta os números em falta aceites (3, 4 e 5), não as justificações: no exemplo há uma só. Antes de entregar o ficheiro, confirme na lista das justificações que todas as lacunas aceites têm um motivo que o contabilista certificado conhece.
    ![Mensagem do registo da exportação SAF-T: Numeração: foram aceites 3 lacuna(s) nas séries porque cada uma tem uma justificação registada](/images/fiscal-core/justificar-lacunas-de-numeracao/06-nota-lacunas-aceites.png)
 
 O ficheiro em si não muda: os dois registos têm o mesmo SHA-256, e o ficheiro não leva a justificação. O que muda é a verificação feita antes de o deixar descarregar. <span className="fd-pending">Pendente de validação por contabilista certificado: como se apresenta à AT a justificação de uma lacuna numa série importada, uma vez que o ficheiro SAF-T não a leva.</span>
@@ -83,15 +83,15 @@ O ficheiro em si não muda: os dois registos têm o mesmo SHA-256, e o ficheiro 
 ## Notas importantes
 
 <HelpCallout type="risco" title="Uma justificação não se altera nem se apaga">
-Depois de guardada, a justificação fica no rasto de auditoria. Ao tentar mudá-la, o fiscaldoo recusa: «Uma justificação de lacuna não pode ser alterada depois de registada: faz parte do rasto de auditoria. Se estava errada, mantenha-a e explique numa nova justificação de outros números.» Também não se elimina. Confirme os números e o motivo antes de guardar. <span className="fd-pending">Pendente de validação por contabilista certificado: que motivos e que prova são aceitáveis para uma lacuna de numeração numa série importada.</span>
+Depois de guardada, a justificação fica no rasto de auditoria. Ao tentar mudá-la, o Fiscaldoo recusa: «Uma justificação de lacuna não pode ser alterada depois de registada: faz parte do rasto de auditoria. Se estava errada, mantenha-a e explique numa nova justificação de outros números.» Também não se elimina. Confirme os números e o motivo antes de guardar. <span className="fd-pending">Pendente de validação por contabilista certificado: que motivos e que prova são aceitáveis para uma lacuna de numeração numa série importada.</span>
 </HelpCallout>
 
 - Um número que um documento da empresa tem, mesmo anulado, não é uma lacuna e não se justifica (veja «Problemas frequentes»).
-- Os passos de importar as séries e os documentos do programa anterior não estão neste artigo. A verificação da numeração das séries do fiscaldoo está em [Como verificar a integridade dos documentos certificados](/fiscal-core/integridade-dos-documentos), e os erros do ficheiro SAF-T em [Como corrigir os erros de validação do SAF-T](/fiscal-core/corrigir-erros-do-saft).
+- Os passos de importar as séries e os documentos do programa anterior não estão neste artigo. A verificação da numeração das séries do Fiscaldoo está em [Como verificar a integridade dos documentos certificados](/fiscal-core/integridade-dos-documentos), e os erros do ficheiro SAF-T em [Como corrigir os erros de validação do SAF-T](/fiscal-core/corrigir-erros-do-saft).
 
 ## Problemas frequentes
 
-Todos aparecem ao carregar no botão de guardar, na janela **Erro de Validação**, e nada fica gravado. Carregue em **Fechar**: a ficha continua aberta com o que escreveu. Corrija e guarde de novo, ou carregue no **X** para descartar. As mensagens são as do fiscaldoo, com a série `FT 2026` do exemplo.
+Todos aparecem ao carregar no botão de guardar, na janela **Erro de Validação**, e nada fica gravado. Carregue em **Fechar**: a ficha continua aberta com o que escreveu. Corrija e guarde de novo, ou carregue no **X** para descartar. As mensagens são as do Fiscaldoo, com a série `FT 2026` do exemplo.
 
 ### Os números já estão justificados
 
@@ -103,7 +103,7 @@ Todos aparecem ao carregar no botão de guardar, na janela **Erro de Validação
 - **Mensagem (série importada):** «Os números 2 a 2 da série “FT 2026” (software anterior) não se podem justificar: um documento da empresa já tem pelo menos um deles. Justifique apenas os números que nenhum documento tem.» Também aparece quando o intervalo apanha um número que existe: de 4 a 6, porque a `FT 2026/6` foi importada.
 
   ![Janela Erro de Validação: os números 2 a 2 da série FT 2026 (software anterior) não se podem justificar, porque um documento da empresa já tem pelo menos um deles](/images/fiscal-core/justificar-lacunas-de-numeracao/05-recusa-numero-com-documento.png)
-- **Mensagem (série do fiscaldoo):** «Os números 1 a 1 da série “FT D26” não podem ser justificados: nem todos são lacunas (um número detido por um documento — mesmo anulado — não é uma lacuna). Verifique primeiro a numeração e justifique apenas os números que aparecem em falta.»
+- **Mensagem (série do Fiscaldoo):** «Os números 1 a 1 da série “FT D26” não podem ser justificados: nem todos são lacunas (um número detido por um documento — mesmo anulado — não é uma lacuna). Verifique primeiro a numeração e justifique apenas os números que aparecem em falta.»
 - **O que fazer:** confira na lista de documentos que números existem e justifique só os que faltam.
 
 ### Os números estão trocados, ou começam em 0

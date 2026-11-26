@@ -5,7 +5,7 @@ title: Como preparar a empresa para emitir documentos certificados
 sidebar_label: Preparar a faturação certificada
 sidebar_position: 0
 description: O que tem de estar pronto antes da primeira fatura certificada — pacote ligado, dados da empresa, certificado do programa, ligação à AT, séries e perfis — e onde se confirma cada ponto.
-keywords: [preparar faturação certificada, preparar faturacao certificada, primeira fatura, começar a faturar, comecar a faturar, certificação, certificacao, certificado de software, certificado do programa, fiscaldoo simulado, base de teste, plataforma fiscaldoo, prontidão, prontidao, comunicações com a AT, comunicacoes com a at, configurar a certificação, configurar a certificacao]
+keywords: [preparar faturação certificada, preparar faturacao certificada, primeira fatura, começar a faturar, comecar a faturar, certificação, certificacao, certificado de software, certificado do programa, fiscaldoo simulado, base de teste, plataforma Fiscaldoo, prontidão, prontidao, comunicações com a AT, comunicacoes com a at, configurar a certificação, configurar a certificacao]
 doc_id: DOC-0011
 article_type: tarefa
 odoo_versions: ["20.0"]
@@ -20,7 +20,7 @@ related: [getting-started/primeira-configuracao/ativar-as-aplicacoes, fiscal-cor
 
 Antes do primeiro documento certificado (fatura, nota de crédito, recibo, guia), a empresa tem de ter duas coisas prontas, que não são a mesma:
 
-- **Para emitir:** os dados fiscais da empresa, o certificado do programa e uma série ativa, com código de validação da AT, para cada tipo de documento e ano. Sem série, o fiscaldoo recusa confirmar o documento.
+- **Para emitir:** os dados fiscais da empresa, o certificado do programa e uma série ativa, com código de validação da AT, para cada tipo de documento e ano. Sem série, o Fiscaldoo recusa confirmar o documento.
 - **Para comunicar à Autoridade Tributária e Aduaneira (AT):** os dados de acesso do subutilizador da AT, com os perfis de cada serviço. Sem eles, os documentos emitem-se na mesma, mas nada segue para a AT. Na demonstração, sem dados de acesso, as faturas da série `FT D26` e os recibos confirmaram-se normalmente.
 
 Este artigo é a lista dessas peças, pela ordem em que se preparam, com o sítio onde se confirma cada uma. Cada peça tem o seu artigo, para onde a lista o leva.
@@ -38,7 +38,7 @@ Este artigo é a lista dessas peças, pela ordem em que se preparam, com o síti
 ## Antes de começar
 
 - Precisa de acesso às **Definições**, que só o administrador técnico vê. Sem elas, quem tem o acesso extra **Administração fiscal** abre as **Credenciais da AT** no mesmo grupo. Veja «Problemas frequentes».
-- O pacote **Faturação certificada, IVA e SAF-T** está ligado: [Como ativar a faturação e as aplicações do fiscaldoo](/getting-started/ativar-as-aplicacoes).
+- O pacote **Faturação certificada, IVA e SAF-T** está ligado: [Como ativar a faturação e as aplicações do Fiscaldoo](/getting-started/ativar-as-aplicacoes).
 - Está a trabalhar na empresa certa: o nome aparece no canto superior direito. Se tem várias empresas, escolha-a aí antes de abrir as listas.
 
 ## Como utilizar
@@ -48,8 +48,8 @@ Este artigo é a lista dessas peças, pela ordem em que se preparam, com o síti
 1. Confirme os dados fiscais da empresa (para emitir): nome, NIF, morada, país Portugal e regime de IVA. Saem em todos os documentos e no SAF-T. Veja [Como preencher os dados fiscais da empresa](/administration/dados-da-empresa).
 2. Abra **Definições › fiscaldoo · Certificação** e desça até **Configurar a certificação: séries**.
    ![Grupo Configurar a certificação: séries com Séries fiscais, Tipos de documento SAF-T (PT) e Verificar integridade](/images/fiscal-core/preparar-a-faturacao-certificada/01-atalhos-series-e-chaves.png)
-3. Abra **Definições › Faturação** e, no bloco **Certificação PT**, leia a linha **Certificado de software da AT em vigor**. O número que lá está é o que sai impresso em cada documento («Processado por programa certificado n.º …/AT»): vem do fiscaldoo, que o dá a cada empresa pelo NIF, e não se regista nem se altera no fiscaldoo. Na demonstração, o número é o 9999, de um fiscaldoo simulado. <span className="fd-pending">Pendente de validação no ecrã: numa base de produção, com o fiscaldoo verdadeiro, o número real do certificado não foi visto.</span>
-4. Não precisa de carregar nenhuma chave de assinatura. A chave pertence ao produtor do programa e vive no fiscaldoo, que assina cada documento: nunca é guardada na base de dados nem entregue ao cliente. O que a instalação precisa é de estar registada no fiscaldoo, com a **Chave de API do fiscaldoo** guardada: [Como ligar a instalação ao fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura). Sem isso, **Confirmar** não emite o documento e a mensagem diz o que fazer.
+3. Abra **Definições › Faturação** e, no bloco **Certificação PT**, leia a linha **Certificado de software da AT em vigor**. O número que lá está é o que sai impresso em cada documento («Processado por programa certificado n.º …/AT»): vem do Fiscaldoo, que o dá a cada empresa pelo NIF, e não se regista nem se altera no fiscaldoo. Na demonstração, o número é o 9999, de um Fiscaldoo simulado. <span className="fd-pending">Pendente de validação no ecrã: numa base de produção, com o Fiscaldoo verdadeiro, o número real do certificado não foi visto.</span>
+4. Não precisa de carregar nenhuma chave de assinatura. A chave pertence ao produtor do programa e vive no Fiscaldoo, que assina cada documento: nunca é guardada na base de dados nem entregue ao cliente. O que a instalação precisa é de estar registada no Fiscaldoo, com a **Chave de API do Fiscaldoo** guardada: [Como ligar a instalação ao Fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura). Sem isso, **Confirmar** não emite o documento e a mensagem diz o que fazer.
 5. Para comunicar, volte a **Definições › fiscaldoo · Certificação** e, em **Configurar a certificação: comunicação com a AT**, abra **Prontidão das comunicações com a AT**. A lista mostra, por **Ambiente** (**Teste** e **Produção**) e por **Serviço** (**Séries**, **Faturas**, **Guias de transporte**), o **Estado**, **O que falta** e a **Ligação à AT**. Abra os grupos para ver as linhas.
 6. Resolva o que a coluna **O que falta** indicar. Sem dados de acesso, cada linha diz «Não há dados de acesso para o ambiente de produção da Autoridade Tributária. Sem eles não se pode enviar nada.» e a **Ligação à AT** fica «Desligada: nada é enviado à Autoridade Tributária». Os dados de acesso registam-se em **Credenciais da AT**, no mesmo grupo.
 7. Para emitir, crie e comunique à AT uma série para cada tipo de documento que vai emitir (fatura, fatura simplificada, fatura-recibo, nota de crédito, recibo, guia de transporte): [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais).
@@ -71,11 +71,11 @@ Para comunicar:
 
 ## Notas importantes
 
-<HelpCallout type="atencao" title="Uma base de teste é assinada por um fiscaldoo simulado">
-Numa base de dados de teste (o nome tem a palavra «test»), não há chave nenhuma para carregar: em **Definições › Faturação**, no bloco **Certificação PT**, o ecrã diz «Base de teste: um fiscaldoo simulado assina com uma chave fictícia e o certificado 9999.». Os documentos assim assinados não têm valor legal. Nunca use uma base de testes para faturar a clientes: numa base de produção, quem assina é o fiscaldoo verdadeiro, com a chave do produtor, que nunca chega à sua base de dados. <span className="fd-pending">Pendente de validação no ecrã: o que acontece numa base de produção (assinatura pelo fiscaldoo verdadeiro) não se viu, porque a demonstração só tem a base de teste.</span>
+<HelpCallout type="atencao" title="Uma base de teste é assinada por um Fiscaldoo simulado">
+Numa base de dados de teste (o nome tem a palavra «test»), não há chave nenhuma para carregar: em **Definições › Faturação**, no bloco **Certificação PT**, o ecrã diz «Base de teste: um Fiscaldoo simulado assina com uma chave fictícia e o certificado 9999.». Os documentos assim assinados não têm valor legal. Nunca use uma base de testes para faturar a clientes: numa base de produção, quem assina é o Fiscaldoo verdadeiro, com a chave do produtor, que nunca chega à sua base de dados. <span className="fd-pending">Pendente de validação no ecrã: o que acontece numa base de produção (assinatura pelo Fiscaldoo verdadeiro) não se viu, porque a demonstração só tem a base de teste.</span>
 </HelpCallout>
 
-- O subutilizador da AT tem de ter, no Portal das Finanças, o perfil de cada serviço que vai usar: **WSE** para as séries, **WFA** para as faturas e **WDT** para as guias de transporte. O fiscaldoo não o consegue verificar, e a coluna **O que falta** lembra-o em cada linha.
+- O subutilizador da AT tem de ter, no Portal das Finanças, o perfil de cada serviço que vai usar: **WSE** para as séries, **WFA** para as faturas e **WDT** para as guias de transporte. O Fiscaldoo não o consegue verificar, e a coluna **O que falta** lembra-o em cada linha.
 - **Ambiente** **Teste** e **Produção** preparam-se em separado. Os documentos reais comunicam-se no ambiente de produção.
 - A comunicação das faturas à AT tem prazo próprio, que não é o da emissão. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo legal de comunicação das faturas à AT.</span>
 - Cada empresa da base de dados prepara-se à parte: os dados, as séries e os dados de acesso são de cada uma. Numa empresa acabada de criar, **Confirmar** diz «O diário «Vendas» não serve para emitir documentos de venda.»: ainda não há diário certificado. O passo **4. Faturação certificada** do assistente cria os diários e as séries em rascunho; até a série estar ativa, **Confirmar** diz que a série «ainda não está ativa». Numa empresa preparada mas sem série para o ano da fatura, a mensagem traz o botão **Criar a série em falta**. As três mensagens estão em [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada).
@@ -87,7 +87,7 @@ Numa base de dados de teste (o nome tem a palavra «test»), não há chave nenh
 ### A Prontidão das comunicações com a AT diz «Falta alguma coisa»
 
 - **Causa:** falta um dos dados que a coluna **O que falta** descreve; o caso mais comum é não haver dados de acesso para esse ambiente.
-- **O que fazer:** carregue em **Resolver** na linha, ou registe os dados de acesso em **Credenciais da AT**: [Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). Depois abra de novo a lista.
+- **O que fazer:** carregue em **Resolver** na linha, ou registe os dados de acesso em **Credenciais da AT**: [Como ligar o Fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). Depois abra de novo a lista.
 
 ### Não encontro as Credenciais da AT nem o certificado do programa
 

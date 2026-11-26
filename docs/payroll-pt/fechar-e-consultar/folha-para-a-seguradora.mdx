@@ -4,7 +4,7 @@ slug: /payroll-pt/folha-para-a-seguradora
 title: Como enviar a folha mensal à seguradora de acidentes de trabalho
 sidebar_label: Folha para a seguradora
 sidebar_position: 3
-description: Gerar no fiscaldoo a folha mensal de retribuições para a seguradora de acidentes de trabalho, ler os avisos, descarregar o ficheiro, registar o envio e criar uma nova revisão quando há correções.
+description: Gerar no Fiscaldoo a folha mensal de retribuições para a seguradora de acidentes de trabalho, ler os avisos, descarregar o ficheiro, registar o envio e criar uma nova revisão quando há correções.
 keywords: [folha para a seguradora, seguro de acidentes de trabalho, folha de salários seguradora, retribuição segura, retribuicao segura, apólice, apolice, folha mensal seguradora, prazo dia 15, acidentes de trabalho, seguradora]
 doc_id: DOC-0238
 article_type: tarefa
@@ -18,9 +18,9 @@ related: [payroll-pt/processar-e-pagar/pagar-os-salarios, payroll-pt/processar-e
 
 ## Para que serve?
 
-O seguro de acidentes de trabalho cobre os trabalhadores que a seguradora conhece e pela retribuição que ela conhece. Todos os meses, a empresa envia à seguradora a lista de quem trabalhou, com a profissão, a situação e o que foi pago. O fiscaldoo prepara essa lista a partir dos recibos do mês, avisa quando falta alguém e gera o ficheiro.
+O seguro de acidentes de trabalho cobre os trabalhadores que a seguradora conhece e pela retribuição que ela conhece. Todos os meses, a empresa envia à seguradora a lista de quem trabalhou, com a profissão, a situação e o que foi pago. O Fiscaldoo prepara essa lista a partir dos recibos do mês, avisa quando falta alguém e gera o ficheiro.
 
-O fiscaldoo não envia nada à seguradora. O ficheiro entrega-se pelo canal que a seguradora indicar; depois regista-se no fiscaldoo que foi enviado.
+O Fiscaldoo não envia nada à seguradora. O ficheiro entrega-se pelo canal que a seguradora indicar; depois regista-se no Fiscaldoo que foi enviado.
 
 ## Quando utilizar?
 
@@ -88,7 +88,7 @@ Com os recibos de setembro de 2026, a folha tem 24 trabalhadores e 33.138,00 €
 - **Prazo.** A folha envia-se até ao dia 15 do mês seguinte. Passado o dia, a folha mostra «O prazo (dia 15 do mês seguinte) já passou. O que aconteceu: a seguradora pode recusar os trabalhadores que ficaram de fora. Como resolver: envie a folha já.» O ecrã compara com a data de hoje: a folha de setembro mostrou este aviso a 02/11/2026. <span className="fd-pending">Pendente de validação por contabilista certificado: o prazo do dia 15 e a consequência de o falhar dependem da apólice e das condições da seguradora.</span>
 - **O que o ecrã não avisa.** Num teste com a apólice da demonstração, **Retribuição declarada à seguradora** saiu a 0,00 em todos os trabalhadores e a folha não mostrou nenhum aviso: nem de falta de retribuição segura, nem de parte não segurada. Antes de enviar, confira esta coluna: um valor a 0,00 quer dizer que a ficha do trabalhador não tem **Retribuição mensal segura** (separador **Trabalho › Seguro de acidentes de trabalho**) e a seguradora fica sem a retribuição que cobre o trabalhador. Quando a retribuição segura é menor do que a paga, a folha avisa «… receberam mais do que a retribuição declarada à seguradora …» e mostra a **Parte não segurada (%)**. <span className="fd-pending">Pendente de validação no ecrã: preencher a **Retribuição mensal segura** e ver o aviso de parte não segurada. Na ficha da demonstração (contrato confirmado a 01/01/2026) o campo não gravou; a alteração passa por uma nova versão do contrato, como em [Como alterar o salário de um trabalhador](/payroll-pt/alterar-o-salario).</span>
 - **Não envie uma folha de um mês sem recibos validados.** Para dezembro de 2026, sem recibos, a folha fica com os 23 trabalhadores como omitidos e a retribuição total a 0,00, e o ecrã deixou-a ser registada como enviada. {/* Nota interna (DOCS-046, master 52d1dd3ad): defeito V4PAYb-02: «Registar como enviada» aceita uma folha em que todos os trabalhadores estão omitidos (total 0,00). */}
-- **Enviar não é garantir cobertura.** Quem fica fora da folha pode não ficar coberto num acidente; quando a retribuição declarada é inferior à paga, a seguradora responde só pela parte declarada e a empresa pela diferença, na proporção (Lei n.º 98/2009, art. 79.º, n.os 4 e 5). <span className="fd-pending">Pendente de validação por contabilista certificado: leitura desta repartição e formato exigido por cada seguradora (o fiscaldoo gera um ficheiro simples com trabalhador, profissão, situação e retribuição).</span>
+- **Enviar não é garantir cobertura.** Quem fica fora da folha pode não ficar coberto num acidente; quando a retribuição declarada é inferior à paga, a seguradora responde só pela parte declarada e a empresa pela diferença, na proporção (Lei n.º 98/2009, art. 79.º, n.os 4 e 5). <span className="fd-pending">Pendente de validação por contabilista certificado: leitura desta repartição e formato exigido por cada seguradora (o Fiscaldoo gera um ficheiro simples com trabalhador, profissão, situação e retribuição).</span>
 
 ## Problemas frequentes
 

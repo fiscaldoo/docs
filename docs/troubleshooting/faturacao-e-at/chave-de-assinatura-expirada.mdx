@@ -1,10 +1,10 @@
 ---
 id: chave-de-assinatura-expirada
 slug: /troubleshooting/chave-de-assinatura-expirada
-title: "A fatura não é assinada: o fiscaldoo não responde, não tem chave ativa ou a ligação não está configurada"
+title: "A fatura não é assinada: o Fiscaldoo não responde, não tem chave ativa ou a ligação não está configurada"
 sidebar_label: A fatura não é assinada
-description: O que fazer quando, ao confirmar uma fatura, o fiscaldoo diz que o fiscaldoo não respondeu, que a ligação não está configurada, que não há chave de assinatura ativa ou que a chave de API foi recusada.
-keywords: [O fiscaldoo não respondeu, Nada foi assinado, a ligação não está configurada, preencha o endereço e a chave de API, o fiscaldoo recusou a chave de API, o fiscaldoo ainda não tem uma chave de assinatura ativa, chave de assinatura retirada, a hora de assinatura do documento não corresponde, não é possível assinar documentos, plataforma fiscaldoo, chave de assinatura, chave de API, assinatura, Ainda não é possível confirmar, o documento não foi assinado e o seu número não foi gasto]
+description: O que fazer quando, ao confirmar uma fatura, o Fiscaldoo diz que o Fiscaldoo não respondeu, que a ligação não está configurada, que não há chave de assinatura ativa ou que a chave de API foi recusada.
+keywords: [O Fiscaldoo não respondeu, Nada foi assinado, a ligação não está configurada, preencha o endereço e a chave de API, o Fiscaldoo recusou a chave de API, o Fiscaldoo ainda não tem uma chave de assinatura ativa, chave de assinatura retirada, a hora de assinatura do documento não corresponde, não é possível assinar documentos, plataforma Fiscaldoo, chave de assinatura, chave de API, assinatura, Ainda não é possível confirmar, o documento não foi assinado e o seu número não foi gasto]
 doc_id: DOC-0334
 article_type: problema
 odoo_versions: ["20.0"]
@@ -17,49 +17,49 @@ related: [fiscal-core/faturacao/emitir-uma-fatura-certificada, fiscal-core/certi
 
 ## Sintoma
 
-Ao carregar em **Confirmar** numa fatura (ou noutro documento de venda), abre a janela **Ainda não é possível confirmar** com uma frase que começa por «O fiscaldoo…» ou «Os documentos são assinados pelo fiscaldoo, mas…», e que termina com «Nada foi assinado.». A fatura continua em **Rascunho**, sem número. Acontece com qualquer perfil que emita faturas, em todas as faturas da empresa, até o problema ser resolvido.
+Ao carregar em **Confirmar** numa fatura (ou noutro documento de venda), abre a janela **Ainda não é possível confirmar** com uma frase que começa por «O Fiscaldoo…» ou «Os documentos são assinados pelo Fiscaldoo, mas…», e que termina com «Nada foi assinado.». A fatura continua em **Rascunho**, sem número. Acontece com qualquer perfil que emita faturas, em todas as faturas da empresa, até o problema ser resolvido.
 
-Cada documento certificado é assinado pelo fiscaldoo, a plataforma do produtor do programa, e não pela instalação do cliente. Se o fiscaldoo não responde, ou não aceita a instalação, não há assinatura e por isso não há documento ([Como ligar a instalação ao fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)).
+Cada documento certificado é assinado pelo Fiscaldoo, a plataforma do produtor do programa, e não pela instalação do cliente. Se o Fiscaldoo não responde, ou não aceita a instalação, não há assinatura e por isso não há documento ([Como ligar a instalação ao Fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)).
 
 ## Mensagem
 
-Quando a instalação ainda não tem a chave de API do fiscaldoo:
+Quando a instalação ainda não tem a chave de API do Fiscaldoo:
 
-> «Os documentos são assinados pelo fiscaldoo, mas a ligação não está configurada: preencha o endereço e a chave de API nas Definições. Nada foi assinado.»
+> «Os documentos são assinados pelo Fiscaldoo, mas a ligação não está configurada: preencha o endereço e a chave de API nas Definições. Nada foi assinado.»
 
-![Janela Ainda não é possível confirmar: os documentos são assinados pelo fiscaldoo, mas a ligação não está configurada](/images/troubleshooting/chave-de-assinatura-expirada/01-ligacao-nao-configurada.png)
+![Janela Ainda não é possível confirmar: os documentos são assinados pelo Fiscaldoo, mas a ligação não está configurada](/images/troubleshooting/chave-de-assinatura-expirada/01-ligacao-nao-configurada.png)
 
-Quando o servidor não chega ao fiscaldoo:
+Quando o servidor não chega ao Fiscaldoo:
 
-> «O fiscaldoo não respondeu (…). Nada foi assinado. Porquê: a ligação ao fiscaldoo falhou ou excedeu o tempo. Como resolver: verifique a ligação à internet deste servidor e tente de novo dentro de uns minutos; se persistir, contacte o suporte do fiscaldoo.»
+> «O Fiscaldoo não respondeu (…). Nada foi assinado. Porquê: a ligação ao Fiscaldoo falhou ou excedeu o tempo. Como resolver: verifique a ligação à internet deste servidor e tente de novo dentro de uns minutos; se persistir, contacte o suporte do fiscaldoo.»
 
-Em ambos os casos a janela acrescenta: «Cada documento certificado é assinado pelo fiscaldoo com a chave do produtor do software; sem ela o documento não pode ser assinado e nenhum número é usado. O administrador do sistema verifica a ligação ao fiscaldoo em Definições › Faturação › Certificação PT.»
+Em ambos os casos a janela acrescenta: «Cada documento certificado é assinado pelo Fiscaldoo com a chave do produtor do software; sem ela o documento não pode ser assinado e nenhum número é usado. O administrador do sistema verifica a ligação ao Fiscaldoo em Definições › Faturação › Certificação PT.»
 
-As duas mensagens foram provocadas na base de demonstração, com o perfil **Administrativo**, ao confirmar uma fatura de 123,00 € à Padaria Aurora, Lda (um rascunho criado para isto), com o endereço do fiscaldoo apontado a uma porta sem servidor e, na segunda, a chave de API preenchida. Na janela, o texto entre parênteses da segunda mensagem é o detalhe técnico do erro de ligação.
+As duas mensagens foram provocadas na base de demonstração, com o perfil **Administrativo**, ao confirmar uma fatura de 123,00 € à Padaria Aurora, Lda (um rascunho criado para isto), com o endereço do Fiscaldoo apontado a uma porta sem servidor e, na segunda, a chave de API preenchida. Na janela, o texto entre parênteses da segunda mensagem é o detalhe técnico do erro de ligação.
 
-As outras mensagens do fiscaldoo têm o mesmo formato (o que aconteceu, porquê, como resolver):
+As outras mensagens do Fiscaldoo têm o mesmo formato (o que aconteceu, porquê, como resolver):
 
-- «O fiscaldoo recusou a chave de API desta instância. Verifique-a nas Definições.»
-- «O fiscaldoo ainda não tem uma chave de assinatura ativa. Nada foi assinado. Porquê: a plataforma ainda não publicou uma chave de assinatura para esta instalação. Como resolver: contacte o suporte do fiscaldoo para ativar uma chave e tente de novo.»
-- «A versão … da chave de assinatura do fiscaldoo está retirada. Porquê: uma chave retirada só serve para verificar documentos já assinados e não pode assinar. Como resolver: use a versão de chave ativa ou contacte o suporte do fiscaldoo se nenhuma estiver ativa.»
+- «O Fiscaldoo recusou a chave de API desta instância. Verifique-a nas Definições.»
+- «O Fiscaldoo ainda não tem uma chave de assinatura ativa. Nada foi assinado. Porquê: a plataforma ainda não publicou uma chave de assinatura para esta instalação. Como resolver: contacte o suporte do Fiscaldoo para ativar uma chave e tente de novo.»
+- «A versão … da chave de assinatura do Fiscaldoo está retirada. Porquê: uma chave retirada só serve para verificar documentos já assinados e não pode assinar. Como resolver: use a versão de chave ativa ou contacte o suporte do Fiscaldoo se nenhuma estiver ativa.»
 - «A hora de assinatura do documento não corresponde ao texto a assinar. O documento não foi assinado e o seu número não foi gasto. Porquê: a data e a hora do texto a assinar não são as do documento no fuso horário da empresa. Como resolver: verifique o fuso horário da empresa e confirme o documento de novo.»
-- «O fiscaldoo assinou o documento … há mais de 24 horas com outros dados e não o volta a assinar. Contacte o suporte fiscaldoo. O documento não foi assinado e o seu número não foi gasto.»
+- «O Fiscaldoo assinou o documento … há mais de 24 horas com outros dados e não o volta a assinar. Contacte o suporte fiscaldoo. O documento não foi assinado e o seu número não foi gasto.»
 
 <span className="fd-pending">Pendente de validação no ecrã: estas cinco mensagens. Só a plataforma verdadeira as dá e a demonstração é simulada; o texto é o do produto.</span>
 
-{/* Nota interna (lote 103, KEY-001 #4477, master e36178712, docs_demo_103_test, porta 10080): artigo refeito. O anterior descrevia a chave privada num ficheiro do servidor, a rotação de versões e o botão Gerar da chave de teste, que já não existem. Visto por clique com o perfil Administrativo (utilizador da cópia só com esse perfil): as duas primeiras mensagens, na janela «Ainda não é possível confirmar»; a seguir repôs-se o simulador e o mesmo rascunho confirmou-se (FT D26/31, da cópia). Uma 1.ª tentativa, num rascunho sem artigo nas linhas, mostrou também a frase «A(s) linha(s) 1 não têm um artigo com referência interna…» junto com a do fiscaldoo: confirma que a janela junta tudo o que falta. */}
+{/* Nota interna (lote 103, KEY-001 #4477, master e36178712, docs_demo_103_test, porta 10080): artigo refeito. O anterior descrevia a chave privada num ficheiro do servidor, a rotação de versões e o botão Gerar da chave de teste, que já não existem. Visto por clique com o perfil Administrativo (utilizador da cópia só com esse perfil): as duas primeiras mensagens, na janela «Ainda não é possível confirmar»; a seguir repôs-se o simulador e o mesmo rascunho confirmou-se (FT D26/31, da cópia). Uma 1.ª tentativa, num rascunho sem artigo nas linhas, mostrou também a frase «A(s) linha(s) 1 não têm um artigo com referência interna…» junto com a do Fiscaldoo: confirma que a janela junta tudo o que falta. */}
 
 ## Causas verificadas
 
-- **A instalação não está registada no fiscaldoo.** Falta a **Chave de API do fiscaldoo** (por exemplo, numa instalação nova, depois de mudar de servidor ou de repor uma cópia de segurança sem a chave). Na demonstração, a chave vazia deu a 1.ª mensagem.
-- **O servidor não chega ao fiscaldoo.** A ligação à internet falhou, ou o fiscaldoo está indisponível. Na demonstração, com a chave preenchida e o endereço apontado a uma porta sem servidor, deu a 2.ª mensagem.
-- **O fiscaldoo recusou a instalação ou não tem chave ativa para ela.** É o caso das mensagens da lista acima: só o suporte do fiscaldoo as resolve.
+- **A instalação não está registada no fiscaldoo.** Falta a **Chave de API do Fiscaldoo** (por exemplo, numa instalação nova, depois de mudar de servidor ou de repor uma cópia de segurança sem a chave). Na demonstração, a chave vazia deu a 1.ª mensagem.
+- **O servidor não chega ao fiscaldoo.** A ligação à internet falhou, ou o Fiscaldoo está indisponível. Na demonstração, com a chave preenchida e o endereço apontado a uma porta sem servidor, deu a 2.ª mensagem.
+- **O Fiscaldoo recusou a instalação ou não tem chave ativa para ela.** É o caso das mensagens da lista acima: só o suporte do Fiscaldoo as resolve.
 
 A chave de assinatura não tem data de fim para o cliente: não «expira» por passar o tempo, e quem a renova é o fiscaldoo. Os certificados e chaves que expiram com a data são os da comunicação com a AT (o **Cofre de chaves** e as **Credenciais da AT**), que não impedem a assinatura das faturas.
 
 ## O que confirmar
 
-1. A mensagem: se diz que a **ligação não está configurada** (falta a chave de API), que o fiscaldoo **não respondeu** (falha de ligação) ou outra da lista.
+1. A mensagem: se diz que a **ligação não está configurada** (falta a chave de API), que o Fiscaldoo **não respondeu** (falha de ligação) ou outra da lista.
 2. Se o problema é de todas as faturas da empresa. Experimente confirmar outra fatura em rascunho: a recusa repete-se.
 3. Se houve uma mudança no servidor nesse dia (atualização, reposição de uma cópia de segurança, mudança de máquina, alteração da rede ou da firewall).
 
@@ -68,13 +68,13 @@ Nenhum perfil da empresa, exceto o administrador do sistema, consegue resolver i
 ## Como resolver
 
 1. Não tente outra vez a mesma fatura em ciclo nem crie faturas noutro programa para contornar: o problema é de todas as faturas. O que a lei prevê, se a paragem passar do prazo de emissão, está mais abaixo.
-2. O administrador do sistema abre **Definições › Faturação**, bloco **Certificação PT**, e carrega em **Ver no fiscaldoo se esta empresa pode assinar**. A resposta confirma se a ligação funciona e se a empresa pode assinar.
-3. Se a ligação não está configurada, o administrador regista a instalação no portal do fiscaldoo e guarda a chave de API ([Como ligar a instalação ao fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)). Se o fiscaldoo não responde, verifica a ligação do servidor à internet e repete passados uns minutos.
-4. Se persistir, contacte o suporte do fiscaldoo com os dados de «Informação a enviar».
+2. O administrador do sistema abre **Definições › Faturação**, bloco **Certificação PT**, e carrega em **Ver no Fiscaldoo se esta empresa pode assinar**. A resposta confirma se a ligação funciona e se a empresa pode assinar.
+3. Se a ligação não está configurada, o administrador regista a instalação no portal do Fiscaldoo e guarda a chave de API ([Como ligar a instalação ao Fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)). Se o Fiscaldoo não responde, verifica a ligação do servidor à internet e repete passados uns minutos.
+4. Se persistir, contacte o suporte do Fiscaldoo com os dados de «Informação a enviar».
 5. Depois de resolvido, abra a fatura em rascunho e carregue de novo em **Confirmar**.
 
 <HelpCallout type="atencao" title="As faturas já emitidas não mudam">
-As faturas emitidas antes do problema continuam verificáveis com a versão da chave com que foram assinadas. A instalação guarda uma cópia, só de leitura, das chaves públicas e dos certificados da última resposta do fiscaldoo: com o fiscaldoo em baixo, os documentos antigos continuam a verificar-se e a imprimir-se e o SAF-T continua a exportar-se; só os documentos novos precisam do fiscaldoo. Não anule as faturas emitidas nem as emita de novo por causa destas mensagens. <span className="fd-pending">Pendente de validação no ecrã: a leitura com o fiscaldoo em baixo, que depende de uma resposta anterior verdadeira do fiscaldoo (a demonstração é simulada e não a guarda).</span>
+As faturas emitidas antes do problema continuam verificáveis com a versão da chave com que foram assinadas. A instalação guarda uma cópia, só de leitura, das chaves públicas e dos certificados da última resposta do Fiscaldoo: com o Fiscaldoo em baixo, os documentos antigos continuam a verificar-se e a imprimir-se e o SAF-T continua a exportar-se; só os documentos novos precisam do fiscaldoo. Não anule as faturas emitidas nem as emita de novo por causa destas mensagens. <span className="fd-pending">Pendente de validação no ecrã: a leitura com o Fiscaldoo em baixo, que depende de uma resposta anterior verdadeira do Fiscaldoo (a demonstração é simulada e não a guarda).</span>
 </HelpCallout>
 
 **Quem faz:** o administrador do sistema e, se persistir, o suporte do fiscaldoo. A empresa confirma de novo quando for dito.
@@ -86,7 +86,7 @@ Enquanto o programa não assina, não emite faturas. A lei prevê esse caso (Des
 - a fatura é passada à mão, num impresso de tipografia autorizada;
 - quando o programa volta a funcionar, cada documento manual é integrado numa série própria de recuperação, de periodicidade anual ou superior e com numeração sequencial iniciada no n.º 1 (ponto 2.4.1), num documento novo do mesmo tipo com todos os elementos do manual (ponto 2.4.2) e com a data do documento manual (ponto 2.4.3).
 
-A paragem não suspende o prazo de emissão da fatura (CIVA, art. 36.º, n.º 1, alínea a)). Como se integra o documento manual no fiscaldoo está em [A fatura não pode ter data anterior à do último documento da série](/troubleshooting/data-anterior-ao-ultimo-documento), no caso «O documento foi passado à mão quando o programa não estava disponível». <span className="fd-pending">Pendente de validação por contabilista certificado: a partir de quando a empresa deve passar a emitir em impressos de tipografia autorizada enquanto o servidor não assina, e o que fazer aos recibos nesse período.</span>
+A paragem não suspende o prazo de emissão da fatura (CIVA, art. 36.º, n.º 1, alínea a)). Como se integra o documento manual no Fiscaldoo está em [A fatura não pode ter data anterior à do último documento da série](/troubleshooting/data-anterior-ao-ultimo-documento), no caso «O documento foi passado à mão quando o programa não estava disponível». <span className="fd-pending">Pendente de validação por contabilista certificado: a partir de quando a empresa deve passar a emitir em impressos de tipografia autorizada enquanto o servidor não assina, e o que fazer aos recibos nesse período.</span>
 
 {/* Nota interna (correção da aud-v2e, NE1b-05, 30/10/2026): pontos 2.4, 2.4.1, 2.4.2 e 2.4.3 conferidos no texto oficial do Diário da República (research/_fontes/despacho_8632_2014/despacho_8632_2014_dre.txt). Pergunta 1 da auditoria aud-v2e ao CC (juntar às perguntas_cc). Ligar ao artigo próprio do documento manual quando existir. */}
 
@@ -97,8 +97,8 @@ A paragem não suspende o prazo de emissão da fatura (CIVA, art. 36.º, n.º 1,
 
 ## Quando contactar o suporte
 
-- Sempre que a mensagem seja uma da lista de «O fiscaldoo recusou…», «ainda não tem uma chave de assinatura ativa», «está retirada» ou «assinou o documento … há mais de 24 horas».
-- A ligação do servidor à internet está certa e o fiscaldoo continua a não responder.
+- Sempre que a mensagem seja uma da lista de «O Fiscaldoo recusou…», «ainda não tem uma chave de assinatura ativa», «está retirada» ou «assinou o documento … há mais de 24 horas».
+- A ligação do servidor à internet está certa e o Fiscaldoo continua a não responder.
 
 ## Informação a enviar
 

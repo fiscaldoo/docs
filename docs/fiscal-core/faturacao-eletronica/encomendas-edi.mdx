@@ -17,12 +17,12 @@ related: [fiscal-core/faturacao-eletronica/ligar-o-edi, fiscal-core/faturacao-el
 ---
 
 <HelpCallout type="risco" title="Nesta versão, só a conta de testes da Saphety">
-O fiscaldoo só liga ao ambiente de testes da Saphety (veja [Como ligar o EDI e a Saphety](/fiscal-core/ligar-o-edi)): as encomendas vêm desse ambiente e uma resposta «Aceite» foi aceite por ele, sem chegar ao retalhista. Combine as encomendas com o retalhista pela via habitual.
+O Fiscaldoo só liga ao ambiente de testes da Saphety (veja [Como ligar o EDI e a Saphety](/fiscal-core/ligar-o-edi)): as encomendas vêm desse ambiente e uma resposta «Aceite» foi aceite por ele, sem chegar ao retalhista. Combine as encomendas com o retalhista pela via habitual.
 </HelpCallout>
 
 ## Para que serve?
 
-O retalhista envia as encomendas por EDI. O fiscaldoo recebe-as e cria um **orçamento** para cada uma, com o cliente, os artigos, as quantidades, os preços do retalhista e a data de entrega, sem nada escrito à mão. Depois de decidir e confirmar, envia ao retalhista a **resposta à encomenda**: aceite, aceite com alterações ou recusada.
+O retalhista envia as encomendas por EDI. O Fiscaldoo recebe-as e cria um **orçamento** para cada uma, com o cliente, os artigos, as quantidades, os preços do retalhista e a data de entrega, sem nada escrito à mão. Depois de decidir e confirmar, envia ao retalhista a **resposta à encomenda**: aceite, aceite com alterações ou recusada.
 
 ## Quando utilizar?
 
@@ -56,7 +56,7 @@ O retalhista envia as encomendas por EDI. O fiscaldoo recebe-as e cria um **orç
 
 </StepByStep>
 
-**Que resposta segue.** O fiscaldoo decide pela encomenda: cancelada = **recusada**; confirmada igual ao pedido = **aceite**; confirmada com quantidade, preço ou data diferentes, ou com linhas retiradas = **aceite com alterações**. No exemplo, a `S00004` seguiu como aceite com alterações, com o preço de 1,60 nas Bolachas e a linha do Sumo aceite como veio.
+**Que resposta segue.** O Fiscaldoo decide pela encomenda: cancelada = **recusada**; confirmada igual ao pedido = **aceite**; confirmada com quantidade, preço ou data diferentes, ou com linhas retiradas = **aceite com alterações**. No exemplo, a `S00004` seguiu como aceite com alterações, com o preço de 1,60 nas Bolachas e a linha do Sumo aceite como veio.
 
 ## No Enterprise
 
@@ -96,7 +96,7 @@ No Odoo Enterprise, as encomendas EDI tratam-se da mesma maneira (visto com um u
 ### Uma encomenda ficou «Por rever»
 
 - **Sintoma:** em **EDI › Painel**, no bloco **Por tratar**, ou em **EDI › Mensagens**, a mensagem **ORDERS (encomenda)** está **Por rever**, com o motivo em **ERROS**. Exemplos da demonstração: «O GLN do remetente 5609999000050 não corresponde a nenhum cliente.» e «Linha 2: nenhum artigo tem o código de barras 5609999119998. Preencha o código de barras na ficha do artigo (ou a referência do cliente) e processe a mensagem outra vez.».
-- **Causa:** o fiscaldoo não encontrou o cliente pelo GLN, ou um artigo pelo código de barras. Não criou nenhum orçamento.
+- **Causa:** o Fiscaldoo não encontrou o cliente pelo GLN, ou um artigo pelo código de barras. Não criou nenhum orçamento.
 - **O que fazer:** corrija a causa (o **EAN/GLN** do cliente ou o **Código de Barras** do artigo) e, na mensagem, carregue em **Reprocessar**. Com **Administrativo**, **Contabilista** ou **Contabilista certificado**, o botão responde «O seu perfil não pode criar orçamentos e processar uma encomenda cria um. Como resolver: peça a um utilizador de Vendas que carregue em «Reprocessar» (ou ao administrador que lhe dê o acesso de Vendas). A mensagem fica «Por rever».»: peça a quem pode criar orçamentos, como o **Administrador**. Quando a causa está corrigida, a mensagem passa a **Processada** e o orçamento aparece em **Vendas › Ordens › Encomendas recebidas**.
 
 {/* Nota interna (lote v23-AT, DOCS-066 #3947, DEF-QA5-F-01, master c2bf63c34, docs_demo_v23at_test, porta 8504): o perfil Faturação passou a Administrativo (os passos feitos antes com o utilizador de faturação da demonstração, que hoje tem o perfil Administrativo, com o mesmo grupo de faturação); menus de cada perfil lidos com utilizadores criados por RPC só com um valor do campo Perfil (o que o ecrã carrega, sem modo de programador); Vendas › Ordens › Encomendas recebidas do Administrativo, do Contabilista e do Contabilista certificado; recusa do Reprocessar provocada por clique com o Administrativo na mensagem ORDERS SIM0005 (Por rever), texto de hoje («ao administrador que lhe dê o acesso de Vendas») */}

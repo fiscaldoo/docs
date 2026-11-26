@@ -3,7 +3,7 @@ id: credenciais-da-at-recusadas
 slug: /troubleshooting/credenciais-da-at-recusadas
 title: A AT recusa as credenciais (utilizador ou senha)
 sidebar_label: Credenciais da AT recusadas
-description: Porque uma comunicação à AT é recusada por credenciais incompletas ou rejeitada pela AT, onde se vê a rejeição na série, o que confirmar no fiscaldoo e no Portal das Finanças (subutilizador, senha, certificado, permissões) e o que ainda não se consegue testar.
+description: Porque uma comunicação à AT é recusada por credenciais incompletas ou rejeitada pela AT, onde se vê a rejeição na série, o que confirmar no Fiscaldoo e no Portal das Finanças (subutilizador, senha, certificado, permissões) e o que ainda não se consegue testar.
 keywords: [credenciais da AT, credenciais AT recusadas, AT recusa credenciais, utilizador do webservice, palavra-passe do webservice, senha errada, subutilizador, Portal das Finanças, Portal das Financas, certificado da AT, chave pública da AT, chave publica da AT, credenciais incompletas, não foi enviado nada, nao foi enviado nada, comunicar à AT, comunicação com a AT rejeitada, comunicacao rejeitada, simulated rejection, código 99]
 doc_id: DOC-0338
 article_type: problema
@@ -19,7 +19,7 @@ related: [fiscal-core/at-e-saft/ligar-a-at, troubleshooting/faturacao-e-at/comun
 
 Uma comunicação à Autoridade Tributária (AT), por exemplo **Comunicar à AT** numa série, abre **Operação inválida** a dizer que as credenciais não estão completas e que **não foi enviado nada**. Ou a AT responde que o utilizador ou a senha estão errados.
 
-Como se criam as credenciais está em [Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). Este artigo trata do que corre mal depois.
+Como se criam as credenciais está em [Como ligar o Fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). Este artigo trata do que corre mal depois.
 
 ## Mensagem
 
@@ -47,10 +47,10 @@ Em **Credenciais da AT** › **Novo**, só com o **Utilizador do webservice** pr
 
 ## Causas verificadas
 
-- **A empresa não tem credenciais da AT, ou estão incompletas.** O fiscaldoo só comunica com o utilizador do webservice, a palavra-passe, o certificado de cliente e a chave privada todos preenchidos, e a chave pública da AT do ambiente escolhido. Numa base de testes, o simulador da AT pede o mesmo que a AT verdadeira: sem credenciais completas, recusa antes de enviar.
+- **A empresa não tem credenciais da AT, ou estão incompletas.** O Fiscaldoo só comunica com o utilizador do webservice, a palavra-passe, o certificado de cliente e a chave privada todos preenchidos, e a chave pública da AT do ambiente escolhido. Numa base de testes, o simulador da AT pede o mesmo que a AT verdadeira: sem credenciais completas, recusa antes de enviar.
 - **A série tem outro problema antes das credenciais.** Na mesma série com o exercício 2026, **Comunicar à AT** foi recusado antes, porque a série `FT D26` já estava ativa para **[FT] Fatura** em 2026. Esse caso está em [Não há uma série ativa para este documento, ou há mais do que uma](/troubleshooting/serie-ativa-em-falta-ou-repetida).
 - **O servidor não tem a chave de cifra do cofre.** **Guardar** as credenciais dá «Este servidor não tem chave de cifra para o cofre de credenciais, por isso nada foi guardado e nenhuma credencial guardada pode ser usada…». A solução é do administrador de sistema e está em [O cofre de credenciais não tem chave de cifra no servidor](/troubleshooting/cofre-sem-chave-de-cifra).
-- **A AT recusa o utilizador ou a senha.** O fiscaldoo envia, a AT recusa e a resposta fica na série: **Comunicação com a AT** em **Rejeitada** e o código e o texto da AT por cima da série. A série não é ativada. Na base de testes, o simulador dá «[99] Simulated rejection».
+- **A AT recusa o utilizador ou a senha.** O Fiscaldoo envia, a AT recusa e a resposta fica na série: **Comunicação com a AT** em **Rejeitada** e o código e o texto da AT por cima da série. A série não é ativada. Na base de testes, o simulador dá «[99] Simulated rejection».
 
 ## O que confirmar
 
@@ -69,7 +69,7 @@ Feito com o administrador da demonstração, que guarda as **Credenciais da AT**
 3. Guarde e confirme que o aviso de credenciais incompletas desaparece.
 4. Volte ao documento ou à série e carregue de novo em **Comunicar à AT**.
 
-Se a série ficar com **Comunicação com a AT** em **Rejeitada** e a resposta da AT disser que o utilizador ou a senha estão errados: entre no Portal das Finanças com o NIF da empresa, confirme o subutilizador e a senha (e as permissões), corrija a **Palavra-passe do webservice** no fiscaldoo e comunique de novo. Uma senha mudada no Portal tem de ser mudada também no fiscaldoo.
+Se a série ficar com **Comunicação com a AT** em **Rejeitada** e a resposta da AT disser que o utilizador ou a senha estão errados: entre no Portal das Finanças com o NIF da empresa, confirme o subutilizador e a senha (e as permissões), corrija a **Palavra-passe do webservice** no Fiscaldoo e comunique de novo. Uma senha mudada no Portal tem de ser mudada também no fiscaldoo.
 
 <HelpCallout type="risco" title="Uma comunicação recusada não foi feita">
 Quando a mensagem diz «não foi enviado nada», a AT não recebeu a série nem o documento. Não use a série nem dê o documento como comunicado até a comunicação ficar aceite.
