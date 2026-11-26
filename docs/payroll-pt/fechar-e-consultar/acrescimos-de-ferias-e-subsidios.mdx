@@ -61,7 +61,7 @@ A quarta rubrica, **Acréscimo: seguro de acidentes de trabalho sobre os subsíd
 
 </StepByStep>
 
-**Exemplo.** Em outubro de 2026, com 8 trabalhadores, o total acrescido é de 3.576,37 €. O Trabalhador A, com base de 2.400,00 €, tem:
+**Exemplo.** Em outubro de 2026, com 24 trabalhadores, o total acrescido é de 10.261,96 €. O Trabalhador A, com base de 2.400,00 €, tem:
 
 - **Férias e subsídio**: 2.400,00 € × 2 ÷ 12 = 400,00 €.
 - **Subsídio de Natal**: 2.400,00 € ÷ 12 = 200,00 €.
@@ -72,9 +72,9 @@ O lançamento, no diário **Salários**, com a data 31/10/2026:
 
 | Conta | Débito | Crédito |
 |---|---|---|
-| 632 Remunerações do pessoal (férias, subsídio de férias e Natal) | 2.890,00 € | |
-| 635 Encargos sobre remunerações | 686,37 € | |
-| 2722 Credores por acréscimos de gastos | | 3.576,37 € |
+| 632 Remunerações do pessoal (férias, subsídio de férias e Natal) | 8.292,50 € | |
+| 635 Encargos sobre remunerações | 1.969,46 € | |
+| 2722 Credores por acréscimos de gastos | | 10.261,96 € |
 
 <span className="fd-pending">Pendente de validação por contabilista certificado: as contas 632, 635 e 2722, a base de dois duodécimos para férias e subsídio de férias e a taxa das contribuições sobre o acréscimo.</span>
 
@@ -88,7 +88,7 @@ No Odoo Enterprise, o acréscimo calcula-se, lança-se e consulta-se da mesma ma
 
 - A corrida está **Lançada** e a lista mostra-a com o **Total acrescido** e o valor **Em vigor**. O rodapé da lista soma só **Em vigor**: uma corrida em **Rascunho** conta 0,00.
 - Depois de **Recalcular o mês**, a corrida antiga fica **Substituído por uma nova corrida** e tem um lançamento de estorno. Para cada mês e empresa, só uma corrida conta. Nada se duplica.
-- Em **Saldo do acréscimo por trabalhador**, o saldo de cada componente sobe. Depois de outubro, o total é igual ao saldo da conta 2722: 3.576,37 €.
+- Em **Saldo do acréscimo por trabalhador**, o saldo de cada componente sobe. Depois de outubro, o total é igual ao saldo da conta 2722: 10.261,96 €.
 
 ![Lista dos acréscimos: outubro lançado e a corrida anterior de outubro substituída](/images/payroll-pt/acrescimos-de-ferias-e-subsidios/02-lista-depois-de-recalcular.png)
 
@@ -96,20 +96,20 @@ No Odoo Enterprise, o acréscimo calcula-se, lança-se e consulta-se da mesma ma
 
 Não há nada a fazer neste ecrã. O abatimento acontece sozinho quando o recibo que paga o subsídio é contabilizado (ver [Como pagar os subsídios de férias e de Natal](/payroll-pt/subsidios-de-ferias-e-natal)).
 
-**Exemplo.** Só outubro estava acrescido. O lote **Natal de dezembro de 2026**, com 7 trabalhadores, tem 10.083,01 € de subsídio. Ao carregar em **Contabilizar**, o lançamento debitou:
+**Exemplo.** Só outubro estava acrescido. O lote **Natal de dezembro de 2026**, com 23 trabalhadores, tem 31.506,16 € de subsídio. Ao carregar em **Contabilizar**, o lançamento debitou:
 
 | Conta | Débito | Crédito |
 |---|---|---|
-| 2722 Credores por acréscimos de gastos (Natal 859,16 € e contribuições 204,05 €) | 1.063,21 € | |
-| 632 Remunerações do pessoal (o subsídio que não estava acrescido) | 9.223,85 € | |
-| 635 Encargos sobre remunerações (o resto das contribuições) | 2.190,68 € | |
-| 2312 Ao pessoal (líquido a receber) | | 8.232,88 € |
-| 242 Retenção de impostos sobre rendimentos | | 741,00 € |
-| 245 Contribuições para a Segurança Social | | 3.503,86 € |
+| 2722 Credores por acréscimos de gastos (Natal 2.659,98 € e contribuições 631,75 €) | 3.291,73 € | |
+| 632 Remunerações do pessoal (o subsídio que não estava acrescido) | 28.846,18 € | |
+| 635 Encargos sobre remunerações (o resto das contribuições) | 6.850,99 € | |
+| 2312 Ao pessoal (líquido a receber) | | 25.769,48 € |
+| 242 Retenção de impostos sobre rendimentos | | 2.271,00 € |
+| 245 Contribuições para a Segurança Social | | 10.948,42 € |
 
-O mesmo lançamento mostra também a conta 231290 Remunerações em processamento, com 10.083,01 € a débito e a crédito, que se anulam.
+O mesmo lançamento mostra também a conta 231290 Remunerações em processamento, com 31.506,16 € a débito e a crédito, que se anulam.
 
-O saldo total desceu de 3.576,37 € para 2.513,16 € (a diferença é de 1.063,21 €), e o saldo do **Subsídio de Natal** dos 7 trabalhadores ficou a 0,00 €. O Trabalhador H, com contrato até 30/11/2026, não entra neste lote e mantém os 104,17 €.
+O saldo total desceu de 10.261,96 € para 6.970,23 € (a diferença é de 3.291,73 €), e o saldo do **Subsídio de Natal** dos 23 trabalhadores ficou a 0,00 €. O Trabalhador H, com contrato até 30/11/2026, não entra neste lote e mantém os 104,17 €.
 
 ![Saldo do acréscimo por trabalhador depois do lote de Natal: Subsídio de Natal a 0,00 € em sete linhas, 104,17 € na oitava e 2.513,16 € no total](/images/payroll-pt/acrescimos-de-ferias-e-subsidios/03-saldo-depois-do-natal.png)
 
@@ -117,7 +117,7 @@ Na saída de um trabalhador, o tratamento do saldo faz parte de [Como tratar a s
 
 ## Notas importantes
 
-- **O rascunho do mês.** Uma vez por mês, o fiscaldoo prepara sozinho um rascunho do mês que acabou, já calculado, por exemplo **Acréscimo 2026-10**, com 8 trabalhadores e 3.576,37 €. Nunca o lança: é o **Administrador de Salários** que o revê, com os valores decididos com o contabilista certificado, e carrega em **Lançar na contabilidade**.
+- **O rascunho do mês.** Uma vez por mês, o fiscaldoo prepara sozinho um rascunho do mês que acabou, já calculado, por exemplo **Acréscimo 2026-10**, com 24 trabalhadores e 10.261,96 €. Nunca o lança: é o **Administrador de Salários** que o revê, com os valores decididos com o contabilista certificado, e carrega em **Lançar na contabilidade**.
 - **Quando o lote já está contabilizado.** O botão **Contabilizar** sai do lote, porque já não há recibos por contabilizar.
 
 - **É uma estimativa.** O valor real só se conhece quando se paga. O acréscimo não altera o recibo nem a Segurança Social do mês.

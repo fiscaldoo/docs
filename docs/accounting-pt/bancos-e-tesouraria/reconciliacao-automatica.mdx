@@ -68,9 +68,9 @@ No Odoo Enterprise, os modelos de reconciliação, o separador **Reconciliação
 ## Resultado esperado
 
 - Os movimentos que batem com um modelo ficam reconciliados e os restantes ficam como exceções. No exemplo, a comissão de 12,50 € ficou reconciliada e a transferência de 380,00 € ficou por tratar.
-- Linhas contabilísticas conferidas no razão para a comissão: o movimento do extrato BNK1/2026/00008 (crédito de **121 Depósitos à ordem** 12,50 €, débito de **120001 Conta Transitória** 12,50 €) e o lançamento do modelo **OD/2026/00104 (Comissões bancárias)** (débito de **6888 Outros não especificados** 12,50 €, crédito de **120001 Conta Transitória** 12,50 €), que anula a conta transitória.
+- Linhas contabilísticas conferidas no razão para a comissão: o movimento do extrato BNK1/2026/00008 (crédito de **121 Depósitos à ordem** 12,50 €, débito de **120001 Conta Transitória** 12,50 €) e o lançamento do modelo **OD/2026/00336 (Comissões bancárias)** (débito de **6888 Outros não especificados** 12,50 €, crédito de **120001 Conta Transitória** 12,50 €), que anula a conta transitória.
 - **O que a reconciliação não toca:** movimentos já reconciliados, ignorados ou duplicados, sem valor, em moeda estrangeira e com data num período bloqueado.
-- Um movimento que falha não pára os outros: fica como exceção.
+- Um movimento que falha não para os outros: fica como exceção.
 
 ## Notas importantes
 

@@ -17,7 +17,7 @@ related: [getting-started/o-fiscaldoo/edicoes-e-versoes-suportadas, getting-star
 
 {/* Nota interna (lote 104, FIX-M302, master e261a9215, 21/11/2026): apps por perfil conferidas com utilizadores novos só com o valor do campo Perfil e o menu que o ecrã carrega: Administrativo = Vendas, Faturação, Despesas, EDI, Painéis (sem Ponto de venda nem Ausência); Contabilista = + Contabilidade, Copiloto; Gestor de RH = Salários, Pessoas, Despesas (+ Assinaturas). */}
 
-{/* Nota interna (lote 104, KEY-001, master e261a9215, 21/11/2026): secção «A certificação» alinhada com chaves-de-assinatura; Estado da certificação aberto com o administrador na cópia (Certificado n.º 9999/AT., «A fiscaldoo assina com a versão 1 da chave.»). */}
+{/* Nota interna (lote 104, KEY-001, master e261a9215, 21/11/2026): secção «A certificação» alinhada com chaves-de-assinatura; Estado da certificação aberto com o administrador na cópia (Certificado n.º 9999/AT., «O fiscaldoo assina com a versão 1 da chave.»). */}
 
 {/* Nota interna (DOCS-046, #3616, lote v12-P2): corrige NV3P-03, NV3P-11 e NV3P-15 (aud-v3ppl). Cada linha da tabela corresponde a menus abertos na docs_demo_v12p2_test, master a060fe441. Certificado n.º 2790: memória do projeto e DEC-992; o número não é constante de código (DEC-766) e regista-se por empresa; na demonstração o PDF sai com o número de teste. */}
 
@@ -46,8 +46,8 @@ Para trazer dados de outro programa, os menus estão em **Contabilidade › Conf
 
 O fiscaldoo é um programa de faturação certificado pela Autoridade Tributária e Aduaneira (AT), com o n.º 2790.
 
-- O número do certificado vem da fiscaldoo, que o dá à instalação, e sai no rodapé de cada documento: «Processado por programa certificado n.º …/AT». Numa base de testes, a fiscaldoo é simulada e o número é o 9999, de teste.
-- A chave de assinatura não está na instalação: quem assina cada documento é a fiscaldoo, a plataforma do produtor do programa, e o administrador liga a instalação a ela com uma chave de API ([Como ligar a instalação à fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)). Sem essa ligação e sem uma série certificada ativa, a empresa não emite documentos certificados. O estado vê-se em **Contabilidade › Configurar › Sistema e segurança › Estado da certificação**, que diz o que falta, com a linha «A fiscaldoo assina com a versão 1 da chave.» quando a fiscaldoo responde.
+- O número do certificado vem do fiscaldoo, que o dá à instalação, e sai no rodapé de cada documento: «Processado por programa certificado n.º …/AT». Numa base de testes, o fiscaldoo é simulado e o número é o 9999, de teste.
+- A chave de assinatura não está na instalação: quem assina cada documento é o fiscaldoo, a plataforma do produtor do programa, e o administrador liga a instalação a ele com uma chave de API ([Como ligar a instalação ao fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)). Sem essa ligação e sem uma série certificada ativa, a empresa não emite documentos certificados. O estado vê-se em **Contabilidade › Configurar › Sistema e segurança › Estado da certificação**, que diz o que falta, com a linha «O fiscaldoo assina com a versão 1 da chave.» quando o fiscaldoo responde.
 - O que é preciso fazer está em [Preparar a faturação certificada](/fiscal-core/preparar-a-faturacao-certificada).
 
 ## A quem se destina
