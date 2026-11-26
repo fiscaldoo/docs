@@ -3,7 +3,7 @@ id: nota-de-credito-sem-fatura-de-origem
 slug: /troubleshooting/nota-de-credito-sem-fatura-de-origem
 title: A nota de crédito não indica a fatura que corrige
 sidebar_label: Nota de crédito sem fatura de origem
-description: Porque uma nota de crédito criada com Novo é recusada por não ter documento de origem, e o que fazer quando a fatura existe no fiscaldoo, foi emitida noutro programa ou já não se encontra.
+description: Porque uma nota de crédito criada com Novo é recusada por não ter documento de origem, e o que fazer quando a fatura existe no Fiscaldoo, foi emitida noutro programa ou já não se encontra.
 keywords: [nota de crédito, nota de credito, sem origem, documento de origem, fatura de origem, documento retificado, não tem documento de origem, nao tem documento de origem, não é uma linha do documento retificado, nao e uma linha do documento retificado, outro software, outro programa, Nota de crédito sem origem, Registar exceção, motivo da retificação, motivo de regularização, motivo de regularizacao]
 doc_id: DOC-0337
 article_type: problema
@@ -17,7 +17,7 @@ related: [fiscal-core/faturacao/emitir-uma-nota-de-credito, troubleshooting/fatu
 
 ## Sintoma
 
-Criou uma nota de crédito em **Faturação › Faturar › Notas de crédito de clientes**, com o botão **Novo**, e, ao carregar em **Confirmar**, o fiscaldoo recusa porque ela não diz que fatura corrige. Esta é a primeira recusa: só depois de indicar a origem é que a nota pede os dados da regularização de IVA.
+Criou uma nota de crédito em **Faturação › Faturar › Notas de crédito de clientes**, com o botão **Novo**, e, ao carregar em **Confirmar**, o Fiscaldoo recusa porque ela não diz que fatura corrige. Esta é a primeira recusa: só depois de indicar a origem é que a nota pede os dados da regularização de IVA.
 
 ## Mensagem
 
@@ -39,7 +39,7 @@ Se indicar o número do documento de outro programa e não o motivo:
 
 - **A nota foi criada com Novo.** Desta forma, nada a liga a uma fatura: o campo **Documento retificado** fica vazio.
 - **As linhas foram escritas à mão.** Mesmo com o **Documento retificado** preenchido, uma linha que não veio da fatura é recusada.
-- **Faltam os dados da regularização de IVA.** Depois de indicar a origem, o fiscaldoo recusa uma coisa de cada vez: primeiro o **Motivo da regularização de IVA** (veja [A nota de crédito pede um motivo de regularização de IVA](/troubleshooting/motivo-de-regularizacao-de-iva)) e, com o motivo de anulação ou redução, a **Prova da regularização** e a **Data de referência da regularização**.
+- **Faltam os dados da regularização de IVA.** Depois de indicar a origem, o Fiscaldoo recusa uma coisa de cada vez: primeiro o **Motivo da regularização de IVA** (veja [A nota de crédito pede um motivo de regularização de IVA](/troubleshooting/motivo-de-regularizacao-de-iva)) e, com o motivo de anulação ou redução, a **Prova da regularização** e a **Data de referência da regularização**.
 - **Falta o motivo da retificação.** É outro campo, que vai para o ficheiro fiscal.
 
 ## O que confirmar
@@ -50,7 +50,7 @@ Se indicar o número do documento de outro programa e não o motivo:
 
 ## Como resolver
 
-### A fatura existe no fiscaldoo
+### A fatura existe no Fiscaldoo
 
 Abandone o rascunho e crie a nota a partir da fatura original, com o botão **Nota de Crédito**: as linhas vêm da fatura e a ligação fica feita. Os passos estão em [Como emitir uma nota de crédito](/fiscal-core/emitir-uma-nota-de-credito).
 
@@ -63,7 +63,7 @@ Abandone o rascunho e crie a nota a partir da fatura original, com o botão **No
 3. Preencha os dados da regularização de IVA: **Motivo da regularização de IVA** e, com o motivo de anulação ou redução, **Prova da regularização** e **Data de referência da regularização**. Sem eles, **Confirmar** recusa, agora por estes dados.
 4. Carregue em **Confirmar**.
 
-O fiscaldoo não confere o número, porque a fatura não está cá: copie-o sem erros. Na demonstração, a `NC D26/2` foi publicada assim.
+O Fiscaldoo não confere o número, porque a fatura não está cá: copie-o sem erros. Na demonstração, a `NC D26/2` foi publicada assim.
 
 ### Não pode indicar o número, ou a fatura já não se encontra
 

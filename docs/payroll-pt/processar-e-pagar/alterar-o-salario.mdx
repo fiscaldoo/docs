@@ -36,7 +36,7 @@ Não use uma versão nova para um mês cujos recibos já estão validados: esses
 
 - Tem o acesso extra **Administrador de Salários**, dado nos **Ajustes avançados** do utilizador. O **Processador de salários** só lê o contrato; a alteração é feita pelos Recursos Humanos ou pelo Administrador de Salários (ver «Problemas frequentes»).
 - Saiba a data de efeito. Escolha o primeiro dia de um mês que ainda não foi processado.
-- A ficha do trabalhador tem preenchido o **Local de trabalho habitual** (separador **Trabalho**). Sem ele, o fiscaldoo recusa a versão nova (ver «Problemas frequentes»).
+- A ficha do trabalhador tem preenchido o **Local de trabalho habitual** (separador **Trabalho**). Sem ele, o Fiscaldoo recusa a versão nova (ver «Problemas frequentes»).
 - Se entra como Administrador de Salários, escolha antes a empresa certa (**Empresa Demonstração, Lda**) no seletor do canto superior direito.
 
 ## Como utilizar
@@ -64,7 +64,7 @@ Alterar o salário não gera lançamentos contabilísticos. O valor novo só che
 
 ## No Enterprise
 
-No Odoo Enterprise, este artigo faz-se da mesma maneira: com o acesso extra **Administrador de Salários**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)). No separador **Folha de Salários**, o **Resumo do contrato** e o **Salário** do passo 4 estão no mesmo sítio, e o bloco **Planear** mostra o **Horário de Trabalho** e **Baseado em presenças**, como no Community.
+No Odoo Enterprise, este artigo faz-se da mesma maneira: com o acesso extra **Administrador de Salários**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do Fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)). No separador **Folha de Salários**, o **Resumo do contrato** e o **Salário** do passo 4 estão no mesmo sítio, e o bloco **Planear** mostra o **Horário de Trabalho** e **Baseado em presenças**, como no Community.
 
 {/* Nota interna (lote EE-06, DOCS-073 #4142, DEC-1794, master ce51f2d47, 10/11/2026): conferido numa cópia Enterprise da demonstração (docs_ee_ee06_test, computador 2) com utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): Administrador de Salários em Salários › Preparar › Trabalhadores e contratos › Histórico de retribuição e no separador Folha de Salários da ficha (Resumo do contrato, Salário; Planear vazio em ce51f2d47: EEA-071 #4148, que entrou no comboio 189; em master 7cd24fcc9 a auditoria docs-aud-ee07 viu o Planear com Horário de Trabalho e Baseado em presenças, no Histórico de retribuição, com o Processador de salários e o acesso Administrador de Salários). Menus e vistas comparados, perfil a perfil, com uma cópia Community do mesmo master (docs_demo_ee06_test). Ver reports/LOTE_EE-06.md. */}
 
@@ -103,7 +103,7 @@ No Odoo Enterprise, este artigo faz-se da mesma maneira: com o acesso extra **Ad
 
 - **Mensagem (Eliminar):** «Operação inválida Um registo fechado não se apaga: 01/10/2026. O que aconteceu: o que foi registado, aprovado, pago ou emitido faz parte do histórico dos salários e nunca é apagado …»
 - **Mensagem (Arquivar):** «Operação inválida Ativo não se pode definir diretamente. …»
-- **Causa:** a versão tem uma data dentro de um mês com recibos validados ou pagos. O fiscaldoo guarda-a no histórico e não deixa apagá-la nem arquivá-la.
+- **Causa:** a versão tem uma data dentro de um mês com recibos validados ou pagos. O Fiscaldoo guarda-a no histórico e não deixa apagá-la nem arquivá-la.
 - **O que fazer:** se o salário dessa versão é igual ao anterior, não tem efeito nos recibos e pode ficar. Crie a versão certa com a data certa. Se o valor estiver errado, peça ao **Administrador de Salários** que avalie a correção dos recibos desse mês com o contabilista.
 
 ### Com o perfil Processador de salários, o botão + aparece

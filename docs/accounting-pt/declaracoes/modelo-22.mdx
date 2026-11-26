@@ -20,9 +20,9 @@ related: [accounting-pt/declaracoes/ies, accounting-pt/declaracoes/pagamentos-po
 
 ## Para que serve?
 
-O Modelo 22 é a declaração anual de IRC. No fiscaldoo, a declaração parte do resultado líquido do exercício, junta as **correções fiscais** (os acréscimos e as deduções que a lei manda fazer ao resultado), calcula o lucro tributável, o imposto, a derrama e a tributação autónoma, e prepara o ficheiro que se entrega no Portal das Finanças.
+O Modelo 22 é a declaração anual de IRC. No Fiscaldoo, a declaração parte do resultado líquido do exercício, junta as **correções fiscais** (os acréscimos e as deduções que a lei manda fazer ao resultado), calcula o lucro tributável, o imposto, a derrama e a tributação autónoma, e prepara o ficheiro que se entrega no Portal das Finanças.
 
-O fiscaldoo não entrega nada à AT: o ficheiro entrega-se no Portal e o comprovativo guarda-se na declaração.
+O Fiscaldoo não entrega nada à AT: o ficheiro entrega-se no Portal e o comprovativo guarda-se na declaração.
 
 ## Quando utilizar?
 
@@ -80,7 +80,7 @@ No Odoo Enterprise, a declaração de IRC prepara-se nos mesmos ecrãs: a lista 
 
 ## Mais-valias e menos-valias de ativos
 
-Quando carrega em **Propor correções pela contabilidade**, o fiscaldoo lê também as vendas e os abates de ativos do período (os mesmos do Modelo 31) e acrescenta ao separador **Correções fiscais** linhas com a descrição «Proposta pela contabilidade»:
+Quando carrega em **Propor correções pela contabilidade**, o Fiscaldoo lê também as vendas e os abates de ativos do período (os mesmos do Modelo 31) e acrescenta ao separador **Correções fiscais** linhas com a descrição «Proposta pela contabilidade»:
 
 - a menos-valia contabilística no campo **736** (acréscimo) e a mais-valia contabilística no campo **767** (dedução);
 - a soma dos resultados fiscais das saídas: no campo **739** (acréscimo), se for positiva, ou no campo **769** (dedução), se for negativa;
@@ -116,7 +116,7 @@ O efeito no lucro tributável é nulo: a menos-valia que a contabilidade já tir
 ## Notas importantes
 
 - **Sem Anexo A, o campo 701 não é conferido.** Gere primeiro a IES: o painel do fecho do exercício lista «Preparar a declaração de IRC (Modelo 22)» antes de «Entregar a IES», mas é a IES (Anexo A) que dá ao Modelo 22 o resultado com que ele confere o campo 701. <span className="fd-pending">Pendente de validação por contabilista certificado: ordem de preparação das declarações.</span>
-- **As correções fiscais são suas.** O fiscaldoo calcula a partir do que escrever. **Propor correções pela contabilidade** propõe algumas a partir da contabilidade (por exemplo, as depreciações não aceites do Modelo 32 e as mais e menos-valias, ver «Mais-valias e menos-valias de ativos»), e os botões **Sugerir** propõem as deduções dos PEC e os prejuízos; confira-as e escreva as outras.
+- **As correções fiscais são suas.** O Fiscaldoo calcula a partir do que escrever. **Propor correções pela contabilidade** propõe algumas a partir da contabilidade (por exemplo, as depreciações não aceites do Modelo 32 e as mais e menos-valias, ver «Mais-valias e menos-valias de ativos»), e os botões **Sugerir** propõem as deduções dos PEC e os prejuízos; confira-as e escreva as outras.
 - **Prazo de entrega.** <span className="fd-pending">Pendente de validação por contabilista certificado: prazo de entrega do Modelo 22 e pagamentos do imposto.</span>
 
 ## Problemas frequentes

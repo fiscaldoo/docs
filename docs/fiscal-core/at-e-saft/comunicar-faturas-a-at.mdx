@@ -18,7 +18,7 @@ related: [fiscal-core/at-e-saft/comunicar-a-faturacao-mensal, fiscal-core/at-e-s
 
 ## Para que serve?
 
-As faturas emitidas num mês têm de ser comunicadas à Autoridade Tributária e Aduaneira (AT) até ao prazo do mês seguinte. O fiscaldoo conta, mês a mês, quantos documentos faltam comunicar e mostra o prazo. Guarda também uma linha por cada comunicação feita (faturas, guias de transporte e outras trocas com a AT): quando, por que via, em que ambiente e com que resposta.
+As faturas emitidas num mês têm de ser comunicadas à Autoridade Tributária e Aduaneira (AT) até ao prazo do mês seguinte. O Fiscaldoo conta, mês a mês, quantos documentos faltam comunicar e mostra o prazo. Guarda também uma linha por cada comunicação feita (faturas, guias de transporte e outras trocas com a AT): quando, por que via, em que ambiente e com que resposta.
 
 Emitir e comunicar são coisas diferentes. Uma fatura emite-se e imprime-se sem estar comunicada; fica «por comunicar» até a comunicação do mês ser registada.
 
@@ -42,7 +42,7 @@ O administrador encontra as mesmas listas em **Definições › fiscaldoo · Cer
 - O seu perfil é **Contabilista** ou acima. Os passos foram feitos com o perfil **Contabilista**. O perfil **Administrativo** não tem a aplicação **Contabilidade** e não vê estas listas.
 - As faturas do mês estão emitidas. Um rascunho não conta.
 - Para comunicar o mês, o ficheiro SAF-T do mês tem de se gerar sem erros: [Como gerar o ficheiro SAF-T de faturação](/fiscal-core/gerar-o-saft).
-- Para comunicar uma fatura de cada vez, pelo webservice (secção «Comunicar uma fatura de cada vez», abaixo): o perfil **Contabilista certificado** e as credenciais da AT da empresa guardadas pelo administrador, como em [Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). O perfil **Contabilista** abre a fatura, mas não tem o botão **Comunicar à AT**.
+- Para comunicar uma fatura de cada vez, pelo webservice (secção «Comunicar uma fatura de cada vez», abaixo): o perfil **Contabilista certificado** e as credenciais da AT da empresa guardadas pelo administrador, como em [Como ligar o Fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). O perfil **Contabilista** abre a fatura, mas não tem o botão **Comunicar à AT**.
 
 ## Como utilizar
 
@@ -61,7 +61,7 @@ O administrador encontra as mesmas listas em **Definições › fiscaldoo · Cer
 
 ### Comunicar uma fatura de cada vez
 
-Com as credenciais da AT guardadas, uma fatura emitida comunica-se logo, sem esperar pela comunicação do mês. O fiscaldoo nunca o faz sozinho: é sempre um clique.
+Com as credenciais da AT guardadas, uma fatura emitida comunica-se logo, sem esperar pela comunicação do mês. O Fiscaldoo nunca o faz sozinho: é sempre um clique.
 
 1. Abra a fatura emitida e carregue em **Comunicar à AT**, no cimo, ao lado de **Enviar ao FE-AP**.
 2. Leia a mensagem no canto do ecrã: «Comunicação com a Autoridade Tributária. Aceites: 1, rejeitados: 0, sem resposta: 0.» Ao lado de **Publicada** aparece a etiqueta **Aceite**, e o botão **Comunicar à AT** desaparece.
@@ -84,12 +84,12 @@ Se a mensagem do passo 2 disser **sem resposta: 1**, a etiqueta passa a **Descon
 ## Notas importantes
 
 <HelpCallout type="risco" title="O prazo é o do cartão">
-O cartão de cada mês mostra o prazo que o fiscaldoo calculou: o dia 5 do mês seguinte, passado para o dia útil seguinte quando calha num fim de semana ou feriado (na demonstração, setembro de 2026 tem **06/10/2026** e agosto **07/09/2026**). Comunique antes dessa data. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo legal da comunicação das faturas, regra do fim de semana e do feriado, e consequências do atraso.</span>
+O cartão de cada mês mostra o prazo que o Fiscaldoo calculou: o dia 5 do mês seguinte, passado para o dia útil seguinte quando calha num fim de semana ou feriado (na demonstração, setembro de 2026 tem **06/10/2026** e agosto **07/09/2026**). Comunique antes dessa data. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo legal da comunicação das faturas, regra do fim de semana e do feriado, e consequências do atraso.</span>
 </HelpCallout>
 
 - **O que as listas não veem.** A contagem do mês só tem os documentos de venda emitidos na empresa do cartão. Não conta rascunhos nem recibos: em outubro de 2026, a 29/10/2026, a demonstração tinha 26 documentos (`FS POS26/1`, cinco faturas `FT D26`, `FS D26/4` a `FS D26/20` e `FR D26/3` a `FR D26/5`) e os recibos `RG D26/16` a `RG D26/20` do mesmo mês não entram. Uma lista vazia ou um mês **Em dia** não prova que todas as vendas foram faturadas.
-- **Numa empresa sem documentos**, o cartão do mês aparece em **Em dia**, com **0 de 0 por comunicar** (visto numa empresa vazia criada na demonstração para o efeito). Quer dizer só que o fiscaldoo não tem documentos emitidos nesse mês, não que a empresa cumpriu: se vendeu e não emitiu, o cartão não o sabe.
-- **A demonstração não traz credenciais da AT.** Por isso, as linhas do histórico que já lá estão vêm todas da comunicação mensal. A comunicação de uma fatura de cada vez (secção acima) só se vê depois de o administrador guardar credenciais de teste: [Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). <span className="fd-pending">Pendente de validação por contabilista certificado: se comunicar as faturas uma a uma dispensa a entrega do ficheiro do mês.</span>
+- **Numa empresa sem documentos**, o cartão do mês aparece em **Em dia**, com **0 de 0 por comunicar** (visto numa empresa vazia criada na demonstração para o efeito). Quer dizer só que o Fiscaldoo não tem documentos emitidos nesse mês, não que a empresa cumpriu: se vendeu e não emitiu, o cartão não o sabe.
+- **A demonstração não traz credenciais da AT.** Por isso, as linhas do histórico que já lá estão vêm todas da comunicação mensal. A comunicação de uma fatura de cada vez (secção acima) só se vê depois de o administrador guardar credenciais de teste: [Como ligar o Fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). <span className="fd-pending">Pendente de validação por contabilista certificado: se comunicar as faturas uma a uma dispensa a entrega do ficheiro do mês.</span>
 
 {/* Nota interna (DOCS-020, NC-A26, refeito a 03/11/2026 em master 436524736): a lista chama-se «Comunicações à AT (faturas e histórico)», com as colunas ID e Documento; o registo tem «Documento em causa» e já não tem «Modelo do documento» (P-A27, P-A28 e UX-082 corrigidos). Captura 01 refeita a 03/11/2026 (41 linhas). A captura 02 e as contagens do passo 2 são de 29/10/2026 (outubro 26 de 26; a 03/11/2026 a cópia de auditoria dava 29 de 29): rever antes de cada auditoria. */}
 
@@ -97,7 +97,7 @@ O cartão de cada mês mostra o prazo que o fiscaldoo calculou: o dia 5 do mês 
 
 ### O mês continua «Pendente» depois de entregar o ficheiro no Portal das Finanças
 
-- **Causa:** a entrega no Portal não muda nada no fiscaldoo; falta registá-la.
+- **Causa:** a entrega no Portal não muda nada no Fiscaldoo; falta registá-la.
 - **O que fazer:** abra a comunicação mensal desse mês, escreva a referência e a data do comprovativo e carregue em **Registar a submissão** ([Como comunicar a faturação do mês à AT](/fiscal-core/comunicar-a-faturacao-mensal), passos 7 e 8).
 
 ### Não encontro uma fatura no histórico

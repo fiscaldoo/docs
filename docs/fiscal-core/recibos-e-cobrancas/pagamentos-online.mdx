@@ -47,7 +47,7 @@ Permite que o cliente pague uma fatura pela página da fatura, com uma referênc
 2. Abra o **Eupago**. Com **Live** desligado e **Usar o simulador** ligado, a ficha mostra a faixa **MODO DE TESTE** e as formas de pagamento **Cartão de crédito / débito**, **MB WAY** e **Multibanco** ligadas. No grupo **Conta no prestador** preencha:
    - **Credenciais no cofre**: só se a empresa tiver mais de uma conta neste prestador; escreva a descrição da entrada do cofre desta conta (passo 5). Vazio, usa a única entrada da empresa.
    - **Diários de faturas de cliente**: as séries cujas referências e pagamentos devem passar por esta conta. Vazio, é a conta por omissão. Hoje a escolha só separa as contas na ficha (um diário por conta); na página da fatura do cliente o pedido sai da conta por omissão (ver Notas importantes).
-   - **Perguntar ao prestador de quantos em quantos minutos**: de quanto em quanto tempo o fiscaldoo pergunta ao prestador se um cliente já pagou (10 por omissão).
+   - **Perguntar ao prestador de quantos em quantos minutos**: de quanto em quanto tempo o Fiscaldoo pergunta ao prestador se um cliente já pagou (10 por omissão).
    - **Conta de gasto das comissões** e **IVA da comissão**: onde se lança a comissão que o prestador retém. Sem estes dois campos não se consegue lançar a transferência do prestador. <span className="fd-pending">Pendente de validação por contabilista certificado: a conta e o IVA a usar na comissão de cada prestador.</span>
    - **Última consulta do estado** só se lê.
    ![Ficha do Eupago com o simulador ligado, a conta 2, o diário de faturas EDI, a conta de comissões 6225 e o IVA de 23 %](/images/fiscal-core/pagamentos-online/02-conta-2-publicada.png)
@@ -72,7 +72,7 @@ Permite que o cliente pague uma fatura pela página da fatura, com uma referênc
 1. Na ficha do prestador, carregue no botão **Transactions** (o contador mostra os pedidos e o valor). A lista abre filtrada por **Confirmado**, por isso aparece vazia enquanto nenhum cliente pagou: retire o filtro para ver os pedidos pendentes.
 2. Abra o pedido: tem o **Valor**, o **Cliente**, o **Prestador**, o **Método de Pagamento** e o estado (**Pendente** até pagar). O Administrador, o Contabilista e o Contabilista certificado veem o botão **Consultar agora**, que pergunta já ao prestador se o cliente pagou. O pedido só passa a **Confirmado** se o prestador o confirmar.
    ![Pedido FT D26/32 pendente, com o botão Consultar agora](/images/fiscal-core/pagamentos-online/09-pedido-de-pagamento.png)
-3. Com o simulador, a resposta é «Resposta do prestador. Ainda não está pago: o prestador continua à espera do cliente.» O fiscaldoo recusa uma segunda consulta passados poucos segundos.
+3. Com o simulador, a resposta é «Resposta do prestador. Ainda não está pago: o prestador continua à espera do cliente.» O Fiscaldoo recusa uma segunda consulta passados poucos segundos.
    ![Mensagem Resposta do prestador depois de carregar em Consultar agora](/images/fiscal-core/pagamentos-online/10-consultar-agora.png)
 4. Os avisos que o prestador envia quando o cliente paga ficam em **Avisos de pagamentos online** (só consulta). Na demonstração está vazia: «Ainda não foi recebido nenhum aviso de pagamento».
    ![Lista de avisos de pagamentos online vazia](/images/fiscal-core/pagamentos-online/11-avisos.png)

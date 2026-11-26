@@ -4,7 +4,7 @@ slug: /payroll-pt/dmr
 title: Como enviar a declaração mensal de remunerações (DMR) à AT
 sidebar_label: Declaração mensal de remunerações (DMR)
 sidebar_position: 1
-description: Preparar no fiscaldoo a DMR do mês a partir dos salários pagos, descarregar o ficheiro, entregá-lo no Portal das Finanças e registar a entrega e a resposta da AT.
+description: Preparar no Fiscaldoo a DMR do mês a partir dos salários pagos, descarregar o ficheiro, entregá-lo no Portal das Finanças e registar a entrega e a resposta da AT.
 keywords: [DMR, declaração mensal de remunerações, declaracao mensal de remuneracoes, DMR AT, entregar DMR, ficheiro DMR, Portal das Finanças, Portal das Financas, rendimentos do trabalho dependente, retenção de IRS, retencao de IRS, Quadro 5, Quadro 4, prazo da DMR, dia 10]
 doc_id: DOC-0223
 article_type: tarefa
@@ -18,9 +18,9 @@ related: [payroll-pt/processar-e-pagar/pagar-os-salarios, payroll-pt/declarar/de
 
 ## Para que serve?
 
-A declaração mensal de remunerações (DMR) diz à Autoridade Tributária e Aduaneira (AT), trabalhador a trabalhador, o que a empresa pagou no mês, o IRS que reteve e as contribuições obrigatórias. O fiscaldoo prepara a DMR a partir dos salários pagos nesse mês e gera o ficheiro no formato da AT.
+A declaração mensal de remunerações (DMR) diz à Autoridade Tributária e Aduaneira (AT), trabalhador a trabalhador, o que a empresa pagou no mês, o IRS que reteve e as contribuições obrigatórias. O Fiscaldoo prepara a DMR a partir dos salários pagos nesse mês e gera o ficheiro no formato da AT.
 
-O fiscaldoo não envia nada à AT. A entrega faz-se no Portal das Finanças; depois regista-se no fiscaldoo que foi entregue e o que a AT respondeu.
+O Fiscaldoo não envia nada à AT. A entrega faz-se no Portal das Finanças; depois regista-se no Fiscaldoo que foi entregue e o que a AT respondeu.
 
 ## Quando utilizar?
 
@@ -39,7 +39,7 @@ No ecrã **O que há para fazer este mês?**, o passo 6, **Entregar as declaraç
 
 - **Preparar** a DMR (criar, gerar, validar e descarregar o ficheiro): perfil **Processador de salários**, com ou sem o acesso extra **Administrador de Salários**.
 - **Registar a entrega e a resposta da AT**: o acesso extra **Submissor de declarações**, que nenhum valor do campo **Perfil** traz. O administrador dá-o em **Ajustes avançados**, na linha **Salários PT — Submissor de Declarações**. Sem ele, os botões **Submeter** e **Registar …** não aparecem: com o perfil **Processador de salários** sozinho, a DMR **Validada** só mostra **Sem efeito**, **Gerar ficheiro de entrega** e **Descarregar ficheiro de entrega**.
-- Os salários estão pagos e o pagamento foi registado com **Banco executou** (a DMR declara o rendimento **pago** no mês, não o mês a que o salário diz respeito). O mês da DMR é o da data em que carregou em **Banco executou**: o fiscaldoo paga «hoje». No exemplo deste artigo, os salários de outubro foram pagos a 01/11/2026, por isso entram na DMR de **novembro**.
+- Os salários estão pagos e o pagamento foi registado com **Banco executou** (a DMR declara o rendimento **pago** no mês, não o mês a que o salário diz respeito). O mês da DMR é o da data em que carregou em **Banco executou**: o Fiscaldoo paga «hoje». No exemplo deste artigo, os salários de outubro foram pagos a 01/11/2026, por isso entram na DMR de **novembro**.
 - Tem à mão o código do serviço de finanças da empresa (quatro algarismos), o NIF do contabilista certificado e o NIF do representante legal.
 
 ## Como utilizar
@@ -47,7 +47,7 @@ No ecrã **O que há para fazer este mês?**, o passo 6, **Entregar as declaraç
 <StepByStep>
 
 1. Abra **Salários › Declarar › Declaração mensal de remunerações (DMR)** e carregue em **Novo**.
-2. Preencha o **Serviço de Finanças (Quadro 1)** com o código de quatro algarismos (com três ou com letras, o fiscaldoo recusa: «O código de serviço de finanças «111» não é válido. O que aconteceu: o código de um Serviço de Finanças tem 4 dígitos.»). O **NIF do declarante (Quadro 2)** é o da empresa e vem preenchido. O **Ano (Quadro 3)** vem com o ano de hoje; o **Mês (Quadro 3)** vem vazio: escolha o mês do **pagamento**, o da data do **Banco executou** (no exemplo, **Novembro**, mesmo que os salários sejam de outubro). O **Prazo de entrega** preenche-se sozinho (10/12/2026 para novembro de 2026).
+2. Preencha o **Serviço de Finanças (Quadro 1)** com o código de quatro algarismos (com três ou com letras, o Fiscaldoo recusa: «O código de serviço de finanças «111» não é válido. O que aconteceu: o código de um Serviço de Finanças tem 4 dígitos.»). O **NIF do declarante (Quadro 2)** é o da empresa e vem preenchido. O **Ano (Quadro 3)** vem com o ano de hoje; o **Mês (Quadro 3)** vem vazio: escolha o mês do **pagamento**, o da data do **Banco executou** (no exemplo, **Novembro**, mesmo que os salários sejam de outubro). O **Prazo de entrega** preenche-se sozinho (10/12/2026 para novembro de 2026).
 3. Em **Tipo de declaração (Quadro 6)**, deixe **1.ª declaração**. As outras opções são **Declaração de substituição** (ver [Corrigir uma DMR já entregue](#corrigir-uma-dmr-já-entregue)) e **Declaração ao abrigo da al. d) do n.º 1 do art. 119.º do CIRS (facto que altera o rendimento declarado)**.
 4. No Quadro 7, escreva o **NIF do Contabilista Certificado (Quadro 7)** e o **NIF do declarante / representante legal (Quadro 7)**. **Contabilista Certificado obrigatório** vem marcado; a caixa **Contabilista Certificado suplente** vem por marcar. <span className="fd-pending">Pendente de validação por contabilista certificado: quando se marca **Contabilista Certificado suplente** e quando a declaração dispensa o contabilista certificado.</span> Os campos **Justo impedimento — motivo**, **Justo impedimento — duração** e **Justo impedimento — data da ocorrência** só se preenchem numa entrega fora de prazo.
 5. Carregue em **Gerar**. A DMR passa a **Gerada**: o separador **Titulares (Quadro 5)** tem as linhas por trabalhador e o **Resumo (Quadro 4)** os totais. Até **Validar**, o **Serviço de Finanças**, o mês e os NIF ainda se corrigem; depois de **Validar**, todos os campos ficam só de leitura e um código errado já não se corrige nesta DMR.
@@ -66,7 +66,7 @@ No ecrã **O que há para fazer este mês?**, o passo 6, **Entregar as declaraç
 
 {/* Nota interna (DOCS-022): vídeo previsto (video=sim, corrente DOCS-006): DMR dos salários de outubro (mês de novembro), de «Novo» até «Descarregar ficheiro de entrega» (o registo da entrega fica para um segundo episódio). Entra como secção «Vídeo demonstrativo» depois de «Resultado esperado» quando existir. */}
 
-**Exemplo.** Os salários de outubro de 2026 (8 trabalhadores) foram pagos com **Banco executou** a 01/11/2026. A DMR de **novembro** de 2026, com prazo 10/12/2026, tem 16 linhas no Quadro 5: por trabalhador, uma com o tipo de rendimento **A — Rendimentos do trabalho dependente sujeitos (exceto os referidos com outros códigos)** e outra com o subsídio de alimentação, que o fiscaldoo declara à parte com o código **A21 — Subsídio de refeição (parte não sujeita)**. No Resumo (Quadro 4): rendimentos sujeitos 11.560,00 €, retenção de IRS 875,00 € e contribuições obrigatórias 1.271,60 €; rendimentos não sujeitos 968,63 €; total 12.528,63 €.
+**Exemplo.** Os salários de outubro de 2026 (8 trabalhadores) foram pagos com **Banco executou** a 01/11/2026. A DMR de **novembro** de 2026, com prazo 10/12/2026, tem 16 linhas no Quadro 5: por trabalhador, uma com o tipo de rendimento **A — Rendimentos do trabalho dependente sujeitos (exceto os referidos com outros códigos)** e outra com o subsídio de alimentação, que o Fiscaldoo declara à parte com o código **A21 — Subsídio de refeição (parte não sujeita)**. No Resumo (Quadro 4): rendimentos sujeitos 11.560,00 €, retenção de IRS 875,00 € e contribuições obrigatórias 1.271,60 €; rendimentos não sujeitos 968,63 €; total 12.528,63 €.
 
 ### Corrigir uma DMR já entregue
 
@@ -96,9 +96,9 @@ Gerada a substituição, a DMR por substituir continua **Aceite**: o ecrã não 
 
 ## Notas importantes
 
-- **Prazo.** A DMR entrega-se até ao dia 10 do mês seguinte ao do pagamento (CIRS, art. 119.º). O fiscaldoo mostra o **Prazo de entrega** na DMR. Quando o dia 10 cai num fim de semana, o prazo passa ao dia útil seguinte: a DMR de setembro de 2026 mostra 12/10/2026 (segunda-feira), porque 10/10/2026 é um sábado.
-- **Preparar não é entregar.** **Gerar**, **Validar** e o ficheiro ficam só no fiscaldoo; o aviso da DMR diz: «O ficheiro de entrega segue o formato oficial da AT (DMR-AT 2024), mas ainda não foi conferido com o validador do Portal das Finanças. Daqui nunca se envia nada.» **Submeter** e os botões **Registar …** só registam o que fez no Portal.
-- **Mês do pagamento.** Um salário de outubro pago em novembro entra na DMR de novembro, e **Gerar** no mês de outubro é recusado («Não há recibos pagos em 10/2026»). O mês é o da data de **Banco executou**, que o fiscaldoo põe sempre a «hoje»: não há como pagar, no ecrã, com uma data anterior. Confirme essa data antes de escolher o **Mês (Quadro 3)**.
+- **Prazo.** A DMR entrega-se até ao dia 10 do mês seguinte ao do pagamento (CIRS, art. 119.º). O Fiscaldoo mostra o **Prazo de entrega** na DMR. Quando o dia 10 cai num fim de semana, o prazo passa ao dia útil seguinte: a DMR de setembro de 2026 mostra 12/10/2026 (segunda-feira), porque 10/10/2026 é um sábado.
+- **Preparar não é entregar.** **Gerar**, **Validar** e o ficheiro ficam só no Fiscaldoo; o aviso da DMR diz: «O ficheiro de entrega segue o formato oficial da AT (DMR-AT 2024), mas ainda não foi conferido com o validador do Portal das Finanças. Daqui nunca se envia nada.» **Submeter** e os botões **Registar …** só registam o que fez no Portal.
+- **Mês do pagamento.** Um salário de outubro pago em novembro entra na DMR de novembro, e **Gerar** no mês de outubro é recusado («Não há recibos pagos em 10/2026»). O mês é o da data de **Banco executou**, que o Fiscaldoo põe sempre a «hoje»: não há como pagar, no ecrã, com uma data anterior. Confirme essa data antes de escolher o **Mês (Quadro 3)**.
 - **Uma DMR gerada ou entregue não se apaga.** Em **Rascunho**, **Eliminar** funciona. Em **Gerada**, **Validada**, **Submetida** ou **Aceite**, **Eliminar** é recusado (ver «Problemas frequentes») e, numa **Aceite**, **Duplicar** também. Corrige-se com uma declaração de substituição.
 - **Não gere de novo o ficheiro de uma DMR aceite.** Numa DMR **Aceite**, **Gerar ficheiro de entrega** continua ativo e não avisa de nada: o ficheiro entregue deve ser o que descarregou antes de **Submeter**. {/* Nota interna (DOCS-022, 3.ª auditoria, NC-43): defeito P-14, #3614 (PAY-067): «Gerar ficheiro de entrega» ativo numa DMR aceite, sem aviso. Retirar esta nota quando o PAY-067 entrar em master. */}
 - Numa base de testes, o **Submissor de declarações** vê ainda os botões **Simular: a AT aceita**, **Simular: a AT recusa** e **Simular: portal ocupado (tentar de novo)**. Servem para ensaiar e não existem numa base real.

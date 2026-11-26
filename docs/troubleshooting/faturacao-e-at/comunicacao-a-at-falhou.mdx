@@ -23,7 +23,7 @@ Carregou em **Comunicar à AT** numa fatura (ou numa série) e:
 - o campo **AT** da fatura, no bloco **Documento certificado**, mostra **Desconhecida** ou **Rejeitada** em vez de **Aceite**;
 - ao tentar **Reenviar** ou comunicar de novo, aparece a janela **Operação inválida**.
 
-Este artigo trata das comunicações feitas pelo fiscaldoo, documento a documento. A comunicação mensal da faturação, por ficheiro SAF-T entregue no Portal das Finanças, está em [Como comunicar as faturas à AT e ver o histórico](/fiscal-core/comunicar-faturas-a-at).
+Este artigo trata das comunicações feitas pelo Fiscaldoo, documento a documento. A comunicação mensal da faturação, por ficheiro SAF-T entregue no Portal das Finanças, está em [Como comunicar as faturas à AT e ver o histórico](/fiscal-core/comunicar-faturas-a-at).
 
 ## Mensagem
 
@@ -63,7 +63,7 @@ Todas as mensagens foram provocadas na base de demonstração, onde a AT é subs
 
 ## Causas verificadas
 
-- **A AT não respondeu, ou a resposta não chegou a tempo.** O fiscaldoo não sabe se a AT recebeu o documento e marca a comunicação **Desconhecida**. A AT pode tê-lo recebido; por isso o fiscaldoo só deixa reenviar depois de uma consulta do estado. Nas faturas e nas guias, essa consulta hoje não chega à AT numa base de produção (ver «Como resolver»).
+- **A AT não respondeu, ou a resposta não chegou a tempo.** O Fiscaldoo não sabe se a AT recebeu o documento e marca a comunicação **Desconhecida**. A AT pode tê-lo recebido; por isso o Fiscaldoo só deixa reenviar depois de uma consulta do estado. Nas faturas e nas guias, essa consulta hoje não chega à AT numa base de produção (ver «Como resolver»).
 - **A AT rejeitou a comunicação.** O estado é **Rejeitada** e o **Código de erro** e a **Mensagem** são os da AT. Na demonstração, o simulador responde só «Simulated rejection», com o código `MOCK-0001` (ou `99`, quando simula uma recusa de autenticação). <span className="fd-pending">Pendente de validação no ecrã: as mensagens de rejeição da AT real, incluindo as de credenciais recusadas, não se provocam na demonstração (só se usa o simulador).</span>
 - **A comunicação chegou ao limite de tentativas.** Cada **Reenviar** conta uma tentativa; à quinta, a mesma comunicação deixa de se reenviar.
 
@@ -83,9 +83,9 @@ A lista só tem as comunicações feitas pelo fiscaldoo. Não mostra o que foi e
 ### A comunicação de uma fatura ou de uma guia está «Desconhecida»
 
 <HelpCallout type="risco" title="Hoje, «Consultar estado» não pergunta nada à AT sobre faturas e guias">
-Numa base de produção, **Consultar estado** numa comunicação de uma fatura ou de uma guia não contacta a AT: o fiscaldoo não tem, para estes documentos, uma consulta de estado na AT. Mesmo assim, regista a consulta como feita: a comunicação continua **Desconhecida**, aparece o campo **Estado consultado em** e **Reenviar** passa a ser permitido. **Estado consultado em** não quer dizer que a AT respondeu nem que não tem o documento. É um defeito do fiscaldoo, com correção a caminho.
+Numa base de produção, **Consultar estado** numa comunicação de uma fatura ou de uma guia não contacta a AT: o Fiscaldoo não tem, para estes documentos, uma consulta de estado na AT. Mesmo assim, regista a consulta como feita: a comunicação continua **Desconhecida**, aparece o campo **Estado consultado em** e **Reenviar** passa a ser permitido. **Estado consultado em** não quer dizer que a AT respondeu nem que não tem o documento. É um defeito do Fiscaldoo, com correção a caminho.
 
-Em produção, uma tarefa automática do fiscaldoo faz esta mesma consulta, de tempos a tempos, às comunicações sem resposta. Por isso, **Estado consultado em** pode aparecer sem que ninguém tenha carregado no botão.
+Em produção, uma tarefa automática do Fiscaldoo faz esta mesma consulta, de tempos a tempos, às comunicações sem resposta. Por isso, **Estado consultado em** pode aparecer sem que ninguém tenha carregado no botão.
 </HelpCallout>
 
 {/* Nota interna (correção do E1, DEC-1322): defeito PD-V2D-01, junto ao cartão ATWS-044 (#3490). O motor real (_real_status em l10n_pt_arxi_at_ws, master 54a9f5f03) só consulta a AT para séries; para faturas e guias devolve no_status_query sem contactar a AT e grava status_checked_at, o que desbloqueia «Reenviar». A tarefa automática é a ATWS-015, desligada nas bases de teste. Rever esta secção quando o ATWS-044 entrar em master. */}
@@ -93,7 +93,7 @@ Em produção, uma tarefa automática do fiscaldoo faz esta mesma consulta, de t
 Até a correção chegar, com o perfil **Contabilista certificado**:
 
 1. Antes de reenviar, confirme no Portal das Finanças, no e-Fatura, se a AT já tem a fatura: procure-a pelo número entre as faturas emitidas pela empresa. <span className="fd-pending">Pendente de validação no ecrã: o Portal das Finanças não se abre a partir da base de demonstração (a AT real não se usa nos testes).</span>
-2. **Se a fatura já aparece no e-Fatura**, não reenvie. A comunicação fica **Desconhecida** no fiscaldoo: contacte o suporte com os dados de «Informação a enviar».
+2. **Se a fatura já aparece no e-Fatura**, não reenvie. A comunicação fica **Desconhecida** no Fiscaldoo: contacte o suporte com os dados de «Informação a enviar».
 3. **Se a fatura não aparece**, abra o registo da comunicação (ver «O que confirmar», passo 2) e carregue em **Reenviar**. Se aparecer «Consulte primeiro o estado…», feche a janela, carregue em **Consultar estado** (não aparece nenhuma mensagem, mas o campo **Estado consultado em** passa a mostrar a hora) e depois em **Reenviar**. Cada reenvio pede uma consulta nova: depois de um reenvio, o campo **Estado consultado em** continua a mostrar a hora da consulta anterior, mas **Reenviar** volta a ser recusado com a mesma mensagem. Quando a AT aceita, a comunicação passa a **Aceite**, e o campo **AT** da fatura também.
 4. **Se o reenvio ficar outra vez Desconhecida**, não reenvie logo: volte ao passo 1 e confirme de novo no e-Fatura se a AT já tem a fatura. Na demonstração, a comunicação da `FT D26/45` (perfil **Contabilista certificado**, simulador sem resposta) foi recusada no 1.º **Reenviar**, ficou com **Estado consultado em** depois de **Consultar estado**, foi reenviada (**Tentativas** 2, ainda **Desconhecida**) e o **Reenviar** seguinte foi recusado com «Consulte primeiro o estado…», com o campo ainda na hora da consulta anterior.
 
@@ -110,14 +110,14 @@ Enquanto a comunicação de uma fatura estiver **Desconhecida**, a fatura não t
 ### A comunicação foi «Rejeitada»
 
 1. Leia o **Código de erro** e a **Mensagem** do registo: dizem o que a AT recusou.
-2. Corrija a causa. Se a AT recusou as credenciais, confira o subutilizador, a palavra-passe e o certificado em [Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). Uma fatura emitida não se altera: se o erro está no documento, a correção é uma nota de crédito ou a anulação, decididas com o contabilista certificado.
+2. Corrija a causa. Se a AT recusou as credenciais, confira o subutilizador, a palavra-passe e o certificado em [Como ligar o Fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). Uma fatura emitida não se altera: se o erro está no documento, a correção é uma nota de crédito ou a anulação, decididas com o contabilista certificado.
 3. Carregue em **Reenviar** no registo, ou em **Comunicar à AT** na fatura. Numa comunicação **Rejeitada**, **Reenviar** não pede consulta prévia. Na demonstração, a comunicação rejeitada da `FT D26/36` foi aceite ao segundo envio.
 
 **Quem faz:** o Contabilista certificado.
 
 ### Chegou ao limite de tentativas
 
-Não insista na mesma comunicação: descubra primeiro porque falha (a **Mensagem** de cada tentativa). Corrigida a causa, carregue em **Comunicar à AT** na fatura: o fiscaldoo cria uma comunicação nova, com tentativas a contar do zero. Na demonstração, a comunicação da `FS D26/7` ficou rejeitada com 5 tentativas; depois, **Comunicar à AT** na fatura criou outra comunicação, que foi **Aceite**.
+Não insista na mesma comunicação: descubra primeiro porque falha (a **Mensagem** de cada tentativa). Corrigida a causa, carregue em **Comunicar à AT** na fatura: o Fiscaldoo cria uma comunicação nova, com tentativas a contar do zero. Na demonstração, a comunicação da `FS D26/7` ficou rejeitada com 5 tentativas; depois, **Comunicar à AT** na fatura criou outra comunicação, que foi **Aceite**.
 
 **Quem faz:** o Contabilista certificado.
 
