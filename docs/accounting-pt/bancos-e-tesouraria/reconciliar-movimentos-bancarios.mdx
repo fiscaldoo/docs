@@ -63,7 +63,7 @@ No Odoo Enterprise, **Contabilidade › Reconciliar › Bancos e caixa › Recon
 
 <span className="fd-pending">Pendente de validação no ecrã: nesta versão, escolher a conta em **Definir conta** é recusado com a janela **Operação inválida** («Esta linha não pode ser modificada (…) — pertence a um lançamento já publicado (…)»). Por isso não se reconciliou nenhum movimento neste ecrã, e o recebimento de um cliente e o pagamento a um fornecedor ficaram por ver. Esta parte é completada quando a correção entrar.</span>
 
-{/* Nota interna (lote EE-01, DOCS-073 #4142, DEC-1794, master ce51f2d47, base Enterprise docs_ee_ee01_test, 10/11/2026): Definir conta provado num movimento criado na cópia com Novo (-0,50 €, «IMPOSTO DO SELO S/ COMISSAO»), escolhendo 6812 na janela «Pesquisar: Conta»: recusa «Operação inválida» citada acima, lançamento BNK1/2026/00106. Defeito no relatório do lote (a guarda de imutabilidade do Fiscaldoo trava a reconciliação do Enterprise). Textos em inglês no ecrã: filtro «Cash In», no ⋮ «Upload Bills», «Manage Models» e «Delete Transaction», e «Add & Close» no Novo. Rever esta secção quando a correção entrar. */}
+{/* Nota interna (lote EE-01, DOCS-073 #4142, DEC-1794, master ce51f2d47, base Enterprise docs_ee_ee01_test, 10/11/2026): Definir conta provado num movimento criado na cópia com Novo (-0,50 €, «IMPOSTO DO SELO S/ COMISSAO»), escolhendo 6812 na janela «Pesquisar: Conta»: recusa «Operação inválida» citada acima, lançamento BNK1/2026/00106. Defeito no relatório do lote (a guarda de imutabilidade do fiscaldoo trava a reconciliação do Enterprise). Textos em inglês no ecrã: filtro «Cash In», no ⋮ «Upload Bills», «Manage Models» e «Delete Transaction», e «Add & Close» no Novo. Rever esta secção quando a correção entrar. */}
 
 ## Resultado esperado
 
@@ -81,7 +81,7 @@ No Odoo Enterprise, **Contabilidade › Reconciliar › Bancos e caixa › Recon
 
 <span className="fd-pending">Pendente de validação por contabilista certificado: a conta das comissões bancárias (o modelo **Taxas bancárias** usa `6888 Outros não especificados`; há quem use `6268 Outros serviços` ou `6988 Outros gastos de financiamento`) e o tratamento das comissões em IVA (isentas, CIVA art. 9.º, n.º 27) e em imposto do selo.</span>
 
-{/* Nota interna (DOCS-021, DOC-0110): video=sim na arquitetura; quando a DOCS-006 gravar este episódio, «## Vídeo demonstrativo» fica neste ponto. Este artigo foi feito na Community (ecrã de reconciliação do Fiscaldoo); o Enterprise está na secção «No Enterprise» (lote EE-01). */}
+{/* Nota interna (DOCS-021, DOC-0110): video=sim na arquitetura; quando a DOCS-006 gravar este episódio, «## Vídeo demonstrativo» fica neste ponto. Este artigo foi feito na Community (ecrã de reconciliação do fiscaldoo); o Enterprise está na secção «No Enterprise» (lote EE-01). */}
 
 ## Notas importantes
 

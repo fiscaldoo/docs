@@ -1,10 +1,10 @@
 ---
 id: edicoes-e-versoes-suportadas
 slug: /getting-started/edicoes-e-versoes-suportadas
-title: Que versões do Odoo e que edições o Fiscaldoo suporta
+title: Que versões do Odoo e que edições o fiscaldoo suporta
 sidebar_label: Versões e edições suportadas
 sidebar_position: 2
-description: O Fiscaldoo é feito para o Odoo 20, nas edições Community e Enterprise. No Enterprise juntam-se os pacotes de ligação ao Enterprise. Saiba o que muda e onde ver a versão e a edição do seu Odoo.
+description: O fiscaldoo é feito para o Odoo 20, nas edições Community e Enterprise. No Enterprise juntam-se os pacotes de ligação ao Enterprise. Saiba o que muda e onde ver a versão e a edição do seu Odoo.
 keywords: [versões, versoes, edições, edicoes, Odoo 20, 20.0, Community, Enterprise, versão suportada, versao suportada, que versão, que edição, compatibilidade, pontes, pacotes de ligação, Enterprise Edition]
 doc_id: DOC-0002
 article_type: conceito
@@ -16,48 +16,48 @@ approval_state: Pendente de aprovação humana
 related: [getting-started/primeira-configuracao/requisitos-e-instalacao, getting-started/primeira-configuracao/ativar-as-aplicacoes, migration-toolkit/historico/mudar-para-o-enterprise]
 ---
 
-O Fiscaldoo é feito para o **Odoo 20** (versão 20.0) e existe para as duas edições do Odoo: **Community** e **Enterprise**. Nas duas instalam-se os mesmos pacotes do fiscaldoo. No Enterprise juntam-se ainda os **pacotes de ligação ao Enterprise**, que põem o Fiscaldoo a trabalhar com as aplicações do Enterprise.
+O fiscaldoo é feito para o **Odoo 20** (versão 20.0) e existe para as duas edições do Odoo: **Community** e **Enterprise**. Nas duas instalam-se os mesmos pacotes do fiscaldoo. No Enterprise juntam-se ainda os **pacotes de ligação ao Enterprise**, que põem o fiscaldoo a trabalhar com as aplicações do Enterprise.
 
 ## Versão do Odoo
 
-- O código do Fiscaldoo tem uma versão por versão do Odoo. A que existe hoje é a **20.0**, para o Odoo 20.
-- Cada pacote do Fiscaldoo tem um número que começa pela versão do Odoo, por exemplo `20.0.1.1.0`. Os dois primeiros números dizem para que Odoo é; os outros mudam a cada atualização do fiscaldoo.
+- O código do fiscaldoo tem uma versão por versão do Odoo. A que existe hoje é a **20.0**, para o Odoo 20.
+- Cada pacote do fiscaldoo tem um número que começa pela versão do Odoo, por exemplo `20.0.1.1.0`. Os dois primeiros números dizem para que Odoo é; os outros mudam a cada atualização do fiscaldoo.
 - Esta documentação descreve o Odoo 20. No topo de cada artigo, a etiqueta da versão diz em que versão do Odoo o procedimento foi visto.
 
-Se a empresa usa outra versão do Odoo, fale com o suporte do Fiscaldoo antes de instalar: os pacotes da versão 20.0 não servem noutra versão do Odoo.
+Se a empresa usa outra versão do Odoo, fale com o suporte do fiscaldoo antes de instalar: os pacotes da versão 20.0 não servem noutra versão do Odoo.
 
 ## Edições do Odoo
 
 | Edição | O que se instala |
 | --- | --- |
 | Community | Os pacotes do fiscaldoo. |
-| Enterprise | Os mesmos pacotes do Fiscaldoo e os pacotes de ligação ao Enterprise (15). Onde o Enterprise já tem uma aplicação para a mesma tarefa, usa-se a do Enterprise. |
+| Enterprise | Os mesmos pacotes do fiscaldoo e os pacotes de ligação ao Enterprise (15). Onde o Enterprise já tem uma aplicação para a mesma tarefa, usa-se a do Enterprise. |
 
 Os ecrãs desta documentação foram vistos numa base de dados «Odoo 20.0 (Community Edition)». Num Odoo Enterprise, alguns caminhos e ecrãs são os do Enterprise, como se diz em [O que muda no Enterprise](#o-que-muda-no-enterprise). Só alguns artigos têm já uma secção ou uma nota própria para o Enterprise; não há artigos repetidos por edição.
 
 ### O que quer dizer a etiqueta «Community e Enterprise»
 
-No topo de cada artigo, incluindo este, há uma etiqueta com as edições do Odoo, por exemplo «Community e Enterprise». Essa etiqueta diz em que edições o procedimento do artigo serve. Um artigo com «Só Enterprise» trata de uma tarefa que só existe numa base Enterprise, como [passar os ativos do Enterprise para o Fiscaldoo](/migration-toolkit/ativos-do-enterprise).
+No topo de cada artigo, incluindo este, há uma etiqueta com as edições do Odoo, por exemplo «Community e Enterprise». Essa etiqueta diz em que edições o procedimento do artigo serve. Um artigo com «Só Enterprise» trata de uma tarefa que só existe numa base Enterprise, como [passar os ativos do Enterprise para o fiscaldoo](/migration-toolkit/ativos-do-enterprise).
 
 ## O que muda no Enterprise
 
-No Enterprise, usam-se primeiro as aplicações do Enterprise. O Fiscaldoo deixa as suas de lado e junta-lhes o que é português. Cada linha corresponde a um ou mais pacotes de ligação, que se instalam sozinhos quando a base tem os dois lados: a aplicação do Enterprise e o pacote do fiscaldoo.
+No Enterprise, usam-se primeiro as aplicações do Enterprise. O fiscaldoo deixa as suas de lado e junta-lhes o que é português. Cada linha corresponde a um ou mais pacotes de ligação, que se instalam sozinhos quando a base tem os dois lados: a aplicação do Enterprise e o pacote do fiscaldoo.
 
 | Área | O que acontece no Enterprise |
 | --- | --- |
-| **Contabilidade** | Os anos fiscais do Enterprise e os do Fiscaldoo ficam alinhados, e os menus repetidos do Enterprise ficam escondidos. A reconciliação bancária passa a ser a do Enterprise. Os diferimentos, as taxas de câmbio e os orçamentos são os do Enterprise: os do Fiscaldoo não se instalam. |
+| **Contabilidade** | Os anos fiscais do Enterprise e os do fiscaldoo ficam alinhados, e os menus repetidos do Enterprise ficam escondidos. A reconciliação bancária passa a ser a do Enterprise. Os diferimentos, as taxas de câmbio e os orçamentos são os do Enterprise: os do fiscaldoo não se instalam. |
 | **Relatórios** | O balanço e a demonstração de resultados do plano português (SNC) aparecem nos relatórios do Enterprise, com os mesmos números do fiscaldoo. A declaração periódica de IVA, o SAF-T e os outros mapas portugueses continuam a ser os do fiscaldoo. |
-| **Ativos** | Cada empresa usa os seus. Uma empresa portuguesa usa os **Ativos fixos** do Fiscaldoo, com as taxas legais e os mapas fiscais. Uma empresa de outro país usa os ativos do Enterprise. Um pacote opcional passa para o Fiscaldoo os ativos que uma empresa portuguesa já tinha no Enterprise: veja [Como migrar os ativos do Enterprise](/migration-toolkit/ativos-do-enterprise). |
-| **Salários** | Cada empresa usa os seus. Uma empresa portuguesa processa os salários no Fiscaldoo; uma empresa de outro país, nos salários do Enterprise. Os dois nunca se misturam na mesma empresa. |
+| **Ativos** | Cada empresa usa os seus. Uma empresa portuguesa usa os **Ativos fixos** do fiscaldoo, com as taxas legais e os mapas fiscais. Uma empresa de outro país usa os ativos do Enterprise. Um pacote opcional passa para o fiscaldoo os ativos que uma empresa portuguesa já tinha no Enterprise: veja [Como migrar os ativos do Enterprise](/migration-toolkit/ativos-do-enterprise). |
+| **Salários** | Cada empresa usa os seus. Uma empresa portuguesa processa os salários no fiscaldoo; uma empresa de outro país, nos salários do Enterprise. Os dois nunca se misturam na mesma empresa. |
 | **Avenças** | As subscrições do Enterprise substituem as avenças do fiscaldoo. As avenças que já existiam passam uma vez para as subscrições, e as faturas que elas geram continuam certificadas. |
-| **Cobranças** | Os lembretes de pagamento do Enterprise trabalham sobre as faturas certificadas. A única coisa que escrevem na fatura é a data do lembrete. Os avisos de cobrança do Fiscaldoo ficam desligados. |
-| **Assinaturas** | Há uma só aplicação de assinaturas, a do Enterprise, com o que só as assinaturas do Fiscaldoo fazem lá dentro. Na ficha da empresa, no separador **Pessoas**, o administrador escolhe em **Pedir as confirmações pelo Sign** se o trabalhador confirma documentos, como o mapa de deslocações ou a declaração de presenças, pela assinatura do Enterprise. Vem desligado. |
+| **Cobranças** | Os lembretes de pagamento do Enterprise trabalham sobre as faturas certificadas. A única coisa que escrevem na fatura é a data do lembrete. Os avisos de cobrança do fiscaldoo ficam desligados. |
+| **Assinaturas** | Há uma só aplicação de assinaturas, a do Enterprise, com o que só as assinaturas do fiscaldoo fazem lá dentro. Na ficha da empresa, no separador **Pessoas**, o administrador escolhe em **Pedir as confirmações pelo Sign** se o trabalhador confirma documentos, como o mapa de deslocações ou a declaração de presenças, pela assinatura do Enterprise. Vem desligado. |
 | **Documentos** | Nos Documentos do Enterprise, quem trabalha só para uma empresa deixa de ver as pastas e os documentos das outras empresas da base. |
-| **EDI e Peppol** | Os documentos Peppol que chegam aos Documentos do Enterprise são tratados como os outros documentos recebidos pelo Fiscaldoo, com o histórico guardado. |
+| **EDI e Peppol** | Os documentos Peppol que chegam aos Documentos do Enterprise são tratados como os outros documentos recebidos pelo fiscaldoo, com o histórico guardado. |
 | **Copiloto** | O leitor de documentos do Copiloto convive com a leitura de faturas do Enterprise: numa fatura de fornecedor já lida pelo Copiloto, o botão de digitalizar do Enterprise não aparece. Um pacote opcional põe a configuração do Copiloto dentro da aplicação de inteligência artificial do Enterprise. |
-| **Ecrã e perfis** | Cada perfil abre o seu ecrã inicial, como no Community. Os perfis do Fiscaldoo ganham o acesso às aplicações do Enterprise instaladas, e os painéis leem os relatórios do Enterprise. |
+| **Ecrã e perfis** | Cada perfil abre o seu ecrã inicial, como no Community. Os perfis do fiscaldoo ganham o acesso às aplicações do Enterprise instaladas, e os painéis leem os relatórios do Enterprise. |
 
-A faturação certificada é a do Fiscaldoo nas duas edições: as séries, a numeração, a assinatura dos documentos e o ficheiro SAF-T são os mesmos.
+A faturação certificada é a do fiscaldoo nas duas edições: as séries, a numeração, a assinatura dos documentos e o ficheiro SAF-T são os mesmos.
 
 Nas empresas portuguesas, as taxas de câmbio automáticas e a leitura de faturas e de extratos pelos serviços online da Odoo começam desligadas. A empresa liga-as quando quiser. Ao ligar um destes serviços, ou a ligação ao banco pela Odoo, aparece um aviso de que os dados da empresa saem para os servidores da Odoo, e fica registado quem ligou e quando. <span className="fd-pending">Pendente de validação no ecrã: o aviso não se provocou, porque provocá-lo é ligar um serviço que envia dados para fora, e as bases de teste nunca o fazem.</span>
 
@@ -75,6 +75,6 @@ Numa base Enterprise, lê-se «Odoo 20.0+e (Enterprise Edition)»:
 
 ## O que precisa para instalar
 
-Os requisitos, as pastas a copiar e a ordem de instalação nas duas edições estão em [Como instalar o Fiscaldoo e que requisitos tem](/getting-started/requisitos-e-instalacao). Depois de instalado, os pacotes ligam-se nas Definições: [Como ativar a faturação e as aplicações do Fiscaldoo](/getting-started/ativar-as-aplicacoes). Para passar uma base que já usa o Fiscaldoo no Community para o Enterprise, veja [Como passar do Community para o Enterprise](/migration-toolkit/mudar-para-o-enterprise).
+Os requisitos, as pastas a copiar e a ordem de instalação nas duas edições estão em [Como instalar o fiscaldoo e que requisitos tem](/getting-started/requisitos-e-instalacao). Depois de instalado, os pacotes ligam-se nas Definições: [Como ativar a faturação e as aplicações do fiscaldoo](/getting-started/ativar-as-aplicacoes). Para passar uma base que já usa o fiscaldoo no Community para o Enterprise, veja [Como passar do Community para o Enterprise](/migration-toolkit/mudar-para-o-enterprise).
 
 {/* Nota interna (DOCS-046, #3616, lote v23-J, DEC-1794): reescrito porque dizia que a versão Enterprise «ainda não está disponível para clientes». Fontes: os 15 __manifest__.py de enterprise/custom_addons em master 5228a94bd (auto_install em lista: cada ponte instala-se com os dois lados; l10n_pt_arxi_ee_asset_migration e l10n_pt_fiscaldoo_ee_copilot_app sem auto_install), DEC-988 (7) e (9), DEC-1010, DEC-1034, DEC-1036 (2), DEC-1002 (2), ee_online.py (EEA-021), README de l10n_pt_arxi_ee (EEA-013: números iguais célula a célula) e MUDANCA_DE_EDICAO.md (séries, numeração, assinaturas e SAF-T iguais). Visto no ecrã a 07/11/2026 numa base Enterprise de teste do computador 2 (odoo20_ee_test_dev_v23j, clone da «cheia» Enterprise, -u dos 61 módulos atrasados até master 5228a94bd, guarda de rede ligada, porta 8428 por túnel), com o admin: Sobre «Odoo 20.0+e (Enterprise Edition)» (captura 02); Aplicações sem filtro, pesquisa «Enterprise»: as 15 pontes, 13 instaladas e as duas opcionais com Ativar. A nota técnica pedida pela AT (DEC-992) é interna e não entra aqui (DEC-1794). */}

@@ -24,7 +24,7 @@ As retenções de IRS ou de IRC que a empresa fez nas faturas dos fornecedores s
 
 Pagar a guia é uma ação à parte, no portal das Finanças, onde a empresa obtém a referência de pagamento. A guia do produto confere que o valor pago, registado com o mês certo, cobre o total.
 
-O pagamento ao Estado regista-se no Fiscaldoo com a guia e o mês: só um pagamento à Autoridade Tributária, até ao total da guia, conta para ela, e o pagamento baixa a conta das retenções (`242`).
+O pagamento ao Estado regista-se no fiscaldoo com a guia e o mês: só um pagamento à Autoridade Tributária, até ao total da guia, conta para ela, e o pagamento baixa a conta das retenções (`242`).
 {/* Nota interna (lote v23-BE, master 7a46de91a): o aviso de que o pagamento não baixava a 242 saiu; o ACC-212 (#3620) está em master e o pagamento debita a 242 (conferido no razão, ver «Resultado esperado»). */}
 
 ## Quando utilizar?
@@ -60,8 +60,8 @@ O pagamento ao Estado regista-se no Fiscaldoo com a guia e o mês: só um pagame
    ![Guia declarada com o botão Marcar como paga assinalado, o estado Declarada, Paga 0,00 € e Declarado e não pago 184,00 €](/images/accounting-pt/pagar-as-retencoes/02-guia-declarada.png)
    <span className="fd-pending">Pendente de validação por contabilista certificado: prazo (dia 20 do mês seguinte, com o dia não útil a passar para o dia útil seguinte) e as retenções que a guia deve incluir (CIRS, art. 98.º e 101.º; CIRC, art. 94.º; CPPT, art. 20.º).</span>
 5. Pague a referência no portal das Finanças. Se tiver o número da guia de pagamento (1 a 11 algarismos), escreva-o em **Número da guia de pagamento** e grave.
-6. Como Contabilista, abra **Pagamentos a fornecedores** e **Novo**. Mantenha **Tipo do Pagamento** em **Enviar**. Em **Fornecedor**, escolha **Autoridade Tributária e Aduaneira**, o parceiro da Autoridade Tributária da empresa (não o contacto **Autoridade Tributária (demonstração)**, que o Fiscaldoo recusa: ver «Problemas frequentes»); em **Valor**, `184,00`; em **Data**, a do pagamento (`15/07/2026`).
-7. Em **Guia de pagamento ao Estado**, escolha **Retenção de IRS** e, em **Período da guia**, o mês das retenções (`01/06/2026`): uma guia atrasada conta no mês a que se refere, não no mês em que se paga. O Fiscaldoo recusa um fornecedor que não seja a Autoridade Tributária e um valor acima do que falta pagar da guia (ver «Problemas frequentes»). Confirme que o **Diário** é **Banco** e carregue em **Confirmar**. O pagamento fica **Pago**.
+6. Como Contabilista, abra **Pagamentos a fornecedores** e **Novo**. Mantenha **Tipo do Pagamento** em **Enviar**. Em **Fornecedor**, escolha **Autoridade Tributária e Aduaneira**, o parceiro da Autoridade Tributária da empresa (não o contacto **Autoridade Tributária (demonstração)**, que o fiscaldoo recusa: ver «Problemas frequentes»); em **Valor**, `184,00`; em **Data**, a do pagamento (`15/07/2026`).
+7. Em **Guia de pagamento ao Estado**, escolha **Retenção de IRS** e, em **Período da guia**, o mês das retenções (`01/06/2026`): uma guia atrasada conta no mês a que se refere, não no mês em que se paga. O fiscaldoo recusa um fornecedor que não seja a Autoridade Tributária e um valor acima do que falta pagar da guia (ver «Problemas frequentes»). Confirme que o **Diário** é **Banco** e carregue em **Confirmar**. O pagamento fica **Pago**.
    ![Pagamento a fornecedor de 184,00 € à Autoridade Tributária e Aduaneira, com a Guia de pagamento ao Estado Retenção de IRS assinalada e o Período da guia 01/06/2026](/images/accounting-pt/pagar-as-retencoes/04-pagamento-da-guia.png)
 8. Volte à guia, com o perfil **Contabilista certificado**, e carregue em **Marcar como paga**. A guia fica **Paga**, com **Paga** 184,00 €, **Declarado e não pago** 0,00 € e **Paga em** 15/07/2026.
    ![Guia de junho paga: estado Paga, Paga 184,00 €, Declarado e não pago 0,00 € e Paga em 15/07/2026](/images/accounting-pt/pagar-as-retencoes/05-guia-paga.png)
@@ -91,7 +91,7 @@ No Odoo Enterprise, os caminhos, a guia e o pagamento são os mesmos (vistos com
 
 ## Notas importantes
 
-- **O Fiscaldoo confere o fornecedor e o valor do pagamento.** Um pagamento com **Guia de pagamento ao Estado** só se confirma para o parceiro da Autoridade Tributária da empresa e até ao que falta pagar da guia (ver «Problemas frequentes»). A guia soma os pagamentos confirmados com o mesmo imposto e o mesmo mês.
+- **O fiscaldoo confere o fornecedor e o valor do pagamento.** Um pagamento com **Guia de pagamento ao Estado** só se confirma para o parceiro da Autoridade Tributária da empresa e até ao que falta pagar da guia (ver «Problemas frequentes»). A guia soma os pagamentos confirmados com o mesmo imposto e o mesmo mês.
 - **Salários.** As retenções dos salários também estão em `242` (parceiro Autoridade Tributária), mas a guia não as soma: em junho de 2026 a guia tem só a fatura de 800,00 €. O pagamento dessas retenções trata-se nos salários.
 - **Corrigir depois de declarar.** Uma guia declarada não se altera. Uma correção tardia faz-se na guia do mês seguinte, com o contabilista certificado. <span className="fd-pending">Pendente de validação por contabilista certificado: correção de retenções de meses já entregues.</span>
 - **Prazo passado.** Com o prazo ultrapassado e a guia por pagar, a guia mostra a faixa «O prazo passou e a guia não está paga». A guia de junho de 2026 mostrou-a a 10/11/2026.

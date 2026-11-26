@@ -18,13 +18,13 @@ related: [fiscal-core/transporte/emitir-uma-guia-de-transporte, fiscal-core/cert
 
 ## Para que serve?
 
-Os bens que circulam acompanhados de uma guia (Decreto-Lei 147/2003) obrigam a empresa a decidir quatro coisas antes de emitir a primeira: **que tipo de guia** cada operação emite, **em que série** é numerada, **como** é comunicada à Autoridade Tributária e Aduaneira (AT) e **que regras** o Fiscaldoo aplica na saída dos bens (código da AT, tolerância do início do transporte, cópias). Este artigo mostra onde se decide cada uma e o que o ecrã recusa. Emitir a guia, passo a passo, está em [Como emitir uma guia de transporte](/fiscal-core/emitir-uma-guia-de-transporte).
+Os bens que circulam acompanhados de uma guia (Decreto-Lei 147/2003) obrigam a empresa a decidir quatro coisas antes de emitir a primeira: **que tipo de guia** cada operação emite, **em que série** é numerada, **como** é comunicada à Autoridade Tributária e Aduaneira (AT) e **que regras** o fiscaldoo aplica na saída dos bens (código da AT, tolerância do início do transporte, cópias). Este artigo mostra onde se decide cada uma e o que o ecrã recusa. Emitir a guia, passo a passo, está em [Como emitir uma guia de transporte](/fiscal-core/emitir-uma-guia-de-transporte).
 
 ## Quando utilizar?
 
 - A empresa vai emitir guias pela primeira vez, ou passa a emitir outro tipo de guia (por exemplo guias de remessa).
 - Quer que a comunicação à AT passe de automática a manual (ou ao contrário).
-- Há operações que não precisam de guia (uso pessoal, amostras…) e quer que o Fiscaldoo deixe de as exigir.
+- Há operações que não precisam de guia (uso pessoal, amostras…) e quer que o fiscaldoo deixe de as exigir.
 - Não é para emitir uma guia concreta nem para corrigir uma já comunicada.
 
 ## Onde encontrar?
@@ -36,7 +36,7 @@ Os bens que circulam acompanhados de uma guia (Decreto-Lei 147/2003) obrigam a e
 ## Antes de começar
 
 - O seu perfil é **Administrador**. Foi com ele que todos os passos foram feitos do princípio ao fim. Os perfis **Contabilista**, **Contabilista certificado**, **Gerência** e **Administrativo** abrem **Definições** com «Sem acesso: Não tem acesso a «Definições»», por isso não chegam aos passos 1 e 5.
-- A empresa tem as credenciais da AT guardadas, para a comunicação automática: [Como ligar o Fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). Na demonstração a AT é um simulador: o código que se vê («MOCK-…») é fictício e nada sai da máquina.
+- A empresa tem as credenciais da AT guardadas, para a comunicação automática: [Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at). Na demonstração a AT é um simulador: o código que se vê («MOCK-…») é fictício e nada sai da máquina.
 - Para ver o resultado de cada opção é preciso uma entrega com guia emitida. O artigo usa as da demonstração, feitas como em [Como emitir uma guia de transporte](/fiscal-core/emitir-uma-guia-de-transporte).
 
 ## Como utilizar
@@ -46,7 +46,7 @@ Os bens que circulam acompanhados de uma guia (Decreto-Lei 147/2003) obrigam a e
 1. **Veja os valores por omissão.** Abra **Definições › Inventário** e desça até **Documentos de transporte (PT)**. O bloco tem cinco opções, todas da empresa: **Código AT exigido para validar** (ligada), **Comunicação das guias** (**Automático**), **Guias valorizadas** (desligada), **Cópias impressas** (2) e **Tolerância do início do transporte** (30 minutos). Quando mudar uma, carregue em **Guardar**.
    ![Definições › Inventário, bloco Documentos de transporte (PT), com as cinco opções e os valores por omissão](/images/fiscal-core/configurar-documentos-de-transporte/01-definicoes-transporte.png)
 2. **Crie a série do tipo de guia que vai emitir.** A demonstração já tem séries ativas de 2026 para **[GT] Guia de transporte (incluindo as globais)** e **[GD] Guia ou nota de devolução**, e nenhuma para os outros tipos. Para emitir, por exemplo, guias de remessa, abra **Séries fiscais**, carregue em **Criar e comunicar**, escreva `D26` em **Identificador da série**, escolha **[GR] Guia de remessa** em **Tipo de documento SAF-T** (escreva «Guia de remessa»: procurar por «[GR]» não encontra nada), deixe **Diário** vazio (as guias não têm diário), marque **Confirmo que estes dados estão corretos e podem ser comunicados** e carregue em **Criar e comunicar**. O resultado diz: «A série “GR D26” foi comunicada à Autoridade Tributária e está ativa, com o código de validação …». Os campos e o resto do percurso estão em [Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais).
-3. **Escolha o tipo de guia de cada operação.** Abra **Tipos de operação** e a operação de saída (na demonstração, **Entregas**). Os campos do Fiscaldoo são quatro:
+3. **Escolha o tipo de guia de cada operação.** Abra **Tipos de operação** e a operação de saída (na demonstração, **Entregas**). Os campos do fiscaldoo são quatro:
    - **Tipo de documento de transporte**: só aceita os cinco tipos de guia, **[GA] Guia de movimentação de ativos fixos próprios**, **[GC] Guia de consignação**, **[GD] Guia ou nota de devolução**, **[GR] Guia de remessa** e **[GT] Guia de transporte (incluindo as globais)**. Vazio, as entregas dessa operação não se emitem como guias.
    - **Exige um documento de transporte**: com a opção ligada, a entrega não se valida sem a guia emitida.
    - **Exceção à guia de transporte**: a operação está fora do regime e nunca exige guia. As 17 escolhas são as do ecrã: **Uso pessoal ou doméstico**, **Bens de retalhistas para consumidores finais que já os adquiriram**, **Ativos fixos tangíveis da própria empresa**, **Produção própria agrícola, silvícola, de aquicultura ou pecuária**, **Amostras, mostruários de viajantes e material de propaganda**, **Filmes e material publicitário para salas de cinema**, **Veículos automóveis com matrícula definitiva**, **Taras e embalagens retornáveis**, **Resíduos urbanos ou hospitalares**, **Bens de solidariedade social (IPSS, campanhas de organizações sem fins lucrativos)**, **Abastecimento de água, saneamento e resíduos do Estado ou do setor empresarial local**, **Artigos sujeitos a impostos especiais de consumo em regime suspensivo**, **Transação intracomunitária**, **Mercadorias em trânsito aduaneiro**, **Mudança de instalações do sujeito passivo (comunicada às direções de finanças)**, **Vendedores ambulantes e fornecedores em regime de isenção (as faturas de aquisição substituem a guia)** e **Outra (é exigido um motivo)**. <span className="fd-pending">Pendente de validação por contabilista certificado: qual destas exceções se aplica a cada operação da empresa; o artigo não responde a essa dúvida de lei.</span>

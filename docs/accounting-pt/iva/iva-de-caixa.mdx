@@ -17,7 +17,7 @@ related: [accounting-pt/iva/configurar-o-iva, accounting-pt/iva/declaracao-perio
 
 ## Para que serve?
 
-No regime de IVA de caixa, o IVA das vendas só se torna exigível quando o cliente paga (ou no prazo limite), e não quando a fatura é emitida. O Fiscaldoo guarda esse IVA numa conta de **IVA suspenso** enquanto a fatura não é recebida, mostra-o num **mapa por cliente e por documento**, e só o leva à declaração periódica no mês do recebimento.
+No regime de IVA de caixa, o IVA das vendas só se torna exigível quando o cliente paga (ou no prazo limite), e não quando a fatura é emitida. O fiscaldoo guarda esse IVA numa conta de **IVA suspenso** enquanto a fatura não é recebida, mostra-o num **mapa por cliente e por documento**, e só o leva à declaração periódica no mês do recebimento.
 
 <span className="fd-pending">Pendente de validação por contabilista certificado: condições para aderir ao regime, comunicação à AT, prazo máximo de exigibilidade e deveres de faturação e de recibo (DL 71/2013). O produto não valida estas condições.</span>
 
@@ -48,7 +48,7 @@ O exemplo foi feito na Empresa Demonstração, Lda, a 05/11/2026, com o perfil *
 
 <StepByStep>
 
-1. Abra a ficha da empresa que adere em **Definições › Utilizadores e empresas › Empresas** e, no separador **Localização PT**, carregue em **Aderir ao regime de IVA de caixa**. A janela mostra no campo **Empresa** a empresa da ficha aberta, mesmo que não seja a empresa ativa no canto superior direito, mas essa empresa tem de estar marcada no seletor de empresas, senão **Confirmar** recusa (veja «Problemas frequentes»). Com a Empresa Teste Portugal ativa e a Empresa Teste Filial também marcada, a ficha da Empresa Teste Filial mostrou «Empresa Teste Filial» e foi ela que ficou no regime. Confira-o e preencha **Comunicado à Autoridade Tributária em** (`15/10/2025`), **O regime começa em** (`01/01/2026`) e **Registada para IVA desde** (`01/03/2020`), que são obrigatórios. Carregue em **Confirmar**. O bloco passa a mostrar **Regime de IVA de caixa** assinalado, **IVA de caixa desde**, **Opção comunicada em** e o botão **Sair do regime de IVA de caixa**. O Fiscaldoo cria as taxas de caixa (por exemplo `23% (IVA de caixa)`, `13% (IVA de caixa)` e `6% (IVA de caixa)`, e as dos Açores e da Madeira) e usa a conta `24331 IVA - Liquidado - regime de caixa (por receber)`. Não envia nada à AT: a comunicação é a data que escreveu.
+1. Abra a ficha da empresa que adere em **Definições › Utilizadores e empresas › Empresas** e, no separador **Localização PT**, carregue em **Aderir ao regime de IVA de caixa**. A janela mostra no campo **Empresa** a empresa da ficha aberta, mesmo que não seja a empresa ativa no canto superior direito, mas essa empresa tem de estar marcada no seletor de empresas, senão **Confirmar** recusa (veja «Problemas frequentes»). Com a Empresa Teste Portugal ativa e a Empresa Teste Filial também marcada, a ficha da Empresa Teste Filial mostrou «Empresa Teste Filial» e foi ela que ficou no regime. Confira-o e preencha **Comunicado à Autoridade Tributária em** (`15/10/2025`), **O regime começa em** (`01/01/2026`) e **Registada para IVA desde** (`01/03/2020`), que são obrigatórios. Carregue em **Confirmar**. O bloco passa a mostrar **Regime de IVA de caixa** assinalado, **IVA de caixa desde**, **Opção comunicada em** e o botão **Sair do regime de IVA de caixa**. O fiscaldoo cria as taxas de caixa (por exemplo `23% (IVA de caixa)`, `13% (IVA de caixa)` e `6% (IVA de caixa)`, e as dos Açores e da Madeira) e usa a conta `24331 IVA - Liquidado - regime de caixa (por receber)`. Não envia nada à AT: a comunicação é a data que escreveu.
    ![Janela Aderir ao regime de IVA de caixa com a Empresa Demonstração, Lda e as datas de comunicação, início e registo para IVA](/images/accounting-pt/iva-de-caixa/89-02-janela-aderir.png)
 2. Em **Contabilidade › Lançar › Vendas e cobranças › Faturas de clientes**, carregue em **Novo**. Escolha o cliente (`Papelaria Central, Lda`) e, em **Adicionar uma linha**, o artigo `Serviço genérico`. O imposto vem sozinho como **23% (IVA de caixa)**. Ao escolher o artigo, o preço fica a 0,00 €: escreva depois a descrição (`Manutenção anual (IVA de caixa)`) e o preço (`1.000,00`). O total mostra **Valor sem Impostos** 1.000,00 €, **IVA 23%** 230,00 € e **Total** 1.230,00 €.
    ![Linha da fatura com o artigo Serviço genérico, a conta 721 Prestações de serviços e o imposto 23% (IVA de caixa)](/images/accounting-pt/iva-de-caixa/89-02-fatura-com-iva-de-caixa.png)
@@ -66,7 +66,7 @@ O exemplo foi feito na Empresa Demonstração, Lda, a 05/11/2026, com o perfil *
 
 ## Resultado esperado
 
-Para a fatura `FT D26/34` (1.000,00 € + 230,00 €, de 05/11/2026), o Fiscaldoo lança:
+Para a fatura `FT D26/34` (1.000,00 € + 230,00 €, de 05/11/2026), o fiscaldoo lança:
 
 | Momento | Conta | Débito | Crédito |
 |---|---|---|---|

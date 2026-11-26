@@ -1,10 +1,10 @@
 ---
 id: processos-automaticos
 slug: /administration/processos-automaticos
-title: Que processos automáticos o Fiscaldoo corre
+title: Que processos automáticos o fiscaldoo corre
 sidebar_label: Processos automáticos
 sidebar_position: 1
-description: As tarefas que o Fiscaldoo corre sozinho (avisos de prazos, certificação, IVA, bancos, salários, cópias, Copiloto), quais vêm desligadas, onde se veem e como confirmar quando correm.
+description: As tarefas que o fiscaldoo corre sozinho (avisos de prazos, certificação, IVA, bancos, salários, cópias, Copiloto), quais vêm desligadas, onde se veem e como confirmar quando correm.
 keywords: [processos automáticos, processos automaticos, tarefas agendadas, ações agendadas, acoes agendadas, cron, agendador, executar manualmente, próxima data de execução, proxima data de execucao, tarefas automáticas]
 doc_id: DOC-0323
 article_type: conceito
@@ -16,17 +16,17 @@ approval_state: Pendente de aprovação humana
 related: [administration/seguranca-e-arquivo/copias-de-seguranca, administration/seguranca-e-arquivo/registo-de-auditoria, management/resumo-de-segunda-feira]
 ---
 
-O Fiscaldoo corre sozinho várias tarefas: avisa de prazos, guarda os PDF certificados, prepara os períodos do IVA, importa extratos, atualiza câmbios. Cada tarefa é uma **ação agendada**, com um intervalo (de 5 em 5 minutos, diária, semanal, mensal) e uma data da próxima execução. Este artigo é para o administrador do sistema e para quem dá suporte.
+O fiscaldoo corre sozinho várias tarefas: avisa de prazos, guarda os PDF certificados, prepara os períodos do IVA, importa extratos, atualiza câmbios. Cada tarefa é uma **ação agendada**, com um intervalo (de 5 em 5 minutos, diária, semanal, mensal) e uma data da próxima execução. Este artigo é para o administrador do sistema e para quem dá suporte.
 
 ## Onde se veem
 
 **Definições › Técnico › Automação › Ações agendadas**, com o perfil de administrador do sistema e o **modo de programador** ligado. Para o ligar, abra **Definições**, desça até ao grupo **Ferramentas de desenvolvimento** e carregue em **Ativar o modo de programador**; o menu **Técnico** aparece ao lado de **Traduções** (num ecrã mais estreito, os dois ficam no botão **+** do fim da barra de menus). Sem o modo de programador, o menu **Técnico** não aparece.
 
-A lista mostra **Prioridade**, **Nome da ação**, **Modelo**, **Próxima Data de Execução**, **Número do intervalo**, **Unidade de intervalo** e **Ativo**. Tem as tarefas do Fiscaldoo e as do Odoo (121 na demonstração a 05/11/2026). Para encontrar uma, escreva parte do nome na pesquisa, por exemplo `câmbio` ou `IVA`.
+A lista mostra **Prioridade**, **Nome da ação**, **Modelo**, **Próxima Data de Execução**, **Número do intervalo**, **Unidade de intervalo** e **Ativo**. Tem as tarefas do fiscaldoo e as do Odoo (121 na demonstração a 05/11/2026). Para encontrar uma, escreva parte do nome na pesquisa, por exemplo `câmbio` ou `IVA`.
 
 ![Ficha da ação agendada Atualizar taxas de câmbio a partir do BCE, com o botão Executar Manualmente, o modelo Empresa, Executar a cada 1 Dias, Ativo ligado e a Próxima Data de Execução 03/11/2026 10:27](/images/administration/processos-automaticos/01-acao-agendada.png)
 
-## As tarefas do Fiscaldoo
+## As tarefas do fiscaldoo
 
 Na demonstração (02/11/2026) há 68 tarefas do fiscaldoo. Por área (o nome é o da lista):
 
@@ -49,7 +49,7 @@ Estas tarefas existem mas estão desligadas (**Ativo** desligado) até alguém a
 - «Formação: extratos anuais por e-mail (15 de janeiro)»;
 - «Salários: anonimizar os dados dos trabalhadores cujo prazo de conservação terminou».
 
-O «Resumo de segunda-feira para a Gerência» também vem desligado e liga-se sozinho quando uma empresa pede o resumo (na demonstração foi ligado para o artigo do resumo). Uma atualização do Fiscaldoo não o desliga: fica ativo enquanto uma empresa tiver o [resumo de segunda-feira](/management/resumo-de-segunda-feira) ligado.
+O «Resumo de segunda-feira para a Gerência» também vem desligado e liga-se sozinho quando uma empresa pede o resumo (na demonstração foi ligado para o artigo do resumo). Uma atualização do fiscaldoo não o desliga: fica ativo enquanto uma empresa tiver o [resumo de segunda-feira](/management/resumo-de-segunda-feira) ligado.
 
 ## Como confirmar que uma tarefa corre
 
@@ -64,4 +64,4 @@ O «Resumo de segunda-feira para a Gerência» também vem desligado e liga-se s
 
 {/* Nota interna (DOCS-046, lote v5-ADM, 02/11/2026, master 6fb7ee1d4, base docs_demo_v5adm_test): conceito, risco normal. Lista lida por RPC com o administrador (ir.cron com id externo de módulos l10n_pt_arxi*, arxi_*, fiscaldoo*, l10n_pt_fiscaldoo*: 67, 60 ativas depois de ligar o resumo; 117 no ecrã com o filtro Tudo); menu, colunas, pesquisa «câmbio» e ficha vistos no ecrã com o administrador em modo programador. Esta base corre as tarefas (max_cron_threads = 1, guarda de rede ligada; nada bloqueado). O mapeamento tinha 10 linhas FC com nomes em inglês; os nomes acima são os do ecrã em pt_PT. */}
 
-{/* Nota interna (lote v21-EE, 05/11/2026, master 02a978ea9, base docs_demo_v21ee_test, administrador): o caminho com `?debug=1` passou a clique em Definições › Ferramentas de desenvolvimento › Ativar o modo de programador; Técnico › Automação › Ações agendadas mostrou 1-80 / 121. A contagem das 68 tarefas do Fiscaldoo é a de 02/11 e não foi refeita. */}
+{/* Nota interna (lote v21-EE, 05/11/2026, master 02a978ea9, base docs_demo_v21ee_test, administrador): o caminho com `?debug=1` passou a clique em Definições › Ferramentas de desenvolvimento › Ativar o modo de programador; Técnico › Automação › Ações agendadas mostrou 1-80 / 121. A contagem das 68 tarefas do fiscaldoo é a de 02/11 e não foi refeita. */}

@@ -49,7 +49,7 @@ Mostra o que mudou nos salários de um mês para o outro, rubrica a rubrica: qua
 
 </StepByStep>
 
-**Exemplo.** Em setembro de 2026 a **Retribuição base** é de 33.170,00 € nos dois meses (diferença 0,00) e a **Retribuição perdida por faltas** passa de -915,99 € (agosto) para -32,00 €. O total passa de 32.254,01 € para 33.138,00 €: a diferença de 883,99 € vem toda das faltas.
+**Exemplo.** Em setembro de 2026 a **Retribuição base** é de 11.560,00 € nos dois meses (diferença 0,00) e a **Retribuição perdida por faltas** passa de -483,33 € (agosto) para 0,00 €. O total passa de 11.076,67 € para 11.560,00 €: a diferença de 483,33 € é toda ela a falta que deixou de existir.
 
 ## No Enterprise
 
@@ -65,8 +65,8 @@ No Odoo Enterprise, a comparação do mês com o anterior faz-se no mesmo ecrã:
 
 ## Notas importantes
 
-- **Só recibos fechados.** Um mês sem recibos fechados, ou o mês anterior sem recibos, não dá uma comparação válida: no primeiro mês de processamento todas as rubricas aparecem como **Nova** e **Diferença (%)** fica a 0,00 (no teste, junho de 2026, com 33.170,00 € de **Retribuição base** marcada **Nova**).
-- **O que a lupa não faz.** A lupa **Recibos** abre todos os recibos fechados dos dois meses (no exemplo, 48, 24 de cada mês), não só os que têm a rubrica da linha. Procure nessa lista o que mudou. {/* Nota interna (DOCS-046): defeito V4PAYb-06: a lupa «Recibos» não filtra pela rubrica; o guia antigo dizia «que têm essa rubrica». */}
+- **Só recibos fechados.** Um mês sem recibos fechados, ou o mês anterior sem recibos, não dá uma comparação válida: no primeiro mês de processamento todas as rubricas aparecem como **Nova** e **Diferença (%)** fica a 0,00 (no teste, junho de 2026, com 11.560,00 € de **Retribuição base** marcada **Nova**).
+- **O que a lupa não faz.** A lupa **Recibos** abre todos os recibos fechados dos dois meses (no exemplo, 16, oito de cada mês), não só os que têm a rubrica da linha. Procure nessa lista o que mudou. {/* Nota interna (DOCS-046): defeito V4PAYb-06: a lupa «Recibos» não filtra pela rubrica; o guia antigo dizia «que têm essa rubrica». */}
 - **Leia a diferença em euros.** **Diferença (%)** sai com o sinal trocado nas rubricas negativas: a **Retribuição perdida por faltas** de -483,33 € para 0,00 € mostra uma diferença de 483,33 € mas **-100,00 %**; de -58,67 € para -483,33 € (agosto contra julho) mostra 723,81 %. Confie na coluna **Diferença**. {/* Nota interna (DOCS-046): defeito V4PAYb-05, percentagem calculada sobre o valor com sinal; ver reports/LOTE_V4_PAY2b.md. */}
 - **O que o ecrã não vê.** Só compara as rubricas que existem nos recibos fechados; não compara dias trabalhados, horas nem o IRS por escalão. Uma rubrica nunca lançada nos dois meses também não aparece.
 - Para corrigir um erro que apanhe aqui, veja [Como corrigir um processamento](/payroll-pt/corrigir-um-processamento).

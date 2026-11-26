@@ -1,9 +1,9 @@
 ---
 id: plano-de-contas-snc
 slug: /accounting-pt/plano-de-contas-snc
-title: Como funciona o plano de contas SNC no Fiscaldoo
+title: Como funciona o plano de contas SNC no fiscaldoo
 sidebar_label: O plano de contas SNC
-description: Perceber como o Fiscaldoo organiza o plano de contas do SNC, conferir o plano da empresa com o plano oficial e saber quando se aplica a variante do SNC-ME ou do SNC-ESNL.
+description: Perceber como o fiscaldoo organiza o plano de contas do SNC, conferir o plano da empresa com o plano oficial e saber quando se aplica a variante do SNC-ME ou do SNC-ESNL.
 keywords: [plano de contas SNC, plano de contas, comparar o plano com o SNC, verificação do plano de contas, códigos fora do plano oficial, conta de movimento, conta agregadora, aplicar variante do plano, SNC-ME, SNC-ESNL, variante do plano, o referencial da empresa não tem variante do plano]
 doc_id: DOC-0077
 article_type: conceito
@@ -17,7 +17,7 @@ related: [accounting-pt/plano-de-contas/referencial-contabilistico, accounting-p
 
 ## Para que serve?
 
-Cada empresa portuguesa do Fiscaldoo traz o plano de contas do SNC, com os códigos e os nomes das contas. A **Verificação do plano de contas SNC** compara o plano da empresa com o plano oficial e lista o que está fora de sítio (contas sem conta-mãe, contas sem taxonomia do SAF-T, códigos que o plano oficial não tem). Só relata: nunca altera nem bloqueia nada.
+Cada empresa portuguesa do fiscaldoo traz o plano de contas do SNC, com os códigos e os nomes das contas. A **Verificação do plano de contas SNC** compara o plano da empresa com o plano oficial e lista o que está fora de sítio (contas sem conta-mãe, contas sem taxonomia do SAF-T, códigos que o plano oficial não tem). Só relata: nunca altera nem bloqueia nada.
 
 Ler esta verificação serve para preparar o SAF-T, a IES e o balanço: o saldo de cada conta só chega à linha certa se a conta tiver o código e a taxonomia certos.
 
@@ -49,7 +49,7 @@ Ler esta verificação serve para preparar o SAF-T, a IES e o balanço: o saldo 
 
 <StepByStep>
 
-1. Abra **Configurar › Plano e regras legais › Comparar o plano com o SNC**. Cada vez que abre, o Fiscaldoo corre a verificação e cria um registo novo, com a data de agora.
+1. Abra **Configurar › Plano e regras legais › Comparar o plano com o SNC**. Cada vez que abre, o fiscaldoo corre a verificação e cria um registo novo, com a data de agora.
 2. Leia o **Resumo**: uma frase com os totais. Na demonstração: «0 conta(s) de movimento sem conta-mãe, 0 agregadora(s) sem filhas, 5 conta(s) com código fora do plano oficial, 0 conta(s) de movimento sem taxonomia, 9 agregadora(s) com taxonomia, 0 taxonomia(s) que não condiz(em) com o código da conta e 0 conta(s) de movimento com subcontas pelo código.»
 3. Percorra os blocos por baixo e compare cada um com o total do resumo (os totais batem com as listas: 5 códigos fora do plano, na lista **Códigos fora do plano oficial**).
    ![Verificação do plano de contas SNC com o resumo e os blocos de contas](/images/accounting-pt/plano-de-contas-snc/77-02-resultado-da-comparacao.png)
@@ -89,7 +89,7 @@ A verificação **não vê** o que está certo nas contas que lista: por exemplo
 
 ### Contas de movimento com subcontas pelo código
 
-O Código de Contas lê-se pelo **código**: uma conta cujo código é o começo do código de outra conta é a conta-mãe dessa (a `2433` é mãe da `24331`). O SAF-T não admite movimentos numa conta que tem subcontas (Portaria n.º 302/2016, Anexo I, 2.1.2.8). Por isso, o Fiscaldoo recusa **lançamentos novos** numa conta onde se lança e que tem subcontas pelo código, e o bloco **Contas de movimento com subcontas pelo código** lista-as.
+O Código de Contas lê-se pelo **código**: uma conta cujo código é o começo do código de outra conta é a conta-mãe dessa (a `2433` é mãe da `24331`). O SAF-T não admite movimentos numa conta que tem subcontas (Portaria n.º 302/2016, Anexo I, 2.1.2.8). Por isso, o fiscaldoo recusa **lançamentos novos** numa conta onde se lança e que tem subcontas pelo código, e o bloco **Contas de movimento com subcontas pelo código** lista-as.
 
 Visto no ecrã, numa cópia da demonstração: criou-se a conta `24331 IVA liquidado: operações de exemplo` (tipo passivo corrente), e a verificação passou a dizer «1 conta(s) de movimento com subcontas pelo código» e a listar «2433 — IVA - Liquidado (24331)». Um lançamento novo na `2433` foi recusado ao ser gravado: «A conta 2433 tem subcontas (24331) e não recebe lançamentos novos. O que aconteceu: o código dela é o começo do código de outras contas, por isso no SNC é a conta-mãe delas, e o SAF-T não admite movimentos numa conta que tem subcontas (Portaria 302/2016, Anexo I, 2.1.2.8). Como resolver: lance numa subconta (por exemplo a 24331). Para passar o saldo que a conta já tem, use o menu «Reclassificar conta para uma subconta» (escreva o nome na pesquisa dos menus): passa os lançamentos em rascunho e lança uma correção nova; os lançamentos já publicados não mudam.» Esta é a frase que lê quem tem o perfil **Contabilista certificado**; o **Contabilista** lê «Para passar o saldo que a conta já tem, peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que use o menu «Reclassificar conta para uma subconta» (…)». Lançar na subconta `24331` foi aceite. **Cuidado:** o IVA liquidado das faturas de venda lança-se na `2433`, por isso, com a `24331` criada por baixo dela, uma fatura de venda com IVA a 23 % deixa de se poder gravar («A conta 2433 tem subcontas (24331) e não recebe lançamentos novos, e o imposto «23%» lança nela. […] Como resolver: passe os impostos para a subconta: na conta 2433 use o botão «Passar os impostos para a subconta» ou o menu «Reclassificar conta para uma subconta» […]», para quem tem o perfil **Contabilista certificado**; o **Contabilista** lê o mesmo precedido de «peça a um utilizador com o perfil «Contabilista certificado (assina, fecha períodos)» que…»). Ao criar a subconta, o formulário da conta mostra logo um aviso amarelo com o botão **Passar os impostos para a subconta**, que só o **Contabilista certificado** vê: o assistente passa as linhas de repartição dos impostos e as posições fiscais que mapeiam a conta para a subconta, pede confirmação e regista-o na auditoria. As faturas emitidas e os lançamentos publicados não mudam, e o apuramento do IVA e a declaração periódica continuam a somar a `2433` e as suas subcontas. Quem não tem esse perfil vê o aviso, que o manda pedir a quem o tem. Depois de passar os impostos, a fatura de venda a 23 % grava. <span className="fd-pending">Pendente de validação por contabilista certificado: se a passagem dos impostos para uma subconta criada à mão é o tratamento que o gabinete quer (a alternativa é não criar a subconta).</span> Para passar o saldo antigo da `2433`, veja [Como criar uma conta ou reclassificar uma conta de 1.º grau](/accounting-pt/criar-e-alterar-contas).
 
@@ -142,7 +142,7 @@ A verificação não gera lançamentos e não altera o plano: é uma fotografia 
 
 ### Um código fora do plano oficial não é sempre um erro
 
-O Fiscaldoo traz subcontas próprias (por exemplo `111 Caixa` por baixo de `11`). Aparecem na lista por não serem códigos da tabela oficial, e não por estarem mal.
+O fiscaldoo traz subcontas próprias (por exemplo `111 Caixa` por baixo de `11`). Aparecem na lista por não serem códigos da tabela oficial, e não por estarem mal.
 
 ### O que a lei diz sobre o plano
 

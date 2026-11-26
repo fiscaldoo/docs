@@ -3,7 +3,7 @@ id: mudar-para-o-enterprise
 slug: /migration-toolkit/mudar-para-o-enterprise
 title: Como passar do Community para o Enterprise
 sidebar_label: Passar ao Enterprise
-description: Uma base que já usa o Fiscaldoo no Odoo Community pode passar para o Enterprise. A passagem é feita pela equipa do Fiscaldoo, primeiro numa cópia. Saiba quem a faz, o que passa, o que muda e o que não passa.
+description: Uma base que já usa o fiscaldoo no Odoo Community pode passar para o Enterprise. A passagem é feita pela equipa do fiscaldoo, primeiro numa cópia. Saiba quem a faz, o que passa, o que muda e o que não passa.
 keywords: [passar para o Enterprise, mudar de edição, mudar de edicao, Community para Enterprise, mudar de Community para Enterprise, edição Enterprise, edicao Enterprise, orçamentos, orcamentos, diferimentos, câmbios, cambios, De outro sistema, já uso o Enterprise]
 doc_id: DOC-0307
 article_type: tarefa
@@ -19,15 +19,15 @@ related: [getting-started/o-fiscaldoo/edicoes-e-versoes-suportadas, getting-star
 
 ## Para que serve?
 
-Uma base que já usa o Fiscaldoo no Odoo Community pode passar para o Odoo Enterprise e continuar a usar o fiscaldoo. Este artigo diz quem faz a passagem, como decorre e o que muda, para a poder planear e avisar o cliente.
+Uma base que já usa o fiscaldoo no Odoo Community pode passar para o Odoo Enterprise e continuar a usar o fiscaldoo. Este artigo diz quem faz a passagem, como decorre e o que muda, para a poder planear e avisar o cliente.
 
-A passagem é feita pela **equipa do Fiscaldoo**. Corre num servidor, fora do ecrã: não há menu, assistente nem botão para ela no Odoo.
+A passagem é feita pela **equipa do fiscaldoo**. Corre num servidor, fora do ecrã: não há menu, assistente nem botão para ela no Odoo.
 
 ## Quando utilizar?
 
-- Quando um cliente que usa o Fiscaldoo no Community quer passar para o Enterprise.
-- Quando uma empresa que já usa o Odoo Enterprise, sem o Fiscaldoo, quer passar a usá-lo: veja «Se a empresa já usa o Enterprise sem o Fiscaldoo», mais abaixo.
-- **Não use** este artigo para instalar o Fiscaldoo numa base nova: veja [Como instalar o Fiscaldoo e que requisitos tem](/getting-started/requisitos-e-instalacao).
+- Quando um cliente que usa o fiscaldoo no Community quer passar para o Enterprise.
+- Quando uma empresa que já usa o Odoo Enterprise, sem o fiscaldoo, quer passar a usá-lo: veja «Se a empresa já usa o Enterprise sem o fiscaldoo», mais abaixo.
+- **Não use** este artigo para instalar o fiscaldoo numa base nova: veja [Como instalar o fiscaldoo e que requisitos tem](/getting-started/requisitos-e-instalacao).
 
 ## Onde encontrar?
 
@@ -47,12 +47,12 @@ Não há menu no Odoo. Para ver em que edição está, abra **Definições** e d
 1. Confirme nas **Definições**, grupo **Sobre**, que a base está em «Odoo 20.0 (Community Edition)».
    ![Grupo Sobre das Definições com a linha Odoo 20.0 (Community Edition)](/images/migration-toolkit/mudar-para-o-enterprise/01-definicoes-sobre-community.png)
 2. Peça a passagem ao suporte do fiscaldoo. Diga o número de empresas e se o cliente usa orçamentos, diferimentos, avenças com débito direto ou cartões autorizados.
-3. A equipa do Fiscaldoo faz primeiro tudo numa **cópia** da base, num servidor de testes:
-   - instala na cópia a contabilidade do Enterprise e, se o cliente tem orçamentos, os orçamentos do Enterprise; os pacotes de ligação do Fiscaldoo instalam-se sozinhos;
+3. A equipa do fiscaldoo faz primeiro tudo numa **cópia** da base, num servidor de testes:
+   - instala na cópia a contabilidade do Enterprise e, se o cliente tem orçamentos, os orçamentos do Enterprise; os pacotes de ligação do fiscaldoo instalam-se sozinhos;
    - corre um **ensaio a seco**, que não grava nada e mostra quantos orçamentos, linhas, diferimentos e anos fiscais vão passar;
-   - corre a **passagem a sério na cópia**: passa os dados, retira os módulos do Fiscaldoo que o Enterprise substitui e compara as séries, a numeração e a última assinatura antes e depois. Se houver qualquer diferença, a passagem falha e mostra a lista;
+   - corre a **passagem a sério na cópia**: passa os dados, retira os módulos do fiscaldoo que o Enterprise substitui e compara as séries, a numeração e a última assinatura antes e depois. Se houver qualquer diferença, a passagem falha e mostra a lista;
    - confere à mão um orçamento, um diferimento e o total de um orçamento.
-4. Com a cópia aprovada, combine com a equipa do Fiscaldoo uma janela de trabalho. Nessa janela, depois de uma cópia de segurança, a equipa repete a passagem na base do cliente.
+4. Com a cópia aprovada, combine com a equipa do fiscaldoo uma janela de trabalho. Nessa janela, depois de uma cópia de segurança, a equipa repete a passagem na base do cliente.
 5. Depois da passagem, as avenças e os ativos têm passos próprios (veja «O que muda»).
 
 </StepByStep>
@@ -64,30 +64,30 @@ A passagem pode repetir-se: o que já passou não se repete. Se algo correr mal,
 | | O que acontece |
 | --- | --- |
 | **Passam para o Enterprise** | Os orçamentos, com as revisões, os diferimentos e os anos fiscais. |
-| **Saem os do Fiscaldoo** | Os orçamentos, os diferimentos e as taxas de câmbio passam a ser os do Enterprise. As taxas de câmbio já importadas ficam. |
+| **Saem os do fiscaldoo** | Os orçamentos, os diferimentos e as taxas de câmbio passam a ser os do Enterprise. As taxas de câmbio já importadas ficam. |
 | **Ficam iguais** | As séries, a numeração, as assinaturas, o ATCUD e o SAF-T. Nas faturas certificadas já publicadas não se escreve nada. |
 | **Avenças** | Quando se instalam as **Subscrições** do Enterprise, as avenças passam uma vez para elas. As faturas que geram continuam certificadas. |
-| **Cobranças** | Com os lembretes de pagamento do Enterprise, os avisos de cobrança do Fiscaldoo ficam desligados. |
-| **Ativos** | Os ativos fixos do Fiscaldoo continuam iguais: as empresas portuguesas usam-nos também no Enterprise. |
+| **Cobranças** | Com os lembretes de pagamento do Enterprise, os avisos de cobrança do fiscaldoo ficam desligados. |
+| **Ativos** | Os ativos fixos do fiscaldoo continuam iguais: as empresas portuguesas usam-nos também no Enterprise. |
 
 <span className="fd-pending">Pendente de validação por contabilista certificado: efeito da passagem sobre a numeração e as séries certificadas.</span>
 
 ## O que não passa
 
 - **Débito direto nas avenças:** a avença passa, mas fica sem cobrança automática, porque as subscrições do Enterprise não têm débito direto SEPA.
-- **Autorizações de cartão:** o cartão guardado passa para a subscrição do Enterprise, que o continua a cobrar, mas a autorização que o cliente deu no Fiscaldoo não passa. Peça ao cliente que autorize de novo.
+- **Autorizações de cartão:** o cartão guardado passa para a subscrição do Enterprise, que o continua a cobrar, mas a autorização que o cliente deu no fiscaldoo não passa. Peça ao cliente que autorize de novo.
 - **Níveis de cobrança inativos:** não passam e ficam listados.
 - **Linhas de orçamento só com contas gerais:** o orçamento do Enterprise só trabalha com contas analíticas. O ensaio a seco para e pede para lhes dar uma conta analítica antes.
 - **Registo das importações de câmbio e das reavaliações cambiais:** perde-se o registo das execuções; os lançamentos que estas geraram ficam. O tipo do orçamento (anual, trimestral, mensal) também não passa: no Enterprise, o período é o das datas.
 
-## Se a empresa já usa o Enterprise sem o Fiscaldoo
+## Se a empresa já usa o Enterprise sem o fiscaldoo
 
-É outro caminho, também feito pela equipa do Fiscaldoo e primeiro numa cópia:
+É outro caminho, também feito pela equipa do fiscaldoo e primeiro numa cópia:
 
 - escolhe-se uma data de arranque, por exemplo 1 de janeiro;
-- instalam-se os pacotes do Fiscaldoo, e os pacotes de ligação entram sozinhos;
+- instalam-se os pacotes do fiscaldoo, e os pacotes de ligação entram sozinhos;
 - abrem-se séries novas para o ano de arranque, uma por tipo de documento, a começar em 1 (veja [Séries documentais](/fiscal-core/series-documentais));
-- os documentos feitos antes no Enterprise ficam como estão (número, datas e valores) e passam a estar marcados como **De outro sistema**. Não levam a assinatura do Fiscaldoo nem se assinam de novo.
+- os documentos feitos antes no Enterprise ficam como estão (número, datas e valores) e passam a estar marcados como **De outro sistema**. Não levam a assinatura do fiscaldoo nem se assinam de novo.
 
 Para os ver, abra **Contabilidade › Lançar › Vendas e cobranças › Faturas de clientes** e, nos filtros da pesquisa, escolha **De outro sistema**.
 
@@ -100,7 +100,7 @@ Para os ver, abra **Contabilidade › Lançar › Vendas e cobranças › Fatura
 ## Notas importantes
 
 - **Ensaiar primeiro numa cópia é obrigatório.** A passagem nunca se faz primeiro na base do cliente.
-- Uma empresa portuguesa que já usava os ativos do Enterprise pode passá-los para os **Ativos fixos** do Fiscaldoo: veja [Como migrar os ativos do Enterprise](/migration-toolkit/ativos-do-enterprise).
+- Uma empresa portuguesa que já usava os ativos do Enterprise pode passá-los para os **Ativos fixos** do fiscaldoo: veja [Como migrar os ativos do Enterprise](/migration-toolkit/ativos-do-enterprise).
 - O que muda no dia a dia de uma base Enterprise está em [Edições e versões suportadas](/getting-started/edicoes-e-versoes-suportadas#o-que-muda-no-enterprise).
 
 ## Problemas frequentes

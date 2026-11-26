@@ -3,7 +3,7 @@ id: diarios
 slug: /accounting-pt/diarios
 title: Como criar um diário
 sidebar_label: Criar um diário
-description: Criar um diário novo (compras, vendas, banco, caixa, cartão de crédito ou operações diversas) com o assistente de três passos, e saber o que o Fiscaldoo preenche sozinho.
+description: Criar um diário novo (compras, vendas, banco, caixa, cartão de crédito ou operações diversas) com o assistente de três passos, e saber o que o fiscaldoo preenche sozinho.
 keywords: [criar um diário, criar um diario, diário de compras, diario de compras, diário de banco, diario de banco, diário de caixa, código do diário, codigo do diario, prefixo da sequência, prefixo da sequencia, tipo de transação SAF-T, tipo de transacao SAF-T, já existe um diário com o código, ja existe um diario com o codigo]
 doc_id: DOC-0082
 article_type: tarefa
@@ -49,7 +49,7 @@ Para o diário de uma série de faturas certificadas, não use este assistente: 
    ![Passo 1 de 3 do assistente, com a opção Compras (faturas de fornecedores) escolhida](/images/accounting-pt/diarios/82-02-passo1-tipo.png)
 3. No **Passo 2 de 3: nome e código**, escreva o **Nome do diário**, por exemplo «Compras de serviços». O **Código curto** vem sugerido pelo tipo («BILL1» nas compras, «INV1» nas vendas, «BNK2», «CSH1», «CCD1» e «MISC1» nos outros): troque-o por um código seu, por exemplo `CSV`. O campo aceita no máximo 5 caracteres. A **Moeda** só se preenche para um diário em moeda estrangeira. Carregue em **Seguinte**.
    ![Passo 2 de 3 com o nome «Compras de serviços» e o código curto CSV](/images/accounting-pt/diarios/82-03-passo2-nome-e-codigo.png)
-4. No **Passo 3 de 3: contas**, a janela mostra as contas do tipo escolhido. Nos bancos e na caixa diz «Deixe a conta principal vazia e ela é criada por si no plano de contas»; nas vendas e nas compras mostra um aviso (ver abaixo). Todas se podem deixar vazias; o que o Fiscaldoo preenche então está na secção «O que o Fiscaldoo preenche sozinho nos bancos e na caixa»:
+4. No **Passo 3 de 3: contas**, a janela mostra as contas do tipo escolhido. Nos bancos e na caixa diz «Deixe a conta principal vazia e ela é criada por si no plano de contas»; nas vendas e nas compras mostra um aviso (ver abaixo). Todas se podem deixar vazias; o que o fiscaldoo preenche então está na secção «O que o fiscaldoo preenche sozinho nos bancos e na caixa»:
 
    | Tipo | Contas pedidas |
    |---|---|
@@ -74,9 +74,9 @@ Abre-se a ficha do diário **Compras de serviços**, com **Tipo** «Compras», *
 
 ## Notas importantes
 
-### O que o Fiscaldoo preenche sozinho nos bancos e na caixa
+### O que o fiscaldoo preenche sozinho nos bancos e na caixa
 
-Se deixar as contas vazias no passo 3, o Fiscaldoo preenche-as com efeito contabilístico:
+Se deixar as contas vazias no passo 3, o fiscaldoo preenche-as com efeito contabilístico:
 
 | Diário | Conta principal | Conta de pendentes | Ganhos / perdas por diferenças |
 |---|---|---|---|
@@ -107,7 +107,7 @@ O **Prefixo da sequência** da ficha é o código curto que escolheu. Escolha-o 
 
 ### O código só aceita 5 caracteres
 
-- **Sintoma:** no Passo 2, o campo **Código curto** para de aceitar letras ao chegar ao quinto carácter.
+- **Sintoma:** no Passo 2, o campo **Código curto** pára de aceitar letras ao chegar ao quinto caracter.
 - **O que fazer:** escolha um código com no máximo 5 caracteres (por exemplo `BPO` ou `CSV`).
 
 {/* Nota interna (v23-T, DOC-0082, master cebcb888d, base docs_demo_v23t_test): nomes de grupos trocados pelos valores do campo Perfil (ou pelo acesso extra); frases de perfil provadas com utilizadores criados só com um valor do campo Perfil (perfil.*), as que não se provaram ficaram sem dizer o que o perfil vê (lista em reports/LOTE_V23-T.md). */}

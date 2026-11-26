@@ -1,8 +1,8 @@
 ---
 id: ligar-a-at
 slug: /fiscal-core/ligar-a-at
-title: Como ligar o Fiscaldoo à Autoridade Tributária
-sidebar_label: Ligar o Fiscaldoo à AT
+title: Como ligar o fiscaldoo à Autoridade Tributária
+sidebar_label: Ligar o fiscaldoo à AT
 sidebar_position: 1
 description: Iniciar o cofre de credenciais numa empresa nova, guardar as credenciais da AT da empresa (subutilizador, certificado .pfx e chave pública da AT), testá-las contra o simulador e confirmar na Prontidão das comunicações o que já está pronto para séries, faturas e guias.
 keywords: [ligar à AT, ligar a at, credenciais da AT, credenciais da at, subutilizador, webservice, webservices, certificado da AT, pfx, chave pública da AT, chave publica da at, prontidão das comunicações, prontidao das comunicacoes, WSE, WFA, WDT, testar a ligação, testar a ligacao, ambiente de testes, produção, producao, usado para envio, cofre, iniciar o cofre, permissões do cofre, permissoes do cofre, empresa nova]
@@ -18,7 +18,7 @@ related: [fiscal-core/certificacao/series-documentais, fiscal-core/at-e-saft/com
 
 ## Para que serve?
 
-Para comunicar diretamente à Autoridade Tributária e Aduaneira (AT) as séries, as faturas e as guias de transporte, o Fiscaldoo usa os dados de acesso da empresa aos webservices da AT: o subutilizador e a sua palavra-passe, o certificado e a chave pública da AT. Estes dados guardam-se uma vez por empresa e por ambiente (**Teste** ou **Produção**), protegidos pelo cofre de credenciais: depois de guardados, a palavra-passe e a chave privada já não se leem.
+Para comunicar diretamente à Autoridade Tributária e Aduaneira (AT) as séries, as faturas e as guias de transporte, o fiscaldoo usa os dados de acesso da empresa aos webservices da AT: o subutilizador e a sua palavra-passe, o certificado e a chave pública da AT. Estes dados guardam-se uma vez por empresa e por ambiente (**Teste** ou **Produção**), protegidos pelo cofre de credenciais: depois de guardados, a palavra-passe e a chave privada já não se leem.
 
 O administrador guarda e altera estas credenciais em qualquer empresa. Outra pessoa só o faz com a permissão **Editar** no cofre da empresa, e numa empresa nova ninguém a tem ainda: por isso o primeiro passo é iniciar o cofre, para depois a poder dar.
 
@@ -26,7 +26,7 @@ Emitir não precisa desta ligação. Uma empresa sem credenciais emite e imprime
 
 ## Quando utilizar?
 
-- Para a empresa passar a comunicar as séries, as faturas e as guias pelo Fiscaldoo, sem ir ao Portal das Finanças.
+- Para a empresa passar a comunicar as séries, as faturas e as guias pelo fiscaldoo, sem ir ao Portal das Finanças.
 - Numa empresa nova, quando a **Prontidão das comunicações com a AT** diz «Não há dados de acesso para o ambiente…».
 - Quando o certificado da AT está perto do fim (**Válido até**) e a AT lhe deu um novo.
 
@@ -40,8 +40,8 @@ Emitir não precisa desta ligação. Uma empresa sem credenciais emite e imprime
 
 - Faça os passos como administrador. Os passos 1 a 10 foram feitos assim do princípio ao fim, a 8 de novembro de 2026, numa empresa nova da demonstração (`Empresa Nova Exemplo, Lda`). No menu **Cofre de credenciais**, o administrador vê **Credenciais**, **Permissões**, **Iniciar o cofre**, **Tipos de portal**, **Domínios permitidos** e **Rodar a chave de cifra**.
 - Um utilizador com o acesso extra **Administração fiscal** também vê **Credenciais da AT** e, no cofre, **Credenciais**, **Permissões** e **Iniciar o cofre**, mas só guarda as credenciais da AT com **Editar** no cofre da empresa (veja «Problemas frequentes»). Nenhum valor do campo **Perfil** dá este acesso: o administrador junta-o em **Definições › Utilizadores e empresas › Utilizadores**, na ficha da pessoa, separador **Ajustes avançados**, em **Localização PT — Faturação, contabilidade e fiscal**. Veja [Perfis e permissões](/administration/perfis-e-permissoes).
-- A empresa já tem o número de contribuinte. O certificado do programa não se regista à mão: o Fiscaldoo, que assina os documentos, dá o número do certificado em vigor a cada empresa pelo NIF, e lê-se em **Definições › Faturação**, linha **Certificado de software da AT em vigor** (na demonstração, o 9999). Veja [Como preparar a empresa para emitir documentos certificados](/fiscal-core/preparar-a-faturacao-certificada).
-- No Portal das Finanças, a empresa tem um subutilizador para os webservices, com os perfis dos serviços que vai usar: **WSE** (séries), **WFA** (faturas) e **WDT** (guias de transporte). O Fiscaldoo não consegue confirmar estes perfis: a **Prontidão** lembra-os em cada linha. <span className="fd-pending">Pendente de validação no ecrã: a criação do subutilizador no Portal das Finanças (a demonstração nunca liga à AT verdadeira, só ao simulador).</span>
+- A empresa já tem o número de contribuinte. O certificado do programa não se regista à mão: a fiscaldoo, que assina os documentos, dá o número do certificado em vigor a cada empresa pelo NIF, e lê-se em **Definições › Faturação**, linha **Certificado de software da AT em vigor** (na demonstração, o 9999). Veja [Como preparar a empresa para emitir documentos certificados](/fiscal-core/preparar-a-faturacao-certificada).
+- No Portal das Finanças, a empresa tem um subutilizador para os webservices, com os perfis dos serviços que vai usar: **WSE** (séries), **WFA** (faturas) e **WDT** (guias de transporte). O fiscaldoo não consegue confirmar estes perfis: a **Prontidão** lembra-os em cada linha. <span className="fd-pending">Pendente de validação no ecrã: a criação do subutilizador no Portal das Finanças (a demonstração nunca liga à AT verdadeira, só ao simulador).</span>
 - Tem o ficheiro do certificado que a AT deu à empresa (.pfx) e a sua palavra-passe, e a chave pública da AT para o ambiente escolhido. <span className="fd-pending">Pendente de validação por contabilista certificado: como e a quem a empresa pede o certificado e a chave pública, e quem os guarda.</span>
 - O servidor tem a chave de cifra do cofre. Isto é com o administrador de sistema.
 
@@ -61,7 +61,7 @@ Emitir não precisa desta ligação. Uma empresa sem credenciais emite e imprime
 7. Marque **Usado para envio**. É o ambiente com que a empresa comunica; só pode haver um por empresa. Se o outro ambiente da mesma empresa já estava marcado, o formulário avisa logo, por exemplo: «As credenciais do ambiente Teste são as usadas para o envio. Ao guardar estas, o ambiente Produção passa a ser aquele com que esta empresa comunica, e o outro fica desmarcado.» Ao guardar, o outro ambiente fica desmarcado.
 8. Carregue em **Guardar** (ícone da nuvem). **Válido até** preenche-se com a data de fim do certificado (na imagem, 03/11/2027) e a palavra-passe passa a aparecer como uma fila de pontos, que não se lê. Aparece o botão **Testar a ligação (simulador)**, ao lado de **Ver a prontidão**, que já estava no registo novo.
    ![Credenciais da AT guardadas para a Empresa Nova Exemplo, Lda no ambiente Teste, com Usado para envio marcado, Válido até 03/11/2027, o utilizador do webservice 599999985/1 e a palavra-passe em máscara](/images/fiscal-core/ligar-a-at/03-credenciais-guardadas.png)
-9. Carregue em **Testar a ligação (simulador)**. O Fiscaldoo confere se as credenciais estão completas e pergunta à AT simulada; não envia nada à AT verdadeira.
+9. Carregue em **Testar a ligação (simulador)**. O fiscaldoo confere se as credenciais estão completas e pergunta à AT simulada; não envia nada à AT verdadeira.
    ![Mensagem Teste passou: as credenciais estão completas e válidas e a Autoridade Tributária simulada respondeu (aceite)](/images/fiscal-core/ligar-a-at/04-testar-a-ligacao.png)
 10. Carregue em **Ver a prontidão**. Abre a **Prontidão das comunicações com a AT** desta empresa, agrupada por empresa e por ambiente. Abra os grupos e confirme as linhas do ambiente que guardou.
 
@@ -96,7 +96,7 @@ As credenciais das imagens são fictícias.
 
 - **Iniciar o cofre é uma vez por empresa.** Depois, só quem tem **Editar** dá permissões. **Editar** serve para guardar e mudar credenciais e para dar permissões; não mostra palavras-passe: ninguém lê uma palavra-passe guardada, nem o administrador. Dê-o só a quem trata das credenciais.
 - **O que a Prontidão não vê.** Não confirma os perfis do subutilizador no Portal das Finanças, nem se a palavra-passe está certa na AT. O teste do passo 9 usa o simulador e não lê a palavra-passe guardada: não o use para confirmar que o servidor ainda consegue usar as credenciais depois de a chave de cifra do cofre mudar ou se perder.
-- **Credenciais da AT e Credenciais do cofre são coisas diferentes.** As **Credenciais da AT** são as deste artigo e ligam o Fiscaldoo aos webservices. O menu **Cofre de credenciais › Credenciais** guarda as palavras-passe dos portais para as pessoas da empresa: guardar lá a palavra-passe do subutilizador não liga o Fiscaldoo à AT. As duas dependem da mesma permissão do cofre.
+- **Credenciais da AT e Credenciais do cofre são coisas diferentes.** As **Credenciais da AT** são as deste artigo e ligam o fiscaldoo aos webservices. O menu **Cofre de credenciais › Credenciais** guarda as palavras-passe dos portais para as pessoas da empresa: guardar lá a palavra-passe do subutilizador não liga o fiscaldoo à AT. As duas dependem da mesma permissão do cofre.
 - **Segredos.** A palavra-passe do webservice e a chave privada só se escrevem: depois de guardadas aparecem como máscara e não se leem, só se substituem. O ficheiro .pfx e a sua palavra-passe não ficam guardados.
 - Quando o certificado chegar ao fim (**Válido até**), abra o registo, escolha o .pfx novo com a sua palavra-passe e guarde.
 
@@ -128,8 +128,8 @@ As credenciais das imagens são fictícias.
 ### «As credenciais ainda não estão prontas: - Falta o número do certificado do programa…»
 
 - **Sintoma:** **Testar a ligação (simulador)** mostra, no canto do ecrã, «As credenciais ainda não estão prontas: - Falta o número do certificado do programa na Autoridade Tributária. As séries e as faturas têm de o levar.…». Na **Prontidão**, as linhas de **Séries** e **Faturas** ficam em **Falta alguma coisa** com a mesma frase; a de **Guias de transporte** fica em **Pronto**.
-- **Causa:** a instalação não tem um certificado de software em vigor para a empresa. O certificado já não se regista na instalação (já não há a lista **Certificados de software**): quem o dá é o Fiscaldoo, que também assina os documentos ([Como ligar a instalação ao Fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)).
-- **O que fazer:** o administrador confirma a ligação ao Fiscaldoo e vê, em **Contabilidade › Configurar › Sistema e segurança › Estado da certificação**, a linha «Certificado de software da AT em vigor» (na demonstração diz «Certificado n.º 9999/AT.»). Se a linha falhar com a ligação certa, contacte o suporte do fiscaldoo. Depois repita o passo 9. <span className="fd-pending">Pendente de validação no ecrã: esta recusa com o master de hoje; a demonstração tem sempre o certificado 9999 do Fiscaldoo simulado e a frase do sintoma vem de uma versão anterior.</span>
+- **Causa:** a instalação não tem um certificado de software em vigor para a empresa. O certificado já não se regista na instalação (já não há a lista **Certificados de software**): quem o dá é a fiscaldoo, que também assina os documentos ([Como ligar a instalação à fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)).
+- **O que fazer:** o administrador confirma a ligação à fiscaldoo e vê, em **Contabilidade › Configurar › Sistema e segurança › Estado da certificação**, a linha «Certificado de software da AT em vigor» (na demonstração diz «Certificado n.º 9999/AT.»). Se a linha falhar com a ligação certa, contacte o suporte da fiscaldoo. Depois repita o passo 9. <span className="fd-pending">Pendente de validação no ecrã: esta recusa com o master de hoje; a demonstração tem sempre o certificado 9999 da fiscaldoo simulada e a frase do sintoma vem de uma versão anterior.</span>
 
 ### «A operação não pode ser concluída: Esta empresa já tem credenciais para este ambiente.»
 

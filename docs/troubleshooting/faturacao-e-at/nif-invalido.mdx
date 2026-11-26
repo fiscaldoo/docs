@@ -38,8 +38,8 @@ Numa fatura a um cliente de Portugal sem NIF, o rascunho avisa, antes de emitir,
 
 ## Causas verificadas
 
-- **O número tem um algarismo trocado.** O último algarismo de um NIF português é calculado a partir dos outros oito. Se não bate, o NIF não existe e o Fiscaldoo não grava a ficha.
-- **O cliente não tem NIF na ficha.** O Fiscaldoo emite a fatura e trata-a como venda a consumidor final, num cliente de Portugal e num de outro país (aí, o consumidor final leva o país do cliente). O NIF não se acrescenta depois a essa fatura.
+- **O número tem um algarismo trocado.** O último algarismo de um NIF português é calculado a partir dos outros oito. Se não bate, o NIF não existe e o fiscaldoo não grava a ficha.
+- **O cliente não tem NIF na ficha.** O fiscaldoo emite a fatura e trata-a como venda a consumidor final, num cliente de Portugal e num de outro país (aí, o consumidor final leva o país do cliente). O NIF não se acrescenta depois a essa fatura.
 - **O NIF do cliente da UE não está Válido no VIES.** Uma fatura com a isenção intracomunitária posta à mão é recusada ao confirmar.
 - **Cliente de outro país da UE.** O número de IVA escreve-se com o código do país à frente (por exemplo `ESB99999997`). Para uma venda isenta a outro país da UE, o número tem de estar validado no VIES, o sistema europeu que confirma os números de IVA.
 
@@ -114,7 +114,7 @@ Deixe o NIF vazio. A fatura sai como «Consumidor final», também num cliente d
 
 ## Quando contactar o suporte
 
-- O Fiscaldoo recusa um NIF que confirmou num documento oficial do cliente.
+- O fiscaldoo recusa um NIF que confirmou num documento oficial do cliente.
 - **Validar VIES** dá **Serviço indisponível** durante muito tempo.
 - Precisa de corrigir o NIF de muitas fichas importadas de outro programa.
 

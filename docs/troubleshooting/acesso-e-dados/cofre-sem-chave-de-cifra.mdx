@@ -18,7 +18,7 @@ related: [troubleshooting/acesso-e-dados/cofre-sem-permissao, troubleshooting/ac
 
 ## Sintoma
 
-Ao guardar uma credencial no cofre, abre-se a janela **Operação inválida** e a credencial não fica guardada. A causa não está no seu perfil, mas no servidor onde o Fiscaldoo corre.
+Ao guardar uma credencial no cofre, abre-se a janela **Operação inválida** e a credencial não fica guardada. A causa não está no seu perfil, mas no servidor onde o fiscaldoo corre.
 
 ## Mensagem
 
@@ -48,7 +48,7 @@ O cofre cifra cada palavra-passe com uma chave que nunca está na base de dados 
 
 ## Como resolver
 
-Quem faz: **o administrador do servidor** (não os utilizadores do Fiscaldoo).
+Quem faz: **o administrador do servidor** (não os utilizadores do fiscaldoo).
 
 1. Se a frase fala de «não tem chave»: defina a variável `FISCALDOO_SECRETS_KEY`, ou crie um ficheiro com a chave e indique o seu caminho em `FISCALDOO_SECRETS_KEY_PATH`. A chave é uma sequência aleatória de 32 bytes, codificada em base64 «URL-safe» (44 caracteres), numa única linha. Se a chave existir mas não tiver esse formato, a frase é «A chave de cifra do cofre de credenciais não é válida: tem de ser 32 bytes aleatórios em base64 URL-safe (44 caracteres)…».
 2. Se a frase fala de «pode ser lido por outros utilizadores»: ponha o ficheiro a 600 (`chmod 600`) e confirme que pertence ao utilizador que corre o Odoo.

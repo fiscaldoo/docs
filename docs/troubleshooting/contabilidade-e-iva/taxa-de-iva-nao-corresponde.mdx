@@ -17,7 +17,7 @@ related: [accounting-pt/iva/taxas-e-isencoes-de-iva, troubleshooting/contabilida
 
 ## Sintoma
 
-Numa fatura em rascunho, a coluna **Impostos** de uma linha tem uma taxa que não é a que espera para a região ou para o tipo de operação, ou o Fiscaldoo recusa a fatura ao carregar em **Confirmar**.
+Numa fatura em rascunho, a coluna **Impostos** de uma linha tem uma taxa que não é a que espera para a região ou para o tipo de operação, ou o fiscaldoo recusa a fatura ao carregar em **Confirmar**.
 
 ## Mensagem
 
@@ -43,7 +43,7 @@ Com uma linha no regime da margem, sem preço de compra:
 
 - **A taxa foi acrescentada, em vez de trocada.** A coluna **Impostos** aceita mais do que uma taxa: ao escolher uma segunda, a primeira fica. Na demonstração, a linha ficou com **6%** e **23%**, e foi recusada só ao confirmar.
 - **A lista tem taxas de outras regiões.** Numa empresa do Continente, a lista da linha mostra, além de **23%**, **13%** e **6%**, a taxa **22% MA** da Madeira e as de operações especiais, como **0% EU S** e **0% EX S**. As outras taxas das regiões procuram-se pela sigla: **MA** mostra também **12% MA**, **5% MA** e **4% MA**, e **AZ** mostra **16% AZ**, **9% AZ** e **4% AZ**, dos Açores. A pesquisa pela palavra «Açores» responde «Sem registos».
-- **O Fiscaldoo não recusa nem avisa uma taxa de outra região.** Com **22% MA**, numa empresa do Continente e com um cliente de Vila Real, o rascunho mostrou **IVA 22%** e 122,00 € sobre 100,00 €, e **Confirmar** publicou a fatura sem qualquer mensagem sobre a taxa. Depois de publicada, a taxa já não se altera.
+- **O fiscaldoo não recusa nem avisa uma taxa de outra região.** Com **22% MA**, numa empresa do Continente e com um cliente de Vila Real, o rascunho mostrou **IVA 22%** e 122,00 € sobre 100,00 €, e **Confirmar** publicou a fatura sem qualquer mensagem sobre a taxa. Depois de publicada, a taxa já não se altera.
 - **A taxa não muda com a região do cliente.** Com um cliente do Funchal (código postal 9000-100), a linha continuou com **23%** e a fatura foi publicada assim. Quem escolhe a taxa é quem faz a fatura.
 - **A autoliquidação só passa com cliente estabelecido em Portugal.** Com um cliente dos Estados Unidos, recusa acima. Com **Construções Marão, Lda** (NIF português), a mesma taxa foi aceite, com **IVA 0%**.
 - **O regime da margem precisa do preço de compra.** As colunas **Regime da margem** e **Preço de compra (com IVA)** estão escondidas: escolhem-se no botão de colunas, à direita do cabeçalho das linhas.
@@ -81,7 +81,7 @@ A fatura fica **Publicada**, com uma só taxa em cada linha e o IVA do total igu
 | 2433 IVA - Liquidado | | 22,00 € |
 | **Regime da margem** (`FT D26/38`): 2111 Clientes gerais | 100,00 € | |
 | 721 Prestações de serviços | | 100,00 € |
-| Lançamento à parte (`OD/2026/00336`): 721 Prestações de serviços | 7,48 € | |
+| Lançamento à parte (`OD/2026/00104`): 721 Prestações de serviços | 7,48 € | |
 | 2433 IVA - Liquidado | | 7,48 € |
 
 A taxa de outra região vai para a mesma conta 2433.

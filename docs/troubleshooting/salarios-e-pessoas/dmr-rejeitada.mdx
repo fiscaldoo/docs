@@ -3,7 +3,7 @@ id: dmr-rejeitada
 slug: /troubleshooting/dmr-rejeitada
 title: A DMR foi rejeitada ou não pode ser gerada
 sidebar_label: DMR rejeitada
-description: O que fazer quando o Portal das Finanças rejeita a DMR (registar a rejeição, reabrir, corrigir e entregar de novo) e quando o Fiscaldoo recusa os dados do empregador da DMR.
+description: O que fazer quando o Portal das Finanças rejeita a DMR (registar a rejeição, reabrir, corrigir e entregar de novo) e quando o fiscaldoo recusa os dados do empregador da DMR.
 keywords: [DMR rejeitada, DMR recusada, AT recusou a DMR, registar como rejeitada, reabrir para corrigir, motivo da rejeição, motivo da rejeicao, DMR não gera, DMR nao gera, NIPC inválido, NIPC invalido, NIPC da Segurança Social, ficha do empregador, declaração mensal de remunerações, declaracao mensal de remuneracoes, recibos por pagar, não há recibos pagos, nao ha recibos pagos, rendimento pago no mês]
 doc_id: DOC-0360
 article_type: problema
@@ -19,10 +19,10 @@ related: [payroll-pt/declarar/dmr, troubleshooting/salarios-e-pessoas/processame
 
 Há dois casos:
 
-- **O Portal das Finanças rejeitou a DMR** que foi entregue. No Fiscaldoo, a DMR está **Submetida** e é preciso registar a rejeição, corrigir e entregar outra vez.
-- **O Fiscaldoo recusa um passo antes da entrega**: **Gerar**, **Validar** ou guardar os dados do empregador abrem uma janela de erro.
+- **O Portal das Finanças rejeitou a DMR** que foi entregue. No fiscaldoo, a DMR está **Submetida** e é preciso registar a rejeição, corrigir e entregar outra vez.
+- **O fiscaldoo recusa um passo antes da entrega**: **Gerar**, **Validar** ou guardar os dados do empregador abrem uma janela de erro.
 
-Este artigo parte da DMR de agosto de 2026 da Empresa Demonstração, Lda (24 linhas, 32.254,01 € de rendimentos, 2.331,00 € de IRS retido), já **Submetida**. O caminho normal da DMR está em [Como enviar a declaração mensal de remunerações (DMR) à AT](/payroll-pt/dmr).
+Este artigo parte da DMR de agosto de 2026 da Empresa Demonstração, Lda (8 linhas, 11.076,67 € de rendimentos, 832,00 € de IRS retido), já **Submetida**. O caminho normal da DMR está em [Como enviar a declaração mensal de remunerações (DMR) à AT](/payroll-pt/dmr).
 
 ## Mensagem
 
@@ -50,8 +50,8 @@ As outras recusas da DMR antes da entrega, «Já existe uma declaração deste t
 
 ## Causas verificadas
 
-- **O Portal das Finanças rejeitou o ficheiro.** O motivo vem do Portal; o Fiscaldoo só regista o que lá se viu. O Fiscaldoo não sabe da rejeição até alguém a registar.
-- **O NIPC da ficha do empregador tem um algarismo errado.** O Fiscaldoo confere o dígito de controlo ao guardar.
+- **O Portal das Finanças rejeitou o ficheiro.** O motivo vem do Portal; o fiscaldoo só regista o que lá se viu. O fiscaldoo não sabe da rejeição até alguém a registar.
+- **O NIPC da ficha do empregador tem um algarismo errado.** O fiscaldoo confere o dígito de controlo ao guardar.
 - **O recibo ainda não está pago.** A DMR declara os recibos **Pagos** no mês, pela data do pagamento. Um recibo validado e por pagar não entra: um salário de outubro pago em novembro entra na DMR de novembro. O pagamento regista-se com **Banco executou** ou **Marcar como pago** no lote ([Não consigo pagar os salários ou gerar o ficheiro de transferências](/troubleshooting/pagamento-dos-salarios-recusado)). <span className="fd-pending">Pendente de validação por contabilista certificado: a DMR do mês em que os rendimentos são pagos ou colocados à disposição (CIRS, art. 119.º).</span>
 - **A DMR de um mês já entregue não se refaz com «Reabrir».** Se a AT aceitou a DMR e o valor mudou depois, faz-se uma declaração de substituição. <span className="fd-pending">Pendente de validação no ecrã: a declaração de substituição não foi feita nesta ronda.</span>
 
@@ -84,7 +84,7 @@ Feito com o administrador da demonstração. Os botões **Registar …** são do
 
 - **Registar como rejeitada** não aparece numa DMR **Submetida** a quem tem o acesso extra **Submissor de declarações**.
 - Depois de **Reabrir para corrigir** e **Gerar**, as linhas do Quadro 5 não refletem a correção feita.
-- O NIPC está certo (confirmado na certidão permanente) e o Fiscaldoo recusa-o.
+- O NIPC está certo (confirmado na certidão permanente) e o fiscaldoo recusa-o.
 
 ## Informação a enviar
 

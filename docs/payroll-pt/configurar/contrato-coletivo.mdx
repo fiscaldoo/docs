@@ -17,9 +17,9 @@ related: [payroll-pt/configurar/salario-minimo, payroll-pt/configurar/contabiliz
 
 ## Para que serve?
 
-Um contrato coletivo pode dar ao trabalhador mais do que a lei: um mínimo por categoria, diuturnidades ou outras cláusulas de valor. O Fiscaldoo guarda cada instrumento com a sua publicação, compara a retribuição do recibo com o mínimo que se aplica e não deixa validar abaixo dele. Este artigo mostra como registar o instrumento, ligar o trabalhador, pagar as diuturnidades e conferir o resultado.
+Um contrato coletivo pode dar ao trabalhador mais do que a lei: um mínimo por categoria, diuturnidades ou outras cláusulas de valor. O fiscaldoo guarda cada instrumento com a sua publicação, compara a retribuição do recibo com o mínimo que se aplica e não deixa validar abaixo dele. Este artigo mostra como registar o instrumento, ligar o trabalhador, pagar as diuturnidades e conferir o resultado.
 
-O Fiscaldoo **não traz o conteúdo de nenhum contrato coletivo**. Quem o carrega é a empresa, a partir do Boletim do Trabalho e Emprego (BTE). Um valor mal carregado dá um recibo errado.
+O fiscaldoo **não traz o conteúdo de nenhum contrato coletivo**. Quem o carrega é a empresa, a partir do Boletim do Trabalho e Emprego (BTE). Um valor mal carregado dá um recibo errado.
 
 ## Quando utilizar?
 
@@ -120,7 +120,7 @@ A rubrica **Diuturnidades** (código `DIUT`) já vem com a origem **Diuturnidade
 
 </StepByStep>
 
-Depois de terminado o prazo, a ficha do instrumento mostra no topo o aviso **Verificar este instrumento:**, por exemplo: «CCT do comércio (exemplo): Os 60 dias para corrigir as cláusulas discriminatórias terminaram em 31/07/2026 (art. 479.º/3). O que acontece agora: o serviço competente remete o caso ao Ministério Público em 15 dias (art. 479.º/4). Como resolver: confirme a correção e a declaração de nulidade antes de aplicar essas cláusulas.» O mesmo aviso diz quando falta a revisão da igualdade: «Não está registada nenhuma revisão da igualdade e não discriminação (art. 24.º-25.º).» O Fiscaldoo não altera nenhum recibo por causa destes avisos.
+Depois de terminado o prazo, a ficha do instrumento mostra no topo o aviso **Verificar este instrumento:**, por exemplo: «CCT do comércio (exemplo): Os 60 dias para corrigir as cláusulas discriminatórias terminaram em 31/07/2026 (art. 479.º/3). O que acontece agora: o serviço competente remete o caso ao Ministério Público em 15 dias (art. 479.º/4). Como resolver: confirme a correção e a declaração de nulidade antes de aplicar essas cláusulas.» O mesmo aviso diz quando falta a revisão da igualdade: «Não está registada nenhuma revisão da igualdade e não discriminação (art. 24.º-25.º).» O fiscaldoo não altera nenhum recibo por causa destes avisos.
 
 {/* Nota interna: Revisto a 04/11/2026 (v8-REV, master 8c5a23228, base docs_demo_v8rev3_test): PAY-081 pôs o aviso na ficha do instrumento; visto só com o prazo já ultrapassado. */}
 
@@ -166,7 +166,7 @@ As diuturnidades entram nos 632 sem linha própria, e os encargos da empresa (24
 - **Uma linha sem regra avisa.** Se um recibo tiver a linha **Diuturnidades** e nenhuma regra servir o trabalhador, o recibo e o lote mostram: «Nenhuma regra de diuturnidades serve Eva Cristina Rocha em 30/11/2026, por isso nada se paga (instrumento coletivo do contrato: nenhum; categoria profissional: Profissionais qualificados). …». A mensagem indica **Lei e calendários**, mas as regras estão em **Salários › Configurar › Rubricas › Regras de diuturnidades**.
 - **Vigência.** Mantenha **Denunciado em**, **Sobrevigência até** e **Expirou em** atualizados: decidem o **Estado atual** e se o instrumento continua a contar na data do recibo. Confirme estas datas no BTE.
 - **Quem não está ligado ao instrumento** não recebe a regra desse instrumento nem fica sujeito à sua tabela.
-- **Igualdade.** O Fiscaldoo não verifica se as cláusulas são discriminatórias: **Igualdade revista em** só regista que alguém o fez.
+- **Igualdade.** O fiscaldoo não verifica se as cláusulas são discriminatórias: **Igualdade revista em** só regista que alguém o fez.
 - **Edição Enterprise.** Numa empresa portuguesa, os salários são estes e o menu de salários do Enterprise fica escondido. Numa empresa de outro país é ao contrário: os recibos são os do Enterprise, nenhuma regra portuguesa corre e estes menus só aparecem ao administrador do sistema. <span className="fd-pending">Pendente de validação no ecrã: diferenças na edição Enterprise.</span>
 
 {/* Nota interna (DOCS-046): efeito de Sobrevigência/Expirou em e da falta de correspondência de nível lido das regras (status_on, minimum_at, wage_at), sem recibo próprio: todos os meses de 2026 ficaram ocupados na base. Provado: um recibo de quem não está ligado ao instrumento, com a linha Diuturnidades, deu quantidade 0 e 0,00 €. Os menus Ordem de prevalência das fontes legais e Valores por fonte legal não aparecem ao Administrador de Salários nem ao admin da demonstração: não entram no artigo. */}

@@ -18,9 +18,9 @@ related: [people/trabalhadores/contrato-de-trabalho, payroll-pt/declarar/vinculo
 
 ## Para que serve?
 
-Quando um contrato acaba, a empresa tem de pagar o que falta (o salário até ao último dia, as férias e os subsídios proporcionais e, em muitos casos, uma compensação), entregar o certificado de trabalho e comunicar a cessação à Segurança Social. O Fiscaldoo regista a cessação, confere o aviso prévio, calcula o recibo final parcela a parcela e prepara o certificado e a comunicação.
+Quando um contrato acaba, a empresa tem de pagar o que falta (o salário até ao último dia, as férias e os subsídios proporcionais e, em muitos casos, uma compensação), entregar o certificado de trabalho e comunicar a cessação à Segurança Social. O fiscaldoo regista a cessação, confere o aviso prévio, calcula o recibo final parcela a parcela e prepara o certificado e a comunicação.
 
-O Fiscaldoo não envia nada à Segurança Social e não emite a declaração de situação de desemprego (ver «Notas importantes»).
+O fiscaldoo não envia nada à Segurança Social e não emite a declaração de situação de desemprego (ver «Notas importantes»).
 
 ## Quando utilizar?
 
@@ -52,14 +52,14 @@ O recibo final faz-se na própria cessação, com o botão **Criar recibo final*
 4. Em **Iniciador**, escolha **Entidade empregadora**, **Trabalhador**, **Ambos (acordo)** ou **Por força da lei**.
 5. Em **Data do aviso**, escreva o dia em que a comunicação foi feita (no exemplo, `10/11/2026`). Em **Último dia do contrato**, escreva o último dia efetivo de trabalho, nunca o da comunicação (no exemplo, `30/11/2026`).
    ![Cessação de Hugo Miguel Santos: termo certo, caducidade, iniciador Entidade empregadora, aviso a 10/11/2026 e último dia 30/11/2026](/images/people/cessacao-do-contrato/01-cessacao-rascunho.png)
-6. Confira o aviso prévio, que o Fiscaldoo calcula sozinho: **Dias de aviso exigidos**, **Dias de aviso dados**, **Dias de aviso em falta** e **Último dia para comunicar**. No exemplo: 15 exigidos, 20 dados, 0 em falta, último dia 15/11/2026.
+6. Confira o aviso prévio, que o fiscaldoo calcula sozinho: **Dias de aviso exigidos**, **Dias de aviso dados**, **Dias de aviso em falta** e **Último dia para comunicar**. No exemplo: 15 exigidos, 20 dados, 0 em falta, último dia 15/11/2026.
    ![Aviso prévio: 15 dias exigidos, 20 dados, 0 em falta, último dia para comunicar 15/11/2026](/images/people/cessacao-do-contrato/02-aviso-previo.png)
 7. Se houver dias de férias de anos anteriores por gozar, preencha **Férias de anos anteriores não gozadas** (grupo **FÉRIAS**). Se a modalidade for um acordo ou um despedimento, preencha o grupo **MOTIVO E ACORDO**.
 8. Guarde e carregue em **Confirmar**. A cessação passa a **Confirmado**, com **Confirmado por** e **Confirmada em**, e a barra mostra **Criar recibo final**, **Reabrir**, **Certificado de trabalho** e **Anular**.
 
 </StepByStep>
 
-Ao confirmar, o Fiscaldoo cria a comunicação da cessação à Segurança Social, em **Rascunho** (no exemplo, «Cessação / Hugo Miguel Santos / 30/11/2026»).
+Ao confirmar, o fiscaldoo cria a comunicação da cessação à Segurança Social, em **Rascunho** (no exemplo, «Cessação / Hugo Miguel Santos / 30/11/2026»).
 
 ### 2. Fazer o recibo final
 
@@ -98,7 +98,7 @@ No exemplo, o recibo final de Hugo Miguel Santos tem estas linhas:
 
 #### Em vez do botão: o lote Acerto final
 
-O botão faz um recibo sem lote, e o **Ficheiro de transferências** só existe no lote. Se quer pagar por ficheiro, ou há várias saídas no mesmo mês, use o lote em vez do botão. O recibo sai igual, ao cêntimo. Não dá para usar os dois na mesma cessação: o Fiscaldoo recusa o segundo recibo final (ver «Problemas frequentes»).
+O botão faz um recibo sem lote, e o **Ficheiro de transferências** só existe no lote. Se quer pagar por ficheiro, ou há várias saídas no mesmo mês, use o lote em vez do botão. O recibo sai igual, ao cêntimo. Não dá para usar os dois na mesma cessação: o fiscaldoo recusa o segundo recibo final (ver «Problemas frequentes»).
 
 <StepByStep>
 
@@ -131,9 +131,9 @@ A comunicação criada ao confirmar a cessação está em **Salários › Prepar
 
 ## No Enterprise
 
-No Odoo Enterprise, a cessação faz-se da mesma maneira, com o perfil **Processador de salários**: as listas **Cessações** e **Certificados de trabalho** têm as mesmas colunas e o formulário **Novo** da cessação tem os mesmos campos. O recibo final é o da aplicação **Salários** do Fiscaldoo; a aplicação de salários do Enterprise não aparece numa empresa portuguesa (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
+No Odoo Enterprise, a cessação faz-se da mesma maneira, com o perfil **Processador de salários**: as listas **Cessações** e **Certificados de trabalho** têm as mesmas colunas e o formulário **Novo** da cessação tem os mesmos campos. O recibo final é o da aplicação **Salários** do fiscaldoo; a aplicação de salários do Enterprise não aparece numa empresa portuguesa (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)).
 
-{/* Nota interna (lote EE-10, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): cópia Enterprise docs_ee_ee10b_test no portátil (pg_dump da odoo20_ee_test, -u dos módulos mudados até master e -i de hr_payroll, planning, hr_appraisal e hr_recruitment), porta 8504, guarda de rede ligada; utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): ee10_proc em Salários › Preparar › Trabalhadores e contratos › Cessações e Pessoas › Contratos e saídas › Cessações e Certificados de trabalho (colunas iguais às da cópia Community) e no formulário Novo da cessação (mesmos rótulos, de Trabalhador a Base das férias anteriores); o recibo final, o pagamento e a contabilização não foram refeitos na cópia Enterprise (são os da aplicação Salários do Fiscaldoo, já conferida no lote EE-06). Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee10_test (master e4dd4ae90, a do lote EE-10 interrompido) e com o texto do artigo. Ver reports/LOTE_EE-10.md. */}
+{/* Nota interna (lote EE-10, DOCS-073 #4142, DEC-1794, master 7cd24fcc9, 11/11/2026): cópia Enterprise docs_ee_ee10b_test no portátil (pg_dump da odoo20_ee_test, -u dos módulos mudados até master e -i de hr_payroll, planning, hr_appraisal e hr_recruitment), porta 8504, guarda de rede ligada; utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): ee10_proc em Salários › Preparar › Trabalhadores e contratos › Cessações e Pessoas › Contratos e saídas › Cessações e Certificados de trabalho (colunas iguais às da cópia Community) e no formulário Novo da cessação (mesmos rótulos, de Trabalhador a Base das férias anteriores); o recibo final, o pagamento e a contabilização não foram refeitos na cópia Enterprise (são os da aplicação Salários do fiscaldoo, já conferida no lote EE-06). Menus e vistas comparados, perfil a perfil, com a cópia Community docs_demo_ee10_test (master e4dd4ae90, a do lote EE-10 interrompido) e com o texto do artigo. Ver reports/LOTE_EE-10.md. */}
 
 ## Resultado esperado
 
@@ -145,10 +145,10 @@ No Odoo Enterprise, a cessação faz-se da mesma maneira, com o perfil **Process
 ## Notas importantes
 
 - **Confirme as compensações antes de pagar.** Os valores da compensação e dos créditos vêm de regras legais guardadas no produto (**Salários › Configurar** › regras de compensação e de cessação). Valide-os com o contabilista certificado ou com o jurista.
-- **Declaração de situação de desemprego.** O Fiscaldoo não a emite nem a prepara. Se o trabalhador a pedir para requerer o subsídio de desemprego, a empresa preenche-a fora do Fiscaldoo, na Segurança Social Direta ou no modelo da Segurança Social, com as datas e o motivo da cessação que ficaram registados aqui. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo de entrega da declaração de situação de desemprego ao trabalhador e forma de entrega.</span>
+- **Declaração de situação de desemprego.** O fiscaldoo não a emite nem a prepara. Se o trabalhador a pedir para requerer o subsídio de desemprego, a empresa preenche-a fora do fiscaldoo, na Segurança Social Direta ou no modelo da Segurança Social, com as datas e o motivo da cessação que ficaram registados aqui. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo de entrega da declaração de situação de desemprego ao trabalhador e forma de entrega.</span>
 - **O aviso prévio conta-se pela Data do aviso.** Se os **Dias de aviso em falta** forem mais do que zero, o recibo final leva a linha do aviso em falta (a pagar pela empresa ou a descontar ao trabalhador, conforme quem não cumpriu).
 - **Uma cessação liquidada fica fechada.** Corrija os dados antes de calcular e validar o recibo final; depois disso, a correção faz-se com um recibo corretivo ([Como corrigir um recibo já processado](/payroll-pt/corrigir-um-processamento)).
-- **O prazo de pagamento dos créditos.** O Fiscaldoo avisa no campo **Pagamento dos créditos** quando não conhece o prazo da modalidade: no exemplo, «O prazo dos créditos desta modalidade de cessação não foi encontrado nas fontes lidas (a confirmar pelo contabilista certificado).»
+- **O prazo de pagamento dos créditos.** O fiscaldoo avisa no campo **Pagamento dos créditos** quando não conhece o prazo da modalidade: no exemplo, «O prazo dos créditos desta modalidade de cessação não foi encontrado nas fontes lidas (a confirmar pelo contabilista certificado).»
 - **Contabilização.** O recibo final só se contabiliza quando todas as rubricas com valor têm modelo de contabilização, incluindo as da cessação ([Como contabilizar o processamento dos salários](/payroll-pt/contabilizar-os-salarios)).
 
 ## Problemas frequentes

@@ -4,7 +4,7 @@ slug: /troubleshooting/palavra-passe-temporaria
 title: Tenho de alterar a palavra-passe temporária
 sidebar_label: Palavra-passe temporária
 sidebar_position: 14
-description: Quando o administrador define a palavra-passe de um utilizador, ela é temporária. À primeira entrada, o Fiscaldoo pede uma nova na página web e só depois deixa trabalhar.
+description: Quando o administrador define a palavra-passe de um utilizador, ela é temporária. À primeira entrada, o fiscaldoo pede uma nova na página web e só depois deixa trabalhar.
 keywords: [palavra-passe temporária, palavra-passe temporaria, password, senha, primeira entrada, alterar palavra-passe, tem de alterar a palavra-passe, force password change, nova palavra-passe, integração, chave de API]
 doc_id: DOC-0430
 article_type: problema
@@ -18,7 +18,7 @@ related: [troubleshooting/acesso-e-dados/sem-permissao, troubleshooting/acesso-e
 
 ## Sintoma
 
-Depois de escrever o utilizador e a palavra-passe que lhe deram, em vez do Fiscaldoo abre-se a página **Alterar palavra-passe**, com o texto «A palavra-passe que recebeu é temporária. Escolha uma nova para continuar.» Nenhum menu abre enquanto não escolher uma nova.
+Depois de escrever o utilizador e a palavra-passe que lhe deram, em vez do fiscaldoo abre-se a página **Alterar palavra-passe**, com o texto «A palavra-passe que recebeu é temporária. Escolha uma nova para continuar.» Nenhum menu abre enquanto não escolher uma nova.
 
 ## Mensagem
 
@@ -34,7 +34,7 @@ Copiadas da base de demonstração em português, com um utilizador novo criado 
 
 - Se a nova é igual à temporária:
   > «A nova palavra-passe é igual à temporária. Escolha uma diferente: a que lhe foi dada era conhecida de quem criou o seu utilizador.»
-- Numa ligação que não é o navegador (por exemplo, outro programa a ligar-se ao Fiscaldoo pela interface externa), a entrada é recusada enquanto a palavra-passe for temporária. A mensagem do servidor, em inglês, é:
+- Numa ligação que não é o navegador (por exemplo, outro programa a ligar-se ao fiscaldoo pela interface externa), a entrada é recusada enquanto a palavra-passe for temporária. A mensagem do servidor, em inglês, é:
   > «Your password is temporary: sign in on the web page, choose a new password, and then use the integration again (or use an API key).»
 
   Ou seja: «a sua palavra-passe é temporária; entre pela página web, escolha uma nova e só depois use a ligação outra vez (ou use uma chave de API)». O pedido simples de início de sessão dessa interface só devolve «falso», sem texto. Na sessão do navegador, a recusa é em português («Tem de alterar a palavra-passe temporária antes de fazer o que quer que seja.»).
@@ -43,7 +43,7 @@ A página **Alterar palavra-passe** abre em português e sem janelas de erro.
 
 ## Causas verificadas
 
-Uma palavra-passe que o administrador define para um utilizador é temporária, porque quem a criou a conhece. O Fiscaldoo recusa qualquer outra ação até a pessoa a trocar por uma que só ela sabe. Uma palavra-passe que a própria pessoa escolheu não é temporária.
+Uma palavra-passe que o administrador define para um utilizador é temporária, porque quem a criou a conhece. O fiscaldoo recusa qualquer outra ação até a pessoa a trocar por uma que só ela sabe. Uma palavra-passe que a própria pessoa escolheu não é temporária.
 
 ## O que confirmar
 
@@ -55,7 +55,7 @@ Uma palavra-passe que o administrador define para um utilizador é temporária, 
 1. Na página **Alterar palavra-passe**, escreva a palavra-passe que lhe deram em **Palavra-passe atual (temporária)**.
 2. Escreva a nova em **Nova palavra-passe** e repita-a em **Confirmar a nova palavra-passe**. Tem de ser diferente da temporária.
 3. Carregue em **Alterar palavra-passe**.
-4. O Fiscaldoo volta à página **Início de Sessão**. Entre com a palavra-passe nova.
+4. O fiscaldoo volta à página **Início de Sessão**. Entre com a palavra-passe nova.
 
 Se usa uma ligação de outro programa, que mostra a mensagem em inglês acima, escolha primeiro a nova no navegador e só depois volte a usar a ligação, ou peça ao administrador uma chave de API.
 

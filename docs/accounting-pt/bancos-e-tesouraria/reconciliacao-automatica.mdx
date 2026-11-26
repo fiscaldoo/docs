@@ -18,7 +18,7 @@ related: [accounting-pt/bancos-e-tesouraria/reconciliar-movimentos-bancarios, ac
 
 ## Para que serve?
 
-Os movimentos que se repetem todos os meses (comissões de manutenção de conta, imposto do selo, juros, seguros, rendas) não precisam de ser reconciliados um a um. O Fiscaldoo traz **modelos de reconciliação** com contas do SNC e com as palavras que esses movimentos têm nos extratos. Com a reconciliação automática ligada no diário do banco, um movimento cuja descrição bate certo com um modelo é lançado sozinho; os outros ficam para si, listados como exceções.
+Os movimentos que se repetem todos os meses (comissões de manutenção de conta, imposto do selo, juros, seguros, rendas) não precisam de ser reconciliados um a um. O fiscaldoo traz **modelos de reconciliação** com contas do SNC e com as palavras que esses movimentos têm nos extratos. Com a reconciliação automática ligada no diário do banco, um movimento cuja descrição bate certo com um modelo é lançado sozinho; os outros ficam para si, listados como exceções.
 
 ## Quando utilizar?
 
@@ -33,7 +33,7 @@ Os movimentos que se repetem todos os meses (comissões de manutenção de conta
 - Ver e criar modelos: **Contabilidade › Configurar › Bancos e ativos › Modelos de reconciliação**.
 - Opções do diário e botão de correr: **Contabilidade › Reconciliar › Bancos e caixa › O que há para fazer com os bancos?** e, em **Listas de apoio**, **Diários de banco e caixa** › o diário **Banco** › separador **Reconciliação**.
 - Relatórios: na mesma página, em **Listas de apoio**, **Resultados da reconciliação automática**.
-- Os **Padrões de reconciliação confirmados** (a aprendizagem do Fiscaldoo) só aparecem em **Contabilidade › Configurar › Bancos e ativos** com o modo de programador ativo.
+- Os **Padrões de reconciliação confirmados** (a aprendizagem do fiscaldoo) só aparecem em **Contabilidade › Configurar › Bancos e ativos** com o modo de programador ativo.
 
 ## Antes de começar
 
@@ -63,20 +63,20 @@ Os movimentos que se repetem todos os meses (comissões de manutenção de conta
 
 No Odoo Enterprise, os modelos de reconciliação, o separador **Reconciliação** do diário e o botão **Reconciliar automaticamente agora** são os mesmos: o **Contabilista certificado** carregou os modelos portugueses em **Outras definições de contas e extratos** e a lista **Modelos de Reconciliação** ficou com os 9 novos, e o **Contabilista** vê no diário **Banco** as duas opções e o botão. As exceções, essas, tratam-se no ecrã de reconciliação do Enterprise: veja «No Enterprise» em [Como reconciliar os movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios#no-enterprise).
 
-{/* Nota interna (lote EE-03, DOCS-073 #4142, DEC-1794, master e4dd4ae90, base Enterprise docs_ee_ee03_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0111. Contabilista certificado: Carregar os modelos portugueses por omissão; lista com Transferências Internas, Taxas bancárias e os 9 do Fiscaldoo (11; a base Enterprise não tem o modelo dos pagamentos online), coluna Disparo «Manual». Contabilista: diário Banco, separador Reconciliação com Tolerância (valor), Tolerância (%), Conta de diferenças, as duas opções e Reconciliar automaticamente agora. A reconciliação automática não se correu na base Enterprise. Ver reports/LOTE_EE-03.md. */}
+{/* Nota interna (lote EE-03, DOCS-073 #4142, DEC-1794, master e4dd4ae90, base Enterprise docs_ee_ee03_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): DOC-0111. Contabilista certificado: Carregar os modelos portugueses por omissão; lista com Transferências Internas, Taxas bancárias e os 9 do fiscaldoo (11; a base Enterprise não tem o modelo dos pagamentos online), coluna Disparo «Manual». Contabilista: diário Banco, separador Reconciliação com Tolerância (valor), Tolerância (%), Conta de diferenças, as duas opções e Reconciliar automaticamente agora. A reconciliação automática não se correu na base Enterprise. Ver reports/LOTE_EE-03.md. */}
 
 ## Resultado esperado
 
 - Os movimentos que batem com um modelo ficam reconciliados e os restantes ficam como exceções. No exemplo, a comissão de 12,50 € ficou reconciliada e a transferência de 380,00 € ficou por tratar.
-- Linhas contabilísticas conferidas no razão para a comissão: o movimento do extrato BNK1/2026/00008 (crédito de **121 Depósitos à ordem** 12,50 €, débito de **120001 Conta Transitória** 12,50 €) e o lançamento do modelo **OD/2026/00336 (Comissões bancárias)** (débito de **6888 Outros não especificados** 12,50 €, crédito de **120001 Conta Transitória** 12,50 €), que anula a conta transitória.
+- Linhas contabilísticas conferidas no razão para a comissão: o movimento do extrato BNK1/2026/00008 (crédito de **121 Depósitos à ordem** 12,50 €, débito de **120001 Conta Transitória** 12,50 €) e o lançamento do modelo **OD/2026/00104 (Comissões bancárias)** (débito de **6888 Outros não especificados** 12,50 €, crédito de **120001 Conta Transitória** 12,50 €), que anula a conta transitória.
 - **O que a reconciliação não toca:** movimentos já reconciliados, ignorados ou duplicados, sem valor, em moeda estrangeira e com data num período bloqueado.
-- Um movimento que falha não para os outros: fica como exceção.
+- Um movimento que falha não pára os outros: fica como exceção.
 
 ## Notas importantes
 
 - **O lançamento automático não se avisa.** Só o vê no relatório e nos movimentos. Corra primeiro com a opção dos modelos desligada, ou confira o relatório no mesmo dia.
 - **A reconciliação automática só a corre o contabilista.** Com outro perfil, o botão **Reconciliar automaticamente agora** não aparece: a **Gerência** e o **Auditor / ROC** abrem o diário **Banco** sem ele, e o **Administrativo** não tem o menu dos bancos. Pela integração, a recusa é «Só o contabilista executa a reconciliação automática: peça ao contabilista da sua empresa.» Também a corre sozinha depois de uma importação, mas só se quem importa for contabilista, e há uma execução agendada que vem desligada.
-- **Padrões confirmados (aprendizagem).** Quando lança à mão um movimento com **Lançamento direto**, escolhendo a conta, o Fiscaldoo regista «descrição → conta». À 3.ª confirmação com a mesma descrição e a mesma conta (valor por omissão) propõe um modelo novo e avisa: ««LIMPEZA ESCRITORIO» foi lançado na conta 6226 3 vezes: propõe-se um modelo de reconciliação (Contabilidade › Configurar › Bancos e ativos › Padrões de reconciliação confirmados (modo programador)).» A descrição é reduzida a uma chave (no exemplo, «LIMPEZA DE ESCRITORIO LIMPA+ EXEMPLO» ficou «LIMPEZA ESCRITORIO»). Em **Padrões de reconciliação confirmados** (só em modo de programador) o padrão aparece com **Confirmações** 3 e o estado **Proposto**; **Aceitar e criar o modelo** cria o modelo («Padrão aceite. Foi criado o modelo de reconciliação «Padrão confirmado: LIMPEZA ESCRITORIO».») e **Rejeitar** descarta a proposta (não foi experimentado). Só o contabilista aceita ou rejeita.
+- **Padrões confirmados (aprendizagem).** Quando lança à mão um movimento com **Lançamento direto**, escolhendo a conta, o fiscaldoo regista «descrição → conta». À 3.ª confirmação com a mesma descrição e a mesma conta (valor por omissão) propõe um modelo novo e avisa: ««LIMPEZA ESCRITORIO» foi lançado na conta 6226 3 vezes: propõe-se um modelo de reconciliação (Contabilidade › Configurar › Bancos e ativos › Padrões de reconciliação confirmados (modo programador)).» A descrição é reduzida a uma chave (no exemplo, «LIMPEZA DE ESCRITORIO LIMPA+ EXEMPLO» ficou «LIMPEZA ESCRITORIO»). Em **Padrões de reconciliação confirmados** (só em modo de programador) o padrão aparece com **Confirmações** 3 e o estado **Proposto**; **Aceitar e criar o modelo** cria o modelo («Padrão aceite. Foi criado o modelo de reconciliação «Padrão confirmado: LIMPEZA ESCRITORIO».») e **Rejeitar** descarta a proposta (não foi experimentado). Só o contabilista aceita ou rejeita.
    ![Lista de Padrões de reconciliação confirmados com o padrão LIMPEZA ESCRITORIO, conta 6226, 3 confirmações, Proposto](/images/accounting-pt/reconciliacao-automatica/06-padroes-confirmados.png)
    ![Padrão proposto, com os botões Aceitar e criar o modelo e Rejeitar e as três linhas do banco que o originaram](/images/accounting-pt/reconciliacao-automatica/07-padrao-proposto.png)
    ![Padrão aceite, com o modelo Padrão confirmado: LIMPEZA ESCRITORIO](/images/accounting-pt/reconciliacao-automatica/08-modelo-criado-pelo-padrao.png)

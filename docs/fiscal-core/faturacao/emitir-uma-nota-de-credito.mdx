@@ -49,7 +49,7 @@ As notas de crédito emitidas ficam em **Faturação › Faturar › Notas de cr
 - O seu perfil é **Administrativo** ou **Contabilista**.
 - A fatura está no estado **Publicada**.
 - Sabe o que aconteceu (devolução, erro, desconto) e quando: a data que conta para o prazo de regularização do IVA depende do motivo (ver o passo 5 e «Prazo para regularizar o IVA»).
-- Tem, ou vai ter, uma prova de que o cliente tomou conhecimento da correção (por exemplo, o e-mail com que lhe envia a nota). O Fiscaldoo pede que a indique.
+- Tem, ou vai ter, uma prova de que o cliente tomou conhecimento da correção (por exemplo, o e-mail com que lhe envia a nota). O fiscaldoo pede que a indique.
 
 {/* Nota interna (auditoria v22-E, 06/11/2026, master d83bdf7ae, base docs_demo_v22e_test, porta 8372): por clique com utilizadores criados só com cada valor do campo Perfil (DEC-1777): o Contabilista emitiu a NC D26/4 (sobre a FT D26/35, cópia publicada da FT D26/33 feita por RPC como admin), da janela Criar nota de crédito até Confirmar. Série (passo «Criar a série em falta»): só o Contabilista certificado tem Contabilidade › Configurar › Faturação certificada › Séries fiscais. Tem Novo e Criar e comunicar (a janela «Criar e comunicar uma série» abriu; não foi submetida); o Administrativo não tem Contabilidade e o Contabilista, o Auditor e a Gerência não têm o menu. */}
 {/* Nota interna (DOCS-046, lote v22-E, 06/11/2026, master d83bdf7ae, base docs_demo_v22e_test, porta 8362): só esta frase, por clique com utilizadores criados só com cada perfil (DEC-1777): o Administrativo emitiu a NC D26/2 (sobre a FT D26/33) e o Contabilista a NC D26/3 (sobre a FT D26/34, criada por RPC como cópia da D26/33), da janela Criar nota de crédito até Confirmar. O resto do artigo não foi repercorrido. */}
@@ -66,7 +66,7 @@ As notas de crédito emitidas ficam em **Faturação › Faturar › Notas de cr
 5. Em **Data de referência da regularização**, escreva a data que o motivo de IVA pede. Por baixo do campo, a janela diz qual é:
    - **Anulação ou redução da operação (…)**: «A data de referência é: Data das circunstâncias que anularam a operação ou reduziram o seu valor», ou seja, o dia da devolução, do desconto ou da anulação.
    - **Correção de erros materiais ou de cálculo, a favor do sujeito passivo**: «A data de referência é: Data em que nasceu o direito à dedução (art. 22.º n.º 1) ou data do registo».
-   - **Fatura inexata, IVA liquidado a mais (retificação facultativa)**: a janela não mostra essa frase nem exige a data. Deixe o campo vazio: o Fiscaldoo conta o prazo a partir da data da fatura que está a corrigir.
+   - **Fatura inexata, IVA liquidado a mais (retificação facultativa)**: a janela não mostra essa frase nem exige a data. Deixe o campo vazio: o fiscaldoo conta o prazo a partir da data da fatura que está a corrigir.
 6. Em **Prova da regularização**, diga como demonstra que o cliente tomou conhecimento da correção, por exemplo «E-mail de 07/11/2026».
    ![Janela Criar nota de crédito preenchida: motivo Devolução de mercadorias, motivo da regularização de IVA Anulação ou redução da operação, data de referência 07/11/2026 e prova E-mail de 07/11/2026](/images/fiscal-core/emitir-uma-nota-de-credito/02-janela-criar-nota-de-credito.png)
 7. Deixe **Diário** e **Data de Reversão** como estão: o diário é o da fatura e a data é a de hoje, que passa a ser a data da nota de crédito.
@@ -101,7 +101,7 @@ O prazo depende do **Motivo da regularização de IVA** que escolhe, e a data a 
 - **Fatura inexata, IVA liquidado a mais (retificação facultativa)**: dois anos a contar da data da fatura que corrige.
 - **Correção de erros materiais ou de cálculo, a favor do sujeito passivo**: dois anos a contar da data em que nasceu o direito à dedução ou da data do registo.
 
-Hoje o Fiscaldoo deixa confirmar uma nota fora do prazo e regista o aviso no histórico de mensagens da nota, por exemplo: «O documento … regulariza IVA a favor do sujeito passivo em 28/10/2026, depois do prazo legal (31/07/2026, art. 78.º do CIVA: CIVA art. 78.º n.º 2). Confirme com o contabilista se a dedução ainda é possível.» Se vir este aviso, fale com o contabilista certificado antes de contar com a recuperação do IVA. <span className="fd-pending">Pendente de validação por contabilista certificado: prazos e data de contagem do art. 78.º.</span>
+Hoje o fiscaldoo deixa confirmar uma nota fora do prazo e regista o aviso no histórico de mensagens da nota, por exemplo: «O documento … regulariza IVA a favor do sujeito passivo em 28/10/2026, depois do prazo legal (31/07/2026, art. 78.º do CIVA: CIVA art. 78.º n.º 2). Confirme com o contabilista se a dedução ainda é possível.» Se vir este aviso, fale com o contabilista certificado antes de contar com a recuperação do IVA. <span className="fd-pending">Pendente de validação por contabilista certificado: prazos e data de contagem do art. 78.º.</span>
 
 ### Que motivo de IVA escolher
 

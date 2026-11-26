@@ -1,10 +1,10 @@
 ---
 id: chaves-de-assinatura
 slug: /fiscal-core/chaves-de-assinatura
-title: Como ligar a instalação ao Fiscaldoo, que assina os documentos
-sidebar_label: Chave de API do Fiscaldoo
-description: Registar a instalação no portal do Fiscaldoo, guardar a chave de API nas Definições, ver se a empresa pode assinar e saber o que acontece se o Fiscaldoo não responder.
-keywords: [chave de assinatura, chave de API, chave de API do Fiscaldoo, fiscaldoo assina, plataforma Fiscaldoo, registar a instalação, Database UUID, ver se a empresa pode assinar, certificado de software, cópia local, chave pública, assinatura dos documentos, assinar documentos]
+title: Como ligar a instalação à fiscaldoo, que assina os documentos
+sidebar_label: Chave de API da fiscaldoo
+description: Registar a instalação no portal da fiscaldoo, guardar a chave de API nas Definições, ver se a empresa pode assinar e saber o que acontece se a fiscaldoo não responder.
+keywords: [chave de assinatura, chave de API, chave de API da fiscaldoo, fiscaldoo assina, plataforma fiscaldoo, registar a instalação, Database UUID, ver se a empresa pode assinar, certificado de software, cópia local, chave pública, assinatura dos documentos, assinar documentos]
 doc_id: DOC-0014
 article_type: tarefa
 odoo_versions: ["20.0"]
@@ -17,16 +17,16 @@ related: [troubleshooting/faturacao-e-at/chave-de-assinatura-expirada, fiscal-co
 
 ## Para que serve?
 
-Cada documento certificado leva uma assinatura. A assinatura é feita pelo **fiscaldoo**, a plataforma do produtor do programa: a chave privada nunca sai de lá e a instalação do cliente não a tem, nem a pode carregar ou renovar. O Fiscaldoo também dá à instalação o número do certificado de software da AT em vigor e diz se cada empresa pode assinar.
+Cada documento certificado leva uma assinatura. A assinatura é feita pela **fiscaldoo**, a plataforma do produtor do programa: a chave privada nunca sai de lá e a instalação do cliente não a tem, nem a pode carregar ou renovar. A fiscaldoo também dá à instalação o número do certificado de software da AT em vigor e diz se cada empresa pode assinar.
 
-Para o Fiscaldoo reconhecer a instalação, o administrador regista-a no portal e guarda nas **Definições** a **Chave de API do Fiscaldoo** que o portal devolve. Este artigo mostra como, como ver se a empresa pode assinar e o que fazer se o Fiscaldoo não responder.
+Para a fiscaldoo reconhecer a instalação, o administrador regista-a no portal e guarda nas **Definições** a **Chave de API da fiscaldoo** que o portal devolve. Este artigo mostra como, como ver se a empresa pode assinar e o que fazer se a fiscaldoo não responder.
 
 ## Quando utilizar?
 
 - Ao pôr a instalação a emitir documentos certificados pela primeira vez, ou depois de a mudar de servidor.
-- Quando **Confirmar** recusa um documento com uma mensagem sobre o Fiscaldoo ([A fatura não é assinada](/troubleshooting/chave-de-assinatura-expirada)).
+- Quando **Confirmar** recusa um documento com uma mensagem sobre a fiscaldoo ([A fatura não é assinada](/troubleshooting/chave-de-assinatura-expirada)).
 - Para ler o número do certificado de software e a versão da chave de assinatura em vigor.
-- Não é aqui que se cria uma série ([Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais)) nem que se ligam os dados de acesso à AT ([Como ligar o Fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at)).
+- Não é aqui que se cria uma série ([Como criar uma série e comunicá-la à AT](/fiscal-core/series-documentais)) nem que se ligam os dados de acesso à AT ([Como ligar o fiscaldoo à Autoridade Tributária](/fiscal-core/ligar-a-at)).
 
 ## Onde encontrar?
 
@@ -35,50 +35,50 @@ Para o Fiscaldoo reconhecer a instalação, o administrador regista-a no portal 
 ## Antes de começar
 
 - O seu perfil é **Administrador** do sistema: as **Definições** são só dele. Com outro perfil, **Definições** diz «Não tem acesso a «Definições de configuração». Esta área é reservada ao administrador técnico do sistema.».
-- Tem o **NIF** da empresa preenchido ([Como preencher os dados fiscais da empresa](/administration/dados-da-empresa)): o Fiscaldoo responde por NIF.
-- O servidor da instalação chega à internet. Numa base de teste, com «test» no nome, o Fiscaldoo é uma simulação local: nada sai do servidor.
+- Tem o **NIF** da empresa preenchido ([Como preencher os dados fiscais da empresa](/administration/dados-da-empresa)): a fiscaldoo responde por NIF.
+- O servidor da instalação chega à internet. Numa base de teste, com «test» no nome, a fiscaldoo é uma simulação local: nada sai do servidor.
 
 ## Como utilizar
 
 <StepByStep>
 
-1. Abra **Definições › Faturação** e, no bloco **Certificação PT**, procure **fiscaldoo: assinatura e certificado de software**. Com uma base de produção, o texto diz «Para registar esta instância: 1) copie o Database UUID, 2) abra o portal do Fiscaldoo e cole-o com o NIF da empresa, 3) cole aqui a chave de API que o portal devolver.».
-   ![Bloco Fiscaldoo: assinatura e certificado de software, com o Database UUID, o botão Registar esta instância no Fiscaldoo, o endereço e a Chave de API do Fiscaldoo, e o botão Ver no Fiscaldoo se esta empresa pode assinar](/images/fiscal-core/chaves-de-assinatura/01-definicoes-fiscaldoo.png)
-   A captura foi tirada numa base de teste com o registo aberto: por isso mostra também o aviso de base de teste e as três linhas de baixo ainda por preencher (certificado em branco e versão da chave 0), o que só acontece antes de o Fiscaldoo responder.
+1. Abra **Definições › Faturação** e, no bloco **Certificação PT**, procure **fiscaldoo: assinatura e certificado de software**. Com uma base de produção, o texto diz «Para registar esta instância: 1) copie o Database UUID, 2) abra o portal da fiscaldoo e cole-o com o NIF da empresa, 3) cole aqui a chave de API que o portal devolver.».
+   ![Bloco fiscaldoo: assinatura e certificado de software, com o Database UUID, o botão Registar esta instância na fiscaldoo, o endereço e a Chave de API da fiscaldoo, e o botão Ver na fiscaldoo se esta empresa pode assinar](/images/fiscal-core/chaves-de-assinatura/01-definicoes-fiscaldoo.png)
+   A captura foi tirada numa base de teste com o registo aberto: por isso mostra também o aviso de base de teste e as três linhas de baixo ainda por preencher (certificado em branco e versão da chave 0), o que só acontece antes de a fiscaldoo responder.
 2. Copie o **Database UUID desta instância**.
-3. Carregue em **Registar esta instância no Fiscaldoo**. Abre o portal do Fiscaldoo noutro separador. No portal, cole o UUID, escreva o NIF da empresa e copie a chave de API que o portal devolver. <span className="fd-pending">Pendente de validação no ecrã: o portal do Fiscaldoo, a que a demonstração não chega (sem rede). Os passos 2 e 3 seguem o texto do próprio ecrã.</span>
-4. Volte às **Definições** e cole a chave em **Chave de API do Fiscaldoo**. Deixe o **Endereço do Fiscaldoo** vazio (o ecrã sugere `https://api.fiscaldoo.pt`) e a **Versão do conector** como está. Guarde. A chave guarda-se cifrada no cofre de credenciais (tipo «fiscaldoo platform»), vê-se como pontos e nunca volta a ser mostrada: para a trocar, escreva uma nova. Na demonstração guardou-se uma chave fictícia e o campo ficou com pontos. <span className="fd-pending">Pendente de validação no ecrã: com uma chave verdadeira, dada pelo portal; a chave do exemplo é fictícia e nenhum pedido chegou ao fiscaldoo.</span>
-5. Carregue em **Ver no Fiscaldoo se esta empresa pode assinar**. O Fiscaldoo responde por NIF e o ecrã mostra a resposta. Na demonstração, com o Fiscaldoo simulado, diz «Empresa Demonstração, Lda pode assinar documentos com o fiscaldoo.».
-6. Confira as três linhas de baixo, que o Fiscaldoo preenche: **Certificado de software da AT em vigor**, **Versão da chave de assinatura (HashControl)** e **Chave pública (SHA-256)**. Não se editam.
+3. Carregue em **Registar esta instância na fiscaldoo**. Abre o portal da fiscaldoo noutro separador. No portal, cole o UUID, escreva o NIF da empresa e copie a chave de API que o portal devolver. <span className="fd-pending">Pendente de validação no ecrã: o portal da fiscaldoo, a que a demonstração não chega (sem rede). Os passos 2 e 3 seguem o texto do próprio ecrã.</span>
+4. Volte às **Definições** e cole a chave em **Chave de API da fiscaldoo**. Deixe o **Endereço da fiscaldoo** vazio (o ecrã sugere `https://api.fiscaldoo.pt`) e a **Versão do conector** como está. Guarde. A chave guarda-se cifrada no cofre de credenciais (tipo «fiscaldoo platform»), vê-se como pontos e nunca volta a ser mostrada: para a trocar, escreva uma nova. Na demonstração guardou-se uma chave fictícia e o campo ficou com pontos. <span className="fd-pending">Pendente de validação no ecrã: com uma chave verdadeira, dada pelo portal; a chave do exemplo é fictícia e nenhum pedido chegou à fiscaldoo.</span>
+5. Carregue em **Ver na fiscaldoo se esta empresa pode assinar**. A fiscaldoo responde por NIF e o ecrã mostra a resposta. Na demonstração, com a fiscaldoo simulada, diz «Empresa Demonstração, Lda pode assinar documentos com a fiscaldoo.».
+6. Confira as três linhas de baixo, que a fiscaldoo preenche: **Certificado de software da AT em vigor**, **Versão da chave de assinatura (HashControl)** e **Chave pública (SHA-256)**. Não se editam.
 7. Com o perfil **Administrativo**, confirme uma fatura em rascunho e veja que recebe número ([Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada)).
 
 </StepByStep>
 
 ## Resultado esperado
 
-- O botão responde «… pode assinar documentos com o fiscaldoo.» e as três linhas ficam preenchidas. Na demonstração (simulada), o certificado é o **9999**, a versão da chave é a **1** e a **Chave pública (SHA-256)** é uma sequência de 64 caracteres que muda de uma base de teste para outra (o Fiscaldoo simulado gera uma chave fictícia por base). Os valores de uma base de produção são os do fiscaldoo.
+- O botão responde «… pode assinar documentos com a fiscaldoo.» e as três linhas ficam preenchidas. Na demonstração (simulada), o certificado é o **9999**, a versão da chave é a **1** e a **Chave pública (SHA-256)** é uma sequência de 64 caracteres que muda de uma base de teste para outra (a fiscaldoo simulada gera uma chave fictícia por base). Os valores de uma base de produção são os da fiscaldoo.
 - **Confirmar** emite o documento. Numa fatura de 123,00 € (100,00 € de uma assistência técnica mais IVA a 23 %) emitida à Padaria Aurora, Lda, a `FT D26/31`, os lançamentos foram: **2111** Clientes gerais a débito 123,00 €; **721** Prestações de serviços a crédito 100,00 €; **2433** IVA - Liquidado a crédito 23,00 €. A assinatura não gera lançamentos próprios.
 - Os documentos antigos não mudam: continuam verificáveis com a versão da chave com que foram assinados ([Como verificar a integridade dos documentos](/fiscal-core/integridade-dos-documentos)).
 
 ## Notas importantes
 
-<HelpCallout type="risco" title="Sem o Fiscaldoo, não se emitem documentos novos">
-A instalação não tem chave privada: assina quem a tem. Se o Fiscaldoo não responder, ou se a chave de API estiver errada, **Confirmar** recusa o documento, que fica em **Rascunho** sem gastar número. Veja [A fatura não é assinada](/troubleshooting/chave-de-assinatura-expirada).
+<HelpCallout type="risco" title="Sem a fiscaldoo, não se emitem documentos novos">
+A instalação não tem chave privada: assina quem a tem. Se a fiscaldoo não responder, ou se a chave de API estiver errada, **Confirmar** recusa o documento, que fica em **Rascunho** sem gastar número. Veja [A fatura não é assinada](/troubleshooting/chave-de-assinatura-expirada).
 </HelpCallout>
 
-- **O que desapareceu.** Já não existem, na instalação, o menu **Chaves de assinatura**, a lista **Certificados de software** nem o botão **Gerar** da chave de teste. A chave, a sua versão e o certificado vivem no Fiscaldoo: quem os renova é o produtor, e a instalação só os pergunta.
-- **Cópia local, só de leitura.** A instalação guarda uma cópia das chaves públicas e dos certificados da última resposta do fiscaldoo. Serve para ler: com o Fiscaldoo em baixo, ou a recusar a instalação, os documentos antigos continuam a verificar-se e a imprimir-se e o SAF-T continua a exportar-se, porque a lei obriga a conservar e a mostrar o que já foi emitido. Para **assinar** nunca se usa a cópia: emitir documentos novos exige o fiscaldoo. <span className="fd-pending">Pendente de validação no ecrã: a cópia local. Só se grava com uma resposta do Fiscaldoo verdadeiro, e a demonstração é simulada, por isso a leitura dos documentos antigos com o Fiscaldoo em baixo não se provou.</span>
-- **Base de teste.** Numa base com «test» no nome, o ecrã diz «Base de teste: um Fiscaldoo simulado assina com uma chave fictícia e o certificado 9999.» e esconde o registo e a chave de API. Esses documentos não têm valor legal e não se cobram. Nunca use uma base de testes para faturar a clientes.
-  ![Bloco Fiscaldoo numa base de teste: fiscaldoo simulado, certificado 9999, versão da chave 1, impressão digital e o botão Ver no Fiscaldoo se esta empresa pode assinar](/images/fiscal-core/chaves-de-assinatura/02-base-de-teste.png)
-- **Cada empresa responde por si.** O botão pergunta pelo NIF da empresa escolhida: uma empresa recusada pelo Fiscaldoo não assina, mesmo que outra da mesma instalação assine.
-- **A hora da assinatura.** O Fiscaldoo assina o documento com a data e a hora em que ele foi emitido, no fuso horário da empresa. Se o texto a assinar e o documento não coincidirem, o documento não se assina e o número não se gasta ([A fatura não é assinada](/troubleshooting/chave-de-assinatura-expirada)).
+- **O que desapareceu.** Já não existem, na instalação, o menu **Chaves de assinatura**, a lista **Certificados de software** nem o botão **Gerar** da chave de teste. A chave, a sua versão e o certificado vivem na fiscaldoo: quem os renova é o produtor, e a instalação só os pergunta.
+- **Cópia local, só de leitura.** A instalação guarda uma cópia das chaves públicas e dos certificados da última resposta da fiscaldoo. Serve para ler: com a fiscaldoo em baixo, ou a recusar a instalação, os documentos antigos continuam a verificar-se e a imprimir-se e o SAF-T continua a exportar-se, porque a lei obriga a conservar e a mostrar o que já foi emitido. Para **assinar** nunca se usa a cópia: emitir documentos novos exige a fiscaldoo. <span className="fd-pending">Pendente de validação no ecrã: a cópia local. Só se grava com uma resposta da fiscaldoo verdadeira, e a demonstração é simulada, por isso a leitura dos documentos antigos com a fiscaldoo em baixo não se provou.</span>
+- **Base de teste.** Numa base com «test» no nome, o ecrã diz «Base de teste: uma fiscaldoo simulada assina com uma chave fictícia e o certificado 9999.» e esconde o registo e a chave de API. Esses documentos não têm valor legal e não se cobram. Nunca use uma base de testes para faturar a clientes.
+  ![Bloco fiscaldoo numa base de teste: fiscaldoo simulada, certificado 9999, versão da chave 1, impressão digital e o botão Ver na fiscaldoo se esta empresa pode assinar](/images/fiscal-core/chaves-de-assinatura/02-base-de-teste.png)
+- **Cada empresa responde por si.** O botão pergunta pelo NIF da empresa escolhida: uma empresa recusada pela fiscaldoo não assina, mesmo que outra da mesma instalação assine.
+- **A hora da assinatura.** A fiscaldoo assina o documento com a data e a hora em que ele foi emitido, no fuso horário da empresa. Se o texto a assinar e o documento não coincidirem, o documento não se assina e o número não se gasta ([A fatura não é assinada](/troubleshooting/chave-de-assinatura-expirada)).
 
 ## Problemas frequentes
 
-### Confirmar recusa o documento com uma mensagem do Fiscaldoo
+### Confirmar recusa o documento com uma mensagem da fiscaldoo
 
-- **Causa:** a chave de API está vazia, o servidor não chega ao Fiscaldoo, ou o Fiscaldoo recusou a instalação.
-- **O que fazer:** as mensagens, a causa de cada uma e o que fazer estão em [A fatura não é assinada](/troubleshooting/chave-de-assinatura-expirada). O botão **Ver no Fiscaldoo se esta empresa pode assinar** dá as mesmas respostas, sem confirmar nenhum documento.
+- **Causa:** a chave de API está vazia, o servidor não chega à fiscaldoo, ou a fiscaldoo recusou a instalação.
+- **O que fazer:** as mensagens, a causa de cada uma e o que fazer estão em [A fatura não é assinada](/troubleshooting/chave-de-assinatura-expirada). O botão **Ver na fiscaldoo se esta empresa pode assinar** dá as mesmas respostas, sem confirmar nenhum documento.
 
 ### «Não tem permissão para criar este registo de «Entrada do cofre de credenciais»…» ao guardar a chave
 
@@ -89,4 +89,4 @@ A instalação não tem chave privada: assina quem a tem. Se o Fiscaldoo não re
 
 - **Causa e o que fazer:** a empresa escolhida não tem NIF. Preencha-o ([Como preencher os dados fiscais da empresa](/administration/dados-da-empresa)) e carregue de novo no botão. <span className="fd-pending">Pendente de validação no ecrã: esta resposta (a demonstração tem NIF em todas as empresas).</span>
 
-{/* Nota interna (lote 103, KEY-001 #4477, master e36178712, cópia docs_demo_103_test, porta 10080): artigo reescrito. O anterior descrevia o menu «Contabilidade › Configurar › Faturação certificada › Chaves de assinatura», que já não existe (as chaves vivem no Fiscaldoo; test_doc_paths e a lista de menus da cópia confirmam). Visto por clique com o administrador (com as duas empresas marcadas no seletor, porque a chave fica no cofre da empresa principal; sem isso o ecrã recusa guardar: «Não tem permissão para criar este registo de «Entrada do cofre de credenciais»…»; a instância foi arrancada com a chave de cifra do cofre só em memória, como nos lotes anteriores): Definições › Faturação, bloco Certificação PT, linha «fiscaldoo: assinatura e certificado de software»; base de teste = simulador (certificado 9999, chave 1); botão «Ver no Fiscaldoo…» na simulação («Empresa Demonstração, Lda pode assinar documentos com o fiscaldoo.»); para ver o registo e a chave de API pôs-se na cópia o parâmetro l10n_pt_fiscaldoo.allow_test_database (a captura 01 mostra por isso também o aviso de base de teste, que numa base de produção não aparece); sem chave de API: «… a ligação não está configurada…» (botão e Confirmar, perfil Administrativo); com a chave antiga do parâmetro de sistema (só na cópia, valor fictício, endereço http://127.0.0.1:1 sem servidor): «O Fiscaldoo não respondeu…» (botão e Confirmar). A seguir repôs-se o simulador e a FT D26/31 (fatura da cópia, não é da base-mãe) confirmou-se por clique com o perfil Administrativo. Não se escreve o NIF do produtor nem segredos. A cópia local (DEC-1993) e as cinco mensagens da lista final vêm dos textos do produto (pt_PT.po do módulo de certificação), sem prova no ecrã. A página ficou pública (o anterior estava «draft: true» como interno, DEC-1287, porque a chave era do produtor no servidor): agora é o administrador do cliente que a usa; o Gestor decide se volta a interno. */}
+{/* Nota interna (lote 103, KEY-001 #4477, master e36178712, cópia docs_demo_103_test, porta 10080): artigo reescrito. O anterior descrevia o menu «Contabilidade › Configurar › Faturação certificada › Chaves de assinatura», que já não existe (as chaves vivem na fiscaldoo; test_doc_paths e a lista de menus da cópia confirmam). Visto por clique com o administrador (com as duas empresas marcadas no seletor, porque a chave fica no cofre da empresa principal; sem isso o ecrã recusa guardar: «Não tem permissão para criar este registo de «Entrada do cofre de credenciais»…»; a instância foi arrancada com a chave de cifra do cofre só em memória, como nos lotes anteriores): Definições › Faturação, bloco Certificação PT, linha «fiscaldoo: assinatura e certificado de software»; base de teste = simulador (certificado 9999, chave 1); botão «Ver na fiscaldoo…» na simulação («Empresa Demonstração, Lda pode assinar documentos com a fiscaldoo.»); para ver o registo e a chave de API pôs-se na cópia o parâmetro l10n_pt_fiscaldoo.allow_test_database (a captura 01 mostra por isso também o aviso de base de teste, que numa base de produção não aparece); sem chave de API: «… a ligação não está configurada…» (botão e Confirmar, perfil Administrativo); com a chave antiga do parâmetro de sistema (só na cópia, valor fictício, endereço http://127.0.0.1:1 sem servidor): «A fiscaldoo não respondeu…» (botão e Confirmar). A seguir repôs-se o simulador e a FT D26/31 (fatura da cópia, não é da base-mãe) confirmou-se por clique com o perfil Administrativo. Não se escreve o NIF do produtor nem segredos. A cópia local (DEC-1993) e as cinco mensagens da lista final vêm dos textos do produto (pt_PT.po do módulo de certificação), sem prova no ecrã. A página ficou pública (o anterior estava «draft: true» como interno, DEC-1287, porque a chave era do produtor no servidor): agora é o administrador do cliente que a usa; o Gestor decide se volta a interno. */}

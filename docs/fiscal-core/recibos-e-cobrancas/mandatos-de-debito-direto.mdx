@@ -18,7 +18,7 @@ related: [fiscal-core/faturacao/subscricoes, fiscal-core/recibos-e-cobrancas/emi
 
 ## Para que serve?
 
-O mandato é a autorização escrita do cliente que permite cobrar-lhe por débito direto (SEPA) na conta dele. O Fiscaldoo guarda o mandato com uma referência única (RUM), o IBAN do cliente, a data da assinatura e a validade. Sem um mandato ativo, o cliente não entra num lote de débito direto nem numa [subscrição](/fiscal-core/subscricoes) cobrada por débito direto.
+O mandato é a autorização escrita do cliente que permite cobrar-lhe por débito direto (SEPA) na conta dele. O fiscaldoo guarda o mandato com uma referência única (RUM), o IBAN do cliente, a data da assinatura e a validade. Sem um mandato ativo, o cliente não entra num lote de débito direto nem numa [subscrição](/fiscal-core/subscricoes) cobrada por débito direto.
 
 ## Quando utilizar?
 
@@ -56,7 +56,7 @@ O mandato é a autorização escrita do cliente que permite cobrar-lhe por débi
 
 ## No Enterprise
 
-No Odoo Enterprise, os mandatos de débito direto são os do Fiscaldoo, e o menu não tem outra entrada de débito direto. **Contabilidade › Lançar › Cobranças a clientes › Mandatos de débito direto** abre a mesma lista, e **Novo** abre o mandato com **Cliente**, **Conta do devedor**, **Esquema**, **Único**, **Data de assinatura**, **Expira em**, **Direito a reembolso** e **Dias de pré-notificação acordados** (visto com um utilizador só com o perfil **Contabilista**).
+No Odoo Enterprise, os mandatos de débito direto são os do fiscaldoo, e o menu não tem outra entrada de débito direto. **Contabilidade › Lançar › Cobranças a clientes › Mandatos de débito direto** abre a mesma lista, e **Novo** abre o mandato com **Cliente**, **Conta do devedor**, **Esquema**, **Único**, **Data de assinatura**, **Expira em**, **Direito a reembolso** e **Dias de pré-notificação acordados** (visto com um utilizador só com o perfil **Contabilista**).
 
 {/* Nota interna (lote EE-12, DOCS-073 #4142, DEC-1794, master 589ecfd27, base Enterprise docs_ee_ee12_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee12_test): DOC-0041. Contabilista: lista (vazia) e Novo sem gravar. O módulo de débito direto SEPA do Enterprise (account_sepa_direct_debit) não está instalado na cópia; Contabilidade › Lançar só tem as entradas do fiscaldoo. Igual na cópia Community. Ver reports/LOTE_EE-12.md. */}
 
@@ -76,7 +76,7 @@ No Odoo Enterprise, os mandatos de débito direto são os do Fiscaldoo, e o menu
 - **Mandato B2B.** O campo **Validado pelo banco do devedor** só aparece com **B2B (empresas)**. Marque-o quando o banco do cliente confirmar o mandato: sem isso, **Ativar** recusa. Com B2B, **Direito a reembolso** fica desmarcado. Segundo a ajuda do ecrã, com CORE o devedor pode pedir o reembolso durante 8 semanas, sem justificação, e com B2B não há reembolso automático.
 - **Validade.** **Expira em** conta os meses definidos na empresa (36, por omissão) desde a assinatura e, depois da primeira cobrança, desde a última cobrança. Os meses mudam-se com o perfil Administrador, em **Definições**, separador **Faturação**, grupo **Débito direto SEPA**, campo **Meses sem cobrança até um mandato expirar**. Passada a data sem cobrança, uma tarefa diária passa o mandato a **Expirado**: deixa de servir para cobrar e, sem botões, não se reativa; registe um mandato novo.
 - **Dias de pré-notificação acordados** vêm a 0: é o prazo, em dias, de aviso ao cliente antes de cada débito, e pode alterar-se mesmo com o mandato ativo. <span className="fd-pending">Pendente de validação por contabilista certificado: prazo de pré-notificação, validade do mandato e tempo de conservação do mandato assinado.</span>
-- O Fiscaldoo guarda os dados do mandato, não a assinatura do cliente: o documento assinado continua à sua guarda.
+- O fiscaldoo guarda os dados do mandato, não a assinatura do cliente: o documento assinado continua à sua guarda.
 
 ## Problemas frequentes
 

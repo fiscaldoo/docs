@@ -41,7 +41,7 @@ A conversa só usa a IA quando as quatro condições abaixo estão cumpridas. As
 - **Uma ligação à IA com a chave da empresa.** Veja [Como ligar o Copiloto a um fornecedor de IA](/copilot/ligar-a-uma-ia).
 - **Os interruptores ligados** em **Copiloto › Controlo › Interruptores**: **Copiloto (interruptor geral da empresa)**, **Ligação à IA (chamadas ao fornecedor de IA)** e **IA - Conversa (responde com dados e cria rascunhos)** para a janela do Copiloto, ou **IA - Perguntas sobre os números** para o menu **Perguntar aos números** da Contabilidade. Os da IA são do tipo **Para fora** e vêm desligados. Veja [Como ligar ou desligar o Copiloto e controlar os dados enviados](/copilot/privacidade-e-consentimentos).
 - **Um limite de gasto da empresa.** Em **Definições da IA**, o **Limite mensal de gasto da empresa (EUR)** vem a 0,00, e 0 quer dizer **bloqueado**: enquanto não escrever um valor, a IA nunca é chamada.
-- **Uma base de dados de produção.** Numa base de testes o Fiscaldoo não chama a IA (veja «Notas importantes»).
+- **Uma base de dados de produção.** Numa base de testes o fiscaldoo não chama a IA (veja «Notas importantes»).
 
 ## Como utilizar
 
@@ -50,7 +50,7 @@ A conversa só usa a IA quando as quatro condições abaixo estão cumpridas. As
 <StepByStep>
 
 1. Abra **Copiloto › Ligações às IAs › Ligações** e a ligação da empresa. Confirme que **Chave guardada** está marcada.
-2. Carregue em **Testar a ligação**. O Fiscaldoo faz a chamada mais pequena possível ao fornecedor (uma palavra, sem dados da empresa).
+2. Carregue em **Testar a ligação**. O fiscaldoo faz a chamada mais pequena possível ao fornecedor (uma palavra, sem dados da empresa).
    ![Ligação à IA com a chave guardada e o botão Testar a ligação assinalado](/images/copilot/conversa/02-testar-a-ligacao.png)
 3. Leia a mensagem. Com uma chave aceite, numa base de produção, a mensagem diz que a ligação funciona e com que modelo o fornecedor respondeu (não visto: a demonstração é uma base de testes). Com uma chave recusada: «A ligação falhou. O fornecedor recusou a chave (HTTP 401). Nada foi alterado. Escreva uma chave nova na ligação e teste de novo.»
 
@@ -71,7 +71,7 @@ Também pode abrir **Contabilidade › Consultar › Análise › Perguntar aos 
 
 ## Resultado esperado
 
-<span className="fd-pending">Pendente de validação no ecrã: a resposta de um fornecedor de IA real. A demonstração é uma base de testes e o Fiscaldoo não chama a IA a partir dela; o que está abaixo vem do produto (o código e o guia do Copiloto) e não foi visto.</span>
+<span className="fd-pending">Pendente de validação no ecrã: a resposta de um fornecedor de IA real. A demonstração é uma base de testes e o fiscaldoo não chama a IA a partir dela; o que está abaixo vem do produto (o código e o guia do Copiloto) e não foi visto.</span>
 
 - **Com a IA a funcionar:** o Copiloto responde com o valor e, por baixo, de onde vem e o botão para abrir a lista dos documentos que o formam. Pode pedir faturas (de clientes ou de fornecedores, por período, em atraso ou por pagar), o que há a receber e a pagar, vendas por cliente, faturas de fornecedores a vencer, o balancete ou o extrato de uma conta. Se pedir para criar, aparece um cartão com o rascunho, que abre e confirma no ecrã do documento.
 - **Cada chamada fica registada** em **Copiloto › Controlo › Chamadas à IA**: quem, a ligação, o resultado, os tipos de dados enviados e o custo estimado, sem o conteúdo (veja [Como ver o que o Copiloto fez e o que enviou à IA](/copilot/registo-do-copiloto)).

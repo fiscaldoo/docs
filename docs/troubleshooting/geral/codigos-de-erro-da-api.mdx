@@ -4,7 +4,7 @@ slug: /troubleshooting/codigos-de-erro-da-api
 title: O que significa cada código de erro da API
 sidebar_label: Códigos de erro da API
 sidebar_position: 3
-description: Quando outro programa fala com a faturação do Fiscaldoo, a resposta traz um código e uma mensagem em português. O que significa cada código e o que corrigir na integração.
+description: Quando outro programa fala com a faturação do fiscaldoo, a resposta traz um código e uma mensagem em português. O que significa cada código e o que corrigir na integração.
 keywords: [api, códigos de erro, codigos de erro, integração, integracao, ACCESS_DENIED, NOT_FOUND, INVALID_INPUT, BUSINESS_RULE, VALIDATION_ERROR, INTERNAL_ERROR, NOT_POSTED, NOT_PUBLISHABLE, PARTNER_NOT_FOUND, PDF_UNAVAILABLE, VAT_INVALID, PRICE_REQUIRED, ZERO_TOTAL, preço da linha, documento a zero, Integração API]
 doc_id: DOC-0327
 article_type: conceito
@@ -16,7 +16,7 @@ approval_state: Pendente de aprovação humana
 related: [troubleshooting/geral/mensagens-do-sistema, troubleshooting/geral/como-pedir-suporte]
 ---
 
-A API de faturação deixa outro programa criar faturas e notas de crédito, publicá-las, ler o estado e o PDF, e validar um NIF. Todas as respostas têm a mesma forma, sem erros técnicos do servidor. Este artigo é para quem faz ou mantém essa ligação: quem usa o Fiscaldoo no ecrã não vê estes códigos, só as [mensagens do sistema](/troubleshooting/mensagens-do-sistema).
+A API de faturação deixa outro programa criar faturas e notas de crédito, publicá-las, ler o estado e o PDF, e validar um NIF. Todas as respostas têm a mesma forma, sem erros técnicos do servidor. Este artigo é para quem faz ou mantém essa ligação: quem usa o fiscaldoo no ecrã não vê estes códigos, só as [mensagens do sistema](/troubleshooting/mensagens-do-sistema).
 
 ## Como é uma resposta
 
@@ -42,7 +42,7 @@ As mensagens abaixo são respostas reais da API, obtidas com chamadas à base de
 | `NOT_PUBLISHABLE` | O documento já não está em rascunho. | «Só um documento em rascunho pode ser publicado. O que aconteceu: este já está no estado «*Publicada*». Como resolver: envie um documento que ainda esteja em rascunho.» | Não publique outra vez. Leia o estado do documento. |
 | `ZERO_TOTAL` | Pediu para publicar um documento com o total de 0,00 €. A API não publica documentos a zero, porque não leva o motivo de um documento gratuito. O rascunho fica como estava. | «O documento tem o total de 0,00 e a API não leva o motivo de um documento gratuito, por isso não se publica aqui. Como resolver: dê preço às linhas, ou publique o documento gratuito no ecrã.» | Dê preço às linhas, ou publique o documento gratuito no ecrã do fiscaldoo. |
 | `NOT_POSTED` | Pediu o PDF de um rascunho. | «Só um documento publicado tem PDF; publique primeiro este.» | Publique o documento e peça o PDF depois. |
-| `BUSINESS_RULE` | A operação vai contra uma regra do produto ou da lei. O texto vem da regra que recusou e pode listar várias faltas. | «Faltam *3* coisas para confirmar esta fatura: …», com **Porquê** e **O que fazer** em cada falta. | Leia a lista e corrija cada ponto. Uma série em falta resolve-se no Fiscaldoo, não no programa. |
+| `BUSINESS_RULE` | A operação vai contra uma regra do produto ou da lei. O texto vem da regra que recusou e pode listar várias faltas. | «Faltam *3* coisas para confirmar esta fatura: …», com **Porquê** e **O que fazer** em cada falta. | Leia a lista e corrija cada ponto. Uma série em falta resolve-se no fiscaldoo, não no programa. |
 | `VALIDATION_ERROR` | Um valor não cumpre uma regra de validação. O texto vem da regra. | Sem frase fixa. | Leia a mensagem: diz a regra e o valor. |
 | `PDF_UNAVAILABLE` | O PDF não se conseguiu produzir nesse momento. | Sem frase copiada. | Tente mais tarde. Se continuar, contacte o suporte. |
 | `INTERNAL_ERROR` | Falha inesperada do lado do servidor. Nada foi gravado. | Sem frase copiada: a mensagem traz uma referência. | Tente de novo. Se continuar, dê a referência ao suporte. |
@@ -74,7 +74,7 @@ Cada chamada corre numa só empresa, a do utilizador. Um documento ou um cliente
 A língua depende da porta por onde o programa entra.
 
 - **A API de faturação** (os códigos deste artigo) responde sempre em português: com ou sem língua no pedido, a mensagem de um NIF inválido vem em português (visto com o contexto vazio e com `en_US`).
-- **As chamadas diretas ao Fiscaldoo por XML-RPC ou JSON-RPC** (gravar uma fatura, confirmar, ler dados) devolvem as mensagens de recusa na língua que o pedido traz em `context`, e **sem língua saem em inglês**, mesmo que o utilizador da ligação tenha o português como língua. Para receber as mensagens em português, envie `context: {'lang': 'pt_PT'}` em cada pedido. Visto por XML-RPC, ao gravar uma fatura de compra com a data de receção num período cuja declaração de IVA já foi entregue: sem língua, «The receipt date 20/06/2026 is in a period whose VAT return (2026/6) was already delivered…»; com `{'lang': 'pt_PT'}`, «A data de receção 20/06/2026 está num período cuja declaração periódica de IVA (2026/6) já foi entregue…»; com `{'lang': 'en_US'}`, em inglês. Por exemplo: `models.execute_kw(db, uid, password, 'account.move', 'create', [valores], {'context': {'lang': 'pt_PT'}})`.
+- **As chamadas diretas ao fiscaldoo por XML-RPC ou JSON-RPC** (gravar uma fatura, confirmar, ler dados) devolvem as mensagens de recusa na língua que o pedido traz em `context`, e **sem língua saem em inglês**, mesmo que o utilizador da ligação tenha o português como língua. Para receber as mensagens em português, envie `context: {'lang': 'pt_PT'}` em cada pedido. Visto por XML-RPC, ao gravar uma fatura de compra com a data de receção num período cuja declaração de IVA já foi entregue: sem língua, «The receipt date 20/06/2026 is in a period whose VAT return (2026/6) was already delivered…»; com `{'lang': 'pt_PT'}`, «A data de receção 20/06/2026 está num período cuja declaração periódica de IVA (2026/6) já foi entregue…»; com `{'lang': 'en_US'}`, em inglês. Por exemplo: `models.execute_kw(db, uid, password, 'account.move', 'create', [valores], {'context': {'lang': 'pt_PT'}})`.
 - **O PDF certificado que o programa guarda ao emitir** (fatura, recibo, guia, documento de trabalho) sai na língua do parceiro do documento, ou em português se o parceiro não tiver língua, sem depender da língua do pedido: não é preciso enviar `lang` para o PDF sair certo. As mensagens de erro continuam a seguir o `context.lang`. <span className="fd-pending">Pendente de validação no ecrã: esta regra do PDF só vale a partir do comboio 238 (FIX-M366), que ainda não está na versão deste artigo (master e538214d9); antes, o PDF de um parceiro sem língua podia sair em inglês quando a fatura era emitida por RPC.</span>
 
 ## Nas descargas de ficheiros

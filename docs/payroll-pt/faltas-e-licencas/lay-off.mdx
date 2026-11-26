@@ -20,7 +20,7 @@ related: [payroll-pt/faltas-e-licencas/faltas, payroll-pt/processar-e-pagar/proc
 
 Num lay-off, a empresa suspende os contratos ou reduz o horário por um motivo que lhe diz respeito (por exemplo uma crise empresarial). O trabalhador perde a retribuição das horas não trabalhadas, mas recebe uma compensação, e não perde as férias nem os subsídios.
 
-No Fiscaldoo, o lay-off regista-se como uma ausência. Depois, o recibo do mês faz sozinho duas coisas:
+No fiscaldoo, o lay-off regista-se como uma ausência. Depois, o recibo do mês faz sozinho duas coisas:
 
 - desconta as horas não trabalhadas e junta a linha **Compensação de lay-off**;
 - no recibo do subsídio de Natal, mostra quanto desse subsídio cabe à Segurança Social, numa linha só informativa.
@@ -62,7 +62,7 @@ No Fiscaldoo, o lay-off regista-se como uma ausência. Depois, o recibo do mês 
 
 </StepByStep>
 
-### O que o Fiscaldoo calcula sozinho
+### O que o fiscaldoo calcula sozinho
 
 **No recibo do mês** (outubro, no exemplo):
 
@@ -106,14 +106,14 @@ O Guia Prático «Regime de Layoff» da Segurança Social (publicado a 15 de mai
 
 ## Notas importantes
 
-- **O Fiscaldoo não comunica nada à Segurança Social.** O pedido do apoio e da parte da Segurança Social faz-se fora do Fiscaldoo; as linhas do recibo servem para conferir os valores.
+- **O fiscaldoo não comunica nada à Segurança Social.** O pedido do apoio e da parte da Segurança Social faz-se fora do fiscaldoo; as linhas do recibo servem para conferir os valores.
 - **Corrigir um lay-off.** Corrija as datas da ausência antes de calcular o lote. Num mês já pago, a diferença vai para um recibo corretivo (ver «Problemas frequentes» e [Como corrigir um processamento de salários](/payroll-pt/corrigir-um-processamento)).
 
 ## Problemas frequentes
 
 ### «Falta num mês já pago…» ao validar um lay-off num mês fechado
 
-- **Causa:** o lay-off tem dias num mês cujo lote já foi pago. Com o perfil **Gestor de RH**, o **Validar** é recusado: «A ausência de «Eva Cristina Rocha» tem dias num mês já pago (setembro 2026) e não pode ser aprovada com o seu perfil. O que aconteceu: aprová-la abre um recibo corretivo com a diferença, e o perfil «Gestor de RH» não vê recibos de vencimento. Quem faz: quem tem o acesso extra «Administrador de Salários». Como resolver: peça-lhe que carregue em «Validar» nesta ausência.». Quem tem o acesso **Administrador de Salários** carrega em **Validar**, e o Fiscaldoo avisa: «Falta num mês já pago. A falta de «Eva Cristina Rocha» tem dias num mês já pago (setembro 2026) e esse recibo está fechado: não é alterado. O que aconteceu: a diferença ficou escrita no recibo corretivo Eva Cristina Rocha (01/09/2026 — 30/09/2026), em rascunho. Como resolver: abra-o a partir do campo «Recibos corretivos» da falta, confira o valor e valide-o, para que a diferença seja paga ou descontada.».
+- **Causa:** o lay-off tem dias num mês cujo lote já foi pago. Com o perfil **Gestor de RH**, o **Validar** é recusado: «A ausência de «Eva Cristina Rocha» tem dias num mês já pago (setembro 2026) e não pode ser aprovada com o seu perfil. O que aconteceu: aprová-la abre um recibo corretivo com a diferença, e o perfil «Gestor de RH» não vê recibos de vencimento. Quem faz: quem tem o acesso extra «Administrador de Salários». Como resolver: peça-lhe que carregue em «Validar» nesta ausência.». Quem tem o acesso **Administrador de Salários** carrega em **Validar**, e o fiscaldoo avisa: «Falta num mês já pago. A falta de «Eva Cristina Rocha» tem dias num mês já pago (setembro 2026) e esse recibo está fechado: não é alterado. O que aconteceu: a diferença ficou escrita no recibo corretivo Eva Cristina Rocha (01/09/2026 — 30/09/2026), em rascunho. Como resolver: abra-o a partir do campo «Recibos corretivos» da falta, confira o valor e valide-o, para que a diferença seja paga ou descontada.».
 - **O que fazer:** abra o recibo corretivo, confira a **Retribuição perdida por faltas** e a **Compensação de lay-off** (no exemplo, 2 dias de setembro, de 14 a 15/09/2026: −64,00 € e 42,67 €, dois terços das 16 horas perdidas) e valide-o. <span className="fd-pending">Pendente de validação por contabilista certificado: os 42,67 € partem do mesmo valor de uma hora de 4,0000 € e não aplicam o mínimo da compensação; confirme o valor antes de validar o recibo corretivo.</span>
 
 {/* Nota interna (lote v23-AR, #4052, master d277b0e80 com o PAY-132 e o PAY-104b, docs_demo_v23ar_test, porta 8508): por clique, com utilizadores criados só com um Perfil: Gestor de RH criou, aprovou e validou a ausência de 19 a 23/10/2026 (datas escritas no campo, com Enter); Processador de salários criou o lote Salários de outubro de 2026 (Criar os recibos do mês: «Recibos criados. 8 recibos criados; 0 trabalhadores já tinham recibo.») e o recibo de Eva Cristina Rocha ficou com 960,00 / 120,00 / 98,40 / -160,00, bruto 1.018,40, descontos 101,20, líquido 917,20 (captura 02); Como foi calculado? da compensação com 70 % (84,00) e 30 % (36,00) e «Fonte: CT arts. 305.º e 306.º»; recibo validado: Remuneração de referência da Segurança Social, Remuneração mensal 1.018,40 €. Lay-off de 14 a 15/09/2026: recusa nova do Gestor de RH e «Falta num mês já pago» com o Administrador de Salários, por clique; recibo corretivo -64,00 / 42,67. Lote Natal de dezembro de 2026 criado e calculado pelo Processador: linha de 6,14 € e «Fonte: CT art. 306.º» (captura 03). Primeiro lay-off da empresa provado numa cópia limpa (docs_demo_v23ar2_test, 8509, b605851c7, sem linhas de lay-off antes): o Processador de salários criou o lote de outubro sem recusa, a rubrica Compensação de lay-off nasceu nesse cálculo, 120,00 € e líquido 917,20 €. Captura 01 mantida (o ecrã só ganhou Primeiro dia útil de regresso, abaixo da zona recortada). */}

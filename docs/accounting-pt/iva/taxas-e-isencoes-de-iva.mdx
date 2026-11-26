@@ -17,7 +17,7 @@ related: [fiscal-core/faturacao/artigos, fiscal-core/faturacao/clientes, trouble
 
 ## Para que serve?
 
-A taxa de IVA de cada linha decide o IVA da fatura e, quando é uma taxa a 0 %, o motivo de isenção que sai no documento e no SAF-T. O Fiscaldoo põe a taxa sozinho: vem do artigo, a ficha do cliente pode trocá-la (cliente de outro país) e a verba das listas do IVA da categoria do artigo sugere a taxa reduzida ou intermédia. Nos Açores e na Madeira há taxas próprias. Este artigo mostra onde cada uma se vê e o que conferir antes de emitir.
+A taxa de IVA de cada linha decide o IVA da fatura e, quando é uma taxa a 0 %, o motivo de isenção que sai no documento e no SAF-T. O fiscaldoo põe a taxa sozinho: vem do artigo, a ficha do cliente pode trocá-la (cliente de outro país) e a verba das listas do IVA da categoria do artigo sugere a taxa reduzida ou intermédia. Nos Açores e na Madeira há taxas próprias. Este artigo mostra onde cada uma se vê e o que conferir antes de emitir.
 
 Escolher a taxa não cria lançamentos. Os lançamentos nascem quando a fatura é emitida (ver «Resultado esperado»).
 
@@ -27,7 +27,7 @@ Escolher a taxa não cria lançamentos. Os lançamentos nascem quando a fatura �
 - Antes de emitir uma fatura a um cliente de outro país da União Europeia.
 - Antes de faturar a um cliente dos Açores ou da Madeira, ou quando a empresa tem sede numa região autónoma.
 - Quando uma venda é isenta e precisa de saber que motivo de isenção sai na fatura.
-- **Não** escolha a taxa **0% EU** para um cliente português: o Fiscaldoo recusa a fatura (ver «Problemas frequentes»).
+- **Não** escolha a taxa **0% EU** para um cliente português: o fiscaldoo recusa a fatura (ver «Problemas frequentes»).
 
 ## Onde encontrar?
 
@@ -79,7 +79,7 @@ O PDF da fatura à Bodega mostra **IVA 0%** na linha e, por baixo do quadro do I
 ## Notas importantes
 
 <HelpCallout type="risco" title="Não emita 0% EU com o NIF por validar no VIES">
-A isenção intracomunitária só vale com o NIF do cliente válido no VIES (RITI, art. 14.º, n.º 1, alínea a)). A AT só a aceita com esse NIF válido (ficha doutrinária 15604): sem ele, a venda é tributada em Portugal. Por isso, com a opção **A isenção intracomunitária exige verificação VIES válida**, que vem ligada ([Como configurar o IVA da empresa](/accounting-pt/configurar-o-iva)), o Fiscaldoo recusa confirmar uma fatura com **0% EU** ou **0% EU S** a um cliente cujo NIF não está **Válido** no VIES. A mensagem está em «Problemas frequentes». O que acontece em cada estado do VIES, e com a opção desligada, está em [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes), secções «A isenção posta à mão: uma faixa por estado» e «A opção da empresa».
+A isenção intracomunitária só vale com o NIF do cliente válido no VIES (RITI, art. 14.º, n.º 1, alínea a)). A AT só a aceita com esse NIF válido (ficha doutrinária 15604): sem ele, a venda é tributada em Portugal. Por isso, com a opção **A isenção intracomunitária exige verificação VIES válida**, que vem ligada ([Como configurar o IVA da empresa](/accounting-pt/configurar-o-iva)), o fiscaldoo recusa confirmar uma fatura com **0% EU** ou **0% EU S** a um cliente cujo NIF não está **Válido** no VIES. A mensagem está em «Problemas frequentes». O que acontece em cada estado do VIES, e com a opção desligada, está em [Como criar um cliente com os dados fiscais certos](/fiscal-core/clientes), secções «A isenção posta à mão: uma faixa por estado» e «A opção da empresa».
 
 Só por decisão do contabilista certificado é que uma fatura assim se emite, pelo perfil **Contabilista certificado**: veja a secção «A decisão do Contabilista certificado» do mesmo artigo. A fatura entra no campo 7 da declaração periódica e na declaração recapitulativa como as outras ([De onde vem cada campo da DP IVA](/accounting-pt/campos-da-declaracao-de-iva)). <span className="fd-pending">Pendente de validação por contabilista certificado: condições da isenção intracomunitária (RITI, art. 14.º), quando se pode emitir com o NIF por validar e o que fazer a uma fatura já emitida assim.</span>
 </HelpCallout>

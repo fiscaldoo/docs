@@ -37,7 +37,7 @@ Num ecrã mais estreito (por exemplo, um portátil de 1366 px de largura), **Apr
 
 - O seu perfil é **Gerência**. É o perfil que vê a aplicação **Direção** e que tem o botão **Aprovar (pronto a pagar)** nas notas de pagamento.
 - A despesa está **Submetido**. O produto só deixa submeter uma despesa com o documento anexado, o número do documento e, se tiver IVA, o fornecedor com NIF.
-- **Hoje, o trabalhador não consegue submeter a despesa que criou:** o Fiscaldoo dá um erro de acesso e a despesa fica em **Rascunho**. Até o erro ser corrigido, a gerência pode submetê-la por ele: na lista de **Despesas por aprovar**, sem filtro, abra a despesa em **Rascunho**, escolha o **Artigo**, o **Documento de suporte** e o **Número do documento**, anexe o documento (botão **Anexar ficheiros**, na conversa da despesa) e carregue em **Submeter**. Como é a gerência que aprova, a despesa abaixo do limite passa logo de **Rascunho** a **Aprovado**, sem passar por **Submetido**, por isso confira tudo antes de carregar. Confira também o que o **Artigo** preenche: no teste, o artigo **[EXP_GEN] Despesas** trouxe o IVA de 23%, um fornecedor e a conta 311 Mercadorias, que não serviam a um estacionamento.
+- **Hoje, o trabalhador não consegue submeter a despesa que criou:** o fiscaldoo dá um erro de acesso e a despesa fica em **Rascunho**. Até o erro ser corrigido, a gerência pode submetê-la por ele: na lista de **Despesas por aprovar**, sem filtro, abra a despesa em **Rascunho**, escolha o **Artigo**, o **Documento de suporte** e o **Número do documento**, anexe o documento (botão **Anexar ficheiros**, na conversa da despesa) e carregue em **Submeter**. Como é a gerência que aprova, a despesa abaixo do limite passa logo de **Rascunho** a **Aprovado**, sem passar por **Submetido**, por isso confira tudo antes de carregar. Confira também o que o **Artigo** preenche: no teste, o artigo **[EXP_GEN] Despesas** trouxe o IVA de 23%, um fornecedor e a conta 311 Mercadorias, que não serviam a um estacionamento.
 - A nota de pagamento está **Conferido**: a tesouraria criou-a a partir das faturas do fornecedor e conferiu-a.
 - Se a empresa usa dois níveis, o administrador definiu o limite em **Definições › Despesas › 2.º nível de aprovação acima de**. Com zero, há uma só aprovação.
 
@@ -56,7 +56,7 @@ Num ecrã mais estreito (por exemplo, um portátil de 1366 px de largura), **Apr
 4. Abra a despesa. Confira o **Total**, os **Impostos**, o **Fornecedor** e o documento anexado.
 5. Carregue em **Aprovar**.
    ![Despesa no estado Submetido com os botões Aprovar, Recusar e Reiniciar e o aviso Um despesa com o mesmo recibo já existe](/images/management/aprovar-pagamentos-e-despesas/03-despesa-submetida.png)
-   No exemplo, o aviso «Um despesa com o mesmo recibo já existe.» não quer dizer que a despesa está repetida: os documentos de exemplo anexados às despesas estão vazios, e o Fiscaldoo dá ficheiros iguais (incluindo vazios) como o mesmo recibo. A ligação **despesa** do aviso mostra duas despesas que nada têm a ver com esta (24,60 € e 38,50 €). Com documentos verdadeiros, o aviso só aparece quando outra despesa tem o mesmo ficheiro (ver «Problemas frequentes»).
+   No exemplo, o aviso «Um despesa com o mesmo recibo já existe.» não quer dizer que a despesa está repetida: os documentos de exemplo anexados às despesas estão vazios, e o fiscaldoo dá ficheiros iguais (incluindo vazios) como o mesmo recibo. A ligação **despesa** do aviso mostra duas despesas que nada têm a ver com esta (24,60 € e 38,50 €). Com documentos verdadeiros, o aviso só aparece quando outra despesa tem o mesmo ficheiro (ver «Problemas frequentes»).
 6. Para recusar, carregue em **Recusar**, escreva o **Motivo** na janela **Recusar despesa** e carregue em **Recusar**.
 
 </StepByStep>
@@ -100,7 +100,7 @@ Se a despesa está acima do limite, **Aprovar** dá só o 1.º nível. A convers
 
 ### Aparece «Um despesa com o mesmo recibo já existe.»
 
-- **Causa:** outra despesa tem anexado um ficheiro igual a um desta. O Fiscaldoo compara o conteúdo dos ficheiros, não o nome: dois ficheiros vazios também contam como o mesmo recibo, e é por isso que o aviso aparece nas despesas do exemplo.
+- **Causa:** outra despesa tem anexado um ficheiro igual a um desta. O fiscaldoo compara o conteúdo dos ficheiros, não o nome: dois ficheiros vazios também contam como o mesmo recibo, e é por isso que o aviso aparece nas despesas do exemplo.
 - **O que fazer:** carregue na ligação **despesa** do aviso. Abre a lista «Despesas com um recibo semelhante ao de …», com as outras despesas. Confirme se alguma é a mesma despesa submetida duas vezes: se for, recuse uma delas. Se forem despesas diferentes, abra o documento anexado a cada uma e confirme que é o recibo certo e não um ficheiro vazio.
 
 ### Recusar depois do 1.º nível dá «Operação inválida»

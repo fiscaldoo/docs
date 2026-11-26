@@ -27,7 +27,7 @@ Estas escolhas valem para todos os recibos da empresa. Configurar não gera lan�
 - Ao começar a processar salários numa empresa nova no fiscaldoo.
 - Em janeiro, para registar a dimensão do ano (a média de trabalhadores do ano anterior).
 - Quando muda a seguradora ou a apólice de acidentes de trabalho, ou a empresa passa a ter um instrumento de regulamentação coletiva.
-- Quando o contabilista certificado decide uma das escolhas que o Fiscaldoo deixa à empresa (lista em [Para o contabilista](#para-o-contabilista)).
+- Quando o contabilista certificado decide uma das escolhas que o fiscaldoo deixa à empresa (lista em [Para o contabilista](#para-o-contabilista)).
 
 Não use este artigo para o valor do salário mínimo: está em [Como atualizar o salário mínimo e aplicar reduções](/payroll-pt/salario-minimo).
 
@@ -46,11 +46,11 @@ Não use este artigo para o valor do salário mínimo: está em [Como atualizar 
 <StepByStep>
 
 1. Abra **Salários › Configurar › Empresa › Ficha do empregador**. Numa empresa sem ficha, a lista diz «Aqui aparecem os dados do empregador usados nas declarações; criam-se com «Novo», um por empresa.» Carregue em **Novo**.
-2. Preencha **Válido desde** e o **Número de Segurança Social do empregador**. O **Número de identificação fiscal (NIF/NIPC)** e o **CAE** vêm da empresa e não se editam na ficha: o NIF (PT599999993 na demonstração) e o CAE (46900) mudam-se nos dados da própria empresa. Deixe **NIPC da Segurança Social (DMR)** vazio até ter o número das instruções oficiais da declaração mensal de remunerações: o Fiscaldoo nunca o presume. A **Base legal** da ficha é só de leitura.
+2. Preencha **Válido desde** e o **Número de Segurança Social do empregador**. O **Número de identificação fiscal (NIF/NIPC)** e o **CAE** vêm da empresa e não se editam na ficha: o NIF (PT599999993 na demonstração) e o CAE (46900) mudam-se nos dados da própria empresa. Deixe **NIPC da Segurança Social (DMR)** vazio até ter o número das instruções oficiais da declaração mensal de remunerações: o fiscaldoo nunca o presume. A **Base legal** da ficha é só de leitura.
 3. Em **Acidentes de trabalho e acordos**, escolha a **Seguradora (acidentes de trabalho)**, escreva o **Número da apólice (acidentes de trabalho)** e a **Apólice válida até**. Em **Prémio do seguro**, escolha **Prémio fixo** ou **Prémio variável** (no variável, a seguradora cobra sobre os salários do mês e a empresa envia-lhe a folha mensal). **Abrangida pelo regime de acidentes em serviço** vem marcada: desmarque-a só se a empresa não estiver abrangida. <span className="fd-pending">Pendente de validação por contabilista certificado: quando se desmarca **Abrangida pelo regime de acidentes em serviço**, e a **FGCT (art. 106.º/3-m)** (referência do Fundo de Garantia de Compensação do Trabalho): quando e como se preenche.</span> Preencha o **Instrumento de regulamentação coletiva aplicável (IRCT)** e as **Partes que o assinaram**, se houver. Guarde.
    ![Ficha do empregador, secção do seguro de acidentes de trabalho: seguradora, número da apólice, apólice válida até 31/12/2026 assinalada e prémio fixo](/images/payroll-pt/configurar-os-salarios/01-ficha-do-empregador-seguro.png)
 4. Abra **Salários › Configurar › Empresa › Dimensão da empresa** e carregue em **Novo**.
-5. Escreva **Válido desde** (por exemplo `01/01/2026`) e, em **Trabalhadores em média**, o número médio de trabalhadores do ano civil anterior (no ano de início de atividade, os trabalhadores nesse dia). A **Dimensão** preenche-se sozinha: com `24` fica **Pequena empresa (10 a menos de 50)**; com `60`, **Média empresa (50 a menos de 250)**.
+5. Escreva **Válido desde** (por exemplo `01/01/2026`) e, em **Trabalhadores em média**, o número médio de trabalhadores do ano civil anterior (no ano de início de atividade, os trabalhadores nesse dia). A **Dimensão** preenche-se sozinha: com `8` fica **Microempresa (menos de 10 trabalhadores)**; com `60`, **Média empresa (50 a menos de 250)**.
 6. Em **Origem do número de trabalhadores**, diga de onde vem o número (por exemplo `Média de 2025 (Relatório Único)`) e guarde.
    ![Dimensão da empresa de 2026: 8 trabalhadores em média e a dimensão Microempresa assinalada](/images/payroll-pt/configurar-os-salarios/02-dimensao-da-empresa.png)
 7. Abra **Salários › Configurar › Empresa › Definições de salários** e carregue na linha da empresa. A linha já existe em todas as empresas, mesmo antes do primeiro salário.
@@ -78,10 +78,10 @@ Não use este artigo para o valor do salário mínimo: está em [Como atualizar 
 Os passos são os mesmos no Odoo Enterprise, com o mesmo acesso extra **Administrador de Salários**. Muda o seguinte:
 
 - **Uma só aplicação de salários.** Numa empresa portuguesa, a lista de aplicações mostra só a **Salários** do fiscaldoo. A aplicação de salários do próprio Enterprise fica escondida a todos, também ao administrador, para o mesmo recibo nunca ser calculado duas vezes, com regras diferentes. Os menus deste artigo, em **Salários › Configurar › Empresa**, são os mesmos que no Community.
-- **Dois separadores nas Definições.** Nas **Definições**, o administrador vê o separador **Salários**, com o bloco **Salários (PT)** do Fiscaldoo, e o separador **Folha de Salários**, que é o dos salários do Enterprise (por exemplo, **Criar pagamento SEPA**; parte dos textos aparece em inglês). O que este artigo configura está em **Salários › Configurar › Empresa**, não nesse separador.
+- **Dois separadores nas Definições.** Nas **Definições**, o administrador vê o separador **Salários**, com o bloco **Salários (PT)** do fiscaldoo, e o separador **Folha de Salários**, que é o dos salários do Enterprise (por exemplo, **Criar pagamento SEPA**; parte dos textos aparece em inglês). O que este artigo configura está em **Salários › Configurar › Empresa**, não nesse separador.
 - **Empresas fora de Portugal.** Num grupo com empresas de outros países, essas empresas fazem os recibos nos salários do Enterprise, sem as regras portuguesas. <span className="fd-pending">Pendente de validação no ecrã: a demonstração Enterprise só tem empresas portuguesas, por isso não se viu uma empresa de outro país.</span>
 
-{/* Nota interna (lote EE-06, DOCS-073 #4142, DEC-1794, master ce51f2d47, 10/11/2026): conferido numa cópia Enterprise da demonstração (docs_ee_ee06_test, computador 2) com utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): acesso extra Administrador de Salários nas três entradas de Salários › Configurar › Empresa; administrador: só a aplicação Salários do Fiscaldoo nas três empresas (portuguesas) e, nas Definições, os separadores Salários (bloco Salários (PT)) e Folha de Salários (o do Enterprise). Menus e vistas comparados, perfil a perfil, com uma cópia Community do mesmo master (docs_demo_ee06_test). Ver reports/LOTE_EE-06.md. */}
+{/* Nota interna (lote EE-06, DOCS-073 #4142, DEC-1794, master ce51f2d47, 10/11/2026): conferido numa cópia Enterprise da demonstração (docs_ee_ee06_test, computador 2) com utilizadores criados na cópia, cada um só com um valor do campo Perfil (mais o acesso extra indicado): acesso extra Administrador de Salários nas três entradas de Salários › Configurar › Empresa; administrador: só a aplicação Salários do fiscaldoo nas três empresas (portuguesas) e, nas Definições, os separadores Salários (bloco Salários (PT)) e Folha de Salários (o do Enterprise). Menus e vistas comparados, perfil a perfil, com uma cópia Community do mesmo master (docs_demo_ee06_test). Ver reports/LOTE_EE-06.md. */}
 
 ## Resultado esperado
 
@@ -133,7 +133,7 @@ Os passos são os mesmos no Odoo Enterprise, com o mesmo acesso extra **Administ
 
 ## Para o contabilista
 
-Escolhas das **Definições de salários** que a lei não fixa ou que o próprio Fiscaldoo marca para validar. Ficam registadas quando mudam e só chegam aos recibos calculados depois. <span className="fd-pending">Pendente de validação por contabilista certificado: a opção a usar em cada uma destas escolhas.</span>
+Escolhas das **Definições de salários** que a lei não fixa ou que o próprio fiscaldoo marca para validar. Ficam registadas quando mudam e só chegam aos recibos calculados depois. <span className="fd-pending">Pendente de validação por contabilista certificado: a opção a usar em cada uma destas escolhas.</span>
 
 | Definição | Opções no ecrã (a primeira é a da demonstração) |
 |---|---|

@@ -18,9 +18,9 @@ related: [payroll-pt/processar-e-pagar/processar-o-mes, payroll-pt/configurar/co
 
 ## Para que serve?
 
-Depois de validar o lote do mês, os salários pagam-se por transferência. Os recibos entram na contabilidade, o Fiscaldoo cria um pagamento por recibo, junta-os num ficheiro de transferências SEPA que se carrega no banco e, quando o banco pagou, regista os pagamentos como executados e o lote como pago.
+Depois de validar o lote do mês, os salários pagam-se por transferência. Os recibos entram na contabilidade, o fiscaldoo cria um pagamento por recibo, junta-os num ficheiro de transferências SEPA que se carrega no banco e, quando o banco pagou, regista os pagamentos como executados e o lote como pago.
 
-O Fiscaldoo não fala com o banco: gera o ficheiro e guarda o que lhe diz. A data em que regista o pagamento é a que conta para a declaração mensal de remunerações (DMR).
+O fiscaldoo não fala com o banco: gera o ficheiro e guarda o que lhe diz. A data em que regista o pagamento é a que conta para a declaração mensal de remunerações (DMR).
 
 ## Quando utilizar?
 
@@ -67,7 +67,7 @@ Gerar os pagamentos antes de contabilizar também funciona (o ficheiro aproveita
 
 ## No Enterprise
 
-No Odoo Enterprise, este artigo faz-se da mesma maneira: com o perfil **Processador de salários** e o acesso extra **Administrador de Salários**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do Fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)). No lote de outubro de 2026 da demonstração Enterprise, **Contabilizar**, **Gerar pagamentos**, **Ficheiro de transferências** (ficheiro `Salários de outubro de 2026.xml`), **Banco executou** e a janela **Marcar como pago** («Todos os 8 recibos do lote «Salários de outubro de 2026» (líquido total 10.382,03 €) já foram pagos pelo banco…») funcionaram como neste artigo.
+No Odoo Enterprise, este artigo faz-se da mesma maneira: com o perfil **Processador de salários** e o acesso extra **Administrador de Salários**, os menus, os ecrãs e os botões são os mesmos que no Community. Numa empresa portuguesa, a única aplicação de salários continua a ser a **Salários** do fiscaldoo (ver [Como configurar os salários da empresa](/payroll-pt/configurar-os-salarios#no-enterprise)). No lote de outubro de 2026 da demonstração Enterprise, **Contabilizar**, **Gerar pagamentos**, **Ficheiro de transferências** (ficheiro `Salários de outubro de 2026.xml`), **Banco executou** e a janela **Marcar como pago** («Todos os 8 recibos do lote «Salários de outubro de 2026» (líquido total 10.382,03 €) já foram pagos pelo banco…») funcionaram como neste artigo.
 
 No Enterprise, a reconciliação do movimento do banco faz-se na reconciliação bancária da contabilidade do Enterprise. <span className="fd-pending">Pendente de validação no ecrã: a reconciliação bancária do Enterprise tem um defeito conhecido nesta versão, por isso não se viu o efeito de um pagamento reconciliado em «Desfazer um pagamento».</span>
 
@@ -90,7 +90,7 @@ No Enterprise, a reconciliação do movimento do banco faz-se na reconciliação
 2. Na janela, escreva o **Motivo** (obrigatório: sem ele aparece «Há campos obrigatórios por preencher…») e carregue em **Repor para Validado**. O motivo fica no registo de auditoria.
    ![Janela Repor para Validado, com o campo Motivo](/images/payroll-pt/pagar-os-salarios/06-repor-para-validado.png)
 
-Só é possível enquanto nenhum pagamento estiver contabilizado na Contabilidade nem reconciliado com o banco. Depois de **Banco executou** o pagamento fica contabilizado, por isso, no exemplo, o Fiscaldoo recusa (ver «Problemas frequentes»). Nesse caso desfaça primeiro o pagamento na Contabilidade (desreconcilie-o ou cancele-o) ou corrija o recibo com um recibo corretivo ([Como corrigir um processamento](/payroll-pt/corrigir-um-processamento)).
+Só é possível enquanto nenhum pagamento estiver contabilizado na Contabilidade nem reconciliado com o banco. Depois de **Banco executou** o pagamento fica contabilizado, por isso, no exemplo, o fiscaldoo recusa (ver «Problemas frequentes»). Nesse caso desfaça primeiro o pagamento na Contabilidade (desreconcilie-o ou cancele-o) ou corrija o recibo com um recibo corretivo ([Como corrigir um processamento](/payroll-pt/corrigir-um-processamento)).
 
 ## Pagar um recibo em numerário
 
@@ -131,7 +131,7 @@ Se o lote não tem pagamentos para pôr no ficheiro (na demonstração, com um l
 
 - **Trabalhador sem IBAN.** **Gerar pagamentos** avisa: «Pagamentos não ordenados. 1 trabalhador(es) sem IBAN válido ficam fora do ficheiro de transferências: … Corrija a conta bancária de cada trabalhador (botão «Ver quem é preciso corrigir» no lote) e faça o ficheiro de transferências de novo.» **Banco executou** só conta quem foi no ficheiro e avisa «Não pago pelo banco.» Quem ficou de fora continua por pagar, e **Marcar como pago** não fecha o lote enquanto esse líquido estiver em aberto: corrija o IBAN, faça outra vez o ficheiro e use **Banco executou** de novo, ou registe o pagamento no recibo.
 - **Carregue em Banco executou no dia em que o banco pagou.** A janela não pede data: os pagamentos ficam executados no dia em que confirma. A DMR declara o rendimento pago em cada mês, por isso um pagamento confirmado a 2 de novembro entra na DMR de novembro e não na de outubro. Na demonstração, a DMR de um mês sem pagamentos confirmados é recusada com «Não há recibos pagos em 11/2026 …». Ver [Como enviar a declaração mensal de remunerações](/payroll-pt/dmr).
-- **Prazo do pagamento.** O recibo mostra a **Data-limite do pagamento** no separador **Pagamento e obrigações**. Em outubro de 2026 é 30/10/2026, porque 31/10/2026 é sábado. O Fiscaldoo compara a data-valor com esta data: no exemplo, pago a 01/11/2026, cada pagamento ficou registado com 2 dias de atraso. <span className="fd-pending">Pendente de validação por contabilista certificado ou jurista do trabalho: vencimento no dia útil anterior (o recibo cita «CT art. 278.º, interpretação»).</span>
+- **Prazo do pagamento.** O recibo mostra a **Data-limite do pagamento** no separador **Pagamento e obrigações**. Em outubro de 2026 é 30/10/2026, porque 31/10/2026 é sábado. O fiscaldoo compara a data-valor com esta data: no exemplo, pago a 01/11/2026, cada pagamento ficou registado com 2 dias de atraso. <span className="fd-pending">Pendente de validação por contabilista certificado ou jurista do trabalho: vencimento no dia útil anterior (o recibo cita «CT art. 278.º, interpretação»).</span>
 - **Fechar o lote é o último passo do mês** (passo 8 do ecrã do mês), depois das declarações e da conferência da contabilidade. Um lote fechado mostra «Lote fechado: já não se altera. Um utilizador com o acesso extra «Administrador de Salários» pode reabri-lo, com um motivo.»
 
 ## Problemas frequentes
@@ -145,7 +145,7 @@ Se o lote não tem pagamentos para pôr no ficheiro (na demonstração, com um l
 ### Executar ou Banco executou responde «O pagamento ainda não pode ser executado»
 
 - **Sintoma:** «Operação inválida O pagamento ainda não pode ser executado. O que aconteceu: o(s) recibo(s) «*Ana Margarida Pinto (01/10/2026 — 31/10/2026)*», … «*Hugo Miguel Santos (01/10/2026 — 31/10/2026)*» não estão contabilizados, e um salário não se paga sem o respetivo lançamento contabilístico. Como corrigir: peça a um utilizador com o acesso extra «Administrador de Salários» que use «Contabilizar» no recibo e execute outra vez.» No lote, a mensagem lista todos os recibos por contabilizar; num recibo, só esse.
-- **Causa:** o recibo, ou o lote, ainda não tem lançamento, e está a usar o perfil **Processador de salários**, que não tem o botão **Contabilizar**. Com o acesso extra **Administrador de Salários**, o Fiscaldoo contabiliza primeiro e não mostra esta mensagem.
+- **Causa:** o recibo, ou o lote, ainda não tem lançamento, e está a usar o perfil **Processador de salários**, que não tem o botão **Contabilizar**. Com o acesso extra **Administrador de Salários**, o fiscaldoo contabiliza primeiro e não mostra esta mensagem.
 - **O que fazer:** peça a um utilizador com o acesso extra **Administrador de Salários** que carregue em **Contabilizar** e repita.
 
 {/* Nota interna (lote v23-AO, DOCS-069 #4052, master a67618a71, docs_demo_v23ao_test, 09/11/2026): UX-147. Vistos por clique com um utilizador só com o perfil Processador de salários, no lote de outubro de 2026 criado e validado por RPC na cópia: recusas do Ficheiro de transferências e de Banco executou (com os 8 recibos), aviso do lote Pago (captura 04 refeita; botões Gerar pagamentos, Ficheiro de transferências e Fechar) e do lote Fechado (sem Reabrir). Recibo de novembro de 2026 de Hugo Miguel Santos criado, validado e contabilizado por RPC: Pagar abre Marcar como pago só com Anular e a frase nova. Contabilizar visto com um utilizador só com o acesso extra Administrador de Salários. Auditoria docs-aud-v23ao (09/11/2026): no lote Pago e já contabilizado, um utilizador só com o acesso extra viu Gerar pagamentos, Ficheiro de transferências, Repor para Validado e Fechar, sem Contabilizar (a vista só o mostra com recibos por contabilizar). */}

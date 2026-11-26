@@ -4,7 +4,7 @@ slug: /accounting-pt/faturas-entre-empresas-do-grupo
 title: Como faturar entre empresas do mesmo grupo
 sidebar_label: Faturas entre empresas do grupo
 sidebar_position: 9
-description: Quando uma empresa do grupo fatura a outra na mesma base de dados, o Fiscaldoo cria sozinho a fatura de fornecedor na empresa que compra, em rascunho ou já publicada.
+description: Quando uma empresa do grupo fatura a outra na mesma base de dados, o fiscaldoo cria sozinho a fatura de fornecedor na empresa que compra, em rascunho ou já publicada.
 keywords: [faturas do grupo, empresas do grupo, intercompany, entre empresas, fatura de fornecedor automática, diário de compras do grupo, criar em rascunho, criar e publicar, multiempresa]
 doc_id: DOC-0070
 article_type: tarefa
@@ -18,7 +18,7 @@ related: [accounting-pt/compras/fatura-de-fornecedor, accounting-pt/dia-a-dia/at
 
 ## Para que serve?
 
-Quando duas empresas do mesmo grupo trabalham na mesma base de dados do Fiscaldoo e uma fatura à outra, a fatura de venda é registada na empresa que vende e a mesma compra tem de ser registada na empresa que compra. Com a opção **Faturas do grupo** ligada na empresa que compra, o Fiscaldoo cria essa **fatura de fornecedor** sozinho, no momento em que a fatura de venda é publicada: com as mesmas linhas, os mesmos valores, as datas e o número da fatura de venda como referência.
+Quando duas empresas do mesmo grupo trabalham na mesma base de dados do fiscaldoo e uma fatura à outra, a fatura de venda é registada na empresa que vende e a mesma compra tem de ser registada na empresa que compra. Com a opção **Faturas do grupo** ligada na empresa que compra, o fiscaldoo cria essa **fatura de fornecedor** sozinho, no momento em que a fatura de venda é publicada: com as mesmas linhas, os mesmos valores, as datas e o número da fatura de venda como referência.
 
 Assim, ninguém escreve a mesma fatura duas vezes e as duas empresas ficam com os mesmos valores.
 
@@ -56,7 +56,7 @@ Não tem menu próprio. Configura-se na ficha da **empresa que compra**: **Defin
 
 ## No Enterprise
 
-No Odoo Enterprise, as faturas do grupo são as do Fiscaldoo: na ficha da **Empresa Teste Portugal**, separador **Contabilidade**, o grupo **Empresas do grupo** tem o mesmo campo **Faturas do grupo**, com **Não criar**, **Criar em rascunho** e **Criar e publicar** (visto com o administrador). A função do próprio Enterprise para transações entre empresas não está instalada na base Enterprise de teste: use a do Fiscaldoo, como neste artigo.
+No Odoo Enterprise, as faturas do grupo são as do fiscaldoo: na ficha da **Empresa Teste Portugal**, separador **Contabilidade**, o grupo **Empresas do grupo** tem o mesmo campo **Faturas do grupo**, com **Não criar**, **Criar em rascunho** e **Criar e publicar** (visto com o administrador). A função do próprio Enterprise para transações entre empresas não está instalada na base Enterprise de teste: use a do fiscaldoo, como neste artigo.
 
 A lista do **Diário de compras do grupo** só mostra os diários das empresas assinaladas no seletor de empresas do topo do ecrã. Com só a **Empresa Demonstração, Lda** assinalada, a lista não mostrou o diário **Compras** da Empresa Teste Portugal e ofereceu só **Criar “Compras”** e **Criar e editar…**: não carregue nessas opções, que criam outro diário. Assinale também a **Empresa Teste Portugal** no seletor e carregue em **Confirmar**: a lista passa a mostrar **Compras**. Também pode deixar o campo vazio, que quer dizer o primeiro diário de compras da empresa que compra.
 
@@ -82,7 +82,7 @@ A lista do **Diário de compras do grupo** só mostra os diários das empresas a
 - As contas de gasto e de rendimento vêm da configuração do artigo em cada empresa. O IVA da compra é o imposto de compra da empresa que compra com a mesma taxa e o mesmo código do imposto de venda.
 
 
-<span className="fd-pending">Pendente de validação por contabilista certificado: a dedução do IVA da fatura de fornecedor criada desta forma (a empresa que compra tem de ter a fatura emitida pelo fornecedor; o documento criado pelo Fiscaldoo é o registo dessa fatura, não a substitui).</span>
+<span className="fd-pending">Pendente de validação por contabilista certificado: a dedução do IVA da fatura de fornecedor criada desta forma (a empresa que compra tem de ter a fatura emitida pelo fornecedor; o documento criado pelo fiscaldoo é o registo dessa fatura, não a substitui).</span>
 
 ## Notas importantes
 

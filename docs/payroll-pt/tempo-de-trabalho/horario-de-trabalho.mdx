@@ -18,7 +18,7 @@ related: [payroll-pt/tempo-de-trabalho/trabalho-suplementar, payroll-pt/tempo-de
 
 ## Para que serve?
 
-O horário de trabalho diz quantas horas cada trabalhador faz por dia. Neste ecrã preenche-se também o **mapa de horário**, o documento que a lei manda afixar no local de trabalho, e regista-se cada alteração do horário, com a data em que foi afixada. O Fiscaldoo compara essa data com o aviso exigido e diz se a alteração é conforme.
+O horário de trabalho diz quantas horas cada trabalhador faz por dia. Neste ecrã preenche-se também o **mapa de horário**, o documento que a lei manda afixar no local de trabalho, e regista-se cada alteração do horário, com a data em que foi afixada. O fiscaldoo compara essa data com o aviso exigido e diz se a alteração é conforme.
 
 ## Quando utilizar?
 
@@ -26,7 +26,7 @@ O horário de trabalho diz quantas horas cada trabalhador faz por dia. Neste ecr
 - Quando o horário vai mudar: registe a alteração e o aviso dado aos trabalhadores.
 - Quando um trabalhador passa a ter outro horário a partir de uma data.
 
-Não altere as horas de um horário que já foi usado num recibo fechado: o Fiscaldoo recusa (ver «Problemas frequentes»). Duplique-o e aplique a cópia.
+Não altere as horas de um horário que já foi usado num recibo fechado: o fiscaldoo recusa (ver «Problemas frequentes»). Duplique-o e aplique a cópia.
 
 ## Onde encontrar?
 
@@ -45,7 +45,7 @@ Não altere as horas de um horário que já foi usado num recibo fechado: o Fisc
 
 <StepByStep>
 
-1. Abra **Pessoas › Configurar › Gestão de tempo › Horários de trabalho** e abra o horário, por exemplo **PT 40.0h/8.0h (demonstração)**, o de 23 trabalhadores da demonstração.
+1. Abra **Pessoas › Configurar › Gestão de tempo › Horários de trabalho** e abra o horário, por exemplo **PT 40.0h/8.0h (demonstração)**, o de sete trabalhadores da demonstração.
 2. Carregue no separador **Mapa de horário (PT)**. Enquanto faltar alguma coisa, aparece «O mapa de horário está incompleto (art. 215.º). Em falta: atividade, sede e local de trabalho, período de funcionamento.»
 3. Escreva a **Atividade exercida**, por exemplo `Contabilidade e consultoria`, e a **Sede e local de trabalho**, por exemplo `Rua de Exemplo, 1, Lisboa`.
 4. Em **Período de funcionamento: início** e **Período de funcionamento: fim**, escreva as horas, por exemplo `8:00` e `19:00`. Em **Dia de encerramento**, escreva `Domingo`.
@@ -62,7 +62,7 @@ Não altere as horas de um horário que já foi usado num recibo fechado: o Fisc
 
 1. Abra **Salários › Preparar › Tempo de trabalho › Alterações do horário de trabalho** e carregue em **Novo**.
 2. Em **Horário de trabalho**, escolha o horário.
-3. Escreva **Aplica-se a partir de** e **Afixada em**. O Fiscaldoo calcula a **Antecedência dada (dias)** e mostra o **Aviso prévio exigido (dias)**.
+3. Escreva **Aplica-se a partir de** e **Afixada em**. O fiscaldoo calcula a **Antecedência dada (dias)** e mostra o **Aviso prévio exigido (dias)**.
 4. Se consultou os trabalhadores, marque **Trabalhadores consultados** e escreva **Consultado em**.
 5. Marque, se for o caso, **Horário acordado individualmente**, **Alteração de uma semana, no máximo** (escreva depois **Dura (dias)** e marque **Registada no livro**) ou **Aumenta as despesas do trabalhador** (escreva a **Compensação**).
 6. Se o instrumento coletivo fixar outro aviso, escreva **IRCT: antecedência (dias)** e **Cláusula do IRCT**: esse aviso substitui o da lei.
@@ -103,7 +103,7 @@ No passo 4 de «Aplicar um horário novo a um trabalhador», o bloco **Planear**
 | Horário acordado individualmente | 7 | 8 | **Não conforme: horário acordado individualmente** |
 | Instrumento coletivo com 5 dias, afixada com 8 | 5 | 8 | **Conforme** |
 
-- Uma alteração não conforme mostra por cima «Esta alteração não respeita o art. 217.º do Código do Trabalho: … É contraordenação grave (art. 217.º/6).», mas fica guardada: o Fiscaldoo avisa, não impede.
+- Uma alteração não conforme mostra por cima «Esta alteração não respeita o art. 217.º do Código do Trabalho: … É contraordenação grave (art. 217.º/6).», mas fica guardada: o fiscaldoo avisa, não impede.
 - Um horário aplicado por versão vale a partir da data da versão. No exemplo, a versão de 01/12/2026 de Diogo Ferreira Lopes fica com o horário novo e a de 01/02/2026 mantém o antigo.
 - Nada disto gera lançamentos contabilísticos. As horas chegam aos recibos pelo contrato de cada trabalhador.
 
@@ -115,7 +115,7 @@ No passo 4 de «Aplicar um horário novo a um trabalhador», o bloco **Planear**
 - **O PDF sai mesmo com o mapa incompleto.** **Imprimir o mapa para afixar** não recusa: confirme antes que a faixa «Em falta» desapareceu.
 - **Horário concentrado.** Marca-se na ficha do trabalhador, separador **Trabalho**, em **Regime de horário** › **Horário concentrado (art. 209.º)** (ver [Contrato de trabalho](/people/contrato-de-trabalho)). Aparece **Modo do horário concentrado**, com **No máximo quatro dias úteis (art. 209.º/1-a)** ou **No máximo três dias consecutivos, depois dois de descanso (art. 209.º/1-b)**. Em **Fundamento de um horário mais longo**, que está na ficha com qualquer regime, escreve-se o acordo ou o instrumento coletivo em que o regime assenta. <span className="fd-pending">Pendente de validação por contabilista certificado: as condições do art. 209.º do Código do Trabalho para cada modo.</span>
   {/* Nota interna (lote v23-AH, DOCS-069 #4052, master 97b34fac3, docs_demo_v23ah_test): regimes, modos e campo Fundamento vistos por clique com o Processador de Salários da demonstração numa ficha de trabalhador, descartados sem gravar. As recusas ao guardar («O horário concentrado de … não tem modo…», «… não tem acordo que o sustente…», «O horário de … tem até … dias úteis seguidos…») não foram provocadas: exigiam gravar o contrato de um trabalhador que já existia. Vinha do guia congelado Salários/horario-concentrado.md. */}
-- **O resultado só compara datas.** O Fiscaldoo não vê se o mapa foi mesmo afixado nem se a consulta aconteceu: confia nas datas e nas marcas que escrever.
+- **O resultado só compara datas.** O fiscaldoo não vê se o mapa foi mesmo afixado nem se a consulta aconteceu: confia nas datas e nas marcas que escrever.
 
 ## Problemas frequentes
 
@@ -144,6 +144,6 @@ No passo 4 de «Aplicar um horário novo a um trabalhador», o bloco **Planear**
 - «Uma alteração de uma semana, no máximo, não tem duração. Como resolver: preencha «Dura (dias)».»
 - «A antecedência de um IRCT precisa da cláusula e a cláusula precisa da antecedência. O que aconteceu: «IRCT: antecedência (dias)» e «Cláusula do IRCT» têm de ser preenchidos em conjunto. Como resolver: preencha os dois ou limpe os dois.»
 
-Corrija o campo que a mensagem indica e guarde de novo. Numa alteração que **Aumenta as despesas do trabalhador**, escreva também a **Compensação**: sem ela, o Fiscaldoo não guarda.
+Corrija o campo que a mensagem indica e guarde de novo. Numa alteração que **Aumenta as despesas do trabalhador**, escreva também a **Compensação**: sem ela, o fiscaldoo não guarda.
 
 

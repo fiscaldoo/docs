@@ -1,9 +1,9 @@
 ---
 id: o-que-e-o-fiscaldoo
 slug: /getting-started/o-que-e-o-fiscaldoo
-title: O que é o Fiscaldoo e a quem se destina
-sidebar_label: O que é o Fiscaldoo
-description: O Fiscaldoo é a localização portuguesa do Odoo 20. Junta a faturação certificada, a contabilidade, os salários e a gestão de pessoas, para empresas e gabinetes em Portugal.
+title: O que é o fiscaldoo e a quem se destina
+sidebar_label: O que é o fiscaldoo
+description: O fiscaldoo é a localização portuguesa do Odoo 20. Junta a faturação certificada, a contabilidade, os salários e a gestão de pessoas, para empresas e gabinetes em Portugal.
 keywords: [fiscaldoo, o que é, o que e, a quem se destina, localização portuguesa, localizacao portuguesa, Odoo, programa certificado, certificação, certificacao, 2790, áreas, areas, aplicações, aplicacoes]
 doc_id: DOC-0001
 article_type: conceito
@@ -17,11 +17,11 @@ related: [getting-started/o-fiscaldoo/edicoes-e-versoes-suportadas, getting-star
 
 {/* Nota interna (lote 104, FIX-M302, master e261a9215, 21/11/2026): apps por perfil conferidas com utilizadores novos só com o valor do campo Perfil e o menu que o ecrã carrega: Administrativo = Vendas, Faturação, Despesas, EDI, Painéis (sem Ponto de venda nem Ausência); Contabilista = + Contabilidade, Copiloto; Gestor de RH = Salários, Pessoas, Despesas (+ Assinaturas). */}
 
-{/* Nota interna (lote 104, KEY-001, master e261a9215, 21/11/2026): secção «A certificação» alinhada com chaves-de-assinatura; Estado da certificação aberto com o administrador na cópia (Certificado n.º 9999/AT., «O Fiscaldoo assina com a versão 1 da chave.»). */}
+{/* Nota interna (lote 104, KEY-001, master e261a9215, 21/11/2026): secção «A certificação» alinhada com chaves-de-assinatura; Estado da certificação aberto com o administrador na cópia (Certificado n.º 9999/AT., «A fiscaldoo assina com a versão 1 da chave.»). */}
 
 {/* Nota interna (DOCS-046, #3616, lote v12-P2): corrige NV3P-03, NV3P-11 e NV3P-15 (aud-v3ppl). Cada linha da tabela corresponde a menus abertos na docs_demo_v12p2_test, master a060fe441. Certificado n.º 2790: memória do projeto e DEC-992; o número não é constante de código (DEC-766) e regista-se por empresa; na demonstração o PDF sai com o número de teste. */}
 
-O Fiscaldoo é a localização portuguesa do Odoo 20, nas edições Community e Enterprise. Junta ao Odoo a faturação certificada, a contabilidade, os salários e a gestão de pessoas para quem trabalha em Portugal, no mesmo programa e com os menus em português.
+O fiscaldoo é a localização portuguesa do Odoo 20, nas edições Community e Enterprise. Junta ao Odoo a faturação certificada, a contabilidade, os salários e a gestão de pessoas para quem trabalha em Portugal, no mesmo programa e com os menus em português.
 
 ## O que acrescenta ao Odoo
 
@@ -38,16 +38,16 @@ Cada linha é uma aplicação do menu principal. O que cada pessoa vê depende d
 | **Auditoria** | Registos e verificação da integridade. | **Registos › Registo de auditoria**, **Integridade › Autodiagnóstico da certificação** |
 | **Copiloto** | Assistente com inteligência artificial, que só usa uma IA externa se a empresa a ligar. | **Ligações às IAs › Ligações**, **Controlo › Chamadas à IA** |
 
-Numa base Enterprise, o administrador vê estas aplicações e as do Enterprise, como **Subscrições**, **Documentos** e **Assinar**. Onde o Enterprise já tem uma aplicação para a mesma tarefa, usa-se a dele: as subscrições em vez das avenças do Fiscaldoo, os lembretes de pagamento, a reconciliação bancária e as assinaturas. O que muda está em [Edições e versões suportadas](/getting-started/edicoes-e-versoes-suportadas#o-que-muda-no-enterprise).
+Numa base Enterprise, o administrador vê estas aplicações e as do Enterprise, como **Subscrições**, **Documentos** e **Assinar**. Onde o Enterprise já tem uma aplicação para a mesma tarefa, usa-se a dele: as subscrições em vez das avenças do fiscaldoo, os lembretes de pagamento, a reconciliação bancária e as assinaturas. O que muda está em [Edições e versões suportadas](/getting-started/edicoes-e-versoes-suportadas#o-que-muda-no-enterprise).
 
 Para trazer dados de outro programa, os menus estão em **Contabilidade › Configurar › Migração e importações**, por exemplo **Importar ficheiro SAF-T**, **Migração de documentos certificados** e **Saldos de abertura por terceiro**, e, para os salários, em **Salários › Configurar › Migração**.
 
 ## A certificação
 
-O Fiscaldoo é um programa de faturação certificado pela Autoridade Tributária e Aduaneira (AT), com o n.º 2790.
+O fiscaldoo é um programa de faturação certificado pela Autoridade Tributária e Aduaneira (AT), com o n.º 2790.
 
-- O número do certificado vem do Fiscaldoo, que o dá à instalação, e sai no rodapé de cada documento: «Processado por programa certificado n.º …/AT». Numa base de testes, o Fiscaldoo é simulado e o número é o 9999, de teste.
-- A chave de assinatura não está na instalação: quem assina cada documento é o Fiscaldoo, a plataforma do produtor do programa, e o administrador liga a instalação a ele com uma chave de API ([Como ligar a instalação ao Fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)). Sem essa ligação e sem uma série certificada ativa, a empresa não emite documentos certificados. O estado vê-se em **Contabilidade › Configurar › Sistema e segurança › Estado da certificação**, que diz o que falta, com a linha «O Fiscaldoo assina com a versão 1 da chave.» quando o Fiscaldoo responde.
+- O número do certificado vem da fiscaldoo, que o dá à instalação, e sai no rodapé de cada documento: «Processado por programa certificado n.º …/AT». Numa base de testes, a fiscaldoo é simulada e o número é o 9999, de teste.
+- A chave de assinatura não está na instalação: quem assina cada documento é a fiscaldoo, a plataforma do produtor do programa, e o administrador liga a instalação a ela com uma chave de API ([Como ligar a instalação à fiscaldoo, que assina os documentos](/fiscal-core/chaves-de-assinatura)). Sem essa ligação e sem uma série certificada ativa, a empresa não emite documentos certificados. O estado vê-se em **Contabilidade › Configurar › Sistema e segurança › Estado da certificação**, que diz o que falta, com a linha «A fiscaldoo assina com a versão 1 da chave.» quando a fiscaldoo responde.
 - O que é preciso fazer está em [Preparar a faturação certificada](/fiscal-core/preparar-a-faturacao-certificada).
 
 ## A quem se destina
@@ -73,12 +73,12 @@ O menu de aplicações muda com o perfil. Na empresa de demonstração, sem cont
 
 O **Ponto de venda**, as **Presenças**, o **Helpdesk**, o **Planeamento**, a **Manutenção** e o **Website** já não vêm com nenhum perfil: só aparecem a quem tem o grupo próprio. <span className="fd-pending">Pendente de validação no ecrã: o **Helpdesk**, o **Planeamento**, a **Manutenção** e o **Website** (a demonstração não os tem instalados).</span> O administrador do sistema vê todas as aplicações, incluindo **Definições**. A lista dos perfis está em [Perfis e permissões](/administration/perfis-e-permissoes).
 
-## O que o Fiscaldoo não faz
+## O que o fiscaldoo não faz
 
 - **Emitir não é comunicar.** Emitir um documento não o comunica à AT. A comunicação é um passo à parte e precisa das credenciais da empresa. Com o ambiente em **Teste**, nada chega ao ambiente real da AT.
-- **Não decide por si.** O Fiscaldoo calcula e preenche o que a lei e os dados permitem. As decisões fiscais e a entrega das declarações continuam a ser da empresa e do seu contabilista certificado.
+- **Não decide por si.** O fiscaldoo calcula e preenche o que a lei e os dados permitem. As decisões fiscais e a entrega das declarações continuam a ser da empresa e do seu contabilista certificado.
 - **Só existe para o Odoo 20.** Instala-se nas edições Community e Enterprise; no Enterprise juntam-se os pacotes de ligação ao Enterprise. Veja [Edições e versões suportadas](/getting-started/edicoes-e-versoes-suportadas).
 
 Antes de instalar, veja [Requisitos e instalação](/getting-started/requisitos-e-instalacao).
 
-{/* Nota interna (DOCS-046, #3616, lote v23-J, DEC-1794): a frase «a versão para a edição Enterprise ainda não está disponível para clientes» saiu; o Fiscaldoo existe no Community e no Enterprise (mesmos pacotes e, no Enterprise, as 15 pontes de enterprise/custom_addons, master 5228a94bd). Aplicações e menus da tabela não foram revistos neste lote (continuam os da v12-P2); na base Enterprise, o admin tem também Subscrições, Documentos, Assinar e Código de Barras (load_menus, 07/11). Base Enterprise de teste: odoo20_ee_test_dev_v23j (ver LOTE_V23-J). */}
+{/* Nota interna (DOCS-046, #3616, lote v23-J, DEC-1794): a frase «a versão para a edição Enterprise ainda não está disponível para clientes» saiu; o fiscaldoo existe no Community e no Enterprise (mesmos pacotes e, no Enterprise, as 15 pontes de enterprise/custom_addons, master 5228a94bd). Aplicações e menus da tabela não foram revistos neste lote (continuam os da v12-P2); na base Enterprise, o admin tem também Subscrições, Documentos, Assinar e Código de Barras (load_menus, 07/11). Base Enterprise de teste: odoo20_ee_test_dev_v23j (ver LOTE_V23-J). */}

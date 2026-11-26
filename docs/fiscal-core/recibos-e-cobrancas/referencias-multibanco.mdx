@@ -18,7 +18,7 @@ related: [fiscal-core/recibos-e-cobrancas/emitir-um-recibo, fiscal-core/recibos-
 
 ## Para que serve?
 
-Uma referência Multibanco (entidade e referência de 9 dígitos) deixa o cliente pagar a fatura no Multibanco ou no homebanking. O Fiscaldoo emite as referências a partir da fatura, em uma ou mais prestações, e, quando importa o ficheiro de cobranças do canal, cria o pagamento do cliente e liga-o à fatura.
+Uma referência Multibanco (entidade e referência de 9 dígitos) deixa o cliente pagar a fatura no Multibanco ou no homebanking. O fiscaldoo emite as referências a partir da fatura, em uma ou mais prestações, e, quando importa o ficheiro de cobranças do canal, cria o pagamento do cliente e liga-o à fatura.
 
 ## Quando utilizar?
 
@@ -72,7 +72,7 @@ No Odoo Enterprise, as referências Multibanco são as do fiscaldoo. Numa fatura
 ## Resultado esperado
 
 - Para a referência de 52,28 € paga em 01/11/2026 cria-se um pagamento de 52,28 € no diário do banco, com o lançamento: débito de 52,28 € em «Recebimentos Pendentes» (120002) e crédito de 52,28 € em «Clientes gerais» (2111). O pagamento fica reconciliado com a fatura.
-- O dinheiro **ainda não está na conta do banco**: o débito fica em «Recebimentos Pendentes» (120002). A conta do banco (121 Depósitos à ordem) só recebe o valor quando importar o extrato do banco. Depois, ao reconciliar a linha do extrato com este pagamento, o valor deixa de estar pendente: o Fiscaldoo debita a conta transitória (120001) e credita «Recebimentos Pendentes» (120002).
+- O dinheiro **ainda não está na conta do banco**: o débito fica em «Recebimentos Pendentes» (120002). A conta do banco (121 Depósitos à ordem) só recebe o valor quando importar o extrato do banco. Depois, ao reconciliar a linha do extrato com este pagamento, o valor deixa de estar pendente: o fiscaldoo debita a conta transitória (120001) e credita «Recebimentos Pendentes» (120002).
 - A fatura fica parcialmente paga (**Pago em parte**), com 52,27 € em dívida, e o botão **Pagamentos** da fatura a 1.
   ![Fatura com o estado Pago em parte e o botão Pagamentos a 1](/images/fiscal-core/referencias-multibanco/10-fatura-parcial.png)
 - **Recebimentos Multibanco por período** (ligação do painel dos pagamentos online) soma o montante por mês (novembro de 2026: 52,28 €).
@@ -89,12 +89,12 @@ O botão **Emitir recibo** da fatura emite o recibo do que **ainda está por pag
 
 ![Janela Emitir recibo da fatura FT D26/55 com o valor de 52,27 €](/images/fiscal-core/referencias-multibanco/14-emitir-recibo-so-o-que-falta.png)
 
-- Hoje, o Fiscaldoo **ainda não emite o recibo do recebimento Multibanco**: na ficha do pagamento não há nenhum botão para o certificar: só **Mudar para Rascunho**, **Marcar como Enviada** e **Cancelar com motivo**.
+- Hoje, o fiscaldoo **ainda não emite o recibo do recebimento Multibanco**: na ficha do pagamento não há nenhum botão para o certificar: só **Mudar para Rascunho**, **Marcar como Enviada** e **Cancelar com motivo**.
 - <span className="fd-pending">Pendente de validação por contabilista certificado: se a empresa tem de emitir recibo por cada recebimento Multibanco e, se tem, como o regularizar enquanto o produto não o emitir (por exemplo, cancelar o pagamento com motivo e emitir o recibo com a data e o meio de pagamento corretos). Peça-o ao contabilista certificado antes de agir.</span>
 
 ## Os resultados da importação
 
-Cada linha do ficheiro acaba num de 9 resultados. Só **Paga** cria um pagamento; nos outros 8 (as exceções) o Fiscaldoo não cria nada e a fatura não muda. A tabela mostra o que o ecrã diz em cada um e o que fazer.
+Cada linha do ficheiro acaba num de 9 resultados. Só **Paga** cria um pagamento; nos outros 8 (as exceções) o fiscaldoo não cria nada e a fatura não muda. A tabela mostra o que o ecrã diz em cada um e o que fazer.
 
 ![Importação MBI/00003 com os 9 resultados e os contadores Paga 2 e Exceções 8](/images/fiscal-core/referencias-multibanco/13-importacao-resultados.png)
 
@@ -106,18 +106,18 @@ Cada linha do ficheiro acaba num de 9 resultados. Só **Paga** cria um pagamento
 | **Valor diferente** | «A referência é de 104.55 e foram pagos 50.0.» | Só acontece numa referência de **valor fixo**. Fale com o cliente: se o valor pago estiver certo, anule a referência e emita outra, de valor variável. |
 | **Mais do que a fatura deve** | «200.0 é mais do que os 104.55 que a fatura ainda deve.» | O cliente pagou mais do que a fatura deve. Acerte a diferença com ele. |
 | **Referência caducada** | «A referência era válida até 02/11/2026.» | O pagamento é posterior à validade. A fatura continua por pagar: fale com o cliente e, se ainda quer cobrar por Multibanco, anule a referência e emita outra. |
-| **Referência anulada** | «A referência foi anulada:» seguido do motivo que escreveu ao anulá-la. | O cliente pagou por uma referência que o Fiscaldoo já não aceita. Fale com ele e trate o recebimento. |
-| **Já paga** | «A referência já foi paga.» | A referência já tem pagamento. O Fiscaldoo não cria um segundo. |
+| **Referência anulada** | «A referência foi anulada:» seguido do motivo que escreveu ao anulá-la. | O cliente pagou por uma referência que o fiscaldoo já não aceita. Fale com ele e trate o recebimento. |
+| **Já paga** | «A referência já foi paga.» | A referência já tem pagamento. O fiscaldoo não cria um segundo. |
 | **Transação repetida** | «Já foi recebido um pagamento com este identificador de transação.» | O mesmo movimento já foi importado antes. Não se duplica; nada a fazer. |
 
 ## Notas importantes
 
 <HelpCallout type="atencao" title="Uma referência anulada ou caducada não aceita pagamentos">
-Anule as referências que o cliente não deve usar (por exemplo, depois de lhe dar uma só). Uma referência já paga não se anula. O ficheiro de cobranças só liga o pagamento a uma referência **ativa** com a mesma entidade e referência, com o valor certo (na de valor fixo) e com a data do pagamento **dentro da validade**: a data não tem de ser igual à da emissão. O resto fica como exceção e o Fiscaldoo não faz nada com ele.
+Anule as referências que o cliente não deve usar (por exemplo, depois de lhe dar uma só). Uma referência já paga não se anula. O ficheiro de cobranças só liga o pagamento a uma referência **ativa** com a mesma entidade e referência, com o valor certo (na de valor fixo) e com a data do pagamento **dentro da validade**: a data não tem de ser igual à da emissão. O resto fica como exceção e o fiscaldoo não faz nada com ele.
 </HelpCallout>
 
 - O **Valor fixo** só aceita o montante da referência; o **variável** aceita qualquer montante até ao que a fatura ainda deve, mas **só um pagamento**: depois do primeiro (por exemplo, 40,00 € de 104,55 €) a referência fica **Paga** e o pagamento seguinte dá «Já paga». Para o cliente pagar por partes, emita prestações.
-- O Fiscaldoo não envia a referência ao cliente: copie-a da lista ou imprima-a, ou envie a fatura por outro meio.
+- O fiscaldoo não envia a referência ao cliente: copie-a da lista ou imprima-a, ou envie a fatura por outro meio.
 
 ## Problemas frequentes
 

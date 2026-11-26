@@ -20,9 +20,9 @@ related: [accounting-pt/bancos-e-tesouraria/reconciliar-terceiros, accounting-pt
 
 ## Para que serve?
 
-Há duas formas de pagar a fornecedores no Fiscaldoo e este artigo explica as duas. A **nota de pagamento** prepara o pagamento de uma ou mais faturas e obriga a conferir e aprovar antes de pagar: serve para quem separa quem prepara de quem autoriza. O **lote de pagamentos** junta vários pagamentos já registados num único ficheiro de transferências SEPA, que se entrega no homebanking do banco.
+Há duas formas de pagar a fornecedores no fiscaldoo e este artigo explica as duas. A **nota de pagamento** prepara o pagamento de uma ou mais faturas e obriga a conferir e aprovar antes de pagar: serve para quem separa quem prepara de quem autoriza. O **lote de pagamentos** junta vários pagamentos já registados num único ficheiro de transferências SEPA, que se entrega no homebanking do banco.
 
-O Fiscaldoo **não envia nada ao banco**: gera o ficheiro e quem paga é o banco, quando o ficheiro for lá entregue.
+O fiscaldoo **não envia nada ao banco**: gera o ficheiro e quem paga é o banco, quando o ficheiro for lá entregue.
 
 ## Quando utilizar?
 
@@ -69,12 +69,12 @@ O Fiscaldoo **não envia nada ao banco**: gera o ficheiro e quem paga é o banco
    ![Lote de pagamentos novo com dois pagamentos da Papelaria Central e total de 229,10 euros](/images/accounting-pt/pagar-a-fornecedores/08-lote-novo.png)
 2. Grave. O lote fica **LOTE/00002**, em **Rascunho**, com **Validar e gerar ficheiro** e **Anular**.
    ![Lote LOTE/00002 em rascunho com o botão Validar e gerar ficheiro assinalado](/images/accounting-pt/pagar-a-fornecedores/08-lote-rascunho.png)
-3. Carregue em **Validar e gerar ficheiro**. O estado passa a **Validado** e aparece «Ficheiro gerado. O ficheiro de transferências LOTE_00002.xml foi gerado e está anexado ao lote. Nada foi enviado ao banco». No separador **Ficheiro** ficam o **Ficheiro SEPA**, o **Código de controlo do ficheiro** e os **Avisos do ficheiro**: no exemplo, o Fiscaldoo trocou «Demonstração» por «Demonstracao» no nome da empresa, porque o conjunto de carateres SEPA não tem acentos.
+3. Carregue em **Validar e gerar ficheiro**. O estado passa a **Validado** e aparece «Ficheiro gerado. O ficheiro de transferências LOTE_00002.xml foi gerado e está anexado ao lote. Nada foi enviado ao banco». No separador **Ficheiro** ficam o **Ficheiro SEPA**, o **Código de controlo do ficheiro** e os **Avisos do ficheiro**: no exemplo, o fiscaldoo trocou «Demonstração» por «Demonstracao» no nome da empresa, porque o conjunto de carateres SEPA não tem acentos.
    ![Separador Ficheiro do lote com o ficheiro, o código de controlo e os avisos](/images/accounting-pt/pagar-a-fornecedores/09-lote-ficheiro.png)
 4. Carregue em **Descarregar o ficheiro SEPA**. No exemplo, o ficheiro `LOTE_00002.xml` tem 2 transações e o total de controlo 229,10, iguais ao lote.
 5. Entregue o ficheiro no homebanking do banco. Depois, no lote, carregue em **Marcar como enviado**: o estado passa a **Enviado**, com **Enviado em** e **Enviado por**. Já não se altera nem se anula.
    ![Lote enviado, com o botão Procurar movimento bancário](/images/accounting-pt/pagar-a-fornecedores/10-lote-enviado.png)
-6. Quando o banco debitar o lote, importe o extrato ([Como importar um extrato bancário](/accounting-pt/importar-extrato-bancario)) e, no lote, carregue em **Procurar movimento bancário**. O Fiscaldoo liga o lote ao **Movimento bancário** de −229,10 € e o botão passa a **Reconciliar**. Carregue em **Reconciliar**: o lote fica **Reconciliado**.
+6. Quando o banco debitar o lote, importe o extrato ([Como importar um extrato bancário](/accounting-pt/importar-extrato-bancario)) e, no lote, carregue em **Procurar movimento bancário**. O fiscaldoo liga o lote ao **Movimento bancário** de −229,10 € e o botão passa a **Reconciliar**. Carregue em **Reconciliar**: o lote fica **Reconciliado**.
    ![Lote com o movimento bancário BNK1/2026/00073 encontrado e o botão Reconciliar](/images/accounting-pt/pagar-a-fornecedores/12-movimento-encontrado.png)
    ![Lote LOTE/00002 reconciliado](/images/accounting-pt/pagar-a-fornecedores/13-lote-reconciliado.png)
 
@@ -89,13 +89,13 @@ No Odoo Enterprise, as notas de pagamento e os lotes são os mesmos, nos mesmos 
 ## Resultado esperado
 
 - **Nota de pagamento emitida:** o lançamento do pagamento é **D 2211 Fornecedores gerais 123,00 €** e **C 120003 Pagamentos Pendentes 123,00 €**, reconciliado com a fatura (que passa a **Pago**). A conta 120003 só sai quando o banco debitar.
-- **Lote reconciliado:** o extrato lança **D 120001 Conta Transitória 229,10 €** e **C 121 Depósitos à ordem 229,10 €**; a reconciliação do lote lança **D 120003 Pagamentos Pendentes 229,10 €** e **C 120001 Conta Transitória 229,10 €** (**OD/2026/00336**, em **Operações Diversas**). Um único movimento do banco paga o lote inteiro.
+- **Lote reconciliado:** o extrato lança **D 120001 Conta Transitória 229,10 €** e **C 121 Depósitos à ordem 229,10 €**; a reconciliação do lote lança **D 120003 Pagamentos Pendentes 229,10 €** e **C 120001 Conta Transitória 229,10 €** (**OD/2026/00106**, em **Operações Diversas**). Um único movimento do banco paga o lote inteiro.
 - O lote **não liga os pagamentos às faturas**: no exemplo, os pagamentos PBNK1/2026/00044 e 00045 continuam por reconciliar com as faturas; faça-o como em [Como reconciliar faturas e pagamentos](/accounting-pt/reconciliar-terceiros).
 
 ## Notas importantes
 
 - **Só entram no lote os pagamentos no estado Pago.** Os pagamentos emitidos por nota de pagamento, e os criados com o botão **Pagar** da fatura, ficam **Reconciliado** com a fatura e não aparecem na lista do lote. Para pagar uma nota por ficheiro SEPA, não a emita por este caminho: use pagamentos manuais, que se ligam à fatura depois. {/* Nota interna (v3-A1, V3A1-08): defeito do produto; ver o comentário no início. */}
-- **Um pagamento só pode estar num lote ativo.** Se estiver noutro, o Fiscaldoo não o aceita.
+- **Um pagamento só pode estar num lote ativo.** Se estiver noutro, o fiscaldoo não o aceita.
 - **Depois de «Enviado», não há volta.** Até ao envio, **Anular** passa o lote a **Anulado**.
 - **Diferenças de IBAN ou de nome.** O ficheiro vai com o IBAN que está no pagamento: confirme-o com o fornecedor antes de validar.
 

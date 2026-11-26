@@ -18,14 +18,14 @@ related: [fiscal-core/recibos-e-cobrancas/debitos-diretos-lotes, fiscal-core/rec
 
 ## Para que serve?
 
-Depois de levar o ficheiro de um [lote de débitos diretos](/fiscal-core/debitos-diretos-lotes) ao banco, o banco responde com um ficheiro de retorno: diz que cobranças foram aceites, rejeitadas ou devolvidas, e porquê. Importá-lo no Fiscaldoo põe a resposta e o código do motivo em cada cobrança, e permite reenviar, num lote novo, só as que falharam.
+Depois de levar o ficheiro de um [lote de débitos diretos](/fiscal-core/debitos-diretos-lotes) ao banco, o banco responde com um ficheiro de retorno: diz que cobranças foram aceites, rejeitadas ou devolvidas, e porquê. Importá-lo no fiscaldoo põe a resposta e o código do motivo em cada cobrança, e permite reenviar, num lote novo, só as que falharam.
 
 ## Quando utilizar?
 
 - Quando o banco lhe deu o ficheiro de retorno de um lote que marcou como enviado.
 - Quando uma cobrança foi rejeitada (por exemplo, sem saldo na conta do cliente) e quer cobrá-la de novo.
 - Quando o banco devolveu uma cobrança que já tinha cobrado e quer saber o que fica por tratar na fatura e no recebimento.
-- Não use o ficheiro de retorno para cobranças de um lote que ainda não foi marcado como **Enviado**: o Fiscaldoo não as encontra.
+- Não use o ficheiro de retorno para cobranças de um lote que ainda não foi marcado como **Enviado**: o fiscaldoo não as encontra.
 
 ## Onde encontrar?
 
@@ -60,7 +60,7 @@ Depois de levar o ficheiro de um [lote de débitos diretos](/fiscal-core/debitos
 
 ## No Enterprise
 
-No Odoo Enterprise, **Contabilidade › Lançar › Cobranças a clientes › Retornos de débito direto** abre a mesma lista do Fiscaldoo, com o botão **Importar ficheiro do banco** e a explicação «Importe o ficheiro que o banco deu (pain.002 ou camt.054): cada cobrança recebe a resposta e o código do motivo; uma cobrança devolvida volta a abrir a fatura.» (visto com um utilizador só com o perfil **Contabilista**).
+No Odoo Enterprise, **Contabilidade › Lançar › Cobranças a clientes › Retornos de débito direto** abre a mesma lista do fiscaldoo, com o botão **Importar ficheiro do banco** e a explicação «Importe o ficheiro que o banco deu (pain.002 ou camt.054): cada cobrança recebe a resposta e o código do motivo; uma cobrança devolvida volta a abrir a fatura.» (visto com um utilizador só com o perfil **Contabilista**).
 
 {/* Nota interna (lote EE-12, DOCS-073 #4142, DEC-1794, master 589ecfd27, base Enterprise docs_ee_ee12_test, cópia da odoo20_ee_test com ee_neutralizar EE_FASE=construir, 12/11/2026, utilizadores criados na cópia só com o perfil indicado; comparado com a cópia Community docs_demo_ee12_test): DOC-0043. Contabilista: lista vazia com as colunas Referência, Importado em, Nome do ficheiro, Formato, Aplicado, Devolvido, Rejeitada, Não aplicados e Valor devolvido ou rejeitado. Nenhum ficheiro importado. Igual na cópia Community. Ver reports/LOTE_EE-12.md. */}
 
@@ -83,7 +83,7 @@ Uma cobrança **devolvida** é a que o banco já tinha cobrado e depois devolveu
    ![Ficheiro de retorno RET/00005 com uma cobrança devolvida, motivo MD01, resultado aplicado](/images/fiscal-core/devolucoes-de-debitos-diretos/10-retorno-devolvido.png)
 2. Abra a fatura. Voltou a **Por pagar**, com os 104,55 € em aberto, mas o botão **Pagamentos** continua a mostrar 1: o recebimento não desapareceu.
    ![Fatura FT D26/58 por pagar, com o botão Pagamentos a 1](/images/fiscal-core/devolucoes-de-debitos-diretos/11-fatura-reaberta.png)
-3. Abra o pagamento (**Pagamentos**). Continua em **Pago**, **não** passa a **Reconciliado**, e a ficha oferece **Mudar para Rascunho**, **Marcar como Enviada** e **Cancelar com motivo**; nenhum deles cria o estorno do recebimento. O Fiscaldoo não cria estorno, não avisa e não abre nenhuma tarefa: o pagamento fica por reconciliar sem que nada o assinale.
+3. Abra o pagamento (**Pagamentos**). Continua em **Pago**, **não** passa a **Reconciliado**, e a ficha oferece **Mudar para Rascunho**, **Marcar como Enviada** e **Cancelar com motivo**; nenhum deles cria o estorno do recebimento. O fiscaldoo não cria estorno, não avisa e não abre nenhuma tarefa: o pagamento fica por reconciliar sem que nada o assinale.
    ![Pagamento PBNK1/2026/00041 em Pago, com os botões Mudar para Rascunho, Marcar como Enviada e Cancelar com motivo](/images/fiscal-core/devolucoes-de-debitos-diretos/12-pagamento-por-reconciliar.png)
 4. Para tirar o recebimento da frente, carregue em **Cancelar com motivo**, escreva o motivo (por exemplo, «Cobrança devolvida pelo banco (MD01).») e carregue em **Cancelar pagamento**. A janela avisa que um pagamento reconciliado tem de ser desreconciliado primeiro, e o motivo fica guardado no pagamento e no registo de auditoria.
    ![Janela Cancelar com motivo, com o campo Motivo](/images/fiscal-core/devolucoes-de-debitos-diretos/13-cancelar-pagamento.png)
@@ -95,7 +95,7 @@ Uma cobrança **devolvida** é a que o banco já tinha cobrado e depois devolveu
 Depois de importar uma devolução, abra sempre a fatura e o pagamento que lhe está ligado. Se o deixar como está, a fatura aparece por pagar e o pagamento aparece pago, sem ligação entre os dois.
 </HelpCallout>
 
-- O Fiscaldoo só desfaz a reconciliação de um recebimento com data **igual ou posterior** à data de cobrança do lote. Com um recebimento anterior (por exemplo, um pagamento de 01/11/2026 numa cobrança de 04/11/2026), a nota diz «Devolvida: não se encontrou nenhum recibo desta cobrança para reverter.» e a fatura continua paga.
+- O fiscaldoo só desfaz a reconciliação de um recebimento com data **igual ou posterior** à data de cobrança do lote. Com um recebimento anterior (por exemplo, um pagamento de 01/11/2026 numa cobrança de 04/11/2026), a nota diz «Devolvida: não se encontrou nenhum recibo desta cobrança para reverter.» e a fatura continua paga.
 - <span className="fd-pending">Pendente de validação por contabilista certificado: o tratamento contabilístico de um recebimento devolvido (cancelar o pagamento, como acima, ou mantê-lo para o regularizar com o movimento do banco), a regularização do recibo, se o recebimento tinha recibo, e o prazo de reembolso do cliente (8 semanas no esquema CORE, segundo o texto do aviso).</span>
 
 ## Notas importantes
@@ -105,7 +105,7 @@ Reenviar os erros só cria um lote em rascunho. Enquanto não o validar, descarr
 </HelpCallout>
 
 - Nem todas as rejeições se reenviam: o campo **Reenvio** mostra **Bloqueado**, **Exige correção** ou **Elegível para reenvio** conforme o motivo do banco.
-  - **Bloqueado** (por exemplo `MD01`, `AC04`, `MD07`, ou um código que o Fiscaldoo não conhece): o cliente recusou, ou o mandato ou a conta não são válidos. Não se reenvia: crie um mandato novo ou indique outra conta e faça um lote novo.
+  - **Bloqueado** (por exemplo `MD01`, `AC04`, `MD07`, ou um código que o fiscaldoo não conhece): o cliente recusou, ou o mandato ou a conta não são válidos. Não se reenvia: crie um mandato novo ou indique outra conta e faça um lote novo.
   - **Exige correção** (por exemplo `AM04`, `MS03`): corrige-se a causa com o cliente e carrega-se em **Causa resolvida**.
   - **Causa resolvida** só aparece nas linhas **Exige correção**. Nas linhas **Bloqueado** o botão nem aparece, por isso não há como o carregar no ecrã (o servidor também o recusaria).
 - O ficheiro importa-se uma só vez por empresa, mesmo que o nome mude.

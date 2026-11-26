@@ -18,7 +18,7 @@ related: [fiscal-core/recibos-e-cobrancas/devolucoes-de-debitos-diretos, fiscal-
 
 ## Para que serve?
 
-O lote de débito direto junta várias faturas de clientes que autorizaram o débito (têm um mandato ativo) e gera o ficheiro SEPA que leva ao banco. O banco cobra nas contas dos clientes na data de cobrança. O Fiscaldoo guarda o lote, o ficheiro, o aviso feito a cada cliente e a resposta do banco.
+O lote de débito direto junta várias faturas de clientes que autorizaram o débito (têm um mandato ativo) e gera o ficheiro SEPA que leva ao banco. O banco cobra nas contas dos clientes na data de cobrança. O fiscaldoo guarda o lote, o ficheiro, o aviso feito a cada cliente e a resposta do banco.
 
 ## Quando utilizar?
 
@@ -52,7 +52,7 @@ O lote de débito direto junta várias faturas de clientes que autorizaram o dé
 5. O lote passa a **Validado** e o **Tipo de sequência** de cada linha fica preenchido: **FRST** na primeira cobrança do mandato e **RCUR** nas seguintes. Abra o separador **Ficheiro SEPA**: está lá o ficheiro `SDD_….xml` e o **Código de controlo do ficheiro**. Os **Avisos do ficheiro** dizem que o ficheiro leva os nomes sem acentos (por exemplo «Escola de Conducao Rota, Lda»), porque o formato SEPA não os aceita. Carregue em **Descarregar o ficheiro** para o levar ao banco.
    ![Lote validado, com os botões Descarregar o ficheiro, Pré-notificar os clientes, Marcar como enviado e Anular](/images/fiscal-core/debitos-diretos-lotes/05-lote-validado.png)
    ![Separador Ficheiro SEPA com o ficheiro, o código de controlo e os avisos sobre os nomes sem acentos](/images/fiscal-core/debitos-diretos-lotes/06-ficheiro-sepa.png)
-6. Carregue em **Pré-notificar os clientes**. Cria-se, por cada cliente, uma pré-notificação (`PNS/…`) com o texto do aviso, o valor, a data de cobrança e **Avisar o cliente até** (14 dias antes da cobrança: 02/11/2026 para uma cobrança em 16/11/2026). O Fiscaldoo **não envia** o aviso: a ficha diz «Daqui não se envia nada: entregue o PDF ao cliente e marque-a como entregue». Carregue em **Descarregar o PDF**, entregue-o ao cliente, volte à ficha e carregue em **Marcar como entregue** e em **Confirmar**.
+6. Carregue em **Pré-notificar os clientes**. Cria-se, por cada cliente, uma pré-notificação (`PNS/…`) com o texto do aviso, o valor, a data de cobrança e **Avisar o cliente até** (14 dias antes da cobrança: 02/11/2026 para uma cobrança em 16/11/2026). O fiscaldoo **não envia** o aviso: a ficha diz «Daqui não se envia nada: entregue o PDF ao cliente e marque-a como entregue». Carregue em **Descarregar o PDF**, entregue-o ao cliente, volte à ficha e carregue em **Marcar como entregue** e em **Confirmar**.
    ![Pré-notificação PNS/00001 com o prazo de aviso de 14 dias, a data limite e o texto para o cliente](/images/fiscal-core/debitos-diretos-lotes/07-pre-aviso.png)
 7. Depois de levar o ficheiro ao banco, abra o lote e carregue em **Marcar como enviado**. A janela **Confirmação** avisa: «Daqui não é enviado nada ao banco. Confirme só depois de levar o ficheiro ao banco.» Carregue em **Confirmar**.
    ![Janela de confirmação de Marcar como enviado](/images/fiscal-core/debitos-diretos-lotes/08-confirmar-envio.png)

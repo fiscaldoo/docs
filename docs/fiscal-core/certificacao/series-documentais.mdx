@@ -19,7 +19,7 @@ related: [fiscal-core/faturacao/emitir-uma-nota-de-credito, fiscal-core/faturaca
 
 Cada tipo de documento certificado (fatura, fatura simplificada, nota de crédito, recibo, guia de transporte…) é numerado numa série própria, normalmente uma por ano. Antes de a série numerar o primeiro documento, tem de ser comunicada à Autoridade Tributária e Aduaneira (AT), que devolve um **código de validação**.
 
-O Fiscaldoo junta esse código ao número de cada documento para formar o ATCUD (código único do documento), que sai impresso no documento e no código QR. Sem código de validação a série não fica ativa e não se emite nenhum documento nela.
+O fiscaldoo junta esse código ao número de cada documento para formar o ATCUD (código único do documento), que sai impresso no documento e no código QR. Sem código de validação a série não fica ativa e não se emite nenhum documento nela.
 
 ## Quando utilizar?
 
@@ -37,7 +37,7 @@ O Fiscaldoo junta esse código ao número de cada documento para formar o ATCUD 
 - O seu perfil é **Contabilista certificado** (o administrador também pode comunicar). Os perfis **Administrativo** e **Contabilista** não veem este menu.
 - A empresa tem Portugal como país fiscal e o NIF preenchido.
 - Existe o diário onde os documentos desta série vão ser emitidos, e esse diário emite o tipo de documento da série (um diário de faturas emite **[FT] Fatura** e as suas notas de crédito **[NC] Nota de crédito**).
-- O diário ainda não tem uma série **ativa** do mesmo tipo para o mesmo exercício. Se tiver, a AT aceita a série nova mas o Fiscaldoo não a ativa (ver «Problemas frequentes»). Não termine a série que está a usar só para abrir lugar à nova: veja primeiro o aviso «Terminar uma série não se desfaz».
+- O diário ainda não tem uma série **ativa** do mesmo tipo para o mesmo exercício. Se tiver, a AT aceita a série nova mas o fiscaldoo não a ativa (ver «Problemas frequentes»). Não termine a série que está a usar só para abrir lugar à nova: veja primeiro o aviso «Terminar uma série não se desfaz».
 - A empresa tem as credenciais de comunicação com a AT configuradas. Se não tem, comunique a série no Portal das Finanças e registe aqui o código (ver «Se comunicou a série no Portal das Finanças»).
 
 ## Como utilizar
@@ -51,7 +51,7 @@ O Fiscaldoo junta esse código ao número de cada documento para formar o ATCUD 
 4. Em **Tipo de documento SAF-T**, escolha o tipo, por exemplo **[NC] Nota de crédito**. Atenção à lista: aparecem vários tipos com nomes parecidos; confirme o código entre parênteses retos.
 5. Em **Diário**, escolha o diário onde os documentos vão ser emitidos e que ainda não tem série ativa deste tipo para o exercício. No exemplo, **Vendas**, que tem séries ativas de 2026 mas nenhuma de 2027.
 6. Em **Exercício**, escreva o ano da série; confirme o **Número inicial** (normalmente 1) e, em **Data de início prevista**, a data a partir da qual vai usar a série (para as séries do ano seguinte, 1 de janeiro). Deixe **Série de recuperação** desmarcada, salvo se for esse o caso.
-7. Marque **Confirmo que estes dados estão corretos e podem ser comunicados**. A **Chave de pedido** é preenchida pelo Fiscaldoo e não se altera: identifica este pedido, para que repetir a operação depois de uma falha continue a mesma série.
+7. Marque **Confirmo que estes dados estão corretos e podem ser comunicados**. A **Chave de pedido** é preenchida pelo fiscaldoo e não se altera: identifica este pedido, para que repetir a operação depois de uma falha continue a mesma série.
    ![Janela Criar e comunicar uma série preenchida: série A27, tipo [NC] Nota de crédito, diário Vendas, exercício 2027, início 01/01/2027, confirmação marcada](/images/fiscal-core/series-documentais/02-assistente-criar-e-comunicar.png)
 8. Carregue em **Criar e comunicar** e espere pela resposta.
 9. Leia o **Resultado da comunicação**. **Comunicada e ativa** quer dizer que a série está pronta para 2027, o exercício para que foi criada (começa a 01/01/2027). Carregue em **Abrir a série** para a ver.
@@ -96,7 +96,7 @@ Na ficha de uma série ativa, o menu **Ações** tem três opções que acabam c
 
 - **Anular na AT** comunica à AT que a série não chegou a ser usada. Só é possível se foi comunicada hoje ou ontem e ainda não numerou nenhum documento.
 - **Finalizar na AT** comunica à AT o último número emitido e termina a série, aqui e na AT: a numeração acaba e a série não volta a ficar ativa. Só é possível depois de a série ter numerado pelo menos um documento.
-- **Terminar** termina a série **só no Fiscaldoo e não comunica nada à AT**: para a AT a série continua ativa. **Cancelar** também é só local. Para fechar uma série que já não vai usar, use **Finalizar na AT**. A exceção é a série registada à mão com o código do Portal das Finanças (marca **Registada à mão (Portal)**): como este programa nunca a comunicou, termina-se ou cancela-se aqui, à mão, e também no Portal. Uma série com o meio PF ou OM não numera documentos neste programa: a emissão é recusada com «Este programa emite os seus documentos por programa informático (PI)»; conclua-a e crie uma série PI. <span className="fd-pending">Pendente de validação no ecrã: o texto completo desta recusa e se **Finalizar na AT** aparece numa série registada à mão.</span>
+- **Terminar** termina a série **só no fiscaldoo e não comunica nada à AT**: para a AT a série continua ativa. **Cancelar** também é só local. Para fechar uma série que já não vai usar, use **Finalizar na AT**. A exceção é a série registada à mão com o código do Portal das Finanças (marca **Registada à mão (Portal)**): como este programa nunca a comunicou, termina-se ou cancela-se aqui, à mão, e também no Portal. Uma série com o meio PF ou OM não numera documentos neste programa: a emissão é recusada com «Este programa emite os seus documentos por programa informático (PI)»; conclua-a e crie uma série PI. <span className="fd-pending">Pendente de validação no ecrã: o texto completo desta recusa e se **Finalizar na AT** aparece numa série registada à mão.</span>
 
 Não termine uma série que ainda está a usar só para criar outra; para as séries do ano seguinte, crie-as para o novo exercício, como no exemplo, sem terminar as do ano em curso. Se não tem a certeza de que séries criar ou terminar (por ano, por estabelecimento, de recuperação), decida-o com o contabilista certificado antes de comunicar. <span className="fd-pending">Pendente de validação por contabilista certificado: número de séries e quando terminar uma série.</span>
 
@@ -115,7 +115,7 @@ Não termine uma série que ainda está a usar só para criar outra; para as sé
 
 ### O resultado diz «Aceite, ainda não aplicada»
 
-- **Causa:** a AT aceitou a série, mas o Fiscaldoo não a pôde ativar. A explicação fica no histórico de mensagens da série; o caso mais comum é «O diário … já tem uma série ativa para [FT] Fatura em 2026».
+- **Causa:** a AT aceitou a série, mas o fiscaldoo não a pôde ativar. A explicação fica no histórico de mensagens da série; o caso mais comum é «O diário … já tem uma série ativa para [FT] Fatura em 2026».
 - **O que fazer:** se escolheu o diário errado, deixe esta série e crie outra no diário certo. Se a série ativa antiga deixou mesmo de ser usada, o perfil **Contabilista certificado** pode fechá-la com **Ações › Finalizar na AT**, que também a termina na AT (leia antes «Terminar uma série não se desfaz»), e depois carregar em **Repetir a operação** na série nova: a resposta guardada é aplicada sem comunicar uma segunda vez.
 
 ### A AT recusou a série

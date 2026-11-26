@@ -1,0 +1,126 @@
+---
+id: ligar-os-bancos-online
+slug: /accounting-pt/ligar-os-bancos-online
+title: Como ligar os bancos online (sincronização automática)
+sidebar_label: Ligar os bancos online
+sidebar_position: 2
+description: Ligar um diário bancário ao banco, com o consentimento do banco, para receber os movimentos automaticamente, sem importar ficheiros. Fornecedores, cofre de credenciais, consentimento e estados da ligação.
+keywords: [ligar banco, ligações bancárias online, ligacoes bancarias online, sincronização bancária, sincronizacao bancaria, sincronização automática, sincronizacao automatica, PSD2, open banking, Salt Edge, Ponto, Ibanity, myPonto, simulador, consentimento, cofre de credenciais, movimentos do banco, extrato automático]
+doc_id: DOC-0449
+article_type: tarefa
+odoo_versions: ["20.0"]
+editions: Community e Enterprise
+fiscaldoo_version: "20.0 (master 6ea32f22c)"
+validation: pendente
+approval_state: Pendente de aprovação humana
+related: [accounting-pt/bancos-e-tesouraria/reconciliar-movimentos-bancarios]
+---
+
+## Para que serve?
+
+A **sincronização bancária online** liga um diário do banco à sua conta bancária, com o consentimento do banco, e recebe os movimentos sozinha — sem descarregar nem importar ficheiros do site do banco. De 12 em 12 horas, ou quando carrega em **Sincronizar agora**, o fiscaldoo lê o saldo e os movimentos novos e cria as linhas no diário, saltando o que já lá está. Depois, reconcilia-se como sempre.
+
+É a alternativa automática a [importar o extrato bancário](/accounting-pt/importar-extrato-bancario): em vez de trazer o ficheiro à mão, o banco entrega os movimentos.
+
+## Quando utilizar?
+
+- Quando quer os movimentos do banco no fiscaldoo sem andar a descarregar e a importar ficheiros.
+- Quando o seu banco disponibiliza o acesso online às contas (PSD2 / *open banking*), através de um dos fornecedores suportados.
+- **Não** precisa dela para carregar um ficheiro que já tem: nesse caso use [importar o extrato bancário](/accounting-pt/importar-extrato-bancario). As duas vias convivem — a sincronização não repete um movimento que já tenha entrado por ficheiro.
+
+## Onde encontrar?
+
+- As ligações: **Contabilidade › Reconciliar › Bancos e caixa › Ligações bancárias online** (o **administrador** tem esta entrada no menu; o **contabilista certificado** chega à mesma lista pelo painel **Bancos**, em **Contabilidade › Reconciliar › Bancos e caixa › O que há para fazer com os bancos?**, ou abre-a logo depois de ligar o banco pelo diário).
+- Ligar um banco: a partir do **diário do banco** (**Contabilidade › Configurar › Geral › Diários de banco e caixa**), no botão **Ligar banco**.
+- Ativar a funcionalidade: **Contabilidade › Configurar › Geral › Definições**, secção **Sincronização bancária online**.
+
+## Antes de começar
+
+- A funcionalidade está **desligada por omissão** e decide-se **empresa a empresa**. Quem a liga é o **administrador** (acesso às Definições).
+- Para **ligar, sincronizar, renovar e desligar** bancos, o perfil é **Contabilista certificado** (todos os passos deste artigo foram percorridos com esse perfil).
+- O exemplo é a Empresa Demonstração, Lda, com o fornecedor **Simulador**, que não precisa de credenciais reais nem de nenhuma ligação a um banco verdadeiro.
+
+## Ativar a sincronização
+
+O administrador abre **Contabilidade › Configurar › Geral › Definições**, procura **Sincronização bancária online** e liga a opção. Ao ligar, ficam à vista dois prazos, que pode ajustar:
+
+- **Prazo do consentimento (dias)** — quanto tempo vale a autorização dada ao banco (180 dias por omissão, o máximo que a lei permite à maioria dos bancos).
+- **Avisar antes de o consentimento do banco terminar (dias)** — com que antecedência o produto o avisa para renovar (14 dias por omissão).
+
+![Secção Sincronização bancária online nas Definições de Contabilidade, com a opção ligada, o Prazo do consentimento (dias) e o aviso antes de o consentimento terminar](/images/accounting-pt/ligar-os-bancos-online/01-ativar-sincronizacao.png)
+
+Enquanto não ligar nenhum banco, **Ligações bancárias online** mostra uma lista vazia e lembra onde se ativa a funcionalidade.
+
+![Lista Ligações bancárias online vazia, com as colunas Diário bancário, Banco, IBAN, Estado, Consentimento, Última sincronização, Saldo do banco e Diferença, e a indicação «Ainda não há nenhum banco ligado»](/images/accounting-pt/ligar-os-bancos-online/02-lista-vazia.png)
+
+## Os fornecedores
+
+Ao ligar um banco escolhe um **fornecedor**, que é quem faz a ponte entre o fiscaldoo e o banco. As chaves de cada fornecedor ficam seladas no **cofre de credenciais** (**Contabilidade › Configurar › Cofre de credenciais › Credenciais**) e **nunca aparecem no ecrã**.
+
+- **Simulador (testes e demonstração)** — bancos fictícios, sem credenciais e sem ligação real. Serve para experimentar o percurso com segurança. É o fornecedor das imagens deste artigo. **Pronto a usar.**
+- **Salt Edge** — agregador europeu. Precisa de **duas** entradas no cofre: **Salt Edge — dados bancários** (o App-id e o *secret* da conta Salt Edge) e **Salt Edge — chave privada que assina os pedidos** (a chave privada da empresa; a chave pública correspondente regista-se na Salt Edge). Cada entrada tem o campo **Ambiente**, que marca como **Teste (sandbox do fornecedor)** ou **Real**. **Pronto a usar.**
+- **Ponto (Ibanity)** — agregador *myPonto / Ponto Connect*, por ligação da organização (cada empresa usa a sua própria subscrição). Precisa de **uma** entrada no cofre: **Ponto (Ibanity) — dados bancários** (o *client-id* e o *client-secret*). **Suportado, em preparação para produção:** a ligação real ainda depende de peças que estão a ser preparadas (certificado de cliente e assinatura dos pedidos), por isso, para já, para ligações reais use o **Salt Edge**. <span className="fd-pending">Pendente de validação no ecrã: a ligação real ao Ponto não foi percorrida porque ainda não está disponível. O que fica dito segue a configuração do produto.</span>
+
+## Como utilizar
+
+Os passos abaixo ligam um banco com o **Simulador**. Com o **Salt Edge** o percurso é o mesmo; muda só o fornecedor escolhido e, no fim, a autorização é dada no site do próprio fornecedor/banco.
+
+<StepByStep>
+
+1. Abra o **diário do seu banco** (**Contabilidade › Configurar › Geral › Diários de banco e caixa**) e, no conjunto de botões em cima, carregue em **Ligar banco**. Conforme a largura do ecrã, o botão pode estar dentro de **Mais**.
+   ![Botões do diário bancário, com Linhas de lançamento, Por reconciliar, Mapa de pendentes, Importar CAMT.053, Importar extrato e, no fim, Ligar banco](/images/accounting-pt/ligar-os-bancos-online/03-botao-ligar-banco.png)
+2. Abre-se o assistente **Ligar banco**. O **Diário bancário** já vem preenchido. Escolha o **Fornecedor** (aqui, **Simulador (testes e demonstração)**) e o **Banco**. Com o Simulador, o banco escolhe-se de uma lista de bancos fictícios; com o Salt Edge, escreve-se o código do banco no fornecedor.
+   ![Assistente Ligar banco com o aviso de que vai ser enviado para o banco, o Diário bancário «Banco», o Fornecedor «Simulador (testes e demonstração)» e o Banco «Banco Atlântico Simulado»](/images/accounting-pt/ligar-os-bancos-online/04-assistente-ligar.png)
+3. Carregue em **Ligar**. É enviado para a página do banco (ou do fornecedor) para dar a autorização. No Simulador, essa página é fictícia: carregue em **Autorizar**.
+   ![Página do banco simulado «Banco Atlântico Simulado» a avisar que é um banco simulado, sem dados reais, com as opções Autorizar e Recusar](/images/accounting-pt/ligar-os-bancos-online/05-autorizar-banco.png)
+4. Volta ao fiscaldoo, agora na ficha da ligação. O estado passa a **Ligado** e aparece a data em **Consentimento válido até**. Ainda sem movimentos: o saldo e a última sincronização só se preenchem na primeira leitura.
+   ![Ficha da ligação no estado Ligado, com o Diário bancário, o Fornecedor Simulador, o Banco Atlântico Simulado, o IBAN, o Responsável, o Consentimento válido até 25/05/2027 e os campos de sincronização](/images/accounting-pt/ligar-os-bancos-online/06-banco-ligado.png)
+5. Carregue em **Sincronizar agora** para a primeira leitura. O fiscaldoo pede os dados ao banco, lê os movimentos e cria as linhas no diário, avisando quantas entraram («Sincronização concluída. N linhas novas no diário.»). A partir daqui, a **Sincronização automática** trata do resto, no **Intervalo (horas)** indicado (12 por omissão).
+   ![Ficha da ligação depois de sincronizar, com a Última sincronização e a Próxima sincronização preenchidas, o Saldo do banco, o Saldo do diário e a Diferença, e o aviso de que o saldo do banco difere do saldo do diário](/images/accounting-pt/ligar-os-bancos-online/07-movimentos-recebidos.png)
+
+</StepByStep>
+
+## Depois de ligar
+
+- Os movimentos entram no diário do banco como entram os de um extrato importado, e **reconciliam-se como sempre** ([reconciliar os movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios)). Enquanto não os reconcilia, o **Saldo do banco** e o **Saldo do diário** não batem certo, e a ficha mostra o aviso **«O saldo do banco difere do saldo do diário na contabilidade»** — é normal, desaparece à medida que reconcilia.
+- Cada leitura fica registada. Na ficha da ligação, o botão **Registo** abre o histórico, com uma linha por evento (**Ligação**, **Atualização pedida**, **Sincronização**, **Desligação**), o resultado, os **Movimentos lidos**, as **Linhas criadas** e as **Já estão no diário** (os movimentos repetidos, que o produto ignora para não duplicar).
+  ![Registo da sincronização com três linhas: Sincronização (85 movimentos lidos, 85 linhas criadas, extrato criado), Atualização pedida e Ligação, todas com o resultado Concluído](/images/accounting-pt/ligar-os-bancos-online/08-registo-sincronizacao.png)
+- O **consentimento tem prazo** (na lei, em geral, 180 dias). Perto do fim, o produto avisa e a ficha mostra um aviso com o botão **Renovar consentimento**, que pede um novo consentimento ao banco sem perder a ligação. Quando o prazo passa, a ligação fica em **Consentimento terminado** e deixa de receber movimentos até renovar.
+- Para parar de receber, use **Desligar**. Os extratos já recebidos ficam no diário; só deixa de haver leituras novas.
+- A lista **Ligações bancárias online** mostra todas as ligações ativas, com o **Estado**, o **Consentimento válido até**, a **Última sincronização** e o **Saldo do banco**.
+  ![Lista Ligações bancárias online com uma ligação do diário Banco ao Banco Atlântico Simulado, no estado Ligado, com o consentimento válido até 25/05/2027 e a última sincronização](/images/accounting-pt/ligar-os-bancos-online/09-lista-ligacoes.png)
+
+## Resultado esperado
+
+- Uma ligação no estado **Ligado**, com a data de **Consentimento válido até**, e os movimentos do banco a entrarem no diário sozinhos.
+- Os **estados** possíveis de uma ligação: **À espera do consentimento do banco** (ainda não autorizou no banco), **Ligado**, **Erro** (a última leitura falhou; volta a tentar no intervalo seguinte), **Consentimento terminado** (o prazo passou; renove) e **Desligado**.
+- Uma ligação com histórico **não se apaga** (o registo fica como prova): para a terminar, usa-se **Desligar**.
+
+## Notas importantes
+
+- **Um diário, uma conta.** Cada ligação corresponde a uma conta bancária de um diário. Se o diário tem o IBAN preenchido, a ligação fica com a conta desse IBAN; se não tem, fica com a conta na moeda do diário.
+- **A sincronização não duplica.** Um movimento que já esteja no diário — mesmo vindo de um ficheiro CAMT.053, MT940 ou CSV — não entra outra vez.
+- **O fiscaldoo nunca contacta um banco por iniciativa própria.** Só o faz quando liga, sincroniza ou renova, e sempre com uma credencial configurada. O **Simulador** é o único fornecedor que funciona sem qualquer credencial.
+- **Salt Edge em modo de teste (*sandbox*):** a conta de teste só mostra **bancos fictícios** (país XF); os bancos portugueses aparecem quando a conta Salt Edge é aprovada para produção. Para a produção são precisas a credencial marcada **Real**, uma base de produção e a **chave privada que assina os pedidos**. <span className="fd-pending">Pendente de validação no ecrã: a ligação real por Salt Edge não foi percorrida na demonstração (precisa de credenciais reais do fornecedor, que não se usam aqui).</span>
+
+## Problemas frequentes
+
+### O menu diz para pedir ao administrador
+
+- **Sintoma:** em **Ligações bancárias online** aparece «Peça ao administrador técnico que ative primeiro a funcionalidade», e o diário do banco não mostra o botão **Ligar banco**.
+- **Causa:** a sincronização bancária online está desligada para a empresa.
+- **O que fazer:** o administrador liga-a em **Contabilidade › Configurar › Geral › Definições**, secção **Sincronização bancária online**.
+
+### O saldo do banco não bate certo com a contabilidade
+
+- **Sintoma:** a ficha da ligação mostra o aviso **«O saldo do banco difere do saldo do diário na contabilidade»** e uma **Diferença** diferente de zero.
+- **Causa:** os movimentos recebidos ainda não foram reconciliados, ou falta o lançamento de abertura do saldo da conta.
+- **O que fazer:** reconcilie os movimentos ([reconciliar os movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios)); confirme também o saldo inicial do diário. A diferença fecha à medida que reconcilia.
+
+### O consentimento terminou
+
+- **Sintoma:** a ligação está em **Consentimento terminado** e não entram movimentos novos.
+- **Causa:** o prazo do consentimento dado ao banco expirou (na lei, em geral, ao fim de 180 dias).
+- **O que fazer:** na ficha da ligação, carregue em **Renovar consentimento** e autorize de novo no banco. O produto avisa antes de o prazo acabar, com a antecedência definida nas Definições.
+
+{/* Nota interna (DOCS-046, DOC-0449): módulo l10n_pt_fiscaldoo_bank_sync, master 6ea32f22c, base docs_demo_bnksync_test (porta 3512). Percorrido no ecrã com o Contabilista certificado (demo.gestor_contabilidade) e o Administrador (ativar a funcionalidade): ativar nas Definições; lista vazia; botão Ligar banco no diário Banco (id 34); assistente; página do banco simulado; Autorizar; estado Ligado (consentimento 180 dias → 25/05/2027); Sincronizar agora → «Sincronização concluída. N linhas novas no diário.»; Registo; lista. Caminhos confirmados contra a árvore de menus da base: Contabilidade › Reconciliar › Bancos e caixa › Ligações bancárias online; Contabilidade › Configurar › Geral › Diários de banco e caixa; Contabilidade › Configurar › Cofre de credenciais › Credenciais; Definições › Sincronização bancária online. Para o Simulador ligar na demonstração, o diário Banco tem IBAN (PT50 9999 0000 1234 5678 9012 2), que as contas fictícias do Simulador (IBAN aleatório) não correspondem; por isso, só para a captura, o IBAN do diário foi retirado na cópia (correspondência por moeda EUR) e reposto a seguir (sem efeito no artigo). O ambiente da demonstração não trazia chave do cofre (FISCALDOO_SECRETS_KEY); sem ela qualquer ligação é recusada com «...este servidor não tem chave de cifra para o cofre de credenciais...»; a instância foi reiniciada com uma chave de teste em memória (nunca em ficheiro) para selar a sessão. Salt Edge real e Ponto real NÃO percorridos (sem credenciais reais; Ponto em preparação, cartão BNK-PONTO). Números do Saldo do banco/Diferença são do Simulador (fictícios, variam a cada ligação) e não entram em contagens da base-mãe. */}

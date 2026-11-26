@@ -18,10 +18,10 @@ related: [fiscal-core/faturacao/clientes, fiscal-core/at-e-saft/ligar-a-at]
 
 ## Para que serve?
 
-O Peppol é uma rede europeia de troca de faturas eletrónicas: a empresa entrega a fatura a um ponto de acesso e este entrega-a ao ponto de acesso do cliente, num ficheiro estruturado (formato BIS 3) em vez de um PDF. Neste ecrã, o Fiscaldoo simula o envio das faturas certificadas e a receção de faturas de fornecedor como **rascunhos**, que uma pessoa confirma. Para as faturas a entidades públicas existe ainda o botão **Enviar ao FE-AP**, tratado nas notas.
+O Peppol é uma rede europeia de troca de faturas eletrónicas: a empresa entrega a fatura a um ponto de acesso e este entrega-a ao ponto de acesso do cliente, num ficheiro estruturado (formato BIS 3) em vez de um PDF. Neste ecrã, o fiscaldoo simula o envio das faturas certificadas e a receção de faturas de fornecedor como **rascunhos**, que uma pessoa confirma. Para as faturas a entidades públicas existe ainda o botão **Enviar ao FE-AP**, tratado nas notas.
 
 <HelpCallout type="risco" title="Hoje isto é só um simulador">
-O Fiscaldoo não tem ligação real à rede Peppol nem à Saphety. Nada do que este artigo mostra sai da máquina: a empresa fica registada em «MODO DE TESTE», o envio não chega a nenhum cliente e a «receção» é uma fatura de fornecedor de exemplo. Não use este ecrã para cumprir uma obrigação perante um cliente: envie-lhe a fatura por e-mail ou imprima-a.
+O fiscaldoo não tem ligação real à rede Peppol nem à Saphety. Nada do que este artigo mostra sai da máquina: a empresa fica registada em «MODO DE TESTE», o envio não chega a nenhum cliente e a «receção» é uma fatura de fornecedor de exemplo. Não use este ecrã para cumprir uma obrigação perante um cliente: envie-lhe a fatura por e-mail ou imprima-a.
 </HelpCallout>
 
 ## Quando utilizar?
@@ -80,7 +80,7 @@ No Odoo Enterprise, o Peppol é o mesmo do fiscaldoo. Nas **Definições**, no b
 ## Notas importantes
 
 - **O que não se pode ver aqui.** Sem ligação real, não há resposta de um cliente, recusa de um ponto de acesso nem confirmação verdadeira de entrega: o simulador aceita sempre, mesmo que o cliente não tenha identificador Peppol. <span className="fd-pending">Pendente de validação no ecrã: envio e receção reais, porque o produto ainda não tem essa ligação.</span>
-- **Enviar ao FE-AP (fatura à Administração Pública).** O botão aparece ao Administrador e ao Contabilista certificado nas faturas emitidas (não ao Contabilista, à Gerência nem ao Administrativo). Ao carregar, o ecrã diz «Fatura eletrónica FE-AP. Aceites: 1, rejeitados: 0, sem resposta: 0.» durante poucos segundos; depois o botão desaparece e a fatura mostra a etiqueta **Aceite**. Esse «Aceite» vem também de um simulador: não houve envio real. <span className="fd-pending">Pendente de validação por contabilista certificado: quando a fatura eletrónica à Administração Pública é obrigatória e o que o Fiscaldoo envia (XML UBL 2.1 CIUS-PT).</span>
+- **Enviar ao FE-AP (fatura à Administração Pública).** O botão aparece ao Administrador e ao Contabilista certificado nas faturas emitidas (não ao Contabilista, à Gerência nem ao Administrativo). Ao carregar, o ecrã diz «Fatura eletrónica FE-AP. Aceites: 1, rejeitados: 0, sem resposta: 0.» durante poucos segundos; depois o botão desaparece e a fatura mostra a etiqueta **Aceite**. Esse «Aceite» vem também de um simulador: não houve envio real. <span className="fd-pending">Pendente de validação por contabilista certificado: quando a fatura eletrónica à Administração Pública é obrigatória e o que o fiscaldoo envia (XML UBL 2.1 CIUS-PT).</span>
 
 ## Problemas frequentes
 

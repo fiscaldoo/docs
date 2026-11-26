@@ -23,7 +23,7 @@ related: [accounting-pt/bancos-e-tesouraria/reconciliar-movimentos-bancarios, ac
 
 Reconciliar é ligar o que se deve com o que se pagou: a fatura de um fornecedor com o pagamento que a liquida, ou o recebimento de um cliente com a devolução que lhe foi feita. Depois de reconciliados, os dois lados deixam de aparecer como saldo em aberto na conta corrente do cliente ou do fornecedor.
 
-Este artigo cobre os dois casos que o Fiscaldoo trata no ecrã: as **faturas**, que se reconciliam na própria fatura, e os **outros itens** de um cliente ou fornecedor (pagamentos e lançamentos manuais), que se reconciliam na lista de itens por reconciliar. A reconciliação com o extrato do banco é outra tarefa: ver [Como reconciliar movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios).
+Este artigo cobre os dois casos que o fiscaldoo trata no ecrã: as **faturas**, que se reconciliam na própria fatura, e os **outros itens** de um cliente ou fornecedor (pagamentos e lançamentos manuais), que se reconciliam na lista de itens por reconciliar. A reconciliação com o extrato do banco é outra tarefa: ver [Como reconciliar movimentos bancários](/accounting-pt/reconciliar-movimentos-bancarios).
 
 ## Quando utilizar?
 
@@ -71,7 +71,7 @@ Este artigo cobre os dois casos que o Fiscaldoo trata no ecrã: as **faturas**, 
    ![Assistente Reconciliar itens de terceiros com débito e crédito de 123,00 euros e diferença de 0,00 euros](/images/accounting-pt/reconciliar-terceiros/05-assistente-sem-diferenca.png)
 4. Se os dois lados não fecham (no exemplo, 200,00 € recebidos e 199,50 € devolvidos), o assistente mostra a **Diferença** (−0,50 €) e diz: «Os itens não fecham: sem ajuste fica uma reconciliação parcial em aberto.» Sem fazer mais nada, carregar em **Reconciliar** liga as linhas mas deixa 0,50 € em aberto na conta do cliente.
    ![Assistente com diferença de menos 0,50 euros e o aviso de reconciliação parcial em aberto](/images/accounting-pt/reconciliar-terceiros/06-diferenca-sem-ajuste.png)
-5. Para fechar a diferença, ative **Ajustar a diferença?**, escolha a **Conta de ajuste** e o **Diário do ajuste** (abre com **Operações Diversas**), confirme a **Descrição** («Ajuste de reconciliação») e a **Data do ajuste**, e carregue em **Reconciliar**. O Fiscaldoo cria um lançamento de ajuste no diário escolhido: no exemplo, **D 2111 Clientes gerais 0,50 €** e **C** na conta de ajuste **0,50 €**, e reconcilia tudo. <span className="fd-pending">Pendente de validação por contabilista certificado: conta de ganhos ou de gastos onde se lançam as diferenças de reconciliação de clientes e fornecedores, e o seu tratamento fiscal.</span>
+5. Para fechar a diferença, ative **Ajustar a diferença?**, escolha a **Conta de ajuste** e o **Diário do ajuste** (abre com **Operações Diversas**), confirme a **Descrição** («Ajuste de reconciliação») e a **Data do ajuste**, e carregue em **Reconciliar**. O fiscaldoo cria um lançamento de ajuste no diário escolhido: no exemplo, **D 2111 Clientes gerais 0,50 €** e **C** na conta de ajuste **0,50 €**, e reconcilia tudo. <span className="fd-pending">Pendente de validação por contabilista certificado: conta de ganhos ou de gastos onde se lançam as diferenças de reconciliação de clientes e fornecedores, e o seu tratamento fiscal.</span>
 
 </StepByStep>
 
@@ -81,7 +81,7 @@ Este artigo cobre os dois casos que o Fiscaldoo trata no ecrã: as **faturas**, 
 
 1. Abra **O que há para fazer com os bancos?** e, em **Listas de apoio**, carregue em **Reconciliação automática de terceiros**.
    ![Secção Listas de apoio do painel dos bancos com a linha Reconciliação automática de terceiros](/images/accounting-pt/reconciliar-terceiros/09-listas-de-apoio.png)
-2. Nos **Critérios**, escolha as **Contas**, os **Terceiros** e as datas **De** e **Até** que quer rever; se deixar tudo vazio, o Fiscaldoo considera todas as contas de clientes e fornecedores. Em **Tolerância**, escreva a maior diferença que aceita ajustar (por omissão 0,00 €, só valores iguais) e escolha a **Conta de ajuste**; o **Diário do ajuste**, a **Descrição** e a **Data do ajuste** abrem preenchidos. No exemplo: Terceiros **Hotel Vista Rio, SA**, **Tolerância** 0,50 € e **Conta de ajuste** 7888 Outros não especificados. Sem **Conta de ajuste**, só se reconciliam valores iguais.
+2. Nos **Critérios**, escolha as **Contas**, os **Terceiros** e as datas **De** e **Até** que quer rever; se deixar tudo vazio, o fiscaldoo considera todas as contas de clientes e fornecedores. Em **Tolerância**, escreva a maior diferença que aceita ajustar (por omissão 0,00 €, só valores iguais) e escolha a **Conta de ajuste**; o **Diário do ajuste**, a **Descrição** e a **Data do ajuste** abrem preenchidos. No exemplo: Terceiros **Hotel Vista Rio, SA**, **Tolerância** 0,50 € e **Conta de ajuste** 7888 Outros não especificados. Sem **Conta de ajuste**, só se reconciliam valores iguais.
    ![Assistente da reconciliação automática com o terceiro Hotel Vista Rio, a tolerância de 0,50 euros e a conta de ajuste 7888](/images/accounting-pt/reconciliar-terceiros/11-auto-criterios.png)
 3. Carregue em **Pré-visualizar**. A janela diz o **Número de correspondências** (1) e quantas levam ajuste (**Com ajuste** 1), e lista cada par: a conta, o cliente, as linhas e a **Diferença** (−0,40 €). Nada foi reconciliado ainda; **Voltar** deixa corrigir os critérios.
    ![Pré-visualização com uma correspondência do Hotel Vista Rio e diferença de menos 0,40 euros](/images/accounting-pt/reconciliar-terceiros/12-auto-previsualizacao.png)
@@ -99,7 +99,7 @@ No Odoo Enterprise, os três caminhos e os passos são os mesmos (visto com um u
 ## Resultado esperado
 
 - A fatura fica **Pago** (ou com o **Valor em Dívida** da diferença) e a conta corrente do cliente ou fornecedor deixa de mostrar os itens reconciliados.
-- Reconciliar sem diferença não cria lançamentos; com ajuste, cria um lançamento no diário escolhido (no exemplo, **OD/2026/00336** e **OD/2026/00337** em **Operações Diversas**), que se vê no razão e no [extrato do terceiro](/accounting-pt/extratos-de-terceiros).
+- Reconciliar sem diferença não cria lançamentos; com ajuste, cria um lançamento no diário escolhido (no exemplo, **OD/2026/00104** e **OD/2026/00105** em **Operações Diversas**), que se vê no razão e no [extrato do terceiro](/accounting-pt/extratos-de-terceiros).
 
 ## Notas importantes
 

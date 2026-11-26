@@ -11,8 +11,8 @@
   "gerado_em": "2026-10-28",
   "base_url": "https://docs.fiscaldoo.pt",
   "formato_url": "https://docs.fiscaldoo.pt/<categoria>/<slug>",
-  "inventario": "data/feature-inventory.json (746 funcionalidades)",
-  "artigos": 446,
+  "inventario": "data/feature-inventory.json (750 funcionalidades)",
+  "artigos": 447,
   "categorias": 11,
   "perfis": {
    "U": "Utilizador sem conhecimentos contabilísticos",
@@ -145,7 +145,7 @@
      "slug": "bancos-e-tesouraria",
      "titulo": "Bancos e tesouraria",
      "pasta": "docs/accounting-pt/bancos-e-tesouraria",
-     "artigos": 13
+     "artigos": 14
     },
     {
      "slug": "ativos",
@@ -184,7 +184,7 @@
      "artigos": 4
     }
    ],
-   "artigos": 118
+   "artigos": 119
   },
   {
    "slug": "payroll-pt",
@@ -5851,6 +5851,58 @@
    "diferencas_ce_ee": [
     "Enterprise: ponte l10n_pt_arxi_ee (reconciliação bancária) - confirmar diferenças no ecrã (DOCS-004)"
    ],
+   "versoes_odoo": [
+    "20.0"
+   ],
+   "visibilidade": "pública",
+   "estado": "Pendente de aprovação humana"
+  },
+  {
+   "id": "DOC-0449",
+   "categoria": "accounting-pt",
+   "secao": "bancos-e-tesouraria",
+   "slug": "ligar-os-bancos-online",
+   "caminho": "accounting-pt/ligar-os-bancos-online",
+   "url": "https://docs.fiscaldoo.pt/accounting-pt/ligar-os-bancos-online",
+   "titulo": "Como ligar os bancos online (sincronização automática)",
+   "resumo": "Liga um diário do banco à conta bancária, com o consentimento do banco, para receber os movimentos automaticamente, sem importar ficheiros.",
+   "tipo": "tarefa",
+   "perfis": [
+    "Contabilista certificado",
+    "Administrador"
+   ],
+   "nivel": "intermédio",
+   "prioridade": "P2",
+   "video": "não",
+   "funcionalidades": [
+    "FC-BANKSYNC-001",
+    "FC-BANKSYNC-002",
+    "FC-BANKSYNC-003",
+    "FC-BANKSYNC-004"
+   ],
+   "relacionados": [
+    "DOC-0109",
+    "DOC-0110"
+   ],
+   "relacionados_caminho": [
+    "accounting-pt/importar-extrato-bancario",
+    "accounting-pt/reconciliar-movimentos-bancarios"
+   ],
+   "palavras_chave": [
+    "ligar banco",
+    "ligações bancárias online",
+    "sincronização bancária",
+    "sincronização automática",
+    "open banking",
+    "Salt Edge",
+    "consentimento",
+    "cofre de credenciais",
+    "movimentos do banco",
+    "ligacoes bancarias online",
+    "sincronizacao bancaria",
+    "sincronizacao automatica"
+   ],
+   "edicoes": "Community e Enterprise",
    "versoes_odoo": [
     "20.0"
    ],

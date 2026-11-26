@@ -21,7 +21,7 @@ Acontece uma destas coisas:
 
 - uma fatura em rascunho, que veio de uma importação, já tem um número no topo (por exemplo `FT IMP26/3`) e, ao carregar em **Confirmar**, aparece a janela **Operação inválida**;
 - ao importar faturas de um ficheiro, a importação é recusada com «Erro na linha …» a dizer que o documento não pode ser criado com número;
-- um programa ligado ao Fiscaldoo (uma integração) recebe a recusa de criar uma fatura com número ou já publicada.
+- um programa ligado ao fiscaldoo (uma integração) recebe a recusa de criar uma fatura com número ou já publicada.
 
 Numa empresa portuguesa, o número de uma fatura é dado pela série fiscal no momento em que a fatura é confirmada, junto com o ATCUD e a assinatura. Um número escrito à mão, ou trazido num ficheiro, não tem nenhum dos dois.
 
@@ -54,7 +54,7 @@ As partes em itálico mudam com o documento. As três primeiras mensagens foram 
 ## Causas verificadas
 
 - **A importação trouxe o número, mas não o diário.** Um ficheiro com a coluna do número (**Número**) e sem a coluna do diário é aceite: a fatura fica em rascunho, no diário certificado por omissão (**Vendas**), já com o número do ficheiro. A recusa só aparece ao **Confirmar**. Na demonstração, o ficheiro com o número `FT IMP26/3` e uma linha de **[KIT-CAN] Kit de canetas** foi importado com «1 registos importados com sucesso».
-- **A importação trouxe o número e o diário.** O Fiscaldoo recusa a linha logo na importação (2.ª mensagem) e não cria nada.
+- **A importação trouxe o número e o diário.** O fiscaldoo recusa a linha logo na importação (2.ª mensagem) e não cria nada.
 - **Um programa externo tentou criar a fatura com número ou já publicada.** A fatura já publicada é sempre recusada. A fatura com número é recusada quando o programa indica o diário; se não o indica, fica em rascunho com o número, e a recusa só aparece ao confirmar (o 1.º caso). Na demonstração, as recusas foram dadas sem criar nenhum documento, e um pedido com número e sem diário criou o rascunho `FT XPTO/2`, depois eliminado.
 - **Duas confirmações ao mesmo tempo na mesma série.** A segunda espera pela primeira e, se não conseguir, é recusada (4.ª mensagem).
 
@@ -95,14 +95,14 @@ Na demonstração, a fatura importada com o número `FT IMP26/1` para a Papelari
 | 711 Mercadorias | | 10,00 € |
 | 2433 IVA - Liquidado | | 2,30 € |
 
-Ao corrigir o ficheiro para as importações seguintes, retire a coluna do número: o Fiscaldoo numera cada fatura quando ela é confirmada. Como emitir a fatura está em [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada).
+Ao corrigir o ficheiro para as importações seguintes, retire a coluna do número: o fiscaldoo numera cada fatura quando ela é confirmada. Como emitir a fatura está em [Como emitir uma fatura certificada](/fiscal-core/emitir-uma-fatura-certificada).
 
 **Quem faz:** quem emite faturas (perfil **Administrativo**, **Contabilista** ou **Contabilista certificado**).
 
 ### A fatura já foi emitida noutro programa: não a confirme
 
 <HelpCallout type="risco" title="Confirmar volta a faturar a mesma venda">
-Ao confirmar, o Fiscaldoo emite uma fatura **nova**, com um número da sua série. Se a venda já foi faturada noutro programa, ficam duas faturas e o IVA liquidado duas vezes. Uma fatura confirmada já não se elimina: corrige-se com uma nota de crédito ou com a anulação. <span className="fd-pending">Pendente de validação por contabilista certificado: como trazer para o Fiscaldoo as faturas emitidas noutro programa certificado (só para consulta e para o SAF-T) sem as voltar a emitir.</span>
+Ao confirmar, o fiscaldoo emite uma fatura **nova**, com um número da sua série. Se a venda já foi faturada noutro programa, ficam duas faturas e o IVA liquidado duas vezes. Uma fatura confirmada já não se elimina: corrige-se com uma nota de crédito ou com a anulação. <span className="fd-pending">Pendente de validação por contabilista certificado: como trazer para o fiscaldoo as faturas emitidas noutro programa certificado (só para consulta e para o SAF-T) sem as voltar a emitir.</span>
 </HelpCallout>
 
 1. Não carregue em **Confirmar**.

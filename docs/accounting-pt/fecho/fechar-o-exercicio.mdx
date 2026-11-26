@@ -20,7 +20,7 @@ related: [accounting-pt/fecho/fechar-o-mes, accounting-pt/fecho/simular-o-result
 
 ## Para que serve?
 
-O fecho do exercício apura o resultado do ano, passa-o para resultados transitados e fecha o ano para novas alterações. O Fiscaldoo reúne tudo num painel, o **Fecho do exercício**, com os passos pela ordem legal e as verificações que as contas devem cumprir.
+O fecho do exercício apura o resultado do ano, passa-o para resultados transitados e fecha o ano para novas alterações. O fiscaldoo reúne tudo num painel, o **Fecho do exercício**, com os passos pela ordem legal e as verificações que as contas devem cumprir.
 
 O fecho é feito uma vez por ano. Os fechos mensais preparam-no: ver [Como fechar a contabilidade do mês](/accounting-pt/fechar-o-mes).
 
@@ -79,13 +79,13 @@ O fecho é feito uma vez por ano. Os fechos mensais preparam-no: ver [Como fecha
 3. Com o administrador (ou com o acesso extra **Administração fiscal**), em **Aprovar as contas**, carregue em **Fazer agora**. Preencha a **Data da aprovação** (vem a de hoje) e a **Ata / número**, por exemplo `Ata n.º 12`, e carregue em **Confirmar**. Com o perfil **Contabilista certificado**, o painel diz «Só o administrador pode fazer este passo.» A data do exemplo, 31/03/2027, é posterior à da demonstração: use a data real da ata.
 4. Em **Passar o resultado para resultados transitados**, carregue em **Fazer agora**. Se o exercício seguinte ainda não existir, a janela diz «O exercício seguinte ainda não existe. Será criado de 01/01/2027 a 31/12/2027.» Carregue em **Confirmar**. O lançamento fica com a data da aprovação e o exercício seguinte fica **Aberto**. O painel passa a abrir nesse exercício: para continuar, volte a escolher **2026 · Fechado** em **Exercício**.
    ![Painel de 2026 com todos os passos feitos até aos resultados transitados e o próximo passo Entregar a IES / SAF-T](/images/accounting-pt/fechar-o-exercicio/07-transferido.png)
-5. Entregue a IES e o SAF-T no Portal das Finanças ([Como preparar e entregar a IES](/accounting-pt/ies)). Depois, em **Entregar a IES / SAF-T**, carregue em **Fazer agora**. O Fiscaldoo não entrega nada neste passo, só regista: na janela **Registar submissão**, escreva a **Referência da submissão** e confirme a **Data da submissão**. A janela avisa: «Um exercício submetido nunca pode ser reaberto e nenhuma exceção permite lançamentos nele.» Carregue em **Confirmar**.
+5. Entregue a IES e o SAF-T no Portal das Finanças ([Como preparar e entregar a IES](/accounting-pt/ies)). Depois, em **Entregar a IES / SAF-T**, carregue em **Fazer agora**. O fiscaldoo não entrega nada neste passo, só regista: na janela **Registar submissão**, escreva a **Referência da submissão** e confirme a **Data da submissão**. A janela avisa: «Um exercício submetido nunca pode ser reaberto e nenhuma exceção permite lançamentos nele.» Carregue em **Confirmar**.
 
 </StepByStep>
 
 ## No Enterprise
 
-No Odoo Enterprise, o exercício fecha-se no mesmo **Painel do fecho do exercício**, com os mesmos passos, os mesmos botões (**Iniciar o fecho**, **Fechar o exercício**, **Simular o resultado**, **Abrir a ficha do exercício** e **Datas de bloqueio**) e a mesma coluna **O que dizem as contas**. No menu **Fechar** do **Contabilista certificado**, todas as entradas são do Fiscaldoo: o apuramento de resultados e o fecho fazem-se pelos passos deste painel.
+No Odoo Enterprise, o exercício fecha-se no mesmo **Painel do fecho do exercício**, com os mesmos passos, os mesmos botões (**Iniciar o fecho**, **Fechar o exercício**, **Simular o resultado**, **Abrir a ficha do exercício** e **Datas de bloqueio**) e a mesma coluna **O que dizem as contas**. No menu **Fechar** do **Contabilista certificado**, todas as entradas são do fiscaldoo: o apuramento de resultados e o fecho fazem-se pelos passos deste painel.
 
 {/* Nota interna (lote EE-02, DOCS-073 #4142, DEC-1794, master 7a46de91a, base Enterprise docs_ee_ee02_test, 10/11/2026, utilizadores criados na cópia só com o perfil indicado): Contabilista certificado: painel do exercício 2026 · Aberto, «O fecho ainda não começou.»; Simular o resultado abriu a janela «Isto é uma SIMULAÇÃO: não se lança nada…» com a Demonstração de resultados provisória da cópia. Iniciar o fecho não se carregou: o exercício da cópia ficou como estava. Menu Fechar deste perfil: Apuramento do IVA, Depreciações do mês, Está tudo em ordem?, Fechar o mês e Painel do fecho do exercício. Ver reports/LOTE_EE-02.md. */}
 
@@ -98,9 +98,9 @@ No Odoo Enterprise, o exercício fecha-se no mesmo **Painel do fecho do exercíc
 
   | Lançamento | Data | Linhas |
   |---|---|---|
-  | **OD/2026/00336** a **00341**, um por ativo (o exemplo do edifício) | 31/12/2026 | Débito 6422 Edifícios e outras construções 3.700,00; Crédito 4382 Edifícios e outras construções 3.700,00. Os outros ativos usam as contas 6424, 6425 e 6433 (a licença do programa, intangível, amortiza-se) |
-  | **OD/2026/00342** CMVMC de 2026 | 31/12/2026 | Débito 321 Mercadorias 480,00; Crédito 611 Mercadorias 480,00 |
-  | **OD/2026/00343** Apuramento de IVA | 31/12/2026 | Crédito 2432 IVA - Dedutível 973,16 e Débito 2435 IVA - Apuramento 973,16; Débito 2433 IVA - Liquidado 1.567,50 e Crédito 2435 1.567,50; Débito 2435 594,34 e Crédito 2436 IVA - A pagar 594,34 |
+  | **OD/2026/00114** a **00119**, um por ativo (o exemplo do edifício) | 31/12/2026 | Débito 6422 Edifícios e outras construções 3.700,00; Crédito 4382 Edifícios e outras construções 3.700,00. Os outros ativos usam as contas 6424, 6425 e 6433 (a licença do programa, intangível, amortiza-se) |
+  | **OD/2026/00120** CMVMC de 2026 | 31/12/2026 | Débito 321 Mercadorias 480,00; Crédito 611 Mercadorias 480,00 |
+  | **OD/2026/00121** Apuramento de IVA | 31/12/2026 | Crédito 2432 IVA - Dedutível 973,16 e Débito 2435 IVA - Apuramento 973,16; Débito 2433 IVA - Liquidado 1.567,50 e Crédito 2435 1.567,50; Débito 2435 594,34 e Crédito 2436 IVA - A pagar 594,34 |
   | **APR/2026/00001** «Apuramento de resultados 2026 (1/3)» | 31/12/2026 | Crédito, por conta de gastos: 611 10.620,00; 6221 10.932,87; 6224 3.150,00; 6226 302,47; 6228 12,50; 6241 1.890,00; 6261 8.100,00; 6262 855,00; 632 45.314,67; 635 10.762,30; 6422 3.700,00; 6424 6.125,00; 6425 3.140,00; 6433 1.466,67; 6871 2.500,00. Débito, por conta de rendimentos: 711 30.670,50; 721 7.722,50; 7888 380,00. Débito 811 Resultado antes de impostos 70.098,48 |
   | **APR/2026/00002** «Apuramento de resultados 2026 (3/3)» | 31/12/2026 | Crédito 811 Resultado antes de impostos 70.098,48; Débito 818 Resultado líquido 70.098,48 |
   | **ENC/2027/00001** «Transferência do resultado 2026» | 31/03/2027 | Débito 561 Resultados transitados 70.098,48; Crédito 818 Resultado líquido 70.098,48 |

@@ -18,7 +18,7 @@ related: [payroll-pt/tempo-de-trabalho/verificar-presencas, payroll-pt/configura
 
 ## Para que serve?
 
-Define quem trabalha em que turno e guarda o registo que a lei pede, com um mapa para imprimir. O Fiscaldoo recusa as escalas e os registos que passam os limites do Código do Trabalho: turnos longos de mais, mudanças de turno sem descanso, semanas sem descanso e menores de noite.
+Define quem trabalha em que turno e guarda o registo que a lei pede, com um mapa para imprimir. O fiscaldoo recusa as escalas e os registos que passam os limites do Código do Trabalho: turnos longos de mais, mudanças de turno sem descanso, semanas sem descanso e menores de noite.
 
 A escala e o registo não mudam o recibo. O subsídio de turno entra no recibo por outro caminho: um registo do subsídio e uma rubrica que o pague (veja **Pôr o subsídio de turno no recibo**).
 
@@ -39,7 +39,7 @@ A escala e o registo não mudam o recibo. O subsídio de turno entra no recibo p
 ## Antes de começar
 
 - O seu perfil é **Gestor de RH**, ou tem o acesso extra **Administrador de Salários**. Os dois criam escalas e registos. O **Processador de salários** vê a escala e o registo, mas não os altera.
-- O trabalhador tem o **Aniversário** preenchido no separador **Pessoal** da ficha, se puder ser menor: é com esta data que o Fiscaldoo calcula a idade. Preencha-a antes de escrever as linhas do trabalhador: as linhas já escritas não voltam a ser conferidas. A data não aparece no registo nem no mapa.
+- O trabalhador tem o **Aniversário** preenchido no separador **Pessoal** da ficha, se puder ser menor: é com esta data que o fiscaldoo calcula a idade. Preencha-a antes de escrever as linhas do trabalhador: as linhas já escritas não voltam a ser conferidas. A data não aparece no registo nem no mapa.
 
 ## Como utilizar
 
@@ -49,7 +49,7 @@ A escala e o registo não mudam o recibo. O subsídio de turno entra no recibo p
 2. Em **Escala**, escreva o nome, por exemplo `Manhã e Tarde`. Marque **Laboração contínua** se a empresa trabalha sem interrupção. Preencha **Instrumento de regulamentação coletiva (IRCT)**, se existir.
 3. Carregue em **Adicionar uma linha**. Preencha **Semana do ciclo** (`1` na primeira) e **Turno** (`Manhã`).
 4. Em **Horário do turno**, escolha o horário com as horas desse turno. Se ainda não existir, escreva o nome e carregue em **Criar e editar…**: em cada dia, preencha **Trabalho de** e **Trabalho para** (no exemplo, das 07:00 às 15:00). Na última linha, não saia com a tecla Tab: abre uma linha vazia e **Guardar** dá o erro «The attendance should have a duration between 0 and 24 hours» (o Odoo mostra esta mensagem em inglês, sem tradução para português). **Criar** sem editar guarda um horário com 8 horas por dia, sem as horas do turno.
-5. Repita para a semana 2, `Tarde`, com o horário das 14:00 às 22:00. O Fiscaldoo preenche **Dias úteis por semana** e **Turno da noite**.
+5. Repita para a semana 2, `Tarde`, com o horário das 14:00 às 22:00. O fiscaldoo preenche **Dias úteis por semana** e **Turno da noite**.
 6. Guarde. Se o turno passar um limite da lei, aparece a mensagem correspondente (veja **Problemas frequentes**).
    ![Escala Manhã e Tarde com dois turnos no ciclo de duas semanas, com cinco dias úteis por semana](/images/payroll-pt/turnos/01-escala-manha-e-tarde.png)
 7. Abra **Salários › Preparar › O que há para fazer este mês?** e carregue em **Trabalhadores numa escala de turnos**, no fundo do ecrã.
@@ -65,7 +65,7 @@ A escala e o registo não mudam o recibo. O subsídio de turno entra no recibo p
 
 O mapa de 02/11/2026 a 07/11/2026 tem as colunas **Dia**, **Turno**, **Trabalhadores** e **Menores** e o texto «Registo dos trabalhadores de cada turno (Código do Trabalho, artigo 221.º, n.º 6).» Um trabalhador menor aparece pelo nome nas duas colunas, sem a data de nascimento.
 
-<span className="fd-pending">Pendente de validação por contabilista certificado: os limites legais aplicados pelo Fiscaldoo a cada turno e a todas as escalas, mesmo fora da laboração contínua (Código do Trabalho, arts. 76.º e 221.º).</span>
+<span className="fd-pending">Pendente de validação por contabilista certificado: os limites legais aplicados pelo fiscaldoo a cada turno e a todas as escalas, mesmo fora da laboração contínua (Código do Trabalho, arts. 76.º e 221.º).</span>
 
 ## Pôr o subsídio de turno no recibo
 
